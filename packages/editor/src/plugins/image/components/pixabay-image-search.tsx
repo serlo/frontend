@@ -26,6 +26,9 @@ export const PixabayImageSearch = ({
   const [query, setQuery] = useState('')
   const [images, setImages] = useState<PixabayImage[]>([])
   const [isLoadingImage, setIsLoadingImage] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
+
+  const [showTags, setShowTags] = useState(true)
 
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
@@ -39,16 +42,21 @@ export const PixabayImageSearch = ({
     }
   }, [isLoadingImage])
 
-  const handleSearch = async () => {
-    if (!query) return
+  const handleSearch = async (searchQuery: string) => {
+    if (!searchQuery) return
+    setIsSearching(true)
     try {
       const response = await fetch(
-        `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo`
+        `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(searchQuery)}&image_type=photo`
       )
       const data = (await response.json()) as PixabayResponse
       setImages(data.hits)
+      setShowTags(false)
     } catch (error) {
+      setShowTags(true)
       console.error('Error fetching images from Pixabay:', error)
+    } finally {
+      setIsSearching(false)
     }
   }
 
@@ -56,21 +64,50 @@ export const PixabayImageSearch = ({
     setQuery(e.target.value)
   }
 
+  const handleTagClick = async (tag: string) => {
+    setQuery(tag)
+    await handleSearch(tag)
+  }
+
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter') return
+    await handleSearch(query)
+  }
+
   return (
-    <div className="min-h-[80vw]">
-      <input
-        type="text"
-        value={query}
-        onChange={handleInputChange}
-        placeholder="Suche"
-        className="ml-10 rounded border p-2"
-      />
-      <button
-        onClick={handleSearch}
-        className="ml-2 rounded bg-blue-500 p-2 text-white"
-      >
-        Search
-      </button>
+    <div className="min-h-[60vw] pt-10">
+      <h2 className="mb-6 ml-10 mt-10 font-bold">{imageStrings.licenceFree}</h2>
+      {/* Search input */}
+      <div className="w-full">
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Suche"
+          onKeyDown={handleKeyDown}
+          className="ml-10 w-[90%] rounded rounded-lg border border-0 bg-yellow-100 p-2 px-4 py-2 text-gray-600"
+        />
+      </div>
+
+      {/* Search tags */}
+      {showTags && (
+        <div>
+          <div className="mb-6 mt-10 flex flex-wrap  justify-center">
+            {Object.values(imageStrings.searchTags).map((tagKey) => (
+              <button
+                key={tagKey}
+                onClick={() => handleTagClick(tagKey)}
+                className="m-2 inline-block rounded-md bg-white px-4 py-2 text-black shadow-md"
+              >
+                {tagKey}
+              </button>
+            ))}
+          </div>
+          <div className="w-full justify-center pt-4 text-center text-sm">
+            {imageStrings.pixabayText}
+          </div>
+        </div>
+      )}
       <div
         className={cn(
           'max-h-[100vw] overflow-y-auto',
@@ -80,13 +117,20 @@ export const PixabayImageSearch = ({
         )}
         style={{ overflow: isLoadingImage ? 'hidden' : 'auto' }}
       >
-        {isLoadingImage && (
+        {/* Loading overlay */}
+        {(isLoadingImage || isSearching) && (
           <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 backdrop-blur-sm">
             <h1 className="text-center text-xl font-bold">
-              {imageStrings.loadingImage}
+              {isLoadingImage
+                ? imageStrings.loadingImage
+                : isSearching
+                  ? imageStrings.searching
+                  : 'Hmm'}
             </h1>
           </div>
         )}
+
+        {/* Images grid */}
         {images.map((image) => (
           <div
             className="mb-4 w-1/2 cursor-pointer px-2"
