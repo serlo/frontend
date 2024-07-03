@@ -795,6 +795,17 @@ export const loggedInData = {
           maxWidthPlaceholder: 'Enter the maximum width',
           helpTooltipText: 'More information and help related to Image Plugin',
           change: 'Change image',
+          licenceHelpText:
+            'External content with the following licenses may be integrated on serlo.org:',
+          licences: {
+            CC4: 'CC BY-SA 4.0',
+            CC3: 'CC BY-SA 3.0',
+            CC2: 'CC BY-SA 2.0',
+            CCBY: 'CC BY',
+            CCO: 'CCO',
+            publicDomain: 'Public Domain',
+            pixabay: 'Pixabay License',
+          },
         },
         injection: {
           title: 'serlo.org Content',

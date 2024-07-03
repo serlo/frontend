@@ -5,6 +5,7 @@ import * as Select from '@radix-ui/react-select'
 import React, { useState, useEffect, useRef } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
 interface LicenseDropdownProps {
@@ -13,49 +14,42 @@ interface LicenseDropdownProps {
   isPixabayImage?: boolean
 }
 
-const licenses = [
-  'CC BY-SA 4.0',
-  'CC BY-SA 3.0',
-  'CC BY-SA 2.0',
-  'CC BY',
-  'Public Domain',
-  'CC0',
-  'Pixabay Lizenz',
-]
-
 export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
-  defaultLicense = 'CC BY-SA 4.0',
   onLicenseChange,
   isPixabayImage = false,
 }) => {
-  const [selectedLicense, setSelectedLicense] = useState(defaultLicense)
+  const editorStrings = useEditorStrings()
+  const imageStrings = editorStrings.plugins.image
+  const { licences, licenceHelpText } = imageStrings
+  const licenceNames = Object.values(licences)
+
+  const [selectedLicense, setSelectedLicense] = useState(licenceNames[0])
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-
   const [triggerWidth, setTriggerWidth] = useState(0)
-
-  useEffect(() => {
-    if (isPixabayImage) {
-      setSelectedLicense('Pixabay Lizenz')
-      onLicenseChange && onLicenseChange('Pixabay Lizenz')
-
-      setIsConfirmed(true)
-    }
-  }, [isPixabayImage, onLicenseChange])
-
-  const handleLicenseChange = (newLicence: string) => {
-    setSelectedLicense(newLicence)
-    onLicenseChange && onLicenseChange(newLicence)
-    setIsConfirmed(true)
-  }
 
   const triggerRef = useRef<HTMLLabelElement>(null)
 
-  // hack to get the content to be the same width as the trigger
   useEffect(() => {
-    setTriggerWidth(triggerRef.current ? triggerRef.current.offsetWidth / 2 : 0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [triggerRef.current])
+    if (isPixabayImage) {
+      const pixabayLicence =
+        licenceNames.find((name) => name.toLowerCase().includes('pixabay')) ||
+        ''
+      setSelectedLicense(pixabayLicence)
+      onLicenseChange?.(pixabayLicence)
+      setIsConfirmed(true)
+    }
+  }, [isPixabayImage, onLicenseChange, licenceNames])
+
+  useEffect(() => {
+    setTriggerWidth(triggerRef.current ? triggerRef.current.offsetWidth / 3 : 0)
+  }, [])
+
+  const handleLicenseChange = (newLicence: string) => {
+    setSelectedLicense(newLicence)
+    onLicenseChange?.(newLicence)
+    setIsConfirmed(true)
+  }
 
   return (
     <label
@@ -65,27 +59,23 @@ export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
       <span className="serlo-tooltip-trigger w-1/4">
         Lizenz
         <FaIcon className="ml-2" icon={faQuestionCircle} />
-        <EditorTooltip text="info" />
+        <EditorTooltip text={licenceHelpText} />
       </span>
       <span className="flex w-3/4 flex-row border-2 border-transparent">
         <Select.Root
-          onValueChange={(value: string) => handleLicenseChange(value)}
+          onValueChange={handleLicenseChange}
           defaultValue={selectedLicense}
-          onOpenChange={(open: boolean) => setIsOpen(open)}
+          onOpenChange={setIsOpen}
           value={selectedLicense}
         >
           <Select.Trigger
             className={cn(
-              `serlo-input-font-reset  rounded-md 
-           border-2 border-editor-primary-100
-           bg-editor-primary-100 px-2 focus:border-2 focus:border-editor-primary`,
-              isOpen && 'rounded-b-none',
-              isOpen && 'border-editor-primary-300',
-              isOpen && 'mb-[-1] border-b-0'
+              'serlo-input-font-reset rounded-md border-2 border-editor-primary-100 bg-editor-primary-100 px-2 text-left focus:border-2 focus:border-editor-primary',
+              'flex flex-row justify-between',
+              isOpen &&
+                'mb-[-1] rounded-b-none border-b-0 border-editor-primary-300'
             )}
-            style={{
-              width: triggerWidth + 'px',
-            }}
+            style={{ width: `${triggerWidth}px` }}
           >
             <Select.Value placeholder="Select an option" />
             <Select.Icon className="ml-2 text-almost-black">
@@ -93,19 +83,17 @@ export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
             </Select.Icon>
           </Select.Trigger>
           <Select.Content
-            className="mr-[-1px] mt-[-1px] w-full rounded-md rounded-t-none border border-2 border-t-0 border-editor-primary bg-white"
-            style={{
-              width: triggerWidth + 'px',
-            }}
+            className="w-full rounded-md rounded-t-none border-2 border-t-0 border-editor-primary bg-white"
+            style={{ width: `${triggerWidth}px` }}
             side="bottom"
             sideOffset={0}
             position="popper"
           >
-            {licenses.map((license) => (
+            {licenceNames.map((license) => (
               <Select.Item
                 key={license}
                 value={license}
-                className=" serlo-input-font-reset my-0 px-3 hover:bg-editor-primary-100"
+                className="serlo-input-font-reset my-0 px-3 hover:bg-editor-primary-100"
               >
                 <Select.ItemText>{license}</Select.ItemText>
               </Select.Item>
