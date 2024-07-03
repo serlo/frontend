@@ -804,8 +804,8 @@ export const loggedInData = {
             CC2: 'CC BY-SA 2.0',
             CCBY: 'CC BY',
             CCO: 'CCO',
-            publicDomain: 'Public Domain',
             pixabay: 'Pixabay License',
+            publicDomain: 'Public Domain',
           },
         },
         injection: {

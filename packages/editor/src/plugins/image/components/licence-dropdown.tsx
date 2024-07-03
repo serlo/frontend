@@ -11,18 +11,21 @@ import { cn } from '@/helper/cn'
 interface LicenseDropdownProps {
   onLicenseChange?: (license: string) => void
   src?: string
+  currentLicence?: string
 }
 
 export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
   onLicenseChange,
   src,
+  currentLicence,
 }) => {
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
   const { licences, licenceHelpText } = imageStrings
+
   const licenceNames = Object.values(licences)
 
-  const [selectedLicense, setSelectedLicense] = useState(licenceNames[0])
+  const [selectedLicense, setSelectedLicense] = useState(currentLicence)
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [triggerWidth, setTriggerWidth] = useState(0)
@@ -89,13 +92,13 @@ export const LicenseDropdown: React.FC<LicenseDropdownProps> = ({
             sideOffset={0}
             position="popper"
           >
-            {licenceNames.map((license) => (
+            {Object.entries(licences).map(([licenseId, licenceName]) => (
               <Select.Item
-                key={license}
-                value={license}
+                key={licenceName}
+                value={licenseId}
                 className="serlo-input-font-reset my-0 px-3 hover:bg-editor-primary-100"
               >
-                <Select.ItemText>{license}</Select.ItemText>
+                <Select.ItemText>{licenceName}</Select.ItemText>
               </Select.Item>
             ))}
           </Select.Content>

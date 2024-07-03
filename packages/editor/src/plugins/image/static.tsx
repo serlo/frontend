@@ -10,7 +10,14 @@ export function ImageStaticRenderer({
   state,
   pathNameBase,
 }: EditorImageDocument & { pathNameBase?: string }) {
-  const { caption, src: fileSrc, link, alt, maxWidth: maxWidthNumber } = state
+  const {
+    caption,
+    src: fileSrc,
+    link,
+    alt,
+    maxWidth: maxWidthNumber,
+    licence,
+  } = state
   const altFallback = useInstanceData().strings.content.imageAltFallback
 
   const src = String(fileSrc)
@@ -31,6 +38,7 @@ export function ImageStaticRenderer({
         href: link?.href,
         alt: altOrFallbacks,
         maxWidth: maxWidthNumber,
+        licence: licence,
       }}
       caption={hasVisibleCaption ? <StaticRenderer document={caption} /> : null}
     />

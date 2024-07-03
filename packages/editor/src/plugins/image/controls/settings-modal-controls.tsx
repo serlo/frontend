@@ -37,6 +37,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
         }}
       />
       <LicenseDropdown
+        currentLicence={licence.defined ? licence?.value : undefined}
         onLicenseChange={updateOrCreateLicence}
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         src={src.get().toString()}
