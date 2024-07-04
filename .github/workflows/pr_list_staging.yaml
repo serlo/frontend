@@ -20,6 +20,7 @@ jobs:
       # post it to the current pull request
       - uses: int128/comment-action@v1
         with:
+          update-if-exists: recreate
           post: |
             ## Pull Requests
             ${{ steps.associated-pull-requests.outputs.body-groups }}
