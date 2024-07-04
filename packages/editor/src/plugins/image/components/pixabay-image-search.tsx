@@ -8,6 +8,7 @@ interface PixabayResponse {
   totalHits: number
   hits: PixabayImage[]
 }
+
 interface PixabayImage {
   id: number
   webformatURL: string
@@ -27,8 +28,7 @@ export const PixabayImageSearch = ({
   const [images, setImages] = useState<PixabayImage[]>([])
   const [isLoadingImage, setIsLoadingImage] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
-
-  const [showTags, setShowTags] = useState(true)
+  const [hasSearched, setHasSearched] = useState(false)
 
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
@@ -37,15 +37,14 @@ export const PixabayImageSearch = ({
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery) return
     setIsSearching(true)
+    setHasSearched(true)
     try {
       const response = await fetch(
         `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(searchQuery)}&image_type=photo`
       )
       const data = (await response.json()) as PixabayResponse
       setImages(data.hits)
-      setShowTags(false)
     } catch (error) {
-      setShowTags(true)
       console.error('Error fetching images from Pixabay:', error)
     } finally {
       setIsSearching(false)
@@ -66,6 +65,8 @@ export const PixabayImageSearch = ({
     await handleSearch(query)
   }
 
+  const showTags = images.length === 0 && !isSearching
+
   return (
     <div className="min-h-[60vw] pt-10">
       <h2 className="mb-6 ml-10 mt-10 font-bold">{imageStrings.licenceFree}</h2>
@@ -77,14 +78,14 @@ export const PixabayImageSearch = ({
           onChange={handleInputChange}
           placeholder="Suche"
           onKeyDown={handleKeyDown}
-          className="ml-10 w-[90%] rounded rounded-lg border border-0 bg-yellow-100 p-2 px-4 py-2 text-gray-600"
+          className="ml-10 w-[90%] rounded-lg border-0 bg-yellow-100 p-2 px-4 py-2 text-gray-600"
         />
       </div>
 
       {/* Search tags */}
       {showTags && (
         <div>
-          <div className="mb-6 mt-10 flex flex-wrap  justify-center">
+          <div className="mb-6 mt-10 flex flex-wrap justify-center">
             {Object.values(imageStrings.searchTags).map((tagKey) => (
               <button
                 key={tagKey}
@@ -97,18 +98,18 @@ export const PixabayImageSearch = ({
           </div>
         </div>
       )}
+
       <div
         className={cn(
           'max-h-[500px]',
-          'mt-4 flex flex-wrap px-8 ',
-          isLoadingImage && 'max-h-100',
-          isLoadingImage && 'border-1 border border-red-500'
+          'mt-4 flex flex-wrap px-8',
+          isLoadingImage && 'max-h-100 border-1 border border-red-500'
         )}
         style={{ overflow: isLoadingImage ? 'hidden' : 'auto' }}
       >
         {/* Loading overlay */}
         {(isLoadingImage || isSearching) && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 backdrop-blur-sm">
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 backdrop-blur-md">
             <h1 className="text-center text-xl font-bold">
               {isLoadingImage
                 ? imageStrings.loadingImage
@@ -118,7 +119,7 @@ export const PixabayImageSearch = ({
         )}
 
         {/* Images grid */}
-        {!showTags && images.length === 0 && (
+        {hasSearched && images.length === 0 && !isSearching && (
           <div className="mt-10 w-full text-center text-lg">
             {imageStrings.noImagesFound}
           </div>
@@ -133,9 +134,10 @@ export const PixabayImageSearch = ({
             }}
           >
             <img
-              src={image.webformatURL}
+              src={image.webformatURL.replace('_640', '_340')}
               alt={image.tags}
               className="h-auto w-full rounded-lg"
+              loading="lazy"
             />
           </div>
         ))}
