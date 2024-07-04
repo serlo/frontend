@@ -76,7 +76,7 @@ export const PixabayImageSearch = ({
           type="text"
           value={query}
           onChange={handleInputChange}
-          placeholder="Suche"
+          placeholder={imageStrings.search}
           onKeyDown={handleKeyDown}
           className="ml-10 w-[90%] rounded-lg border-0 bg-yellow-100 p-2 px-4 py-2 text-gray-600"
         />
