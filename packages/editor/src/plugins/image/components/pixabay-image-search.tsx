@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
@@ -112,9 +112,7 @@ export const PixabayImageSearch = ({
             <h1 className="text-center text-xl font-bold">
               {isLoadingImage
                 ? imageStrings.loadingImage
-                : isSearching
-                  ? imageStrings.searching
-                  : 'Hmm'}
+                : imageStrings.searching}
             </h1>
           </div>
         )}
