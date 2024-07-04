@@ -1,6 +1,6 @@
 name: pr-list-staging
 on:
-  push:
+  pull-request:
     branches:
       - staging
 jobs:
@@ -24,7 +24,7 @@ jobs:
       - name: update PR description
         uses: nefrob/pr-description@v1.1.2
         with:
-          content: "<!-- changes-start -->\n<h2>Changes</h2>${{ steps.associated-pull-requests.outputs.body-groups }}${{ steps.associated-pull-requests.outputs.body-others }}\n<!-- changes-end -->"
+          content: "<!-- changes-start -->\n<h2>Changes</h2>\n${{ steps.associated-pull-requests.outputs.body-groups }}\n${{ steps.associated-pull-requests.outputs.body-others }}\n<!-- changes-end -->"
           regex: '<!-- changes-start -->.*?<!-- changes-end -->'
           regexFlags: ims
           token: ${{ secrets.GITHUB_TOKEN }}
