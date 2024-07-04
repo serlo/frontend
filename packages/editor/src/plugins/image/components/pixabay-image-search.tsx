@@ -34,14 +34,6 @@ export const PixabayImageSearch = ({
   const imageStrings = editorStrings.plugins.image
   const apiKey = 'secret'
 
-  useEffect(() => {
-    if (isLoadingImage) {
-      document.body.classList.add('overflow-hidden')
-    } else {
-      document.body.classList.remove('overflow-hidden')
-    }
-  }, [isLoadingImage])
-
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery) return
     setIsSearching(true)

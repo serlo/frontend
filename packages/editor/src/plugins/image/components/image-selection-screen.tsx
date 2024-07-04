@@ -29,8 +29,8 @@ export function ImageSelectionScreen(
       ? imageStrings.placeholderUploading
       : imageStrings.placeholderFailed
 
-  const imgUrl = src.get() as string
-  const showErrorMessage = imgUrl.length > 5 && !isImageUrl(imgUrl)
+  const imageUrl = src.get() as string
+  const showErrorMessage = imageUrl.length > 5 && !isImageUrl(imageUrl)
 
   const [showPixabayModal, setShowPixabayModal] = useState(false)
 
