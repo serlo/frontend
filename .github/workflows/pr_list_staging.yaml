@@ -7,7 +7,8 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: int128/list-associated-pull-requests-action@v1
+      - name: collect pull requests
+        uses: int128/list-associated-pull-requests-action@v1
         id: associated-pull-requests
         with:
           base: production
@@ -17,11 +18,13 @@ jobs:
             apps
             packages
 
-      # post it to the current pull request
-      - uses: int128/comment-action@v1
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: update PR description
+        uses: nefrob/pr-description@v1.1.2
         with:
-          update-if-exists: recreate
-          post: |
-            ## Pull Requests
-            ${{ steps.associated-pull-requests.outputs.body-groups }}
-            ${{ steps.associated-pull-requests.outputs.body-others }}
+          content: "<!-- changes-start -->\n<h2>Changes</h2>${{ steps.associated-pull-requests.outputs.body-groups }}${{ steps.associated-pull-requests.outputs.body-others }}\n<!-- changes-end -->"
+          regex: '<!-- changes-start -->.*?<!-- changes-end -->'
+          regexFlags: ims
+          token: ${{ secrets.GITHUB_TOKEN }}
