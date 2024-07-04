@@ -2,7 +2,7 @@ name: pr-list-staging
 on:
   pull_request:
     branches:
-      - staging
+      - production
 jobs:
   comment:
     runs-on: ubuntu-latest
