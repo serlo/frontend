@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -68,7 +69,7 @@ export const PixabayImageSearch = ({
   const showTags = images.length === 0 && !isSearching
 
   return (
-    <div className="min-h-[60vw] pt-10">
+    <div className="min-h-[60vw] pt-2">
       <h2 className="mb-6 ml-10 mt-10 font-bold">{imageStrings.licenceFree}</h2>
       {/* Search input */}
       <div className="w-full">
@@ -109,8 +110,9 @@ export const PixabayImageSearch = ({
       >
         {/* Loading overlay */}
         {(isLoadingImage || isSearching) && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 backdrop-blur-md">
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 backdrop-blur-sm">
             <h1 className="text-center text-xl font-bold">
+              <LoadingSpinner noText />
               {isLoadingImage
                 ? imageStrings.loadingImage
                 : imageStrings.searching}
@@ -125,19 +127,16 @@ export const PixabayImageSearch = ({
           </div>
         )}
         {images.map((image) => (
-          <div
-            className="mb-4 w-1/2 cursor-pointer px-2"
-            key={image.id}
-            onClick={() => {
-              setIsLoadingImage(true)
-              onSelectImage(image.largeImageURL)
-            }}
-          >
+          <div className="w-1/2  px-2 pb-4" key={image.id}>
             <img
               src={image.webformatURL.replace('_640', '_340')}
               alt={image.tags}
-              className="h-auto w-full rounded-lg"
+              className="h-auto w-full cursor-pointer rounded-lg"
               loading="lazy"
+              onClick={() => {
+                setIsLoadingImage(true)
+                onSelectImage(image.largeImageURL)
+              }}
             />
           </div>
         ))}
