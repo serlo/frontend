@@ -32,7 +32,7 @@ export const PixabayImageSearch = ({
 
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
-  const apiKey = 'secret'
+  const apiKey = process.env.NEXT_PUBLIC_PIXABAY_API_KEY
 
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery) return
