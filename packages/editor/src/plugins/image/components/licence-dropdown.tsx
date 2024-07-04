@@ -2,7 +2,7 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import * as Select from '@radix-ui/react-select'
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -82,7 +82,7 @@ export const LicenseDropdown = ({
             )}
             style={{ width: `${triggerWidth}px` }}
           >
-            <Select.Value placeholder="Select an option" />
+            <Select.Value />
             <Select.Icon className="ml-2 text-almost-black">
               <FaIcon icon={isOpen ? faCaretUp : faCaretDown} />
             </Select.Icon>
