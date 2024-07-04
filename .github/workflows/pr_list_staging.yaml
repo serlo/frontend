@@ -1,0 +1,26 @@
+name: pr-list-staging
+on:
+  push:
+    branches:
+      - staging
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: int128/list-associated-pull-requests-action@v1
+        id: associated-pull-requests
+        with:
+          base: production
+          head: staging
+          group-by-paths: |
+            e2e-tests
+            apps
+            packages
+
+      # post it to the current pull request
+      - uses: int128/comment-action@v1
+        with:
+          post: |
+            ## Pull Requests
+            ${{ steps.associated-pull-requests.outputs.body-groups }}
+            ${{ steps.associated-pull-requests.outputs.body-others }}
