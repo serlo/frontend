@@ -798,15 +798,6 @@ export const loggedInData = {
           licence: 'Licence',
           licenceHelpText:
             'External content with the following licenses may be integrated on serlo.org:',
-          licences: {
-            CC4: 'CC BY-SA 4.0',
-            CC3: 'CC BY-SA 3.0',
-            CC2: 'CC BY-SA 2.0',
-            CCBY: 'CC BY',
-            CCO: 'CCO',
-            pixabay: 'Pixabay License',
-            publicDomain: 'Public Domain',
-          },
         },
         injection: {
           title: 'serlo.org Content',

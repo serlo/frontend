@@ -5,6 +5,7 @@ import * as Select from '@radix-ui/react-select'
 import { useState, useEffect, useRef } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -21,12 +22,20 @@ export const LicenseDropdown = ({
 }: LicenseDropdownProps) => {
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
-  const { licences, licenceHelpText } = imageStrings
+  const { licenceHelpText } = imageStrings
+  const { licenses: allLicenses } = useInstanceData()
 
-  const licenceNames = Object.values(licences)
+  const relevantLicenseIds = [1, 2, 3, 101, 102, 103, 104]
+  const licenses = allLicenses.filter(
+    (license) => license.shortTitle && relevantLicenseIds.includes(license.id)
+  )
+  const licenceNames = licenses.map((license) => {
+    return license.shortTitle
+  })
 
   const [selectedLicense, setSelectedLicense] = useState(
-    currentLicence ?? 'CC4'
+    currentLicence ??
+      licenses.find((license) => license.isDefault)?.id?.toString()
   )
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -38,7 +47,7 @@ export const LicenseDropdown = ({
   useEffect(() => {
     if (isPixabayImage) {
       const pixabayLicence =
-        licenceNames.find((name) => name.toLowerCase().includes('pixabay')) ||
+        licenceNames.find((name) => name?.toLowerCase().includes('pixabay')) ||
         ''
       setSelectedLicense(pixabayLicence)
       onLicenseChange?.(pixabayLicence)
@@ -95,13 +104,13 @@ export const LicenseDropdown = ({
             position="popper"
           >
             <Select.Viewport>
-              {Object.entries(licences).map(([licenseId, licenceName]) => (
+              {licenses.map(({ id, shortTitle }) => (
                 <Select.Item
-                  key={licenceName}
-                  value={licenseId}
+                  key={id}
+                  value={id.toString()}
                   className="serlo-input-font-reset my-0 px-3 hover:bg-editor-primary-100 focus:bg-editor-primary-100"
                 >
-                  <Select.ItemText>{licenceName}</Select.ItemText>
+                  <Select.ItemText>{shortTitle}</Select.ItemText>
                 </Select.Item>
               ))}
             </Select.Viewport>
