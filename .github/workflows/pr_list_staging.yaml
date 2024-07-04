@@ -1,6 +1,6 @@
 name: pr-list-staging
 on:
-  pull-request:
+  pull_request:
     branches:
       - staging
 jobs:
