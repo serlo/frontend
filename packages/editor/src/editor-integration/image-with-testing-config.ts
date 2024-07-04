@@ -96,7 +96,7 @@ export function createReadFile(secret: string) {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
       async function runFetch() {
-        const endpoint = 'https://api.serlo.org/graphql'
+        const endpoint = 'https://api.serlo-staging.dev/graphql'
         const response = await fetch(endpoint, {
           headers: {
             Accept: 'application/json',
