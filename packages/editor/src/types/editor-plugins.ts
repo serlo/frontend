@@ -51,6 +51,9 @@ export interface EditorArticleDocument {
   plugin: EditorPluginType.Article
   state: PrettyStaticState<ArticlePluginState>
   id?: string
+  serloContext?: {
+    articleTitle?: string
+  }
 }
 export interface EditorArticleIntroductionDocument {
   plugin: EditorPluginType.ArticleIntroduction
