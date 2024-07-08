@@ -139,6 +139,20 @@ const localMap: Set<string> = new Set([
   'https://app.lumi.education/h5p/libraries/H5P.ImageMultipleHotspotQuestion-1.0/image-multiple-hotspot-question.js?version=1.0.1',
 
   'https://app.lumi.education/h5p/libraries/H5P.MathDisplay-1.0/scripts/mathdisplay.js?version=1.0.8',
+
+  // patch it "back" to 1.24-master
+  'https://app.lumi.education/h5p/core/styles/h5p.css?version=1.26',
+  'https://app.lumi.education/h5p/core/styles/h5p-core-button.css?version=1.26',
+  'https://app.lumi.education/h5p/core/styles/h5p-confirmation-dialog.css?version=1.26',
+  'https://app.lumi.education/h5p/core/js/jquery.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p-event-dispatcher.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p-x-api-event.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p-x-api.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p-content-type.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p-action-bar.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/request-queue.js?version=1.26',
+  'https://app.lumi.education/h5p/core/js/h5p-confirmation-dialog.js?version=1.26',
 ])
 
 function rewriteDependencies(deps: string[]) {
