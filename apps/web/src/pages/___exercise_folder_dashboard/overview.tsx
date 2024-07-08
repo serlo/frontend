@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
 import { HeadTags } from '@/components/head-tags'
@@ -57,7 +58,11 @@ export default function Overview() {
 
   return (
     <div className="mx-auto max-w-[800px] pt-16">
-      <HeadTags data={{ title: 'Aufgabenordner Übersicht' }} noIndex />
+      <Head>
+        <title>Aufgabenordner Übersicht</title>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <HeadTags data={{ title: '' }} noIndex />
       <h1 className="mb-4 text-3xl">Aufgabenordner Übersicht</h1>
       <div className="text-right">
         Sortierung:{' '}
