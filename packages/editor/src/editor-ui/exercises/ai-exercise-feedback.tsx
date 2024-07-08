@@ -58,7 +58,7 @@ export function AIExerciseFeedback({
   }
 
   return (
-    <div className="border-blueish-200 bg-blueish-100 ml-3 flex max-w-[500px] items-center rounded-lg border-2 p-4 text-lg animate-in fade-in">
+    <div className="ml-3 flex max-w-[500px] items-center rounded-lg border-2 border-blueish-200 bg-blueish-100 p-4 text-lg animate-in fade-in">
       <div className="mr-4 min-w-96">
         {aiExecuteStatus === ExecutePromptStatus.Loading ? (
           <Skeleton />
