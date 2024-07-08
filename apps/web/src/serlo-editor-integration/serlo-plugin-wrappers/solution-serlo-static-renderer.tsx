@@ -87,6 +87,8 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
     // if already on entity, just scroll down. Otherwise open entity in new tab.
     const onlyScroll = currentPath.includes(String(entityId))
 
+    console.log(`${entityId}#comment-area-begin-scrollpoint`)
+
     return (
       <>
         <h2 className="serlo-h2 mt-10 border-b-0">
@@ -97,7 +99,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
           <a
             target={onlyScroll ? undefined : '_blank'}
             rel={onlyScroll ? undefined : 'noreferrer'}
-            href={`${entityId}#comment-area-begin-scrollpoint`}
+            href={`/${entityId}#comment-area-begin-scrollpoint`}
             className="serlo-button-light"
           >
             {commentStrings.questionLink} {onlyScroll ? '👇' : '👉'}
