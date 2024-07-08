@@ -16,7 +16,7 @@ interface UpdateLicenseProps {
 }
 
 export default renderedPageNoHooks<UpdateLicenseProps>((props) => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content {...props} />
   </FrontendClientBase>
 ))

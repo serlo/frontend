@@ -29,6 +29,7 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
     <FrontendClientBase
       noContainers
       noHeaderFooter
+      noIndex
       loadLoggedInData /* warn: enables preview editor without login */
       serloEntityData={{ entityId: props.id }}
     >

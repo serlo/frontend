@@ -17,7 +17,7 @@ export interface HistoryRevisionProps {
 }
 
 export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
-  <FrontendClientBase serloEntityData={{ entityId: props.id }}>
+  <FrontendClientBase serloEntityData={{ entityId: props.id }} noIndex>
     <Content {...props} />
   </FrontendClientBase>
 ))

@@ -211,7 +211,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         <HeadTags
           data={page.metaData}
           breadcrumbsData={page.breadcrumbsData}
-          noindex={'entityData' in page && page.entityData.trashed}
+          noIndex={'entityData' in page && page.entityData.trashed}
         />
       )}
       {page.kind === 'single-entity' || page.kind === 'taxonomy' ? (

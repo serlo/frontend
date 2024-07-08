@@ -1,10 +1,10 @@
 import { BoxRenderer } from '@editor/plugins/box/renderer'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import Head from 'next/head'
 
 import { Link } from './content/link'
 import { FaIcon } from './fa-icon'
+import { HeadTags } from './head-tags'
 import {
   SupportedRegion,
   deRegions,
@@ -104,12 +104,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
             ) : null}
           </>
         </BoxRenderer>
-        {extraMeta ? (
-          <Head>
-            <title>{extraMeta.title}</title>
-            <meta name="description" content={extraMeta.metaDescription} />
-          </Head>
-        ) : null}
+        {extraMeta ? <HeadTags data={{ ...extraMeta }} /> : null}
 
         <style jsx global>
           {`

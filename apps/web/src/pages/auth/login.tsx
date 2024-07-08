@@ -3,7 +3,7 @@ import { Login } from '@/components/pages/auth/login'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Login />
   </FrontendClientBase>
 ))

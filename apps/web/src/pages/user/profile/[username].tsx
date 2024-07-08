@@ -14,12 +14,10 @@ export default renderedPageNoHooks<UserProps>(({ pageData }) => {
     <FrontendClientBase
       serloEntityData={{ entityId: pageData.userData.id }}
       authorization={pageData.authorization}
+      noIndex={!isActiveDonor && !isActiveAuthor && !isActiveReviewer}
     >
       <Head>
         <title>{username}</title>
-        {!isActiveDonor && !isActiveAuthor && !isActiveReviewer && (
-          <meta name="robots" content="noindex" />
-        )}
       </Head>
       <Profile userData={pageData.userData} />
     </FrontendClientBase>
