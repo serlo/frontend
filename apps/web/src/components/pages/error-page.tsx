@@ -1,7 +1,7 @@
-import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
 import { PageTitle } from '../content/page-title'
+import { HeadTags } from '../head-tags'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -49,13 +49,12 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
       ? errStrings.temporary
       : errStrings.permanent
 
+  const titleText = isDeletedComment ? 'Deleted Comment' : title
+
   return (
     <>
-      <Head>
-        {isDeletedComment && 'Deleted Comment'}
-        <meta name="robots" content="noindex" />
-      </Head>
-      <PageTitle title={title} headTitle />
+      <HeadTags data={{ title: titleText }} noIndex />
+      <PageTitle title={titleText} />
       <p className="serlo-p text-2xl" id="error-page-description">
         {text}
       </p>

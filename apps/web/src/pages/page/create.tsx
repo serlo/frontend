@@ -21,6 +21,7 @@ export default renderedPageNoHooks(() => {
   return (
     <FrontendClientBase
       noContainers
+      noIndex
       loadLoggedInData={!isProduction} // warn: enables preview editor without login
     >
       <div className="relative">

@@ -4,7 +4,6 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { User } from '@serlo/authorization'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import { MouseEvent, useRef, useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
@@ -28,12 +27,10 @@ const ContentPage: NextPage = () => {
     <FrontendClientBase
       noHeaderFooter
       noContainers
+      noIndex
       showNav={false}
       authorization={{}}
     >
-      <Head>
-        <meta name="robots" content="noindex" />
-      </Head>
       <BotHunt />
     </FrontendClientBase>
   )

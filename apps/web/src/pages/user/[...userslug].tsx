@@ -7,7 +7,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 // frontend redirect for routes the old form of `/user/${userId}/${username}`
 // deployed this will be handled by the cf-worker
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))

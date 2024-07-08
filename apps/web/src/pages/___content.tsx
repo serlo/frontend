@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
-import Head from 'next/head'
 
+import { HeadTags } from '@/components/head-tags'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 // from https://github.com/serlo/frontend/wiki/Schema
@@ -29,9 +29,7 @@ const specialCases = [
 const ContentPage: NextPage = () => {
   return (
     <>
-      <Head>
-        <meta name="robots" content="noindex" />
-      </Head>
+      <HeadTags data={{ title: 'Example Content' }} noIndex />
       <nav>
         <h2>Entities</h2>
         <ul>{renderLis(entities)}</ul>

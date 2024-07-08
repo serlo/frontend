@@ -14,6 +14,7 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
   return (
     <FrontendClientBase
       noContainers
+      noIndex
       loadLoggedInData /* warn: enables preview editor without login */
     >
       <div className="relative">

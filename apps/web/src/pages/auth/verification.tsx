@@ -3,7 +3,7 @@ import { Verification } from '@/components/pages/auth/verification'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Verification />
   </FrontendClientBase>
 ))

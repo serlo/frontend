@@ -1,9 +1,9 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 import { loginUrl } from './auth/utils'
 import { Link } from '../content/link'
+import { HeadTags } from '../head-tags'
 import { InfoPanel } from '../info-panel'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
@@ -110,14 +110,12 @@ export function AddRevision({
     return success ? Promise.resolve() : Promise.reject()
   }
 
+  const typeString = getTranslatedType(strings, type)
+  const title = `${strings.editOrAdd.button} | ${typeString}${id ? ` (${id})` : ''}`
+
   return (
     <>
-      <Head>
-        <title>{`${strings.editOrAdd.button} | ${getTranslatedType(
-          strings,
-          type
-        )}${id ? ` (${id})` : ''}`}</title>
-      </Head>
+      <HeadTags data={{ title }} />
       {renderBacklink()}
       <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
       <div className="serlo-editor-hacks mx-auto mb-24 max-w-[816px]">

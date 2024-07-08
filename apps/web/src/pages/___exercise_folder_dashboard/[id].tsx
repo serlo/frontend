@@ -4,12 +4,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import jsonDiff from 'json-diff'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
+import { HeadTags } from '@/components/head-tags'
 import { cn } from '@/helper/cn'
 
 interface FolderData {
@@ -74,7 +74,12 @@ export default function Page() {
     }
   }, [id])
   if (!data) {
-    return <p>Lade Daten für Ordner {router.query.id}</p>
+    return (
+      <>
+        <HeadTags data={{ title: 'Loading…' }} noIndex />
+        <p>Lade Daten für Ordner {router.query.id}</p>
+      </>
+    )
   } else {
     const diff = jsonDiff.diffString(
       data.versions[start].content,
@@ -101,9 +106,13 @@ export default function Page() {
     })
     return (
       <>
-        <Head>
-          <title>Daten-Auswertung für {decodeURIComponent(data.title)}</title>
-        </Head>
+        <HeadTags
+          data={{
+            title: `Daten-Auswertung für ${decodeURIComponent(data.title)}`,
+          }}
+          noIndex
+        />
+
         <div className="flex items-baseline justify-between bg-gray-50 py-4 pl-8">
           <a
             href={data.title}

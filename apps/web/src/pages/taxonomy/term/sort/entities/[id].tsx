@@ -46,7 +46,7 @@ type Category = (typeof allCategories)[number]
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noIndex>
       <Content {...props} />
     </FrontendClientBase>
   )
