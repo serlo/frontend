@@ -32,10 +32,13 @@ export function AiInputExerciseRenderer({
   answers,
   onEvaluate,
 }: InputExerciseRendererProps) {
+  const correctAnswers = answers.filter((answer) => answer.isCorrect)
+  console.log('Correct Answers :', correctAnswers)
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const { aiMessages, setAiMessages, lastAiFeedbackRef } =
-    useInputFeedbackAiExerciseState()
+    useInputFeedbackAiExerciseState(correctAnswers)
+  const [additionalPrompt, setAdditionalPrompt] = useState<string>('')
   const exStrings = useInstanceData().strings.content.exercises
 
   const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
@@ -134,6 +137,49 @@ export function AiInputExerciseRenderer({
             lastAiFeedbackRef={lastAiFeedbackRef}
           />
         )}
+      </div>
+      <div className="mt-4">
+        <textarea
+          className={cn(`
+            serlo-input-font-reset mb-5
+            w-full rounded-3xl border-3 border-brand-400
+            px-3 py-2 font-bold text-brand placeholder-brand focus:border-brand
+            focus:bg-white focus:text-brand focus:placeholder-opacity-0 focus:opacity-100
+            focus:outline-none active:border-brand print:hidden
+          `)}
+          rows={10}
+          readOnly
+          value={aiMessages
+            .map((msg) => `${msg.role}: ${msg.content}`)
+            .join('\r\n')}
+        />
+        <textarea
+          className={cn(`
+            serlo-input-font-reset mb-5
+            w-full rounded-3xl border-3 border-brand-400
+            px-3 py-2 font-bold text-brand placeholder-brand focus:border-brand
+            focus:bg-white focus:text-brand focus:placeholder-opacity-0 focus:opacity-100
+            focus:outline-none active:border-brand print:hidden
+          `)}
+          rows={10}
+          placeholder="Add to prompt"
+          value={additionalPrompt}
+          onChange={(event) => setAdditionalPrompt(event.target.value)}
+        />
+        <button
+          onClick={() =>
+            setAiMessages([
+              ...aiMessages,
+              {
+                role: 'system',
+                content: additionalPrompt,
+              } as ChatCompletionMessageParam,
+            ])
+          }
+        >
+          {' '}
+          Add to prompt
+        </button>
       </div>
     </div>
   )
