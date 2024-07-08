@@ -4,12 +4,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import jsonDiff from 'json-diff'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
-import { HeadTags } from '@/components/head-tags'
 import { cn } from '@/helper/cn'
 
 interface FolderData {
@@ -76,7 +76,9 @@ export default function Page() {
   if (!data) {
     return (
       <>
-        <HeadTags data={{ title: 'Loading…' }} noIndex />
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
         <p>Lade Daten für Ordner {router.query.id}</p>
       </>
     )
@@ -106,13 +108,10 @@ export default function Page() {
     })
     return (
       <>
-        <HeadTags
-          data={{
-            title: `Daten-Auswertung für ${decodeURIComponent(data.title)}`,
-          }}
-          noIndex
-        />
-
+        <Head>
+          <title>Daten-Auswertung für {decodeURIComponent(data.title)}</title>
+          <meta name="robots" content="noindex" />
+        </Head>
         <div className="flex items-baseline justify-between bg-gray-50 py-4 pl-8">
           <a
             href={data.title}
