@@ -709,8 +709,11 @@ export const loggedInData = {
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          upload: "Hochladen",
+          upload: "Bild hochladen",
           imageUrl: "Bild-URL",
+          invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
+          invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
+          searchOnline: "Online nach lizenzfreien Bildern suchen",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
@@ -722,7 +725,9 @@ export const loggedInData = {
           alt: "Beschreibung (wird nicht angezeigt)",
           altPlaceholder: "Was ist auf dem Bild zu sehen?",
           maxWidth: "Maximale Breite",
-          maxWidthPlaceholder: "Gib die maximal Breite an"
+          maxWidthPlaceholder: "Gib die maximal Breite an",
+          helpTooltipText: "Mehr Informationen und Hilfe",
+          change: "Bild ändern"
         },
         injection: {
           title: "serlo.org Inhalt",

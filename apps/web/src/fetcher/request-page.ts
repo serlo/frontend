@@ -54,6 +54,17 @@ export async function requestPage(
   // users are not handled in uuid query any more
   if (uuid.__typename === UuidType.User) return { kind: 'not-found' }
 
+  // temporary redirect course pages to course as a fallback for client side navigation
+  // that does not go through cf-worker
+  if (uuid.__typename === 'CoursePage') {
+    const target = buildCoursePageUrl(
+      uuid.course.alias,
+      String(uuid.id),
+      uuid.title
+    )
+    return { kind: 'redirect', target }
+  }
+
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
@@ -242,6 +253,10 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
+        content: {
+          ...(content as EditorRowsDocument),
+          serloContext: { articleTitle: uuid.title },
+        } as EditorRowsDocument,
         typename: UuidType.Article,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
