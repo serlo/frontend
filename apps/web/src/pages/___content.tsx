@@ -30,6 +30,7 @@ const ContentPage: NextPage = () => {
   return (
     <>
       <Head>
+        <title>Example Content</title>
         <meta name="robots" content="noindex" />
       </Head>
       <nav>

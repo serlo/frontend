@@ -1,5 +1,4 @@
 import { GetServerSideProps, NextPage } from 'next'
-import Head from 'next/head'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 
@@ -8,12 +7,10 @@ const ContentPage: NextPage = () => {
     <FrontendClientBase
       noHeaderFooter
       noContainers
+      noIndex
       showNav={false}
       authorization={{}}
     >
-      <Head>
-        <meta name="robots" content="noindex" />
-      </Head>
       <div className="mt-12 p-12 text-center">
         <h1 className="serlo-h1">Diese URL kennen wir leider nicht. 😶‍🌫️</h1>
         (sorry, we don&apos;t seem to know this url)

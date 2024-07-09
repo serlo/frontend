@@ -3,7 +3,7 @@ import { Recovery } from '@/components/pages/auth/recovery'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Recovery />
   </FrontendClientBase>
 ))

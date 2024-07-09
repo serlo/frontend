@@ -20,7 +20,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))

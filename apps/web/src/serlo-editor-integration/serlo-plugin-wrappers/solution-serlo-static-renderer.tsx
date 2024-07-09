@@ -97,7 +97,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
           <a
             target={onlyScroll ? undefined : '_blank'}
             rel={onlyScroll ? undefined : 'noreferrer'}
-            href={`${entityId}#comment-area-begin-scrollpoint`}
+            href={`/${entityId}#comment-area-begin-scrollpoint`}
             className="serlo-button-light"
           >
             {commentStrings.questionLink} {onlyScroll ? '👇' : '👉'}

@@ -3,7 +3,7 @@ import { Search } from '@/components/pages/search'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Search />
   </FrontendClientBase>
 ))

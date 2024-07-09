@@ -176,7 +176,7 @@ Scenario('Taxonomy', ({ I }) => {
   I.see('Klasse 5')
   I.see('Klasse 6')
   I.click('Klasse 7')
-  I.see('Aufgaben')
+  I.see('Klasse 7')
   I.click('Grundwissenstest 7. Klasse')
   I.see('Aufgaben')
   I.click('2021')

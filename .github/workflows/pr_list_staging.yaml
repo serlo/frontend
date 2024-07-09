@@ -1,0 +1,30 @@
+name: pr-list-staging
+on:
+  pull_request:
+    branches:
+      - production
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: collect pull requests
+        uses: int128/list-associated-pull-requests-action@v1
+        id: associated-pull-requests
+        with:
+          base: production
+          head: staging
+          group-by-paths: |
+            e2e-tests
+            apps
+            packages
+
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: update PR description
+        uses: nefrob/pr-description@v1.1.2
+        with:
+          content: "<!-- changes-start -->\n---\n### Changes\n\n${{ steps.associated-pull-requests.outputs.body-groups }}\n${{ steps.associated-pull-requests.outputs.body-others }}\n<!-- changes-end -->"
+          regex: '<!-- changes-start -->.*?<!-- changes-end -->'
+          regexFlags: ims
+          token: ${{ secrets.GITHUB_TOKEN }}

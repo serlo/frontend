@@ -3,7 +3,7 @@ import { Registration } from '@/components/pages/auth/registration'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Registration />
   </FrontendClientBase>
 ))

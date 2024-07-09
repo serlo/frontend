@@ -96,26 +96,22 @@ export function createReadFile(secret: string) {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
       async function runFetch() {
-        const endpoint = 'https://api.serlo.org/graphql'
+        const endpoint = 'https://api.serlo-staging.dev/graphql'
         const response = await fetch(endpoint, {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'X-SERLO-EDITOR-TESTING': secret,
           },
           method: 'POST',
           body: JSON.stringify({
             query: uploadUrlQuery,
-            context: {
-              headers: {
-                'X-SERLO-EDITOR-TESTING': secret,
-              },
-            },
             variables: {
               mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
             },
           }),
         })
-        const data = (await response.json()) as MediaUploadQuery
+        const { data } = (await response.json()) as { data: MediaUploadQuery }
         const reader = new FileReader()
 
         reader.onload = async function (e: ProgressEvent) {

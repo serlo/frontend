@@ -74,7 +74,14 @@ export default function Page() {
     }
   }, [id])
   if (!data) {
-    return <p>Lade Daten für Ordner {router.query.id}</p>
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <p>Lade Daten für Ordner {router.query.id}</p>
+      </>
+    )
   } else {
     const diff = jsonDiff.diffString(
       data.versions[start].content,
@@ -103,6 +110,7 @@ export default function Page() {
       <>
         <Head>
           <title>Daten-Auswertung für {decodeURIComponent(data.title)}</title>
+          <meta name="robots" content="noindex" />
         </Head>
         <div className="flex items-baseline justify-between bg-gray-50 py-4 pl-8">
           <a

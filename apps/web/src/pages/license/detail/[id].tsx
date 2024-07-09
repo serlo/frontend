@@ -9,7 +9,7 @@ import { LicenseDetailProps } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<LicenseDetailProps>(({ pageData }) => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <LicenseDetail {...pageData.licenseData} />
   </FrontendClientBase>
 ))

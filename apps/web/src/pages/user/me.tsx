@@ -8,7 +8,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 // redirect for route `/user/me`
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))
