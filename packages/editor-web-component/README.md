@@ -1,6 +1,6 @@
 # Serlo Editor as a web component
 
-This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repository [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) shows how this package can be used.
+This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repositories [serlo/serlo-editor-lit](https://github.com/serlo/serlo-editor-lit) and [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) show how this package can be used.
 
 If you are using React, we recommend using the Serlo Editor as a [React component](https://www.npmjs.com/package/@serlo/editor).
 
@@ -34,7 +34,7 @@ export default defineComponent({
   name: 'SerloEditorComponent',
   setup() {
     const isEditing = ref(false)
-    const initialExampleState = ref({
+    const initialState = ref({
       plugin: 'rows',
       state: [
         {
@@ -60,7 +60,7 @@ export default defineComponent({
 
     return {
       isEditing,
-      initialExampleState,
+      initialState,
       toggleMode,
       handleStateChange,
     }
@@ -68,6 +68,8 @@ export default defineComponent({
 })
 </script>
 ```
+
+If you want to display a certain plugin as an initial state of the Serlo Editor, check out the [documentation](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins) for each JSON state of the plugins.
 
 ## Releasing a new version to npm
 
