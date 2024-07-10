@@ -27,9 +27,7 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
   const editorStrings = useEditorStrings()
   const { licence, licenceHelpText } = editorStrings.plugins.image
 
-  const [isConfirmed, setIsConfirmed] = useState(
-    src ? src.includes('pixabay') : false
-  )
+  const [isConfirmed, setIsConfirmed] = useState(!!src?.includes('pixabay'))
   const [selectedLicense, setSelectedLicense] = useState(currentLicence || '1')
   const isPixabayImage = src?.includes('pixabay')
   const hasSetInitialLicense = useRef(false)
