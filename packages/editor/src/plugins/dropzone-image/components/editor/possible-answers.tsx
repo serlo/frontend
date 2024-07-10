@@ -24,7 +24,7 @@ export function PossibleAnswers(props: PossibleAnswersProps) {
       <button
         className="serlo-button-editor-primary"
         onClick={onClickAddAnswerZone}
-        data-qa="plugin-dropzone-image-add-wrong-answer-button"
+        data-qa="plugin-dropzone-image-add-answer-zone-button"
       >
         {dropzoneImageStrings.addDropZone}
       </button>
