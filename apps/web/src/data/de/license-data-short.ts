@@ -1,67 +1,15 @@
 import { LicenseData } from '@/data-types'
 
-const ccBaseLicence = {
-  title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA __VERSION__.0',
-  shortTitle: 'CC BY-SA __VERSION__.0',
-  url: 'https://creativecommons.org/licenses/by-sa/__VERSION__.0/deed.de',
-  agreement:
-    'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/__VERSION__.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz __VERSION__.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
-}
-
-const getCCLicence = (id: number, version: string) => {
-  return {
-    id,
-    title: ccBaseLicence.title.replace(/__VERSION__/g, version),
-    shortTitle: ccBaseLicence.shortTitle.replace(/__VERSION__/g, version),
-    url: ccBaseLicence.url.replace(/__VERSION__/g, version),
-    agreement: ccBaseLicence.agreement.replace(/__VERSION__/g, version),
-  }
-}
-
-const cc4Licence = {
-  ...getCCLicence(1, '4'),
-  isDefault: true,
-}
-
-const cc3Licence = getCCLicence(2, '3')
-const cc2Licence = getCCLicence(3, '2')
-
-const ccByLicence = {
-  id: 101,
-  title: 'Dieses Werk steht unter der freien Lizenz CC BY',
-  shortTitle: 'CC BY',
-  url: 'https://creativecommons.org/licenses/by/4.0/deed.de',
-  agreement: 'TODO',
-}
-
-const ccoLicence = {
-  id: 102,
-  title: 'Dieses Werk steht unter der freien Lizenz CCO',
-  shortTitle: 'CCO',
-  url: 'https://creativecommons.org/publicdomain/zero/1.0/deed.de',
-  agreement: 'TODO',
-}
-
-const pixabayLicence = {
-  id: 103,
-  title: 'Dieses Werk steht unter der freien Lizenz Pixabay License',
-  shortTitle: 'Pixabay License',
-  url: 'https://pixabay.com/service/license/',
-  agreement: 'TODO',
-}
-
-const publicDomain = {
-  id: 104,
-  title: 'Dieses Werk steht unter im Public Domain',
-  shortTitle: 'Public Domain',
-  url: 'https://pixabay.com/service/license/',
-  agreement: 'TODO',
-}
-
 export const licenses: LicenseData[] = [
-  cc4Licence,
-  cc3Licence,
-  cc2Licence,
+  {
+    id: 1,
+    isDefault: true,
+    title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0',
+    shortTitle: 'CC BY-SA 4.0',
+    url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
+    agreement:
+      'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/terms">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/terms">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
+  },
   {
     id: 4,
     title:
@@ -179,8 +127,4 @@ export const licenses: LicenseData[] = [
     url: 'https://za.schleswig-holstein.de/',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Schleswig Holstein nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="/terms">Nutzungsbedingungen</a> gehalten hast.`,
   },
-  ccoLicence,
-  ccByLicence,
-  pixabayLicence,
-  publicDomain,
 ]
