@@ -77,6 +77,7 @@ export const NiceDropdown = ({
         >
           <Select.Trigger
             ref={triggerRef}
+            onKeyDown={(e) => e.stopPropagation()}
             className={cn(
               'serlo-input-font-reset rounded-md border-2 bg-editor-primary-100 px-2 text-left focus:border-2 focus:border-editor-primary',
               'flex w-full flex-row justify-between',
