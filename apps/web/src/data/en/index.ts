@@ -698,6 +698,11 @@ export const loggedInData = {
           addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
+          visibilityOptions: {
+            full: 'full',
+            partial: 'partial',
+            none: 'none',
+          },
           answers: {
             add: 'Add answer',
             remove: 'Remove answer',
