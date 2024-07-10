@@ -41,6 +41,8 @@ export function AddRevision({
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
+  const isPage = type === UuidType.Page
+
   useEffect(() => {
     async function confirmAuth() {
       await fetchAndPersistAuthSession()
@@ -58,7 +60,7 @@ export function AddRevision({
 
   if (!setEntityMutation) return null
 
-  if (!id && !taxonomyParentId) return null
+  if (!id && !isPage && !taxonomyParentId) return null
 
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
