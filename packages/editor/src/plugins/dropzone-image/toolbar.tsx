@@ -1,4 +1,3 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import type { ImageProps } from '@editor/plugins/image'
@@ -19,7 +18,6 @@ interface DropzoneImageToolbarProps {
     state?: ImageProps['state']
   }
   children?: ReactNode
-  onClickAddAnswerZone?: () => void
   showSettingsButton?: boolean
 }
 
@@ -27,7 +25,6 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
   const {
     id,
     backgroundImageState,
-    onClickAddAnswerZone,
     showSettingsButton = false,
     children,
   } = props
@@ -40,7 +37,6 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
-      contentControls={renderAddButton()}
       pluginSettings={
         <>
           {renderSettingsModal()}
@@ -50,27 +46,6 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
       pluginControls={pluginControls}
     />
   )
-
-  function renderAddButton() {
-    return onClickAddAnswerZone ? (
-      <button
-        data-qa="plugin-dropzone-image-add-answer-zone-button"
-        onClick={onClickAddAnswerZone}
-        className={cn(`
-          serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm
-          transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
-        `)}
-      >
-        <EditorTooltip
-          text={editorStrings.plugins.dropzoneImage.dropZoneTooltip}
-          className="-ml-5 !pb-1"
-        />
-        {editorStrings.plugins.dropzoneImage.dropZone}
-      </button>
-    ) : (
-      <></>
-    )
-  }
 
   function renderSettingsModal() {
     if (!showSettingsButton || !backgroundImageState) return null

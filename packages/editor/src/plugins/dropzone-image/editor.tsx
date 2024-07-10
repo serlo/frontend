@@ -110,7 +110,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
       }}
     >
       <DropzoneImageToolbar
-        onClickAddAnswerZone={insertAnswerZone}
         id={id}
         showSettingsButton={isBackgroundTypeImage}
         backgroundImageState={{
@@ -145,7 +144,10 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
             setModalType={setModalType}
           />
           <EditorCanvas state={state} setModalType={setModalType} />
-          <PossibleAnswers answerZones={answerZones} />
+          <PossibleAnswers
+            answerZones={answerZones}
+            onClickAddAnswerZone={insertAnswerZone}
+          />
           <ExtraIncorrectAnswers
             extraDraggableAnswers={extraDraggableAnswers}
             setModalType={setModalType}
