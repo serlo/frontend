@@ -708,6 +708,10 @@ export const loggedInData = {
             remove: 'Remove answer',
             edit: 'Edit answer',
             settings: 'Answer settings',
+            answersPlaceholder:
+              'Here you will find your correct dropzone answers',
+            wrongAnswersPlaceholder:
+              'Here you will find your incorrect answers',
           },
           answerZone: {
             description: 'Description (optional)',

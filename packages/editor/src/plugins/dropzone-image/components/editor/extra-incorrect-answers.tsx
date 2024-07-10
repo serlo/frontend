@@ -15,7 +15,10 @@ interface ExtraIncorrectAnswersProps {
 export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
   const { extraDraggableAnswers, setModalType } = props
 
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const {
+    blanksExercise: blanksExerciseStrings,
+    dropzoneImage: pluginStrings,
+  } = useEditorStrings().plugins
 
   const answers = extraDraggableAnswers.map(convertAnswer)
 
@@ -24,6 +27,11 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
       <span>{blanksExerciseStrings.dummyAnswers}:</span>
 
       <DraggableArea accept="none">
+        {answers.length === 0 && (
+          <span className="text-sm text-gray-600">
+            {pluginStrings.answers.wrongAnswersPlaceholder}
+          </span>
+        )}
         {answers.map((possibleAnswer, index) => (
           <RemovableInputWrapper
             key={index}
