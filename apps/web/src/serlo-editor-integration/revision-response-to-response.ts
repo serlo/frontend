@@ -35,10 +35,14 @@ export function revisionResponseToResponse(
     content,
   }
 
+  // TODO: integrate into Entity below
   if (uuid.__typename === UuidRevType.Page) {
     return {
       __typename: UuidType.Page,
+      date: uuid.date,
       title,
+      revisions: uuid.repository.revisions,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
       currentRevision: abstractRevisionData,
       ...repositoryFields,
     }
