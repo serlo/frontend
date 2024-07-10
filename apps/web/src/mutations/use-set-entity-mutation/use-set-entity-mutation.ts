@@ -58,6 +58,7 @@ export function useSetEntityMutation() {
           return false
         }
         const additionalInput = getAdditionalInputData(mutationStrings, data)
+
         input = {
           ...genericInput,
           ...additionalInput,
@@ -139,9 +140,14 @@ function getGenericInputData(
   const { __typename, changes, content, controls, id } = data
   if (!__typename) return
 
+  const changesOrFallback =
+    __typename === UuidType.Page
+      ? 'Page'
+      : getRequiredString(mutationStrings, 'changes', changes)
+
   return {
     entityType: __typename,
-    changes: getRequiredString(mutationStrings, 'changes', changes),
+    changes: changesOrFallback,
     content: getRequiredString(mutationStrings, 'content', content),
     entityId: id ? id : undefined,
     needsReview,
@@ -182,6 +188,12 @@ function getAdditionalInputData(
         metaDescription,
       }
     case UuidType.Event:
+      return {
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaTitle,
+        metaDescription,
+      }
+    case UuidType.Page:
       return {
         title: getRequiredString(mutationStrings, 'title', title),
         metaTitle,
