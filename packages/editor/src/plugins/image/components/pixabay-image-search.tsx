@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 import React, {
   ChangeEvent,
   useRef,
@@ -96,7 +96,7 @@ export const PixabayImageSearch = ({
   const showTags = images.length === 0 && !isSearching
 
   return (
-    <div className="min-h-[60vw] pt-2">
+    <div className="max-h-[60vw] min-h-[20vw] pt-2">
       <h2 className="mb-6 ml-10 mt-10 font-bold">{imageStrings.licenceFree}</h2>
       {/* Search input */}
       <div className="relative ml-10 w-[90%]">
@@ -111,7 +111,7 @@ export const PixabayImageSearch = ({
         />
         {query && (
           <div
-            className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center justify-center px-4 text-gray-300"
+            className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center justify-center px-4 text-gray-400"
             onClick={() => {
               setQuery('')
               setImages([])
@@ -120,7 +120,7 @@ export const PixabayImageSearch = ({
               })
             }}
           >
-            <FaIcon icon={faXmark} />
+            <FaIcon icon={faXmarkCircle} />
           </div>
         )}
       </div>
@@ -133,7 +133,7 @@ export const PixabayImageSearch = ({
               <button
                 key={tagKey}
                 onClick={() => handleTagClick(tagKey)}
-                className="m-2 inline-block rounded-md bg-white px-4 py-2 text-black shadow-md"
+                className="m-2 inline-block rounded-md bg-white px-2 py-1 text-sm text-black shadow-md"
               >
                 {tagKey}
               </button>

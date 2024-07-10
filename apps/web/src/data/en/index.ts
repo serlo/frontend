@@ -804,16 +804,13 @@ export const loggedInData = {
           maxWidthPlaceholder: 'Enter the maximum width',
           helpTooltipText: 'More information and help related to Image Plugin',
           change: 'Change image',
-<<<<<<< HEAD
           licence: 'Licence',
           licenceHelpText:
             'External content with the following licenses may be integrated on serlo.org:',
-=======
           licenceFree: 'Licence Free Images',
           pixabayText: 'Pictures will be fetched from Pixabay', // TODO: fix text
           pixabayLoadedText: "These pictures were loaded from Pixabay's API.", // TODO: fix text
           searching: 'Searching for images ...',
->>>>>>> 462cd40fb (feat(image-plugin-redesign): Improve pixabay functionality)
           loadingImage: 'Downloading image ...', // "Bild wird heruntergeladen..."
           noImagesFound: 'No images found',
           searchTags: {
