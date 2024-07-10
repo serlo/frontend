@@ -63,7 +63,7 @@ export const NiceDropdown = ({
     <label
       className={`h-100 mx-auto mb-0 mt-5 flex items-center text-almost-black ${className}`}
     >
-      <span className="serlo-tooltip-trigger w-1/4">
+      <span className="serlo-tooltip-trigger flex w-1/4 justify-between pr-[15px]">
         {label}
         <FaIcon className="ml-2" icon={faQuestionCircle} />
         <EditorTooltip text={helpText} />
