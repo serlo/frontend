@@ -92,6 +92,7 @@ export function createImagePlugin(
               link: undefined,
               alt: undefined,
               licence: undefined,
+              imageSource: undefined,
               maxWidth: undefined,
               caption: { plugin: EditorPluginType.Text },
             },
