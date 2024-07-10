@@ -1,5 +1,14 @@
-import React, { ChangeEvent, useState } from 'react'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import React, {
+  ChangeEvent,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react'
+import { debounce } from 'ts-debounce'
 
+import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
@@ -34,6 +43,7 @@ export const PixabayImageSearch = ({
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
   const apiKey = process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery) return
@@ -51,6 +61,23 @@ export const PixabayImageSearch = ({
       setIsSearching(false)
     }
   }
+
+  const debouncedSearch = useCallback(
+    debounce((searchQuery: string) => {
+      void handleSearch(searchQuery)
+    }, 300),
+    []
+  )
+
+  useEffect(() => {
+    if (query.length > 3) {
+      void debouncedSearch(query)
+    }
+    // Cancel the debounce if the component is unmounted or the query changes
+    return () => {
+      debouncedSearch.cancel()
+    }
+  }, [query, debouncedSearch])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
@@ -72,15 +99,30 @@ export const PixabayImageSearch = ({
     <div className="min-h-[60vw] pt-2">
       <h2 className="mb-6 ml-10 mt-10 font-bold">{imageStrings.licenceFree}</h2>
       {/* Search input */}
-      <div className="w-full">
+      <div className="relative ml-10 w-[90%]">
         <input
+          ref={inputRef}
           type="text"
           value={query}
           onChange={handleInputChange}
           placeholder={imageStrings.search}
           onKeyDown={handleKeyDown}
-          className="ml-10 w-[90%] rounded-lg border-0 bg-yellow-100 p-2 px-4 py-2 text-gray-600"
+          className="w-full rounded-lg border-0 bg-yellow-100 py-2 pl-4 pr-10 text-gray-600"
         />
+        {query && (
+          <div
+            className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center justify-center px-4 text-gray-300"
+            onClick={() => {
+              setQuery('')
+              setImages([])
+              setTimeout(() => {
+                inputRef.current?.focus()
+              })
+            }}
+          >
+            <FaIcon icon={faXmark} />
+          </div>
+        )}
       </div>
 
       {/* Search tags */}
