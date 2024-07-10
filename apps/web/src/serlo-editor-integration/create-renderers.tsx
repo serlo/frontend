@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
@@ -24,6 +25,7 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
+  EditorDropzoneImageDocument,
 } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
@@ -74,6 +76,14 @@ const SpoilerSerloStaticRenderer = dynamic<
 >(() =>
   import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
     (mod) => mod.SpoilerSerloStaticRenderer
+  )
+)
+
+const DropzoneImageSerloStaticRenderer = dynamic<
+  EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
+>(() =>
+  import('@editor/plugins/dropzone-image/static').then(
+    (mod) => mod.DropzoneImageStaticRenderer
   )
 )
 
@@ -149,7 +159,12 @@ export function createRenderers(): InitRenderersArgs {
           )
         },
       },
+      {
+        type: EditorPluginType.DropzoneImage,
+        renderer: DropzoneImageSerloStaticRenderer,
+      },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,

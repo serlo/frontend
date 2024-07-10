@@ -28,6 +28,7 @@ import type {
   EditorVideoDocument,
   EditorTemplateExerciseGroupDocument,
   EditorExerciseGroupDocument,
+  EditorCourseDocument,
 } from './editor-plugins'
 import { TemplatePluginType } from './template-plugin-type'
 
@@ -50,6 +51,11 @@ export function isBoxDocument(
   document: AnyEditorDocument
 ): document is EditorBoxDocument {
   return document.plugin === EditorPluginType.Box
+}
+export function isCourseDocument(
+  document: AnyEditorDocument
+): document is EditorCourseDocument {
+  return document.plugin === EditorPluginType.Course
 }
 export function isUnsupportedDocument(
   document: AnyEditorDocument

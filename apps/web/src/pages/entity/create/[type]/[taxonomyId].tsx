@@ -67,8 +67,9 @@ function Content({
   return (
     <FrontendClientBase
       noContainers
+      noIndex
       loadLoggedInData={!isProduction} // warn: enables preview editor without login
-      entityId={taxonomyParentId}
+      serloEntityData={{ entityId: taxonomyParentId }}
     >
       <div className="relative">
         <MaxWidthDiv>

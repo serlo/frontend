@@ -24,7 +24,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       }, 1000)
     }
     return (
-      <FrontendClientBase>
+      <FrontendClientBase noIndex>
         <LoadingSpinner noText />
       </FrontendClientBase>
     )
@@ -48,7 +48,8 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
     <FrontendClientBase
       noContainers
       noHeaderFooter
-      entityId={entityId}
+      noIndex
+      serloEntityData={{ entityId }}
       authorization={pageData.authorization}
     >
       <LazyIframeResizer />
@@ -56,7 +57,6 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         <HeadTags
           data={pageData.metaData}
           breadcrumbsData={pageData.breadcrumbsData}
-          noindex
         />
       ) : null}
       <div className="relative">

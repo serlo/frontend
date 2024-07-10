@@ -21,8 +21,7 @@ interface UuidUrlInputProps {
     typename: UuidWithRevType,
     id: number,
     title: string,
-    taxType?: TaxonomyTermType,
-    coursePageId?: number
+    taxType?: TaxonomyTermType
   ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
@@ -81,30 +80,27 @@ export function UuidUrlInput({
     const { uuid } = data
     if (!uuid) return modalStrings.notFound
 
-    const title = uuid.__typename.includes(UuidType.Exercise)
-      ? getTranslatedType(strings, uuid.__typename)
+    const { __typename: typename, id } = uuid
+
+    const title = typename.includes(UuidType.Exercise)
+      ? getTranslatedType(strings, typename)
       : uuid.title
 
-    const id =
-      uuid.__typename === UuidType.CoursePage ? uuid.course?.id : uuid.id
-    const coursePageId =
-      uuid.__typename === UuidType.CoursePage ? uuid.id : undefined
+    const taxonomyType =
+      Object.hasOwn(uuid, 'type') && uuid.type ? uuid.type : undefined
 
-    if (!supportedEntityTypes.includes(uuid.__typename as UuidWithRevType))
-      return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
+    if (!supportedEntityTypes.includes(typename as UuidWithRevType))
+      return modalStrings.unsupportedType.replace('%type%', typename)
 
-    if (
-      Object.hasOwn(uuid, 'type') &&
-      uuid.type &&
-      !supportedTaxonomyTypes.includes(uuid.type)
-    )
-      return modalStrings.unsupportedType.replace('%type%', uuid.type ?? '')
+    if (taxonomyType && !supportedTaxonomyTypes.includes(taxonomyType))
+      return modalStrings.unsupportedType.replace('%type%', taxonomyType ?? '')
 
-    if (unsupportedIds && unsupportedIds.includes(uuid.id))
+    if (unsupportedIds && unsupportedIds.includes(id))
       return modalStrings.unsupportedId
 
     if (!id) return modalStrings.notFound
-    if (!uuid.__typename.includes(UuidType.Exercise) && !title)
+
+    if (!typename.includes(UuidType.Exercise) && !title)
       return modalStrings.notFound
 
     return (
@@ -115,15 +111,13 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <FaIcon icon={getIconByTypename(uuid.__typename as UuidType)} />{' '}
-          {title}
+          <FaIcon icon={getIconByTypename(typename as UuidType)} /> {title}
         </a>
         {renderButtons(
-          uuid.__typename as UuidWithRevType,
+          typename as UuidWithRevType,
           id,
-          title ?? getTranslatedType(strings, uuid.__typename),
-          Object.hasOwn(uuid, 'type') ? uuid.type : undefined,
-          coursePageId
+          title ?? getTranslatedType(strings, typename),
+          taxonomyType
         )}
       </>
     )
@@ -136,11 +130,6 @@ const uuidSimpleQuery = gql`
       id
       __typename
       title
-      ... on CoursePage {
-        course {
-          id
-        }
-      }
       ... on TaxonomyTerm {
         type
       }

@@ -1,6 +1,13 @@
+import {
+  buildCoursePageUrl,
+  getCoursePageIdFromPath,
+} from '@editor/plugins/course/helper/get-course-id-from-path'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { EditorRowsDocument } from '@editor/types/editor-plugins'
+import {
+  EditorCourseDocument,
+  EditorRowsDocument,
+} from '@editor/types/editor-plugins'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -24,32 +31,44 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
-// ALWAYS start alias with slash
+// ALWAYS start requestPath with slash
 export async function requestPage(
-  alias: string,
+  requestPath: string,
   instance: Instance
 ): Promise<RequestPageData> {
   const response = await request<MainUuidQuery, MainUuidQueryVariables>(
     endpoint,
     dataQuery,
     {
-      alias: { instance, path: alias },
+      alias: { instance, path: requestPath },
     }
   )
   const uuid = response.uuid
   const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
 
-  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
+  // no content for comments
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' }
+
   // users are not handled in uuid query any more
   if (uuid.__typename === UuidType.User) return { kind: 'not-found' }
+
+  // temporary redirect course pages to course as a fallback for client side navigation
+  // that does not go through cf-worker
+  if (uuid.__typename === 'CoursePage') {
+    const target = buildCoursePageUrl(
+      uuid.course.alias,
+      String(uuid.id),
+      uuid.title
+    )
+    return { kind: 'redirect', target }
+  }
 
   if (
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Page ||
-    uuid.__typename === UuidRevType.CoursePage ||
+    uuid.__typename === UuidRevType.CoursePage || // TODO: remove at some point
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||
@@ -73,52 +92,8 @@ export async function requestPage(
   )
   const breadcrumbsData = createBreadcrumbs(uuid, instance)
   const horizonData = instance === Instance.De ? createHorizon() : undefined
-  const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias)
-
-  if (uuid.__typename === UuidType.Course) {
-    const firstPage = uuid.pages.filter(
-      (page) => page.currentRevision !== null
-    )[0]?.alias
-    if (firstPage) {
-      return await requestPage(firstPage, instance)
-    } else {
-      const pages = uuid.pages.map((page) => {
-        return {
-          id: page.id,
-          title: page.currentRevision?.title ?? '',
-          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
-          noCurrentRevision: !page.currentRevision,
-        }
-      })
-
-      return {
-        // show warning if no pages exist or are reviewed yet
-        kind: 'single-entity',
-        newsletterPopup: false,
-        entityData: {
-          id: uuid.id,
-          alias: uuid.alias,
-          typename: UuidType.Course,
-          title: uuid.currentRevision?.title ?? '',
-          isUnrevised: !uuid.currentRevision,
-          courseData: {
-            id: uuid.id,
-            title: uuid.currentRevision?.title ?? '',
-            pages,
-            index: 0,
-          },
-        },
-        metaData: {
-          title: uuid.currentRevision?.title ?? '',
-          contentType: 'course',
-        },
-        authorization,
-        breadcrumbsData,
-      }
-    }
-  }
 
   if (uuid.__typename === UuidType.TaxonomyTerm) {
     return {
@@ -133,7 +108,6 @@ export async function requestPage(
             ? 'topic-folder'
             : 'topic',
       },
-      cacheKey,
       breadcrumbsData,
       secondaryMenuData: secondaryMenuData,
       authorization,
@@ -162,7 +136,6 @@ export async function requestPage(
         metaDescription: getMetaDescription(exercise?.state.content),
       },
       horizonData,
-      cacheKey,
       authorization,
     }
   }
@@ -191,7 +164,6 @@ export async function requestPage(
         ),
       },
       horizonData,
-      cacheKey,
       authorization,
     }
   }
@@ -200,7 +172,7 @@ export async function requestPage(
     uuid.currentRevision?.content
       ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
-  )) as EditorRowsDocument
+  )) as EditorRowsDocument | EditorCourseDocument
 
   if (uuid.__typename === UuidType.Event) {
     return {
@@ -221,7 +193,6 @@ export async function requestPage(
         metaImage,
         metaDescription: getMetaDescription(content),
       },
-      cacheKey,
       authorization,
     }
   }
@@ -247,7 +218,6 @@ export async function requestPage(
         metaDescription: getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
       secondaryMenuData: secondaryMenuData,
       breadcrumbsData: secondaryMenuData ? undefined : breadcrumbsData,
       authorization,
@@ -256,38 +226,112 @@ export async function requestPage(
 
   const { licenseId } = uuid
 
+  const sharedEntityData = {
+    id: uuid.id,
+    alias: uuid.alias,
+    trashed: uuid.trashed,
+    title: uuid.title,
+    licenseId,
+    content,
+    isUnrevised: !uuid.currentRevision,
+    unrevisedRevisions: uuid.revisions?.totalCount,
+  }
+
+  const sharedMetadata = {
+    title,
+    metaImage,
+    metaDescription:
+      uuid.currentRevision?.metaDescription ?? getMetaDescription(content),
+    dateCreated: uuid.date,
+    dateModified: uuid.currentRevision?.date,
+    canonicalUrl: uuid.alias,
+  }
+
   if (uuid.__typename === UuidType.Article) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
+        ...sharedEntityData,
+        content: {
+          ...(content as EditorRowsDocument),
+          serloContext: { articleTitle: uuid.title },
+        } as EditorRowsDocument,
         typename: UuidType.Article,
-        title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
-        content,
-        licenseId,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
           setContentAsSection: true,
         },
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'article',
-        metaImage,
         metaDescription: uuid.currentRevision?.metaDescription
           ? uuid.currentRevision?.metaDescription
           : getArticleMetaDescription(content),
-        dateCreated: uuid.date,
-        dateModified: uuid.currentRevision?.date,
       },
       horizonData,
-      cacheKey,
+      breadcrumbsData,
+      authorization,
+    }
+  }
+
+  if (uuid.__typename === UuidType.Course) {
+    const pageId = getCoursePageIdFromPath(requestPath)
+
+    const pages = (content as unknown as EditorCourseDocument).state.pages
+    if (!pages || !pages.length) return { kind: 'not-found' }
+
+    const coursePageUrls = pages.map((page) =>
+      buildCoursePageUrl(uuid.alias, page.id, page.title)
+    )
+    const pageIndex = Math.max(
+      pages.findIndex(({ id }) => pageId && id.startsWith(pageId)),
+      0
+    )
+    const page = pages.at(pageIndex)
+
+    if (!page) return { kind: 'not-found' }
+
+    const fullTitle = page.title ? `${page.title} – ${uuid.title}` : uuid.title
+    const metaTitle =
+      fullTitle.length < 75 ? fullTitle : page.title ?? uuid.title
+
+    const canonicalUrl = pageIndex ? coursePageUrls[pageIndex] : uuid.alias
+    const metaDescription = sharedMetadata.metaDescription?.length
+      ? sharedMetadata.metaDescription
+      : uuid.title
+
+    return {
+      kind: 'single-entity',
+      newsletterPopup: false,
+      entityData: {
+        ...sharedEntityData,
+        content: {
+          ...(content as EditorCourseDocument),
+          serloContext: {
+            activeCoursePageId: pageId,
+            courseTitle: uuid.title,
+            coursePageUrls,
+          },
+        } as EditorCourseDocument,
+        typename: UuidType.Course,
+        title: uuid.title,
+        schemaData: {
+          wrapWithItemType: 'http://schema.org/Article',
+          useArticleTag: true,
+          setContentAsSection: true,
+        },
+      },
+      metaData: {
+        ...sharedMetadata,
+        title: metaTitle,
+        contentType: 'course',
+        canonicalUrl,
+        metaDescription,
+      },
+      horizonData,
       breadcrumbsData,
       authorization,
     }
@@ -298,11 +342,8 @@ export async function requestPage(
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
+        ...sharedEntityData,
         typename: UuidType.Video,
-        title: uuid.currentRevision?.title ?? '',
         content: [
           {
             plugin: EditorPluginType.Video,
@@ -316,18 +357,12 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseId,
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'video',
-        metaImage,
-        metaDescription: getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
       breadcrumbsData,
       authorization,
     }
@@ -338,11 +373,8 @@ export async function requestPage(
       kind: 'single-entity',
       newsletterPopup: false,
       entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
         typename: UuidType.Applet,
-        title: uuid.currentRevision?.title ?? '',
+        ...sharedEntityData,
         content: [
           {
             plugin: EditorPluginType.Geogebra,
@@ -353,85 +385,12 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseId,
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
       },
       metaData: {
-        title,
+        ...sharedMetadata,
         contentType: 'applet',
-        metaImage,
-        metaDescription: uuid.currentRevision?.metaDescription
-          ? uuid.currentRevision?.metaDescription
-          : getMetaDescription(content),
       },
       horizonData,
-      cacheKey,
-      breadcrumbsData,
-      authorization,
-    }
-  }
-
-  if (uuid.__typename === UuidType.CoursePage) {
-    const pagesToShow =
-      uuid.course && uuid.course.pages
-        ? uuid.course.pages.filter(
-            (page) =>
-              page.alias &&
-              page.currentRevision &&
-              !page.currentRevision.trashed &&
-              page.currentRevision.title &&
-              page.currentRevision.title !== ''
-          )
-        : []
-
-    let currentPageIndex = -1
-    const pages = pagesToShow.map((page, i) => {
-      const active = page.id === uuid.id
-      if (active) {
-        currentPageIndex = i
-      }
-      return {
-        title: page.currentRevision?.title ?? '',
-        id: page.id,
-        url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
-        active,
-      }
-    })
-    return {
-      kind: 'single-entity',
-      newsletterPopup: false,
-      entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
-        typename: UuidType.CoursePage,
-        title: uuid.currentRevision?.title ?? '',
-        content,
-        licenseId: uuid.course.licenseId,
-        schemaData: {
-          wrapWithItemType: 'http://schema.org/Article',
-          useArticleTag: true,
-          setContentAsSection: true,
-        },
-        courseData: {
-          id: uuid.course.id,
-          title: uuid.course.currentRevision?.title ?? '',
-          pages,
-          index: currentPageIndex,
-        },
-        unrevisedRevisions: uuid.revisions?.totalCount,
-        unrevisedCourseRevisions: uuid.course.revisions?.totalCount,
-        isUnrevised: !uuid.currentRevision,
-      },
-      metaData: {
-        title,
-        contentType: 'course-page',
-        metaImage,
-        metaDescription: getMetaDescription(content),
-      },
-      horizonData,
-      cacheKey,
       breadcrumbsData,
       authorization,
     }

@@ -33,6 +33,16 @@ export function MathExamsLanding({
 
   const regionTitle = region === 'nrw' ? 'NRW' : deRegions[region].title
 
+  const longRegionTitle =
+    region === 'schleswig-holstein' ? (
+      <span>
+        <span className="sm:hidden">Schleswig-</span>
+        <span className="serlo-underlined pb-1 sm:pb-3">
+          <span className="hidden sm:inline">Schleswig-</span>Holstein
+        </span>
+      </span>
+    ) : null
+
   return (
     <>
       <HeadTags
@@ -58,7 +68,14 @@ export function MathExamsLanding({
               <span className="inline-block max-w-[27rem] !whitespace-normal pb-3">
                 Mathe Prüfungen
                 <br />
-                <span className="serlo-underlined">{regionTitle}</span>
+                {longRegionTitle ?? (
+                  <span
+                    className="serlo-underlined"
+                    style={{ paddingBottom: `${regionTitle.length - 3}px` }}
+                  >
+                    {regionTitle}
+                  </span>
+                )}
               </span>
             </h1>
             <p className="text-2xl leading-cozy text-almost-black">

@@ -9,16 +9,16 @@ import { serloDomain } from '@/helper/urls/serlo-domain'
 interface HeadTagsProps {
   data: HeadData
   breadcrumbsData?: BreadcrumbsData
-  noindex?: boolean
+  noIndex?: boolean
 }
 
-export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
-  const { title, contentType, metaDescription, metaImage } = data
+export function HeadTags({ data, breadcrumbsData, noIndex }: HeadTagsProps) {
+  const { title, contentType, metaDescription, metaImage, canonicalUrl } = data
   const { strings, lang } = useInstanceData()
   const router = useRouter()
 
   const canonicalHref =
-    `https://${lang}.serlo.org` + router.asPath.split('?')[0]
+    canonicalUrl ?? `https://${lang}.serlo.org` + router.asPath.split('?')[0]
 
   return (
     <Head>
@@ -56,7 +56,7 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
       (entry) => entry.id === testAreaId
     )
     if (
-      noindex ||
+      noIndex ||
       (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
       data.title.startsWith('Testbereich')
     ) {

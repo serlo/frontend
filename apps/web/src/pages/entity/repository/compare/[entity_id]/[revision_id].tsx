@@ -11,9 +11,10 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 export default renderedPageNoHooks<RevisionProps>(({ pageData }) => (
   <RevisionViewProvider value>
     <FrontendClientBase
-      entityId={pageData.revisionData.thisRevision.id}
-      authorization={pageData.authorization}
       noContainers
+      noIndex
+      serloEntityData={{ entityId: pageData.revisionData.thisRevision.id }}
+      authorization={pageData.authorization}
     >
       <Revision data={pageData.revisionData} />
     </FrontendClientBase>

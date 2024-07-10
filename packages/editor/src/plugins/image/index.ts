@@ -4,6 +4,7 @@ import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import type { FileError } from '@serlo/frontend/src/serlo-editor-integration/image-with-serlo-config'
 
 import { ImageEditor } from './editor'
+import { isImageUrl } from './utils/check-image-url'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -66,7 +67,7 @@ export function createImagePlugin(
         }
       }
       // ==================
-      if (/\.(gif|jpe?g|png|svg|webp)$/.test(value.toLowerCase())) {
+      if (isImageUrl(value.toLowerCase())) {
         return {
           state: {
             src: value,

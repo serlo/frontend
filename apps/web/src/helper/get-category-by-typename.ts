@@ -5,7 +5,7 @@ export function getCategoryByTypename(typename?: string) {
     ? 'articles'
     : typename === UuidType.Video
       ? 'videos'
-      : typename === UuidType.Course || typename === UuidType.CoursePage
+      : typename === UuidType.Course
         ? 'courses'
         : typename === UuidType.Applet
           ? 'applets'

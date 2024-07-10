@@ -89,6 +89,7 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "¡Enlace copiado!",
+      copyFailed: "¡Error al copiar enlace!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -154,7 +155,7 @@ export const instanceData = {
         printModeChooseOption: "Elige una de las opciones.",
         strategy: "Estrategia",
         solution: "Solución propuesta",
-        showHiddenInteractive: 'Check your solution here'
+        showHiddenInteractive: "Comprueba tu solución aquí"
       },
       boxTypes: {
         blank: "Blanco",
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "¿Tienes una pregunta?",
-      questionLink: 'Write it below',
+      questionLink: "Escríbelo aquí",
       commentsOne: "Comentario",
       commentsMany: "Comentarios",
       submit: "Enviar",
@@ -492,7 +493,7 @@ export const instanceLandingData = {
 };
 export const serverSideStrings = {
   title: "¡Aprende con Serlo!",
-  topicTitleAffix: 'Basics & Exercises'
+  topicTitleAffix: "Básicos y ejercicios"
 };
 export const loggedInData = {
   authMenu: [{
@@ -528,16 +529,12 @@ export const loggedInData = {
     authorMenu: {
       log: 'Log',
       settings: "Configuración",
-      moveCoursePage: "Mueve esta página a otro curso",
-      thisCoursePage: "Esta página del curso",
-      addCoursePage: "Agregar página de curso",
-      wholeCourse: "Curso completo",
       moveOrCopyItems: "Mover o copiar elementos",
       addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
       changeLicense: "Cambiar licencia",
       subscribe: "Suscribirse",
-      subscribeNotifications: "Recibir notificaciones",
-      subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: "Cancelar suscripción",
       convert: "Convertir (beta)",
       history: "Historial",
@@ -624,6 +621,52 @@ export const loggedInData = {
           anchorId: "ID de Ancla (marca de posición)",
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
+        dropzoneImage: {
+          title: 'Image Dropzones',
+          description: 'Create an exercise with interactive images for matching and labeling',
+          backgroundImage: "Imagen de fondo",
+          dropZone: 'Drop zone',
+          dropZoneTooltip: 'Choose the drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          answers: {
+            add: "Añadir respuesta",
+            remove: "Eliminar respuesta",
+            edit: "Editar respuesta",
+            settings: "Configuración de respuestas"
+          },
+          answerZone: {
+            description: "Descripción (opcional)",
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: "Duplicar zona",
+            delete: "Eliminar zona\n"
+          },
+          backgroundType: {
+            description: 'Insert a background image or proceed with a blank background',
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: "Imagen de fondo",
+            // 'Hintergrundbild hinzufügen'
+            blank: "Fondo en blanco" //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: 'Choose the layout of the background',
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square',
+            //'Quadradtisch',
+            landscape: 'Landscape',
+            //'Querformat',
+            portrait: 'Portrait' // 'Hochformat'
+
+          },
+          or: "ó",
+          modal: {
+            settings: "Configuración",
+            new: 'New Drop Zone',
+            edit: "Editar respuesta",
+            wrong: "Crear respuesta incorrecta"
+          }
+        },
         unsupported: {
           title: "Sin soporte",
           notSupported: "Lo sentimos, este plugin no es compatible:",
@@ -645,7 +688,6 @@ export const loggedInData = {
           combineLikeTerms: "Combina términos similares",
           setEqual: "Coloca los términos iguales entre sí.",
           firstExplanation: "Primera explicación",
-          moveUpLabel: "Mover hacia arriba",
           removeRowLabel: "Eliminar fila"
         },
         geogebra: {
@@ -667,8 +709,11 @@ export const loggedInData = {
         image: {
           title: "Imagen",
           description: "Subir imágenes.",
-          upload: "Subir",
+          upload: "Subir imagen",
           imageUrl: "URL de la imagen",
+          invalidImageUrl: "Error: URL inválida o incompleta",
+          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          searchOnline: 'Search online for licence-free images',
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
@@ -680,7 +725,9 @@ export const loggedInData = {
           alt: "Descripción (no es visible)",
           altPlaceholder: "Describe lo que muestra la imagen",
           maxWidth: "Ancho máximo",
-          maxWidthPlaceholder: "Introduce la anchura máxima"
+          maxWidthPlaceholder: "Introduce la anchura máxima",
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: "Cambiar imagen"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -777,7 +824,7 @@ export const loggedInData = {
           unorderedList: "Lista sin ordenar",
           lists: "Listas",
           mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
-          code: 'Code (%ctrlOrCmd% + ⇧ + C)',
+          code: "Código (%ctrlOrCmd% + ⇧ + C)",
           blank: "Blanco",
           createBlank: "Crear espacio en blanco",
           removeBlank: "Eliminar espacio en blanc",
@@ -849,14 +896,11 @@ export const loggedInData = {
           description: "Textos con blancos",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
-          chooseChildPluginType: 'Choose the answer type',
+          chooseChildPluginType: "Elije el tipo de respuesta",
           modes: {
             typing: "Tecleando/escribir",
             'drag-and-drop': "Arrastrar y colocar"
           },
-          previewMode: "Vista Previa",
-          previewIsActiveHint: "Vuelve a editar el ejercicio",
-          previewIsDeactiveHint: "Vista preliminar del ejercicio",
           dummyAnswers: "Respuestas incorrectas adicionales",
           addDummyAnswer: "Añadir una respuesta incorrecta",
           removeDummyAnswer: "Eliminar la respuesta adicional",
@@ -870,7 +914,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Título",
           seoTitle: "Título para motores de búsqueda",
-          seoDesc: "Descripción para los motores de búsqueda"
+          seoDesc: "Descripción para los motores de búsqueda",
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "Escribe una breve introducción",
@@ -878,7 +924,6 @@ export const loggedInData = {
           moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
           addSource: "Añadir fuente",
           removeLabel: "Eliminar",
-          moveUpLabel: "Mover hacia arriba",
           dragLabel: "Arrastra para cambiar el orden",
           openInTab: "Abrir en una nueva pestaña",
           sources: "Fuentes",
@@ -906,13 +951,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Eliminar página del curso",
-          addCoursePage: "Añadir página del curso"
-        },
-        coursePage: {
-          explanation: "Explicación",
-          video: "Vídeo",
-          question: "Pregunta",
-          title: "Título"
+          addCoursePage: "Añadir página del curso",
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: "Ejercicio de elección",

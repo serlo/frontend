@@ -31,6 +31,7 @@ export const Suggestions = ({
         return (
           <div
             key={index}
+            data-qa={`plugin-suggestion-${pluginType}`}
             data-active={index === selected}
             onMouseDown={(event: React.MouseEvent) => {
               event.preventDefault()

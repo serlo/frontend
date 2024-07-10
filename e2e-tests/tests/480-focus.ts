@@ -32,10 +32,15 @@ Scenario('focus plugins by clicking', async ({ I }) => {
   I.pressKey('Enter')
   I.see('Bild', '$plugin-type-indicator')
   I.say('focused on src input field of new image plugin')
-  I.seeElement('label > input:focus')
+  I.seeElement('input[data-qa="plugin-image-src"]:focus')
+
+  I.say('type in the image src (caption input not available otherwise)')
+  const src = 'https://de.serlo.org/_assets/img/serlo-logo.svg'
+  I.type(src)
+  I.seeElement(locate('img.serlo-img').withAttr({ src }))
 
   I.say('image plugin still focused after clicking on its caption')
-  I.click('$plugin-text-editor')
+  I.click(locate('$plugin-text-editor').inside('$plugin-image-editor'))
   I.see('Bild', '$plugin-type-indicator')
 
   I.say('add a new plugin')
@@ -60,8 +65,12 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.waitForElement('h1 > input:focus', 5)
 
   I.say('focus on image plugin inside of introduction multimedia plugin')
+  // TODO: Triple tab is a quick fix.
+  // When the upload or search buttons are focused, the toolbar doesn't appear.
+  // This is a bug that needs to be fixed.
   I.pressKey('Tab')
-  // ! caption gets focus first (okay for now)
+  I.pressKey('Tab')
+  I.pressKey('Tab')
   I.see('Bild', '$plugin-type-indicator')
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 

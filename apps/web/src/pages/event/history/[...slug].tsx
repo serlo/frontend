@@ -12,7 +12,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<EventHistoryProps>(({ pageData }) => {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noIndex>
       <Content {...pageData} />
     </FrontendClientBase>
   )

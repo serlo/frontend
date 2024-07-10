@@ -2,6 +2,7 @@ import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
+import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
@@ -27,7 +28,9 @@ import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-export function createBasicPlugins(props: Required<PluginsConfig>) {
+import { createTestingImagePlugin } from './image-with-testing-config'
+
+export function createBasicPlugins(config: Required<PluginsConfig>) {
   return [
     {
       type: EditorPluginType.Text,
@@ -35,15 +38,25 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
       visibleInSuggestions: true,
       icon: <IconText />,
     },
+    ...(config.general.testingSecret
+      ? [
+          {
+            type: EditorPluginType.Image,
+            plugin: createTestingImagePlugin(config.general.testingSecret),
+            visibleInSuggestions: true,
+            icon: <IconImage />,
+          },
+        ]
+      : []),
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(props.multimedia),
+      plugin: createMultimediaPlugin(createMultimediaPluginConfig(config)),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(props.spoiler),
+      plugin: createSpoilerPlugin(config.spoiler),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
@@ -55,13 +68,13 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin(props.box),
+      plugin: createBoxPlugin(config.box),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },
     {
       type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(props.table),
+      plugin: createSerloTablePlugin(config.table),
       visibleInSuggestions: true,
       icon: <IconTable />,
     },
@@ -83,9 +96,9 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: props.general.exerciseVisibleInSuggestion,
+      visibleInSuggestions: true,
     },
-    ...(props.general.enableTextAreaExercise
+    ...(config.general.enableTextAreaExercise
       ? [
           {
             type: EditorPluginType.TextAreaExercise,
@@ -117,4 +130,23 @@ export function createBasicPlugins(props: Required<PluginsConfig>) {
       plugin: genericContentTypePlugin,
     },
   ]
+}
+
+function createMultimediaPluginConfig(config: Required<PluginsConfig>) {
+  const { general, multimedia } = config
+
+  return {
+    ...multimedia,
+    allowedPlugins: multimedia.allowedPlugins.filter((allowedPlugin) => {
+      if (
+        // If the user didn't provide the Serlo Editor testing secret,
+        // remove the Image plugin from Multimedia config allowed plugins
+        allowedPlugin === EditorPluginType.Image &&
+        !general?.testingSecret
+      ) {
+        return false
+      }
+      return true
+    }),
+  }
 }

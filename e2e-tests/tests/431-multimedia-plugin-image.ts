@@ -21,12 +21,15 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
 
   I.say('Focus multimedia Image plugin')
   I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
-  I.seeElement('$plugin-image-placeholder')
+  I.seeElement('$plugin-image-empty-wrapper')
 
   I.say('Upload an image')
-  I.attachFile('$plugin-image-upload', 'assets/sample-image.png')
+  I.attachFile(
+    locate('$plugin-image-upload').inside('.plugin-rows'),
+    'assets/sample-image.png'
+  )
   I.waitForElement('img.serlo-img', 10)
-  I.dontSeeElement(locate('$plugin-image-placeholder').inside('plugin-rows'))
+  I.dontSeeElement(locate('$plugin-image-empty-wrapper').inside('plugin-rows'))
 
   I.say('Edit image description')
   const description = 'Simple sample image'
@@ -84,14 +87,8 @@ Scenario('Multimedia plugin invalid image URL', ({ I }) => {
   // Focus the src input
   I.click(locate('$plugin-image-src').inside('.plugin-rows'))
   I.type('https://de.serlo.org/_assets/img/serlo-logo')
-  // Unfortunately, our handling of invalid URLs is the same as handling of valid URLs, at the moment.
-  // I couldn't figure out how to test for default browser "broken image".
-  I.seeElement(
-    locate('img.serlo-img').withAttr({
-      src: 'https://de.serlo.org/_assets/img/serlo-logo',
-    })
-  )
-  I.dontSeeElement(locate('$plugin-image-placeholder').inside('plugin-rows'))
+  // Check that the error message is displayed
+  I.seeElement('$plugin-image-src-error')
 })
 
 Scenario('Multimedia plugin valid image URL', ({ I }) => {
@@ -107,7 +104,7 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
   I.click(locate('$plugin-image-src').inside('.plugin-rows'))
   I.type(src)
   I.seeElement(locate('img.serlo-img').withAttr({ src }))
-  I.dontSeeElement(locate('$plugin-image-placeholder').inside('plugin-rows'))
+  I.dontSeeElement(locate('$plugin-image-empty-wrapper').inside('plugin-rows'))
 
   I.say('Edit image description')
   const description = 'Simple sample image'
@@ -157,6 +154,14 @@ Scenario('Multimedia plugin fill in image caption', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   addMultimediaPlugin(I)
+
+  I.say('Type in the image src (caption input not available otherwise)')
+  const src = 'https://de.serlo.org/_assets/img/serlo-logo.svg'
+  I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
+  I.click(locate('$plugin-image-src').inside('.plugin-rows'))
+  I.type(src)
+  I.seeElement(locate('img.serlo-img').withAttr({ src }))
+  I.dontSeeElement(locate('$plugin-image-empty-wrapper').inside('plugin-rows'))
 
   I.say('Type in the caption')
   const caption = 'Pleasant image caption'

@@ -12,7 +12,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noIndex>
       <Content />
     </FrontendClientBase>
   )

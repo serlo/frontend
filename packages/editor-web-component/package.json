@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -39,11 +39,11 @@
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
-    "@serlo/editor": "0.8.2"
+    "@serlo/editor": "0.9.1"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
-    "@serlo/editor": "0.8.2",
+    "@serlo/editor": "0.9.1",
     "@serlo/typescript-config": "workspace:*",
     "@types/escodegen": "^0.0.10",
     "@types/estraverse": "^5.1.7",

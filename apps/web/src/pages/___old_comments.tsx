@@ -1,6 +1,5 @@
 import { GraphQLClient, gql } from 'graphql-request'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
@@ -19,12 +18,10 @@ const ContentPage: NextPage = () => {
     <FrontendClientBase
       noHeaderFooter
       noContainers
+      noIndex
       showNav={false}
       authorization={{}}
     >
-      <Head>
-        <meta name="robots" content="noindex" />
-      </Head>
       <OldComments />
     </FrontendClientBase>
   )

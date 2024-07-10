@@ -7,7 +7,8 @@ Before(popupWarningFix)
 Scenario('Basic text interactions', async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/74888')
 
-  I.click('$plugin-text-editor')
+  I.click('$add-new-plugin-row-button')
+  I.pressKey('Enter')
 
   const testString = 'TESTTESTTEST'
   I.type(testString)
@@ -31,7 +32,7 @@ Scenario('Add new plugins', async ({ I }) => {
   I.click('$entity-title-input')
   I.click('$add-new-plugin-row-button')
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     I.pressKey('ArrowDown')
   }
   // Spoiler
@@ -43,7 +44,7 @@ Scenario('Add new plugins', async ({ I }) => {
 
   I.pressKey('ArrowDown')
   I.pressKey('/')
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     I.pressKey('ArrowDown')
   }
   // Box

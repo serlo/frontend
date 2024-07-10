@@ -20,7 +20,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))
@@ -29,7 +29,6 @@ const filters = [
   UuidType.Article,
   UuidType.Video,
   UuidType.Applet,
-  UuidType.CoursePage,
   UuidType.Exercise,
   UuidType.ExerciseGroup,
   UuidType.User,

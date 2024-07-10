@@ -19,13 +19,6 @@ console.log(
   '[NEXT_PUBLIC_VERCEL_URL] deployment url:',
   process.env.NEXT_PUBLIC_VERCEL_URL ?? '---'
 )
-console.log(
-  '[DATABASE_URL] planetscale integration:',
-  process.env.DATABASE_URL &&
-    process.env.DATABASE_URL.includes('serlo_planetscale')
-    ? 'available'
-    : 'not available'
-)
 
 /**
  * @type {import('next').NextConfig}

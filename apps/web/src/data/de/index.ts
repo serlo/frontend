@@ -89,6 +89,7 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
+      copyFailed: "Sorry, Link konnte nicht automatisch kopiert werden.",
       close: "Schließen",
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
-      questionLink: "Kommentiere unten",
+      questionLink: "Kommentiere hier",
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
@@ -528,10 +529,6 @@ export const loggedInData = {
     authorMenu: {
       log: "Aktivitätenlog",
       settings: "Einstellungen",
-      moveCoursePage: "Kursseite in einen anderen Kurs verschieben",
-      thisCoursePage: "Diese Kursseite",
-      addCoursePage: "Kursseite hinzufügen",
-      wholeCourse: "Gesamter Kurs",
       moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
@@ -624,6 +621,52 @@ export const loggedInData = {
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
         },
+        dropzoneImage: {
+          title: "Bilder mit Ablagezonen",
+          description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
+          backgroundImage: "Hintergrundbild",
+          dropZone: "Ablagezone",
+          dropZoneTooltip: "Ablagezone hinzufügen",
+          removeDropZone: "Ablagezone entfernen",
+          dropzoneVisibility: "Ablagezone Sichtbarkeit",
+          answers: {
+            add: "Antwort hinzufügen",
+            remove: "Antwort entfernen",
+            edit: "Antwort bearbeiten",
+            settings: "Antworteinstellungen"
+          },
+          answerZone: {
+            description: "Beschreibung (optional)",
+            sizeLabel: "Größe der Zone manuell festlegen",
+            duplicate: "Zone duplizieren",
+            delete: "Zone entfernen"
+          },
+          backgroundType: {
+            description: "Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund",
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: "Hintergrundbild hinzufügen",
+            // 'Hintergrundbild hinzufügen'
+            blank: "Leerer Hintergrund" //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: "Lege die Ausrichtung des Hintergrundes fest",
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: "Quadratisch",
+            //'Quadradtisch',
+            landscape: "Querformat",
+            //'Querformat',
+            portrait: "Hochformat" // 'Hochformat'
+
+          },
+          or: "oder",
+          modal: {
+            settings: "Einstellungen",
+            new: "Neue Ablagezone",
+            edit: "Antwort bearbeiten",
+            wrong: "Falsche Antwort hinzufügen"
+          }
+        },
         unsupported: {
           title: "Nicht unterstützt",
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
@@ -645,7 +688,6 @@ export const loggedInData = {
           combineLikeTerms: "Fasse die Terme zusammen.",
           setEqual: "Setze die Terme gleich.",
           firstExplanation: "Erste Erklärung",
-          moveUpLabel: "Zeile eins nach oben verschieben",
           removeRowLabel: "Zeile entfernen"
         },
         geogebra: {
@@ -667,8 +709,11 @@ export const loggedInData = {
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          upload: "Hochladen",
+          upload: "Bild hochladen",
           imageUrl: "Bild-URL",
+          invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
+          invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
+          searchOnline: "Online nach lizenzfreien Bildern suchen",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
@@ -680,7 +725,9 @@ export const loggedInData = {
           alt: "Beschreibung (wird nicht angezeigt)",
           altPlaceholder: "Was ist auf dem Bild zu sehen?",
           maxWidth: "Maximale Breite",
-          maxWidthPlaceholder: "Gib die maximal Breite an"
+          maxWidthPlaceholder: "Gib die maximal Breite an",
+          helpTooltipText: "Mehr Informationen und Hilfe",
+          change: "Bild ändern"
         },
         injection: {
           title: "serlo.org Inhalt",
@@ -854,9 +901,6 @@ export const loggedInData = {
             typing: "Tippen",
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "Vorschau",
-          previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
-          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
           dummyAnswers: "Falsche Antwortmöglichkeiten",
           addDummyAnswer: "Falsche Antwort hinzufügen",
           removeDummyAnswer: "Falsche Antwort entfernen",
@@ -870,7 +914,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titel",
           seoTitle: "Titel für Suchmaschinen",
-          seoDesc: "Beschreibung für Suchmaschinen"
+          seoDesc: "Beschreibung für Suchmaschinen",
+          moveUpLabel: "Eins nach oben verschieben",
+          moveDownLabel: "Nach unten verschieben"
         },
         article: {
           writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
@@ -878,7 +924,6 @@ export const loggedInData = {
           moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
           addSource: "Quellenangabe hinzufügen",
           removeLabel: "Löschen",
-          moveUpLabel: "Eins nach oben verschieben",
           dragLabel: "Ziehen, um die Reihenfolge zu ändern",
           openInTab: "Öffne den Link in einem neuen Tab",
           sources: "Quellen",
@@ -906,13 +951,8 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Kursseite entfernen",
-          addCoursePage: "Kursseite hinzufügen"
-        },
-        coursePage: {
-          explanation: "Erklärung",
-          video: 'Video',
-          question: "Frage",
-          title: "Titel"
+          addCoursePage: "Kursseite hinzufügen",
+          confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
         },
         exercise: {
           scMcExercise: "Auswahlaufgabe",
