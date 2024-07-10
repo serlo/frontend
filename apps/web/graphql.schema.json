@@ -232,6 +232,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "Page",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "Video",
             "ofType": null
           }
@@ -515,6 +520,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "PageRevision",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "VideoRevision",
             "ofType": null
           }
@@ -619,6 +629,11 @@
           {
             "kind": "OBJECT",
             "name": "ExerciseRevisionConnection",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PageRevisionConnection",
             "ofType": null
           },
           {
@@ -1505,6 +1520,11 @@
           {
             "kind": "OBJECT",
             "name": "ExerciseGroup",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Page",
             "ofType": null
           },
           {
@@ -10185,6 +10205,47 @@
             "deprecationReason": null
           },
           {
+            "name": "taxonomyTerms",
+            "description": null,
+            "args": [
+              {
+                "name": "after",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TaxonomyTermConnection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "threads",
             "description": null,
             "args": [
@@ -10286,7 +10347,17 @@
         "interfaces": [
           {
             "kind": "INTERFACE",
+            "name": "AbstractEntity",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
             "name": "AbstractRepository",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "AbstractTaxonomyTermChild",
             "ofType": null
           },
           {
@@ -10602,6 +10673,22 @@
             "deprecationReason": null
           },
           {
+            "name": "changes",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "content",
             "description": null,
             "args": [],
@@ -10645,6 +10732,30 @@
                 "name": "Int",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metaDescription",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metaTitle",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -10761,10 +10872,27 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "url",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
         "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "AbstractEntityRevision",
+            "ofType": null
+          },
           {
             "kind": "INTERFACE",
             "name": "AbstractRevision",
@@ -10847,7 +10975,13 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "AbstractEntityRevisionConnection",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
