@@ -10,7 +10,7 @@ import { LicenseDropdown } from '../components/licence-dropdown'
 import { FaIcon } from '@/components/fa-icon'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
-  const { link, alt, src, imageSource, maxWidth, licence } = state
+  const { alt, src, imageSource, licence } = state
   const imageStrings = useEditorStrings().plugins.image
 
   const isTemp = isTempFile(src.value)
