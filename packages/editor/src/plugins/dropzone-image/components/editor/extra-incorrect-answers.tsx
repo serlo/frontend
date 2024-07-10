@@ -15,39 +15,34 @@ interface ExtraIncorrectAnswersProps {
 export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
   const { extraDraggableAnswers, setModalType } = props
 
-  const {
-    blanksExercise: blanksExerciseStrings,
-    dropzoneImage: pluginStrings,
-  } = useEditorStrings().plugins
+  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
 
   const answers = extraDraggableAnswers.map(convertAnswer)
 
   return (
     <>
-      <span>{blanksExerciseStrings.dummyAnswers}:</span>
+      {answers.length > 0 && (
+        <>
+          <span>{blanksExerciseStrings.dummyAnswers}:</span>
 
-      <DraggableArea accept="none">
-        {answers.length === 0 && (
-          <span className="text-sm text-gray-600">
-            {pluginStrings.answers.wrongAnswersPlaceholder}
-          </span>
-        )}
-        {answers.map((possibleAnswer, index) => (
-          <RemovableInputWrapper
-            key={index}
-            onRemoveClick={() => {
-              extraDraggableAnswers.remove(index)
-            }}
-            tooltipText={blanksExerciseStrings.removeDummyAnswer}
-          >
-            <DraggableAnswer
-              answer={possibleAnswer}
-              data-qa="plugin-dropzone-image-alternative-answer"
-            />
-          </RemovableInputWrapper>
-        ))}
-      </DraggableArea>
-
+          <DraggableArea accept="none">
+            {answers.map((possibleAnswer, index) => (
+              <RemovableInputWrapper
+                key={index}
+                onRemoveClick={() => {
+                  extraDraggableAnswers.remove(index)
+                }}
+                tooltipText={blanksExerciseStrings.removeDummyAnswer}
+              >
+                <DraggableAnswer
+                  answer={possibleAnswer}
+                  data-qa="plugin-dropzone-image-alternative-answer"
+                />
+              </RemovableInputWrapper>
+            ))}
+          </DraggableArea>
+        </>
+      )}
       <button
         className="serlo-button-editor-secondary"
         onClick={() => setModalType(ModalType.CreateWrongAnswer)}
