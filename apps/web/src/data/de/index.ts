@@ -625,8 +625,7 @@ export const loggedInData = {
           title: "Bilder mit Ablagezonen",
           description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
           backgroundImage: "Hintergrundbild",
-          dropZone: "Ablagezone",
-          dropZoneTooltip: "Ablagezone hinzufügen",
+          addDropZone: "Ablagezone hinzufügen",
           removeDropZone: "Ablagezone entfernen",
           dropzoneVisibility: "Ablagezone Sichtbarkeit",
           answers: {

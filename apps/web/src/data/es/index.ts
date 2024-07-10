@@ -625,8 +625,7 @@ export const loggedInData = {
           title: 'Image Dropzones',
           description: 'Create an exercise with interactive images for matching and labeling',
           backgroundImage: "Imagen de fondo",
-          dropZone: 'Drop zone',
-          dropZoneTooltip: 'Choose the drop zone',
+          addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
           answers: {
