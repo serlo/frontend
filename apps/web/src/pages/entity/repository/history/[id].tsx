@@ -123,22 +123,6 @@ export const revisionHistoryQuery = gql`
           }
         }
       }
-
-      ... on Page {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
-            date
-          }
-        }
-      }
     }
   }
 

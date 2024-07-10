@@ -15,7 +15,6 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
   OnSaveData,
   SetEntityMutationData,
@@ -23,7 +22,6 @@ import {
 } from '@/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
-import type { PageSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export function AddRevision({
@@ -39,7 +37,6 @@ export function AddRevision({
   const auth = useAuthentication()
 
   const setEntityMutation = useSetEntityMutation()
-  const addPageRevision = useAddPageRevision()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
@@ -61,9 +58,7 @@ export function AddRevision({
 
   if (!setEntityMutation) return null
 
-  const isPage = type === UuidType.Page
-
-  if (!id && !isPage && !taxonomyParentId) return null
+  if (!id && !taxonomyParentId) return null
 
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
@@ -82,30 +77,25 @@ export function AddRevision({
   // types needs refactoring here. splitting controls and data would probably make sense
 
   const onSave = async (
-    data:
-      | SetEntityMutationData
-      | PageSerializedState
-      | TaxonomyCreateOrUpdateMutationData
+    data: SetEntityMutationData | TaxonomyCreateOrUpdateMutationData
   ) => {
     const willNeedReview = Object.hasOwn(data, 'controls')
       ? !(data as OnSaveData).controls.noReview
       : entityNeedsReview
 
     const success =
-      type === UuidType.Page
-        ? await addPageRevision(data as PageSerializedState)
-        : type === UuidType.TaxonomyTerm
-          ? await taxonomyCreateOrUpdateMutation(
-              data as TaxonomyCreateOrUpdateMutationData
-            )
-          : await setEntityMutation(
-              {
-                ...data,
-                __typename: type,
-              } as SetEntityMutationData,
-              willNeedReview,
-              taxonomyParentId
-            )
+      type === UuidType.TaxonomyTerm
+        ? await taxonomyCreateOrUpdateMutation(
+            data as TaxonomyCreateOrUpdateMutationData
+          )
+        : await setEntityMutation(
+            {
+              ...data,
+              __typename: type,
+            } as SetEntityMutationData,
+            willNeedReview,
+            taxonomyParentId
+          )
 
     return success ? Promise.resolve() : Promise.reject()
   }

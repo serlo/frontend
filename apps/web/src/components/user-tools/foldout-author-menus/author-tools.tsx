@@ -17,12 +17,7 @@ import { useCanDo } from '@/auth/use-can-do'
 import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  ExerciseInlineType,
-  UuidRevType,
-  UuidType,
-  UuidWithRevType,
-} from '@/data-types'
+import { ExerciseInlineType, UuidType, UuidWithRevType } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -363,8 +358,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 function typeToAuthorizationType(
   type: AuthorToolsData['typename']
 ): AuthUuidType {
-  if (type === UuidType.Page) return 'Page'
-  if (type === UuidRevType.Page) return 'PageRevision'
+  if (type === UuidType.Page) return UuidType.Page
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }

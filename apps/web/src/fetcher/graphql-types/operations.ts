@@ -2311,20 +2311,6 @@ export type SetThreadStatusMutationVariables = Exact<{
 
 export type SetThreadStatusMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadStatus: { __typename?: 'DefaultResponse', success: boolean } } };
 
-export type AddPageRevisionMutationVariables = Exact<{
-  input: PageAddRevisionInput;
-}>;
-
-
-export type AddPageRevisionMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', addRevision: { __typename?: 'DefaultResponse', success: boolean } } };
-
-export type CreatePageMutationVariables = Exact<{
-  input: CreatePageInput;
-}>;
-
-
-export type CreatePageMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', create: { __typename?: 'DefaultResponse', success: boolean } } };
-
 export type UpdateLicenseMutationVariables = Exact<{
   input: EntityUpdateLicenseInput;
 }>;
@@ -2352,13 +2338,6 @@ export type CheckoutRevisionMutationVariables = Exact<{
 
 
 export type CheckoutRevisionMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', checkoutRevision: { __typename?: 'DefaultResponse', success: boolean } } };
-
-export type CheckoutPageRevisionMutationVariables = Exact<{
-  input: CheckoutRevisionInput;
-}>;
-
-
-export type CheckoutPageRevisionMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', checkoutRevision: { __typename?: 'DefaultResponse', success: boolean } } };
 
 export type SetAbstractEntityMutationVariables = Exact<{
   input: SetAbstractEntityInput;
