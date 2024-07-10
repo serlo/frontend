@@ -6,6 +6,11 @@ import {
 } from '@editor/types/plugin-type-guards'
 import { createContext, useContext } from 'react'
 
+export const defaultExerciseContext = {
+  question: '',
+  strategy: '',
+  steps: '',
+}
 export const ExerciseContext = createContext<{
   exerciseTrackingId?: number
   isInExerciseGroup?: boolean
@@ -13,11 +18,7 @@ export const ExerciseContext = createContext<{
   question: string
   strategy: string
   steps: string
-}>({
-  question: '',
-  strategy: '',
-  steps: '',
-})
+}>(defaultExerciseContext)
 
 interface ExerciseContextProps {
   question: string

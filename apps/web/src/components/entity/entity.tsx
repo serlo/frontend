@@ -17,7 +17,10 @@ import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { ExerciseContext } from '@/contexts/exercise-context'
+import {
+  defaultExerciseContext,
+  ExerciseContext,
+} from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -113,6 +116,7 @@ export function Entity({ data }: EntityProps) {
     const content = isExercise ? (
       <ExerciseContext.Provider
         value={{
+          ...defaultExerciseContext,
           isEntity: true,
           isInExerciseGroup: false,
         }}
