@@ -1,7 +1,6 @@
 import { NiceDropdown } from '@editor/core/components/nice-dropdown'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, FC } from 'react'
 
-import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface LicenseDropdownProps {
@@ -10,51 +9,60 @@ interface LicenseDropdownProps {
   currentLicence?: string
 }
 
-export const LicenseDropdown = ({
+const imageLicenses = [
+  { id: 1, label: 'CC BY-SA 4.0' },
+  { id: 2, label: 'CC BY-SA 3.0' },
+  { id: 3, label: 'CC BY-SA 2.0' },
+  { id: 4, label: 'CC BY' },
+  { id: 5, label: 'CCO' },
+  { id: 6, label: 'Pixabay License' },
+  { id: 7, label: 'Public Domain' },
+]
+
+export const LicenseDropdown: FC<LicenseDropdownProps> = ({
   onLicenseChange,
   src,
   currentLicence,
-}: LicenseDropdownProps) => {
+}) => {
   const editorStrings = useEditorStrings()
-  const imageStrings = editorStrings.plugins.image
-  const { licenses: allLicenses } = useInstanceData()
+  const { licence, licenceHelpText } = editorStrings.plugins.image
 
-  const relevantLicenseIds = [1, 2, 3, 101, 102, 103, 104]
-  const licenses = allLicenses.filter(
-    (license) => license.shortTitle && relevantLicenseIds.includes(license.id)
+  const [isConfirmed, setIsConfirmed] = useState(
+    src ? src.includes('pixabay') : false
   )
-  const licenceNames = licenses.map((license) => {
-    return license.shortTitle
-  })
-
-  const [isConfirmed, setIsConfirmed] = useState(false)
-
+  const [selectedLicense, setSelectedLicense] = useState(currentLicence || '1')
   const isPixabayImage = src?.includes('pixabay')
+  const hasSetInitialLicense = useRef(false)
+
   useEffect(() => {
-    if (isPixabayImage) {
-      const pixabayLicence =
-        licenceNames.find((name) => name?.toLowerCase().includes('pixabay')) ||
-        ''
-      onLicenseChange?.(pixabayLicence)
+    if (isPixabayImage && !hasSetInitialLicense.current) {
+      const pixabayLicense = imageLicenses.find(({ id }) => id === 6)
+      if (!pixabayLicense) return
+      setSelectedLicense(pixabayLicense.id.toString())
+      onLicenseChange?.(pixabayLicense.id.toString())
+      setIsConfirmed(true)
+      hasSetInitialLicense.current = true
+    }
+  }, [isPixabayImage, onLicenseChange])
+
+  const handleLicenseChange = (newLicense?: string) => {
+    if (newLicense) {
+      setSelectedLicense(newLicense)
+      onLicenseChange?.(newLicense)
       setIsConfirmed(true)
     }
-  }, [isPixabayImage, onLicenseChange, licenceNames])
-
-  const handleLicenseChange = (newLicence: string) => {
-    onLicenseChange?.(newLicence)
-    setIsConfirmed(true)
   }
 
   return (
     <NiceDropdown
-      options={licenses.map((license) => ({
-        label: license.shortTitle ?? '',
-        value: license.id,
+      options={imageLicenses.map(({ id, label }) => ({
+        label: label ?? '',
+        value: id,
       }))}
-      onChange={(newLicence: string) => handleLicenseChange(newLicence)}
-      label={imageStrings.licence}
-      helpText={imageStrings.licenceHelpText}
-      defaultValue={currentLicence}
+      onChange={handleLicenseChange}
+      label={licence}
+      helpText={licenceHelpText}
+      defaultValue={selectedLicense}
       isConfirmed={isConfirmed}
     />
   )

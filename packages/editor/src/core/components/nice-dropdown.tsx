@@ -24,17 +24,20 @@ export const NiceDropdown = ({
   defaultValue,
   options,
   className,
-  isConfirmed,
+  isConfirmed: initialConfirmed,
 }: NiceDropdownProps) => {
   const [selectedValue, setSelectedValue] = useState(defaultValue)
   const [isOpen, setIsOpen] = useState(false)
   const [triggerWidth, setTriggerWidth] = useState(0)
+  const [isConfirmed, setIsConfirmed] = useState(initialConfirmed ?? false)
+  const [hasOpened, setHasOpened] = useState(false)
 
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   const handleChange = (newValue: string) => {
     setSelectedValue(newValue)
     onChange?.(newValue)
+    setIsConfirmed(true)
   }
 
   useEffect(() => {
@@ -42,6 +45,19 @@ export const NiceDropdown = ({
       setTriggerWidth(triggerRef.current.offsetWidth)
     }
   }, [])
+
+  useEffect(() => {
+    if (isOpen && !hasOpened) {
+      setHasOpened(true)
+    } else if (!isOpen && hasOpened) {
+      setIsConfirmed(true)
+    }
+  }, [isOpen, hasOpened])
+
+  // Update selectedValue if defaultValue changes
+  useEffect(() => {
+    setSelectedValue(defaultValue)
+  }, [defaultValue])
 
   return (
     <label
@@ -79,6 +95,7 @@ export const NiceDropdown = ({
             className="mx-auto mt-[-2px] rounded-md rounded-t-none border-2 border-editor-primary bg-white"
             side="bottom"
             position="popper"
+            onKeyDown={(e) => e.stopPropagation()}
             style={{ width: triggerWidth, borderTop: 'none' }}
           >
             <Select.Viewport>
