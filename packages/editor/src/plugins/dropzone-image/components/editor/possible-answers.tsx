@@ -30,6 +30,11 @@ export function PossibleAnswers(props: PossibleAnswersProps) {
       </button>
 
       <DraggableArea accept="none" className="mt-4">
+        {correctAnswers.length === 0 && (
+          <span className="text-sm text-gray-600">
+            {dropzoneImageStrings.answers.answersPlaceholder}
+          </span>
+        )}
         {correctAnswers.map((possibleAnswer, index) => (
           <DraggableAnswer
             key={index}

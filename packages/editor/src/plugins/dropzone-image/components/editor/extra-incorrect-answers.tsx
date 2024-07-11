@@ -21,25 +21,28 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
 
   return (
     <>
-      <span>{blanksExerciseStrings.dummyAnswers}:</span>
+      {answers.length > 0 && (
+        <>
+          <span>{blanksExerciseStrings.dummyAnswers}:</span>
 
-      <DraggableArea accept="none">
-        {answers.map((possibleAnswer, index) => (
-          <RemovableInputWrapper
-            key={index}
-            onRemoveClick={() => {
-              extraDraggableAnswers.remove(index)
-            }}
-            tooltipText={blanksExerciseStrings.removeDummyAnswer}
-          >
-            <DraggableAnswer
-              answer={possibleAnswer}
-              data-qa="plugin-dropzone-image-alternative-answer"
-            />
-          </RemovableInputWrapper>
-        ))}
-      </DraggableArea>
-
+          <DraggableArea accept="none">
+            {answers.map((possibleAnswer, index) => (
+              <RemovableInputWrapper
+                key={index}
+                onRemoveClick={() => {
+                  extraDraggableAnswers.remove(index)
+                }}
+                tooltipText={blanksExerciseStrings.removeDummyAnswer}
+              >
+                <DraggableAnswer
+                  answer={possibleAnswer}
+                  data-qa="plugin-dropzone-image-alternative-answer"
+                />
+              </RemovableInputWrapper>
+            ))}
+          </DraggableArea>
+        </>
+      )}
       <button
         className="serlo-button-editor-secondary"
         onClick={() => setModalType(ModalType.CreateWrongAnswer)}
