@@ -9,15 +9,15 @@ interface LicenseDropdownProps {
   currentLicence?: string
 }
 
-const imageLicenses = [
-  { id: 1, label: 'CC BY-SA 4.0' },
-  { id: 2, label: 'CC BY-SA 3.0' },
-  { id: 3, label: 'CC BY-SA 2.0' },
-  { id: 4, label: 'CC BY' },
-  { id: 5, label: 'CCO' },
-  { id: 6, label: 'Pixabay License' },
-  { id: 7, label: 'Public Domain' },
-]
+enum ImageLicence {
+  'CCBYSA4' = 'CC BY-SA 4.0',
+  'CCBYSA3' = 'CC BY-SA 3.0',
+  'CCBYSA2' = 'CC BY-SA 2.0',
+  'CCBY' = 'CC BY',
+  'CCO' = 'CCO',
+  'Pixabay' = 'Pixabay License',
+  'PublicDomain' = 'Public Domain',
+}
 
 export const LicenseDropdown: FC<LicenseDropdownProps> = ({
   onLicenseChange,
@@ -34,10 +34,8 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
 
   useEffect(() => {
     if (isPixabayImage && !hasSetInitialLicense.current) {
-      const pixabayLicense = imageLicenses.find(({ id }) => id === 6)
-      if (!pixabayLicense) return
-      setSelectedLicense(pixabayLicense.id.toString())
-      onLicenseChange?.(pixabayLicense.id.toString())
+      setSelectedLicense(ImageLicence.Pixabay)
+      onLicenseChange?.(ImageLicence.Pixabay)
       setIsConfirmed(true)
       hasSetInitialLicense.current = true
     }
@@ -53,15 +51,16 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
 
   return (
     <NiceDropdown
-      options={imageLicenses.map(({ id, label }) => ({
-        label: label ?? '',
-        value: id,
+      options={Object.keys(ImageLicence).map((key) => ({
+        label: ImageLicence[key as keyof typeof ImageLicence],
+        value: key,
       }))}
       onChange={handleLicenseChange}
       label={licence}
       helpText={licenceHelpText}
       defaultValue={selectedLicense}
       isConfirmed={isConfirmed}
+      showConfirmation
     />
   )
 }

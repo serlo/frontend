@@ -15,6 +15,7 @@ interface NiceDropdownProps {
   defaultValue?: string
   className?: string
   isConfirmed?: boolean
+  showConfirmation?: boolean
 }
 
 export const NiceDropdown = ({
@@ -25,6 +26,7 @@ export const NiceDropdown = ({
   options,
   className,
   isConfirmed: initialConfirmed,
+  showConfirmation,
 }: NiceDropdownProps) => {
   const [selectedValue, setSelectedValue] = useState(defaultValue)
   const [isOpen, setIsOpen] = useState(false)
@@ -61,7 +63,10 @@ export const NiceDropdown = ({
 
   return (
     <label
-      className={`h-100 mx-auto mb-0 mt-5 flex items-center text-almost-black ${className}`}
+      className={cn(
+        'h-100 mx-auto mb-0 mt-5 flex items-center text-almost-black',
+        className
+      )}
     >
       <span className="serlo-tooltip-trigger flex w-1/4 justify-between pr-[15px]">
         {label}
@@ -113,9 +118,9 @@ export const NiceDropdown = ({
           </Select.Content>
         </Select.Root>
       </span>
-      {isConfirmed && (
+      {showConfirmation && isConfirmed && (
         <span className="pointer-events-none ml-2 inline-flex items-center pr-3 text-green-500">
-          &#10003;
+          ✓
         </span>
       )}
     </label>

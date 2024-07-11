@@ -16,7 +16,7 @@ export const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
     return (
       <label className="mx-auto mb-0 mt-5 flex items-center justify-between text-almost-black">
         <span className="w-1/5">{label}</span>
-        {tooltip && <span className="w-25] ml-[-25px]">{tooltip}</span>}
+        {tooltip && <span className="w-25 ml-[-25px]">{tooltip}</span>}
         <input
           autoFocus={autoFocus}
           {...props}
