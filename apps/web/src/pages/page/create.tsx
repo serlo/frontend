@@ -8,6 +8,9 @@ import { UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
+// TODO: investigate if we still need this or if /add-revision is a good home
+// (would need changes, currently add-revision expects a taxonomy id in the url)
+
 export default renderedPageNoHooks(() => {
   const addRevisionProps = {
     initialState: {

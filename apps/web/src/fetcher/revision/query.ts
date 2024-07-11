@@ -47,27 +47,6 @@ export const revisionQuery = gql`
           }
         }
       }
-      ... on PageRevision {
-        ...abstractRevision
-        repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            ...abstractRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
     }
   }
 
