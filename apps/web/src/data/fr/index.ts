@@ -628,11 +628,17 @@ export const loggedInData = {
           addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
+          visibilityOptions: {
+            full: 'full',
+            partial: 'partial',
+            none: 'none'
+          },
           answers: {
             add: "Ajouter une réponse",
             remove: 'Remove answer',
             edit: 'Edit answer',
-            settings: 'Answer settings'
+            settings: 'Answer settings',
+            answersPlaceholder: 'Here you will find your dropzone answers'
           },
           answerZone: {
             description: 'Description (optional)',
