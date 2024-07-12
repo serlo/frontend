@@ -22,14 +22,10 @@ const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 export function EditorPresentation() {
   editorRenderers.init(createRenderers())
 
+  const title = 'Serlo Editor: Seamless Creation of Digital Learning Resources'
   return (
     <>
-      <HeadTags
-        data={{
-          title:
-            'Serlo Editor: Seamless Creation of Digital Learning Resources',
-        }}
-      />
+      <HeadTags data={{ title }} />
       <header className="px-side pb-8 pt-6 lg:px-side-lg">
         <Logo />
         {renderSupporterLogos()}

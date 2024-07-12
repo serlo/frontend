@@ -1,4 +1,5 @@
 import type { AuthorizationPayload } from '@serlo/authorization'
+import Head from 'next/head'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
@@ -10,6 +11,7 @@ import {
   fetchLoggedInData,
   getCachedLoggedInData,
 } from './logged-on-data-helper'
+import { MaintenanceBanner } from '../maintenance-banner'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { SessionDurationEvent } from '../session-duration-event'
 import { AuthProvider } from '@/auth/auth-provider'
@@ -29,6 +31,7 @@ export interface FrontendClientBaseProps {
   children: JSX.Element | (JSX.Element | null)[]
   noHeaderFooter?: boolean
   noContainers?: boolean
+  noIndex?: boolean
   showNav?: boolean
   serloEntityData?: UuidsContextData
   authorization?: AuthorizationPayload
@@ -54,6 +57,7 @@ export function FrontendClientBase({
   children,
   noHeaderFooter,
   noContainers,
+  noIndex,
   showNav,
   serloEntityData,
   authorization,
@@ -112,6 +116,11 @@ export function FrontendClientBase({
   return (
     <InstanceDataProvider value={instanceData}>
       <PrintMode />
+      {noIndex ? (
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+      ) : null}
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
           <UuidsProvider value={serloEntityData ?? null}>
@@ -133,6 +142,7 @@ export function FrontendClientBase({
               >
                 {children}
               </ConditionalWrap>
+              <MaintenanceBanner />
             </ConditionalWrap>
           </UuidsProvider>
         </LoggedInDataProvider>

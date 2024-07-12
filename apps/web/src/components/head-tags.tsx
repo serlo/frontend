@@ -9,10 +9,10 @@ import { serloDomain } from '@/helper/urls/serlo-domain'
 interface HeadTagsProps {
   data: HeadData
   breadcrumbsData?: BreadcrumbsData
-  noindex?: boolean
+  noIndex?: boolean
 }
 
-export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
+export function HeadTags({ data, breadcrumbsData, noIndex }: HeadTagsProps) {
   const { title, contentType, metaDescription, metaImage, canonicalUrl } = data
   const { strings, lang } = useInstanceData()
   const router = useRouter()
@@ -56,7 +56,7 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
       (entry) => entry.id === testAreaId
     )
     if (
-      noindex ||
+      noIndex ||
       (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
       data.title.startsWith('Testbereich')
     ) {

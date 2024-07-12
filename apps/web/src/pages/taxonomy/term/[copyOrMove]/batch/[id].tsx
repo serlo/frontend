@@ -13,6 +13,7 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>(
     return (
       <FrontendClientBase
         noContainers
+        noIndex
         loadLoggedInData /* warn: enables preview editor without login */
       >
         <div className="relative">

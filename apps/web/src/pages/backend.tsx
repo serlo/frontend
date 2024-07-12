@@ -5,7 +5,6 @@ import {
   faHatWizard,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import Head from 'next/head'
 
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
@@ -23,7 +22,7 @@ interface Entry {
 }
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))
@@ -58,9 +57,6 @@ function Content() {
 
   return (
     <>
-      <Head>
-        <meta name="robots" content="noindex" />
-      </Head>
       <PageTitle title={`🧙‍♀️ ${strings.pageTitles.diagon} 🔮`} headTitle />
       {renderMenu()}
     </>

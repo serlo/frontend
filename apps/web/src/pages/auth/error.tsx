@@ -9,7 +9,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Error />
   </FrontendClientBase>
 ))

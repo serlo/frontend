@@ -30,12 +30,6 @@ import {
 } from './types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-const visibilityOptions = [
-  DropzoneVisibility.Full,
-  DropzoneVisibility.Partial,
-  DropzoneVisibility.None,
-]
-
 export function DropzoneImageEditor(props: DropzoneImageProps) {
   const { state, id } = props
   const {
@@ -46,6 +40,8 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   } = state
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
+
+  const visibilityOptions = Object.values(pluginStrings.visibilityOptions)
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
@@ -110,7 +106,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
       }}
     >
       <DropzoneImageToolbar
-        onClickAddAnswerZone={insertAnswerZone}
         id={id}
         showSettingsButton={isBackgroundTypeImage}
         backgroundImageState={{
@@ -145,7 +140,10 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
             setModalType={setModalType}
           />
           <EditorCanvas state={state} setModalType={setModalType} />
-          <PossibleAnswers answerZones={answerZones} />
+          <PossibleAnswers
+            answerZones={answerZones}
+            onClickAddAnswerZone={insertAnswerZone}
+          />
           <ExtraIncorrectAnswers
             extraDraggableAnswers={extraDraggableAnswers}
             setModalType={setModalType}

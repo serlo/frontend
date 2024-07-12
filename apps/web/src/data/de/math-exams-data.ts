@@ -137,7 +137,7 @@ export const examsFoldersNW: ExamsFolders = {
 export const examsFoldersBE: ExamsFolders = {
   msa: {
     id: 305819,
-    displayTitle: 'Mittlere Schulabschluss (MSA)',
+    displayTitle: 'Mittlerer Schulabschluss (MSA)',
     schoolType: 'alle',
   },
   ebbr: {
@@ -257,6 +257,11 @@ export const extraMetaTags = {
       'Mathe Abschlussprüfungen in Brandenburg | Oberschule & Gesamtschule',
     metaDescription:
       'Kostenlose Prüfungsvorbereitung für A-Kurs/EBR-Klasse und B-Kurs/FOR-Klasse sowie Grund- und Erweiterungskurs der Gesamtschule in Brandenburg. Mit Serlo schaffst du das!',
+  },
+  308610: {
+    title: 'Mathe MSA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
+    metaDescription:
+      'Mathe lernen für den Mittleren Schulabschluss (MSA) mit den originalen Prüfungsaufgaben und Lösungen aus Schleswig-Holstein. Mit Serlo schaffst du das!',
   },
 } as const
 

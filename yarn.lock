@@ -4869,7 +4869,7 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@rollup/plugin-replace": ^5.0.5
-    "@serlo/editor": 0.9.0
+    "@serlo/editor": 0.9.1
     "@serlo/typescript-config": "workspace:*"
     "@types/escodegen": ^0.0.10
     "@types/estraverse": ^5.1.7
@@ -4904,15 +4904,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@serlo/editor@npm:0.9.0"
+"@serlo/editor@npm:0.9.1":
+  version: 0.9.1
+  resolution: "@serlo/editor@npm:0.9.1"
   dependencies:
     "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-resizable: ^3.0.5
-  checksum: 9bb50f019df661ebb405007759a4c08ee8c2a4a8ffa6cba7f9b67707a53d612b3e828444a2f55fdbc668e73bf1156139d7e58dd169a1be0da1cb17af143f1b72
+  checksum: bf009ed1b264145745ec4baa9a49737a363d56e4554e3f48a3b2038f263705973adbfa926b157789bae0e638e47ea172116204c1682c8e59b65e03f390ba8169
   languageName: node
   linkType: hard
 

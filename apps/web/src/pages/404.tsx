@@ -3,7 +3,7 @@ import { ErrorPage } from '@/components/pages/error-page'
 
 export default function Custom404() {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noIndex>
       <ErrorPage code={404} />
     </FrontendClientBase>
   )

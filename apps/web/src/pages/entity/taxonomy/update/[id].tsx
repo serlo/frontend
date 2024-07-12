@@ -36,7 +36,7 @@ interface UpdateTaxonomyLinksProps {
 
 export default renderedPageNoHooks<UpdateTaxonomyLinksProps>((props) => {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noIndex>
       <Content {...props} />
     </FrontendClientBase>
   )

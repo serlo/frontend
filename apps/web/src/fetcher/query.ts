@@ -40,12 +40,6 @@ export const dataQuery = gql`
         }
       }
 
-      ... on Page {
-        currentRevision {
-          ...abstractRevision
-        }
-      }
-
       ... on Exercise {
         ...exercise
       }

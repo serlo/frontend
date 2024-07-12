@@ -20,10 +20,7 @@ export function Search() {
 
   return (
     <>
-      <HeadTags
-        data={{ title: `Serlo.org - ${strings.header.search}` }}
-        noindex
-      />
+      <HeadTags data={{ title: `Serlo.org - ${strings.header.search}` }} />
       <PageTitle title={strings.header.search} />
       {consentGiven ? renderSearch() : renderConsentBanner()}
     </>

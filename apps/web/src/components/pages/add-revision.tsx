@@ -1,9 +1,9 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 import { loginUrl } from './auth/utils'
 import { Link } from '../content/link'
+import { HeadTags } from '../head-tags'
 import { InfoPanel } from '../info-panel'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
@@ -15,7 +15,6 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
   OnSaveData,
   SetEntityMutationData,
@@ -23,7 +22,6 @@ import {
 } from '@/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
-import type { PageSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export function AddRevision({
@@ -39,10 +37,11 @@ export function AddRevision({
   const auth = useAuthentication()
 
   const setEntityMutation = useSetEntityMutation()
-  const addPageRevision = useAddPageRevision()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
+
+  const isPage = type === UuidType.Page
 
   useEffect(() => {
     async function confirmAuth() {
@@ -60,8 +59,6 @@ export function AddRevision({
   }, [auth, strings])
 
   if (!setEntityMutation) return null
-
-  const isPage = type === UuidType.Page
 
   if (!id && !isPage && !taxonomyParentId) return null
 
@@ -82,42 +79,35 @@ export function AddRevision({
   // types needs refactoring here. splitting controls and data would probably make sense
 
   const onSave = async (
-    data:
-      | SetEntityMutationData
-      | PageSerializedState
-      | TaxonomyCreateOrUpdateMutationData
+    data: SetEntityMutationData | TaxonomyCreateOrUpdateMutationData
   ) => {
     const willNeedReview = Object.hasOwn(data, 'controls')
       ? !(data as OnSaveData).controls.noReview
       : entityNeedsReview
 
     const success =
-      type === UuidType.Page
-        ? await addPageRevision(data as PageSerializedState)
-        : type === UuidType.TaxonomyTerm
-          ? await taxonomyCreateOrUpdateMutation(
-              data as TaxonomyCreateOrUpdateMutationData
-            )
-          : await setEntityMutation(
-              {
-                ...data,
-                __typename: type,
-              } as SetEntityMutationData,
-              willNeedReview,
-              taxonomyParentId
-            )
+      type === UuidType.TaxonomyTerm
+        ? await taxonomyCreateOrUpdateMutation(
+            data as TaxonomyCreateOrUpdateMutationData
+          )
+        : await setEntityMutation(
+            {
+              ...data,
+              __typename: type,
+            } as SetEntityMutationData,
+            willNeedReview,
+            taxonomyParentId
+          )
 
     return success ? Promise.resolve() : Promise.reject()
   }
 
+  const typeString = getTranslatedType(strings, type)
+  const title = `${strings.editOrAdd.button} | ${typeString}${id ? ` (${id})` : ''}`
+
   return (
     <>
-      <Head>
-        <title>{`${strings.editOrAdd.button} | ${getTranslatedType(
-          strings,
-          type
-        )}${id ? ` (${id})` : ''}`}</title>
-      </Head>
+      <HeadTags data={{ title }} />
       {renderBacklink()}
       <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
       <div className="serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
