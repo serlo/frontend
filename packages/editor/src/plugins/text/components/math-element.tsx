@@ -48,12 +48,25 @@ export function MathElement({
     editor.selection &&
     Range.isCollapsed(editor.selection)
 
+  console.log('ShouldShowMathEditor :', {
+    shouldShowMathEditor,
+    focused,
+    selected,
+    editorSelection: editor.selection,
+    isRangeCollapsed: editor.selection
+      ? Range.isCollapsed(editor.selection)
+      : undefined,
+  })
   if (!shouldShowMathEditor) {
     return (
       <>
         {/* Slate void elements need to set attributes and contentEditable={false}
           See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements */}
-        <span {...attributes} contentEditable={false}>
+        <span
+          {...attributes}
+          contentEditable={false}
+          style={{ userSelect: 'none' }}
+        >
           <StaticMath src={element.src} inline={element.inline} type="math" />
           {children}
         </span>

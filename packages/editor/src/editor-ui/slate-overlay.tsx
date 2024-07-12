@@ -6,10 +6,12 @@ interface SlateOverlayProps {
   width: number
   anchor?: CustomElement
   children: ReactNode
+
+  skipLeftPositioning?: boolean
 }
 
 export function SlateOverlay(props: SlateOverlayProps) {
-  const { width, anchor, children } = props
+  const { width, anchor, children, skipLeftPositioning = false } = props
   const editor = useSlate()
   const wrapper = useRef<HTMLDivElement>(null)
 
@@ -33,11 +35,26 @@ export function SlateOverlay(props: SlateOverlayProps) {
     const overlap = boundingWrapperRight - parentRect.right
     const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
 
-    wrapper.current.style.left = `${
+    const leftOffSet =
       (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
-    }px`
-    wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
-  }, [editor, anchor, width])
+    // if (!skipLeftPositioning) {
+    wrapper.current.style.left = `${leftOffSet}px`
+    // }
+
+    console.log('Overlay wrapper.current.style.left', {
+      leftOffSet,
+      wrapperCurrentStyleLeft: wrapper.current.style.left,
+      overlap,
+      fallbackBoundingLeft,
+      boundingLeft,
+      offsetRectLeft: offsetRect.left,
+      anchorRectBottom: anchorRect.bottom,
+      offsetRectTop: offsetRect.top,
+      width,
+      parentRect: parentRect,
+    })
+    wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
+  }, [editor, anchor, width, skipLeftPositioning])
 
   return (
     <div ref={wrapper} className="absolute z-[95]">
@@ -60,32 +77,12 @@ function getAnchorRect(
   wrapper: HTMLDivElement
 ) {
   if (anchor) {
-    return ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect()
+    return (
+      ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect() ?? null
+    )
   }
 
-  const getRectWithinShadowDom = (): DOMRect | null => {
-    const rootNode = wrapper.getRootNode() as ShadowRoot | Document
-
-    if (!(rootNode instanceof ShadowRoot)) {
-      return null
-    }
-
-    const activeElement = rootNode.activeElement as HTMLElement
-    if (activeElement) {
-      const rect = activeElement.getBoundingClientRect()
-      return rect
-    } else {
-      const shadowHostRect = rootNode.host.getBoundingClientRect()
-      return new DOMRect(
-        shadowHostRect.left,
-        shadowHostRect.top,
-        shadowHostRect.width,
-        shadowHostRect.height
-      )
-    }
-  }
-
-  const shadowRect = getRectWithinShadowDom()
+  const shadowRect = getRectWithinShadowDom(wrapper)
   if (shadowRect) {
     return shadowRect
   }
@@ -99,4 +96,37 @@ function getAnchorRect(
   }
 
   return null
+}
+
+function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
+  const rootNode = wrapper.getRootNode() as ShadowRoot | Document
+
+  if (!(rootNode instanceof ShadowRoot)) {
+    return null
+  }
+  console.log('getRectWithinShadowDom called', rootNode)
+
+  const activeElement = rootNode.activeElement as HTMLElement
+  console.log('activeElement', activeElement)
+  if (activeElement) {
+    const rect = activeElement.getBoundingClientRect()
+    return new DOMRect(
+      rect.left,
+      // Add 14 px to the top to make the menu align with where the cursor is
+      // placed
+      rect.top,
+      rect.width,
+      rect.height
+    )
+  } else {
+    const shadowHostRect = rootNode.host.getBoundingClientRect()
+    return new DOMRect(
+      shadowHostRect.left,
+      // Add 14 px to the top to make the menu align with where the cursor is
+      // placed
+      shadowHostRect.top,
+      shadowHostRect.width,
+      shadowHostRect.height
+    )
+  }
 }

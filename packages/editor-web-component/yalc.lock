@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@serlo/editor": {
+      "signature": "52b49509acdf6479a2b47b71e1355e83",
+      "file": true,
+      "replaced": "0.9.0"
+    }
+  }
+}

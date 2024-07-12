@@ -30,6 +30,7 @@ export function TextLeafWithPlaceholder(
       <span
         className="pointer-events-none absolute -mt-1 block w-full text-gray-400 [user-select:none]"
         contentEditable={false}
+        style={{ userSelect: 'none' }}
         data-qa="plugin-text-leaf-element-with-placeholder"
       >
         {customPlaceholder ?? textStrings.placeholder}{' '}

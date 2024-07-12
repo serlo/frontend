@@ -33,6 +33,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
+      console.log('Target and e target: ', { target, eTarget: e.target })
       if (!focused && target === containerRef.current) {
         if (document?.plugin === 'rows') {
           const parent = selectChildTreeOfParent(store.getState(), id)
@@ -49,6 +50,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   // additional focus check to set focus when using tab navigation
   const handleFocus = useCallback(
     (e: React.FocusEvent) => {
+      console.log('Handle focus called', e)
       if (!document) return
       if (['rows', 'exercise'].includes(document?.plugin)) return
 

@@ -35,6 +35,8 @@ export const useEditableKeydownHandler = (
 
   return useCallback(
     (event: React.KeyboardEvent) => {
+      console.log('Text editor, event.key: ', event.key)
+
       // If linebreaks are disabled in the config, prevent any enter key handling
       if (config.noLinebreaks && event.key === 'Enter') {
         event.preventDefault()
@@ -109,8 +111,13 @@ export const useEditableKeydownHandler = (
         // or merge with next Slate instance on "delete" key
         const isBackspaceAtStart =
           isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
+
         const isDeleteAtEnd =
           isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
+        console.log('IsBackspaceAtStart: ', {
+          isBackspaceAtStart,
+          isListActiveThisShouldBeFalse: isListActive,
+        })
         if ((isBackspaceAtStart || isDeleteAtEnd) && !isListActive) {
           event.preventDefault()
 

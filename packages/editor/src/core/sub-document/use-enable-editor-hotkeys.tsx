@@ -50,7 +50,9 @@ export const useEnableEditorHotkeys = (
     Key.ArrowUp,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusPrevious(selectChildTree(store.getState())))
+        const childTree = selectChildTree(store.getState())
+        console.log('ChildTree: ', childTree)
+        dispatch(focusPrevious(childTree))
       })
     },
     {
@@ -65,7 +67,12 @@ export const useEnableEditorHotkeys = (
     Key.ArrowDown,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusNext(selectChildTree(store.getState())))
+        const currentStore = store.getState()
+        console.log('Current store: ', currentStore)
+        const childTree = selectChildTree(currentStore)
+        console.log('ChildTree: ', childTree)
+
+        dispatch(focusNext(childTree))
       })
     },
     {
@@ -100,6 +107,9 @@ export const useEnableEditorHotkeys = (
 
   useHotkeys('backspace, del', (e) => {
     if (isDocumentEmpty) {
+      console.log('backspace or delete called while document is empty', {
+        isDocumentEmpty,
+      })
       handleKeyDown(e, () => {
         if (!e) return
 
