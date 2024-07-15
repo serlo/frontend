@@ -10,6 +10,7 @@ import { debounce } from 'ts-debounce'
 
 import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -31,6 +32,26 @@ interface PixabayImageSearchProps {
   onSelectImage: (imageUrl: string) => void
 }
 
+const germanSearchTags = {
+  math: 'Mathematik',
+  nature: 'Natur',
+  plants: 'Pflanzen',
+  adventure: 'Abenteuer',
+  teamwork: 'Teamwork',
+  journey: 'Reise',
+  sports: 'Sport',
+  chemistry: 'Chemie',
+  lab: 'Labor',
+  tech: 'Technologie',
+  physics: 'Physik',
+  humans: 'Menschen',
+  pyramide: 'Pyramide',
+  cylinder: 'Zylinder',
+  art: 'Kunst',
+  music: 'Musik',
+  school: 'Schule',
+}
+
 export const PixabayImageSearch = ({
   onSelectImage,
 }: PixabayImageSearchProps) => {
@@ -40,6 +61,7 @@ export const PixabayImageSearch = ({
   const [isSearching, setIsSearching] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
+  const { lang } = useInstanceData()
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
   const apiKey = process.env.NEXT_PUBLIC_PIXABAY_API_KEY
@@ -93,10 +115,16 @@ export const PixabayImageSearch = ({
     await handleSearch(query)
   }
 
-  const showTags = images.length === 0 && !isSearching
+  const isGermanLocale = lang === 'de'
+  const showTags = isGermanLocale && images.length === 0 && !isSearching
 
   return (
-    <div className="max-h-[60vw] min-h-[20vw] pt-2">
+    <div
+      className={cn(
+        'max-h-[60vw] pt-2',
+        isGermanLocale ? 'min-h-[20vw]' : 'min-h-[5vw]'
+      )}
+    >
       <h2 className="mb-6 ml-10 mt-10 font-bold">{imageStrings.licenceFree}</h2>
       {/* Search input */}
       <div className="relative ml-10 w-[90%]">
@@ -115,6 +143,7 @@ export const PixabayImageSearch = ({
             onClick={() => {
               setQuery('')
               setImages([])
+              setHasSearched(false)
               setTimeout(() => {
                 inputRef.current?.focus()
               })
@@ -129,7 +158,7 @@ export const PixabayImageSearch = ({
       {showTags && (
         <div>
           <div className="mb-6 mt-10 flex flex-wrap justify-center">
-            {Object.values(imageStrings.searchTags).map((tagKey) => (
+            {Object.values(germanSearchTags).map((tagKey) => (
               <button
                 key={tagKey}
                 onClick={() => handleTagClick(tagKey)}
@@ -146,9 +175,9 @@ export const PixabayImageSearch = ({
         className={cn(
           'max-h-[500px]',
           'mt-4 flex flex-wrap px-8',
-          isLoadingImage && 'max-h-100 border-1 border border-red-500'
+          isLoadingImage && 'max-h-100 border-1 border border-red-500',
+          isLoadingImage ? 'overflow-hidden' : 'overflow-auto'
         )}
-        style={{ overflow: isLoadingImage ? 'hidden' : 'auto' }}
       >
         {/* Loading overlay */}
         {(isLoadingImage || isSearching) && (
