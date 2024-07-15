@@ -968,6 +968,7 @@ export const loggedInData = {
           scMcExercise: "Ejercicio de elección",
           inputExercise: "Ejercicio de respuesta escrita",
           textAreaExercise: "Ejercicio de cajas de texto",
+          dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: "Ejercicio de rellenar los espacios en blanco",
           h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
