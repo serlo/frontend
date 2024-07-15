@@ -92,7 +92,7 @@ export function createPlugins({
           {
             type: EditorPluginType.DropzoneImage,
             plugin: createDropzoneImagePlugin(),
-            visibleInSuggestions: true,
+            visibleInSuggestions: false,
             icon: <IconDropzones />,
           },
         ]),
