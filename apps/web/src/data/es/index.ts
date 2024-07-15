@@ -716,9 +716,12 @@ export const loggedInData = {
           description: "Subir imágenes.",
           upload: "Subir imagen",
           imageUrl: "URL de la imagen",
+          imageSource: 'Image Source',
+          imageSourceHelpText: 'Add the author or source of this image here',
           invalidImageUrl: "Error: URL inválida o incompleta",
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
           searchOnline: 'Search online for licence-free images',
+          placeholderSource: 'Source (optional)',
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
@@ -732,7 +735,9 @@ export const loggedInData = {
           maxWidth: "Ancho máximo",
           maxWidthPlaceholder: "Introduce la anchura máxima",
           helpTooltipText: 'More information and help related to Image Plugin',
-          change: "Cambiar imagen"
+          change: "Cambiar imagen",
+          licence: 'Licence',
+          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:'
         },
         injection: {
           title: "serlo.org Contenido",
