@@ -4869,7 +4869,7 @@ __metadata:
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
   dependencies:
     "@rollup/plugin-replace": ^5.0.5
-    "@serlo/editor": 0.9.1
+    "@serlo/editor": "file:.yalc/@serlo/editor"
     "@serlo/typescript-config": "workspace:*"
     "@types/escodegen": ^0.0.10
     "@types/estraverse": ^5.1.7
@@ -4904,15 +4904,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.9.1":
-  version: 0.9.1
-  resolution: "@serlo/editor@npm:0.9.1"
+"@serlo/editor@file:.yalc/@serlo/editor::locator=%40serlo%2Feditor-web-component%40workspace%3Apackages%2Feditor-web-component":
+  version: 0.9.1+0bed0eee
+  resolution: "@serlo/editor@file:.yalc/@serlo/editor#.yalc/@serlo/editor::hash=a0daa7&locator=%40serlo%2Feditor-web-component%40workspace%3Apackages%2Feditor-web-component"
   dependencies:
     "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-resizable: ^3.0.5
-  checksum: bf009ed1b264145745ec4baa9a49737a363d56e4554e3f48a3b2038f263705973adbfa926b157789bae0e638e47ea172116204c1682c8e59b65e03f390ba8169
+  checksum: f2059c5b5e02bd160caa9de6b8b1716b7d0e64dae8b561525eab49f872b0ddb04ced5b6d0e85c42575f5c0985a7674f1824975050aee6f7e27e6a9df6e43bd8d
   languageName: node
   linkType: hard
 
@@ -5036,7 +5036,7 @@ __metadata:
     redux-saga: ^1.3.0
     reselect: ^4.1.8
     slate: ^0.103.0
-    slate-react: ^0.105.0
+    slate-react: ^0.107.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
     tailwindcss: ^3.4.3
@@ -5196,7 +5196,7 @@ __metadata:
     redux-saga: ^1.3.0
     reselect: ^4.1.8
     slate: ^0.103.0
-    slate-react: ^0.105.0
+    slate-react: ^0.107.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
     tailwindcss: ^3.4.3
@@ -16739,9 +16739,9 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"slate-react@npm:^0.105.0":
-  version: 0.105.0
-  resolution: "slate-react@npm:0.105.0"
+"slate-react@npm:^0.107.0":
+  version: 0.107.0
+  resolution: "slate-react@npm:0.107.0"
   dependencies:
     "@juggle/resize-observer": ^3.4.0
     "@types/is-hotkey": ^0.1.8
@@ -16756,7 +16756,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     react: ">=18.2.0"
     react-dom: ">=18.2.0"
     slate: ">=0.99.0"
-  checksum: 64927027d3d584e9451d6ee7320bc3f2ff3dd277bb6888be63fce5e8689140623e5c8b614ed64fe47055b33bd67fefd0c83a03074a0b52c5937d96f8806edab5
+  checksum: f839661240e1b7b2565a4713c27b71fa99e924fceafe0f320221b3e4073e40334e2727d548c735ae40df9712161fbdb679c4a0b9c5ad2a57a442a1708c094952
   languageName: node
   linkType: hard
 
