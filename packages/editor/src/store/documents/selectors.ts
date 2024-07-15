@@ -54,6 +54,11 @@ export const selectIsDocumentEmpty = createSelector(
     if (typeof plugin.isEmpty === 'function') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const state = plugin.state.init(document.state, () => {})
+      // console.log('Plugin isEmpty is function', {
+      //   // eslint-disable-next-line
+      //   state: state as any,
+      //   isEmpty: plugin.isEmpty(state),
+      // })
       return plugin.isEmpty(state)
     }
 
@@ -61,6 +66,12 @@ export const selectIsDocumentEmpty = createSelector(
     const initialState = plugin.state.createInitialState({
       createDocument: () => {},
     })
+    // console.log("Plugin isEmpty isn't function", {
+    //   // eslint-disable-next-line
+    //   initialState: initialState as any,
+    //   documentState: document.state,
+    //   isEmpty: R.equals(document.state, initialState),
+    // })
     return R.equals(document.state, initialState)
   }
 )

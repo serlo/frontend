@@ -106,7 +106,8 @@ export function SerloTableEditor(props: SerloTableProps) {
               onKeyDown={onKeyDownHandler}
               className={cn(
                 '[&>div>[data-slate-editor]]:pr-2',
-                '[&>div>[data-slate-editor]]:pb-block'
+                '[&>div>[data-slate-editor]]:pb-block',
+                '[&>div>[data-slate-editor]]:focus:caret-visible'
               )}
             >
               {renderInlineNav(rowIndex, colIndex)}
