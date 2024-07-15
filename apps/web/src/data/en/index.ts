@@ -808,8 +808,8 @@ export const loggedInData = {
           licenceHelpText:
             'External content with the following licenses may be integrated on serlo.org:',
           licenceFree: 'Licence Free Images',
-          pixabayText: 'Pictures will be fetched from Pixabay', // TODO: fix text
-          pixabayLoadedText: "These pictures were loaded from Pixabay's API.", // TODO: fix text
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: 'These images were loaded from Pixabay.',
           searching: 'Searching for images ...',
           loadingImage: 'Downloading image ...', // "Bild wird heruntergeladen..."
           noImagesFound: 'No images found',
