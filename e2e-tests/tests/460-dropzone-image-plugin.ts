@@ -32,12 +32,12 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
   I.type(
     'https://assets.serlo.org/5ab7c782ad7f7_f4111037d697776c337e7bffd142cedd01324bc9.png'
   )
-  I.click('$modal-close-button')
   I.seeNumberOfElements('$answer-zone-answerZone-0', 1)
 
   I.seeNumberOfElements('$plugin-dropzone-image-answer-content-image', 2)
 
   I.say('Click settings button of first answer zone')
+  I.click('$modal-close-button')
   I.moveCursorTo('$answer-zone-answerZone-0')
   I.click('$answer-zone-answerZone-0-settings-button')
   I.seeNumberOfElements('$answer-zone-settings-form-duplicate-button', 1)

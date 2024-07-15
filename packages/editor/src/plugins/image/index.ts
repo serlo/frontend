@@ -23,6 +23,8 @@ const imageState = object({
   src: upload(''),
   link: optional(object({ href: string('') })),
   alt: optional(string('')),
+  imageSource: optional(string('')),
+  licence: optional(string('')),
   maxWidth: optional(number(0)),
   caption: optional(
     child({
@@ -89,6 +91,8 @@ export function createImagePlugin(
               src: { pending: files[0] },
               link: undefined,
               alt: undefined,
+              licence: undefined,
+              imageSource: undefined,
               maxWidth: undefined,
               caption: { plugin: EditorPluginType.Text },
             },
