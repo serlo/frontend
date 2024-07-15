@@ -716,9 +716,12 @@ export const loggedInData = {
           description: "Télécharger des images.",
           upload: 'Upload Image',
           imageUrl: 'Image URL',
+          imageSource: 'Image Source',
+          imageSourceHelpText: 'Add the author or source of this image here',
           invalidImageUrl: 'Error: Invalid or Incomplete URL',
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
           searchOnline: 'Search online for licence-free images',
+          placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
@@ -732,7 +735,9 @@ export const loggedInData = {
           maxWidth: 'Maximum width',
           maxWidthPlaceholder: 'Enter the maximum width',
           helpTooltipText: 'More information and help related to Image Plugin',
-          change: 'Change image'
+          change: 'Change image',
+          licence: 'Licence',
+          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:'
         },
         injection: {
           title: "Contenu de serlo.org",
