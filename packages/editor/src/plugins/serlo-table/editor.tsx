@@ -81,7 +81,6 @@ export function SerloTableEditor(props: SerloTableProps) {
           )
 
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
-            console.log(`Table OnKeyUpHandler called for ${e.key}`, { isClear })
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
             if (e.key === 'Delete' || e.key === 'Backspace') {
               if (!isClear) setUpdateHack((count) => count + 1)

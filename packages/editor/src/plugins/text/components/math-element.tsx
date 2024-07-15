@@ -48,15 +48,6 @@ export function MathElement({
     editor.selection &&
     Range.isCollapsed(editor.selection)
 
-  console.log('ShouldShowMathEditor :', {
-    shouldShowMathEditor,
-    focused,
-    selected,
-    editorSelection: editor.selection,
-    isRangeCollapsed: editor.selection
-      ? Range.isCollapsed(editor.selection)
-      : undefined,
-  })
   if (!shouldShowMathEditor) {
     return (
       <>

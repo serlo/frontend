@@ -94,12 +94,6 @@ export function TextEditor(props: TextEditorProps) {
     // Get the current text value of the editor
     const text = Node.string(editor)
 
-    console.log('Text editor: ', {
-      text,
-      editor,
-      focused,
-      editorChildren: editor.children,
-    })
     // If the editor is not focused, remove the suggestions search
     // and exit the useEffect hook
     if (focused === false) {
@@ -116,8 +110,7 @@ export function TextEditor(props: TextEditorProps) {
 
     // If the editor is empty, set the cursor at the start
     if (text === '') {
-      console.log('Text editor, text is empty. Set cursor at the start'),
-        Transforms.select(editor, { offset: 0, path: [0, 0] })
+      Transforms.select(editor, { offset: 0, path: [0, 0] })
       instanceStateStore[id].selection = editor.selection
     }
 
@@ -170,7 +163,7 @@ export function TextEditor(props: TextEditorProps) {
       {focused ? <LinkControls /> : null}
 
       {showSuggestions ? (
-        <SlateOverlay width={620} skipLeftPositioning>
+        <SlateOverlay width={620}>
           <Suggestions {...suggestionsProps} />
         </SlateOverlay>
       ) : null}

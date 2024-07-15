@@ -19,14 +19,12 @@ export const focusSlice = createSlice({
     focusNext(state, action: PayloadAction<ChildTreeNode | null>) {
       if (!state || !action.payload) return state
       const next = findNextChildTreeNode(action.payload, state)
-      console.log('Next: ', { next, state })
       if (!next) return state
       return next
     },
     focusPrevious(state, action: PayloadAction<ChildTreeNode | null>) {
       if (!state || !action.payload) return state
       const previous = findPreviousChildTreeNode(action.payload, state)
-      console.log('Previous: ', { previous, state })
       if (!previous) return state
       return previous
     },

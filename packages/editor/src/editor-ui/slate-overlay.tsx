@@ -6,12 +6,10 @@ interface SlateOverlayProps {
   width: number
   anchor?: CustomElement
   children: ReactNode
-
-  skipLeftPositioning?: boolean
 }
 
 export function SlateOverlay(props: SlateOverlayProps) {
-  const { width, anchor, children, skipLeftPositioning = false } = props
+  const { width, anchor, children } = props
   const editor = useSlate()
   const wrapper = useRef<HTMLDivElement>(null)
 
@@ -37,24 +35,10 @@ export function SlateOverlay(props: SlateOverlayProps) {
 
     const leftOffSet =
       (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
-    // if (!skipLeftPositioning) {
     wrapper.current.style.left = `${leftOffSet}px`
-    // }
 
-    console.log('Overlay wrapper.current.style.left', {
-      leftOffSet,
-      wrapperCurrentStyleLeft: wrapper.current.style.left,
-      overlap,
-      fallbackBoundingLeft,
-      boundingLeft,
-      offsetRectLeft: offsetRect.left,
-      anchorRectBottom: anchorRect.bottom,
-      offsetRectTop: offsetRect.top,
-      width,
-      parentRect: parentRect,
-    })
     wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
-  }, [editor, anchor, width, skipLeftPositioning])
+  }, [editor, anchor, width])
 
   return (
     <div ref={wrapper} className="absolute z-[95]">
@@ -104,10 +88,8 @@ function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
   if (!(rootNode instanceof ShadowRoot)) {
     return null
   }
-  console.log('getRectWithinShadowDom called', rootNode)
 
   const activeElement = rootNode.activeElement as HTMLElement
-  console.log('activeElement', activeElement)
   if (activeElement) {
     const rect = activeElement.getBoundingClientRect()
     return new DOMRect(

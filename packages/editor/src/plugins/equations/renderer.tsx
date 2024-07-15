@@ -118,5 +118,5 @@ export function EquationsRenderer({
 }
 
 export function renderDownArrow() {
-  return <div className="self-center font-[serif] text-4xl">&darr;</div>
+  return <span className="self-center font-[serif] text-4xl">&darr;</span>
 }
