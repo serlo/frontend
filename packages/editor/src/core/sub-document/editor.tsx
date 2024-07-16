@@ -17,6 +17,17 @@ import {
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
 
+// Global state to manage focus events and cleanup old timeout. Could probably
+// refactor this to a Context, but so far, I haven't seen issues with this
+// approach.
+export const focusState: {
+  latestId: string | null
+  timeout: NodeJS.Timeout | null
+} = {
+  latestId: null,
+  timeout: null,
+}
+
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
@@ -52,19 +63,30 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       if (!document) return
       if (['rows', 'exercise'].includes(document?.plugin)) return
 
+      // Clear any existing timeout
+      if (focusState.timeout) {
+        clearTimeout(focusState.timeout)
+      }
+
+      focusState.latestId = id
+
       // if after a short delay dom focus is not set inside focused plugin
       // we overwrite it here (because it's probably because of tab navigation)
-      setTimeout(() => {
+      focusState.timeout = setTimeout(() => {
         // fixes a bug in table plugin with disappearing buttons
         if (['button', 'select'].includes(e.target.nodeName?.toLowerCase())) {
           return
         }
 
         // find closest document
-        const target = (e.target as HTMLDivElement).closest('[data-document]')
 
-        if (!focused && target === containerRef.current) {
-          dispatch(focus(id))
+        if (focusState.latestId === id) {
+          const target = (e.target as HTMLDivElement).closest('[data-document]')
+          // console.log(`focusing sub document ${id}`, { target, focused })
+
+          if (!focused && target === containerRef.current) {
+            dispatch(focus(id))
+          }
         }
         // 10ms is an arbitrary value:
         // as low as possible but after the other focus handler is done rerendering
