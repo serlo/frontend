@@ -5036,7 +5036,7 @@ __metadata:
     redux-saga: ^1.3.0
     reselect: ^4.1.8
     slate: ^0.103.0
-    slate-react: ^0.107.0
+    slate-react: ^0.107.1
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
     tailwindcss: ^3.4.3
@@ -16736,27 +16736,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     react-dom: ">=18.2.0"
     slate: ">=0.99.0"
   checksum: 8236f4f1149ad2bfcdaee263c2ad4818d40fafb3bdb77d2b360d434cc3794e123a8da93f7acd73813dc27ad9723d21e9080dea98053693460d0f5376858c6515
-  languageName: node
-  linkType: hard
-
-"slate-react@npm:^0.107.0":
-  version: 0.107.0
-  resolution: "slate-react@npm:0.107.0"
-  dependencies:
-    "@juggle/resize-observer": ^3.4.0
-    "@types/is-hotkey": ^0.1.8
-    "@types/lodash": ^4.14.200
-    direction: ^1.0.4
-    is-hotkey: ^0.2.0
-    is-plain-object: ^5.0.0
-    lodash: ^4.17.21
-    scroll-into-view-if-needed: ^3.1.0
-    tiny-invariant: 1.3.1
-  peerDependencies:
-    react: ">=18.2.0"
-    react-dom: ">=18.2.0"
-    slate: ">=0.99.0"
-  checksum: f839661240e1b7b2565a4713c27b71fa99e924fceafe0f320221b3e4073e40334e2727d548c735ae40df9712161fbdb679c4a0b9c5ad2a57a442a1708c094952
   languageName: node
   linkType: hard
 
