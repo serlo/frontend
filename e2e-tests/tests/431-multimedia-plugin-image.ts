@@ -34,26 +34,15 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
   I.say('Edit image description')
   const description = 'Simple sample image'
   I.click('$plugin-image-settings')
-  I.fillField('Beschreibung (wird nicht angezeigt)', description)
+  I.fillField('Alternativtext (wird nicht angezeigt)', description)
   I.click('$modal-close-button')
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
 
   I.say('Edit image link')
   const href = 'https://de.serlo.org/mathe/test'
   I.click('$plugin-image-settings')
-  I.fillField('Link', href)
-  I.fillField('Maximale Breite', 200)
+  I.fillField('Quelle (optional)', href)
   I.click('$modal-close-button')
-  I.seeElement(locate('$plugin-image-link').withAttr({ href }))
-
-  I.say('Edit image max width')
-  const maxWidth = 200
-  I.click('$plugin-image-settings')
-  I.fillField('Maximale Breite', maxWidth)
-  I.click('$modal-close-button')
-  I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
-  )
 
   I.say(
     'Switch to video and back to image - uploaded image and settings should stay'
@@ -70,10 +59,6 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
   I.click('$modal-close-button')
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
-  I.seeElement(locate('$plugin-image-link').withAttr({ href }))
-  I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
-  )
 })
 
 Scenario('Multimedia plugin invalid image URL', ({ I }) => {
@@ -109,26 +94,15 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
   I.say('Edit image description')
   const description = 'Simple sample image'
   I.click('$plugin-image-settings')
-  I.fillField('Beschreibung (wird nicht angezeigt)', description)
+  I.fillField('Alternativtext (wird nicht angezeigt)', description)
   I.click('$modal-close-button')
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
 
   I.say('Edit image link')
   const link = 'https://de.serlo.org/mathe/test'
   I.click('$plugin-image-settings')
-  I.fillField('Link', link)
-  I.fillField('Maximale Breite', 200)
+  I.fillField('Quelle (optional)', link)
   I.click('$modal-close-button')
-  I.seeElement(locate('$plugin-image-link').withAttr({ href: link }))
-
-  I.say('Edit image max width')
-  const maxWidth = 200
-  I.click('$plugin-image-settings')
-  I.fillField('Maximale Breite', maxWidth)
-  I.click('$modal-close-button')
-  I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
-  )
 
   I.say('Switch to video and back to image - image and settings should stay')
   I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
@@ -144,10 +118,6 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
   I.click('$modal-close-button')
   I.seeElement(locate('img.serlo-img').withAttr({ src }))
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
-  I.seeElement(locate('$plugin-image-link').withAttr({ href: link }))
-  I.seeElement(
-    locate('.mx-auto').withAttr({ style: `max-width: ${maxWidth}px;` })
-  )
 })
 
 Scenario('Multimedia plugin fill in image caption', ({ I }) => {

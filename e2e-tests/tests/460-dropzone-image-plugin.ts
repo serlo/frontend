@@ -5,12 +5,12 @@ Feature('Serlo Editor - Dropzone Image plugin')
 Before(popupWarningFix)
 
 Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  I.amOnPage('/entity/create/Exercise/23869')
 
   I.say('Add drag drop plugin')
 
   I.click('Füge ein Element hinzu')
-  I.click('$plugin-suggestion-dropzoneImage')
+  I.click('$add-exercise-dropzoneImage')
 
   I.say('Select background type and shape')
 
@@ -87,12 +87,12 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
 Scenario(
   'Create a drag drop exercise with two dropzones and wrong answers',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    I.amOnPage('/entity/create/Exercise/23869')
 
     I.say('Add drag drop plugin')
 
     I.click('Füge ein Element hinzu')
-    I.click('$plugin-suggestion-dropzoneImage')
+    I.click('$add-exercise-dropzoneImage')
 
     I.say('Select background type and shape')
 
