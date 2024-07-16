@@ -66,10 +66,10 @@ export function EquationsRenderer({
             <td />
             {transformationTarget === 'term' ? (
               <td colSpan={2}>
-                <div className="flex">
+                <span className="flex">
                   {renderDownArrow()}
                   {step.explanation}
-                </div>
+                </span>
               </td>
             ) : (
               <>

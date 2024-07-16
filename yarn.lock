@@ -4905,14 +4905,14 @@ __metadata:
   linkType: soft
 
 "@serlo/editor@file:.yalc/@serlo/editor::locator=%40serlo%2Feditor-web-component%40workspace%3Apackages%2Feditor-web-component":
-  version: 0.9.1+0bed0eee
-  resolution: "@serlo/editor@file:.yalc/@serlo/editor#.yalc/@serlo/editor::hash=a0daa7&locator=%40serlo%2Feditor-web-component%40workspace%3Apackages%2Feditor-web-component"
+  version: 0.9.1+a3c33902
+  resolution: "@serlo/editor@file:.yalc/@serlo/editor#.yalc/@serlo/editor::hash=6cff3a&locator=%40serlo%2Feditor-web-component%40workspace%3Apackages%2Feditor-web-component"
   dependencies:
     "@serlo/katex-styles": 1.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-resizable: ^3.0.5
-  checksum: f2059c5b5e02bd160caa9de6b8b1716b7d0e64dae8b561525eab49f872b0ddb04ced5b6d0e85c42575f5c0985a7674f1824975050aee6f7e27e6a9df6e43bd8d
+  checksum: 09275d48790537a628eb594285f50f49bb7d2a3112e6605931143a52367a7f2fefca4942b33b677ebfeb971f08a58193d35c93aef251de0eb7c01357dede29ba
   languageName: node
   linkType: hard
 
@@ -5196,7 +5196,7 @@ __metadata:
     redux-saga: ^1.3.0
     reselect: ^4.1.8
     slate: ^0.103.0
-    slate-react: ^0.107.0
+    slate-react: ^0.107.1
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.5
     tailwindcss: ^3.4.3
@@ -16757,6 +16757,27 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     react-dom: ">=18.2.0"
     slate: ">=0.99.0"
   checksum: f839661240e1b7b2565a4713c27b71fa99e924fceafe0f320221b3e4073e40334e2727d548c735ae40df9712161fbdb679c4a0b9c5ad2a57a442a1708c094952
+  languageName: node
+  linkType: hard
+
+"slate-react@npm:^0.107.1":
+  version: 0.107.1
+  resolution: "slate-react@npm:0.107.1"
+  dependencies:
+    "@juggle/resize-observer": ^3.4.0
+    "@types/is-hotkey": ^0.1.8
+    "@types/lodash": ^4.14.200
+    direction: ^1.0.4
+    is-hotkey: ^0.2.0
+    is-plain-object: ^5.0.0
+    lodash: ^4.17.21
+    scroll-into-view-if-needed: ^3.1.0
+    tiny-invariant: 1.3.1
+  peerDependencies:
+    react: ">=18.2.0"
+    react-dom: ">=18.2.0"
+    slate: ">=0.99.0"
+  checksum: 8424f07b0ea934fda0a3e5d8a7326c37c32940491082135f7089dadb35e52793708a35832584648f76f1b77eee599dec5a9b60551a35c85f12f523afb7422377
   languageName: node
   linkType: hard
 

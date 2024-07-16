@@ -284,13 +284,14 @@ export function EquationsEditor(props: EquationsProps) {
           </td>
         </tr>
         <tr className="h-8">
-          <td />
-          {!selectIsDocumentEmpty(
-            store.getState(),
-            state.firstExplanation.id
-          ) ? (
-            <span className="text-center">{renderDownArrow()}</span>
-          ) : null}
+          <td>
+            {!selectIsDocumentEmpty(
+              store.getState(),
+              state.firstExplanation.id
+            ) ? (
+              <span className="text-center">{renderDownArrow()}</span>
+            ) : null}
+          </td>
         </tr>
       </tbody>
     )
