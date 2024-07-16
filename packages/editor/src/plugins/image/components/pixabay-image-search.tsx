@@ -73,7 +73,7 @@ export const PixabayImageSearch = ({
     setHasSearched(true)
     try {
       const response = await fetch(
-        `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(searchQuery)}&image_type=photo`
+        `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(searchQuery)}&image_type=photo&lang=de`
       )
       const data = (await response.json()) as PixabayResponse
       setImages(data.hits)
