@@ -715,7 +715,7 @@ export const loggedInData = {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
           upload: "Bild hochladen",
-          imageUrl: "Bildquelle",
+          imageUrl: "Bild-URL",
           imageSource: "Bildquelle",
           imageSourceHelpText: "Füge hier die URL oder weitere Informationen wie den Urheber dieses Bildes hinzu.",
           invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
