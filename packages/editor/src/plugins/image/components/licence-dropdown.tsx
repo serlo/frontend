@@ -1,5 +1,5 @@
 import { NiceDropdown } from '@editor/core/components/nice-dropdown'
-import { useState, useEffect, useRef, FC } from 'react'
+import { useState, FC } from 'react'
 
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
