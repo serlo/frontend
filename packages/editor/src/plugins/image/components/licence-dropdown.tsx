@@ -28,7 +28,9 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
   const { licence, licenceHelpText } = editorStrings.plugins.image
 
   const [isConfirmed, setIsConfirmed] = useState(!!src?.includes('pixabay'))
-  const [selectedLicense, setSelectedLicense] = useState(currentLicence || '1')
+  const [selectedLicense, setSelectedLicense] = useState(
+    currentLicence || 'CCBYSA4'
+  )
 
   const handleLicenseChange = (newLicense?: string) => {
     if (newLicense) {
