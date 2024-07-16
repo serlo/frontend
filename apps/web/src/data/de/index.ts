@@ -968,7 +968,7 @@ export const loggedInData = {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
           textAreaExercise: "Freitext",
-          dropzoneImage: 'Image Dropzones Exercise',
+          dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
