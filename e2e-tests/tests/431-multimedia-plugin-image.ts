@@ -34,14 +34,14 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
   I.say('Edit image description')
   const description = 'Simple sample image'
   I.click('$plugin-image-settings')
-  I.fillField('Beschreibung (wird nicht angezeigt)', description)
+  I.fillField('Alternativtext (wird nicht angezeigt)', description)
   I.click('$modal-close-button')
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
 
   I.say('Edit image link')
   const href = 'https://de.serlo.org/mathe/test'
   I.click('$plugin-image-settings')
-  I.fillField('Image Source', href)
+  I.fillField('Quelle (optional)', href)
   I.click('$modal-close-button')
 
   I.say(
@@ -94,14 +94,14 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
   I.say('Edit image description')
   const description = 'Simple sample image'
   I.click('$plugin-image-settings')
-  I.fillField('Beschreibung (wird nicht angezeigt)', description)
+  I.fillField('Alternativtext (wird nicht angezeigt)', description)
   I.click('$modal-close-button')
   I.seeElement(locate('img.serlo-img').withAttr({ alt: description }))
 
   I.say('Edit image link')
   const link = 'https://de.serlo.org/mathe/test'
   I.click('$plugin-image-settings')
-  I.fillField('Image Source', link)
+  I.fillField('Quelle (optional)', link)
   I.click('$modal-close-button')
 
   I.say('Switch to video and back to image - image and settings should stay')
