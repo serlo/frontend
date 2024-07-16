@@ -18,7 +18,7 @@ export function ImageSelectionScreen(
 ) {
   const editorStrings = useEditorStrings()
   const { state, urlInputRef } = props
-  const { src } = state
+  const { src, licence } = state
 
   const imageStrings = editorStrings.plugins.image
   const disableFileUpload = props.config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
@@ -36,6 +36,8 @@ export function ImageSelectionScreen(
 
   const onSelectPixabayImage = (imageUrl: string) => {
     state.src.set(imageUrl)
+    if (!licence.defined) licence.create('Pixabay')
+    else licence.set('Pixabay')
     setShowPixabayModal(false)
   }
 

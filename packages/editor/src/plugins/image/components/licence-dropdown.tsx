@@ -29,17 +29,6 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
 
   const [isConfirmed, setIsConfirmed] = useState(!!src?.includes('pixabay'))
   const [selectedLicense, setSelectedLicense] = useState(currentLicence || '1')
-  const isPixabayImage = src?.includes('pixabay')
-  const hasSetInitialLicense = useRef(false)
-
-  useEffect(() => {
-    if (isPixabayImage && !hasSetInitialLicense.current) {
-      setSelectedLicense(ImageLicence.Pixabay)
-      onLicenseChange?.(ImageLicence.Pixabay)
-      setIsConfirmed(true)
-      hasSetInitialLicense.current = true
-    }
-  }, [isPixabayImage, onLicenseChange])
 
   const handleLicenseChange = (newLicense?: string) => {
     if (newLicense) {
