@@ -49,7 +49,7 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
         Transforms.select(editor, selection)
       })
 
-      ReactEditor.focus(editor)
+      ReactEditor.focus(editor, { retries: 2 })
       storeEntry.needRefocus--
     }
   })
