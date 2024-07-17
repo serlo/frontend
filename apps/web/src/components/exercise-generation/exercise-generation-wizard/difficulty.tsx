@@ -41,13 +41,13 @@ export function Difficulty({
           {difficultyStrings.label}
         </label>
         <MenuButton
-          value={difficulty || ''}
+          value={difficulty || 'default'}
           onChange={(newValue) =>
             setDifficulty(newValue as ExerciseGenerationDifficulty | null)
           }
-          defaultValue=""
+          defaultValue="default"
         >
-          <MenuItem value="">{difficultyStrings.chooseOption}</MenuItem>
+          <MenuItem value="default">{difficultyStrings.chooseOption}</MenuItem>
           <MenuItem value="low">{difficultyStrings.easy}</MenuItem>
           <MenuItem value="medium">{difficultyStrings.medium}</MenuItem>
           <MenuItem value="high">{difficultyStrings.hard}</MenuItem>
