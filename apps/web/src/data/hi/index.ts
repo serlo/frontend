@@ -744,7 +744,6 @@ export const loggedInData = {
           pixabayLoadedText: 'These images were loaded from Pixabay.',
           searching: 'Searching for images ...',
           loadingImage: 'Downloading image ...',
-          // "Bild wird heruntergeladen..."
           noImagesFound: 'No images found'
         },
         injection: {
