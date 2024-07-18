@@ -739,13 +739,12 @@ export const loggedInData = {
           change: "Bild ändern",
           licence: "Lizenz",
           licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:",
-          licenceFree: 'Licence Free Images',
+          licenceFree: "Lizenzfreie Bilder",
           pixabayText: 'Images will be fetched from Pixabay',
-          pixabayLoadedText: 'These images were loaded from Pixabay.',
+          pixabayLoadedText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
           searching: 'Searching for images ...',
-          loadingImage: 'Downloading image ...',
-          // "Bild wird heruntergeladen..."
-          noImagesFound: 'No images found'
+          loadingImage: "Bilder werden heruntergeladen ...",
+          noImagesFound: "Keine Bilder gefunden"
         },
         injection: {
           title: "serlo.org Inhalt",
