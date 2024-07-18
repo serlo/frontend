@@ -720,6 +720,7 @@ export const loggedInData = {
           imageSourceHelpText: "Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.",
           invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
           invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
+          search: 'Suche',
           searchOnline: "Online nach lizenzfreien Bildern suchen",
           placeholderSource: "Quelle (optional)",
           placeholderEmpty: 'https://example.com/image.png',
@@ -737,7 +738,13 @@ export const loggedInData = {
           helpTooltipText: "Mehr Informationen und Hilfe",
           change: "Bild ändern",
           licence: "Lizenz",
-          licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:"
+          licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:",
+          licenceFree: "Lizenzfreie Bilder",
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
+          searching: 'Searching for images ...',
+          loadingImage: "Bilder werden heruntergeladen ...",
+          noImagesFound: "Keine Bilder gefunden"
         },
         injection: {
           title: "serlo.org Inhalt",
