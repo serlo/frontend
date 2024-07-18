@@ -12,6 +12,84 @@ interface UseEditorChangeArgs {
   focused: boolean
 }
 
+const isEditorInDOM = (editor: Editor) => {
+  try {
+    // Get DOMNode of the whole editor
+    const domNode = ReactEditor.toDOMNode(editor, editor)
+    console.log('editorInDom: ', domNode)
+
+    if (document.body.contains(domNode)) {
+      return true
+    }
+
+    // Fallback to checking if it's in the Shadow DOM
+    let rootNode = domNode.getRootNode() as ShadowRoot | Document
+    while (rootNode instanceof ShadowRoot) {
+      if (rootNode.host.contains(domNode)) {
+        return true
+      }
+      rootNode = rootNode.host.getRootNode() as ShadowRoot | Document
+    }
+
+    return false
+  } catch (error) {
+    console.warn('Error checking. Editor is not mounted to DOM:', error)
+    return false
+  }
+}
+
+// Check if the Slate node exists in the DOM
+// const isNodeInDOM = (
+//   editor: Editor,
+//   selection: BaseRange | BasePoint | undefined
+// ) => {
+//   try {
+
+//     if (!selection) return false
+
+//     console.log('IsNodeInDom: ', selection)
+
+//     let path: Path
+//     if ('path' in selection) {
+//       // If selection is a BasePoint
+//       path = selection.path
+//     } else if ('focus' in selection) {
+//       // If selection is a BaseRange
+//       path = selection.focus.path
+//     } else {
+//       console.error('Unexpected selection format')
+//       return false
+//     }
+
+//     // Get the node at the selection
+//     const [node] = Editor.node(editor, path)
+
+//     console.log('Node: ', node)
+//     if (!node) return false
+
+//     const domNode = ReactEditor.toDOMNode(editor, node)
+//     console.log('DomNode: ', domNode)
+
+//     if (document.body.contains(domNode)) {
+//       return true
+//     }
+
+//     // Fallback to see if the node is in a Shadow DOM
+//     let rootNode = domNode.getRootNode() as ShadowRoot | Document
+//     while (rootNode instanceof ShadowRoot) {
+//       if (rootNode.host.contains(domNode)) {
+//         return true
+//       }
+//       rootNode = rootNode.host.getRootNode() as ShadowRoot | Document
+//     }
+
+//     return false
+//   } catch (error) {
+//     console.error('Error checking if selected node is in DOM:', error)
+//     return false
+//   }
+// }
+
 export const useEditorChange = (args: UseEditorChangeArgs) => {
   const { editor, state, id, focused } = args
 
@@ -49,8 +127,27 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
         Transforms.select(editor, selection)
       })
 
-      ReactEditor.focus(editor, { retries: 2 })
-      storeEntry.needRefocus--
+      setTimeout(() => {
+        if (isEditorInDOM(editor)) {
+          ReactEditor.focus(editor)
+          storeEntry.needRefocus--
+        } else {
+          console.warn('Editor not found in DOM, skipping focus')
+          // storeEntry.needRefocus = 0
+        }
+      }, 0)
+
+      // if (isNodeInDOM(editor, selection)) {
+      //   console.log('About to focus', { id, storeEntry, selection })
+      //   ReactEditor.focus(editor)
+      //   storeEntry.needRefocus--
+      // } else {
+      //   console.warn('Slate node not found in DOM, skipping focus')
+      //   // Optionally reset focus state
+      //   // storeEntry.needRefocus = 0
+      // }
+      // ReactEditor.focus(editor)
+      // storeEntry.needRefocus--
     }
   })
 
