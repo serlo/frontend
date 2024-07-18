@@ -787,6 +787,7 @@ export const loggedInData = {
           invalidImageUrl: 'Error: Invalid or Incomplete URL',
           invalidImageUrlMessage:
             'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          search: 'Suche',
           searchOnline: 'Search online for licence-free images',
           placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
@@ -806,6 +807,12 @@ export const loggedInData = {
           licence: 'Licence',
           licenceHelpText:
             'External content with the following licenses may be integrated on serlo.org:',
+          licenceFree: 'Licence Free Images',
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: 'These images were loaded from Pixabay.',
+          searching: 'Searching for images ...',
+          loadingImage: 'Downloading image ...', // "Bild wird heruntergeladen..."
+          noImagesFound: 'No images found',
         },
         injection: {
           title: 'serlo.org Content',
