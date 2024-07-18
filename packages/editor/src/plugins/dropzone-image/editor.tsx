@@ -31,7 +31,7 @@ import {
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function DropzoneImageEditor(props: DropzoneImageProps) {
-  const { state, id } = props
+  const { state, id, focused } = props
   const {
     answerZones,
     backgroundImage,
@@ -105,30 +105,32 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         extraDraggableAnswers,
       }}
     >
-      <DropzoneImageToolbar
-        id={id}
-        showSettingsButton={isBackgroundTypeImage}
-        backgroundImageState={{
-          id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
-          state: backgroundImagePluginState?.state as unknown as
-            | ImageProps['state']
-            | undefined,
-        }}
-      >
-        <PreviewButton
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
-        />
-        <ToolbarSelect
-          tooltipText={pluginStrings.dropzoneVisibility}
-          value={dropzoneVisibility.value}
-          changeValue={(value) => dropzoneVisibility.set(value)}
-          options={visibilityOptions.map((option) => ({
-            text: option.charAt(0).toUpperCase() + option.slice(1),
-            value: option,
-          }))}
-        />
-      </DropzoneImageToolbar>
+      {focused && (
+        <DropzoneImageToolbar
+          id={id}
+          showSettingsButton={isBackgroundTypeImage}
+          backgroundImageState={{
+            id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
+            state: backgroundImagePluginState?.state as unknown as
+              | ImageProps['state']
+              | undefined,
+          }}
+        >
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
+          <ToolbarSelect
+            tooltipText={pluginStrings.dropzoneVisibility}
+            value={dropzoneVisibility.value}
+            changeValue={(value) => dropzoneVisibility.set(value)}
+            options={visibilityOptions.map((option) => ({
+              text: option.charAt(0).toUpperCase() + option.slice(1),
+              value: option,
+            }))}
+          />
+        </DropzoneImageToolbar>
+      )}
       {previewActive ? (
         <DropzoneImageStaticRenderer {...staticDocument} />
       ) : (
