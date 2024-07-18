@@ -43,7 +43,6 @@ const germanSearchTags = {
   chemistry: 'Chemie',
   lab: 'Labor',
   tech: 'Technologie',
-  physics: 'Physik',
   humans: 'Menschen',
   pyramide: 'Pyramide',
   cylinder: 'Zylinder',
