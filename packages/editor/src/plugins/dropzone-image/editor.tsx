@@ -41,7 +41,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
-  const visibilityOptions = Object.values(pluginStrings.visibilityOptions)
+  const visibilityOptions = Object.entries(pluginStrings.visibilityOptions)
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
@@ -124,9 +124,9 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
             tooltipText={pluginStrings.dropzoneVisibility}
             value={dropzoneVisibility.value}
             changeValue={(value) => dropzoneVisibility.set(value)}
-            options={visibilityOptions.map((option) => ({
-              text: option.charAt(0).toUpperCase() + option.slice(1),
-              value: option,
+            options={visibilityOptions.map(([key, val]) => ({
+              text: val.charAt(0).toUpperCase() + val.slice(1),
+              value: key,
             }))}
           />
         </DropzoneImageToolbar>

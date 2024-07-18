@@ -811,7 +811,7 @@ export const loggedInData = {
           pixabayText: 'Images will be fetched from Pixabay',
           pixabayLoadedText: 'These images were loaded from Pixabay.',
           searching: 'Searching for images ...',
-          loadingImage: 'Downloading image ...', // "Bild wird heruntergeladen..."
+          loadingImage: 'Downloading image ...',
           noImagesFound: 'No images found',
         },
         injection: {
