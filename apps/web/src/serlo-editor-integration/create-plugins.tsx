@@ -86,16 +86,12 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
-    ...(isProduction
-      ? []
-      : [
-          {
-            type: EditorPluginType.DropzoneImage,
-            plugin: createDropzoneImagePlugin(),
-            visibleInSuggestions: false,
-            icon: <IconDropzones />,
-          },
-        ]),
+    {
+      type: EditorPluginType.DropzoneImage,
+      plugin: createDropzoneImagePlugin(),
+      visibleInSuggestions: false,
+      icon: <IconDropzones />,
+    },
     {
       type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(),

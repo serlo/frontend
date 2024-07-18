@@ -606,7 +606,6 @@ export interface EntityMutation {
   checkoutRevision: DefaultResponse;
   rejectRevision: DefaultResponse;
   setAbstractEntity: SetEntityResponse;
-  sort: DefaultResponse;
   updateLicense: DefaultResponse;
 }
 
@@ -626,11 +625,6 @@ export interface EntityMutationSetAbstractEntityArgs {
 }
 
 
-export interface EntityMutationSortArgs {
-  input: EntitySortInput;
-}
-
-
 export interface EntityMutationUpdateLicenseArgs {
   input: EntityUpdateLicenseInput;
 }
@@ -645,11 +639,6 @@ export interface EntityQueryDeletedEntitiesArgs {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-}
-
-export interface EntitySortInput {
-  childrenIds: Array<Scalars['Int']['input']>;
-  entityId: Scalars['Int']['input'];
 }
 
 export interface EntityUpdateLicenseInput {
