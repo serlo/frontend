@@ -197,33 +197,6 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === UuidType.Page) {
-    return {
-      kind: 'single-entity',
-      newsletterPopup: true,
-      entityData: {
-        id: uuid.id,
-        alias: uuid.alias,
-        trashed: uuid.trashed,
-        typename: UuidType.Page,
-        revisionId: uuid.currentRevision?.id,
-        title: uuid.currentRevision?.title ?? '',
-        content,
-        isUnrevised: !uuid.currentRevision,
-      },
-      metaData: {
-        title,
-        contentType: 'page',
-        metaImage,
-        metaDescription: getMetaDescription(content),
-      },
-      horizonData,
-      secondaryMenuData: secondaryMenuData,
-      breadcrumbsData: secondaryMenuData ? undefined : breadcrumbsData,
-      authorization,
-    }
-  }
-
   const { licenseId } = uuid
 
   const sharedEntityData = {
@@ -333,6 +306,25 @@ export async function requestPage(
       },
       horizonData,
       breadcrumbsData,
+      authorization,
+    }
+  }
+
+  if (uuid.__typename === UuidType.Page) {
+    return {
+      kind: 'single-entity',
+      newsletterPopup: true,
+      entityData: {
+        ...sharedEntityData,
+        typename: UuidType.Page,
+      },
+      metaData: {
+        ...sharedMetadata,
+        contentType: 'page',
+      },
+      horizonData,
+      secondaryMenuData: secondaryMenuData,
+      breadcrumbsData: secondaryMenuData ? undefined : breadcrumbsData,
       authorization,
     }
   }

@@ -27,6 +27,7 @@ const entityTypes = [
   UuidType.Event,
   UuidType.Exercise,
   UuidType.ExerciseGroup,
+  UuidType.Page,
   UuidType.Video,
 ] as const
 type EntityType = (typeof entityTypes)[number]
@@ -75,9 +76,6 @@ export function convertEditorResponseToState(
   }
 
   try {
-    if (UuidType.Page === uuid.__typename) {
-      return convertPage(uuid.__typename, uuid)
-    }
     if (UuidType.TaxonomyTerm === uuid.__typename) {
       return convertTaxonomy(uuid.__typename, uuid)
     }
@@ -113,6 +111,7 @@ export function convertEditorResponseToState(
     | StaticDocument<EventTypePluginState>
     | StaticDocument<TextExerciseTypePluginState>
     | StaticDocument<TextExerciseGroupTypePluginState>
+    | StaticDocument<PageTypePluginState>
     | StaticDocument<VideoTypePluginState> {
     stack.push({ id: uuid.id, type: entityType })
 
@@ -155,21 +154,6 @@ export function convertEditorResponseToState(
           sources: [],
         },
       })
-    }
-  }
-
-  function convertPage(
-    entityType: MainUuidType['__typename'],
-    uuid: Extract<MainUuidType, { __typename: 'Page' }>
-  ): StaticDocument<PageTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return {
-      plugin: TemplatePluginType.Page,
-      state: {
-        ...idAndLicense,
-        title,
-        content: serializeStaticDocument(parseStaticString(content)),
-      },
     }
   }
 
@@ -216,13 +200,6 @@ export interface AbstractSerializedState extends Entity {
   meta_description?: string
   url?: string
   cohesive?: string
-}
-
-export interface PageSerializedState extends Uuid {
-  __typename?: UuidType.Page
-  title?: string
-  content: SerializedStaticState
-  licenseId?: number
 }
 
 export interface TaxonomySerializedState extends Uuid {

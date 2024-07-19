@@ -625,15 +625,20 @@ export const loggedInData = {
           title: 'Image Dropzones',
           description: 'Create an exercise with interactive images for matching and labeling',
           backgroundImage: "Imagen de fondo",
-          dropZone: 'Drop zone',
-          dropZoneTooltip: 'Choose the drop zone',
+          addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
           dropzoneVisibility: 'Dropzone Visibility',
+          visibilityOptions: {
+            full: 'full',
+            partial: 'partial',
+            none: 'none'
+          },
           answers: {
             add: "Añadir respuesta",
             remove: "Eliminar respuesta",
             edit: "Editar respuesta",
-            settings: "Configuración de respuestas"
+            settings: "Configuración de respuestas",
+            answersPlaceholder: 'Here you will find your dropzone answers'
           },
           answerZone: {
             description: "Descripción (opcional)",
@@ -711,9 +716,13 @@ export const loggedInData = {
           description: "Subir imágenes.",
           upload: "Subir imagen",
           imageUrl: "URL de la imagen",
+          imageSource: 'Image Source',
+          imageSourceHelpText: 'Add the author or source of this image here',
           invalidImageUrl: "Error: URL inválida o incompleta",
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          search: 'Suche',
           searchOnline: 'Search online for licence-free images',
+          placeholderSource: 'Source (optional)',
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
@@ -727,7 +736,15 @@ export const loggedInData = {
           maxWidth: "Ancho máximo",
           maxWidthPlaceholder: "Introduce la anchura máxima",
           helpTooltipText: 'More information and help related to Image Plugin',
-          change: "Cambiar imagen"
+          change: "Cambiar imagen",
+          licence: 'Licence',
+          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:',
+          licenceFree: 'Licence Free Images',
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: 'These images were loaded from Pixabay.',
+          searching: 'Searching for images ...',
+          loadingImage: 'Downloading image ...',
+          noImagesFound: 'No images found'
         },
         injection: {
           title: "serlo.org Contenido",
@@ -958,6 +975,7 @@ export const loggedInData = {
           scMcExercise: "Ejercicio de elección",
           inputExercise: "Ejercicio de respuesta escrita",
           textAreaExercise: "Ejercicio de cajas de texto",
+          dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: "Ejercicio de rellenar los espacios en blanco",
           h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",

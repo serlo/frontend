@@ -35,15 +35,6 @@ export function revisionResponseToResponse(
     content,
   }
 
-  if (uuid.__typename === UuidRevType.Page) {
-    return {
-      __typename: UuidType.Page,
-      title,
-      currentRevision: abstractRevisionData,
-      ...repositoryFields,
-    }
-  }
-
   const abstractEntityRevisionData = {
     ...abstractRevisionData,
     url: uuid.url ?? '',
@@ -56,6 +47,7 @@ export function revisionResponseToResponse(
     uuid.__typename === UuidRevType.Article ||
     uuid.__typename === UuidRevType.Course ||
     uuid.__typename === UuidRevType.Event ||
+    uuid.__typename === UuidRevType.Page ||
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.ExerciseGroup ||
     uuid.__typename === UuidRevType.Exercise

@@ -30,14 +30,8 @@ import {
 } from './types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-const visibilityOptions = [
-  DropzoneVisibility.Full,
-  DropzoneVisibility.Partial,
-  DropzoneVisibility.None,
-]
-
 export function DropzoneImageEditor(props: DropzoneImageProps) {
-  const { state, id } = props
+  const { state, id, focused } = props
   const {
     answerZones,
     backgroundImage,
@@ -46,6 +40,8 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   } = state
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
+
+  const visibilityOptions = Object.entries(pluginStrings.visibilityOptions)
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
@@ -109,31 +105,32 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         extraDraggableAnswers,
       }}
     >
-      <DropzoneImageToolbar
-        onClickAddAnswerZone={insertAnswerZone}
-        id={id}
-        showSettingsButton={isBackgroundTypeImage}
-        backgroundImageState={{
-          id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
-          state: backgroundImagePluginState?.state as unknown as
-            | ImageProps['state']
-            | undefined,
-        }}
-      >
-        <PreviewButton
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
-        />
-        <ToolbarSelect
-          tooltipText={pluginStrings.dropzoneVisibility}
-          value={dropzoneVisibility.value}
-          changeValue={(value) => dropzoneVisibility.set(value)}
-          options={visibilityOptions.map((option) => ({
-            text: option.charAt(0).toUpperCase() + option.slice(1),
-            value: option,
-          }))}
-        />
-      </DropzoneImageToolbar>
+      {focused && (
+        <DropzoneImageToolbar
+          id={id}
+          showSettingsButton={isBackgroundTypeImage}
+          backgroundImageState={{
+            id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
+            state: backgroundImagePluginState?.state as unknown as
+              | ImageProps['state']
+              | undefined,
+          }}
+        >
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
+          <ToolbarSelect
+            tooltipText={pluginStrings.dropzoneVisibility}
+            value={dropzoneVisibility.value}
+            changeValue={(value) => dropzoneVisibility.set(value)}
+            options={visibilityOptions.map(([key, val]) => ({
+              text: val.charAt(0).toUpperCase() + val.slice(1),
+              value: key,
+            }))}
+          />
+        </DropzoneImageToolbar>
+      )}
       {previewActive ? (
         <DropzoneImageStaticRenderer {...staticDocument} />
       ) : (
@@ -145,7 +142,10 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
             setModalType={setModalType}
           />
           <EditorCanvas state={state} setModalType={setModalType} />
-          <PossibleAnswers answerZones={answerZones} />
+          <PossibleAnswers
+            answerZones={answerZones}
+            onClickAddAnswerZone={insertAnswerZone}
+          />
           <ExtraIncorrectAnswers
             extraDraggableAnswers={extraDraggableAnswers}
             setModalType={setModalType}

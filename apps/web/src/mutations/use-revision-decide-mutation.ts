@@ -26,15 +26,6 @@ const checkoutEntityMutation = gql`
     }
   }
 `
-const checkoutPageMutation = gql`
-  mutation checkoutPageRevision($input: CheckoutRevisionInput!) {
-    page {
-      checkoutRevision(input: $input) {
-        success
-      }
-    }
-  }
-`
 
 export function useRevisionDecideMutation() {
   const mutationFetch = useMutationFetch()
@@ -42,15 +33,10 @@ export function useRevisionDecideMutation() {
 
   return async function (
     mode: RevisionMutationMode,
-    input: RejectRevisionInput,
-    isPage: boolean
+    input: RejectRevisionInput
   ) {
     const isCheckout = mode === 'checkout'
-    const mutation = isPage
-      ? checkoutPageMutation
-      : isCheckout
-        ? checkoutEntityMutation
-        : rejectEntityMutation
+    const mutation = isCheckout ? checkoutEntityMutation : rejectEntityMutation
     NProgress.start()
 
     // persist current alias here since it might change on mutation

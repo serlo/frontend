@@ -43,7 +43,7 @@ const canvasDimensionsMap = {
 }
 
 export function BackgroundShapeSelect(props: DropzoneImageProps) {
-  const { state, id } = props
+  const { state, id, focused } = props
   const { canvasShape, canvasDimensions } = state
   const shapeStrings = useEditorStrings().plugins.dropzoneImage.backgroundShapes
 
@@ -56,7 +56,7 @@ export function BackgroundShapeSelect(props: DropzoneImageProps) {
 
   return (
     <>
-      <DropzoneImageToolbar id={id} />
+      {focused && <DropzoneImageToolbar id={id} />}
       <h2 className="mt-6 flex flex-row items-center justify-center pt-10 font-bold text-almost-black">
         {shapeStrings.description}
       </h2>
