@@ -37,7 +37,18 @@ export function SlateOverlay(props: SlateOverlayProps) {
       (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
     wrapper.current.style.left = `${leftOffSet}px`
 
-    wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
+    // wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
+    wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
+    console.log('Slate overlay style: ', {
+      wrapperStyle: wrapper.current?.style,
+      boundingLeft,
+      boundingWrapperRight,
+      overlap,
+      fallbackBoundingLeft,
+      offsetRect,
+      parentRect,
+      anchorRect,
+    })
   }, [editor, anchor, width])
 
   return (
