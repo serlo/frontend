@@ -57,6 +57,7 @@ export function ImageSelectionScreen(
         <UploadButton {...props} />
         {!disableFileUpload && !isProduction && (
           <button
+            data-qa="plugin-image-pixabay-search-button"
             onClick={() => setShowPixabayModal(true)}
             className="almost-black mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300"
           >
