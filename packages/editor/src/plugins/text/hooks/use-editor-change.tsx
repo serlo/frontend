@@ -16,8 +16,6 @@ const isEditorInDOM = (editor: Editor) => {
   try {
     // Get DOMNode of the whole editor
     const domNode = ReactEditor.toDOMNode(editor, editor)
-    console.log('editorInDom: ', domNode)
-
     if (document.body.contains(domNode)) {
       return true
     }
