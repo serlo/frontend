@@ -10,6 +10,10 @@ import {
   isValidState,
   type InitialState,
 } from './initial-state'
+import {
+  defaultBoxAndSpoilerPlugins,
+  defaultMultimediaConfig,
+} from './default-plugins'
 
 const LazySerloEditor = lazy(() =>
   import('@serlo/editor').then((module) => ({ default: module.SerloEditor }))
@@ -170,16 +174,23 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
-                pluginsConfig={
-                  testingSecretAttr
+                pluginsConfig={{
+                  box: {
+                    allowedPlugins: defaultBoxAndSpoilerPlugins,
+                  },
+                  spoiler: {
+                    allowedPlugins: defaultBoxAndSpoilerPlugins,
+                  },
+                  multimedia: defaultMultimediaConfig,
+                  ...(testingSecretAttr
                     ? {
                         general: {
                           testingSecret: testingSecretAttr,
                           enableTextAreaExercise: false,
                         },
                       }
-                    : {}
-                }
+                    : {}),
+                }}
                 // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
                 _enableImagePlugin
                 onChange={({ changed, getDocument }) => {
