@@ -116,6 +116,9 @@ Scenario(
 
     I.say('Remove the Image plugin and merge the split Text plugin')
     I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
+
+    I.click('$modal-close-button') // patch to close the pixabay
+
     I.moveCursorTo(
       locate('[data-radix-collection-item]').inside('.plugin-toolbar')
     )
@@ -182,6 +185,8 @@ Scenario(
     // beginning of each page already contains one. But, we do need to focus it,
     // in order to make the src input visible
     I.click('$plugin-image-editor')
+    I.click('$modal-close-button') // patch to close the pixabay modal
+
     const imagePluginUrlInput =
       'input[placeholder="https://example.com/image.png"]'
 

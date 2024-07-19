@@ -102,7 +102,11 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
 
   I.say('Switch to video and back to image - image and settings should stay')
   I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
+
+  I.click('$modal-close-button') // patch to close the pixabay modal
+
   I.click('$plugin-multimedia-parent-button')
+
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
@@ -135,7 +139,11 @@ Scenario('Multimedia plugin fill in image caption', ({ I }) => {
 
   I.say('Switch to video and back to image - caption should stay')
   I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
+
+  I.click('$modal-close-button') // patch to close the pixabay modal
+
   I.click('$plugin-multimedia-parent-button')
+
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
