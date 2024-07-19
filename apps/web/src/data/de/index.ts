@@ -424,7 +424,8 @@ export const instanceData = {
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
       verificationProblem: "Wenn du keine Mail bekommen hast",
-      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
+      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten.",
+      badRole: 'You are only allowed to log in through Vidis if you are a teacher.'
     },
     keys: {
       ctrl: "Strg",
