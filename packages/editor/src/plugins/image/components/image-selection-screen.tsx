@@ -55,7 +55,7 @@ export function ImageSelectionScreen(
       </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
-        {!disableFileUpload && !isProduction && (
+        {!disableFileUpload && (
           <button
             data-qa="plugin-image-pixabay-search-button"
             onClick={() => setShowPixabayModal(true)}
