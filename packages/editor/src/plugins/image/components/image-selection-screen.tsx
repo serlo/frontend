@@ -11,7 +11,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
-import { isProduction } from '@/helper/is-production'
 
 export function ImageSelectionScreen(
   props: ImageProps & { urlInputRef: RefObject<HTMLInputElement> }
