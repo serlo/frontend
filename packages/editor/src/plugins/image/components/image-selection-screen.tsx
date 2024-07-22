@@ -11,7 +11,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
-import { isProduction } from '@/helper/is-production'
 
 export function ImageSelectionScreen(
   props: ImageProps & { urlInputRef: RefObject<HTMLInputElement> }
@@ -55,7 +54,7 @@ export function ImageSelectionScreen(
       </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
-        {!disableFileUpload && !isProduction && (
+        {!disableFileUpload && (
           <button
             data-qa="plugin-image-pixabay-search-button"
             onClick={() => setShowPixabayModal(true)}
