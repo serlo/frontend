@@ -6,14 +6,14 @@ import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
 import {
+  defaultBoxAndSpoilerPlugins,
+  defaultMultimediaConfig,
+} from './default-plugins'
+import {
   exampleInitialState,
   isValidState,
   type InitialState,
 } from './initial-state'
-import {
-  defaultBoxAndSpoilerPlugins,
-  defaultMultimediaConfig,
-} from './default-plugins'
 
 const LazySerloEditor = lazy(() =>
   import('@serlo/editor').then((module) => ({ default: module.SerloEditor }))
