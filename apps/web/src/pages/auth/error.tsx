@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
-import { FlowType } from '@/components/auth/flow-type'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
+import { loginUrl } from '@/components/pages/auth/utils'
 import { useInstanceData } from '@/contexts/instance-context'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -52,7 +52,7 @@ function Error() {
     error.error.message.includes('ERR_BAD_ROLE')
   ) {
     showToastNotice(authStrings.badRole, 'warning', 5000)
-    void router.push(`/auth/${FlowType.login}`)
+    void router.push(loginUrl)
   }
 
   return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
