@@ -14,6 +14,7 @@ import type {
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import type { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
+import { clone } from 'ramda'
 import {
   type Dispatch,
   type FormEvent,
@@ -178,6 +179,8 @@ export function handleFlowError<S>(
   return async (error: AxiosError) => {
     // eslint-disable-next-line no-console
     console.error(error)
+    // eslint-disable-next-line no-console
+    console.error(clone(error))
     triggerSentry({ message: 'Auth error', code: error.response?.status })
 
     const data = error.response?.data as {
