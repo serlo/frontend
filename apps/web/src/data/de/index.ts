@@ -425,7 +425,7 @@ export const instanceData = {
       signUp: "Account anlegen",
       verificationProblem: "Wenn du keine Mail bekommen hast",
       verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten.",
-      badRole: 'You are only allowed to log in through Vidis if you are a teacher.'
+      badRole: "Du darfst dich nur über Vidis einloggen, wenn du Lehrer bist. Sorry 🤷"
     },
     keys: {
       ctrl: "Strg",
@@ -741,9 +741,9 @@ export const loggedInData = {
           licence: "Lizenz",
           licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:",
           licenceFree: "Lizenzfreie Bilder",
-          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
           pixabayLoadedText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
-          searching: 'Searching for images ...',
+          searching: "Suche nach Bildern ...",
           loadingImage: "Bilder werden heruntergeladen ...",
           noImagesFound: "Keine Bilder gefunden"
         },
