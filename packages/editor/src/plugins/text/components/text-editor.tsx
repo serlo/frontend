@@ -21,6 +21,7 @@ import { withEmptyLinesRestriction } from '../plugins'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
 import { instanceStateStore } from '../utils/instance-state-store'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
@@ -163,9 +164,13 @@ export function TextEditor(props: TextEditorProps) {
       {focused ? <LinkControls /> : null}
 
       {showSuggestions ? (
-        <SlateOverlay width={620}>
+        <ModalWithCloseButton
+          className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll"
+          isOpen
+          setIsOpen={(open) => {}}
+        >
           <Suggestions {...suggestionsProps} />
-        </SlateOverlay>
+        </ModalWithCloseButton>
       ) : null}
     </Slate>
   )
