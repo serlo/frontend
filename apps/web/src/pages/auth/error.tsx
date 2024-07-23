@@ -1,6 +1,5 @@
 import { FlowError } from '@ory/client'
 import { useRouter } from 'next/router'
-import { clone } from 'ramda'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
@@ -48,7 +47,6 @@ function Error() {
       })
   }, [id, router, router.isReady, error])
 
-  console.log('cloned error -> ', clone(error))
   if (
     isVidisKratosError(error) &&
     error.error.message.includes('ERR_BAD_ROLE')
