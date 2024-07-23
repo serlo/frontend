@@ -15,50 +15,50 @@ export function SlateOverlay(props: SlateOverlayProps) {
 
   // Positioning of the overlay relative to the anchor
   useEffect(() => {
-    if (!wrapper.current) return
+    // When the "+" button is clicked, the "/" is inserted and the editor is
+    // focused. We need to wait for the editor to have an updated focused to
+    // select the correct anchor
+    const timeout = setTimeout(() => {
+      if (!wrapper.current) return
+      const anchorRect = getAnchorRect(editor, anchor, wrapper.current)
+      const parentRect = wrapper.current
+        .closest('.rows-editor-renderer-container')
+        ?.getBoundingClientRect()
+      const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
 
-    const anchorRect = getAnchorRect(editor, anchor, wrapper.current)
-    const parentRect = wrapper.current
-      .closest('.rows-editor-renderer-container')
-      ?.getBoundingClientRect()
-    const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
+      if (!anchorRect || !parentRect || !offsetRect) return
 
-    if (!anchorRect || !parentRect || !offsetRect) return
+      const boundingLeft = anchorRect.left - 2 // wrapper starts at anchor's left
 
-    const boundingLeft = anchorRect.left - 2 // wrapper starts at anchor's left
+      const boundingWrapperRight = boundingLeft + width
+      const overlap = boundingWrapperRight - parentRect.right
+      const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
 
-    const boundingWrapperRight = boundingLeft + width
-    const overlap = boundingWrapperRight - parentRect.right
-    const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
+      const leftOffset =
+        (overlap > 0 ? fallbackBoundingLeft : boundingLeft) -
+        offsetRect.left -
+        5
+      wrapper.current.style.left = `${leftOffset}px`
+      wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
 
-    const leftOffset =
-      (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
-    wrapper.current.style.left = `${leftOffset}px`
-    wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
+      console.log('Slate overlay style: ', {
+        wrapperStyle: {
+          top: wrapper.current?.style.top,
+          left: wrapper.current?.style.left,
+          bottom: wrapper.current?.style.bottom,
+          right: wrapper.current?.style.right,
+        },
+        boundingLeft,
+        boundingWrapperRight,
+        overlap,
+        leftOffset,
+        offsetRect,
+        parentRect,
+        anchorRect,
+      })
+    }, 1)
 
-    // Adjust the top position based on whether it's a new plugin or not
-    // const isNewPlugin = anchorRect.top < offsetRect.top
-    // const topOffset = isNewPlugin
-    //   ? parentRect.top - offsetRect.top
-    //   : anchorRect.bottom - offsetRect.top + 6
-
-    // wrapper.current.style.top = `${topOffset}px`
-
-    console.log('Slate overlay style: ', {
-      wrapperStyle: {
-        top: wrapper.current?.style.top,
-        left: wrapper.current?.style.left,
-        bottom: wrapper.current?.style.bottom,
-        right: wrapper.current?.style.right,
-      },
-      boundingLeft,
-      boundingWrapperRight,
-      overlap,
-      leftOffset,
-      offsetRect,
-      parentRect,
-      anchorRect,
-    })
+    return () => clearTimeout(timeout)
   }, [editor, anchor, width])
 
   return (
