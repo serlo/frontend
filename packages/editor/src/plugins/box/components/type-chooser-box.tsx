@@ -29,6 +29,7 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
                 className="serlo-button-editor-secondary"
                 onClick={(event) => {
                   event.preventDefault()
+                  event.stopPropagation()
                   typeState.set(type)
                 }}
                 data-qa={`plugin-box-initial-type-chooser-option-${type}`}
