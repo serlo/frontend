@@ -22,8 +22,8 @@ export function AddRowButtonFloating({
       <div
         className={cn(
           'group ',
-          'opacity-0 transition-opacity duration-200',
-          'relative mb-2 flex items-center px-8',
+          'opacity-0 transition-opacity duration-300',
+          'relative mb-4 flex items-center px-8 pb-2',
           'text-editor-primary-200 hover:opacity-100',
           'focus-visible:text-editor-primary-200 group-hover:opacity-100',
           'cursor-pointer'
