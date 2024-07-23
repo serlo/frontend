@@ -51,7 +51,7 @@ function Error() {
     isVidisKratosError(error) &&
     error.error.message.includes('ERR_BAD_ROLE')
   ) {
-    showToastNotice(authStrings.badRole, 'warning')
+    showToastNotice(authStrings.badRole, 'warning', 5000)
     void router.push(`/auth/${FlowType.login}`)
   }
 
