@@ -1,11 +1,15 @@
 import { FlowError } from '@ory/client'
 import { useRouter } from 'next/router'
+import { clone } from 'ramda'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
+import { FlowType } from '@/components/auth/flow-type'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
+import { useInstanceData } from '@/contexts/instance-context'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export default renderedPageNoHooks(() => (
@@ -18,6 +22,8 @@ function Error() {
   const [error, setError] = useState<FlowError | string>()
   const router = useRouter()
   const { id } = router.query
+
+  const authStrings = useInstanceData().strings.auth
 
   useEffect(() => {
     if (!router.isReady || error) return
@@ -42,5 +48,31 @@ function Error() {
       })
   }, [id, router, router.isReady, error])
 
+  console.log('cloned error -> ', clone(error))
+  if (
+    isVidisKratosError(error) &&
+    error.error.message.includes('ERR_BAD_ROLE')
+  ) {
+    showToastNotice(authStrings.badRole, 'warning')
+    void router.push(`/auth/${FlowType.login}`)
+  }
+
   return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
+}
+
+interface VidisKratosError {
+  id: string
+  error: {
+    code: number
+    message: string
+    status: string
+  }
+  created_at: string
+  updated_at: string
+}
+
+function isVidisKratosError(
+  error: string | FlowError | undefined | VidisKratosError
+): error is VidisKratosError {
+  return (error as VidisKratosError)?.error?.message !== undefined
 }
