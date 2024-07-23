@@ -91,6 +91,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           error: { id: string; message?: string }
         }
 
+        console.error('onLogin -> createBrowserLoginFlow catch -> ', e)
         if (data?.error?.message?.includes('ERR_BAD_ROLE')) {
           showToastNotice(strings.auth.badRole)
         }
@@ -182,7 +183,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
           return
         })
     } catch (e: unknown) {
+      const error = e as AxiosError
+      const data = error.response?.data as {
+        error: { message?: string }
+      }
       console.error('onLogin -> updateLoginFlow catch -> ', e)
+      if (data?.error?.message?.includes('ERR_BAD_ROLE')) {
+        showToastNotice(strings.auth.badRole)
+      }
       try {
         await handleFlowError(
           router,
