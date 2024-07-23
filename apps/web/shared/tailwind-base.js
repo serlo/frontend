@@ -110,6 +110,8 @@ export default {
         menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px',
         modal: '0px 0px 10px 0px rgba(0, 0, 0, 0.25)',
         input: `0 0 4px 0 ${brand}`,
+        suggestions: '2px 2px 1px 1px #AAAAAA',
+        stickysearch: ' 0px 7px 7px 3px rgba(255,255,255,0.8)',
       },
       fontFamily: {
         serlo: 'Karla, sans-serif',

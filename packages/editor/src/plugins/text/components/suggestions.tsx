@@ -1,6 +1,9 @@
+import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
+import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
 import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
+import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -30,6 +33,10 @@ const allInteractiveExerciseTypes = [
 const exerciseIcons = {
   [EditorPluginType.DropzoneImage]: <IconDropzones />,
   [EditorPluginType.H5p]: <IconH5p />,
+  [EditorPluginType.BlanksExercise]: <IconFillGaps />,
+  [EditorPluginType.InputExercise]: <IconTextArea />,
+  [EditorPluginType.ScMcExercise]: <IconScMcExercise />,
+  [EditorPluginType.TextAreaExercise]: <IconTextArea />,
 }
 
 export const Suggestions = ({
@@ -48,13 +55,11 @@ export const Suggestions = ({
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    // focus on title, remove focus from content
     setTimeout(() => {
       searchInputRef.current?.focus()
     })
-    // only after creating plugin
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [searchInputRef.current])
 
   if (options.length === 0) {
     return <div>{editorStrings.plugins.text.noItemsFound}</div>
@@ -87,7 +92,7 @@ export const Suggestions = ({
     index: number
   ) => {
     return (
-      <div
+      <button
         key={index}
         data-qa={`plugin-suggestion-${pluginType}`}
         data-active={index === selected}
@@ -99,9 +104,9 @@ export const Suggestions = ({
           onMouseMove(index)
         }}
         className={cn(`
-          group/suggestion flex cursor-pointer flex-col items-center rounded-md
-          border border-2 border-transparent p-2 pb-0
-          hover:border-gray-300 data-[active=true]:border-brand-300
+          group/suggestion hover:shadow-suggestions flex cursor-pointer flex-col items-center
+          rounded-md border border-2 border-transparent p-2
+          pb-0
         `)}
       >
         <div
@@ -112,18 +117,13 @@ export const Suggestions = ({
           {icon ?? <IconFallback className="h-full w-full" />}
         </div>
         <h5 className="text-center text-sm font-bold">{title}</h5>
-      </div>
+      </button>
     )
   }
 
   return (
     <div className="mt-2">
-      <div
-        className="sticky top-0 z-10 bg-white pl-6 pt-4"
-        style={{
-          boxShadow: '0px 7px 7px 3px rgba(255,255,255,0.8)',
-        }}
-      >
+      <div className="shadow-stickysearch sticky top-0 z-10 bg-white pl-6 pt-4">
         <EditorInput
           ref={searchInputRef}
           autoFocus

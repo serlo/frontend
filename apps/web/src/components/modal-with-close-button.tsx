@@ -103,7 +103,7 @@ export function ModalWithCloseButton({
               onClick={() => onOpenChange(false)}
               title={title}
               className={cn(
-                `z-2 absolute right-3.5 top-3.5 inline-flex h-9 w-9 cursor-pointer items-center
+                `absolute right-3.5 top-3.5 z-20 inline-flex h-9 w-9 cursor-pointer items-center
               justify-center rounded-full border-none leading-tight
               text-almost-black hover:bg-brand hover:text-white`,
                 extraCloseButtonClassName
