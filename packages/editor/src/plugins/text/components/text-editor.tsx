@@ -1,5 +1,4 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect } from 'react'
@@ -165,7 +164,7 @@ export function TextEditor(props: TextEditorProps) {
 
       {showSuggestions ? (
         <ModalWithCloseButton
-          className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll"
+          className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll pt-0"
           isOpen
           setIsOpen={(open) => {}}
         >
