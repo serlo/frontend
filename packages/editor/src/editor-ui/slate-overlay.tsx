@@ -90,23 +90,14 @@ function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
   const activeElement = rootNode.activeElement as HTMLElement
   if (activeElement) {
     const rect = activeElement.getBoundingClientRect()
-    return new DOMRect(
-      rect.left,
-      // Add 14 px to the top to make the menu align with where the cursor is
-      // placed
-      rect.top,
-      rect.width,
-      rect.height
-    )
-  } else {
-    const shadowHostRect = rootNode.host.getBoundingClientRect()
-    return new DOMRect(
-      shadowHostRect.left,
-      // Add 14 px to the top to make the menu align with where the cursor is
-      // placed
-      shadowHostRect.top,
-      shadowHostRect.width,
-      shadowHostRect.height
-    )
+    return new DOMRect(rect.left, rect.top, rect.width, rect.height)
   }
+
+  const shadowHostRect = rootNode.host.getBoundingClientRect()
+  return new DOMRect(
+    shadowHostRect.left,
+    shadowHostRect.top,
+    shadowHostRect.width,
+    shadowHostRect.height
+  )
 }
