@@ -424,7 +424,8 @@ export const instanceData = {
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
-      verificationLinkText: 'Click here to request the verification email again.'
+      verificationLinkText: 'Click here to request the verification email again.',
+      badRole: 'You are only allowed to log in through Vidis if you are a teacher.'
     },
     keys: {
       ctrl: 'ctrl',
@@ -720,6 +721,7 @@ export const loggedInData = {
           imageSourceHelpText: 'Add the author or source of this image here',
           invalidImageUrl: 'Error: Invalid or Incomplete URL',
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          search: 'Suche',
           searchOnline: 'Search online for licence-free images',
           placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
@@ -737,7 +739,13 @@ export const loggedInData = {
           helpTooltipText: 'More information and help related to Image Plugin',
           change: 'Change image',
           licence: 'Licence',
-          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:'
+          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:',
+          licenceFree: 'Licence Free Images',
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: 'These images were loaded from Pixabay.',
+          searching: 'Searching for images ...',
+          loadingImage: 'Downloading image ...',
+          noImagesFound: 'No images found'
         },
         injection: {
           title: "Contenu de serlo.org",

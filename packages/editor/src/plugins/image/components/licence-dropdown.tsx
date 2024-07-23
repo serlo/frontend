@@ -1,5 +1,5 @@
 import { NiceDropdown } from '@editor/core/components/nice-dropdown'
-import { useState, useEffect, useRef, FC } from 'react'
+import { useState, FC } from 'react'
 
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -28,18 +28,9 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
   const { licence, licenceHelpText } = editorStrings.plugins.image
 
   const [isConfirmed, setIsConfirmed] = useState(!!src?.includes('pixabay'))
-  const [selectedLicense, setSelectedLicense] = useState(currentLicence || '1')
-  const isPixabayImage = src?.includes('pixabay')
-  const hasSetInitialLicense = useRef(false)
-
-  useEffect(() => {
-    if (isPixabayImage && !hasSetInitialLicense.current) {
-      setSelectedLicense(ImageLicence.Pixabay)
-      onLicenseChange?.(ImageLicence.Pixabay)
-      setIsConfirmed(true)
-      hasSetInitialLicense.current = true
-    }
-  }, [isPixabayImage, onLicenseChange])
+  const [selectedLicense, setSelectedLicense] = useState(
+    currentLicence || 'CCBYSA4'
+  )
 
   const handleLicenseChange = (newLicense?: string) => {
     if (newLicense) {

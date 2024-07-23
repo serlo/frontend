@@ -424,7 +424,8 @@ export const instanceData = {
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
       verificationProblem: "Wenn du keine Mail bekommen hast",
-      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
+      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten.",
+      badRole: "Du darfst dich nur über Vidis einloggen, wenn du Lehrer bist. Sorry 🤷"
     },
     keys: {
       ctrl: "Strg",
@@ -717,9 +718,10 @@ export const loggedInData = {
           upload: "Bild hochladen",
           imageUrl: "Bild-URL",
           imageSource: "Bildquelle",
-          imageSourceHelpText: "Füge hier die URL oder weitere Informationen wie den Urheber dieses Bildes hinzu.",
+          imageSourceHelpText: "Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.",
           invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
           invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
+          search: 'Suche',
           searchOnline: "Online nach lizenzfreien Bildern suchen",
           placeholderSource: "Quelle (optional)",
           placeholderEmpty: 'https://example.com/image.png',
@@ -727,7 +729,7 @@ export const loggedInData = {
           placeholderFailed: "Hochladen fehlgeschlagen",
           retry: "Erneut versuchen",
           failedUpload: "Hochladen fehlgeschlagen",
-          captionPlaceholder: "Optionale Bildunterschrift",
+          captionPlaceholder: "Bildunterschrift (optional)",
           href: 'Link',
           hrefPlaceholder: "Bild verlinken",
           alt: "Alternativtext (wird nicht angezeigt)",
@@ -737,7 +739,13 @@ export const loggedInData = {
           helpTooltipText: "Mehr Informationen und Hilfe",
           change: "Bild ändern",
           licence: "Lizenz",
-          licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:"
+          licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:",
+          licenceFree: "Lizenzfreie Bilder",
+          pixabayText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
+          pixabayLoadedText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
+          searching: "Suche nach Bildern ...",
+          loadingImage: "Bilder werden heruntergeladen ...",
+          noImagesFound: "Keine Bilder gefunden"
         },
         injection: {
           title: "serlo.org Inhalt",

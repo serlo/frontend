@@ -8,14 +8,14 @@ import { BackgroundShape, BackgroundType } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function BackgroundTypeSelect(props: DropzoneImageProps) {
-  const { state, id } = props
+  const { state, id, focused } = props
   const { backgroundType, backgroundImage, canvasShape } = state
   const backgroundTypeStrings =
     useEditorStrings().plugins.dropzoneImage.backgroundType
 
   return (
     <>
-      <DropzoneImageToolbar id={id} />
+      {focused && <DropzoneImageToolbar id={id} />}
       <div className="m-6 flex items-center justify-center p-6 py-8 text-gray-500">
         {backgroundTypeStrings.description}
       </div>
