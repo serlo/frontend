@@ -40,22 +40,6 @@ export function SlateOverlay(props: SlateOverlayProps) {
         5
       wrapper.current.style.left = `${leftOffset}px`
       wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
-
-      console.log('Slate overlay style: ', {
-        wrapperStyle: {
-          top: wrapper.current?.style.top,
-          left: wrapper.current?.style.left,
-          bottom: wrapper.current?.style.bottom,
-          right: wrapper.current?.style.right,
-        },
-        boundingLeft,
-        boundingWrapperRight,
-        overlap,
-        leftOffset,
-        offsetRect,
-        parentRect,
-        anchorRect,
-      })
     }, 1)
 
     return () => clearTimeout(timeout)
@@ -81,16 +65,6 @@ function getAnchorRect(
   anchor: CustomElement | undefined,
   wrapper: HTMLDivElement
 ): DOMRect | null {
-  console.log('getAnchorRect', {
-    editor,
-    anchor,
-    wrapper,
-    shadowRect: getRectWithinShadowDom(wrapper),
-    nativeDomSelection:
-      Number(window?.getSelection()?.rangeCount) > 0
-        ? window?.getSelection()?.getRangeAt(0).getBoundingClientRect()
-        : undefined,
-  })
   if (anchor) {
     return (
       ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect() ?? null
@@ -116,7 +90,6 @@ function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
   const activeElement = rootNode.activeElement as HTMLElement
   if (activeElement) {
     const rect = activeElement.getBoundingClientRect()
-    console.log('Shadow Rect active Element: ', rect)
     return new DOMRect(
       rect.left,
       // Add 14 px to the top to make the menu align with where the cursor is
@@ -127,7 +100,6 @@ function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
     )
   } else {
     const shadowHostRect = rootNode.host.getBoundingClientRect()
-    console.log('Shadow Rect shadowHostRect: ', shadowHostRect)
     return new DOMRect(
       shadowHostRect.left,
       // Add 14 px to the top to make the menu align with where the cursor is

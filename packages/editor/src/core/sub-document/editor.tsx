@@ -78,12 +78,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           return
         }
 
-        // find closest document
-
         if (focusState.latestId === id) {
+          // find closest document
           const target = (e.target as HTMLDivElement).closest('[data-document]')
-          // console.log(`focusing sub document ${id}`, { target, focused })
-
           if (!focused && target === containerRef.current) {
             dispatch(focus(id))
           }

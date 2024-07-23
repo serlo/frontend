@@ -125,7 +125,6 @@ export function VisualEditor(props: VisualEditorProps) {
       props.onError()
     }
     setTimeout(() => {
-      console.log('Onmount focus called!')
       ref.focus()
     })
   }

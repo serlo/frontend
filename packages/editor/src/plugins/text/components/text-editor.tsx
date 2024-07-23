@@ -96,8 +96,6 @@ export function TextEditor(props: TextEditorProps) {
 
     // If the editor is not focused, remove the suggestions search
     // and exit the useEffect hook
-
-    console.log('Text editor', { text, focused })
     if (focused === false) {
       if (text.startsWith('/')) {
         editor.deleteBackward('line')
