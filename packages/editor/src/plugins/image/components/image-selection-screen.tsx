@@ -66,7 +66,7 @@ export function ImageSelectionScreen(
             {imageStrings.searchOnline}
           </button>
         )}
-        <span className="mb-1 flex w-full justify-center font-bold">
+        <span className="mb-1 flex w-full justify-center font-medium">
           {imageStrings.imageUrl}
         </span>
         <span className="serlo-tooltip-trigger">
