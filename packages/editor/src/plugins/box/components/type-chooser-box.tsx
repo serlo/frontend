@@ -13,10 +13,10 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
 
-  const handleTypeSelection = (
+  function handleTypeSelection(
     type: string,
     event: React.MouseEvent | React.KeyboardEvent
-  ) => {
+  ) {
     event.preventDefault()
     event.stopPropagation()
     typeState.set(type)
