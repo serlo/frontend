@@ -52,7 +52,6 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
 
       requestAnimationFrame(() => {
         if (isEditorInDOM(editor)) {
-          console.log('Firing focus', { editor, id, state, focused })
           ReactEditor.focus(editor, { retries: 2 })
           storeEntry.needRefocus--
         }

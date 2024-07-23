@@ -160,9 +160,6 @@ export class EditorWebComponent extends HTMLElement {
       this._currentState = initialState
     }
 
-    // eslint-disable-next-line no-console
-    console.log('Mounting React Component with state:', initialState)
-
     if (!this.reactRoot) {
       return null
     }

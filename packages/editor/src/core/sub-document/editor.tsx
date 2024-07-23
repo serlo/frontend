@@ -1,4 +1,5 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import * as R from 'ramda'
 import { useRef, useMemo, useCallback } from 'react'
@@ -10,6 +11,7 @@ import {
   runChangeDocumentSaga,
   selectChildTreeOfParent,
   selectDocument,
+  selectDocumentPluginType,
   selectIsFocused,
   store,
   useAppDispatch,
@@ -59,10 +61,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   // additional focus check to set focus when using tab navigation
   const handleFocus = useCallback(
-    (e: React.FocusEvent) => {
+    (event: React.FocusEvent) => {
       if (!document) return
       if (['rows', 'exercise'].includes(document?.plugin)) return
 
+      event?.stopPropagation()
       // Clear any existing timeout
       if (focusState.timeout) {
         clearTimeout(focusState.timeout)
@@ -73,14 +76,21 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       // if after a short delay dom focus is not set inside focused plugin
       // we overwrite it here (because it's probably because of tab navigation)
       focusState.timeout = setTimeout(() => {
+        const pluginType = selectDocumentPluginType(store.getState(), id)
+
         // fixes a bug in table plugin with disappearing buttons
-        if (['button', 'select'].includes(e.target.nodeName?.toLowerCase())) {
+        if (
+          pluginType === EditorPluginType.SerloTable &&
+          ['button', 'select'].includes(event.target.nodeName?.toLowerCase())
+        ) {
           return
         }
 
         if (focusState.latestId === id) {
           // find closest document
-          const target = (e.target as HTMLDivElement).closest('[data-document]')
+          const target = (event.target as HTMLDivElement).closest(
+            '[data-document]'
+          )
           if (!focused && target === containerRef.current) {
             dispatch(focus(id))
           }
