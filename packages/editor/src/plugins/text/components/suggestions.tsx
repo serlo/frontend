@@ -6,7 +6,7 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import type { SuggestionOption } from '../hooks/use-suggestions'
 
@@ -34,18 +34,27 @@ const exerciseIcons = {
 
 export const Suggestions = ({
   options,
-  suggestionsRef,
   selected,
   onMouseDown,
   onMouseMove,
 }: SuggestionsProps) => {
   const editorStrings = useEditorStrings()
   const exerciseTemplateStrings = editorStrings.templatePlugins.exercise
-
   const [searchString, setSearchString] = useState('')
   const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
     editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
   )
+
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    // focus on title, remove focus from content
+    setTimeout(() => {
+      searchInputRef.current?.focus()
+    })
+    // only after creating plugin
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (options.length === 0) {
     return <div>{editorStrings.plugins.text.noItemsFound}</div>
@@ -108,7 +117,7 @@ export const Suggestions = ({
   }
 
   return (
-    <div ref={suggestionsRef} className="mt-2">
+    <div className="mt-2">
       <div
         className="sticky top-0 z-10 bg-white pl-6 pt-4"
         style={{
@@ -116,6 +125,7 @@ export const Suggestions = ({
         }}
       >
         <EditorInput
+          ref={searchInputRef}
           autoFocus
           placeholder="Search..."
           value={searchString}

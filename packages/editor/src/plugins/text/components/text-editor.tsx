@@ -162,15 +162,13 @@ export function TextEditor(props: TextEditorProps) {
 
       {focused ? <LinkControls /> : null}
 
-      {showSuggestions ? (
-        <ModalWithCloseButton
-          className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll pt-0"
-          isOpen
-          setIsOpen={(open) => {}}
-        >
-          <Suggestions {...suggestionsProps} />
-        </ModalWithCloseButton>
-      ) : null}
+      <ModalWithCloseButton
+        className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll pt-0"
+        isOpen={showSuggestions}
+        setIsOpen={(open) => {}}
+      >
+        <Suggestions {...suggestionsProps} />
+      </ModalWithCloseButton>
     </Slate>
   )
 }
