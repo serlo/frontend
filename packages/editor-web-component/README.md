@@ -71,6 +71,15 @@ export default defineComponent({
 
 If you want to display a certain plugin as an initial state of the Serlo Editor, check out the [documentation](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins) for each JSON state of the plugins.
 
+## Shadow DOM vs. normal DOM
+
+We give you the option whether you want to render the web-component within the Shadow DOM or not. Both have their pros and cons. Outside of the Shadow DOM, it's easier to run into style collisions. However, the Serlo Editor within the Shadow DOM is still buggy in a few places, especially when it comes to focus management.
+We are fixing them, but by default we are rendering the Serlo Editor within the normal DOM. If you want to render it within the Shadow DOM, you can pass `true` to the `use-shadow-dom` argument. Bug reports and fixes in form of a PR for the use-shadow-dom mode are very welcome!
+
+```html
+<editor-web-component use-shadow-dom="true"></editor-web-component>
+```
+
 ## Releasing a new version to npm
 
 Bump the version number in the package.json and
