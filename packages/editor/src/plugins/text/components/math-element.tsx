@@ -53,11 +53,7 @@ export function MathElement({
       <>
         {/* Slate void elements need to set attributes and contentEditable={false}
           See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements */}
-        <span
-          {...attributes}
-          contentEditable={false}
-          className="select-none"
-        >
+        <span {...attributes} contentEditable={false} className="select-none">
           <StaticMath src={element.src} inline={element.inline} type="math" />
           {children}
         </span>
