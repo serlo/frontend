@@ -7,7 +7,9 @@ import type {
   PureRemoveDocumentAction,
   PureReplaceDocumentAction,
 } from './types'
-import { State } from '../types'
+import { State, type DocumentState } from '../types'
+
+type IDocumentState = Record<string, DocumentState>
 
 const initialState: State['documents'] = {}
 
@@ -17,7 +19,10 @@ export const documentsSlice = createSlice({
   reducers: {
     // The insert action with a side effect:
     // Focus the newly inserted document (see `focus` slice)
-    insertAndFocusDocument(state, action: InsertAndFocusDocumentAction) {
+    insertAndFocusDocument(
+      state: IDocumentState,
+      action: InsertAndFocusDocumentAction
+    ) {
       const { id, plugin: type, state: pluginState } = action.payload
       state[id] = {
         plugin: type,
@@ -25,22 +30,34 @@ export const documentsSlice = createSlice({
       }
     },
     // The pure insert action (no side effects)
-    pureInsertDocument(state, action: PureInsertDocumentAction) {
+    pureInsertDocument(
+      state: IDocumentState,
+      action: PureInsertDocumentAction
+    ) {
       const { id, plugin: type, state: pluginState } = action.payload
       state[id] = {
         plugin: type,
         state: pluginState,
       }
     },
-    pureRemoveDocument(state, action: PureRemoveDocumentAction) {
+    pureRemoveDocument(
+      state: IDocumentState,
+      action: PureRemoveDocumentAction
+    ) {
       delete state[action.payload]
     },
-    pureChangeDocument(state, action: PureChangeDocumentAction) {
+    pureChangeDocument(
+      state: IDocumentState,
+      action: PureChangeDocumentAction
+    ) {
       const { id, state: pluginState } = action.payload
       if (!state[id]) return state
       state[id].state = pluginState
     },
-    pureReplaceDocument(state, action: PureReplaceDocumentAction) {
+    pureReplaceDocument(
+      state: IDocumentState,
+      action: PureReplaceDocumentAction
+    ) {
       const { id, plugin: type, state: pluginState } = action.payload
       state[id] = {
         plugin: type,

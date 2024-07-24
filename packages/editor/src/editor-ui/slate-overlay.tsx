@@ -15,28 +15,34 @@ export function SlateOverlay(props: SlateOverlayProps) {
 
   // Positioning of the overlay relative to the anchor
   useEffect(() => {
-    if (!wrapper.current) return
+    // When the "+" button is clicked, the "/" is inserted and the editor is
+    // focused. We need to wait for the editor to have an updated focused to
+    // select the correct anchor
+    const timeout = setTimeout(() => {
+      if (!wrapper.current) return
+      const anchorRect = getAnchorRect(editor, anchor, wrapper.current)
+      const parentRect = wrapper.current
+        .closest('.rows-editor-renderer-container')
+        ?.getBoundingClientRect()
+      const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
 
-    const anchorRect = getAnchorRect(editor, anchor, wrapper.current)
+      if (!anchorRect || !parentRect || !offsetRect) return
 
-    const parentRect = wrapper.current
-      .closest('.rows-editor-renderer-container')
-      ?.getBoundingClientRect()
+      const boundingLeft = anchorRect.left - 2 // wrapper starts at anchor's left
 
-    const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
+      const boundingWrapperRight = boundingLeft + width
+      const overlap = boundingWrapperRight - parentRect.right
+      const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
 
-    if (!anchorRect || !parentRect || !offsetRect) return
+      const leftOffset =
+        (overlap > 0 ? fallbackBoundingLeft : boundingLeft) -
+        offsetRect.left -
+        5
+      wrapper.current.style.left = `${leftOffset}px`
+      wrapper.current.style.top = `${anchorRect.bottom + 20 - offsetRect.top}px`
+    }, 1)
 
-    const boundingLeft = anchorRect.left - 2 // wrapper starts at anchor's left
-
-    const boundingWrapperRight = boundingLeft + width
-    const overlap = boundingWrapperRight - parentRect.right
-    const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
-
-    wrapper.current.style.left = `${
-      (overlap > 0 ? fallbackBoundingLeft : boundingLeft) - offsetRect.left - 5
-    }px`
-    wrapper.current.style.top = `${anchorRect.bottom + 6 - offsetRect.top}px`
+    return () => clearTimeout(timeout)
   }, [editor, anchor, width])
 
   return (
@@ -58,45 +64,40 @@ function getAnchorRect(
   editor: ReactEditor,
   anchor: CustomElement | undefined,
   wrapper: HTMLDivElement
-) {
+): DOMRect | null {
   if (anchor) {
-    return ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect()
+    return (
+      ReactEditor.toDOMNode(editor, anchor)?.getBoundingClientRect() ?? null
+    )
   }
 
-  const getRectWithinShadowDom = (): DOMRect | null => {
-    const rootNode = wrapper.getRootNode() as ShadowRoot | Document
+  const shadowRect = getRectWithinShadowDom(wrapper)
+  if (shadowRect) return shadowRect
 
-    if (!(rootNode instanceof ShadowRoot)) {
-      return null
-    }
-
-    const activeElement = rootNode.activeElement as HTMLElement
-    if (activeElement) {
-      const rect = activeElement.getBoundingClientRect()
-      return rect
-    } else {
-      const shadowHostRect = rootNode.host.getBoundingClientRect()
-      return new DOMRect(
-        shadowHostRect.left,
-        shadowHostRect.top,
-        shadowHostRect.width,
-        shadowHostRect.height
-      )
-    }
-  }
-
-  const shadowRect = getRectWithinShadowDom()
-  if (shadowRect) {
-    return shadowRect
-  }
-
-  // Fallback to the native DOM selection if not within the Shadow DOM
   const nativeDomSelection = window.getSelection()
-
   if (nativeDomSelection && nativeDomSelection.rangeCount > 0) {
-    const range = nativeDomSelection.getRangeAt(0)
-    return range.getBoundingClientRect()
+    return nativeDomSelection.getRangeAt(0).getBoundingClientRect()
   }
 
   return null
+}
+
+function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
+  const rootNode = wrapper.getRootNode() as ShadowRoot | Document
+
+  if (!(rootNode instanceof ShadowRoot)) return null
+
+  const activeElement = rootNode.activeElement as HTMLElement
+  if (activeElement) {
+    const rect = activeElement.getBoundingClientRect()
+    return new DOMRect(rect.left, rect.top, rect.width, rect.height)
+  }
+
+  const shadowHostRect = rootNode.host.getBoundingClientRect()
+  return new DOMRect(
+    shadowHostRect.left,
+    shadowHostRect.top,
+    shadowHostRect.width,
+    shadowHostRect.height
+  )
 }

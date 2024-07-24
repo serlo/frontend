@@ -28,7 +28,7 @@ export function TextLeafWithPlaceholder(
   return (
     <>
       <span
-        className="pointer-events-none absolute -mt-1 block w-full text-gray-400 [user-select:none]"
+        className="pointer-events-none absolute -mt-1 block w-full select-none text-gray-400"
         contentEditable={false}
         data-qa="plugin-text-leaf-element-with-placeholder"
       >

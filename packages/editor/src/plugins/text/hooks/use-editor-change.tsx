@@ -41,6 +41,7 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
 
   useEffect(() => {
     const storeEntry = instanceStateStore[id]
+
     if (focused && storeEntry.needRefocus > 0) {
       const selection = storeEntry.selection ?? Editor.start(editor, [])
 
@@ -49,8 +50,12 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
         Transforms.select(editor, selection)
       })
 
-      ReactEditor.focus(editor)
-      storeEntry.needRefocus--
+      requestAnimationFrame(() => {
+        if (isEditorInDOM(editor)) {
+          ReactEditor.focus(editor, { retries: 2 })
+          storeEntry.needRefocus--
+        }
+      })
     }
   })
 
@@ -84,4 +89,31 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
     },
     [editor.operations, editor.selection, state, id]
   )
+}
+
+function isEditorInDOM(editor: Editor) {
+  try {
+    // Get DOMNode of the whole editor
+    const domNode = ReactEditor.toDOMNode(editor, editor)
+    if (document.body.contains(domNode)) {
+      return true
+    }
+
+    // Fallback to checking if it's in the Shadow DOM
+    let rootNode = domNode.getRootNode() as ShadowRoot | Document
+    while (rootNode instanceof ShadowRoot) {
+      if (rootNode.host.contains(domNode)) {
+        return true
+      }
+      rootNode = rootNode.host.getRootNode() as ShadowRoot | Document
+    }
+
+    console.warn("Editor is not in DOM. Can't focus item", { editor, domNode })
+
+    return false
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.warn('Error checking if editor is in DOM. Not mounted!', error)
+    return false
+  }
 }
