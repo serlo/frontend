@@ -44,25 +44,16 @@ The tests are written in `/tests`, the file names are setting the order of execu
 
 ## Run tests against localhost build
 
-If you want to run the tests against your local changes, first build the frontend and start it on localhost:
+If you want to run the tests against your local changes, first build the frontend and start it on localhost, then run the `e2e-localhost` command:
 
 ```sh
 yarn build && yarn start
-```
-
-Then ensure to uncomment this line in the .env file.
-
-`FRONTEND_URL=http://localhost:3000`
-
-Finally, run the tests:
-
-```sh
-yarn e2e
+yarn e2e-localhost
 ```
 
 ## Run tests against staging
 
-By default, the e2e tests are run against staging. Just ensure this comment is set in the .env file.
+By default, the e2e tests are run against staging. Ensure this comment is set in the .env file.
 
 `# FRONTEND_URL=https://staging.serlo.org`
 
