@@ -56,7 +56,7 @@ export function MathElement({
         <span
           {...attributes}
           contentEditable={false}
-          style={{ userSelect: 'none' }}
+          className="select-none"
         >
           <StaticMath src={element.src} inline={element.inline} type="math" />
           {children}
