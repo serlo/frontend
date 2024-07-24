@@ -6,6 +6,7 @@ import { useState } from 'react'
 import type { GeogebraProps } from '.'
 import { GeogebraRenderer, parseId } from './renderer'
 import { GeogebraToolbar } from './toolbar'
+import { cn } from '@/helper/cn'
 
 export function GeogebraEditor(props: GeogebraProps) {
   const { focused, state } = props
@@ -28,7 +29,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           type="applet"
           provider="GeoGebra"
           embedUrl={url}
-          className={!focused ? 'pointer-events-none' : ''}
+          className={cn(!focused && 'pointer-events-none')}
         >
           <GeogebraRenderer geogebraId={cleanId} />
         </EmbedWrapper>

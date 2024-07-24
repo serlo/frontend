@@ -1,4 +1,5 @@
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -7,9 +8,11 @@ import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedi
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
 import type { PluginsConfig } from '@editor/package/config'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
@@ -25,6 +28,7 @@ import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
+import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
@@ -53,6 +57,12 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       plugin: createMultimediaPlugin(createMultimediaPluginConfig(config)),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
+    },
+    {
+      type: EditorPluginType.Video,
+      plugin: videoPlugin,
+      visibleInSuggestions: true,
+      icon: <IconVideo />,
     },
     {
       type: EditorPluginType.Spoiler,
@@ -120,7 +130,12 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       type: EditorPluginType.BlanksExercise,
       plugin: blanksExercise,
     },
-
+    {
+      type: EditorPluginType.DropzoneImage,
+      plugin: createDropzoneImagePlugin(),
+      visibleInSuggestions: false,
+      icon: <IconDropzones />,
+    },
     // Special plugins, never visible in suggestions
     // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
