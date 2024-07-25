@@ -100,7 +100,6 @@ export async function requestRevision(
 
     return {
       kind: 'revision',
-      newsletterPopup: false,
       revisionData: {
         repository: {
           id: uuid.repository.id,

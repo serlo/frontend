@@ -28,7 +28,6 @@ export async function requestUserByUsername(
 
   return {
     kind: 'user/profile',
-    newsletterPopup: false,
     userData: {
       ...userData,
       motivation: userData.motivation ?? undefined,

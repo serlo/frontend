@@ -207,7 +207,6 @@ export interface EntityPageBase {
   secondaryMenuData?: SecondaryMenuData['entries']
   metaData?: HeadData
   horizonData?: HorizonData
-  newsletterPopup: boolean
   authorization: AuthorizationPayload
 }
 

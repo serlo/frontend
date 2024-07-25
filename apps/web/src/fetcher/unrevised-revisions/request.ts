@@ -27,7 +27,6 @@ export async function requestUnrevisedRevisionsBySubjects(
     return {
       kind: 'unrevisedRevisions',
       revisionsData: subject,
-      newsletterPopup: false,
       authorization,
     }
   } catch (e) {

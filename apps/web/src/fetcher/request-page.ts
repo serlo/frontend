@@ -99,7 +99,6 @@ export async function requestPage(
     return {
       kind: 'taxonomy',
       taxonomyData: buildTaxonomyData(uuid),
-      newsletterPopup: false,
       metaData: {
         title,
         metaImage,
@@ -127,7 +126,6 @@ export async function requestPage(
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
-      newsletterPopup: false,
       breadcrumbsData,
       metaData: {
         title,
@@ -153,7 +151,6 @@ export async function requestPage(
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
-      newsletterPopup: false,
       breadcrumbsData,
       metaData: {
         title,
@@ -185,7 +182,6 @@ export async function requestPage(
         content,
         isUnrevised: false,
       },
-      newsletterPopup: false,
       horizonData,
       metaData: {
         title,
@@ -223,7 +219,6 @@ export async function requestPage(
   if (uuid.__typename === UuidType.Article) {
     return {
       kind: 'single-entity',
-      newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
         content: {
@@ -278,7 +273,6 @@ export async function requestPage(
 
     return {
       kind: 'single-entity',
-      newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
         content: {
@@ -313,7 +307,6 @@ export async function requestPage(
   if (uuid.__typename === UuidType.Page) {
     return {
       kind: 'single-entity',
-      newsletterPopup: true,
       entityData: {
         ...sharedEntityData,
         typename: UuidType.Page,
@@ -332,7 +325,6 @@ export async function requestPage(
   if (uuid.__typename === UuidType.Video) {
     return {
       kind: 'single-entity',
-      newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
         typename: UuidType.Video,
@@ -363,7 +355,6 @@ export async function requestPage(
   if (uuid.__typename === UuidType.Applet) {
     return {
       kind: 'single-entity',
-      newsletterPopup: false,
       entityData: {
         typename: UuidType.Applet,
         ...sharedEntityData,

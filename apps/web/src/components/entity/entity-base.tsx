@@ -13,7 +13,6 @@ import { JsonLd } from '../json-ld'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { SecondaryMenu } from '../navigation/secondary-menu'
-import { NewsletterPopup } from '../scripts/newsletter-popup'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { ABProvider, useABValue } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -217,7 +216,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       {page.kind === 'single-entity' || page.kind === 'taxonomy' ? (
         <JsonLd data={page} id={entityId} />
       ) : null}
-      {page.newsletterPopup && <NewsletterPopup />}
       <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           <Breadcrumbs
