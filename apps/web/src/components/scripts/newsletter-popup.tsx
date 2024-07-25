@@ -96,7 +96,7 @@ export function NewsletterPopup() {
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
             className="serlo-new-landing-button serlo-button-with-wings mt-2 inline-block"
-            href="/serlo" // TODO: activate mailchimp landing page with form and link here
+            href="https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&id=a7bb2bbc4f"
           >
             Jetzt anmelden!
           </a>
