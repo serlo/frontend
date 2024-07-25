@@ -7,6 +7,7 @@ import type { AxiosError } from '@/auth/types'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { loginUrl } from '@/components/pages/auth/utils'
 import { useInstanceData } from '@/contexts/instance-context'
+import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -18,7 +19,7 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Error() {
-  const [error, setError] = useState<FlowError | string>()
+  const [error, setError] = useState<FlowError>()
   const router = useRouter()
   const { id } = router.query
 
@@ -48,29 +49,32 @@ function Error() {
   }, [id, router, router.isReady, error])
 
   if (
-    isVidisKratosError(error) &&
+    hasFlowErrorFieldError(error) &&
     error.error.message.includes('ERR_BAD_ROLE')
   ) {
     showToastNotice(authStrings.badRole, 'warning', 5000)
-    void router.push(loginUrl)
+    return router.push(loginUrl)
+  }
+
+  if (isProduction) {
+    triggerSentry({ message: 'Auth error in error flow', data: error })
+    showToastNotice(authStrings.somethingWrong, 'warning', 5000)
+    return router.push(loginUrl)
   }
 
   return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
 }
 
-interface VidisKratosError {
-  id: string
+interface FlowErrorWithErrorField extends FlowError {
   error: {
     code: number
     message: string
     status: string
   }
-  created_at: string
-  updated_at: string
 }
 
-function isVidisKratosError(
-  error: string | FlowError | undefined | VidisKratosError
-): error is VidisKratosError {
-  return (error as VidisKratosError)?.error?.message !== undefined
+function hasFlowErrorFieldError(
+  error: FlowError | undefined
+): error is FlowErrorWithErrorField {
+  return Object.prototype.hasOwnProperty.call(error?.error, 'message')
 }
