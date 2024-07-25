@@ -48,16 +48,16 @@ const imageSrc =
 export function NewsletterPopup() {
   const { lang } = useInstanceData()
   const [shouldLoad, setShouldLoad] = useState(false)
-  const [alredySeen, setAlredySeen] = useState(false)
+  const [alreadySeen, setAlreadySeen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
   useScrollUpTrigger(
     () => {
       setIsOpen(true)
       window.localStorage.setItem('newsletterAlreadyInvited', '1')
-      setAlredySeen(true)
+      setAlreadySeen(true)
     },
-    shouldLoad && !isOpen && !alredySeen
+    shouldLoad && !isOpen && !alreadySeen
   )
 
   useEffect(() => {
@@ -83,11 +83,11 @@ export function NewsletterPopup() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageSrc}
-          alt="Das Serlo Team läd dich ein den Newsletter zu abbonieren."
+          alt="Das Serlo Team lädt dich ein den Newsletter zu abbonieren."
           className="mt-12"
         />
         <p className="serlo-p mt-12">
-          <b>Kurs und prägnant</b>:<br />
+          <b>Kurz und prägnant</b>:<br />
           Unser Newsletter mit Updates zu Serlo, digitaler Bildung und
           Bildungsgerechtigkeit.
           <br />
