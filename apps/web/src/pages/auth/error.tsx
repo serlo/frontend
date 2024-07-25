@@ -76,5 +76,5 @@ interface FlowErrorWithErrorField extends FlowError {
 function hasFlowErrorFieldError(
   error: FlowError | undefined
 ): error is FlowErrorWithErrorField {
-  return Object.prototype.hasOwnProperty.call(error?.error, 'message')
+  return !!error?.error && Object.hasOwn(error.error, 'message')
 }
