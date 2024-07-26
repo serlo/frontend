@@ -197,6 +197,16 @@ export function FillInTheBlanksExample() {
   )
 }
 
+export const DropzoneExample = (
+  <div className="pt-2">
+    <StaticRenderer
+      document={parseDocumentString(
+        '{"plugin":"rows","state":[{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}],"id":"77620693-3a91-4da6-9473-a11ecf3f5bf5"}],"id":"ff2620f8-349d-4dc3-aee4-7eb92b7bc2e2"},"interactive":{"plugin":"dropzoneImage","state":{"answerZones":[{"id":"answerZone-0","name":"","position":{"top":0.0784,"left":0.2267},"layout":{"width":0.3149,"height":0.1704},"answers":[{"id":"a987ac56-9c73-4625-9d8b-f635ba418643","image":{"plugin":"image","state":{"src":""},"id":"782e0412-9618-40e1-8ea7-a1354370258e"},"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Condensation","strong":true}]}],"id":"e199f1b6-ccbc-4049-90a0-286bebe99130"}}]},{"id":"answerZone-1","name":"","position":{"top":0.4193,"left":0},"layout":{"width":0.3317,"height":0.1642},"answers":[{"id":"b48d3e4a-6076-478f-b45e-c6ef5a0e0032","image":{"plugin":"image","state":{"src":""},"id":"08a6c108-ea96-4388-9b4c-62e887602f6e"},"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Evaporation","strong":true}]}],"id":"aa3116c8-87a9-4b05-84ba-376a596fe8b5"}}]},{"id":"answerZone-2","name":"","position":{"top":0.3152,"left":0.6983},"layout":{"width":0.3,"height":0.1894},"answers":[{"id":"8bb93f22-055b-4961-a3b9-959158708cd1","image":{"plugin":"image","state":{"src":""},"id":"e8156ff2-bdd0-4c82-9901-996b436dfd14"},"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Precipitation","strong":true}]}],"id":"cd8f5505-d78d-484f-b06a-5138e3048d16"}}]},{"id":"answerZone-3","name":"","position":{"top":0.7919,"left":0.4517},"layout":{"width":0.3383,"height":0.1611},"answers":[{"id":"56d78ed9-621b-47d5-a94c-3cbe9059d6e2","image":{"plugin":"image","state":{"src":""},"id":"171c8f60-3086-4b82-ada0-075cd55a6d08"},"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Infiltration","strong":true}]}],"id":"d7c7dfb3-c0ef-420c-83bb-2d3340a05150"}}]}],"canvasShape":"","canvasDimensions":{"height":316.7750325097529,"width":600},"backgroundType":"image","backgroundImage":{"plugin":"image","state":{"src":"https://assets.serlo.org/c7b11690-4806-11ef-b44b-9b93a28029ea/image.jpg","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}],"id":"d28a8490-1f60-429f-a8bc-a14189324c7c"}},"id":"0fb8a4ea-4ee2-4c34-835b-02a2f19a0bce"},"dropzoneVisibility":"full","extraDraggableAnswers":[]},"id":"00596756-5bb7-445c-b4e3-2ca744716f1e"}},"id":"22dde504-84ec-4466-9761-9b5097599893"}]}'
+      )}
+    />
+  </div>
+)
+
 export const InputExample = (
   <div className="pt-2">
     <StaticRenderer

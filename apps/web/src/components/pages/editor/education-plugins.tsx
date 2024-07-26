@@ -22,6 +22,7 @@ import { useRef, useState } from 'react'
 
 import {
   BoxExample,
+  DropzoneExample,
   FillInTheBlanksExample,
   HighlightExample,
   InputExample,
@@ -49,6 +50,15 @@ const pluginData = [
       'Fill in the Blanks exercises allow students to either input an original answer, or drag & drop from a predefined list of answers. Authors can add additional wrong answers to the list to make the exercise more challenging.',
     example: <FillInTheBlanksExample />,
     demoSlug: '/_assets/img/editor/demo-videos/fill-in-the-blanks-exercise',
+    category: 'educational',
+  },
+  {
+    title: 'Dropzones Exercise',
+    icon: faPencilAlt,
+    description:
+      'Dropzones exercises allow students to drag & drop predefined answers into the correct dropzone. Authors can add additional wrong answers to the list to make the exercise more challenging.',
+    example: DropzoneExample,
+    demoSlug: '/_assets/img/editor/demo-videos/dropzone-exercise',
     category: 'educational',
   },
   {
