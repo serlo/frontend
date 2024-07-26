@@ -39,13 +39,16 @@ const h2Class =
 
 const categories = ['educational', 'basic'] as const
 
+//dropzone-exercise
+
 const pluginData = [
   {
     title: 'Fill in the Gap Exercise',
     icon: faPencilAlt,
     description:
       'Fill in the gap exercises allow students to either input an original answer, or drag & drop from a predefined list of answers. Authors can add additional wrong answers to the list to make the exercise more challenging.',
-    example: FillInTheGapExample,
+    example: <FillInTheGapExample />,
+    demoSlug: '/_assets/img/editor/demo-videos/fill-in-the-gap-exercise',
     category: 'educational',
   },
   {
@@ -54,6 +57,7 @@ const pluginData = [
     description:
       'Single-choice exercises offer different answer options, of which only one is correct. For each answer authors can provide individual feedback to the learners e.g. to explain misconceptions behind common mistakes.',
     example: SCExample,
+    demoSlug: '/_assets/img/editor/demo-videos/sc-exercise',
     category: 'educational',
   },
   {
@@ -62,6 +66,7 @@ const pluginData = [
     description:
       'Multiple-choice exercises offer different answer options, of which several can be correct. For each answer authors can provide individual feedback to the learners e.g. to explain misconceptions behind common mistakes.',
     example: MCExample,
+    demoSlug: '/_assets/img/editor/demo-videos/mc-exercise',
     category: 'educational',
   },
   {
@@ -70,6 +75,7 @@ const pluginData = [
     description:
       'An input field appears below the task where a value or a character string can be entered and validated. Authors can add individual feedback to certain answers e.g. to explain misconceptions behind common mistakes.',
     example: InputExample,
+    demoSlug: '/_assets/img/editor/demo-videos/input-exercise',
     category: 'educational',
   },
   {
@@ -86,7 +92,7 @@ const pluginData = [
     description:
       'Math Formulas are well formatted and correctly displayed and can be created using LaTeX or a visual editor.',
     example: null,
-    image: 'math-formula.png',
+    demoSlug: '/_assets/img/editor/demo-videos/math-formulas',
     category: 'educational',
   },
   {
@@ -95,7 +101,7 @@ const pluginData = [
     description:
       'With the terms and equations element, we make it simple to implement nicely formatted, multi-line equations and term transformations. Command dashes and additional explanations with links can also be added.',
     example: null,
-    image: 'math-equations.png',
+    demoSlug: '/_assets/img/editor/demo-videos/equations-plugin',
     category: 'educational',
   },
   {
@@ -108,6 +114,7 @@ const pluginData = [
         document={{ plugin: EditorPluginType.Geogebra, state: 'd4eNMF5R' }}
       />
     ),
+    demoSlug: '/_assets/img/editor/demo-videos/geogebra-plugin',
     category: 'educational',
   },
   {
@@ -125,6 +132,7 @@ const pluginData = [
     description:
       'Boxes offer the possibility to highlight important sections for learners. With the various semantic box types e.g. “example,” “mnemonic” or “quote”, the content can be structured clearly.',
     example: BoxExample,
+    demoSlug: '/_assets/img/editor/demo-videos/box-plugin',
     category: 'educational',
   },
   {
@@ -133,7 +141,7 @@ const pluginData = [
     description:
       'Rich text can be edited in-line with bold, italic, headings, links, lists, and more.',
     example: null,
-    image: 'text-toolbar.png',
+    demoSlug: '/_assets/img/editor/demo-videos/text-plugin',
     category: 'basic',
   },
   {
@@ -142,6 +150,7 @@ const pluginData = [
     description:
       'Everything looks nicer with images 🙂. You can insert them full width or with your text floating around. ',
     example: null,
+    demoSlug: '/_assets/img/editor/demo-videos/image-plugin',
     image: 'images.png',
     category: 'basic',
   },
@@ -160,6 +169,7 @@ const pluginData = [
     description:
       'This feature offers special formatting and automatic syntax highlighting for code examples.',
     example: HighlightExample,
+    demoSlug: '/_assets/img/editor/demo-videos/code-plugin',
     category: 'basic',
   },
   {
@@ -167,6 +177,7 @@ const pluginData = [
     icon: faTable,
     description: 'Build tables intuitively with row and column headers.',
     example: null,
+    demoSlug: '/_assets/img/editor/demo-videos/table-plugin',
     image: 'table.png',
     category: 'basic',
   },
@@ -176,6 +187,7 @@ const pluginData = [
     description:
       'Hide additional content – e.g. more detailed context, sub-topics or further information – easily accessible within your content.',
     example: SpoilerExample,
+    demoSlug: '/_assets/img/editor/demo-videos/spoiler-plugin',
     category: 'basic',
   },
 ]
@@ -205,14 +217,36 @@ export function EducationPlugins() {
   )
 
   function renderInfoBox() {
-    const { description, example, image, title } =
+    const { description, example, image, title, demoSlug } =
       pluginData.find(({ title }) => title === selectedTitle) ?? pluginData[0]
 
     return (
-      <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
+      <div
+        className="m-3 mb-[3.2rem] mt-1 flex-1 text-left"
+        key={`infoBox-${title}`}
+      >
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
           <UuidsProvider value={{ entityId: 1555 }}>
             <p className="mb-6 text-xl">{description}</p>
+
+            {demoSlug ? (
+              <>
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="mb-12 rounded-md border-4 border-brand-200"
+                >
+                  <source src={`${demoSlug}.webm`} type="video/webm" />
+                  <source src={`${demoSlug}.mp4`} type="video/mp4" />
+                </video>
+                <p className="sr-only">
+                  Short Video of Editing Experience with ${title}
+                </p>
+              </>
+            ) : null}
+
             {example ? (
               <>
                 <div className="mb-3 border-b-2 border-brand-100 font-bold">
