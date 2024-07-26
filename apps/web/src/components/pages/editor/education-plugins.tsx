@@ -22,7 +22,7 @@ import { useRef, useState } from 'react'
 
 import {
   BoxExample,
-  FillInTheGapExample,
+  FillInTheBlanksExample,
   HighlightExample,
   InputExample,
   MCExample,
@@ -43,12 +43,12 @@ const categories = ['educational', 'basic'] as const
 
 const pluginData = [
   {
-    title: 'Fill in the Gap Exercise',
+    title: 'Fill in the Blanks Exercise',
     icon: faPencilAlt,
     description:
-      'Fill in the gap exercises allow students to either input an original answer, or drag & drop from a predefined list of answers. Authors can add additional wrong answers to the list to make the exercise more challenging.',
-    example: <FillInTheGapExample />,
-    demoSlug: '/_assets/img/editor/demo-videos/fill-in-the-gap-exercise',
+      'Fill in the Blanks exercises allow students to either input an original answer, or drag & drop from a predefined list of answers. Authors can add additional wrong answers to the list to make the exercise more challenging.',
+    example: <FillInTheBlanksExample />,
+    demoSlug: '/_assets/img/editor/demo-videos/fill-in-the-blanks-exercise',
     category: 'educational',
   },
   {
