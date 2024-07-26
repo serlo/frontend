@@ -7,6 +7,7 @@ import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
 import { EditorTeam, teamDataVicky } from './editor-team'
 import { EducationPlugins } from './education-plugins'
+import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
@@ -98,7 +99,9 @@ export function EditorPresentation() {
 
         <section className="-mb-6 px-4">
           <div className="mx-auto mb-28 max-w-7xl">
-            <EducationPlugins />
+            <Lazy>
+              <EducationPlugins />
+            </Lazy>
           </div>
         </section>
 

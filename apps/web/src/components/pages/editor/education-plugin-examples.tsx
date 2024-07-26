@@ -1,3 +1,5 @@
+import { Editor } from '@editor/core'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import type { BoxType } from '@editor/plugins/box/renderer'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { HighlightRenderer } from '@editor/plugins/highlight/renderer'
@@ -6,8 +8,21 @@ import type { StaticMathProps } from '@editor/plugins/text/static-components/sta
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { EditorBoxDocument } from '@editor/types/editor-plugins'
+import type {
+  AnyEditorDocument,
+  EditorBoxDocument,
+} from '@editor/types/editor-plugins'
+import { faEye } from '@fortawesome/free-regular-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import { debounce } from 'ts-debounce'
+
+import { FaIcon } from '@/components/fa-icon'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { cn } from '@/helper/cn'
+import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 
 const StaticMath = dynamic<StaticMathProps>(() =>
   import('@editor/plugins/text/static-components/static-math').then(
@@ -45,48 +60,142 @@ function createBoxExample(title: string, content: string, type: BoxType) {
 
 export const BoxExample = (
   <>
-    {[
-      createBoxExample('A Box', 'This box is of the type "Note"', 'note'),
-      createBoxExample(
+    <ExampleWithEditSwitch
+      className="mt-10"
+      title="Editable Example"
+      startInEdit
+      stateString={JSON.stringify(
+        createBoxExample('A Box', 'This box is of the type "Note"', 'note')
+      )}
+    />
+    <BoxStaticRenderer
+      {...createBoxExample(
         'Another Box',
         'This box is of the type "Attention"',
         'attention'
-      ),
-      createBoxExample(
+      )}
+    />
+    <BoxStaticRenderer
+      {...createBoxExample(
         'Yet another Box',
         'This box is of the type "Quote"',
         'quote'
-      ),
-    ].map((document, index) => (
-      <BoxStaticRenderer key={index} {...document} />
-    ))}
+      )}
+    />
   </>
 )
 
-export const FillInTheGapExample = (
-  <div className="flex flex-col gap-2 pt-2">
-    <h1 className="ml-[32px] text-xl font-bold">Typing</h1>
-    <StaticRenderer
-      document={parseDocumentString(
-        '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Whales are the biggest "},{"type":"textBlank","blankId":"9070d7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"mammals"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in the world. They communicate over long "},{"type":"textBlank","blankId":"3b0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"distances"}, {"answer":"distance"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" through long songs up to thousands of kilometers."}]}]},"mode":"typing"}}'
+function ExampleWithEditSwitch({
+  title,
+  stateString,
+  startInEdit,
+  className,
+}: {
+  title: string
+  stateString: string
+  startInEdit?: boolean
+  className?: string
+}) {
+  const [exampleState, setExampleState] = useState<AnyEditorDocument>(
+    parseDocumentString(stateString)
+  )
+  const [isEdit, setIsEdit] = useState(!!startInEdit)
+
+  useEffect(() => {
+    if (!isEdit) return
+    setTimeout(() => {
+      void (
+        document.activeElement
+          ?.closest('.example-with-switch-wrapper')
+          ?.querySelector('.plugin-wrapper-container') as HTMLDivElement
+      )?.focus()
+    }, 20)
+  }, [isEdit])
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData)
+    return (
+      <div className="text-center">
+        <LoadingSpinner />
+      </div>
+    )
+  const editorStrings = loggedInData.strings.editor
+
+  const debouncedSetState = debounce(
+    (state?: AnyEditorDocument | null) =>
+      setExampleState(state ?? parseDocumentString(stateString)),
+    40
+  )
+
+  editorPlugins.init(
+    createPlugins({
+      editorStrings,
+      parentType: 'Article',
+    })
+  )
+  return (
+    <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
+      <div className="flex">
+        <h1 className="ml-[32px] mr-2 text-xl font-bold">{title}</h1>
+        <button
+          onClick={() => setIsEdit(!isEdit)}
+          className="serlo-button-light !px-4 text-base"
+        >
+          {isEdit ? (
+            <>
+              <FaIcon icon={faEye} /> Show Student-View
+            </>
+          ) : (
+            <>
+              <FaIcon icon={faPencilAlt} /> Show Edit-View
+            </>
+          )}
+        </button>
+      </div>
+      {isEdit ? (
+        <div className={cn(className)}>
+          <Editor
+            initialState={exampleState}
+            onChange={({ changed, getDocument }) => {
+              if (!changed) return
+              void debouncedSetState(getDocument())
+            }}
+          />
+        </div>
+      ) : (
+        <StaticRenderer document={exampleState} />
       )}
-    />
-    <h1 className="ml-[32px] text-xl font-bold">Drag & Drop</h1>
-    <StaticRenderer
-      document={parseDocumentString(
-        '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Some species of spiders are able to detect "},{"type":"textBlank","blankId":"1070e7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"magnetic fields"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" . They also have extraordinary "},{"type":"textBlank","blankId":"ab0cfadb-eae6-48dd-aa08-18fa21686402","correctAnswers":[{"answer":"sensory abilities"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in their leg hairs and have special receptors to detect even the slightest "},{"type":"textBlank","blankId":"8a0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"vibrations"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" and air currents to identify their prey and predators."}]}]},"mode":"drag-and-drop"}}'
-      )}
-    />
-    <h1 className="ml-side text-xl font-bold">
-      Exercise with table drag & drop
-    </h1>
-    <StaticRenderer
-      document={parseDocumentString(
-        '{"plugin":"rows","state":[{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Vervollständige die Vierfeldertafel. Die Wahrscheinlichkeit "},{"type":"math","src":"P(A~\\\\cap~B)","inline":true,"children":[{"text":""}]},{"text":" beträgt "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":"."}]}]}]},"interactive":{"plugin":"blanksExercise","state":{"text":{"plugin":"serloTable","state":{"rows":[{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"A","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"\\\\bar{A}","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"B","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"16c4d09d-a4d5-4792-b975-4594700b8486","correctAnswers":[{"answer":"21 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":" "}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"14~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"884597fa-ea00-47da-8404-eb7db26512de","correctAnswers":[{"answer":"35 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":" "}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"\\\\bar{B}","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"19 ~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"b85fde19-284e-457c-b054-8ea42180f933","correctAnswers":[{"answer":"46 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"b91deb33-3c1f-4b27-9d89-59f0bdc94e48","correctAnswers":[{"answer":"65 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"5bccafac-d0d2-46e7-a737-bb3e462d4218","correctAnswers":[{"answer":"40 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"80a57af9-e968-4ead-8c06-6a9183be0e10","correctAnswers":[{"answer":"60 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"100~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}}]}],"tableType":"RowAndColumnHeader"}},"mode":"drag-and-drop"}},"solution":{"plugin":"solution","state":{"strategy":{"plugin":"text","state":[{"children":[{"children":[{"type":"list-item-child","children":[{"text":"Setze für die Wahrscheinlichkeit "},{"type":"math","src":"","inline":true,"children":[{"text":""}]},{"text":""},{"type":"math","src":"P(A\\\\cap B)","inline":true,"children":[{"text":""}]},{"text":" "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":" ein."}]}],"type":"list-item"},{"children":[{"type":"list-item-child","children":[{"text":"Berechne die fehlenden Werte in den Zeilen und Spalten. Die Summe der Werte im Inneren der "},{"type":"a","href":"/1875","children":[{"text":"Tafel"}]},{"text":" ergeben den Wert am Rand der Tafel."}]}],"type":"list-item"}],"type":"unordered-list"}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"h","children":[{"text":"Ausgefüllte Vierfeldertafel"}],"level":3}]},{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Wahrscheinlichkeit "},{"type":"math","src":"P(A\\\\cap B)","inline":true,"children":[{"text":""}]},{"text":" beträgt nach Angabe "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":". Diese tragen wir in die Tafel ein."}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/8d7f6370-18e8-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}},"illustrating":true,"width":50}},{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"In jeder Zeile und Spalte gilt:"}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Die Werte im Inneren der Tafel ergeben als "},{"text":"Summe","strong":true},{"text":" den Wert am Rand."}]},{"type":"p","children":[{"text":""}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/e427af20-18e8-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":"Ausfüllen der Zeilen und Spalten"}]}]}}},"illustrating":true,"width":50}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Damit kann die Tafel vollständig ausgefüllt werden:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/20e463e0-18e9-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}}]},"prerequisite":{"id":"1875","title":"Vierfeldertafel"}}}}}]}'
-      )}
-    />
-  </div>
-)
+    </div>
+  )
+}
+
+export function FillInTheBlanksExample() {
+  return (
+    <div className="flex flex-col gap-2 pt-2">
+      <ExampleWithEditSwitch
+        title="Typing"
+        // startInEdit // does steal focus
+        stateString='{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Whales are the biggest "},{"type":"textBlank","blankId":"9070d7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"mammals"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in the world. They communicate over long "},{"type":"textBlank","blankId":"3b0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"distances"}, {"answer":"distance"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" through long songs up to thousands of kilometers."}]}]},"mode":"typing"}}'
+      />
+
+      <h1 className="ml-side text-xl font-bold">Drag & Drop</h1>
+      <StaticRenderer
+        document={parseDocumentString(
+          '{"plugin":"blanksExercise","state":{"text":{"plugin":"text","state":[{"type":"p","children":[{"text":"Some species of spiders are able to detect "},{"type":"textBlank","blankId":"1070e7e2-f087-41f7-bb65-a7a05c643c88","correctAnswers":[{"answer":"magnetic fields"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" . They also have extraordinary "},{"type":"textBlank","blankId":"ab0cfadb-eae6-48dd-aa08-18fa21686402","correctAnswers":[{"answer":"sensory abilities"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" in their leg hairs and have special receptors to detect even the slightest "},{"type":"textBlank","blankId":"8a0cfadb-eae6-48dd-aa08-18fa21686405","correctAnswers":[{"answer":"vibrations"}],"acceptMathEquivalents":false,"children":[{"text":""}]},{"text":" and air currents to identify their prey and predators."}]}]},"mode":"drag-and-drop"}}'
+        )}
+      />
+
+      <h1 className="ml-side text-xl font-bold">
+        Exercise with table drag & drop
+      </h1>
+      <StaticRenderer
+        document={parseDocumentString(
+          '{"plugin":"rows","state":[{"plugin":"exercise","state":{"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Vervollständige die Vierfeldertafel. Die Wahrscheinlichkeit "},{"type":"math","src":"P(A~\\\\cap~B)","inline":true,"children":[{"text":""}]},{"text":" beträgt "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":"."}]}]}]},"interactive":{"plugin":"blanksExercise","state":{"text":{"plugin":"serloTable","state":{"rows":[{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"A","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"\\\\bar{A}","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"B","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"16c4d09d-a4d5-4792-b975-4594700b8486","correctAnswers":[{"answer":"21 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":" "}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"14~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"884597fa-ea00-47da-8404-eb7db26512de","correctAnswers":[{"answer":"35 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":" "}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"\\\\bar{B}","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"19 ~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"b85fde19-284e-457c-b054-8ea42180f933","correctAnswers":[{"answer":"46 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"b91deb33-3c1f-4b27-9d89-59f0bdc94e48","correctAnswers":[{"answer":"65 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}}]},{"columns":[{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"5bccafac-d0d2-46e7-a737-bb3e462d4218","correctAnswers":[{"answer":"40 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"textBlank","blankId":"80a57af9-e968-4ead-8c06-6a9183be0e10","correctAnswers":[{"answer":"60 %"}],"acceptMathEquivalents":true,"children":[{"text":""}]},{"text":""}]}]}},{"content":{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"100~\\\\%","inline":true,"children":[{"text":""}]},{"text":""}]}]}}]}],"tableType":"RowAndColumnHeader"}},"mode":"drag-and-drop"}},"solution":{"plugin":"solution","state":{"strategy":{"plugin":"text","state":[{"children":[{"children":[{"type":"list-item-child","children":[{"text":"Setze für die Wahrscheinlichkeit "},{"type":"math","src":"","inline":true,"children":[{"text":""}]},{"text":""},{"type":"math","src":"P(A\\\\cap B)","inline":true,"children":[{"text":""}]},{"text":" "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":" ein."}]}],"type":"list-item"},{"children":[{"type":"list-item-child","children":[{"text":"Berechne die fehlenden Werte in den Zeilen und Spalten. Die Summe der Werte im Inneren der "},{"type":"a","href":"/1875","children":[{"text":"Tafel"}]},{"text":" ergeben den Wert am Rand der Tafel."}]}],"type":"list-item"}],"type":"unordered-list"}]},"steps":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"h","children":[{"text":"Ausgefüllte Vierfeldertafel"}],"level":3}]},{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Die Wahrscheinlichkeit "},{"type":"math","src":"P(A\\\\cap B)","inline":true,"children":[{"text":""}]},{"text":" beträgt nach Angabe "},{"type":"math","src":"21~\\\\%","inline":true,"children":[{"text":""}]},{"text":". Diese tragen wir in die Tafel ein."}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/8d7f6370-18e8-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}},"illustrating":true,"width":50}},{"plugin":"multimedia","state":{"explanation":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"In jeder Zeile und Spalte gilt:"}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Die Werte im Inneren der Tafel ergeben als "},{"text":"Summe","strong":true},{"text":" den Wert am Rand."}]},{"type":"p","children":[{"text":""}]}]}]},"multimedia":{"plugin":"image","state":{"src":"https://assets.serlo.org/e427af20-18e8-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":"Ausfüllen der Zeilen und Spalten"}]}]}}},"illustrating":true,"width":50}},{"plugin":"text","state":[{"type":"p","children":[{"text":"Damit kann die Tafel vollständig ausgefüllt werden:"}]}]},{"plugin":"image","state":{"src":"https://assets.serlo.org/20e463e0-18e9-11ef-890b-238e2c9e9d69/image.png","caption":{"plugin":"text","state":[{"type":"p","children":[{"text":""}]}]}}}]},"prerequisite":{"id":"1875","title":"Vierfeldertafel"}}}}}]}'
+        )}
+      />
+    </div>
+  )
+}
 
 export const InputExample = (
   <div className="pt-2">
