@@ -1,13 +1,10 @@
-import dynamic from 'next/dynamic'
-import { ScriptProps } from 'next/script'
+import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
+import { ModalWithCloseButton } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
-
-const Script = dynamic<ScriptProps>(() =>
-  import('next/script').then((mod) => mod.default)
-)
+import { useScrollUpTrigger } from '@/helper/use-scroll-up-trigger'
 
 const pages = [
   '/abc',
@@ -45,39 +42,68 @@ const pages = [
   '/wirkung',
 ]
 
+const imageSrc =
+  'https://assets.serlo.org/db99f830-6f49-11ed-b282-836733dd2d87/SerloStandorte.jpg'
+
 export function NewsletterPopup() {
   const { lang } = useInstanceData()
-
   const [shouldLoad, setShouldLoad] = useState(false)
+  const [alreadySeen, setAlreadySeen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+
+  useScrollUpTrigger(
+    () => {
+      setIsOpen(true)
+      window.localStorage.setItem('newsletterAlreadyInvited', '1')
+      setAlreadySeen(true)
+    },
+    shouldLoad && !isOpen && !alreadySeen
+  )
 
   useEffect(() => {
     setShouldLoad(
-      lang === Instance.De && pages.includes(window.location.pathname)
+      lang === Instance.De &&
+        pages.includes(window.location.pathname) &&
+        !window.localStorage.getItem('newsletterAlreadyInvited')
     )
-    return () => document.getElementById('PopupSignupForm_0')?.remove()
   }, [lang])
 
-  return shouldLoad ? (
+  if (!shouldLoad) return null
+
+  return (
     <>
-      <Script
-        id="mailchimp-popup"
-        strategy="lazyOnload"
-        src="//s3.amazonaws.com/downloads.mailchimp.com/js/signup-forms/popup/embed.js"
-        data-dojo-config="usePlainJson: true, isDebug: false"
-        onLoad={() => {
-          setTimeout(() => {
-            // @ts-expect-error custom mc code
-            global.require(['mojo/signup-forms/Loader'], function (L) {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-              L.start({
-                baseUrl: 'mc.us7.list-manage.com',
-                uuid: '23f4b04bf70ea485a766e532d',
-                lid: 'a7bb2bbc4f',
-              })
-            })
-          }, 200)
-        }}
-      />
+      <Head>
+        <link rel="preload" href={imageSrc} as="image" />
+      </Head>
+      <ModalWithCloseButton
+        isOpen={isOpen}
+        setIsOpen={() => setIsOpen(!isOpen)}
+        className="top-8 max-h-[90vh] translate-y-0 overflow-y-auto"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imageSrc}
+          alt="Das Serlo Team lädt dich ein den Newsletter zu abbonieren."
+          className="mt-12"
+        />
+        <p className="serlo-p mt-12">
+          <b>Kurz und prägnant</b>:<br />
+          Unser Newsletter mit Updates zu Serlo, digitaler Bildung und
+          Bildungsgerechtigkeit.
+          <br />
+        </p>
+        <div className="text-center">
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a
+            target="_blank"
+            rel="noreferrer"
+            className="serlo-new-landing-button serlo-button-with-wings mt-2 inline-block"
+            href="https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&id=a7bb2bbc4f"
+          >
+            Jetzt anmelden!
+          </a>
+        </div>
+      </ModalWithCloseButton>
     </>
-  ) : null
+  )
 }
