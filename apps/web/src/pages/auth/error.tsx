@@ -53,13 +53,15 @@ function Error() {
     error.error.message.includes('ERR_BAD_ROLE')
   ) {
     showToastNotice(authStrings.badRole, 'warning', 5000)
-    return router.push(loginUrl)
+    void router.push(loginUrl)
+    return
   }
 
   if (isProduction) {
     triggerSentry({ message: 'Auth error in error flow', data: error })
     showToastNotice(authStrings.somethingWrong, 'warning', 5000)
-    return router.push(loginUrl)
+    void router.push(loginUrl)
+    return
   }
 
   return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
