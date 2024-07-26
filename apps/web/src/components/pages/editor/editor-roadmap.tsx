@@ -4,7 +4,9 @@ const roadmapData = [
   {
     title: 'Latest Releases',
     steps: [
+      'Improve Image plugin, easier uploads',
       'Fill-in-the-gap exercise (new plugin)',
+      'Drag & Drop image exercise (fill-in-the-blanks)',
       'Exercise generation with AI ✨',
       'Copy & Paste content across plugins',
       'Web Component release',
@@ -13,14 +15,16 @@ const roadmapData = [
   {
     title: 'Next up',
     steps: [
-      'Improve Image plugin, easier uploads',
-      'Drag & Drop image exercise (fill-in-the-gap)',
       'AI supported input exercises',
+      'Image Galleries',
+      'Easier exercise creation',
     ],
   },
   {
     title: 'Soon',
     steps: [
+      'Improved onboarding & help',
+      'Interactive Videos',
       'Better keyboard navigation',
       'Asset upload for Editor integrations',
     ],
@@ -30,6 +34,9 @@ const roadmapData = [
     steps: [
       'Better support for LMS integrations',
       'Automated OER license management',
+      'Learning method library',
+      'Individual learning path creation',
+      'Slides',
     ],
   },
 ]

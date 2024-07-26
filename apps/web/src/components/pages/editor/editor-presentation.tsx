@@ -40,7 +40,7 @@ export function EditorPresentation() {
           md:text-left
         `)}
       >
-        <section className="mt-32 px-4 text-center font-bold">
+        <section className="mt-20 px-4 text-center font-bold">
           <h1
             className={cn(`
               mx-auto mt-3
@@ -75,9 +75,9 @@ export function EditorPresentation() {
                 <b className="tracking-tight">open source and free of charge</b>
                 .
               </p>
-              <p className="mt-8 text-center md:text-left">
+              {/* <p className="mt-8 text-center md:text-left">
                 {renderStayInTouch()}
-              </p>
+              </p> */}
             </div>
             <div className="-mx-side mt-8 pl-2 sm:max-w-[32rem] sm:flex-1">
               <VideoSerloStaticRenderer
@@ -91,9 +91,24 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className="mb-20 mt-12 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
-          <div className="mx-auto max-w-7xl">
-            <EditorFeatures />
+        <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 !pt-16">
+          <div className="mx-auto mt-2 max-w-4xl px-4 pb-16 text-center text-xl sm:flex">
+            <div className="mt-5 flex-1">
+              <b className="font-handwritten text-4xl text-brand">20,000+</b>
+              <br />
+              Educational resources have been created with the Serlo Editor
+            </div>
+            <div className="mt-5 flex-1">
+              <b className="font-handwritten text-4xl text-brand">750 000+</b>
+              <br />
+              Students and teachers per month use Serlo Editor content
+            </div>
+            <div className="mt-5 flex-1">
+              <b className="font-handwritten text-4xl text-brand">500+</b>
+              <br />
+              Authors so far used the Serlo Editor to create open educational
+              resources
+            </div>
           </div>
         </section>
 
@@ -105,24 +120,9 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 !pt-16">
-          <div className="mx-auto mt-2 max-w-4xl px-4 pb-16 text-center text-xl sm:flex">
-            <div className="mt-5 flex-1">
-              <b className="font-handwritten text-4xl text-brand">20,000+</b>
-              <br />
-              Educational resources have been created with the Serlo Editor
-            </div>
-            <div className="mt-5 flex-1">
-              <b className="font-handwritten text-4xl text-brand">~1 Mio</b>
-              <br />
-              Students and teachers per month use Serlo Editor content
-            </div>
-            <div className="mt-5 flex-1">
-              <b className="font-handwritten text-4xl text-brand">500+</b>
-              <br />
-              Authors so far used the Serlo Editor to create open educational
-              resources
-            </div>
+        <section className="mb-20 mt-12 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
+          <div className="mx-auto max-w-7xl">
+            <EditorFeatures />
           </div>
         </section>
 
@@ -143,8 +143,7 @@ export function EditorPresentation() {
                 Those might include:
               </p>
               <ul className="serlo-ul text-xl">
-                <li>JavaScript library</li>
-                <li>Docker container</li>
+                <li>JavaScript/Typescript over NPM library</li>
                 <li>Plugins for the most popular LMS (Moodle & Edu-Sharing)</li>
                 <li>Software as a service</li>
               </ul>

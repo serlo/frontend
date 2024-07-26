@@ -15,7 +15,7 @@ const features = [
     description: 'What authors see looks just like what learners see',
   },
   {
-    title: '17+ Content Elements',
+    title: '17+ Features',
     icon: faCubesStacked,
     description: 'Including many especially designed for supporting education',
   },

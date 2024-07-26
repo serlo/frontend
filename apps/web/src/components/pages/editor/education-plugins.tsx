@@ -206,7 +206,7 @@ export function EducationPlugins() {
 
   return (
     <div className="text-center">
-      <h2 className={cn(h2Class, 'mb-4')}>Features</h2>
+      <h2 className={cn(h2Class, 'mb-4')}>Editor Features</h2>
       <div className="sm:flex">
         <div className="mb-4 text-left sm:mb-12 sm:mt-8 sm:w-min sm:text-right">
           {renderPluginsMenu()}
