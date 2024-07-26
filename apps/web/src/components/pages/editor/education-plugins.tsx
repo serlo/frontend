@@ -17,6 +17,7 @@ import {
   faParagraph,
   faTable,
   faEquals,
+  faBullseye,
 } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
 
@@ -54,7 +55,7 @@ const pluginData = [
   },
   {
     title: 'Dropzones Exercise',
-    icon: faPencilAlt,
+    icon: faBullseye,
     description:
       'Dropzones exercises allow students to drag & drop predefined answers into the correct dropzone. Authors can add additional wrong answers to the list to make the exercise more challenging.',
     example: DropzoneExample,
