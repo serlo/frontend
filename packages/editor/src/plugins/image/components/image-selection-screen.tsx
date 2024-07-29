@@ -40,6 +40,9 @@ export function ImageSelectionScreen(
     setShowPixabayModal(false)
   }
 
+  const showPixabayButton =
+    !disableFileUpload && !!process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+
   return (
     <div
       className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
@@ -54,7 +57,7 @@ export function ImageSelectionScreen(
       </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
-        {!disableFileUpload && (
+        {showPixabayButton && (
           <button
             data-qa="plugin-image-pixabay-search-button"
             onClick={() => setShowPixabayModal(true)}
