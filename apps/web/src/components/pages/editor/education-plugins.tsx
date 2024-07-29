@@ -54,10 +54,10 @@ const pluginData = [
     category: 'educational',
   },
   {
-    title: 'Dropzones Exercise',
+    title: 'Image Dropzones Exercise',
     icon: faBullseye,
     description:
-      'Dropzones exercises allow students to drag & drop predefined answers into the correct dropzone. Authors can add additional wrong answers to the list to make the exercise more challenging.',
+      'Image Dropzones exercises allow students to drag & drop predefined answers into the correct dropzone. Authors can add additional wrong answers to the list to make the exercise more challenging.',
     example: DropzoneExample,
     demoSlug: '/_assets/img/editor/demo-videos/dropzone-exercise',
     category: 'educational',
