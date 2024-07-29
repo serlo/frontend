@@ -26,6 +26,22 @@ function Error() {
   const authStrings = useInstanceData().strings.auth
 
   useEffect(() => {
+    if (
+      hasFlowErrorFieldError(error) &&
+      error.error.message.includes('ERR_BAD_ROLE')
+    ) {
+      showToastNotice(authStrings.badRole, 'warning', 5000)
+      void router.push(loginUrl)
+      return
+    }
+
+    if (isProduction && error) {
+      triggerSentry({ message: 'Auth error in error flow', data: error })
+      showToastNotice(authStrings.somethingWrong, 'warning', 5000)
+      void router.push(loginUrl)
+      return
+    }
+
     if (!router.isReady || error) return
 
     kratos
@@ -46,23 +62,7 @@ function Error() {
 
         return Promise.reject(err)
       })
-  }, [id, router, router.isReady, error])
-
-  if (
-    hasFlowErrorFieldError(error) &&
-    error.error.message.includes('ERR_BAD_ROLE')
-  ) {
-    showToastNotice(authStrings.badRole, 'warning', 5000)
-    void router.push(loginUrl)
-    return
-  }
-
-  if (isProduction) {
-    triggerSentry({ message: 'Auth error in error flow', data: error })
-    showToastNotice(authStrings.somethingWrong, 'warning', 5000)
-    void router.push(loginUrl)
-    return
-  }
+  }, [id, router, error, authStrings])
 
   return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
 }
