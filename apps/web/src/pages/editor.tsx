@@ -4,8 +4,15 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => {
   return (
-    <FrontendClientBase noContainers noHeaderFooter>
-      <EditorPresentation />
+    <FrontendClientBase
+      noContainers
+      noHeaderFooter
+      loadLoggedInData
+      serloEntityData={{ entityId: 1555 }}
+    >
+      <div className="relative">
+        <EditorPresentation />
+      </div>
     </FrontendClientBase>
   )
 })

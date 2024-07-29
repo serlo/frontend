@@ -1,12 +1,13 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import dynamic from 'next/dynamic'
 
 import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
 import { EditorTeam, teamDataVicky } from './editor-team'
-import { EducationPlugins } from './education-plugins'
+import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
@@ -15,6 +16,9 @@ import { cn } from '@/helper/cn'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 
+const EducationPlugins = dynamic(() =>
+  import('./education-plugins').then((mod) => mod.EducationPlugins)
+)
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
@@ -39,7 +43,7 @@ export function EditorPresentation() {
           md:text-left
         `)}
       >
-        <section className="mt-32 px-4 text-center font-bold">
+        <section className="mt-20 px-4 text-center font-bold">
           <h1
             className={cn(`
               mx-auto mt-3
@@ -74,9 +78,9 @@ export function EditorPresentation() {
                 <b className="tracking-tight">open source and free of charge</b>
                 .
               </p>
-              <p className="mt-8 text-center md:text-left">
+              {/* <p className="mt-8 text-center md:text-left">
                 {renderStayInTouch()}
-              </p>
+              </p> */}
             </div>
             <div className="-mx-side mt-8 pl-2 sm:max-w-[32rem] sm:flex-1">
               <VideoSerloStaticRenderer
@@ -90,18 +94,6 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className="mb-20 mt-12 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
-          <div className="mx-auto max-w-7xl">
-            <EditorFeatures />
-          </div>
-        </section>
-
-        <section className="-mb-6 px-4">
-          <div className="mx-auto mb-28 max-w-7xl">
-            <EducationPlugins />
-          </div>
-        </section>
-
         <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 !pt-16">
           <div className="mx-auto mt-2 max-w-4xl px-4 pb-16 text-center text-xl sm:flex">
             <div className="mt-5 flex-1">
@@ -110,7 +102,7 @@ export function EditorPresentation() {
               Educational resources have been created with the Serlo Editor
             </div>
             <div className="mt-5 flex-1">
-              <b className="font-handwritten text-4xl text-brand">~1 Mio</b>
+              <b className="font-handwritten text-4xl text-brand">750 000+</b>
               <br />
               Students and teachers per month use Serlo Editor content
             </div>
@@ -120,6 +112,20 @@ export function EditorPresentation() {
               Authors so far used the Serlo Editor to create open educational
               resources
             </div>
+          </div>
+        </section>
+
+        <section className="-mb-6 px-4">
+          <div className="mx-auto mb-28 max-w-7xl">
+            <Lazy>
+              <EducationPlugins />
+            </Lazy>
+          </div>
+        </section>
+
+        <section className="mb-20 mt-12 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
+          <div className="mx-auto max-w-7xl">
+            <EditorFeatures />
           </div>
         </section>
 
@@ -140,8 +146,7 @@ export function EditorPresentation() {
                 Those might include:
               </p>
               <ul className="serlo-ul text-xl">
-                <li>JavaScript library</li>
-                <li>Docker container</li>
+                <li>JavaScript/Typescript over NPM library</li>
                 <li>Plugins for the most popular LMS (Moodle & Edu-Sharing)</li>
                 <li>Software as a service</li>
               </ul>
