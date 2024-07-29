@@ -1,12 +1,12 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import dynamic from 'next/dynamic'
 
 import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
 import { EditorTeam, teamDataVicky } from './editor-team'
-import { EducationPlugins } from './education-plugins'
 import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
@@ -16,6 +16,9 @@ import { cn } from '@/helper/cn'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 
+const EducationPlugins = dynamic(() =>
+  import('./education-plugins').then((mod) => mod.EducationPlugins)
+)
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
