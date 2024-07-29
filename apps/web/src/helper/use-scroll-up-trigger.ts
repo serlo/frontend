@@ -7,7 +7,7 @@ export function useScrollUpTrigger(handleScroll: () => void, active: boolean) {
   useEffect(() => {
     const handler = () => {
       const isUp = window.scrollY < oldScrollY.current
-      if (isUp) handleScroll()
+      if (isUp && window.scrollY > 100) handleScroll()
       oldScrollY.current = window.scrollY
     }
 
