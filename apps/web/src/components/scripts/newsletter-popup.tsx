@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import type { ModalWithCloseButtonProps } from '../modal-with-close-button'
@@ -83,13 +84,16 @@ export function NewsletterPopup() {
       <ModalWithCloseButton
         isOpen={isOpen}
         setIsOpen={() => setIsOpen(!isOpen)}
-        className="top-8 max-h-[90vh] translate-y-0 overflow-y-auto"
+        className="top-8 max-h-[90vh] translate-y-0 overflow-y-auto p-0"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={imageSrc}
           alt="Das Serlo Team lädt dich ein den Newsletter zu abbonieren."
-          className="mt-12"
+          priority
+          sizes="500px"
+          width={490}
+          height={333}
+          className="mt-12 max-h-[333px] max-w-full"
         />
         <p className="serlo-p mt-12">
           <b>Kurz und prägnant</b>:<br />
