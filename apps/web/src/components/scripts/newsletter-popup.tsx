@@ -1,7 +1,8 @@
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
-import { ModalWithCloseButton } from '../modal-with-close-button'
+import type { ModalWithCloseButtonProps } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { useScrollUpTrigger } from '@/helper/use-scroll-up-trigger'
@@ -44,6 +45,10 @@ const pages = [
 
 const imageSrc =
   'https://assets.serlo.org/db99f830-6f49-11ed-b282-836733dd2d87/SerloStandorte.jpg'
+
+const ModalWithCloseButton = dynamic<ModalWithCloseButtonProps>(() =>
+  import('../modal-with-close-button').then((mod) => mod.ModalWithCloseButton)
+)
 
 export function NewsletterPopup() {
   const { lang } = useInstanceData()
