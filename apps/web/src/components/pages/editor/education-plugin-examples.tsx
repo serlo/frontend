@@ -3,8 +3,6 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import type { BoxType } from '@editor/plugins/box/renderer'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { HighlightRenderer } from '@editor/plugins/highlight/renderer'
-import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
-import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -14,7 +12,6 @@ import type {
 } from '@editor/types/editor-plugins'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { debounce } from 'ts-debounce'
 
@@ -23,12 +20,6 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
-
-const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@editor/plugins/text/static-components/static-math').then(
-    (mod) => mod.StaticMath
-  )
-)
 
 function createBoxExample(title: string, content: string, type: BoxType) {
   return {
