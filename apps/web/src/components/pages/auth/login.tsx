@@ -87,7 +87,9 @@ export function Login({ oauth }: { oauth?: boolean }) {
         setFlow(data)
       } catch (e) {
         const error = e as AxiosError
-        const data = error.response?.data as { error: { id: string } }
+        const data = error.response?.data as {
+          error: { id: string; message?: string }
+        }
 
         if (oauth && data?.error?.id === 'session_already_available') {
           void oauthHandler('login', String(loginChallenge))

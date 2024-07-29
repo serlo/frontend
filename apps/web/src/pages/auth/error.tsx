@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
+import { loginUrl } from '@/components/pages/auth/utils'
+import { useInstanceData } from '@/contexts/instance-context'
+import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export default renderedPageNoHooks(() => (
@@ -15,9 +19,11 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Error() {
-  const [error, setError] = useState<FlowError | string>()
+  const [error, setError] = useState<FlowError>()
   const router = useRouter()
   const { id } = router.query
+
+  const authStrings = useInstanceData().strings.auth
 
   useEffect(() => {
     if (!router.isReady || error) return
@@ -37,9 +43,40 @@ function Error() {
             void router.push('/') // Let's just redirect home!
             return Promise.reject(err)
         }
+
         return Promise.reject(err)
       })
   }, [id, router, router.isReady, error])
 
+  if (
+    hasFlowErrorFieldError(error) &&
+    error.error.message.includes('ERR_BAD_ROLE')
+  ) {
+    showToastNotice(authStrings.badRole, 'warning', 5000)
+    void router.push(loginUrl)
+    return
+  }
+
+  if (isProduction) {
+    triggerSentry({ message: 'Auth error in error flow', data: error })
+    showToastNotice(authStrings.somethingWrong, 'warning', 5000)
+    void router.push(loginUrl)
+    return
+  }
+
   return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
+}
+
+interface FlowErrorWithErrorField extends FlowError {
+  error: {
+    code: number
+    message: string
+    status: string
+  }
+}
+
+function hasFlowErrorFieldError(
+  error: FlowError | undefined
+): error is FlowErrorWithErrorField {
+  return !!error?.error && Object.hasOwn(error.error, 'message')
 }

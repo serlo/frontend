@@ -11,7 +11,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
-import { isProduction } from '@/helper/is-production'
 
 export function ImageSelectionScreen(
   props: ImageProps & { urlInputRef: RefObject<HTMLInputElement> }
@@ -41,6 +40,9 @@ export function ImageSelectionScreen(
     setShowPixabayModal(false)
   }
 
+  const showPixabayButton =
+    !disableFileUpload && !!process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+
   return (
     <div
       className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
@@ -55,11 +57,11 @@ export function ImageSelectionScreen(
       </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton {...props} />
-        {!disableFileUpload && !isProduction && (
+        {showPixabayButton && (
           <button
             data-qa="plugin-image-pixabay-search-button"
             onClick={() => setShowPixabayModal(true)}
-            className="almost-black mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-gray-800 hover:bg-editor-primary-300"
+            className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-almost-black text-gray-800 hover:bg-editor-primary-300"
           >
             <span className="mr-2 inline-block">
               <FaIcon icon={faMagnifyingGlass} />
@@ -67,7 +69,7 @@ export function ImageSelectionScreen(
             {imageStrings.searchOnline}
           </button>
         )}
-        <span className="mb-1 flex w-full justify-center font-bold">
+        <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
           {imageStrings.imageUrl}
         </span>
         <span className="serlo-tooltip-trigger">

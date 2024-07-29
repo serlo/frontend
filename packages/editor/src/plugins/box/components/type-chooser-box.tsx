@@ -13,6 +13,15 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
 
+  function handleTypeSelection(
+    type: string,
+    event: React.MouseEvent | React.KeyboardEvent
+  ) {
+    event.preventDefault()
+    event.stopPropagation()
+    typeState.set(type)
+  }
+
   return (
     <figure
       className="relative mx-side rounded-xl border-3 p-4 pt-2"
@@ -27,9 +36,11 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
             <li key={type} className="inline-block pb-3.5 pr-4">
               <button
                 className="serlo-button-editor-secondary"
-                onClick={(event) => {
-                  event.preventDefault()
-                  typeState.set(type)
+                onClick={(event) => handleTypeSelection(type, event)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleTypeSelection(type, event)
+                  }
                 }}
                 data-qa={`plugin-box-initial-type-chooser-option-${type}`}
               >
