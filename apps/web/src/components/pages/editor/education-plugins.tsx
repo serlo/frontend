@@ -267,7 +267,7 @@ export function EducationPlugins() {
                   {example}
                 </div>
               </>
-            ) : (
+            ) : image ? (
               <>
                 <div className="mb-6 border-b-2 border-brand-100 font-bold">
                   Screenshot
@@ -281,7 +281,7 @@ export function EducationPlugins() {
                   src={`/_assets/img/editor/screenshots/${image}`}
                 />
               </>
-            )}
+            ) : null}
           </UuidsProvider>
           <style jsx global>
             {`
