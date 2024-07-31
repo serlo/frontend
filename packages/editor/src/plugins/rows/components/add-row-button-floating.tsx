@@ -1,7 +1,8 @@
-import IconAddRow from '@editor/editor-ui/assets/plugin-icons/icon-add-row.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { cn } from '@serlo/frontend/src/helper/cn'
 
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AddRowButtonFloatingProps {
@@ -17,31 +18,35 @@ export function AddRowButtonFloating({
   const rowsStrings = useEditorStrings().plugins.rows
 
   if (hide) return null
+
+  const baseStyles = `
+  group
+  opacity-0 transition-opacity duration-300
+  relative mb-4 flex items-center px-8 pb-2
+`
+
+  const stateStyles = `
+  text-editor-primary-200 hover:opacity-100
+  focus-visible:text-editor-primary-200 group-hover:opacity-100
+`
+
+  const interactionStyles = 'cursor-pointer'
+
   return (
     <>
       <div
-        className={cn(
-          'group ',
-          'opacity-0 transition-opacity duration-300',
-          'relative mb-4 flex items-center px-8 pb-2',
-          'text-editor-primary-200 hover:opacity-100',
-          'focus-visible:text-editor-primary-200 group-hover:opacity-100',
-          'cursor-pointer'
-        )}
+        className={cn(baseStyles, stateStyles, interactionStyles)}
         onClick={onClick}
       >
         {/* Divider line */}
-        <div className="flex-grow border-t-2 border-gray-300"></div>
-        <div className={cn('group/btn serlo-tooltip-trigger relative px-6')}>
+        <div className="flex-grow border-t-2 border-gray-300" />
+        <div className="group/btn serlo-tooltip-trigger relative px-6 text-2xl">
           {/* Add button */}
-          <IconAddRow className="" />
-          <EditorTooltip
-            text={rowsStrings.addAnElement}
-            className="align-center"
-          />
+          <FaIcon icon={faCirclePlus} />
+          <EditorTooltip text={rowsStrings.addAnElement} />
         </div>
         {/* Divider line */}
-        <div className="flex-grow border-t-2 border-gray-300"></div>
+        <div className="flex-grow border-t-2 border-gray-300" />
       </div>
     </>
   )
