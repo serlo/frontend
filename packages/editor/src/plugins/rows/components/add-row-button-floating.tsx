@@ -31,6 +31,7 @@ export function AddRowButtonFloating({
   const stateStyles = `
     text-editor-primary-200
     hover:opacity-100 hover:z-50
+    focus:opacity-100 focus:z-50
     ${focused ? 'opacity-40' : ''}
     focus-visible:text-editor-primary-200 
   `
