@@ -68,6 +68,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
     const allowedByContext = allowedContextPlugins ?? allVisible
 
+    // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
     const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
     return typesOfAncestors
       ? allowedByContext.filter((plugin) =>
@@ -103,7 +104,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   const options = showSuggestions ? filteredOptions : []
 
-  const basicPluginTypes = new Set([
+  const interactivePluginTypes = new Set([
     EditorPluginType.TextAreaExercise,
     EditorPluginType.ScMcExercise,
     EditorPluginType.H5p,
@@ -112,16 +113,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     EditorPluginType.Solution,
   ])
 
-  const interactivePluginTypes = new Set([
-    EditorPluginType.TextAreaExercise,
-    EditorPluginType.ScMcExercise,
-    EditorPluginType.H5p,
-    EditorPluginType.BlanksExercise,
-    EditorPluginType.DropzoneImage,
-  ])
-
   const basicOptions = options.filter(
-    (option) => !basicPluginTypes.has(option.pluginType)
+    (option) => !interactivePluginTypes.has(option.pluginType)
   )
 
   const interactiveOptions = options.filter((option) =>
