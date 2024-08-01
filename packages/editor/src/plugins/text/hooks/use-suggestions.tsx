@@ -289,9 +289,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     suggestionsProps: {
       options,
       suggestionsRef,
-      selected,
-      onMouseDown: insertSelectedPlugin,
-      onMouseMove: setSelected,
       renderedBasicPlugins,
       renderedInteractivePlugins,
       searchString,

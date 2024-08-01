@@ -7,9 +7,6 @@ import type { SuggestionOption } from '../hooks/use-suggestions'
 interface SuggestionsProps {
   options: SuggestionOption[]
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
-  selected: number
-  onMouseDown: (pluginType: string) => void
-  onMouseMove: (index: number) => void
   renderedBasicPlugins: JSX.Element[]
   renderedInteractivePlugins: JSX.Element[]
   searchString: string
