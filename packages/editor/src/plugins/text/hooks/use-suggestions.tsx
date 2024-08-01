@@ -33,7 +33,7 @@ interface useSuggestionsArgs {
 }
 
 export interface SuggestionOption {
-  pluginType: string
+  pluginType: EditorPluginType
   title: string
   description?: string
   icon?: JSX.Element
@@ -64,35 +64,36 @@ const exerciseIcons = {
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const { editor, id, focused, isInlineChildEditor } = args
-
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const editorStrings = useEditorStrings()
-  const pluginsStrings = editorStrings.plugins
-  const exerciseTemplateStrings = editorStrings.templatePlugins.exercise
+  const {
+    plugins: pluginsStrings,
+    templatePlugins: { exercise: exerciseTemplateStrings },
+  } = editorStrings
   const { selection } = editor
 
   const [searchString, setSearchString] = useState('')
   const [currentlyFocusedItem, setCurrentlyFocusedItem] = useState(0)
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const allowedContextPlugins = useContext(AllowedChildPlugins)
 
   useEffect(() => {
     if (itemRefs.current[currentlyFocusedItem]) {
       itemRefs.current[currentlyFocusedItem]?.focus()
     }
   }, [currentlyFocusedItem])
-  const allowedContextPlugins = useContext(AllowedChildPlugins)
 
   const allowedPlugins = useMemo(() => {
-    const allVisible = editorPlugins
-      .getAllWithData()
+    const allWithData = editorPlugins.getAllWithData()
+
+    const allVisible = allWithData
       .filter(({ visibleInSuggestions }) => visibleInSuggestions)
       .map(({ type }) => type)
 
     const allowedByContext = allowedContextPlugins ?? allVisible
 
-    // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
     const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
     return typesOfAncestors
       ? allowedByContext.filter((plugin) =>
@@ -105,19 +106,17 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
   )
 
-  const interactivePlugins = interactiveExerciseTypes.map((exerciseType) => {
-    return {
-      pluginType: 'exercise',
-      title: exerciseTemplateStrings[exerciseType],
-      icon: exerciseIcons[exerciseType],
-    }
-  })
+  const interactivePlugins = interactiveExerciseTypes.map((exerciseType) => ({
+    pluginType: 'exercise',
+    title: exerciseTemplateStrings[exerciseType],
+    icon: exerciseIcons[exerciseType],
+  }))
+
   const filteredOptions = useMemo(() => {
     const allOptions = allowedPlugins
       .filter((plugin) => plugin !== 'exercise' && plugin !== 'exerciseGroup')
-      .map((type) => {
-        return createOption(type, pluginsStrings)
-      })
+      .map((type) => createOption(type as EditorPluginType, pluginsStrings))
+
     return filterOptions(allOptions, searchString)
   }, [allowedPlugins, pluginsStrings, searchString])
 
@@ -139,6 +138,31 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   const options = showSuggestions ? filteredOptions : []
 
+  const basicPluginTypes = new Set([
+    EditorPluginType.TextAreaExercise,
+    EditorPluginType.ScMcExercise,
+    EditorPluginType.H5p,
+    EditorPluginType.BlanksExercise,
+    EditorPluginType.InputExercise,
+    EditorPluginType.Solution,
+  ])
+
+  const interactivePluginTypes = new Set([
+    EditorPluginType.TextAreaExercise,
+    EditorPluginType.ScMcExercise,
+    EditorPluginType.H5p,
+    EditorPluginType.BlanksExercise,
+    EditorPluginType.DropzoneImage,
+  ])
+
+  const basicOptions = options.filter(
+    (option) => !basicPluginTypes.has(option.pluginType)
+  )
+
+  const interactiveOptions = options.filter((option) =>
+    interactivePluginTypes.has(option.pluginType)
+  )
+
   const closure = useRef({
     showSuggestions,
     selected,
@@ -159,9 +183,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   useHotkeys(Key.Escape, handleSuggestionsMenuClose, hotkeyConfig)
 
   const handleArrowKeyPress = (event: KeyboardEvent) => {
-    const basicPlugins = options
-    const totalItems = basicPlugins.length + interactivePlugins.length
-    const basicPluginsCount = basicPlugins.length
+    const totalItems = basicOptions.length + interactiveOptions.length
+    const basicPluginsCount = basicOptions.length
     const interactivePluginsStartIndex = basicPluginsCount
     const columns = 5 // assuming 5 columns in the grid
     const fullRows = Math.floor(basicPluginsCount / columns)
@@ -172,11 +195,17 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       currentlyFocusedItem >= fullRows * columns &&
       currentlyFocusedItem < basicPluginsCount
 
+    const isInFirstRowOfInteractive =
+      currentlyFocusedItem < interactivePluginsStartIndex + columns &&
+      currentlyFocusedItem >= interactivePluginsStartIndex
     switch (event.key) {
       case Key.ArrowDown:
         if (isInLastRowOfBasic) {
-          // Move focus to the first item in interactive plugins
-          setCurrentlyFocusedItem(interactivePluginsStartIndex)
+          const indexInFirstInteractiveRow = currentlyFocusedItem % columns
+          // Move focus to the first item in   interactive plugins
+          setCurrentlyFocusedItem(
+            interactivePluginsStartIndex + indexInFirstInteractiveRow
+          )
         } else if (
           isInLastFullRow &&
           currentlyFocusedItem % columns >= lastRowItemCount
@@ -190,7 +219,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
         }
         break
       case Key.ArrowUp:
-        setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
+        if (isInFirstRowOfInteractive) {
+          setCurrentlyFocusedItem((prev) => prev - lastRowItemCount)
+        } else {
+          setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
+        }
         break
       case Key.ArrowLeft:
         setCurrentlyFocusedItem((prev) => Math.max(prev - 1, 0))
@@ -210,9 +243,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     hotkeyConfig
   )
 
-  useHotkeys([Key.Enter, ' '], () => {
-    if (options[currentlyFocusedItem])
+  useHotkeys([Key.Enter, ' '], (event) => {
+    if (options[currentlyFocusedItem]) {
       insertSelectedPlugin(options[currentlyFocusedItem].pluginType)
+    }
+    event.preventDefault()
   })
 
   const renderPluginItem = (
@@ -221,7 +256,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     pluginCategory: string
   ) => {
     const selectableIndex =
-      pluginCategory === 'basic' ? index : index + options.length
+      pluginCategory === 'basic' ? index : index + basicOptions.length
     return (
       <button
         key={index}
@@ -255,6 +290,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       </button>
     )
   }
+
   function insertSelectedPlugin(pluginType: EditorPluginType | string) {
     editor.deleteBackward('line')
 
@@ -284,13 +320,14 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     editor.deleteBackward('line')
   }
 
-  const renderedBasicPlugins = options.map((basicItem, index) => {
+  const renderedBasicPlugins = basicOptions.map((basicItem, index) => {
     return renderPluginItem(basicItem, index, 'basic')
   })
 
-  const renderedInteractivePlugins = interactivePlugins.map((item, index) => {
+  const renderedInteractivePlugins = interactiveOptions.map((item, index) => {
     return renderPluginItem(item, index, 'interactive')
   })
+
   return {
     showSuggestions,
     suggestionsProps: {
@@ -314,7 +351,7 @@ interface PluginStrings {
 }
 
 function createOption(
-  pluginType: string,
+  pluginType: EditorPluginType,
   allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
   const pluginData: PluginWithData | undefined = editorPlugins
