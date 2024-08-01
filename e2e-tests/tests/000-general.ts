@@ -26,10 +26,13 @@ Scenario('About Serlo', ({ I }) => {
   I.scrollPageToBottom()
   I.click('Community')
 
-  I.pressKey('Escape') // close newsletter modal in case it popped up
+  // this page sometimes load slowly
+  I.wait(20)
+  // close newsletter modal in case it popped up
+  I.pressKey('Escape')
 
-  // Make sure it's the right page, wait longer to reduce flakiness
-  I.waitForText("Was gibt's zu tun?", 20)
+  // Make sure it's the right page
+  I.see("Was gibt's zu tun?")
 })
 
 Scenario('Main Menu', async ({ I }) => {
