@@ -2,6 +2,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
+import { useRef } from 'react'
 
 interface AddRowButtonFloatingProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>
@@ -15,6 +16,7 @@ export function AddRowButtonFloating({
   hide,
 }: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   return (
     <div className="absolute bottom-0 z-[1] h-auto w-full translate-y-full">
@@ -32,8 +34,18 @@ export function AddRowButtonFloating({
               focused ? 'opacity-60' : 'opacity-0'
             )}
             title={rowsStrings.addAnElement}
-            onClick={onClick}
+            onClick={(event) => {
+              onClick(event)
+
+              // Imperatively calling blur, because inside the Shadow DOM, the
+              // button somehow retains focus which shifts the suggestion menu
+              // to the right!
+              if (buttonRef.current) {
+                buttonRef.current.blur()
+              }
+            }}
             data-qa="add-new-plugin-row-button"
+            ref={buttonRef}
           >
             <FaIcon icon={faCirclePlus} className="text-xl" />
           </button>

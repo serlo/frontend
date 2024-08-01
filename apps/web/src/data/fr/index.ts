@@ -425,7 +425,8 @@ export const instanceData = {
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
       verificationLinkText: 'Click here to request the verification email again.',
-      badRole: 'You are only allowed to log in through Vidis if you are a teacher.'
+      badRole: 'You are only allowed to log in through VIDIS if you are a teacher.',
+      somethingWrong: 'Sorry, something went wrong!'
     },
     keys: {
       ctrl: 'ctrl',

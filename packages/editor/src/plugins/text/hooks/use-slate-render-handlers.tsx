@@ -83,7 +83,11 @@ export const useSlateRenderHandlers = ({
       }
       if (element.type === 'textBlank') {
         return (
-          <span {...attributes} contentEditable={false}>
+          <span
+            {...attributes}
+            contentEditable={false}
+            style={{ userSelect: 'none' }}
+          >
             <BlankRenderer element={element} focused={focused} />
             {/* Because blank is a void element we need to render children here even though it will always be an empty text element. Slate will complain if this is not included here */}
             {children}

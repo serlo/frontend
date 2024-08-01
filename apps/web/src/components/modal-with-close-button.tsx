@@ -10,7 +10,7 @@ import { FaIcon } from './fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-interface ModalWithCloseButtonProps {
+export interface ModalWithCloseButtonProps {
   title?: string
   isOpen: boolean
   setIsOpen: (open: boolean) => void

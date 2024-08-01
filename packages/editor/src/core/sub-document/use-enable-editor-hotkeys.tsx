@@ -47,36 +47,6 @@ export const useEnableEditorHotkeys = (
   }
 
   useHotkeys(
-    Key.ArrowUp,
-    (e) => {
-      handleKeyDown(e, () => {
-        dispatch(focusPrevious(selectChildTree(store.getState())))
-      })
-    },
-    {
-      enableOnContentEditable: true,
-      enableOnFormTags: true,
-      scopes: ['root-up-down-enter'],
-      enabled: isFocused,
-    }
-  )
-
-  useHotkeys(
-    Key.ArrowDown,
-    (e) => {
-      handleKeyDown(e, () => {
-        dispatch(focusNext(selectChildTree(store.getState())))
-      })
-    },
-    {
-      enableOnContentEditable: true,
-      enableOnFormTags: true,
-      scopes: ['root-up-down-enter'],
-      enabled: isFocused,
-    }
-  )
-
-  useHotkeys(
     Key.Enter,
     (e) => {
       handleKeyDown(e, () => {

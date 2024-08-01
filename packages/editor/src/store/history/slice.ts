@@ -7,7 +7,7 @@ import type {
   PureCommitActionToHistoryAction,
 } from './types'
 import type { AppDispatch } from '../store'
-import type { State } from '../types'
+import type { HistoryState, State } from '../types'
 
 const initialState: State['history'] = {
   undoStack: [],
@@ -51,14 +51,14 @@ export const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    persistHistory(state, action: PersistHistoryAction) {
+    persistHistory(state: HistoryState, action: PersistHistoryAction) {
       state.initialState = state.initialState || {
         documents: action.payload,
       }
       state.pendingChanges = 0
     },
     pureCommitActionToHistory: (
-      state,
+      state: HistoryState,
       action: PureCommitActionToHistoryAction
     ) => {
       const { combine, actions } = action.payload

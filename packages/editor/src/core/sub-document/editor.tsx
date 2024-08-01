@@ -1,4 +1,5 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import * as R from 'ramda'
 import { useRef, useMemo, useCallback } from 'react'
@@ -10,12 +11,24 @@ import {
   runChangeDocumentSaga,
   selectChildTreeOfParent,
   selectDocument,
+  selectDocumentPluginType,
   selectIsFocused,
   store,
   useAppDispatch,
   useAppSelector,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
+
+// Global state to manage focus events and cleanup old timeout. Could probably
+// refactor this to a Context, but so far, I haven't seen issues with this
+// approach.
+export const focusState: {
+  latestId: string | null
+  timeout: NodeJS.Timeout | null
+} = {
+  latestId: null,
+  timeout: null,
+}
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const dispatch = useAppDispatch()
@@ -48,23 +61,39 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   // additional focus check to set focus when using tab navigation
   const handleFocus = useCallback(
-    (e: React.FocusEvent) => {
+    (event: React.FocusEvent) => {
       if (!document) return
       if (['rows', 'exercise'].includes(document?.plugin)) return
 
+      event?.stopPropagation()
+      // Clear any existing timeout
+      if (focusState.timeout) {
+        clearTimeout(focusState.timeout)
+      }
+
+      focusState.latestId = id
+
       // if after a short delay dom focus is not set inside focused plugin
       // we overwrite it here (because it's probably because of tab navigation)
-      setTimeout(() => {
+      focusState.timeout = setTimeout(() => {
+        const pluginType = selectDocumentPluginType(store.getState(), id)
+
         // fixes a bug in table plugin with disappearing buttons
-        if (['button', 'select'].includes(e.target.nodeName?.toLowerCase())) {
+        if (
+          pluginType === EditorPluginType.SerloTable &&
+          ['button', 'select'].includes(event.target.nodeName?.toLowerCase())
+        ) {
           return
         }
 
-        // find closest document
-        const target = (e.target as HTMLDivElement).closest('[data-document]')
-
-        if (!focused && target === containerRef.current) {
-          dispatch(focus(id))
+        if (focusState.latestId === id) {
+          // find closest document
+          const target = (event.target as HTMLDivElement).closest(
+            '[data-document]'
+          )
+          if (!focused && target === containerRef.current) {
+            dispatch(focus(id))
+          }
         }
         // 10ms is an arbitrary value:
         // as low as possible but after the other focus handler is done rerendering

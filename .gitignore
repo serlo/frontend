@@ -34,6 +34,7 @@ tsconfig.tsbuildinfo
 yarn-debug.log*
 yarn-error.log*
 .yalc
+yalc.lock
 
 # asdf-vm
 .tool-versions
