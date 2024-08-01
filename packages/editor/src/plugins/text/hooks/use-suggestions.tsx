@@ -1,9 +1,4 @@
-import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
-import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
-import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
-import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
-import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
   PluginWithData,
@@ -44,34 +39,13 @@ const hotkeyConfig = {
   scopes: ['global'],
 }
 
-const allInteractiveExerciseTypes = [
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.TextAreaExercise,
-  EditorPluginType.BlanksExercise,
-  EditorPluginType.DropzoneImage,
-] as const
-
-const exerciseIcons = {
-  [EditorPluginType.DropzoneImage]: <IconDropzones />,
-  [EditorPluginType.H5p]: <IconH5p />,
-  [EditorPluginType.BlanksExercise]: <IconFillGaps />,
-  [EditorPluginType.InputExercise]: <IconTextArea />,
-  [EditorPluginType.ScMcExercise]: <IconScMcExercise />,
-  [EditorPluginType.TextAreaExercise]: <IconTextArea />,
-}
-
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const { editor, id, focused, isInlineChildEditor } = args
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const editorStrings = useEditorStrings()
-  const {
-    plugins: pluginsStrings,
-    templatePlugins: { exercise: exerciseTemplateStrings },
-  } = editorStrings
+  const { plugins: pluginsStrings } = editorStrings
   const { selection } = editor
 
   const [searchString, setSearchString] = useState('')
@@ -102,16 +76,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       : allowedByContext
   }, [allowedContextPlugins, id])
 
-  const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
-    editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
-  )
-
-  const interactivePlugins = interactiveExerciseTypes.map((exerciseType) => ({
-    pluginType: 'exercise',
-    title: exerciseTemplateStrings[exerciseType],
-    icon: exerciseIcons[exerciseType],
-  }))
-
   const filteredOptions = useMemo(() => {
     const allOptions = allowedPlugins
       .filter((plugin) => plugin !== 'exercise' && plugin !== 'exerciseGroup')
@@ -120,11 +84,12 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     return filterOptions(allOptions, searchString)
   }, [allowedPlugins, pluginsStrings, searchString])
 
-  const showSuggestions =
+  const [showSuggestions, setShowSuggestions] = useState(
     !isInlineChildEditor &&
-    focused &&
-    filteredOptions.length > 0 &&
-    !isSelectionWithinList(editor)
+      focused &&
+      filteredOptions.length > 0 &&
+      !isSelectionWithinList(editor)
+  )
 
   const { enableScope, disableScope } = useHotkeysContext()
 
@@ -179,8 +144,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       setSelected(0)
     }
   }, [options.length, selected])
-
-  useHotkeys(Key.Escape, handleSuggestionsMenuClose, hotkeyConfig)
 
   const handleArrowKeyPress = (event: KeyboardEvent) => {
     const totalItems = basicOptions.length + interactiveOptions.length
@@ -263,7 +226,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
         data-qa={`plugin-suggestion-${pluginType}`}
         data-active={index === selected}
         ref={(el) => (itemRefs.current[selectableIndex] = el)}
-        onMouseDown={(event: React.MouseEvent) => {
+        onClick={(event: React.MouseEvent) => {
           event.preventDefault()
           insertSelectedPlugin(pluginType)
         }}
@@ -330,9 +293,9 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   return {
     showSuggestions,
+    setShowSuggestions,
     suggestionsProps: {
       options,
-      interactivePlugins,
       suggestionsRef,
       selected,
       onMouseDown: insertSelectedPlugin,

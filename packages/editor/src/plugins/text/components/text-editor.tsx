@@ -51,12 +51,13 @@ export function TextEditor(props: TextEditorProps) {
       editorKey: v4(),
     }
   }, [createTextEditor])
-  const { showSuggestions, suggestionsProps } = useSuggestions({
-    editor,
-    id,
-    focused,
-    isInlineChildEditor: config.isInlineChildEditor,
-  })
+  const { showSuggestions, setShowSuggestions, suggestionsProps } =
+    useSuggestions({
+      editor,
+      id,
+      focused,
+      isInlineChildEditor: config.isInlineChildEditor,
+    })
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
     editor,
     focused,
@@ -166,7 +167,9 @@ export function TextEditor(props: TextEditorProps) {
       <ModalWithCloseButton
         className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll pt-0"
         isOpen={showSuggestions}
-        setIsOpen={() => {}}
+        setIsOpen={(open) => {
+          setShowSuggestions(open)
+        }}
         title=""
       >
         <Suggestions {...suggestionsProps} />
