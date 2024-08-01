@@ -7,7 +7,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AddRowButtonFloatingProps {
-  onClick: (event: React.MouseEvent | React.KeyboardEvent) => void
+  onClick: (event: React.MouseEvent) => void
   focused?: boolean
   hide?: boolean
 }
