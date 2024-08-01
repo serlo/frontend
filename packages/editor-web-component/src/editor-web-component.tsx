@@ -6,6 +6,10 @@ import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
 import {
+  defaultBoxAndSpoilerPlugins,
+  defaultMultimediaConfig,
+} from './default-plugins'
+import {
   exampleInitialState,
   isValidState,
   type InitialState,
@@ -32,27 +36,19 @@ export class EditorWebComponent extends HTMLElement {
 
   private _testingSecret: string | null = null
 
+  // By default, we are NOT attaching it to the shadow DOM
+  private _useShadowDOM: boolean = false
+
   constructor() {
     super()
 
-    // Create a shadow root for encapsulation
-    this.attachShadow({ mode: 'open' })
-
     this.container = document.createElement('div')
 
-    this.shadowRoot!.appendChild(this.container)
-
-    this.loadAndApplyStyles()
-  }
-
-  loadAndApplyStyles() {
-    const styleEl = document.createElement('style')
-    styleEl.textContent = styles
-    this.shadowRoot!.appendChild(styleEl)
+    // Shadow DOM will be attached in connectedCallback if needed
   }
 
   static get observedAttributes() {
-    return ['initial-state', 'mode', 'testing-secret']
+    return ['initial-state', 'mode', 'testing-secret', 'use-shadow-dom']
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -64,6 +60,8 @@ export class EditorWebComponent extends HTMLElement {
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
+    } else if (name === 'use-shadow-dom') {
+      this._useShadowDOM = newValue !== 'false'
     }
   }
 
@@ -122,11 +120,30 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this._useShadowDOM && !this.shadowRoot) {
+      this.attachShadow({ mode: 'open' })
+      this.shadowRoot!.appendChild(this.container)
+    } else if (!this._useShadowDOM) {
+      this.appendChild(this.container)
+    }
+
+    this.loadAndApplyStyles()
+
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
     }
 
     this.mountReactComponent()
+  }
+
+  loadAndApplyStyles() {
+    const styleEl = document.createElement('style')
+    styleEl.textContent = styles
+    if (this._useShadowDOM) {
+      this.shadowRoot!.appendChild(styleEl)
+    } else {
+      this.appendChild(styleEl)
+    }
   }
 
   broadcastNewState(newState: unknown): void {
@@ -156,9 +173,6 @@ export class EditorWebComponent extends HTMLElement {
       this._currentState = initialState
     }
 
-    // eslint-disable-next-line no-console
-    console.log('Mounting React Component with state:', initialState)
-
     if (!this.reactRoot) {
       return null
     }
@@ -170,16 +184,23 @@ export class EditorWebComponent extends HTMLElement {
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
                 initialState={this.initialState}
-                pluginsConfig={
-                  testingSecretAttr
+                pluginsConfig={{
+                  box: {
+                    allowedPlugins: defaultBoxAndSpoilerPlugins,
+                  },
+                  spoiler: {
+                    allowedPlugins: defaultBoxAndSpoilerPlugins,
+                  },
+                  multimedia: defaultMultimediaConfig,
+                  ...(testingSecretAttr
                     ? {
                         general: {
                           testingSecret: testingSecretAttr,
                           enableTextAreaExercise: false,
                         },
                       }
-                    : {}
-                }
+                    : {}),
+                }}
                 // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
                 _enableImagePlugin
                 onChange={({ changed, getDocument }) => {

@@ -41,3 +41,24 @@ yarn e2e-firefox
 ```
 
 The tests are written in `/tests`, the file names are setting the order of execution. The browser session is stored between tests, TypeScript is supported.
+
+## Run tests against localhost build
+
+If you want to run the tests against your local changes, first build the frontend and start it on localhost, then run the `e2e-localhost` command:
+
+```sh
+yarn build && yarn start
+yarn e2e-localhost
+```
+
+## Run tests against staging
+
+By default, the e2e tests are run against staging. Ensure this comment is set in the .env file.
+
+`# FRONTEND_URL=https://staging.serlo.org`
+
+Then, run the tests:
+
+```sh
+yarn e2e
+```

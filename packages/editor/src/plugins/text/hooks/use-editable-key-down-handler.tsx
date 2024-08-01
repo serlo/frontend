@@ -109,6 +109,7 @@ export const useEditableKeydownHandler = (
         // or merge with next Slate instance on "delete" key
         const isBackspaceAtStart =
           isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
+
         const isDeleteAtEnd =
           isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
         if ((isBackspaceAtStart || isDeleteAtEnd) && !isListActive) {

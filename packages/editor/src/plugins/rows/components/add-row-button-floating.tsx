@@ -1,6 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { cn } from '@serlo/frontend/src/helper/cn'
+import { useRef } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -16,6 +17,7 @@ export function AddRowButtonFloating({
   hide,
 }: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   if (hide) return null
 
@@ -36,7 +38,16 @@ export function AddRowButtonFloating({
     <>
       <div
         className={cn(baseStyles, stateStyles, interactionStyles)}
-        onClick={onClick}
+        onClick={(event) => {
+          onClick(event)
+
+          // Imperatively calling blur, because inside the Shadow DOM, the
+          // button somehow retains focus which shifts the suggestion menu
+          // to the right!
+          if (buttonRef.current) {
+            buttonRef.current.blur()
+          }
+        }}
       >
         {/* Divider line */}
         <div className="flex-grow border-t-2 border-gray-300" />

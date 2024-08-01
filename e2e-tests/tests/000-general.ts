@@ -26,6 +26,8 @@ Scenario('About Serlo', ({ I }) => {
   I.scrollPageToBottom()
   I.click('Community')
 
+  I.pressKey('Escape') // close newsletter modal in case it popped up
+
   // Make sure it's the right page, wait longer to reduce flakiness
   I.waitForText("Was gibt's zu tun?", 20)
 })
