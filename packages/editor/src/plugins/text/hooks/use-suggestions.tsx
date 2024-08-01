@@ -275,14 +275,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     })
   }
 
-  function handleSuggestionsMenuClose(event: KeyboardEvent) {
-    if (!closure.current.showSuggestions) return
-
-    event.preventDefault()
-
-    editor.deleteBackward('line')
-  }
-
   const renderedBasicPlugins = basicOptions.map((basicItem, index) => {
     return renderPluginItem(basicItem, index, 'basic')
   })
