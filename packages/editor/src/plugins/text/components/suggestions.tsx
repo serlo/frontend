@@ -37,7 +37,7 @@ export const Suggestions = ({
 
   return (
     <div className="mt-2">
-      <div className="shadow-stickysearch sticky top-0 z-10 bg-white pb-4 pl-6 pt-4">
+      <div className="sticky top-0 z-10 bg-white pb-4 pl-6 pt-4 shadow-stickysearch">
         <EditorInput
           ref={searchInputRef}
           autoFocus
