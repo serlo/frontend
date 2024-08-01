@@ -24,15 +24,12 @@ Scenario('About Serlo', ({ I }) => {
   I.click('Pädagogisches Konzept')
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
-  I.click('Community')
-
-  // this page sometimes load slowly
-  I.wait(20)
   // close newsletter modal in case it popped up
   I.pressKey('Escape')
+  I.click('Community')
 
-  // Make sure it's the right page
-  I.see("Was gibt's zu tun?")
+  // Make sure it's the right page (this page sometimes load slowly)
+  I.waitForText("Was gibt's zu tun?", 20)
 })
 
 Scenario('Main Menu', async ({ I }) => {
