@@ -35,10 +35,10 @@
     @apply serlo-button bg-transparent text-brand hover:bg-brand-700 hover:text-white;
   }
   .serlo-button-editor-primary {
-    @apply serlo-button bg-editor-primary-200 text-almost-black hover:bg-editor-primary;
+    @apply serlo-button bg-editor-primary-200 text-xl text-almost-black hover:bg-editor-primary font-bold ml-3 px-3 py-2.5 rounded-lg;
   }
   .serlo-button-editor-secondary {
-    @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
+    @apply serlo-button bg-editor-primary-100 text-xl text-almost-black hover:bg-editor-primary-200 font-bold px-3 py-2.5 rounded-lg;
   }
   .serlo-p {
     @apply mx-side mb-block mt-0 hyphens-auto text-lg leading-cozy;
