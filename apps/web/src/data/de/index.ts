@@ -818,7 +818,7 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
-          placeholder: "Schreib etwas oder füge Elemente ein:",
+          placeholder: "Schreibe etwas …",
           addButtonExplanation: "Klicke, um ein neues Element einzufügen",
           quote: "Zitat",
           setColor: "Einfärben",
