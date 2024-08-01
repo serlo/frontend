@@ -23,9 +23,9 @@ export function AddRowButtonFloating({
   if (hide) return null
 
   const baseStyles = `
-  group
+  group z-50
   opacity-0 transition-opacity duration-300
-  relative mb-4 flex items-center px-8 pb-2
+  relative mb-6 flex items-center px-8 
 `
 
   const stateStyles = `
@@ -37,6 +37,9 @@ export function AddRowButtonFloating({
 
   return (
     <div
+      style={{
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+      }}
       tabIndex={0}
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
