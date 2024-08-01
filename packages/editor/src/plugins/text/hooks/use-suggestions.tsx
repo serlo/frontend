@@ -111,6 +111,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     EditorPluginType.BlanksExercise,
     EditorPluginType.InputExercise,
     EditorPluginType.Solution,
+    EditorPluginType.DropzoneImage,
   ])
 
   const basicOptions = options.filter(
@@ -176,7 +177,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
         break
       case Key.ArrowUp:
         if (isInFirstRowOfInteractive) {
-          setCurrentlyFocusedItem((prev) => prev - lastRowItemCount)
+          const rowIndex = currentlyFocusedItem - interactivePluginsStartIndex
+          setCurrentlyFocusedItem(
+            (prev) => prev - Math.max(lastRowItemCount, rowIndex + 1)
+          )
         } else {
           setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
         }
