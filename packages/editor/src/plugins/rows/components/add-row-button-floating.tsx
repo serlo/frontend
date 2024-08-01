@@ -41,11 +41,6 @@ export function AddRowButtonFloating({
   return (
     <button
       ref={buttonRef}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter') {
-          onClick(event)
-        }
-      }}
       className={cn(baseStyles, stateStyles, interactionStyles)}
       onClick={(event) => {
         onClick(event)
