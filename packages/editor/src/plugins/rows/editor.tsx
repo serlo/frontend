@@ -18,7 +18,7 @@ export function RowsEditor({ state, config, id }: RowsProps) {
   function insertRowWithSuggestionsOpen(insertIndex: number) {
     const textPluginWithSuggestions = {
       plugin: EditorPluginType.Text,
-      state: [{ type: 'p', children: [{ text: '/' }] }],
+      state: [{ type: 'p', children: [{ text: '' }] }],
     }
     setTimeout(() => {
       state.insert(insertIndex, textPluginWithSuggestions)
