@@ -94,7 +94,6 @@ export function TextEditor(props: TextEditorProps) {
   useEffect(() => {
     // Get the current text value of the editor
     const text = Node.string(editor)
-
     // If the editor is not focused, remove the suggestions search
     // and exit the useEffect hook
     if (focused === false) {
@@ -142,7 +141,17 @@ export function TextEditor(props: TextEditorProps) {
 
       <Editable
         readOnly={false}
-        onKeyDown={handleEditableKeyDown}
+        onKeyDown={(e) => {
+          if (e.key === '/') {
+            const text = Node.string(editor)
+            // "Show suggestions when the user types '/' and the editor is empty"
+            if (text.length === 0) {
+              setShowSuggestions(true)
+              e.preventDefault()
+            }
+          }
+          handleEditableKeyDown
+        }}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}

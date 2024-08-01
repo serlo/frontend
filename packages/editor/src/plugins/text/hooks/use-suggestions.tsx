@@ -234,9 +234,9 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
           setCurrentlyFocusedItem(selectableIndex)
         }}
         className={cn(`
-          group/suggestion flex cursor-pointer flex-col items-center rounded-md
-          border border-2 border-transparent p-2 pb-0
-          hover:shadow-suggestions
+          group/suggestion focus:shadow-suggestions hover:shadow-suggestions flex cursor-pointer flex-col items-center
+          rounded-md border border-2 border-transparent p-2
+          pb-0
         `)}
       >
         <div
