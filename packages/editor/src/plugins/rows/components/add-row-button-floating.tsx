@@ -24,7 +24,7 @@ export function AddRowButtonFloating({
 
   const baseStyles = `
     opacity-0 transition-opacity duration-300
-    relative mb-6 flex items-center px-8
+    relative mb-6 flex items-center px-8 w-full
     bg-gradient-to-b from-transparent via-white to-transparent
   `
 
@@ -39,8 +39,8 @@ export function AddRowButtonFloating({
   const interactionStyles = 'cursor-pointer'
 
   return (
-    <div
-      tabIndex={0}
+    <button
+      ref={buttonRef}
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
           onClick(event)
@@ -65,6 +65,6 @@ export function AddRowButtonFloating({
       </div>
       {/* Divider line */}
       <div className="flex-grow border-t-2 border-gray-300" />
-    </div>
+    </button>
   )
 }
