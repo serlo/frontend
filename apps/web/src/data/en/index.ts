@@ -891,7 +891,7 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
-          placeholder: 'Write something or add element:',
+          placeholder: 'Write something...',
           addButtonExplanation: 'Click to insert new element',
           quote: 'Quote',
           setColor: 'Set color',
