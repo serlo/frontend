@@ -25,6 +25,7 @@ Scenario('About Serlo', ({ I }) => {
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
   // close newsletter modal in case it popped up
+  I.wait(2)
   I.pressKey('Escape')
   I.click('Community')
 
