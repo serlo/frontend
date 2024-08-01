@@ -167,6 +167,7 @@ export function TextEditor(props: TextEditorProps) {
         className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll pt-0"
         isOpen={showSuggestions}
         setIsOpen={() => {}}
+        title=""
       >
         <Suggestions {...suggestionsProps} />
       </ModalWithCloseButton>

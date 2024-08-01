@@ -45,6 +45,7 @@
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-visually-hidden": "^1.1.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@serlo/authorization": "^0.60.0",
     "@serlo/editor": "workspace:*",
