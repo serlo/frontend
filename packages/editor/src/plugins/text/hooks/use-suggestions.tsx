@@ -1,4 +1,5 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
   PluginWithData,
@@ -211,7 +212,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   })
 
   const renderPluginItem = (
-    { pluginType, title, icon }: SuggestionOption,
+    { pluginType, title, icon, description }: SuggestionOption,
     index: number,
     pluginCategory: string
   ) => {
@@ -234,19 +235,24 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
           setCurrentlyFocusedItem(selectableIndex)
         }}
         className={cn(`
-          group/suggestion focus:shadow-suggestions hover:shadow-suggestions flex cursor-pointer flex-col items-center
-          rounded-md border border-2 border-transparent p-2
+          group serlo-tooltip-trigger flex cursor-auto
+          flex-col items-center rounded-md border
+          border-2 border-transparent
           pb-0
         `)}
       >
-        <div
-          className={cn(`
-           mb-2 flex w-full items-center justify-center rounded-md
-          `)}
-        >
-          {icon ?? <IconFallback className="h-full w-full" />}
+        <EditorTooltip text={description} />
+
+        <div className="group-focus:shadow-suggestions hover:shadow-suggestions w-full cursor-pointer rounded-md p-2">
+          <div
+            className={cn(
+              'flex w-full items-center justify-center rounded-md '
+            )}
+          >
+            {icon ?? <IconFallback className="h-full w-full" />}
+          </div>
+          <h5 className="mt-2 text-center text-sm font-bold">{title}</h5>
         </div>
-        <h5 className="text-center text-sm font-bold">{title}</h5>
       </button>
     )
   }
