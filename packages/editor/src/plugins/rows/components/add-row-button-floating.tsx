@@ -23,23 +23,22 @@ export function AddRowButtonFloating({
   if (hide) return null
 
   const baseStyles = `
-  group z-50
-  opacity-0 transition-opacity duration-300
-  relative mb-6 flex items-center px-8 
-`
+    opacity-0 transition-opacity duration-300
+    relative mb-6 flex items-center px-8
+    bg-gradient-to-b from-transparent via-white to-transparent
+  `
 
   const stateStyles = `
-  text-editor-primary-200 hover:opacity-100 ${focused ? 'opacity-40' : ''}
-  focus-visible:text-editor-primary-200 group-hover:opacity-100
-`
+    text-editor-primary-200
+    hover:opacity-100 hover:z-50
+    ${focused ? 'opacity-40' : ''}
+    focus-visible:text-editor-primary-200 
+  `
 
   const interactionStyles = 'cursor-pointer'
 
   return (
     <div
-      style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.6)',
-      }}
       tabIndex={0}
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
@@ -53,14 +52,12 @@ export function AddRowButtonFloating({
         // Imperatively calling blur, because inside the Shadow DOM, the
         // button somehow retains focus which shifts the suggestion menu
         // to the right!
-        if (buttonRef.current) {
-          buttonRef.current.blur()
-        }
+        buttonRef?.current?.blur()
       }}
     >
       {/* Divider line */}
       <div className="flex-grow border-t-2 border-gray-300" />
-      <div className="group/btn serlo-tooltip-trigger relative px-6 text-2xl">
+      <div className="serlo-tooltip-trigger px-6 text-2xl">
         {/* Add button */}
         <FaIcon icon={faCirclePlus} />
         <EditorTooltip text={rowsStrings.addAnElement} />
