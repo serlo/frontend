@@ -45,7 +45,7 @@ export function RowEditor({
       />
       <AddRowButtonFloating
         focused={focused}
-        onClick={(event: React.MouseEvent) => {
+        onClick={(event: React.MouseEvent | React.KeyboardEvent) => {
           event.preventDefault()
           onAddButtonClick(index + 1)
         }}

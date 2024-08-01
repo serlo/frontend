@@ -7,13 +7,14 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AddRowButtonFloatingProps {
-  onClick: React.MouseEventHandler<HTMLElement>
+  onClick: (event: React.MouseEvent | React.KeyboardEvent) => void
   focused?: boolean
   hide?: boolean
 }
 
 export function AddRowButtonFloating({
   onClick,
+  focused,
   hide,
 }: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
@@ -28,37 +29,41 @@ export function AddRowButtonFloating({
 `
 
   const stateStyles = `
-  text-editor-primary-200 hover:opacity-100
+  text-editor-primary-200 hover:opacity-100 ${focused ? 'opacity-40' : ''}
   focus-visible:text-editor-primary-200 group-hover:opacity-100
 `
 
   const interactionStyles = 'cursor-pointer'
 
   return (
-    <>
-      <div
-        className={cn(baseStyles, stateStyles, interactionStyles)}
-        onClick={(event) => {
+    <div
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
           onClick(event)
+        }
+      }}
+      className={cn(baseStyles, stateStyles, interactionStyles)}
+      onClick={(event) => {
+        onClick(event)
 
-          // Imperatively calling blur, because inside the Shadow DOM, the
-          // button somehow retains focus which shifts the suggestion menu
-          // to the right!
-          if (buttonRef.current) {
-            buttonRef.current.blur()
-          }
-        }}
-      >
-        {/* Divider line */}
-        <div className="flex-grow border-t-2 border-gray-300" />
-        <div className="group/btn serlo-tooltip-trigger relative px-6 text-2xl">
-          {/* Add button */}
-          <FaIcon icon={faCirclePlus} />
-          <EditorTooltip text={rowsStrings.addAnElement} />
-        </div>
-        {/* Divider line */}
-        <div className="flex-grow border-t-2 border-gray-300" />
+        // Imperatively calling blur, because inside the Shadow DOM, the
+        // button somehow retains focus which shifts the suggestion menu
+        // to the right!
+        if (buttonRef.current) {
+          buttonRef.current.blur()
+        }
+      }}
+    >
+      {/* Divider line */}
+      <div className="flex-grow border-t-2 border-gray-300" />
+      <div className="group/btn serlo-tooltip-trigger relative px-6 text-2xl">
+        {/* Add button */}
+        <FaIcon icon={faCirclePlus} />
+        <EditorTooltip text={rowsStrings.addAnElement} />
       </div>
-    </>
+      {/* Divider line */}
+      <div className="flex-grow border-t-2 border-gray-300" />
+    </div>
   )
 }
