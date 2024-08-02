@@ -688,7 +688,7 @@ export const loggedInData = {
         box: {
           title: 'Container',
           description:
-            'A container for examples, quotes, warnings, theorems, notes…',
+            'Insert a container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
           typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
@@ -698,7 +698,7 @@ export const loggedInData = {
         dropzoneImage: {
           title: 'Image Dropzones',
           description:
-            'Create an exercise with interactive images for matching and labeling',
+            'Create a fill-in-the-gap text or a table where the correct answers are inserted via drag and drop.',
           backgroundImage: 'Background image',
           addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
@@ -750,7 +750,7 @@ export const loggedInData = {
         equations: {
           title: 'Terms and equations',
           description:
-            'Write term manipulations and solve multiline equations.',
+            'Create term transformations and solve multi-line equations.',
           leftHandSide: 'left-hand side',
           transformation: 'transformation',
           mode: 'Mode',
@@ -784,7 +784,8 @@ export const loggedInData = {
         },
         image: {
           title: 'Image',
-          description: 'Upload images.',
+          description:
+            'Upload images or search online for freely licensed images.',
           upload: 'Upload Image',
           imageUrl: 'Image URL',
           imageSource: 'Image Source',
@@ -821,7 +822,7 @@ export const loggedInData = {
         },
         injection: {
           title: 'serlo.org Content',
-          description: 'Embed serlo.org content via their ID.',
+          description: 'Embed an existing content from serlo.org via ID.',
           illegalInjectionFound: 'Illegal injection found',
           serloEntitySrc: 'Serlo entity {{src}}',
           serloId: 'Serlo ID',
@@ -887,7 +888,8 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: 'A collapsible box.',
+          description:
+            'Insert a fold-out box, e.g. for additional content or help.',
           enterATitle: 'Enter a title',
         },
         text: {
@@ -954,7 +956,8 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          description: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
+          description:
+            'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
           videoUrl: 'Video URL',
           videoDescription: 'Description',
           titlePlaceholder: 'Title',
@@ -978,7 +981,8 @@ export const loggedInData = {
         },
         inputExercise: {
           title: 'Input Exercise',
-          description: 'Solution can be text or math',
+          description:
+            'Create a task where an exact input or value can be entered and validated.',
         },
         textAreaExercise: {
           title: 'Text Box Exercise',
@@ -986,11 +990,13 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice',
+          description:
+            'Create single or multiple choice tasks and adapt them with individual feedback if necessary.',
         },
         blanksExercise: {
           title: 'Fill In The Blanks',
-          description: 'Text with blanks',
+          description:
+            'Create a fill-in-the-gap text or table where the correct answers are typed in.',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
