@@ -52,14 +52,14 @@ export function AddRowButtonFloating({
       }}
     >
       {/* Divider line */}
-      <div className="flex-grow border-t-2 border-gray-300" />
-      <div className="serlo-tooltip-trigger px-6 text-2xl">
+      <span className="flex-grow border-t-2 border-gray-300" />
+      <span className="serlo-tooltip-trigger px-6 text-2xl">
         {/* Add button */}
         <FaIcon icon={faCirclePlus} />
         <EditorTooltip text={rowsStrings.addAnElement} />
-      </div>
+      </span>
       {/* Divider line */}
-      <div className="flex-grow border-t-2 border-gray-300" />
+      <span className="flex-grow border-t-2 border-gray-300" />
     </button>
   )
 }
