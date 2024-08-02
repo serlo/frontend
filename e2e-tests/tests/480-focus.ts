@@ -65,16 +65,16 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.waitForElement('h1 > input:focus', 5)
 
   I.say('focus on image plugin inside of introduction multimedia plugin')
-  // TODO: Double tab is a quick fix.
-  // When the upload or search buttons are focused, the toolbar doesn't appear.
-  // This is a bug that needs to be fixed.
-  I.pressKey('Tab')
   I.pressKey('Tab')
   I.see('Bild', '$plugin-type-indicator')
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 
   I.say('focus on text plugin inside of introduction multimedia plugin')
+  // TODO: Triple tab is a quick fix, its not clear that the tab order is correct for a good UX
   I.pressKey('Tab')
+  I.pressKey('Tab')
+  I.pressKey('Tab')
+
   I.see('Text', '$plugin-type-indicator')
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 
