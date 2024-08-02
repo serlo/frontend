@@ -65,10 +65,9 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.waitForElement('h1 > input:focus', 5)
 
   I.say('focus on image plugin inside of introduction multimedia plugin')
-  // TODO: Triple tab is a quick fix.
+  // TODO: Double tab is a quick fix.
   // When the upload or search buttons are focused, the toolbar doesn't appear.
   // This is a bug that needs to be fixed.
-  I.pressKey('Tab')
   I.pressKey('Tab')
   I.pressKey('Tab')
   I.see('Bild', '$plugin-type-indicator')
@@ -104,7 +103,7 @@ Scenario('focus plugins with arrow keys', ({ I }) => {
   I.see('First text plugin', 'div[data-slate-editor="true"]:focus')
 
   I.say('add second text plugin, type in it, check that it has focus')
-  I.click('Füge ein Element hinzu')
+  I.click(locate('$add-new-plugin-row-button').last())
   I.pressKey('Backspace')
   I.type('Second text plugin')
   I.see('First text plugin', 'div[data-slate-editor="true"]')
