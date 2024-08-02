@@ -7,7 +7,8 @@ import { SuggestionItem } from './suggestion-item'
 import { SuggestionOption } from '../hooks/use-suggestions'
 
 interface SuggestionsProps {
-  options: SuggestionOption[]
+  basicOptions: SuggestionOption[]
+  interactiveOptions: SuggestionOption[]
   searchString: string
   setSearchString: (searchString: string) => void
   itemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>
@@ -17,7 +18,8 @@ interface SuggestionsProps {
 }
 
 export const Suggestions = ({
-  options,
+  basicOptions,
+  interactiveOptions,
   searchString,
   setSearchString,
   itemRefs,
@@ -33,24 +35,6 @@ export const Suggestions = ({
       searchInputRef.current?.focus()
     }, 0)
   }, [])
-
-  const interactivePluginTypes = new Set([
-    EditorPluginType.TextAreaExercise,
-    EditorPluginType.ScMcExercise,
-    EditorPluginType.H5p,
-    EditorPluginType.BlanksExercise,
-    EditorPluginType.InputExercise,
-    EditorPluginType.Solution,
-    EditorPluginType.DropzoneImage,
-  ])
-
-  const basicOptions = options.filter(
-    (option) => !interactivePluginTypes.has(option.pluginType)
-  )
-
-  const interactiveOptions = options.filter((option) =>
-    interactivePluginTypes.has(option.pluginType)
-  )
 
   return (
     <div className="mt-2">

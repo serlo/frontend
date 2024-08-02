@@ -30,19 +30,19 @@ export const SuggestionItem = forwardRef<
       )}
     >
       <EditorTooltip text={description} />
-      <div
+      <span
         className={cn(
           'w-full cursor-pointer rounded-md p-2 hover:shadow-suggestions ',
           selected && 'shadow-suggestions'
         )}
       >
-        <div
+        <span
           className={cn('flex w-full items-center justify-center rounded-md')}
         >
           {icon || <IconFallback className="h-full w-full" />}
-        </div>
+        </span>
         <h5 className="mt-2 text-center text-sm font-bold">{title}</h5>
-      </div>
+      </span>
     </button>
   )
 })

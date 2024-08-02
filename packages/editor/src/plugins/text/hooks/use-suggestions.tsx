@@ -37,6 +37,16 @@ const hotkeyConfig = {
   scopes: ['global'],
 }
 
+export const interactivePluginTypes = new Set([
+  EditorPluginType.TextAreaExercise,
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.H5p,
+  EditorPluginType.BlanksExercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.Solution,
+  EditorPluginType.DropzoneImage,
+])
+
 export const useSuggestions = ({
   editor,
   id,
@@ -95,16 +105,6 @@ export const useSuggestions = ({
   }, [enableScope, disableScope, showSuggestions])
 
   const options = showSuggestions ? filteredOptions : []
-
-  const interactivePluginTypes = new Set([
-    EditorPluginType.TextAreaExercise,
-    EditorPluginType.ScMcExercise,
-    EditorPluginType.H5p,
-    EditorPluginType.BlanksExercise,
-    EditorPluginType.InputExercise,
-    EditorPluginType.Solution,
-    EditorPluginType.DropzoneImage,
-  ])
 
   const basicOptions = options.filter(
     (option) => !interactivePluginTypes.has(option.pluginType)
@@ -216,7 +216,8 @@ export const useSuggestions = ({
     showSuggestions,
     setShowSuggestions,
     suggestionsProps: {
-      options,
+      basicOptions,
+      interactiveOptions,
       itemRefs,
       searchString,
       setSearchString,
