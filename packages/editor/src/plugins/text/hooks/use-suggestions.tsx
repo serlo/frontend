@@ -1,9 +1,7 @@
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
-  PluginWithData,
   editorPlugins,
+  PluginWithData,
 } from '@editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@editor/plugins/rows'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
@@ -13,13 +11,12 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useContext, useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor } from 'slate'
 import { Key } from 'ts-key-enum'
 
 import { insertPlugin } from '../utils/insert-plugin'
-import { cn } from '@/helper/cn'
 
 interface useSuggestionsArgs {
   editor: SlateEditor
@@ -40,11 +37,13 @@ const hotkeyConfig = {
   scopes: ['global'],
 }
 
-export const useSuggestions = (args: useSuggestionsArgs) => {
-  const { editor, id, focused, isInlineChildEditor } = args
+export const useSuggestions = ({
+  editor,
+  id,
+  focused,
+  isInlineChildEditor,
+}: useSuggestionsArgs) => {
   const dispatch = useAppDispatch()
-  const [selected, setSelected] = useState(0)
-  const suggestionsRef = useRef<HTMLDivElement>(null)
   const editorStrings = useEditorStrings()
   const { plugins: pluginsStrings } = editorStrings
   const { selection } = editor
@@ -54,23 +53,15 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
   const allowedContextPlugins = useContext(AllowedChildPlugins)
 
-  useEffect(() => {
-    if (itemRefs.current[currentlyFocusedItem]) {
-      itemRefs.current[currentlyFocusedItem]?.focus()
-    }
-  }, [currentlyFocusedItem])
-
   const allowedPlugins = useMemo(() => {
     const allWithData = editorPlugins.getAllWithData()
-
     const allVisible = allWithData
       .filter(({ visibleInSuggestions }) => visibleInSuggestions)
       .map(({ type }) => type)
 
     const allowedByContext = allowedContextPlugins ?? allVisible
-
-    // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
     const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+
     return typesOfAncestors
       ? allowedByContext.filter((plugin) =>
           checkIsAllowedNesting(plugin, typesOfAncestors)
@@ -123,22 +114,17 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     interactivePluginTypes.has(option.pluginType)
   )
 
-  const closure = useRef({
-    showSuggestions,
-    selected,
-    options,
-  })
-  closure.current = {
-    showSuggestions,
-    selected,
-    options,
-  }
+  useEffect(() => {
+    if (options.length < currentlyFocusedItem) {
+      setCurrentlyFocusedItem(0)
+    }
+  }, [options.length, currentlyFocusedItem])
 
   useEffect(() => {
-    if (options.length < selected) {
-      setSelected(0)
+    if (itemRefs.current[currentlyFocusedItem]) {
+      itemRefs.current[currentlyFocusedItem]?.focus()
     }
-  }, [options.length, selected])
+  }, [currentlyFocusedItem])
 
   const handleArrowKeyPress = (event: KeyboardEvent) => {
     const totalItems = basicOptions.length + interactiveOptions.length
@@ -160,7 +146,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       case Key.ArrowDown:
         if (isInLastRowOfBasic) {
           const indexInFirstInteractiveRow = currentlyFocusedItem % columns
-          // Move focus to the first item in   interactive plugins
           setCurrentlyFocusedItem(
             interactivePluginsStartIndex + indexInFirstInteractiveRow
           )
@@ -168,7 +153,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
           isInLastFullRow &&
           currentlyFocusedItem % columns >= lastRowItemCount
         ) {
-          // Jump to the first item of the last row if down arrow is pressed from incomplete row
           setCurrentlyFocusedItem(fullRows * columns)
         } else {
           setCurrentlyFocusedItem((prev) =>
@@ -211,91 +195,34 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     event.preventDefault()
   })
 
-  const renderPluginItem = (
-    { pluginType, title, icon, description }: SuggestionOption,
-    index: number,
-    pluginCategory: string
-  ) => {
-    const selectableIndex =
-      pluginCategory === 'basic' ? index : index + basicOptions.length
-    return (
-      <button
-        key={index}
-        data-qa={`plugin-suggestion-${pluginType}`}
-        data-active={index === selected}
-        ref={(el) => (itemRefs.current[selectableIndex] = el)}
-        onClick={(event: React.MouseEvent) => {
-          event.preventDefault()
-          insertSelectedPlugin(pluginType)
-        }}
-        onMouseMove={() => {
-          setSelected(index)
-        }}
-        onFocus={() => {
-          setCurrentlyFocusedItem(selectableIndex)
-        }}
-        className={cn(`
-          group serlo-tooltip-trigger flex cursor-auto
-          flex-col items-center rounded-md border
-          border-2 border-transparent
-          pb-0
-        `)}
-      >
-        <EditorTooltip text={description} />
-
-        <div className="group-focus:shadow-suggestions hover:shadow-suggestions w-full cursor-pointer rounded-md p-2">
-          <div
-            className={cn(
-              'flex w-full items-center justify-center rounded-md '
-            )}
-          >
-            {icon ?? <IconFallback className="h-full w-full" />}
-          </div>
-          <h5 className="mt-2 text-center text-sm font-bold">{title}</h5>
-        </div>
-      </button>
-    )
-  }
-
   function insertSelectedPlugin(pluginType: EditorPluginType | string) {
     editor.deleteBackward('line')
 
-    // If the text plugin is selected from the suggestions list, clear the editor
     if (pluginType === EditorPluginType.Text) {
-      // In browsers other than chrome, the cursor is sometimes in front of the `/`
       editor.deleteForward('line')
       return
     }
 
     setTimeout(() => {
-      // Split the text-plugin and insert selected new plugin
       insertPlugin({ pluginType, editor, id, dispatch })
 
-      // If there is an empty line on the initial selection point, remove it
       if (selection && editor.children[selection.anchor.path[0]]) {
         editor.deleteBackward('block')
       }
     })
   }
 
-  const renderedBasicPlugins = basicOptions.map((basicItem, index) => {
-    return renderPluginItem(basicItem, index, 'basic')
-  })
-
-  const renderedInteractivePlugins = interactiveOptions.map((item, index) => {
-    return renderPluginItem(item, index, 'interactive')
-  })
-
   return {
     showSuggestions,
     setShowSuggestions,
     suggestionsProps: {
       options,
-      suggestionsRef,
-      renderedBasicPlugins,
-      renderedInteractivePlugins,
+      itemRefs,
       searchString,
       setSearchString,
+      currentlyFocusedItem,
+      setCurrentlyFocusedItem,
+      insertSelectedPlugin,
     },
   }
 }
@@ -336,7 +263,6 @@ function filterOptions(option: SuggestionOption[], text: string) {
 
   const filterResults = new Set<SuggestionOption>()
 
-  // title or pluginType start with search string
   option.forEach((entry) => {
     if (
       entry.title.toLowerCase().startsWith(search) ||
@@ -346,7 +272,6 @@ function filterOptions(option: SuggestionOption[], text: string) {
     }
   })
 
-  // title includes search string
   option.forEach((entry) => {
     if (entry.title.toLowerCase().includes(search)) {
       filterResults.add(entry)
