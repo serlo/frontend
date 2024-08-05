@@ -200,6 +200,7 @@ export const useSuggestions = ({
 
     if (pluginType === EditorPluginType.Text) {
       editor.deleteForward('line')
+      setShowSuggestions(false)
       return
     }
 
