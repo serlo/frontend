@@ -11,7 +11,18 @@ import { useState } from 'react'
 import type { ImageProps } from '..'
 import { cn } from '@/helper/cn'
 
-export function UploadButton({ config, state }: ImageProps) {
+interface UploadButtonProps {
+  config: ImageProps['config']
+  state: ImageProps['state']
+  onFocus?: () => void
+  onBlur?: () => void
+}
+export function UploadButton({
+  config,
+  state,
+  onFocus,
+  onBlur,
+}: UploadButtonProps) {
   const { src } = state
   const imageStrings = useEditorStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
@@ -23,10 +34,12 @@ export function UploadButton({ config, state }: ImageProps) {
         onFocus={(e) => {
           e.stopPropagation()
           setIsLabelFocused(true)
+          onFocus?.()
         }}
         onBlur={(e) => {
           e.stopPropagation()
           setIsLabelFocused(false)
+          onBlur?.()
         }}
         className={cn(
           'mb-4 flex w-full py-2',
