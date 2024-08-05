@@ -36,6 +36,13 @@ export const Suggestions = ({
     }, 0)
   }, [])
 
+  const getTooltipPosition = (index: number) => {
+    if (index % 5 === 0) {
+      return 'right'
+    } else if (index % 5 === 4) {
+      return 'left'
+    }
+  }
   return (
     <div className="mt-2">
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
@@ -71,6 +78,7 @@ export const Suggestions = ({
               setCurrentlyFocusedItem(-1)
               itemRefs.current[index]?.blur()
             }}
+            tooltipPosition={getTooltipPosition(index)}
           />
         ))}
       </div>
@@ -97,6 +105,7 @@ export const Suggestions = ({
               setCurrentlyFocusedItem(-1)
               itemRefs.current[index + basicOptions.length]?.blur()
             }}
+            tooltipPosition={getTooltipPosition(index)}
           />
         ))}
       </div>

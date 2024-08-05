@@ -13,6 +13,7 @@ interface SuggestionItemProps {
   onMouseEnter: () => void
   onMouseLeave: () => void
   onBlur: () => void
+  tooltipPosition?: 'right' | 'left'
 }
 
 export const SuggestionItem = forwardRef<
@@ -20,7 +21,16 @@ export const SuggestionItem = forwardRef<
   SuggestionItemProps
 >(
   (
-    { option, selected, onClick, onFocus, onMouseEnter, onMouseLeave, onBlur },
+    {
+      option,
+      selected,
+      onClick,
+      onFocus,
+      onMouseEnter,
+      onMouseLeave,
+      onBlur,
+      tooltipPosition,
+    },
     ref
   ) => {
     const { pluginType, title, icon, description } = option
@@ -39,7 +49,7 @@ export const SuggestionItem = forwardRef<
           'group serlo-tooltip-trigger flex cursor-auto flex-col items-center rounded-md border border-2 border-transparent pb-0'
         )}
       >
-        <EditorTooltip text={description} />
+        <EditorTooltip position={tooltipPosition} text={description} />
         <span
           className={cn(
             'w-full cursor-pointer rounded-md p-2 hover:shadow-suggestions ',
