@@ -174,7 +174,7 @@ export function TextEditor(props: TextEditorProps) {
       {focused ? <LinkControls /> : null}
 
       <ModalWithCloseButton
-        className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll pt-0"
+        className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
         isOpen={showSuggestions}
         setIsOpen={setShowSuggestions}
         title=""

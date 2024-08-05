@@ -65,6 +65,12 @@ export const Suggestions = ({
               insertSelectedPlugin(item.pluginType)
             }}
             onFocus={() => setCurrentlyFocusedItem(index)}
+            onBlur={() => setCurrentlyFocusedItem(-1)}
+            onMouseEnter={() => setCurrentlyFocusedItem(index)}
+            onMouseLeave={() => {
+              setCurrentlyFocusedItem(-1)
+              itemRefs.current[index]?.blur()
+            }}
           />
         ))}
       </div>
@@ -82,7 +88,15 @@ export const Suggestions = ({
               event.preventDefault()
               insertSelectedPlugin(item.pluginType)
             }}
+            onBlur={() => setCurrentlyFocusedItem(-1)}
             onFocus={() => setCurrentlyFocusedItem(index + basicOptions.length)}
+            onMouseEnter={() =>
+              setCurrentlyFocusedItem(index + basicOptions.length)
+            }
+            onMouseLeave={() => {
+              setCurrentlyFocusedItem(-1)
+              itemRefs.current[index + basicOptions.length]?.blur()
+            }}
           />
         ))}
       </div>
