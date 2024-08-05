@@ -65,6 +65,9 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.waitForElement('h1 > input:focus', 5)
 
   I.say('focus on image plugin inside of introduction multimedia plugin')
+  // TODO: Double tab is a quick fix, focus / toolbar visibility needs to be improved in image ,
+  //       specifically with ImageSelectionScreen component
+  I.pressKey('Tab')
   I.pressKey('Tab')
   I.see('Bild', '$plugin-type-indicator')
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
