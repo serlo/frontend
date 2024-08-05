@@ -82,7 +82,7 @@ export const Suggestions = ({
           />
         ))}
       </div>
-      <h1 className="pl-8 pt-4 text-lg font-bold">
+      <h1 className="pl-6 pt-4 text-lg font-bold">
         {editorStrings.plugins.interactivePluginsTitle}
       </h1>
       <div className="grid grid-cols-5 gap-4 p-4">
