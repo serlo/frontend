@@ -210,6 +210,7 @@ export const useSuggestions = ({
         editor.deleteBackward('block')
       }
     })
+    setShowSuggestions(false)
   }
 
   return {
