@@ -150,7 +150,7 @@ export function TextEditor(props: TextEditorProps) {
               e.preventDefault()
             }
           }
-          handleEditableKeyDown
+          handleEditableKeyDown(e)
         }}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
