@@ -2,6 +2,7 @@ import { EditorInput } from '@editor/editor-ui/editor-input'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useEffect, useRef } from 'react'
+import { Key } from 'ts-key-enum'
 
 import { SuggestionItem } from './suggestion-item'
 import { SuggestionOption } from '../hooks/use-suggestions'
@@ -94,6 +95,12 @@ export function Suggestions(props: SuggestionsProps) {
           placeholder="Search..."
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === Key.ArrowDown) {
+              setCurrentlyFocusedItem(0)
+              e.preventDefault()
+            }
+          }}
           inputWidth="50%"
           width="60%"
           className="ml-8 block"
