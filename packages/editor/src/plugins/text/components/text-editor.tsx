@@ -64,6 +64,7 @@ export function TextEditor(props: TextEditorProps) {
     focused,
     placeholder: config.placeholder,
     id,
+    setShowSuggestions,
   })
   const handleEditorChange = useEditorChange({
     editor,

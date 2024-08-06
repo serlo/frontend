@@ -13,6 +13,7 @@ interface UseSlateRenderHandlersArgs {
   id: string
   editor: SlateEditor
   placeholder?: string
+  setShowSuggestions?: (show: boolean) => void
 }
 
 export const useSlateRenderHandlers = ({
@@ -20,6 +21,7 @@ export const useSlateRenderHandlers = ({
   id,
   editor,
   placeholder,
+  setShowSuggestions,
 }: UseSlateRenderHandlersArgs) => {
   const mayManipulateSiblings = useMemo(
     () => selectMayManipulateSiblings(store.getState(), id),
@@ -108,7 +110,7 @@ export const useSlateRenderHandlers = ({
           mayManipulateSiblings
             ? () => {
                 ReactEditor.focus(editor)
-                editor.insertText('/')
+                setShowSuggestions?.(true)
               }
             : undefined
         }
