@@ -14,6 +14,7 @@ import {
 import { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor } from 'slate'
+import { ReactEditor } from 'slate-react'
 import { Key } from 'ts-key-enum'
 
 import { insertPlugin } from '../utils/insert-plugin'
@@ -23,7 +24,6 @@ interface useSuggestionsArgs {
   id: string
   focused: boolean
   isInlineChildEditor?: boolean
-  refocus?: () => void
 }
 
 export interface SuggestionOption {
@@ -53,7 +53,6 @@ export const useSuggestions = ({
   id,
   focused,
   isInlineChildEditor,
-  refocus,
 }: useSuggestionsArgs) => {
   const dispatch = useAppDispatch()
   const pluginsStrings = useEditorStrings().plugins
@@ -232,7 +231,7 @@ export const useSuggestions = ({
     if (pluginType === EditorPluginType.Text) {
       editor.deleteForward('line')
       setShowSuggestions(false)
-      refocus?.()
+      refocus(editor)
       return
     }
 
@@ -316,3 +315,6 @@ function filterOptions(option: SuggestionOption[], text: string) {
 
   return [...filterResults]
 }
+
+const refocus = (editor: SlateEditor) =>
+  setTimeout(() => ReactEditor.focus(editor), 10)
