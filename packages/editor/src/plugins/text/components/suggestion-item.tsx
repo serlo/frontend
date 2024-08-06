@@ -8,7 +8,11 @@ import { cn } from '@/helper/cn'
 interface SuggestionItemProps {
   option: SuggestionOption
   selected: boolean
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onSelectPlugin: (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>
+  ) => void
   onFocus: () => void
   onMouseEnter: () => void
   onMouseLeave: () => void
@@ -23,7 +27,7 @@ export const SuggestionItem = forwardRef<
   const {
     option,
     selected,
-    onClick,
+    onSelectPlugin,
     onFocus,
     onMouseEnter,
     onMouseLeave,
@@ -38,7 +42,13 @@ export const SuggestionItem = forwardRef<
       data-qa={`plugin-suggestion-${pluginType}`}
       data-active={selected}
       ref={ref}
-      onClick={onClick}
+      onClick={onSelectPlugin}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          onSelectPlugin(e)
+          e.preventDefault()
+        }
+      }}
       onFocus={onFocus}
       onBlur={onBlur}
       onMouseEnter={onMouseEnter}

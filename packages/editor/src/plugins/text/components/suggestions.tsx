@@ -44,7 +44,7 @@ export function Suggestions(props: SuggestionsProps) {
     return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
   }
 
-  const handleItemClick = (
+  const handlePluginSelection = (
     event: React.MouseEvent<HTMLButtonElement>,
     pluginType: EditorPluginType | string
   ) => {
@@ -72,7 +72,7 @@ export function Suggestions(props: SuggestionsProps) {
           option={item}
           selected={currentIndex === currentlyFocusedItem}
           ref={(el) => (itemRefs.current[currentIndex] = el)}
-          onClick={(e) => handleItemClick(e, item.pluginType)}
+          onSelectPlugin={(e) => handlePluginSelection(e, item.pluginType)}
           onFocus={() => handleItemFocus(currentIndex)}
           onBlur={handleItemBlur}
           onMouseEnter={() => handleItemFocus(currentIndex)}
