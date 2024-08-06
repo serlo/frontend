@@ -893,7 +893,7 @@ export const loggedInData = {
           enterATitle: 'Enter a title',
         },
         solution: {
-          title: 'Solution',
+          title: 'Non interactive exercise',
           description:
             'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.',
         },
