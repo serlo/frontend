@@ -206,20 +206,20 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.InputExercise,
-      visibleInSuggestions: true,
       plugin: createInputExercisePlugin(),
+      visibleInSuggestions: true,
       icon: <IconTextArea />,
     },
     {
       type: EditorPluginType.ScMcExercise,
-      visibleInSuggestions: true,
       plugin: createScMcExercisePlugin(),
+      visibleInSuggestions: true,
       icon: <IconScMcExercise />,
     },
     {
       type: EditorPluginType.BlanksExercise,
-      visibleInSuggestions: true,
       plugin: blanksExercise,
+      visibleInSuggestions: true,
       icon: <IconFillGaps />,
     },
 
