@@ -13,6 +13,7 @@ import { cn } from '@/helper/cn'
 
 export interface ModalWithCloseButtonProps {
   title?: string
+  altText?: string
   isOpen: boolean
   setIsOpen: (open: boolean) => void
   children: ReactNode
@@ -25,6 +26,7 @@ export interface ModalWithCloseButtonProps {
 export function ModalWithCloseButton({
   isOpen,
   title,
+  altText,
   setIsOpen,
   children,
   className,
@@ -100,7 +102,7 @@ export function ModalWithCloseButton({
             ) : (
               <VisuallyHidden.Root asChild>
                 <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>
-                  {/* TODO: Accessibility text to be added here for screenreaders */}
+                  {altText}
                 </Dialog.Title>
               </VisuallyHidden.Root>
             )}
