@@ -4,12 +4,17 @@ Feature('Serlo Editor')
 
 Before(popupWarningFix)
 
+function addNewTextPlugin(I) {
+  I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
+}
+
 Scenario('Basic text interactions', async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/74888')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Enter')
-
+  addNewTextPlugin(I)
   const testString = 'TESTTESTTEST'
   I.type(testString)
   I.see(testString)
@@ -21,8 +26,7 @@ Scenario('Basic text interactions', async ({ I }) => {
 
 Scenario('Add new plugins', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Enter')
+  addNewTextPlugin(I)
 
   // Only one text plugin visible
   I.see('Schreib etwas oder füge')
@@ -32,25 +36,21 @@ Scenario('Add new plugins', async ({ I }) => {
   I.click('$entity-title-input')
   I.click('$add-new-plugin-row-button')
 
-  for (let i = 0; i < 3; i++) {
-    I.pressKey('ArrowDown')
-  }
   // Spoiler
   I.say('I insert a spoiler plugin')
-  I.see('Spoiler')
+  I.type('Spoiler')
+  I.pressKey('Tab')
   I.pressKey('Enter')
 
   I.see('Titel eingeben')
 
+  // Box
+  I.say('I insert a box plugin')
   I.pressKey('ArrowDown')
   I.pressKey('/')
-  for (let i = 0; i < 4; i++) {
-    I.pressKey('ArrowDown')
-  }
-  // Box
+  I.type('Box')
+  I.pressKey('Tab')
   I.pressKey('Enter')
-  I.say('I insert a box plugin')
-
   I.see('Art der Box')
   I.click('Merke')
 
@@ -60,32 +60,31 @@ Scenario('Add new plugins', async ({ I }) => {
 Scenario('Close plugin selection modal', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
   I.click('Füge ein Element hinzu')
-  const textPluginDescription =
-    'Schreibe Text und Matheformeln, und formatiere sie.'
-  I.see(textPluginDescription)
+  const basicPluginsHeader = 'Basic Plugins'
+  I.see(basicPluginsHeader)
 
   I.pressKey('Escape')
   // Modal should be closed
-  I.dontSee(textPluginDescription)
+  I.dontSee(basicPluginsHeader)
 
   // Open modal again
-  I.type('/')
-  I.see(textPluginDescription)
+  I.click('Füge ein Element hinzu')
 
-  // focus something different by clicking outside of the modal, in this
-  // instance into the quickbar
-  I.click('$quickbar-input')
+  I.see(basicPluginsHeader)
+
+  I.click('$modal-close-button', undefined, { force: true })
   // Modal should now be closed
-  I.dontSee(textPluginDescription)
+  I.dontSee(basicPluginsHeader)
 })
 
-Scenario('Add plugin via slash command', async ({ I }) => {
+Scenario('Add table plugin', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   // ensure there is no table yet
   I.dontSeeElement('.serlo-table')
   I.click('$add-new-plugin-row-button')
   I.type('Tabelle')
+  I.pressKey('Tab')
   I.pressKey('Enter')
 
   I.seeElement('.serlo-table')
@@ -107,7 +106,9 @@ Scenario(
 
     I.say('Add an Image plugin in place of the empty line using suggestions')
     I.pressKey('ArrowUp')
-    I.type('/Bild')
+    I.type('/')
+    I.type('Bild')
+    I.pressKey('Tab')
     I.pressKey('Enter')
 
     I.see('First paragraph')
@@ -185,12 +186,11 @@ Scenario(
     // beginning of each page already contains one. But, we do need to focus it,
     // in order to make the src input visible
     I.click('$plugin-image-editor')
-    I.click('$modal-close-button') // patch to close the pixabay modal
+    // I.click('$modal-close-button') // patch to close the pixabay modal
 
-    const imagePluginUrlInput =
-      'input[placeholder="https://example.com/image.png"]'
+    const imagePluginUrlSelector = '$plugin-image-src'
 
-    I.click(imagePluginUrlInput)
+    I.click(imagePluginUrlSelector)
 
     const firstWord = 'Some '
     I.type(firstWord)
@@ -199,16 +199,16 @@ Scenario(
     const secondWord = 'Text'
     I.type(secondWord)
 
-    I.seeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
+    I.seeInField(imagePluginUrlSelector, `${firstWord}${secondWord}`)
 
     I.pressKey(['CommandOrControl', 'Z'])
-    I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
-    I.dontSeeInField(imagePluginUrlInput, `${secondWord}`)
-    I.seeInField(imagePluginUrlInput, firstWord)
+    I.dontSeeInField(imagePluginUrlSelector, `${firstWord}${secondWord}`)
+    I.dontSeeInField(imagePluginUrlSelector, `${secondWord}`)
+    I.seeInField(imagePluginUrlSelector, firstWord)
 
     I.pressKey(['CommandOrControl', 'Z'])
-    I.dontSeeInField(imagePluginUrlInput, `${firstWord}${secondWord}`)
-    I.dontSeeInField(imagePluginUrlInput, firstWord)
+    I.dontSeeInField(imagePluginUrlSelector, `${firstWord}${secondWord}`)
+    I.dontSeeInField(imagePluginUrlSelector, firstWord)
   }
 )
 
