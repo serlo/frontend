@@ -38,7 +38,7 @@ export function TextEditor(props: TextEditorProps) {
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
 
-  const { editor, editorKey } = useMemo(() => {
+  const { editor: slateEditor, editorKey } = useMemo(() => {
     return {
       editor: createTextEditor(
         withReact(
@@ -54,39 +54,39 @@ export function TextEditor(props: TextEditorProps) {
   }, [createTextEditor])
   const { showSuggestions, setShowSuggestions, suggestionsProps } =
     useSuggestions({
-      editor,
+      editor: slateEditor,
       id,
       focused,
       isInlineChildEditor: config.isInlineChildEditor,
     })
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
-    editor,
+    editor: slateEditor,
     focused,
     placeholder: config.placeholder,
     id,
     setShowSuggestions,
   })
   const handleEditorChange = useEditorChange({
-    editor,
+    editor: slateEditor,
     state,
     id,
     focused,
   })
   const handleEditableKeyDown = useEditableKeydownHandler({
     config,
-    editor,
+    editor: slateEditor,
     id,
     showSuggestions,
     setShowSuggestions,
     state,
   })
   const handleEditablePaste = useEditablePasteHandler({
-    editor,
+    editor: slateEditor,
     id,
   })
   const dynamicPlaceholder = useDynamicPlacehoder({
     id,
-    editor,
+    editor: slateEditor,
     focused,
     containerRef,
     staticPlaceholder: config.placeholder,
@@ -96,39 +96,39 @@ export function TextEditor(props: TextEditorProps) {
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
     // Get the current text value of the editor
-    const text = Node.string(editor)
+    const text = Node.string(slateEditor)
     // If the editor is not focused, remove the suggestions search
     // and exit the useEffect hook
     if (focused === false) {
       if (text.startsWith('/')) {
-        editor.deleteBackward('line')
+        slateEditor.deleteBackward('line')
       }
       return
     }
 
     // If the first child of the editor is not a paragraph, do nothing
     const isFirstChildParagraph =
-      'type' in editor.children[0] && editor.children[0].type === 'p'
+      'type' in slateEditor.children[0] && slateEditor.children[0].type === 'p'
     if (!isFirstChildParagraph) return
 
     // If the editor is empty, set the cursor at the start
     if (text === '') {
-      Transforms.select(editor, { offset: 0, path: [0, 0] })
-      instanceStateStore[id].selection = editor.selection
+      Transforms.select(slateEditor, { offset: 0, path: [0, 0] })
+      instanceStateStore[id].selection = slateEditor.selection
     }
 
     // If the editor only has a forward slash, set the cursor
     // after it, so that the user can type to filter suggestions
     if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-      instanceStateStore[id].selection = editor.selection
-      ReactEditor.focus(editor)
+      Transforms.select(slateEditor, { offset: 1, path: [0, 0] })
+      instanceStateStore[id].selection = slateEditor.selection
+      ReactEditor.focus(slateEditor)
     }
-  }, [editor, focused, id])
+  }, [slateEditor, focused, id])
 
   return (
     <Slate
-      editor={editor}
+      editor={slateEditor}
       initialValue={instanceStateStore[id].value}
       onChange={handleEditorChange}
       key={editorKey}
