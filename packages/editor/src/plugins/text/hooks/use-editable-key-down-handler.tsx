@@ -22,13 +22,15 @@ interface UseEditableKeydownHandlerArgs {
   editor: SlateEditor
   id: string
   showSuggestions: boolean
+  setShowSuggestions: (show: boolean) => void
   state: TextEditorProps['state']
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { showSuggestions, config, editor, id, state } = args
+  const { showSuggestions, setShowSuggestions, config, editor, id, state } =
+    args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -46,6 +48,15 @@ export const useEditableKeydownHandler = (
       if (selection && Range.isCollapsed(selection) && !showSuggestions) {
         const isListActive = isSelectionWithinList(editor)
 
+        if (event.key === '/') {
+          const { path } = selection.focus
+          const node = Node.get(editor, path)
+
+          if (Object.hasOwn(node, 'text') && node.text.length === 0) {
+            setShowSuggestions(true)
+            event.preventDefault()
+          }
+        }
         // Special handler for links. If you move right and end up at the right edge of a link,
         // this handler unselects the link, so you can write normal text behind it.
         if (isHotkey('right', event)) {
@@ -163,6 +174,7 @@ export const useEditableKeydownHandler = (
       editor,
       id,
       showSuggestions,
+      setShowSuggestions,
       state,
       textFormattingOptions,
     ]

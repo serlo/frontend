@@ -76,6 +76,7 @@ export function TextEditor(props: TextEditorProps) {
     editor,
     id,
     showSuggestions,
+    setShowSuggestions,
     state,
   })
   const handleEditablePaste = useEditablePasteHandler({
@@ -142,18 +143,7 @@ export function TextEditor(props: TextEditorProps) {
 
       <Editable
         readOnly={false}
-        onKeyDown={(e) => {
-          if (e.key === '/') {
-            const text = Node.string(editor)
-            // "Show suggestions when the user types '/' and the editor is empty"
-            //todo: fix this for "/" entered on new line
-            if (text.length === 0) {
-              setShowSuggestions(true)
-              e.preventDefault()
-            }
-          }
-          handleEditableKeyDown(e)
-        }}
+        onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
