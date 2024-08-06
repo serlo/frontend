@@ -130,7 +130,7 @@ export const useSuggestions = ({
     const totalItems = basicOptions.length + interactiveOptions.length
     const basicPluginsCount = basicOptions.length
     const interactivePluginsStartIndex = basicPluginsCount
-    const columns = 5 // assuming 5 columns in the grid
+    const columns = 5
     const fullRows = Math.floor(basicPluginsCount / columns)
     const lastRowItemCount = basicPluginsCount % columns
 

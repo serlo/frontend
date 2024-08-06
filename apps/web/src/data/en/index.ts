@@ -993,6 +993,10 @@ export const loggedInData = {
           description:
             'Create single or multiple choice tasks and adapt them with individual feedback if necessary.',
         },
+        h5p: {
+          title: 'H5P',
+          description: 'Import an interactive task from H5P via URL.',
+        },
         blanksExercise: {
           title: 'Fill In The Blanks',
           description:

@@ -11,7 +11,7 @@ export function EditorTooltip({
   text?: string
   hotkeys?: string
   className?: string
-  position?: 'top' | 'right' | 'left' | 'down'
+  position?: 'top' | 'right' | 'left' | 'bottom'
 }) {
   const { strings } = useInstanceData()
   if (!text && !hotkeys) return null
@@ -25,7 +25,7 @@ export function EditorTooltip({
     top: 'bottom-full mb-2.5',
     right: 'left-full top-1/3 transform -translate-y-1/3 translate-x-2.5',
     left: 'right-full top-1/3 transform -translate-y-1/3 -translate-x-2.5',
-    down: 'top-full mt-2.5',
+    bottom: 'top-full mt-2.5',
   }
 
   return (
