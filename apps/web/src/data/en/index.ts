@@ -892,6 +892,11 @@ export const loggedInData = {
             'Insert a fold-out box, e.g. for additional content or help.',
           enterATitle: 'Enter a title',
         },
+        solution: {
+          title: 'Solution',
+          description:
+            'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.',
+        },
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
