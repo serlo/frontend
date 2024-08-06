@@ -147,6 +147,7 @@ export function TextEditor(props: TextEditorProps) {
           if (e.key === '/') {
             const text = Node.string(editor)
             // "Show suggestions when the user types '/' and the editor is empty"
+            //todo: fix this for "/" entered on new line
             if (text.length === 0) {
               setShowSuggestions(true)
               e.preventDefault()
