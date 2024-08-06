@@ -53,6 +53,7 @@ export interface RowsPluginConfig {
   allowedPlugins?: (EditorPluginType | string)[]
   parentType: string
   textPluginPlaceholder?: string
+  isInlineChildEditor?: boolean
 }
 
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>

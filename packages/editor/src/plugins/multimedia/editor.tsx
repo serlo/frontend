@@ -99,7 +99,11 @@ export function MultimediaEditor(props: MultimediaProps) {
         <AreImagesDisabledInTableContext.Provider value>
           <MultimediaRenderer
             media={<>{multimedia.render()}</>}
-            explanation={<>{explanation.render()}</>}
+            explanation={
+              <>
+                {explanation.render({ config: { isInlineChildEditor: true } })}
+              </>
+            }
             mediaWidth={width.value}
           />
         </AreImagesDisabledInTableContext.Provider>

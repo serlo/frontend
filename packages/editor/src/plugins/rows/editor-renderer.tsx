@@ -219,6 +219,7 @@ export function EditorRowRenderer({
           {row.render({
             config: {
               placeholder: config.textPluginPlaceholder,
+              isInlineChildEditor: config.isInlineChildEditor,
             },
           })}
         </div>
