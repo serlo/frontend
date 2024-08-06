@@ -45,7 +45,9 @@ export function Suggestions(props: SuggestionsProps) {
   }
 
   const handlePluginSelection = (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
     pluginType: EditorPluginType | string
   ) => {
     event.preventDefault()
@@ -72,7 +74,7 @@ export function Suggestions(props: SuggestionsProps) {
           option={item}
           selected={currentIndex === currentlyFocusedItem}
           ref={(el) => (itemRefs.current[currentIndex] = el)}
-          onSelectPlugin={(e) => handlePluginSelection(e, item.pluginType)}
+          onSelectPlugin={handlePluginSelection}
           onFocus={() => handleItemFocus(currentIndex)}
           onBlur={handleItemBlur}
           onMouseEnter={() => handleItemFocus(currentIndex)}

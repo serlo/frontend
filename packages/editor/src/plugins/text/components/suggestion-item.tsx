@@ -11,7 +11,8 @@ interface SuggestionItemProps {
   onSelectPlugin: (
     event:
       | React.MouseEvent<HTMLButtonElement>
-      | React.KeyboardEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLButtonElement>,
+    pluginType: string
   ) => void
   onFocus: () => void
   onMouseEnter: () => void
@@ -42,11 +43,10 @@ export const SuggestionItem = forwardRef<
       data-qa={`plugin-suggestion-${pluginType}`}
       data-active={selected}
       ref={ref}
-      onClick={onSelectPlugin}
+      onClick={(e) => onSelectPlugin(e, pluginType)}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
-          onSelectPlugin(e)
-          e.preventDefault()
+          onSelectPlugin(e, pluginType)
         }
       }}
       onFocus={onFocus}
