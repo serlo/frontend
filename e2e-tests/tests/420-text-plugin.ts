@@ -219,6 +219,12 @@ Scenario('Redo using keyboard', async ({ I }) => {
   I.pressKey(['CommandOrControl', 'Z'])
   I.dontSee('Some text')
 
+  // ! For some reason, the first redo does not work. The second one does. If
+  // one puts a pause() here and runs the command only once through the
+  // interactive shell , it works just as fine as clicking the button.
+  // Therefore, I thought the Ctrl+Y was maybe happening too quickly after the
+  // Ctrl+Z, but even with I.wait(1) inbetween, two executions were needed.
+
   I.pressKey(['CommandOrControl', 'Y'])
   I.pressKey(['CommandOrControl', 'Y'])
   I.see('Some text')

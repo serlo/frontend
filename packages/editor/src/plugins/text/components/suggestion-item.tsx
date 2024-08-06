@@ -19,7 +19,7 @@ interface SuggestionItemProps {
 export const SuggestionItem = forwardRef<
   HTMLButtonElement,
   SuggestionItemProps
->((props, ref) => {
+>(function SuggestionItem(props, ref) {
   const {
     option,
     selected,
@@ -33,11 +33,6 @@ export const SuggestionItem = forwardRef<
 
   const { pluginType, title, icon, description } = option
 
-  const handleMouseEvents = {
-    onMouseEnter,
-    onMouseLeave,
-  }
-
   return (
     <button
       data-qa={`plugin-suggestion-${pluginType}`}
@@ -46,7 +41,8 @@ export const SuggestionItem = forwardRef<
       onClick={onClick}
       onFocus={onFocus}
       onBlur={onBlur}
-      {...handleMouseEvents}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={cn(
         'group serlo-tooltip-trigger flex cursor-auto flex-col items-center rounded-md border border-2 border-transparent pb-0'
       )}
@@ -66,5 +62,3 @@ export const SuggestionItem = forwardRef<
     </button>
   )
 })
-
-SuggestionItem.displayName = 'SuggestionItem'

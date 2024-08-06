@@ -11,6 +11,7 @@ export function EditorTooltip({
   text?: string
   hotkeys?: string
   className?: string
+  // TODO: See where position can be used in previous usage of tooltip
   position?: 'top' | 'right' | 'left' | 'bottom'
 }) {
   const { strings } = useInstanceData()

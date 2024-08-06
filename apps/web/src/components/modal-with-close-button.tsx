@@ -99,9 +99,9 @@ export function ModalWithCloseButton({
               </Dialog.Title>
             ) : (
               <VisuallyHidden.Root asChild>
-                <Dialog.Title
-                  className={cn('serlo-h2', extraTitleClassName)}
-                ></Dialog.Title>
+                <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>
+                  {/* TODO: Accessibility text to be added here for screenreaders */}
+                </Dialog.Title>
               </VisuallyHidden.Root>
             )}
 

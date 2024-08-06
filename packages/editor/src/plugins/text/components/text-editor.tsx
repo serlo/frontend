@@ -180,8 +180,8 @@ export function TextEditor(props: TextEditorProps) {
         className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
         isOpen={showSuggestions}
         setIsOpen={setShowSuggestions}
-        title=""
       >
+        {/* TODO: Remove added text plugin if user closes modal without selecting text plugin */}
         <Suggestions {...suggestionsProps} />
       </ModalWithCloseButton>
     </Slate>

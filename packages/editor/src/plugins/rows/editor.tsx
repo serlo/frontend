@@ -15,7 +15,7 @@ export function RowsEditor({ state, config, id }: RowsProps) {
   const showLargeAddButton =
     parentType === EditorPluginType.Article || isParentTemplatePlugin
 
-  function insertRowWithSuggestionsOpen(insertIndex: number) {
+  function insertTextPluginAndOpenSuggestions(insertIndex: number) {
     const textPluginWithSuggestions = {
       plugin: EditorPluginType.Text,
       state: [{ type: 'p', children: [{ text: '' }] }],
@@ -35,7 +35,7 @@ export function RowsEditor({ state, config, id }: RowsProps) {
               config={config}
               key={row.id}
               onAddButtonClick={() => {
-                insertRowWithSuggestionsOpen(index + 1)
+                insertTextPluginAndOpenSuggestions(index + 1)
               }}
               index={index}
               rows={state}
@@ -48,7 +48,7 @@ export function RowsEditor({ state, config, id }: RowsProps) {
       {showLargeAddButton ? (
         <AddRowButtonLarge
           onClick={() => {
-            insertRowWithSuggestionsOpen(state.length)
+            insertTextPluginAndOpenSuggestions(state.length)
           }}
         />
       ) : null}

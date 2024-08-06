@@ -676,9 +676,12 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: 'Are you sure you want to leave without saving?',
       noChangesWarning: 'Nothing changed so there is no need to save yet',
-      plugins: {
+      addPluginsModal: {
+        searchInputPlaceholder: 'Search...',
         basicPluginsTitle: 'Basic Plugins',
         interactivePluginsTitle: 'Interactive Plugins',
+      },
+      plugins: {
         anchor: {
           title: 'Anchor',
           description: 'Insert an anchor.',

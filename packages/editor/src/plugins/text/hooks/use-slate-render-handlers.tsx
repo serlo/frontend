@@ -116,7 +116,7 @@ export const useSlateRenderHandlers = ({
         }
       />
     ),
-    [editor, mayManipulateSiblings, placeholder]
+    [editor, mayManipulateSiblings, placeholder, setShowSuggestions]
   )
 
   return { handleRenderElement, handleRenderLeaf }

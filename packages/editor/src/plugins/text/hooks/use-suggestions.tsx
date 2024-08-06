@@ -38,7 +38,7 @@ const hotkeyConfig = {
   scopes: ['global'],
 }
 
-export const interactivePluginTypes = new Set([
+const interactivePluginTypes = new Set([
   EditorPluginType.TextAreaExercise,
   EditorPluginType.ScMcExercise,
   EditorPluginType.H5p,
@@ -56,8 +56,7 @@ export const useSuggestions = ({
   refocus,
 }: useSuggestionsArgs) => {
   const dispatch = useAppDispatch()
-  const editorStrings = useEditorStrings()
-  const { plugins: pluginsStrings } = editorStrings
+  const pluginsStrings = useEditorStrings().plugins
   const { selection } = editor
 
   const [searchString, setSearchString] = useState('')
@@ -72,6 +71,7 @@ export const useSuggestions = ({
       .map(({ type }) => type)
 
     const allowedByContext = allowedContextPlugins ?? allVisible
+    // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
     const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
 
     return typesOfAncestors
@@ -129,6 +129,7 @@ export const useSuggestions = ({
   }, [currentlyFocusedItem])
 
   const handleArrowKeyPress = (event: KeyboardEvent) => {
+    // itemRefs.current[currentlyFocusedItem]?.blur()
     const totalItems = basicOptions.length + interactiveOptions.length
     const basicPluginsCount = basicOptions.length
     const interactivePluginsStartIndex = basicPluginsCount
@@ -292,6 +293,7 @@ function createOption(
 }
 
 function filterOptions(option: SuggestionOption[], text: string) {
+  // TODO: remove logic relating to '/' character everywhere
   const search = text.replace('/', '').toLowerCase()
   if (!search.length) return option
 

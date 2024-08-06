@@ -72,7 +72,7 @@ export function Suggestions(props: SuggestionsProps) {
           option={item}
           selected={currentIndex === currentlyFocusedItem}
           ref={(el) => (itemRefs.current[currentIndex] = el)}
-          onClick={(event) => handleItemClick(event, item.pluginType)}
+          onClick={(e) => handleItemClick(e, item.pluginType)}
           onFocus={() => handleItemFocus(currentIndex)}
           onBlur={handleItemBlur}
           onMouseEnter={() => handleItemFocus(currentIndex)}
@@ -92,7 +92,7 @@ export function Suggestions(props: SuggestionsProps) {
         <EditorInput
           ref={searchInputRef}
           autoFocus
-          placeholder="Search..."
+          placeholder={editorStrings.addPluginsModal.searchInputPlaceholder}
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
           onKeyDown={(e) => {
@@ -107,13 +107,13 @@ export function Suggestions(props: SuggestionsProps) {
         />
       </div>
       <h1 className="pl-6 pt-4 text-lg font-bold">
-        {editorStrings.plugins.basicPluginsTitle}
+        {editorStrings.addPluginsModal.basicPluginsTitle}
       </h1>
       <div className="grid grid-cols-5 gap-4 p-4">
         {renderSuggestions(basicOptions)}
       </div>
       <h1 className="pl-6 pt-4 text-lg font-bold">
-        {editorStrings.plugins.interactivePluginsTitle}
+        {editorStrings.addPluginsModal.interactivePluginsTitle}
       </h1>
       <div className="grid grid-cols-5 gap-4 p-4">
         {renderSuggestions(interactiveOptions, basicOptions.length)}
