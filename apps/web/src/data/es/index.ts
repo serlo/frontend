@@ -818,7 +818,7 @@ export const loggedInData = {
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
-          placeholder: "Escribe algo o añade algún elemento:",
+          placeholder: 'Write something...',
           addButtonExplanation: "Haz clic para insertar un nuevo elemento",
           quote: "Cita",
           setColor: "Elegir color",

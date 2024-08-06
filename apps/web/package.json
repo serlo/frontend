@@ -55,7 +55,7 @@
     "autoprefixer": "^10.4.19",
     "canvas-confetti": "^1.9.2",
     "clsx": "^2.1.0",
-    "fast-xml-parser": "^4.3.6",
+    "fast-xml-parser": "^4.4.1",
     "fp-ts": "^2.16.5",
     "graphiql": "^3.2.3",
     "graphql": "^16.8.1",

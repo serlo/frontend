@@ -5303,7 +5303,7 @@ __metadata:
     eslint-plugin-import: ^2.29.1
     eslint-plugin-react: ^7.34.1
     eslint-plugin-react-hooks: ^4.6.0
-    fast-xml-parser: ^4.3.6
+    fast-xml-parser: ^4.4.1
     fp-ts: ^2.16.5
     graphiql: ^3.2.3
     graphql: ^16.8.1
@@ -5465,7 +5465,7 @@ __metadata:
     eslint-plugin-import: ^2.29.1
     eslint-plugin-react: ^7.34.1
     eslint-plugin-react-hooks: ^4.6.0
-    fast-xml-parser: ^4.3.6
+    fast-xml-parser: ^4.4.1
     fp-ts: ^2.16.5
     graphiql: ^3.2.3
     graphql: ^16.8.1
@@ -10177,14 +10177,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.3.6":
-  version: 4.3.6
-  resolution: "fast-xml-parser@npm:4.3.6"
+"fast-xml-parser@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "fast-xml-parser@npm:4.4.1"
   dependencies:
     strnum: ^1.0.5
   bin:
     fxparser: src/cli/cli.js
-  checksum: 12795c55f4564699c3cee13f7e892423244ac1125775e9b85bf948a1d4b65352da8f688d334bad530972288bb7ee0cf3d2605088d475123fce40d95003f045fa
+  checksum: f440c01cd141b98789ae777503bcb6727393296094cc82924ae9f88a5b971baa4eec7e65306c7e07746534caa661fc83694ff437d9012dc84dee39dfbfaab947
   languageName: node
   linkType: hard
 

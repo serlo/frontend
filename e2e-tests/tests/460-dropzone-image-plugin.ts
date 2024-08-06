@@ -9,7 +9,6 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
 
   I.say('Add drag drop plugin')
 
-  I.click('Füge ein Element hinzu')
   I.click('$add-exercise-dropzoneImage')
 
   I.say('Select background type and shape')
@@ -91,7 +90,6 @@ Scenario(
 
     I.say('Add drag drop plugin')
 
-    I.click('Füge ein Element hinzu')
     I.click('$add-exercise-dropzoneImage')
 
     I.say('Select background type and shape')

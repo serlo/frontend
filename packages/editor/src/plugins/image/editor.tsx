@@ -31,17 +31,23 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  const src = state.src.value.toString()
+
+  const hasValidUrl = isImageUrl(src)
+
+  // focus related logic
   const isCaptionFocused = useAppSelector((storeState) => {
     return state.caption.defined
       ? selectIsFocused(storeState, state.caption.id)
       : false
   })
+  const [isAButtonFocused, setIsAButtonFocused] = useState(false)
 
-  const hasFocus = focused || isCaptionFocused
+  const hasFocus =
+    focused || isCaptionFocused || (isAButtonFocused && !hasValidUrl)
+
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
-
-  // eslint-disable-next-line @typescript-eslint/no-base-to-string
-  const src = state.src.value.toString()
 
   const urlInputRef = useRef<HTMLInputElement>(null)
 
@@ -68,8 +74,6 @@ export function ImageEditor(props: ImageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const hasValidUrl = isImageUrl(src)
-
   return (
     <>
       {hasFocus ? (
@@ -95,7 +99,11 @@ export function ImageEditor(props: ImageProps) {
         data-qa="plugin-image-editor"
       >
         {!hasValidUrl && (
-          <ImageSelectionScreen {...props} urlInputRef={urlInputRef} />
+          <ImageSelectionScreen
+            {...props}
+            setIsAButtonFocused={setIsAButtonFocused}
+            urlInputRef={urlInputRef}
+          />
         )}
         {hasValidUrl && (
           <ImageRenderer

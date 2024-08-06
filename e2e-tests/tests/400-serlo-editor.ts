@@ -29,7 +29,7 @@ Scenario('Add new plugins', async ({ I }) => {
   addNewTextPlugin(I)
 
   // Only one text plugin visible
-  I.see('Schreib etwas oder füge')
+  I.see('Schreibe etwas')
 
   // workaround: plugin toolbar is hiding add-new-plugin-row-button
   // unfocus to make it visible
