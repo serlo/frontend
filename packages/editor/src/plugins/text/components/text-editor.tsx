@@ -57,6 +57,7 @@ export function TextEditor(props: TextEditorProps) {
       id,
       focused,
       isInlineChildEditor: config.isInlineChildEditor,
+      refocus: () => setTimeout(() => ReactEditor.focus(editor), 10),
     })
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
     editor,

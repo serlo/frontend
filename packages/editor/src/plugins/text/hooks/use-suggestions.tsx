@@ -23,6 +23,7 @@ interface useSuggestionsArgs {
   id: string
   focused: boolean
   isInlineChildEditor?: boolean
+  refocus?: () => void
 }
 
 export interface SuggestionOption {
@@ -52,6 +53,7 @@ export const useSuggestions = ({
   id,
   focused,
   isInlineChildEditor,
+  refocus,
 }: useSuggestionsArgs) => {
   const dispatch = useAppDispatch()
   const editorStrings = useEditorStrings()
@@ -201,6 +203,7 @@ export const useSuggestions = ({
     if (pluginType === EditorPluginType.Text) {
       editor.deleteForward('line')
       setShowSuggestions(false)
+      refocus?.()
       return
     }
 

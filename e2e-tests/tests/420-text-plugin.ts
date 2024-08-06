@@ -28,7 +28,10 @@ Scenario('Add new line in plugin using Enter', async ({ I }) => {
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
   I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  I.type('Text')
+
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   const firstText = 'first'
@@ -63,6 +66,9 @@ Scenario('Remove empty Text plugin using Backspace key', async ({ I }) => {
 
   I.say('Add a second Text plugin')
   I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.say('Remove the forward slash')
@@ -83,10 +89,10 @@ Scenario('Remove empty Text plugin using Delete key', async ({ I }) => {
 
   I.say('Add a second Text plugin')
   I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
-
-  I.say('Remove the forward slash')
-  I.pressKey('Backspace')
 
   I.say('Nothing happens when Delete is pressed in the last plugin')
   I.pressKey('Delete')
@@ -105,6 +111,10 @@ Scenario('Merge with previous plugin using Backspace key', async ({ I }) => {
 
   I.say('Create another text plugin')
   I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
+
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
   I.pressKey('Backspace')
   I.type('- Second text plugin')
@@ -136,6 +146,9 @@ Scenario(
 
     I.say('Create a text plugin')
     I.click('$add-new-plugin-row-button')
+    I.type('Text')
+    I.pressKey('Tab')
+    I.pressKey('Enter')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
     I.pressKey('Backspace')
     I.type('- Plain text')
@@ -167,7 +180,9 @@ Scenario('Undo', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.click('$add-new-plugin-row-button')
-
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.pressKey('Backspace')
 
   I.type('Some text')
@@ -182,7 +197,9 @@ Scenario('Undo using keyboard', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.click('$add-new-plugin-row-button')
-
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.pressKey('Backspace')
 
   I.type('Some text')
@@ -197,7 +214,9 @@ Scenario('Redo', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.click('$add-new-plugin-row-button')
-
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.pressKey('Backspace')
 
   I.type('Some text')
@@ -217,7 +236,9 @@ Scenario('Redo using keyboard', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.click('$add-new-plugin-row-button')
-
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.pressKey('Backspace')
 
   I.type('Some text')
@@ -243,7 +264,9 @@ Scenario('Copy/cut/paste text', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.click('$add-new-plugin-row-button')
-
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
   I.pressKey('Backspace')
 
   I.type('TESTTESTTEST')
