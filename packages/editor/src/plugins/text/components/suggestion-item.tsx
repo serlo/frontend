@@ -38,6 +38,12 @@ export const SuggestionItem = forwardRef<
 
   const { pluginType, title, icon, description } = option
 
+  const tooltipClassName = tooltipPosition
+    ? tooltipPosition === 'right'
+      ? '-left-0'
+      : '-right-0'
+    : ''
+
   return (
     <button
       data-qa={`plugin-suggestion-${pluginType}`}
@@ -57,7 +63,7 @@ export const SuggestionItem = forwardRef<
         'group serlo-tooltip-trigger flex cursor-auto flex-col items-center rounded-md border border-2 border-transparent pb-0'
       )}
     >
-      <EditorTooltip position={tooltipPosition} text={description} />
+      <EditorTooltip className={tooltipClassName} text={description} />
       <span
         className={cn(
           'w-full cursor-pointer rounded-md p-2 hover:shadow-suggestions',

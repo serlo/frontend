@@ -6,13 +6,10 @@ export function EditorTooltip({
   text,
   hotkeys,
   className,
-  position = 'top',
 }: {
   text?: string
   hotkeys?: string
   className?: string
-  // TODO: See where position can be used in previous usage of tooltip
-  position?: 'top' | 'right' | 'left' | 'bottom'
 }) {
   const { strings } = useInstanceData()
   if (!text && !hotkeys) return null
@@ -22,22 +19,14 @@ export function EditorTooltip({
     isMac ? '⌘' : strings.keys.ctrl
   )
 
-  const positionClasses = {
-    top: 'bottom-full mb-2.5',
-    right: 'left-full top-1/3 transform -translate-y-1/3 translate-x-2.5',
-    left: 'right-full top-1/3 transform -translate-y-1/3 -translate-x-2.5',
-    bottom: 'top-full mt-2.5',
-  }
-
   return (
     <span
       className={cn(
-        'serlo-tooltip sr-only pointer-events-none block cursor-default opacity-0 transition-opacity',
-        positionClasses[position],
+        'serlo-tooltip sr-only pointer-events-none bottom-full block cursor-default opacity-0 transition-opacity',
         className
       )}
     >
-      <span className="block w-80 max-w-fit rounded bg-almost-black px-2 py-1.5 text-center text-sm font-bold text-white">
+      <span className="block w-80 max-w-fit rounded bg-almost-black px-2 py-1.5 text-center text-sm font-bold text-white ">
         {text}
         {hotkeys ? (
           <span className="block text-gray-300">{hotkeysTranslated}</span>
