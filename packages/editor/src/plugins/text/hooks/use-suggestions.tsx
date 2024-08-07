@@ -58,6 +58,12 @@ export const useSuggestions = ({
   const pluginsStrings = useEditorStrings().plugins
   const { selection } = editor
 
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  const focusSearchInput = () => {
+    searchInputRef.current?.focus()
+  }
+
   const [searchString, setSearchString] = useState('')
   const [currentlyFocusedItem, setCurrentlyFocusedItem] = useState(0)
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -143,6 +149,8 @@ export const useSuggestions = ({
     const isInLastFullRowOfBasic =
       currentlyFocusedItem >= (fullBasicRowsCount - 1) * columns &&
       currentlyFocusedItem < fullBasicRowsCount * columns
+
+    const isInFirstRowOfBasic = currentlyFocusedItem < columns
     const isInLastRowOfBasic =
       currentlyFocusedItem >= fullBasicRowsCount * columns &&
       currentlyFocusedItem < basicPluginsCount
@@ -193,7 +201,11 @@ export const useSuggestions = ({
             setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
           }
         } else if (isInBasicGrid) {
-          setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
+          if (isInFirstRowOfBasic) {
+            focusSearchInput()
+          } else {
+            setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
+          }
         }
         break
 
@@ -252,6 +264,8 @@ export const useSuggestions = ({
       basicOptions,
       interactiveOptions,
       itemRefs,
+      searchInputRef,
+      focusSearchInput,
       searchString,
       setSearchString,
       currentlyFocusedItem,

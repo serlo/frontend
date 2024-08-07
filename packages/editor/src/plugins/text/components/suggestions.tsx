@@ -1,7 +1,7 @@
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { SuggestionItem } from './suggestion-item'
@@ -10,6 +10,7 @@ import { SuggestionOption } from '../hooks/use-suggestions'
 interface SuggestionsProps {
   basicOptions: SuggestionOption[]
   interactiveOptions: SuggestionOption[]
+  searchInputRef: React.MutableRefObject<HTMLInputElement | null>
   searchString: string
   setSearchString: (searchString: string) => void
   itemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>
@@ -22,6 +23,7 @@ export function Suggestions(props: SuggestionsProps) {
   const {
     basicOptions,
     interactiveOptions,
+    searchInputRef,
     searchString,
     setSearchString,
     itemRefs,
@@ -31,14 +33,13 @@ export function Suggestions(props: SuggestionsProps) {
   } = props
 
   const editorStrings = useEditorStrings()
-  const searchInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const focusTimeout = setTimeout(() => {
       searchInputRef.current?.focus()
     }, 0)
     return () => clearTimeout(focusTimeout)
-  }, [])
+  }, [searchInputRef])
 
   const getTooltipPosition = (index: number): 'right' | 'left' | undefined => {
     return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
