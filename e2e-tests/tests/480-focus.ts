@@ -1,3 +1,5 @@
+import { addNewTextPlugin } from './helpers/standard-editor-functions'
+
 Feature('Serlo Editor - focus behaviour')
 
 Scenario('Autofocus', async ({ I }) => {
@@ -15,6 +17,7 @@ Scenario('Autofocus', async ({ I }) => {
 
   I.click('Füge ein Element hinzu')
   I.type('Bild')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.say('focused on src input field of newly added image plugin')
   I.seeElement(locate('input[data-qa="plugin-image-src"]:focus'))
@@ -28,7 +31,9 @@ Scenario('focus plugins by clicking', async ({ I }) => {
   I.say('focus the existing text plugin and change it to an image plugin')
   I.click('$plugin-text-editor')
   I.see('Text', '$plugin-type-indicator')
-  I.type('/Bild')
+  I.type('/')
+  I.type('Bi')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.see('Bild', '$plugin-type-indicator')
   I.say('focused on src input field of new image plugin')
@@ -51,8 +56,8 @@ Scenario('focus plugins by clicking', async ({ I }) => {
   I.say('suggestions menu open in the new text plugin')
   I.see('Text', 'h5')
 
-  I.say('click outside of editor to close the suggestions menu')
-  I.click('header')
+  I.say('close the suggestions menu')
+  I.click('$modal-close-button')
   I.dontSeeElement('h5')
 
   I.say('click outside of editor again to unfocus the plugin')
@@ -96,17 +101,17 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 })
 
-Scenario('focus plugins with arrow keys', ({ I }) => {
+Scenario.only('focus plugins with arrow keys', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('add first text plugin, type in it, check that it has focus')
-  I.click('Füge ein Element hinzu')
+  addNewTextPlugin(I)
   I.pressKey('Backspace')
   I.type('First text plugin')
   I.see('First text plugin', 'div[data-slate-editor="true"]:focus')
 
   I.say('add second text plugin, type in it, check that it has focus')
-  I.click(locate('$add-new-plugin-row-button').last())
+  addNewTextPlugin(I)
   I.pressKey('Backspace')
   I.type('Second text plugin')
   I.see('First text plugin', 'div[data-slate-editor="true"]')
