@@ -680,8 +680,8 @@ export const loggedInData = {
         altText:
           'A popup window to select a new element. Use the arrow keys to navigate through the list of available elements or exercises. Press Enter to select an element and Esc to close',
         searchInputPlaceholder: 'Search...',
-        basicPluginsTitle: 'Basic Plugins',
-        interactivePluginsTitle: 'Interactive Plugins',
+        basicPluginsTitle: 'Content Elements',
+        interactivePluginsTitle: 'Exercises',
       },
       plugins: {
         anchor: {
@@ -703,7 +703,7 @@ export const loggedInData = {
         dropzoneImage: {
           title: 'Image Dropzones',
           description:
-            'Create a fill-in-the-gap text or a table where the correct answers are inserted via drag and drop.',
+            'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
           backgroundImage: 'Background image',
           addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
@@ -773,13 +773,14 @@ export const loggedInData = {
         },
         geogebra: {
           title: 'GeoGebra Applet',
-          description: 'Embed GeoGebra Materials applets via URL or ID.',
+          description: 'Embed GeoGebra materials applets via URL or ID.',
           chooseApplet: 'Choose Applet',
           urlOrId: 'GeoGebra URL or ID',
         },
         highlight: {
           title: 'Source Code',
-          description: 'Highlight the syntax of source code.',
+          description:
+            'Write code and highlight it according to the programming language.',
           clickAndEnter: 'Click here and enter your source code…',
           enterHere: 'Enter your source code here',
           language: 'Language',
@@ -876,7 +877,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: 'Table',
-          description: 'Create pretty tables',
+          description: 'Create a customizable table.',
           mode: 'Mode',
           columnHeaders: 'Only column headers',
           rowHeaders: 'Only row headers',

@@ -52,6 +52,7 @@ export function Suggestions(props: SuggestionsProps) {
     pluginType: EditorPluginType | string
   ) => {
     event.preventDefault()
+    // insert exercise plugin should be handled differently
     insertSelectedPlugin(pluginType)
   }
 

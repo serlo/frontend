@@ -11,6 +11,7 @@ import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
 import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
+import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
@@ -197,6 +198,7 @@ export function createPlugins({
       type: EditorPluginType.Solution,
       plugin: solutionPlugin,
       visibleInSuggestions: true,
+      icon: <IconPencil />,
     },
     {
       type: EditorPluginType.H5p,
