@@ -66,8 +66,8 @@ export const SuggestionItem = forwardRef<
       <EditorTooltip className={tooltipClassName} text={description} />
       <span
         className={cn(
-          'w-full cursor-pointer rounded-md p-2 hover:shadow-suggestions',
-          selected && 'shadow-suggestions'
+          'w-full cursor-pointer rounded-md p-2 hover:shadow-xl',
+          selected && 'shadow-xl'
         )}
       >
         <span className="flex w-full items-center justify-center rounded-md">
