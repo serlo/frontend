@@ -101,7 +101,7 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 })
 
-Scenario.only('focus plugins with arrow keys', ({ I }) => {
+Scenario('focus plugins with arrow keys', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('add first text plugin, type in it, check that it has focus')

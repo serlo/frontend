@@ -9,6 +9,7 @@ async function addBoxPlugin(I: CodeceptJS.I, type: string) {
   I.click('$plugin-text-editor', '$plugin-article-content')
   I.type('/')
   I.type('Box')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.seeElement('$plugin-box-initial-type-chooser')
   I.click(`$plugin-box-initial-type-chooser-option-${type}`)
