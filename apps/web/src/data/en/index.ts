@@ -939,7 +939,6 @@ export const loggedInData = {
           removeBlank: 'Remove Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
-          noItemsFound: 'No items found',
           colorNames: {
             blue: 'Blue',
             green: 'Green',
