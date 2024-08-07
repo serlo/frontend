@@ -43,8 +43,7 @@ export function ImageSelectionScreen(
     setShowPixabayModal(false)
   }
 
-  const showPixabayButton =
-    !disableFileUpload && !!process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+  const showPixabayButton = !disableFileUpload
 
   return (
     <div
