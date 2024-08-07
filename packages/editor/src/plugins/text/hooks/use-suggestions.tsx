@@ -1,8 +1,5 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
-import {
-  editorPlugins,
-  PluginWithData,
-} from '@editor/plugin/helpers/editor-plugins'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@editor/plugins/rows'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import { selectAncestorPluginTypes, store, useAppDispatch } from '@editor/store'
@@ -284,7 +281,7 @@ function createOption(
   pluginType: EditorPluginType,
   allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
-  const pluginData: PluginWithData | undefined = editorPlugins
+  const pluginData = editorPlugins
     .getAllWithData()
     .find((plugin) => plugin.type === pluginType)
 
@@ -292,15 +289,17 @@ function createOption(
     return { pluginType, title: pluginType }
   }
 
-  const pluginStrings: PluginStrings | undefined = allPluginStrings[
+  const pluginStrings = allPluginStrings[
     pluginType as keyof typeof allPluginStrings
   ] as PluginStrings
 
-  const title: string =
+  const title =
     pluginStrings?.title ?? pluginData.plugin.defaultTitle ?? pluginType
-  const description: string | undefined =
+
+  const description =
     pluginStrings?.description ?? pluginData.plugin.defaultDescription
-  const icon: JSX.Element | undefined = pluginData.icon
+
+  const icon = pluginData.icon
 
   return { pluginType, title, description, icon }
 }
