@@ -4,7 +4,6 @@ import {
 } from '@editor/core/helpers/use-shadow-root'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import { useState, type ReactNode, useCallback, useRef, useEffect } from 'react'
 
 import { FaIcon } from './fa-icon'
@@ -95,17 +94,15 @@ export function ModalWithCloseButton({
             data-modal-state={isOpen ? 'open' : 'closed'}
             aria-describedby={undefined}
           >
-            {title ? (
-              <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>
-                {title}
-              </Dialog.Title>
-            ) : (
-              <VisuallyHidden.Root asChild>
-                <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>
-                  {altText}
-                </Dialog.Title>
-              </VisuallyHidden.Root>
-            )}
+            <Dialog.Title
+              className={cn(
+                'serlo-h2',
+                extraTitleClassName,
+                title ? '' : 'sr-only'
+              )}
+            >
+              {title || altText}
+            </Dialog.Title>
 
             {children}
             <Dialog.Close
