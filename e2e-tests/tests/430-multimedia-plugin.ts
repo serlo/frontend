@@ -12,6 +12,7 @@ export async function addMultimediaPlugin(I: CodeceptJS.I) {
   I.click(locate('$plugin-text-editor').inside('.plugin-rows'))
   I.type('/')
   I.type('Multimedia')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.seeNumberOfElements('$plugin-multimedia-wrapper', 2)
 }
