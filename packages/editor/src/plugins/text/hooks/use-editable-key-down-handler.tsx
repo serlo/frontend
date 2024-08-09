@@ -21,14 +21,13 @@ interface UseEditableKeydownHandlerArgs {
   config: ReturnType<typeof useTextConfig>
   editor: SlateEditor
   id: string
-  showSuggestions: boolean
   state: TextEditorProps['state']
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { showSuggestions, config, editor, id, state } = args
+  const { config, editor, id, state } = args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -43,7 +42,7 @@ export const useEditableKeydownHandler = (
       // Handle specific keyboard commands
       // (only if selection is collapsed and suggestions are not shown)
       const { selection } = editor
-      if (selection && Range.isCollapsed(selection) && !showSuggestions) {
+      if (selection && Range.isCollapsed(selection)) {
         const isListActive = isSelectionWithinList(editor)
 
         // Special handler for links. If you move right and end up at the right edge of a link,
@@ -157,14 +156,6 @@ export const useEditableKeydownHandler = (
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
       textFormattingOptions.handleListsShortcuts(event, editor)
     },
-    [
-      config.noLinebreaks,
-      dispatch,
-      editor,
-      id,
-      showSuggestions,
-      state,
-      textFormattingOptions,
-    ]
+    [config.noLinebreaks, dispatch, editor, id, state, textFormattingOptions]
   )
 }

@@ -1,5 +1,11 @@
+import { AddPluginModal } from '@editor/core/components/add-plugin-modal/add-plugin-modal'
+import {
+  PluginSelectionMenuContext,
+  insertNewPluginCallback,
+} from '@editor/core/contexts/plugins-context'
 import { selectParentPluginType, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useContext } from 'react'
 
 import type { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
@@ -15,18 +21,23 @@ export function RowsEditor({ state, config, id }: RowsProps) {
   const showLargeAddButton =
     parentType === EditorPluginType.Article || isParentTemplatePlugin
 
-  function insertRowWithSuggestionsOpen(insertIndex: number) {
-    const textPluginWithSuggestions = {
-      plugin: EditorPluginType.Text,
-      state: [{ type: 'p', children: [{ text: '/' }] }],
+  const insertPluginCallback: insertNewPluginCallback = (
+    pluginType: string,
+    insertIndex?: number
+  ) => {
+    const pluginToInsert = {
+      plugin: pluginType,
     }
     setTimeout(() => {
-      state.insert(insertIndex, textPluginWithSuggestions)
+      state.insert(insertIndex ?? state.length, pluginToInsert)
     })
   }
 
+  const pContext = useContext(PluginSelectionMenuContext)
+
   return (
     <AllowedChildPlugins.Provider value={config.allowedPlugins}>
+      <AddPluginModal />
       <div className="relative mt-6">
         {state.map((row, index) => {
           const hideAddButton = showLargeAddButton && index === state.length - 1
@@ -34,8 +45,8 @@ export function RowsEditor({ state, config, id }: RowsProps) {
             <RowEditor
               config={config}
               key={row.id}
-              onAddButtonClick={() => {
-                insertRowWithSuggestionsOpen(index + 1)
+              onAddButtonClick={(insertIndex: number) => {
+                pContext.openSuggestions(insertPluginCallback, insertIndex)
               }}
               index={index}
               rows={state}
@@ -48,7 +59,7 @@ export function RowsEditor({ state, config, id }: RowsProps) {
       {showLargeAddButton ? (
         <AddRowButtonLarge
           onClick={() => {
-            insertRowWithSuggestionsOpen(state.length)
+            pContext.openSuggestions(insertPluginCallback, state.length)
           }}
         />
       ) : null}
