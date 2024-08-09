@@ -1,11 +1,5 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import React, {
-  createContext,
-  ReactNode,
-  useState,
-  useEffect,
-  useRef,
-} from 'react'
+import React, { createContext, ReactNode, useReducer, useRef } from 'react'
 
 // Define interactive plugin types
 export const interactivePluginTypes = new Set([
@@ -18,7 +12,16 @@ export const interactivePluginTypes = new Set([
   EditorPluginType.DropzoneImage,
 ])
 
-// Combined context type
+// Action types for useReducer
+type ActionType =
+  | { type: 'SET_SHOW_PLUGIN_MODAL'; payload: boolean }
+  | {
+      type: 'SET_INSERT_PLUGIN_CALLBACK'
+      payload: insertNewPluginCallback | null
+    }
+  | { type: 'SET_SAVED_INSERT_INDEX'; payload: number | null }
+
+// Plugin Menu Context type
 export interface PluginMenuContextType {
   showPluginModal: boolean
   setShowPluginModal: (show: boolean) => void
@@ -36,7 +39,28 @@ export type insertNewPluginCallback = (
   insertIndex?: number
 ) => void
 
-// Create combined context
+// Initial state for the reducer
+const initialState = {
+  showPluginModal: false,
+  insertPluginCallback: null as insertNewPluginCallback | null,
+  savedInsertIndex: null as number | null,
+}
+
+// Reducer function to handle state transitions
+function pluginMenuReducer(state: typeof initialState, action: ActionType) {
+  switch (action.type) {
+    case 'SET_SHOW_PLUGIN_MODAL':
+      return { ...state, showPluginModal: action.payload }
+    case 'SET_INSERT_PLUGIN_CALLBACK':
+      return { ...state, insertPluginCallback: action.payload }
+    case 'SET_SAVED_INSERT_INDEX':
+      return { ...state, savedInsertIndex: action.payload }
+    default:
+      return state
+  }
+}
+
+// Create Plugin Menu context
 export const PluginMenuContext = createContext<PluginMenuContextType>({
   showPluginModal: false,
   setShowPluginModal: () => {},
@@ -45,7 +69,6 @@ export const PluginMenuContext = createContext<PluginMenuContextType>({
   allowedChildPlugins: [],
 })
 
-// Combined context provider component
 export function PluginMenuContextProvider({
   children,
   allowedChildPlugins,
@@ -53,33 +76,35 @@ export function PluginMenuContextProvider({
   children: ReactNode
   allowedChildPlugins: string[] | undefined
 }) {
-  const [showPluginModal, setShowPluginModal] = useState(false)
-  const [insertPluginCallback, setInsertPluginCallback] =
-    useState<insertNewPluginCallback | null>(null)
-  const [savedInsertIndex, setSavedInsertIndex] = useState<number | null>(null)
+  const [state, dispatch] = useReducer(pluginMenuReducer, initialState)
 
   // Use a ref to store the current callback function
   const insertPluginCallbackRef = useRef<insertNewPluginCallback | null>(null)
 
-  // Update the ref whenever the state changes
-  useEffect(() => {
-    insertPluginCallbackRef.current = insertPluginCallback
-  }, [insertPluginCallback])
+  // Sync the ref with the current state
+  React.useEffect(() => {
+    insertPluginCallbackRef.current = state.insertPluginCallback
+  }, [state.insertPluginCallback])
+
+  const setShowPluginModal = (show: boolean) => {
+    dispatch({ type: 'SET_SHOW_PLUGIN_MODAL', payload: show })
+  }
 
   const openSuggestions = (
     insertPlugin: insertNewPluginCallback,
     insertIndex: number
   ) => {
-    setInsertPluginCallback(() => insertPlugin)
-    setSavedInsertIndex(insertIndex)
+    dispatch({ type: 'SET_INSERT_PLUGIN_CALLBACK', payload: insertPlugin })
+    dispatch({ type: 'SET_SAVED_INSERT_INDEX', payload: insertIndex })
     setShowPluginModal(true)
   }
 
-  const addPlugin = (pluginType: string, insertIndex?: number) => {
+  const addPlugin = (pluginType: string) => {
     if (insertPluginCallbackRef.current) {
-      const indexToUse =
-        insertIndex !== undefined ? insertIndex : savedInsertIndex
-      insertPluginCallbackRef.current(pluginType, indexToUse ?? undefined)
+      insertPluginCallbackRef.current(
+        pluginType,
+        state.savedInsertIndex ?? undefined
+      )
     }
     setShowPluginModal(false)
   }
@@ -87,7 +112,7 @@ export function PluginMenuContextProvider({
   return (
     <PluginMenuContext.Provider
       value={{
-        showPluginModal,
+        showPluginModal: state.showPluginModal,
         setShowPluginModal,
         addPlugin,
         openSuggestions,
