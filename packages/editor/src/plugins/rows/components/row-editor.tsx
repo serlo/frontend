@@ -1,5 +1,4 @@
 import { AddPluginModal } from '@editor/core/components/add-plugin-modal/add-plugin-modal'
-import { PluginSelectionMenuContext } from '@editor/core/contexts/plugins-context'
 import { StateTypeReturnType } from '@editor/plugin'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { selectIsFocused, useAppSelector } from '@editor/store'
@@ -7,6 +6,7 @@ import { useContext, useRef } from 'react'
 
 import { AddRowButtonFloating } from './add-row-button-floating'
 import type { RowsPluginConfig, RowsPluginState } from '..'
+import { PluginMenuContext } from '../contexts/plugin-menu-context'
 import { EditorRowRenderer } from '../editor-renderer'
 
 interface RowEditorProps {
@@ -29,7 +29,7 @@ export function RowEditor({
   const focused = useAppSelector((state) => selectIsFocused(state, row.id))
   const plugins = editorPlugins.getAllWithData()
   const dropContainer = useRef<HTMLDivElement>(null)
-  const pContext = useContext(PluginSelectionMenuContext)
+  const pContext = useContext(PluginMenuContext)
 
   return (
     <div

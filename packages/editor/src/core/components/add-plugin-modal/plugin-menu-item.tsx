@@ -1,9 +1,9 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { PluginMenuContext } from '@editor/plugins/rows/contexts/plugin-menu-context'
 import React, { forwardRef, useContext } from 'react'
 
 import type { PluginMenuItemType } from './add-plugin-modal'
-import { PluginSelectionMenuContext } from '../../contexts/plugins-context'
 import { cn } from '@/helper/cn'
 
 interface PluginMenuItemProps {
@@ -44,7 +44,7 @@ export const PluginMenuItem = forwardRef<
       : '-right-0'
     : ''
 
-  const pContext = useContext(PluginSelectionMenuContext)
+  const pContext = useContext(PluginMenuContext)
   return (
     <button
       data-qa={`plugin-suggestion-${pluginType}`}

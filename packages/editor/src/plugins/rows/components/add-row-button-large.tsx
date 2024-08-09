@@ -1,8 +1,9 @@
-import { PluginSelectionMenuContext } from '@editor/core/contexts/plugins-context'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useContext } from 'react'
+
+import { PluginMenuContext } from '../contexts/plugin-menu-context'
 
 interface AddRowButtonLargeProps {
   insertPluginCallback: (pluginType: string, insertIndex?: number) => void
@@ -14,7 +15,7 @@ export function AddRowButtonLarge({
   insertPluginCallback,
 }: AddRowButtonLargeProps) {
   const rowsStrings = useEditorStrings().plugins.rows
-  const pContext = useContext(PluginSelectionMenuContext)
+  const pContext = useContext(PluginMenuContext)
 
   return (
     <button

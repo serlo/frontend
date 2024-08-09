@@ -1,10 +1,7 @@
-import {
-  PluginSelectionMenuContext,
-  interactivePluginTypes,
-} from '@editor/core/contexts/plugins-context'
+import { interactivePluginTypes } from '@editor/core/contexts/plugins-context'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { AllowedChildPlugins } from '@editor/plugins/rows/allowed-child-plugins-context'
+import { PluginMenuContext } from '@editor/plugins/rows/contexts/plugin-menu-context'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import { selectAncestorPluginTypes, store } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
@@ -32,12 +29,11 @@ export function AddPluginModal() {
 
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const pContext = useContext(PluginSelectionMenuContext)
+  const pContext = useContext(PluginMenuContext)
 
   const [searchString, setSearchString] = useState('')
   const [currentlyFocusedItem, setCurrentlyFocusedItem] = useState(0)
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const allowedContextPlugins = useContext(AllowedChildPlugins)
 
   const id = ROOT
 
@@ -47,8 +43,7 @@ export function AddPluginModal() {
       .filter(({ visibleInSuggestions }) => visibleInSuggestions)
       .map(({ type }) => type)
 
-    // return allVisible
-    const allowedByContext = allowedContextPlugins ?? allVisible
+    const allowedByContext = pContext.allowedChildPlugins ?? allVisible
     // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
     const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
 
@@ -57,7 +52,7 @@ export function AddPluginModal() {
           checkIsAllowedNesting(plugin, typesOfAncestors)
         )
       : allowedByContext
-  }, [allWithData, allowedContextPlugins, id])
+  }, [allWithData, pContext.allowedChildPlugins, id])
 
   const allOptions = allowedPlugins.map((type) =>
     createOption(type as EditorPluginType, pluginsStrings)
@@ -114,7 +109,7 @@ export function AddPluginModal() {
       isOpen={pContext.showPluginModal}
       setIsOpen={pContext.setShowPluginModal}
     >
-      <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
+      <div className="shadow-stickysearch sticky top-0 z-10 bg-white pb-3 pl-6 pt-7">
         <EditorInput
           ref={searchInputRef}
           autoFocus

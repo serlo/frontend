@@ -1,6 +1,6 @@
-import { PluginSelectionMenuContext } from '@editor/core/contexts/plugins-context'
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
+import { PluginMenuContext } from '@editor/plugins/rows/contexts/plugin-menu-context'
 import {
   focusNext,
   focusPrevious,
@@ -34,7 +34,7 @@ export const useEditableKeydownHandler = (
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
 
-  const pContext = useContext(PluginSelectionMenuContext)
+  const pContext = useContext(PluginMenuContext)
 
   const insertPluginCallback = useCallback(
     (pluginType: string) => {
