@@ -114,7 +114,7 @@ export function AddPluginModal() {
       isOpen={pContext.showPluginModal}
       setIsOpen={pContext.setShowPluginModal}
     >
-      <div className="shadow-stickysearch sticky top-0 z-10 bg-white pb-3 pl-6 pt-7">
+      <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
           ref={searchInputRef}
           autoFocus
