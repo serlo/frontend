@@ -1,4 +1,7 @@
-import { PluginSelectionMenuContext } from '@editor/core/contexts/plugins-context'
+import {
+  PluginSelectionMenuContext,
+  interactivePluginTypes,
+} from '@editor/core/contexts/plugins-context'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@editor/plugins/rows/allowed-child-plugins-context'
@@ -15,16 +18,6 @@ import { Key } from 'ts-key-enum'
 
 import { PluginMenuItem } from './plugin-menu-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-
-const interactivePluginTypes = new Set([
-  EditorPluginType.TextAreaExercise,
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.BlanksExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.Solution,
-  EditorPluginType.DropzoneImage,
-])
 
 export interface PluginMenuItemType {
   pluginType: EditorPluginType
@@ -118,8 +111,8 @@ export function AddPluginModal() {
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
       extraTitleClassName="sr-only"
       title="Add Plugin Modal"
-      isOpen={pContext.showSuggestions}
-      setIsOpen={pContext.setShowSuggestions}
+      isOpen={pContext.showPluginModal}
+      setIsOpen={pContext.setShowPluginModal}
     >
       <div className="shadow-stickysearch sticky top-0 z-10 bg-white pb-3 pl-6 pt-7">
         <EditorInput

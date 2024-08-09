@@ -1,3 +1,4 @@
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import React, {
   createContext,
   ReactNode,
@@ -6,9 +7,19 @@ import React, {
   useRef,
 } from 'react'
 
+export const interactivePluginTypes = new Set([
+  EditorPluginType.TextAreaExercise,
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.H5p,
+  EditorPluginType.BlanksExercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.Solution,
+  EditorPluginType.DropzoneImage,
+])
+
 export interface PluginSelectionMenuContextType {
-  showSuggestions: boolean
-  setShowSuggestions: (show: boolean) => void
+  showPluginModal: boolean
+  setShowPluginModal: (show: boolean) => void
   addPlugin: insertNewPluginCallback
   openSuggestions: (
     insertPlugin: insertNewPluginCallback,
@@ -18,8 +29,8 @@ export interface PluginSelectionMenuContextType {
 
 export const PluginSelectionMenuContext =
   createContext<PluginSelectionMenuContextType>({
-    showSuggestions: false,
-    setShowSuggestions: () => {},
+    showPluginModal: false,
+    setShowPluginModal: () => {},
     addPlugin: (_pluginType) => {},
     openSuggestions: () => {},
   })
@@ -34,7 +45,7 @@ export function PluginSelectionMenuContextProvider({
 }: {
   children: ReactNode
 }) {
-  const [showSuggestions, setShowSuggestions] = useState(false)
+  const [showPluginModal, setShowPluginModal] = useState(false)
   const [insertPluginCallback, setInsertPluginCallback] =
     useState<insertNewPluginCallback | null>(null)
   const [savedInsertIndex, setSavedInsertIndex] = useState<number | null>(null)
@@ -53,7 +64,7 @@ export function PluginSelectionMenuContextProvider({
   ) => {
     setInsertPluginCallback(() => insertPlugin)
     setSavedInsertIndex(insertIndex)
-    setShowSuggestions(true)
+    setShowPluginModal(true)
   }
 
   const addPlugin = (pluginType: string, insertIndex?: number) => {
@@ -62,13 +73,14 @@ export function PluginSelectionMenuContextProvider({
         insertIndex !== undefined ? insertIndex : savedInsertIndex
       insertPluginCallbackRef.current(pluginType, indexToUse ?? undefined)
     }
+    setShowPluginModal(false)
   }
 
   return (
     <PluginSelectionMenuContext.Provider
       value={{
-        showSuggestions,
-        setShowSuggestions,
+        showPluginModal,
+        setShowPluginModal,
         addPlugin,
         openSuggestions,
       }}

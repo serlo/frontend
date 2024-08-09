@@ -209,6 +209,7 @@ export function createPlugins({
       type: EditorPluginType.ScMcExercise,
       plugin: createScMcExercisePlugin(),
       icon: <IconScMcExercise />,
+      visibleInSuggestions: true,
     },
     {
       type: EditorPluginType.BlanksExercise,

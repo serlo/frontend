@@ -20,8 +20,6 @@ export function AddRowButtonFloating({
   const rowsStrings = useEditorStrings().plugins.rows
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  if (hide) return null
-
   const baseStyles = `
     opacity-0 transition-opacity duration-300
     relative mb-6 flex items-center px-8 w-full
@@ -38,7 +36,7 @@ export function AddRowButtonFloating({
 
   const interactionStyles = 'cursor-pointer'
 
-  return (
+  return hide ? null : (
     <button
       ref={buttonRef}
       className={cn(baseStyles, stateStyles, interactionStyles)}

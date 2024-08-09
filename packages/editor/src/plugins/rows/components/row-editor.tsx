@@ -28,8 +28,6 @@ export function RowEditor({
   const plugins = editorPlugins.getAllWithData()
   const dropContainer = useRef<HTMLDivElement>(null)
 
-  const isLastRow = index === rows.length - 1
-
   return (
     <div
       key={row.id}
@@ -51,7 +49,7 @@ export function RowEditor({
           event.preventDefault()
           onAddButtonClick(index + 1)
         }}
-        hide={hideAddButton || isLastRow}
+        hide={hideAddButton}
       />
     </div>
   )

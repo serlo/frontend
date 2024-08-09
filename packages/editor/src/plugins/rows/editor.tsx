@@ -2,6 +2,7 @@ import { AddPluginModal } from '@editor/core/components/add-plugin-modal/add-plu
 import {
   PluginSelectionMenuContext,
   insertNewPluginCallback,
+  interactivePluginTypes,
 } from '@editor/core/contexts/plugins-context'
 import { selectParentPluginType, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -25,9 +26,24 @@ export function RowsEditor({ state, config, id }: RowsProps) {
     pluginType: string,
     insertIndex?: number
   ) => {
-    const pluginToInsert = {
-      plugin: pluginType,
-    }
+    const isInteractivePlugin = interactivePluginTypes.has(
+      pluginType as EditorPluginType
+    )
+
+    const pluginToInsert = isInteractivePlugin
+      ? {
+          plugin: EditorPluginType.Exercise,
+          state: {
+            content: { plugin: EditorPluginType.Rows },
+            interactive: {
+              plugin: pluginType,
+            },
+          },
+        }
+      : {
+          plugin: pluginType,
+        }
+
     setTimeout(() => {
       state.insert(insertIndex ?? state.length, pluginToInsert)
     })
