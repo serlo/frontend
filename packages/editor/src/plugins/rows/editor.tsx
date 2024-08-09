@@ -1,12 +1,10 @@
-import { AddPluginModal } from '@editor/core/components/add-plugin-modal/add-plugin-modal'
 import {
-  PluginSelectionMenuContext,
+  PluginSelectionMenuContextProvider,
   insertNewPluginCallback,
   interactivePluginTypes,
 } from '@editor/core/contexts/plugins-context'
 import { selectParentPluginType, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useContext } from 'react'
 
 import type { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
@@ -49,36 +47,33 @@ export function RowsEditor({ state, config, id }: RowsProps) {
     })
   }
 
-  const pContext = useContext(PluginSelectionMenuContext)
-
   return (
     <AllowedChildPlugins.Provider value={config.allowedPlugins}>
-      <AddPluginModal />
-      <div className="relative mt-6">
-        {state.map((row, index) => {
-          const hideAddButton = showLargeAddButton && index === state.length - 1
-          return (
-            <RowEditor
-              config={config}
-              key={row.id}
-              onAddButtonClick={(insertIndex: number) => {
-                pContext.openSuggestions(insertPluginCallback, insertIndex)
-              }}
-              index={index}
-              rows={state}
-              row={row}
-              hideAddButton={hideAddButton}
-            />
-          )
-        })}
-      </div>
-      {showLargeAddButton ? (
-        <AddRowButtonLarge
-          onClick={() => {
-            pContext.openSuggestions(insertPluginCallback, state.length)
-          }}
-        />
-      ) : null}
+      <PluginSelectionMenuContextProvider>
+        <div className="relative mt-6">
+          {state.map((row, index) => {
+            const hideAddButton =
+              showLargeAddButton && index === state.length - 1
+            return (
+              <RowEditor
+                config={config}
+                key={row.id}
+                insertPluginCallback={insertPluginCallback}
+                index={index}
+                rows={state}
+                row={row}
+                hideAddButton={hideAddButton}
+              />
+            )
+          })}
+        </div>
+        {showLargeAddButton ? (
+          <AddRowButtonLarge
+            insertIndex={state.length}
+            insertPluginCallback={insertPluginCallback}
+          />
+        ) : null}
+      </PluginSelectionMenuContextProvider>
     </AllowedChildPlugins.Provider>
   )
 }
