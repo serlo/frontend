@@ -3,7 +3,7 @@ import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect } from 'react'
 import { createEditor, Node, Transforms } from 'slate'
-import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
+import { Editable, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
@@ -85,15 +85,6 @@ export function TextEditor(props: TextEditorProps) {
     // Get the current text value of the editor
     const text = Node.string(editor)
 
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
-      }
-      return
-    }
-
     // If the first child of the editor is not a paragraph, do nothing
     const isFirstChildParagraph =
       'type' in editor.children[0] && editor.children[0].type === 'p'
@@ -103,14 +94,6 @@ export function TextEditor(props: TextEditorProps) {
     if (text === '') {
       Transforms.select(editor, { offset: 0, path: [0, 0] })
       instanceStateStore[id].selection = editor.selection
-    }
-
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-      instanceStateStore[id].selection = editor.selection
-      ReactEditor.focus(editor)
     }
   }, [editor, focused, id])
 
