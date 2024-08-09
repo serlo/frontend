@@ -48,7 +48,7 @@ export const useEditableKeydownHandler = (
       }
 
       // Handle specific keyboard commands
-      // (only if selection is collapsed and suggestions are not shown)
+      // (only if selection is collapsed)
       const { selection } = editor
       if (selection && Range.isCollapsed(selection)) {
         const isListActive = isSelectionWithinList(editor)
