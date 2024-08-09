@@ -1,3 +1,4 @@
+import { PluginSelectionMenuContext } from '@editor/core/contexts/plugins-context'
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
@@ -8,12 +9,13 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import isHotkey from 'is-hotkey'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { insertPlugin } from '../utils/insert-plugin'
 import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 
@@ -32,6 +34,17 @@ export const useEditableKeydownHandler = (
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
 
+  const pContext = useContext(PluginSelectionMenuContext)
+
+  const insertPluginCallback = useCallback(
+    (pluginType: string) => {
+      setTimeout(() => {
+        // Split the text-plugin and insert selected new plugin
+        insertPlugin({ pluginType, editor, id, dispatch })
+      })
+    },
+    [dispatch, editor, id]
+  )
   return useCallback(
     (event: React.KeyboardEvent) => {
       // If linebreaks are disabled in the config, prevent any enter key handling
@@ -44,6 +57,16 @@ export const useEditableKeydownHandler = (
       const { selection } = editor
       if (selection && Range.isCollapsed(selection)) {
         const isListActive = isSelectionWithinList(editor)
+
+        if (event.key === '/') {
+          const { path } = selection.focus
+          const node = Node.get(editor, path)
+
+          if (Object.hasOwn(node, 'text') && node.text.length === 0) {
+            pContext.openSuggestions(insertPluginCallback, -1)
+            event.preventDefault()
+          }
+        }
 
         // Special handler for links. If you move right and end up at the right edge of a link,
         // this handler unselects the link, so you can write normal text behind it.
@@ -156,6 +179,15 @@ export const useEditableKeydownHandler = (
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
       textFormattingOptions.handleListsShortcuts(event, editor)
     },
-    [config.noLinebreaks, dispatch, editor, id, state, textFormattingOptions]
+    [
+      config.noLinebreaks,
+      dispatch,
+      editor,
+      id,
+      state,
+      textFormattingOptions,
+      insertPluginCallback,
+      pContext,
+    ]
   )
 }
