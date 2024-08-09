@@ -1,12 +1,17 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
+import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
+import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
+import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
+import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
+import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
@@ -189,16 +194,26 @@ export function createPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: true,
     },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      icon: <IconPencil />,
+    },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin, icon: <IconH5p /> },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
+      icon: <IconTextArea />,
     },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    {
+      type: EditorPluginType.ScMcExercise,
+      plugin: createScMcExercisePlugin(),
+      icon: <IconScMcExercise />,
+    },
     {
       type: EditorPluginType.BlanksExercise,
       plugin: blanksExercise,
+      icon: <IconFillGaps />,
     },
 
     // Special plugins, never visible in suggestions
