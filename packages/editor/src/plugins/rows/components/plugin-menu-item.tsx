@@ -1,25 +1,20 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { PluginMenuContext } from '@editor/plugins/rows/contexts/plugin-menu-context'
-import React, { forwardRef, useContext } from 'react'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { forwardRef } from 'react'
 
-import type { PluginMenuItemType } from './add-plugin-modal'
+import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { cn } from '@/helper/cn'
 
 interface PluginMenuItemProps {
   option: PluginMenuItemType
   selected: boolean
-  onSelectPlugin?: (
-    event:
-      | React.MouseEvent<HTMLButtonElement>
-      | React.KeyboardEvent<HTMLButtonElement>,
-    pluginType: string
-  ) => void
+  tooltipPosition?: 'right' | 'left'
+  onInsertPlugin: (pluginType: EditorPluginType) => void
   onFocus: () => void
+  onBlur: () => void
   onMouseEnter: () => void
   onMouseLeave: () => void
-  onBlur: () => void
-  tooltipPosition?: 'right' | 'left'
 }
 
 export const PluginMenuItem = forwardRef<
@@ -29,11 +24,12 @@ export const PluginMenuItem = forwardRef<
   const {
     option,
     selected,
+    tooltipPosition,
+    onInsertPlugin,
     onFocus,
+    onBlur,
     onMouseEnter,
     onMouseLeave,
-    onBlur,
-    tooltipPosition,
   } = props
 
   const { pluginType, title, icon, description } = option
@@ -44,16 +40,15 @@ export const PluginMenuItem = forwardRef<
       : '-right-0'
     : ''
 
-  const pContext = useContext(PluginMenuContext)
   return (
     <button
       data-qa={`plugin-suggestion-${pluginType}`}
       data-active={selected}
       ref={ref}
-      onClick={(_e) => pContext.addPlugin(pluginType)}
+      onClick={() => onInsertPlugin(pluginType)}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
-          pContext.addPlugin(pluginType)
+          onInsertPlugin(pluginType)
         }
       }}
       onFocus={onFocus}

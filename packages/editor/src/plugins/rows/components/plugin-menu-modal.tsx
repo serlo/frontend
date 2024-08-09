@@ -1,7 +1,9 @@
-import { interactivePluginTypes } from '@editor/core/contexts/plugins-context'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { PluginMenuContext } from '@editor/plugins/rows/contexts/plugin-menu-context'
+import {
+  PluginMenuActionTypes,
+  PluginMenuContext,
+} from '@editor/plugins/rows/contexts/plugin-menu'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import { selectAncestorPluginTypes, store } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
@@ -14,28 +16,34 @@ import React, { useContext, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItem } from './plugin-menu-item'
+import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
-export interface PluginMenuItemType {
-  pluginType: EditorPluginType
-  title: string
-  description?: string
-  icon?: JSX.Element
+export const interactivePluginTypes = new Set([
+  EditorPluginType.TextAreaExercise,
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.H5p,
+  EditorPluginType.BlanksExercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.Solution,
+  EditorPluginType.DropzoneImage,
+])
+
+interface PluginMenuModalProps {
+  onInsertPlugin: (pluginType: EditorPluginType) => void
 }
 
-export function AddPluginModal() {
+export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   const editorStrings = useEditorStrings()
   const pluginsStrings = editorStrings.plugins
 
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const pContext = useContext(PluginMenuContext)
+  const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
 
   const [searchString, setSearchString] = useState('')
   const [currentlyFocusedItem, setCurrentlyFocusedItem] = useState(0)
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
-
-  const id = ROOT
 
   const allWithData = editorPlugins.getAllWithData()
   const allowedPlugins = useMemo(() => {
@@ -43,16 +51,16 @@ export function AddPluginModal() {
       .filter(({ visibleInSuggestions }) => visibleInSuggestions)
       .map(({ type }) => type)
 
-    const allowedByContext = pContext.allowedChildPlugins ?? allVisible
+    const allowedByContext = pluginMenuState.allowedChildPlugins ?? allVisible
     // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
-    const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+    const typesOfAncestors = selectAncestorPluginTypes(store.getState(), ROOT)
 
     return typesOfAncestors
       ? allowedByContext.filter((plugin) =>
           checkIsAllowedNesting(plugin, typesOfAncestors)
         )
       : allowedByContext
-  }, [allWithData, pContext.allowedChildPlugins, id])
+  }, [allWithData, pluginMenuState.allowedChildPlugins])
 
   const allOptions = allowedPlugins.map((type) =>
     createOption(type as EditorPluginType, pluginsStrings)
@@ -77,37 +85,19 @@ export function AddPluginModal() {
     return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
   }
 
-  const renderSuggestions = (
-    options: PluginMenuItemType[],
-    offset: number = 0
-  ) => {
-    return options.map((item, index) => {
-      const currentIndex = index + offset
-      return (
-        <PluginMenuItem
-          key={currentIndex}
-          option={item}
-          selected={currentIndex === currentlyFocusedItem}
-          ref={(el) => (itemRefs.current[currentIndex] = el)}
-          onFocus={() => handleItemFocus(currentIndex)}
-          onBlur={handleItemBlur}
-          onMouseEnter={() => handleItemFocus(currentIndex)}
-          onMouseLeave={() => {
-            handleItemBlur()
-            itemRefs.current[currentIndex]?.blur()
-          }}
-          tooltipPosition={getTooltipPosition(index)}
-        />
-      )
-    })
+  const handleModalClose = (isOpen: boolean) => {
+    if (isOpen === false) {
+      pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
+    }
   }
+
   return (
     <ModalWithCloseButton
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
       extraTitleClassName="sr-only"
       title="Add Plugin Modal"
-      isOpen={pContext.showPluginModal}
-      setIsOpen={pContext.setShowPluginModal}
+      isOpen={pluginMenuState.showPluginMenu}
+      setIsOpen={handleModalClose}
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
@@ -131,16 +121,42 @@ export function AddPluginModal() {
         {editorStrings.addPluginsModal.basicPluginsTitle}
       </h1>
       <div className="grid grid-cols-5 gap-4 p-4">
-        {renderSuggestions(basicOptions)}
+        {renderPluginItems(basicOptions)}
       </div>
       <h1 className="pl-6 pt-4 text-lg font-bold">
         {editorStrings.addPluginsModal.interactivePluginsTitle}
       </h1>
       <div className="grid grid-cols-5 gap-4 p-4">
-        {renderSuggestions(interactiveOptions, basicOptions.length)}
+        {renderPluginItems(interactiveOptions, basicOptions.length)}
       </div>
     </ModalWithCloseButton>
   )
+
+  function renderPluginItems(
+    options: PluginMenuItemType[],
+    offset: number = 0
+  ) {
+    return options.map((item, index) => {
+      const currentIndex = index + offset
+      return (
+        <PluginMenuItem
+          key={currentIndex}
+          ref={(el) => (itemRefs.current[currentIndex] = el)}
+          option={item}
+          selected={currentIndex === currentlyFocusedItem}
+          tooltipPosition={getTooltipPosition(index)}
+          onInsertPlugin={onInsertPlugin}
+          onFocus={() => handleItemFocus(currentIndex)}
+          onBlur={handleItemBlur}
+          onMouseEnter={() => handleItemFocus(currentIndex)}
+          onMouseLeave={() => {
+            handleItemBlur()
+            itemRefs.current[currentIndex]?.blur()
+          }}
+        />
+      )
+    })
+  }
 }
 
 interface PluginStrings {

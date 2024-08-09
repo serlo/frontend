@@ -1,10 +1,15 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
-import { PluginMenuContext } from '@editor/plugins/rows/contexts/plugin-menu-context'
+import {
+  PluginMenuContext,
+  PluginMenuActionTypes,
+} from '@editor/plugins/rows/contexts/plugin-menu'
 import {
   focusNext,
   focusPrevious,
+  removePluginChild,
   selectChildTree,
+  selectChildTreeOfParent,
   store,
   useAppDispatch,
 } from '@editor/store'
@@ -15,7 +20,6 @@ import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
-import { insertPlugin } from '../utils/insert-plugin'
 import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 
@@ -34,17 +38,8 @@ export const useEditableKeydownHandler = (
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
 
-  const pContext = useContext(PluginMenuContext)
+  const { pluginMenuDispatch } = useContext(PluginMenuContext)
 
-  const insertPluginCallback = useCallback(
-    (pluginType: string) => {
-      setTimeout(() => {
-        // Split the text-plugin and insert selected new plugin
-        insertPlugin({ pluginType, editor, id, dispatch })
-      })
-    },
-    [dispatch, editor, id]
-  )
   return useCallback(
     (event: React.KeyboardEvent) => {
       // If linebreaks are disabled in the config, prevent any enter key handling
@@ -62,8 +57,25 @@ export const useEditableKeydownHandler = (
           const { path } = selection.focus
           const node = Node.get(editor, path)
 
-          if (Object.hasOwn(node, 'text') && node.text.length === 0) {
-            pContext.openSuggestions(insertPluginCallback, -1)
+          const parent = selectChildTreeOfParent(store.getState(), id)
+
+          if (Object.hasOwn(node, 'text') && node.text.length === 0 && parent) {
+            pluginMenuDispatch({
+              type: PluginMenuActionTypes.OPEN_WITH_SLASH_KEY,
+              payload: {
+                insertIndex: parent.children?.findIndex(
+                  (child) => child.id === id
+                ),
+                insertCallback: () => {
+                  dispatch(
+                    removePluginChild({
+                      parent: parent.id,
+                      child: id,
+                    })
+                  )
+                },
+              },
+            })
             event.preventDefault()
           }
         }
@@ -181,13 +193,12 @@ export const useEditableKeydownHandler = (
     },
     [
       config.noLinebreaks,
-      dispatch,
       editor,
+      textFormattingOptions,
+      pluginMenuDispatch,
       id,
       state,
-      textFormattingOptions,
-      insertPluginCallback,
-      pContext,
+      dispatch,
     ]
   )
 }
