@@ -1,5 +1,12 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import React, { createContext, ReactNode, useReducer, useRef } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useReducer,
+  useRef,
+  useEffect,
+  useCallback,
+} from 'react'
 
 // Define interactive plugin types
 export const interactivePluginTypes = new Set([
@@ -60,6 +67,24 @@ function pluginMenuReducer(state: typeof initialState, action: ActionType) {
   }
 }
 
+// Action creators
+const setShowPluginModal = (show: boolean): ActionType => ({
+  type: 'SET_SHOW_PLUGIN_MODAL',
+  payload: show,
+})
+
+const setInsertPluginCallback = (
+  callback: insertNewPluginCallback | null
+): ActionType => ({
+  type: 'SET_INSERT_PLUGIN_CALLBACK',
+  payload: callback,
+})
+
+const setSavedInsertIndex = (index: number | null): ActionType => ({
+  type: 'SET_SAVED_INSERT_INDEX',
+  payload: index,
+})
+
 // Create Plugin Menu context
 export const PluginMenuContext = createContext<PluginMenuContextType>({
   showPluginModal: false,
@@ -82,38 +107,37 @@ export function PluginMenuContextProvider({
   const insertPluginCallbackRef = useRef<insertNewPluginCallback | null>(null)
 
   // Sync the ref with the current state
-  React.useEffect(() => {
+  useEffect(() => {
     insertPluginCallbackRef.current = state.insertPluginCallback
   }, [state.insertPluginCallback])
 
-  const setShowPluginModal = (show: boolean) => {
-    dispatch({ type: 'SET_SHOW_PLUGIN_MODAL', payload: show })
-  }
+  const openSuggestions = useCallback(
+    (insertPlugin: insertNewPluginCallback, insertIndex: number) => {
+      dispatch(setInsertPluginCallback(insertPlugin))
+      dispatch(setSavedInsertIndex(insertIndex))
+      dispatch(setShowPluginModal(true))
+    },
+    [dispatch]
+  )
 
-  const openSuggestions = (
-    insertPlugin: insertNewPluginCallback,
-    insertIndex: number
-  ) => {
-    dispatch({ type: 'SET_INSERT_PLUGIN_CALLBACK', payload: insertPlugin })
-    dispatch({ type: 'SET_SAVED_INSERT_INDEX', payload: insertIndex })
-    setShowPluginModal(true)
-  }
-
-  const addPlugin = (pluginType: string) => {
-    if (insertPluginCallbackRef.current) {
-      insertPluginCallbackRef.current(
-        pluginType,
-        state.savedInsertIndex ?? undefined
-      )
-    }
-    setShowPluginModal(false)
-  }
+  const addPlugin = useCallback(
+    (pluginType: string, insertIndex?: number) => {
+      if (insertPluginCallbackRef.current) {
+        const indexToUse =
+          insertIndex !== undefined ? insertIndex : state.savedInsertIndex
+        insertPluginCallbackRef.current(pluginType, indexToUse ?? undefined)
+      }
+      dispatch(setShowPluginModal(false))
+    },
+    [state.savedInsertIndex]
+  )
 
   return (
     <PluginMenuContext.Provider
       value={{
         showPluginModal: state.showPluginModal,
-        setShowPluginModal,
+        setShowPluginModal: (show: boolean) =>
+          dispatch(setShowPluginModal(show)),
         addPlugin,
         openSuggestions,
         allowedChildPlugins,
