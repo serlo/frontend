@@ -135,7 +135,6 @@ export function TextEditor(props: TextEditorProps) {
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
-        // renderLeaf={handleRenderLeaf}
         decorate={
           dynamicPlaceholder.shouldShow
             ? dynamicPlaceholder.decorateEmptyLines

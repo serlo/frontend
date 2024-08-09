@@ -1,11 +1,9 @@
-import { selectMayManipulateSiblings, store } from '@editor/store'
-import { createElement, useCallback, useMemo } from 'react'
+import { createElement, useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
-import { ReactEditor, RenderElementProps, RenderLeafProps } from 'slate-react'
+import { RenderElementProps } from 'slate-react'
 
 import { BlankRenderer } from '../../blanks-exercise/blank-renderer'
 import { MathElement } from '../components/math-element'
-import { TextLeafWithPlaceholder } from '../components/text-leaf-with-placeholder'
 import { ListElementType } from '../types/text-editor'
 
 interface UseSlateRenderHandlersArgs {
@@ -17,15 +15,7 @@ interface UseSlateRenderHandlersArgs {
 
 export const useSlateRenderHandlers = ({
   focused,
-  id,
-  editor,
-  placeholder,
 }: UseSlateRenderHandlersArgs) => {
-  const mayManipulateSiblings = useMemo(
-    () => selectMayManipulateSiblings(store.getState(), id),
-    [id]
-  )
-
   const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -99,23 +89,5 @@ export const useSlateRenderHandlers = ({
     [focused]
   )
 
-  const handleRenderLeaf = useCallback(
-    (props: RenderLeafProps) => (
-      <TextLeafWithPlaceholder
-        {...props}
-        customPlaceholder={placeholder}
-        onAdd={
-          mayManipulateSiblings
-            ? () => {
-                ReactEditor.focus(editor)
-                editor.insertText('/')
-              }
-            : undefined
-        }
-      />
-    ),
-    [editor, mayManipulateSiblings, placeholder]
-  )
-
-  return { handleRenderElement, handleRenderLeaf }
+  return { handleRenderElement }
 }
