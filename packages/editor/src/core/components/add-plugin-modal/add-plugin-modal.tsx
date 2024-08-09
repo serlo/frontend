@@ -13,7 +13,7 @@ import {
 import React, { useContext, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
-import { PluginMenuItem } from './PluginMenuItem'
+import { PluginMenuItem } from './plugin-menu-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 const interactivePluginTypes = new Set([
