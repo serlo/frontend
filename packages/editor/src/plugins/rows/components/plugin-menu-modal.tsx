@@ -48,7 +48,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   const allWithData = editorPlugins.getAllWithData()
   const allowedPlugins = useMemo(() => {
     const allVisible = allWithData
-      .filter(({ visibleInSuggestions }) => visibleInSuggestions)
+      .filter(
+        ({ type, visibleInSuggestions }) =>
+          visibleInSuggestions ||
+          interactivePluginTypes.has(type as EditorPluginType)
+      )
       .map(({ type }) => type)
 
     const allowedByContext = pluginMenuState.allowedChildPlugins ?? allVisible

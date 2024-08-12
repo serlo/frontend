@@ -677,8 +677,6 @@ export const loggedInData = {
       confirmRouteChange: 'Are you sure you want to leave without saving?',
       noChangesWarning: 'Nothing changed so there is no need to save yet',
       addPluginsModal: {
-        altText:
-          'A popup window to select a new element. Use the arrow keys to navigate through the list of available elements or exercises. Press Enter to select an element and Esc to close',
         searchInputPlaceholder: 'Search...',
         basicPluginsTitle: 'Content Elements',
         interactivePluginsTitle: 'Exercises',
