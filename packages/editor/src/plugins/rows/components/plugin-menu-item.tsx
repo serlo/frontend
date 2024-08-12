@@ -49,6 +49,7 @@ export const PluginMenuItem = forwardRef<
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
           onInsertPlugin(pluginType)
+          e.preventDefault()
         }
       }}
       onFocus={onFocus}

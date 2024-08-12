@@ -107,7 +107,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         <EditorInput
           ref={searchInputRef}
           autoFocus
-          placeholder="editorStrings.addPluginsModal.searchInputPlaceholder"
+          placeholder={editorStrings.addPluginsModal.searchInputPlaceholder}
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
           onKeyDown={(e) => {
