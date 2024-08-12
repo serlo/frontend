@@ -5,4 +5,5 @@ export const pluginMenuInitialState: PluginMenuState = {
   showPluginMenu: false,
   insertIndex: undefined,
   insertCallback: undefined,
+  searchInputRef: null,
 }

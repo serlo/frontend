@@ -1,4 +1,4 @@
-import { type ReactNode, useReducer } from 'react'
+import { type ReactNode, useReducer, useRef } from 'react'
 
 import { PluginMenuContext } from './context'
 import { pluginMenuReducer } from './reducer'
@@ -12,6 +12,7 @@ interface PluginMenuProviderProps {
 export const PluginMenuProvider = (props: PluginMenuProviderProps) => {
   const { children, allowedChildPlugins } = props
 
+  const searchInputRef = useRef<HTMLInputElement>(null)
   const [initialState, pluginMenuDispatch] = useReducer(
     pluginMenuReducer,
     pluginMenuInitialState
@@ -19,6 +20,7 @@ export const PluginMenuProvider = (props: PluginMenuProviderProps) => {
 
   const pluginMenuState = {
     ...initialState,
+    searchInputRef,
     allowedChildPlugins,
   }
 

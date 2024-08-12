@@ -12,7 +12,7 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import React, { useContext, useMemo, useRef, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItem } from './plugin-menu-item'
@@ -36,8 +36,6 @@ interface PluginMenuModalProps {
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   const editorStrings = useEditorStrings()
   const pluginsStrings = editorStrings.plugins
-
-  const searchInputRef = useRef<HTMLInputElement>(null)
 
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
 
@@ -95,6 +93,13 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     }
   }
 
+  useEffect(() => {
+    const focusTimeout = setTimeout(() => {
+      pluginMenuState.searchInputRef?.current?.focus()
+    }, 0)
+    return () => clearTimeout(focusTimeout)
+  }, [pluginMenuState.searchInputRef])
+
   return (
     <ModalWithCloseButton
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
@@ -105,7 +110,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
-          ref={searchInputRef}
+          ref={pluginMenuState?.searchInputRef}
           autoFocus
           placeholder={editorStrings.addPluginsModal.searchInputPlaceholder}
           value={searchString}

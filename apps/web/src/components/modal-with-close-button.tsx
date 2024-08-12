@@ -90,6 +90,7 @@ export function ModalWithCloseButton({
           <Dialog.Content
             className={cn('serlo-modal', className)}
             data-modal-state={isOpen ? 'open' : 'closed'}
+            aria-describedby={undefined}
           >
             {title ? (
               <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>

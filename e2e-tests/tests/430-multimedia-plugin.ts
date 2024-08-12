@@ -4,16 +4,21 @@ Feature('Serlo Editor - Multimedia plugin')
 
 Before(popupWarningFix)
 
+const selectors = {
+  addNewPluginButton: '$add-new-plugin-row-button',
+}
 export async function addMultimediaPlugin(I: CodeceptJS.I) {
   // Ensure that only the Multimedia plugin from article introduction is present
   I.seeNumberOfElements('$plugin-multimedia-wrapper', 1)
 
   I.say('Replace default Text plugin with a Multimedia plugin')
   I.click(locate('$plugin-text-editor').inside('.plugin-rows'))
-  I.type('/')
+  // I.type('/')
+  I.click(selectors.addNewPluginButton)
   I.type('Multimedia')
+  I.pressKey('Tab')
   I.pressKey('Enter')
-  I.seeNumberOfElements('$plugin-multimedia-wrapper', 2)
+  I.seeNumberOfElements('$plugin-multimedia-wrapper', 1)
 }
 
 Scenario('Multimedia plugin toolbar controls', async ({ I }) => {
