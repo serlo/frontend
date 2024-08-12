@@ -818,7 +818,7 @@ export const loggedInData = {
         text: {
           title: "Texte",
           description: "Créer contenu en utilisant du texte riche (RTF) et des formules mathématiques.",
-          placeholder: 'Write something or add element:',
+          placeholder: 'Write something...',
           addButtonExplanation: 'Click to insert new element',
           quote: "Citation",
           setColor: "Définir la couleur",

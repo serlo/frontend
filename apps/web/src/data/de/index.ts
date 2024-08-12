@@ -741,7 +741,7 @@ export const loggedInData = {
           change: "Bild ändern",
           licence: "Lizenz",
           licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:",
-          licenceFree: "Lizenzfreie Bilder",
+          licenceFree: "Frei lizenzierte Bilder",
           pixabayText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
           pixabayLoadedText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
           searching: "Suche nach Bildern ...",
@@ -818,7 +818,7 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
-          placeholder: "Schreib etwas oder füge Elemente ein:",
+          placeholder: "Schreibe etwas …",
           addButtonExplanation: "Klicke, um ein neues Element einzufügen",
           quote: "Zitat",
           setColor: "Einfärben",

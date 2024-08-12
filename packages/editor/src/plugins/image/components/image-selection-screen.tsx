@@ -13,10 +13,13 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
 export function ImageSelectionScreen(
-  props: ImageProps & { urlInputRef: RefObject<HTMLInputElement> }
+  props: ImageProps & {
+    urlInputRef: RefObject<HTMLInputElement>
+    setIsAButtonFocused: (isFocused: boolean) => void
+  }
 ) {
   const editorStrings = useEditorStrings()
-  const { state, urlInputRef } = props
+  const { state, urlInputRef, setIsAButtonFocused } = props
   const { src, licence } = state
 
   const imageStrings = editorStrings.plugins.image
@@ -40,8 +43,7 @@ export function ImageSelectionScreen(
     setShowPixabayModal(false)
   }
 
-  const showPixabayButton =
-    !disableFileUpload && !!process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+  const showPixabayButton = !disableFileUpload
 
   return (
     <div
@@ -56,11 +58,17 @@ export function ImageSelectionScreen(
         <PixabayImageSearch onSelectImage={onSelectPixabayImage} />
       </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
-        <UploadButton {...props} />
+        <UploadButton
+          onFocus={() => setIsAButtonFocused(true)}
+          onBlur={() => setIsAButtonFocused(false)}
+          {...props}
+        />
         {showPixabayButton && (
           <button
             data-qa="plugin-image-pixabay-search-button"
             onClick={() => setShowPixabayModal(true)}
+            onFocus={() => setIsAButtonFocused(true)}
+            onBlur={() => setIsAButtonFocused(false)}
             className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-almost-black text-gray-800 hover:bg-editor-primary-300"
           >
             <span className="mr-2 inline-block">
@@ -83,6 +91,8 @@ export function ImageSelectionScreen(
               'w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600',
               showErrorMessage && 'outline outline-1 outline-red-500'
             )}
+            onFocus={() => setIsAButtonFocused(true)}
+            onBlur={() => setIsAButtonFocused(false)}
             data-qa="plugin-image-src"
           />
           {showErrorMessage && (

@@ -24,11 +24,12 @@ Scenario('About Serlo', ({ I }) => {
   I.click('Pädagogisches Konzept')
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
+  // close newsletter modal in case it popped up
+  I.wait(2)
+  I.pressKey('Escape')
   I.click('Community')
 
-  I.pressKey('Escape') // close newsletter modal in case it popped up
-
-  // Make sure it's the right page, wait longer to reduce flakiness
+  // Make sure it's the right page (this page sometimes load slowly)
   I.waitForText("Was gibt's zu tun?", 20)
 })
 
