@@ -12,7 +12,7 @@ interface PluginMenuProviderProps {
 export const PluginMenuProvider = (props: PluginMenuProviderProps) => {
   const { children, allowedChildPlugins } = props
 
-  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
   const [initialState, pluginMenuDispatch] = useReducer(
     pluginMenuReducer,
     pluginMenuInitialState

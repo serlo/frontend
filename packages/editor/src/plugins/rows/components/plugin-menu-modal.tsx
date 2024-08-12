@@ -13,6 +13,7 @@ import {
   useEditorStrings,
 } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItem } from './plugin-menu-item'
@@ -31,6 +32,11 @@ export const interactivePluginTypes = new Set([
 
 interface PluginMenuModalProps {
   onInsertPlugin: (pluginType: EditorPluginType) => void
+}
+
+const hotkeyConfig = {
+  enableOnContentEditable: true,
+  scopes: ['global'],
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
@@ -99,6 +105,111 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     }, 0)
     return () => clearTimeout(focusTimeout)
   }, [pluginMenuState.searchInputRef])
+
+  const focusSearchInput = () => {
+    pluginMenuState.searchInputRef?.current?.focus()
+  }
+
+  const handleArrowKeyPress = (event: KeyboardEvent) => {
+    const totalItems = basicOptions.length + interactiveOptions.length
+    const basicPluginsCount = basicOptions.length
+    const interactivePluginsStartIndex = basicPluginsCount
+    const columns = 5
+
+    const isInBasicGrid = currentlyFocusedItem < interactivePluginsStartIndex
+    const isInInteractiveGrid =
+      currentlyFocusedItem >= interactivePluginsStartIndex
+
+    const fullBasicRowsCount = Math.floor(basicPluginsCount / columns)
+    const lastBasicRowItemCount = basicPluginsCount % columns
+    const isInLastFullRowOfBasic =
+      currentlyFocusedItem >= (fullBasicRowsCount - 1) * columns &&
+      currentlyFocusedItem < fullBasicRowsCount * columns
+
+    const isInFirstRowOfBasic = currentlyFocusedItem < columns
+    const isInLastRowOfBasic =
+      currentlyFocusedItem >= fullBasicRowsCount * columns &&
+      currentlyFocusedItem < basicPluginsCount
+    const isInFirstRowOfInteractive =
+      currentlyFocusedItem >= interactivePluginsStartIndex &&
+      currentlyFocusedItem < interactivePluginsStartIndex + columns
+
+    switch (event.key) {
+      case Key.ArrowDown:
+        if (isInBasicGrid) {
+          if (isInLastRowOfBasic) {
+            const indexInFirstInteractiveRow = currentlyFocusedItem % columns
+            setCurrentlyFocusedItem(
+              interactivePluginsStartIndex + indexInFirstInteractiveRow
+            )
+          } else if (
+            isInLastFullRowOfBasic &&
+            currentlyFocusedItem % columns >= lastBasicRowItemCount
+          ) {
+            setCurrentlyFocusedItem(fullBasicRowsCount * columns)
+          } else {
+            setCurrentlyFocusedItem((prev) =>
+              Math.min(prev + columns, totalItems - 1)
+            )
+          }
+        } else if (isInInteractiveGrid) {
+          setCurrentlyFocusedItem((prev) =>
+            Math.min(prev + columns, totalItems - 1)
+          )
+        }
+        break
+
+      case Key.ArrowUp:
+        if (isInInteractiveGrid) {
+          if (isInFirstRowOfInteractive) {
+            const indexInLastRowOfBasic =
+              (currentlyFocusedItem - interactivePluginsStartIndex) % columns
+            if (indexInLastRowOfBasic < lastBasicRowItemCount) {
+              setCurrentlyFocusedItem(
+                fullBasicRowsCount * columns + indexInLastRowOfBasic
+              )
+            } else {
+              setCurrentlyFocusedItem(
+                fullBasicRowsCount * columns + lastBasicRowItemCount - 1
+              )
+            }
+          } else {
+            setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
+          }
+        } else if (isInBasicGrid) {
+          if (isInFirstRowOfBasic) {
+            focusSearchInput()
+          } else {
+            setCurrentlyFocusedItem((prev) => Math.max(prev - columns, 0))
+          }
+        }
+        break
+
+      case Key.ArrowLeft:
+        setCurrentlyFocusedItem((prev) => Math.max(prev - 1, 0))
+        break
+
+      case Key.ArrowRight:
+        setCurrentlyFocusedItem((prev) => Math.min(prev + 1, totalItems - 1))
+        break
+
+      default:
+        break
+    }
+
+    event.preventDefault()
+  }
+  useHotkeys(
+    [Key.ArrowUp, Key.ArrowDown, Key.ArrowLeft, Key.ArrowRight],
+    handleArrowKeyPress,
+    hotkeyConfig
+  )
+
+  useEffect(() => {
+    if (itemRefs.current[currentlyFocusedItem]) {
+      itemRefs.current[currentlyFocusedItem]?.focus()
+    }
+  }, [currentlyFocusedItem])
 
   return (
     <ModalWithCloseButton
