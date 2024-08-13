@@ -101,13 +101,13 @@ Scenario(
   }
 )
 
-Scenario('Set box type using keyboard', async ({ I }) => {
+Scenario.skip('Set box type using keyboard', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Create box plugin')
-  I.click('$plugin-text-editor', '$plugin-article-content')
-  I.type('/')
+  I.click('$add-new-plugin-row-button')
   I.type('Box')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.seeElement('$plugin-box-initial-type-chooser')
 

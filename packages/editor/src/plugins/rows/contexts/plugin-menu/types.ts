@@ -36,7 +36,6 @@ export interface PluginMenuState {
   showPluginMenu: boolean
   insertIndex: number | undefined
   insertCallback: (() => void) | undefined
-  searchInputRef: React.RefObject<HTMLInputElement> | null
 }
 
 export interface PluginMenuItemType {

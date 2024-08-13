@@ -49,6 +49,8 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   const [currentlyFocusedItem, setCurrentlyFocusedItem] = useState(0)
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
 
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+
   const allWithData = editorPlugins.getAllWithData()
   const allowedPlugins = useMemo(() => {
     const allVisible = allWithData
@@ -70,16 +72,21 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       : allowedByContext
   }, [allWithData, pluginMenuState.allowedChildPlugins])
 
-  const allOptions = allowedPlugins.map((type) =>
-    createOption(type as EditorPluginType, pluginsStrings)
-  )
-  const basicOptions = allOptions.filter(
-    (option) => !interactivePluginTypes.has(option.pluginType)
-  )
+  const { basicOptions, interactiveOptions } = useMemo(() => {
+    const allOptions = allowedPlugins.map((type) => {
+      return createOption(type as EditorPluginType, pluginsStrings)
+    })
+    const allowed = filterOptions(allOptions, searchString)
 
-  const interactiveOptions = allOptions.filter((option) =>
-    interactivePluginTypes.has(option.pluginType)
-  )
+    return {
+      basicOptions: allowed.filter(
+        (option) => !interactivePluginTypes.has(option.pluginType)
+      ),
+      interactiveOptions: allowed.filter((option) =>
+        interactivePluginTypes.has(option.pluginType)
+      ),
+    }
+  }, [allowedPlugins, pluginsStrings, searchString])
 
   const handleItemFocus = (index: number) => {
     setCurrentlyFocusedItem(index)
@@ -101,13 +108,13 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   useEffect(() => {
     const focusTimeout = setTimeout(() => {
-      pluginMenuState.searchInputRef?.current?.focus()
+      searchInputRef?.current?.focus()
     }, 0)
     return () => clearTimeout(focusTimeout)
-  }, [pluginMenuState.searchInputRef])
+  }, [searchInputRef])
 
   const focusSearchInput = () => {
-    pluginMenuState.searchInputRef?.current?.focus()
+    searchInputRef?.current?.focus()
   }
 
   const handleArrowKeyPress = (event: KeyboardEvent) => {
@@ -211,6 +218,14 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     }
   }, [currentlyFocusedItem])
 
+  useEffect(() => {
+    if (pluginMenuState.showPluginMenu) {
+      setTimeout(() => {
+        searchInputRef.current?.focus()
+      }, 0)
+    }
+  }, [pluginMenuState.showPluginMenu, searchInputRef])
+
   return (
     <ModalWithCloseButton
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
@@ -221,7 +236,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
-          ref={pluginMenuState?.searchInputRef}
+          ref={searchInputRef}
           autoFocus
           placeholder={editorStrings.addPluginsModal.searchInputPlaceholder}
           value={searchString}
@@ -313,4 +328,30 @@ function createOption(
     description,
     icon,
   }
+}
+
+function filterOptions(option: PluginMenuItemType[], text: string) {
+  const search = text.replace('/', '').toLowerCase()
+  if (!search.length) return option
+
+  const filterResults = new Set<PluginMenuItemType>()
+
+  // title or pluginType start with search string
+  option.forEach((entry) => {
+    if (
+      entry.title.toLowerCase().startsWith(search) ||
+      entry.pluginType.startsWith(search)
+    ) {
+      filterResults.add(entry)
+    }
+  })
+
+  // title includes search string
+  option.forEach((entry) => {
+    if (entry.title.toLowerCase().includes(search)) {
+      filterResults.add(entry)
+    }
+  })
+
+  return [...filterResults]
 }
