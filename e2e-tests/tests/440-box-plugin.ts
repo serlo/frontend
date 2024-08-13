@@ -6,12 +6,10 @@ Before(popupWarningFix)
 
 async function addBoxPlugin(I: CodeceptJS.I, type: string) {
   I.say('Create box plugin and set type')
-  I.click('$plugin-text-editor', '$plugin-article-content')
-  I.type('/')
+  I.click('$add-new-plugin-row-button')
   I.type('Box')
   I.pressKey('Tab')
   I.pressKey('Enter')
-  I.seeElement('$plugin-box-initial-type-chooser')
   I.click(`$plugin-box-initial-type-chooser-option-${type}`)
 }
 
@@ -68,7 +66,9 @@ Scenario(
     I.click('$plugin-text-editor', '$plugin-box-title')
     I.pressKey('ArrowDown')
     I.type('Boxinhalt')
-    I.pressKey('ArrowUp') // Set cursor to start of content text
+    // Set cursor to start of content text
+    I.pressKey(['Ctrl', 'A'])
+    I.pressKey('ArrowLeft')
     I.pressKey('ArrowUp') // Move cursor to box title
     I.type('Boxtitel')
 
