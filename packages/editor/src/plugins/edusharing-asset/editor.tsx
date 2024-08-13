@@ -1,0 +1,182 @@
+import { useEffect, useRef, useState } from 'react'
+import type { EdusharingAssetProps } from '.'
+import Modal from 'react-modal'
+import { EdusharingAssetRenderer } from './renderer'
+import { PluginDefaultTools, PluginToolbar } from '@editor/package'
+import * as t from 'io-ts'
+
+export const EdusharingAssetDecoder = t.type({
+  nodeId: t.string,
+  repositoryId: t.string,
+})
+
+export function EdusharingAssetEditor({
+  state,
+  focused,
+  config,
+  id,
+}: EdusharingAssetProps) {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const { edusharingAsset, contentWidth } = state
+
+  useEffect(() => {
+    function handleIFrameEvent({ data, source }: MessageEvent) {
+      if (source !== iframeRef.current?.contentWindow) return
+
+      if (typeof data === 'object' && EdusharingAssetDecoder.is(data)) {
+        const newEdusharingAsset = {
+          nodeId: data.nodeId,
+          repositoryId: data.repositoryId,
+        }
+
+        if (state.edusharingAsset.defined === false) {
+          state.edusharingAsset.create(newEdusharingAsset)
+        } else {
+          // TODO: Better implementation
+          state.edusharingAsset.nodeId.set(newEdusharingAsset.nodeId)
+          state.edusharingAsset.repositoryId.set(
+            newEdusharingAsset.repositoryId
+          )
+        }
+
+        setModalIsOpen(false)
+      }
+    }
+
+    window.addEventListener('message', handleIFrameEvent)
+
+    return () => window.removeEventListener('message', handleIFrameEvent)
+  }, [state.edusharingAsset])
+
+  return (
+    <>
+      {renderPluginToolbar()}
+      {renderModal()}
+      <EdusharingAssetRenderer
+        nodeId={
+          state.edusharingAsset.defined
+            ? state.edusharingAsset.nodeId.value
+            : undefined
+        }
+        repositoryId={
+          state.edusharingAsset.defined
+            ? state.edusharingAsset.repositoryId.value
+            : undefined
+        }
+        ltik={config.ltik}
+        contentWidth={contentWidth.defined ? contentWidth.value : undefined}
+      />
+    </>
+  )
+
+  function renderPluginToolbar() {
+    if (!focused) return null
+
+    return (
+      <PluginToolbar
+        pluginType="Edu-sharing Inhalt"
+        pluginControls={<PluginDefaultTools pluginId={id} />}
+        pluginSettings={
+          <>
+            <button
+              onClick={() => setModalIsOpen(true)}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+              data-qa="plugin-edusharing-select-content-button"
+            >
+              Inhalt wählen
+            </button>
+            {edusharingAsset.defined && !contentWidth.defined ? (
+              <button
+                onClick={() => {
+                  if (contentWidth.defined === false) {
+                    contentWidth.create('30rem')
+                  }
+                }}
+                className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                data-qa="plugin-edusharing-change-size-button"
+              >
+                Größe verändern
+              </button>
+            ) : null}
+            {edusharingAsset.defined && contentWidth.defined ? (
+              <>
+                <button
+                  onClick={() =>
+                    contentWidth.set((previousContentWidth) =>
+                      addToContentWidth(previousContentWidth, 2)
+                    )
+                  }
+                  className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                  data-qa="plugin-edusharing-bigger-button"
+                >
+                  Größer
+                </button>
+                <button
+                  onClick={() =>
+                    contentWidth.set((previousContentWidth) =>
+                      addToContentWidth(previousContentWidth, -2)
+                    )
+                  }
+                  className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                  data-qa="plugin-edusharing-smaller-button"
+                >
+                  Kleiner
+                </button>
+              </>
+            ) : null}
+          </>
+        }
+      />
+    )
+
+    function addToContentWidth(previousContentWidth: string, value: number) {
+      const contentWidthNumber = parseFloat(
+        previousContentWidth.replace('rem', '')
+      )
+      const newContentWidthNumber = Math.max(contentWidthNumber + value, 4)
+      return `${newContentWidthNumber}rem`
+    }
+  }
+
+  // TODO: Use @radix-ui/react-dialog instead of react-modal
+  function renderModal() {
+    if (!modalIsOpen) return
+
+    // See https://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(document.getElementsByTagName('body')[0])
+
+    // TODO: Create helper function
+    const url = new URL(window.location.origin)
+
+    url.pathname = '/lti/start-edusharing-deeplink-flow'
+    url.searchParams.append('ltik', config.ltik)
+
+    return (
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        style={{
+          content: {
+            width: '80%',
+            height: '80vh',
+            top: '50%',
+            left: '50%',
+            bottom: 'auto',
+            right: 'auto',
+            transform: 'translate(-50%, -50%)',
+          },
+          overlay: {
+            zIndex: 100,
+          },
+        }}
+      >
+        <iframe
+          src={url.href}
+          className="edusharing-h-full edusharing-w-full"
+          ref={iframeRef}
+        />
+      </Modal>
+    )
+  }
+}

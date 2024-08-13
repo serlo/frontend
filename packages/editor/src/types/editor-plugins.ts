@@ -33,6 +33,8 @@ import type {
 import { TextAreaExercisePluginState } from '@editor/plugins/text-area-exercise'
 import type { UnsupportedPluginState } from '@editor/plugins/unsupported'
 import type { VideoPluginState } from '@editor/plugins/video'
+import type { EdusharingAssetState } from '@editor/plugins/edusharing-asset'
+import type { SerloInjectionPluginState } from '@editor/plugins/serlo-injection'
 
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
@@ -161,7 +163,7 @@ export interface EditorSpoilerDocument {
   state: PrettyStaticState<SpoilerPluginState>
   id?: string
 }
-export interface EditorSerloInjectionDocument {
+export interface EditorInjectionDocument {
   plugin: EditorPluginType.Injection
   state: PrettyStaticState<InjectionPluginState>
   id?: string
@@ -233,6 +235,18 @@ export interface EditorExerciseGroupDocument {
   }
 }
 
+export interface EditorSerloInjectionDocument {
+  plugin: EditorPluginType.SerloInjection
+  state: PrettyStaticState<SerloInjectionPluginState>
+  id?: string
+}
+
+export interface EditorEdusharingAssetDocument {
+  plugin: EditorPluginType.EdusharingAsset
+  state: PrettyStaticState<EdusharingAssetState>
+  id?: string
+}
+
 // Template Plugins
 export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
@@ -256,7 +270,7 @@ export type SupportedEditorDocument =
   | EditorAudioDocument
   | EditorSerloTableDocument
   | EditorHighlightDocument
-  | EditorSerloInjectionDocument
+  | EditorInjectionDocument
   | EditorMultimediaDocument
   | EditorSpoilerDocument
   | EditorBoxDocument
@@ -268,6 +282,8 @@ export type SupportedEditorDocument =
   | EditorPageLayoutDocument
   | EditorPageTeamDocument
   | EditorPagePartnersDocument
+  | EditorEdusharingAssetDocument
+  | EditorSerloInjectionDocument
 
 export interface UnknownEditorDocument {
   plugin: string

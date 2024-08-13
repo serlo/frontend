@@ -29,6 +29,8 @@ import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
+import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
+import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 
 export function createRenderers(
   customPluginRenderers: PluginStaticRenderer[]
@@ -96,6 +98,14 @@ export function createRenderers(
       {
         type: EditorPluginType.TextAreaExercise,
         renderer: TextAreaExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.EdusharingAsset,
+        renderer: EdusharingAssetStaticRenderer,
+      },
+      {
+        type: EditorPluginType.SerloInjection,
+        renderer: SerloInjectionStaticRenderer,
       },
       {
         type: EditorPluginType.Unsupported,

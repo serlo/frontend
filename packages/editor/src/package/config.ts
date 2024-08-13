@@ -1,6 +1,7 @@
 import type { PluginWithData } from '@editor/plugin/helpers/editor-plugins'
 import type { PluginStaticRenderer } from '@editor/plugin/helpers/editor-renderer'
 import type { BoxConfig } from '@editor/plugins/box'
+import type { EdusharingAssetConfig } from '@editor/plugins/edusharing-asset'
 import {
   defaultConfig as defaultMultimediaConfig,
   type MultimediaConfig,
@@ -17,8 +18,11 @@ export interface PluginsConfig {
   table?: SerloTableConfig
   general?: {
     testingSecret?: string
+    // TODO: Move to pluginsConfig.general.enablePlugins
     enableTextAreaExercise: boolean
+    enablePlugins?: EditorPluginType[]
   }
+  edusharingAsset?: EdusharingAssetConfig
 }
 
 // Custom plugins and renderers are an Edusharing specific feature,
@@ -38,6 +42,9 @@ const defaultPluginsConfig: Required<PluginsConfig> = {
   },
   general: {
     enableTextAreaExercise: false,
+  },
+  edusharingAsset: {
+    ltik: '', // TODO: Use null instead
   },
 }
 

@@ -19,6 +19,7 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 import '@/assets-webkit/styles/serlo-tailwind.css'
+import { LtikContext } from '@editor/plugins/edusharing-asset/static.jsx'
 
 export interface SerloEditorProps {
   children: EditorProps['children']
@@ -27,6 +28,7 @@ export interface SerloEditorProps {
   initialState?: EditorProps['initialState']
   onChange?: EditorProps['onChange']
   language?: SupportedLanguage
+  // TODO: Move to pluginsConfig.general.enablePlugins
   _enableImagePlugin?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
 }
 
@@ -77,11 +79,14 @@ export function SerloEditor(props: SerloEditorProps) {
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
-        <div className="serlo-editor-hacks">
-          <Editor initialState={initialState} onChange={onChange}>
-            {children}
-          </Editor>
-        </div>
+        {/* TODO: Find solution to get ltik into static renderer without context */}
+        <LtikContext.Provider value={pluginsConfig.edusharingAsset?.ltik}>
+          <div className="serlo-editor-hacks">
+            <Editor initialState={initialState} onChange={onChange}>
+              {children}
+            </Editor>
+          </div>
+        </LtikContext.Provider>
       </LoggedInDataProvider>
     </InstanceDataProvider>
   )

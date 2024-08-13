@@ -9,6 +9,7 @@ import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
+import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
 import type { PluginsConfig } from '@editor/package/config'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
@@ -31,6 +32,9 @@ import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
+import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
+import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
 
@@ -100,6 +104,33 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       visibleInSuggestions: true,
       icon: <IconHighlight />,
     },
+    ...(config.general.enablePlugins?.some(
+      (type) => type === EditorPluginType.EdusharingAsset
+    )
+      ? [
+          {
+            type: EditorPluginType.EdusharingAsset,
+            plugin: createEdusharingAssetPlugin({
+              ltik: config.edusharingAsset.ltik,
+            }),
+            visibleInSuggestions: true,
+            icon: <IconImage />,
+          },
+        ]
+      : []),
+    ...(config.general.enablePlugins?.some(
+      (type) => type === EditorPluginType.SerloInjection
+    )
+      ? [
+          {
+            type: EditorPluginType.SerloInjection,
+            plugin: createSerloInjectionPlugin(),
+            renderer: SerloInjectionStaticRenderer,
+            visibleInSuggestions: true,
+            icon: <IconInjection />,
+          },
+        ]
+      : []),
 
     // Exercises etc.
     // ===================================================
