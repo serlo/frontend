@@ -36,7 +36,8 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       ? wrapExercisePlugin(pluginType)
       : { plugin: pluginType }
 
-    pluginMenuState.onInsertComplete?.()
+    // TODO: Remove this after confirm with Vito
+    // pluginMenuState.onInsertComplete?.()
 
     state.insert(pluginMenuState.insertIndex, pluginToInsert)
 

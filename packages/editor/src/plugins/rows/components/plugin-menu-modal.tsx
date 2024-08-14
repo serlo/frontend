@@ -267,7 +267,7 @@ function createOption(
 }
 
 function filterOptions(option: PluginMenuItemType[], text: string) {
-  const search = text.replace('/', '').toLowerCase()
+  const search = text.toLowerCase()
   if (!search.length) return option
 
   const filterResults = new Set<PluginMenuItemType>()

@@ -60,12 +60,16 @@ export const useEditableKeydownHandler = (
           const parent = selectChildTreeOfParent(store.getState(), id)
 
           if (Object.hasOwn(node, 'text') && node.text.length === 0 && parent) {
+            const currentIndex = parent.children?.findIndex(
+              (child) => child.id === id
+            )
+            const insertIndex =
+              currentIndex !== undefined ? currentIndex + 1 : undefined
+
             pluginMenuDispatch({
               type: PluginMenuActionTypes.OPEN_WITH_SLASH_KEY,
               payload: {
-                insertIndex: parent.children?.findIndex(
-                  (child) => child.id === id
-                ),
+                insertIndex,
                 onInsertComplete: () => {
                   dispatch(
                     removePluginChild({

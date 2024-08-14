@@ -114,40 +114,36 @@ Scenario.skip(
   }
 )
 
-// TODO: Check why text plugin replaced
-Scenario.skip(
-  'Inserting a plugin right after a list using suggestions',
-  ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
 
-    I.say('Add a new text plugin and delete the backslash')
-    addNewTextPlugin(I)
+  I.say('Add a new text plugin and delete the backslash')
+  addNewTextPlugin(I)
 
-    I.say('Create an unordered list and add multiple list items')
-    I.type('- Some text')
-    I.see('Some text', 'ul')
-    I.pressKey('Enter')
-    I.type('Some more text')
-    I.see('Some more text', 'ul')
-    I.pressKey('Enter')
-    I.type('Some more extra text')
-    I.see('Some more extra text', 'ul')
+  I.say('Create an unordered list and add multiple list items')
+  I.type('- Some text')
+  I.see('Some text', 'ul')
+  I.pressKey('Enter')
+  I.type('Some more text')
+  I.see('Some more text', 'ul')
+  I.pressKey('Enter')
+  I.type('Some more extra text')
+  I.see('Some more extra text', 'ul')
 
-    I.say('Exit the list using double Enter')
-    I.pressKey('Enter')
-    I.pressKey('Enter')
+  I.say('Exit the list using double Enter')
+  I.pressKey('Enter')
+  I.pressKey('Enter')
 
-    I.say('Add a Spoiler plugin using plugin modal')
-    I.type('/')
-    I.type('Spoiler')
-    I.pressKey('Tab')
-    I.pressKey('Enter')
-    I.click('Titel eingeben')
-    I.see('Spoiler')
+  I.say('Add a Spoiler plugin using plugin modal')
+  I.type('/')
+  I.type('Spoiler')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
+  I.click('Titel eingeben')
+  I.see('Spoiler')
 
-    I.say('Check that the list still exists')
-    I.see('Some text', 'ul')
-    I.see('Some more text', 'ul')
-    I.see('Some more extra text', 'ul')
-  }
-)
+  I.say('Check that the list still exists')
+  I.see('Some text', 'ul')
+  I.see('Some more text', 'ul')
+  I.see('Some more extra text', 'ul')
+})
