@@ -7,7 +7,7 @@ import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { cn } from '@/helper/cn'
 
 interface PluginMenuItemProps {
-  option: PluginMenuItemType
+  item: PluginMenuItemType
   selected: boolean
   tooltipPosition?: 'right' | 'left'
   onInsertPlugin: (pluginType: EditorPluginType) => void
@@ -22,7 +22,7 @@ export const PluginMenuItem = forwardRef<
   PluginMenuItemProps
 >(function PluginMenuItem(props, ref) {
   const {
-    option,
+    item,
     selected,
     tooltipPosition,
     onInsertPlugin,
@@ -32,7 +32,7 @@ export const PluginMenuItem = forwardRef<
     onMouseLeave,
   } = props
 
-  const { pluginType, title, icon, description } = option
+  const { pluginType, title, icon, description } = item
 
   const tooltipClassName = tooltipPosition
     ? tooltipPosition === 'right'

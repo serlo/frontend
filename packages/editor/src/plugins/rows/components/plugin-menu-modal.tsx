@@ -279,7 +279,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         <PluginMenuItem
           key={currentIndex}
           ref={(el) => (itemRefs.current[currentIndex] = el)}
-          option={item}
+          item={item}
           selected={currentIndex === currentlyFocusedItem}
           tooltipPosition={getTooltipPosition(index)}
           onInsertPlugin={(type: EditorPluginType) => {
