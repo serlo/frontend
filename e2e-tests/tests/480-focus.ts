@@ -45,7 +45,7 @@ Scenario('focus plugins by clicking', async ({ I }) => {
   I.see('Bild', '$plugin-type-indicator')
 
   I.say('add a new plugin')
-  I.click('Füge ein Element hinzu')
+  I.click('Füge ein Element hinzu', undefined, { force: true })
   I.type('Text')
   I.pressKey('Tab')
   I.pressKey('Enter')
