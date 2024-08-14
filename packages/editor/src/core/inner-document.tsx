@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
+import { PreferenceContextProvider } from './contexts'
 import { EditorChildren } from './editor-children'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import type { EditorProps } from './types'
@@ -106,7 +107,9 @@ export function InnerDocument({ children, onChange, ...props }: EditorProps) {
 
   return (
     <div className="relative" ref={wrapperRef}>
-      <EditorChildren>{children}</EditorChildren>
+      <PreferenceContextProvider>
+        <EditorChildren>{children}</EditorChildren>
+      </PreferenceContextProvider>
     </div>
   )
 }
