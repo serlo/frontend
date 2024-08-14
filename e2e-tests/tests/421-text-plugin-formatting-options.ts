@@ -156,6 +156,7 @@ Scenario(
 
     I.say('Refocus link')
     I.click('Some text')
+    I.click('Some text')
     I.see('Hypotenuse')
 
     I.say('Toggle link off via plugin bar')
