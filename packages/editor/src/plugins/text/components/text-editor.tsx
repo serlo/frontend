@@ -49,7 +49,7 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [createTextEditor])
 
-  const { handleRenderElement } = useSlateRenderHandlers({
+  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
     editor,
     focused,
     placeholder: config.placeholder,
@@ -122,6 +122,7 @@ export function TextEditor(props: TextEditorProps) {
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
+        renderLeaf={handleRenderLeaf}
         decorate={
           dynamicPlaceholder.shouldShow
             ? dynamicPlaceholder.decorateEmptyLines

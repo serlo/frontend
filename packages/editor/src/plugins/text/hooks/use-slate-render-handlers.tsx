@@ -1,9 +1,10 @@
 import { createElement, useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
-import { RenderElementProps } from 'slate-react'
+import { RenderElementProps, RenderLeafProps } from 'slate-react'
 
 import { BlankRenderer } from '../../blanks-exercise/blank-renderer'
 import { MathElement } from '../components/math-element'
+import { TextLeafWithPlaceholder } from '../components/text-leaf-with-placeholder'
 import { ListElementType } from '../types/text-editor'
 
 interface UseSlateRenderHandlersArgs {
@@ -15,6 +16,7 @@ interface UseSlateRenderHandlersArgs {
 
 export const useSlateRenderHandlers = ({
   focused,
+  placeholder,
 }: UseSlateRenderHandlersArgs) => {
   const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
@@ -89,5 +91,12 @@ export const useSlateRenderHandlers = ({
     [focused]
   )
 
-  return { handleRenderElement }
+  const handleRenderLeaf = useCallback(
+    (props: RenderLeafProps) => (
+      <TextLeafWithPlaceholder {...props} customPlaceholder={placeholder} />
+    ),
+    [placeholder]
+  )
+
+  return { handleRenderElement, handleRenderLeaf }
 }
