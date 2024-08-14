@@ -15,7 +15,7 @@ const selectors = {
   numberedListButton: '$plugin-toolbar-button-nummerierte-liste',
 }
 
-function addNewTextPlugin(I) {
+export function addNewTextPlugin(I) {
   I.click(selectors.addNewPluginButton)
   I.type('Text')
   I.pressKey('Tab')
@@ -31,12 +31,11 @@ function focusTextPlugin(I, position = 'first') {
   }
 }
 
-Scenario.skip('Add a new line using Enter', async ({ I }) => {
+Scenario('Add a new line using Enter', async ({ I }) => {
   I.amOnPage(pageUrl)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
 
-  I.click(selectors.addNewPluginButton)
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
 
   I.say('Press Enter to add a new line')

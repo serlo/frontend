@@ -104,6 +104,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     if (isOpen === false) {
       pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
     }
+    setSearchString('')
   }
 
   useEffect(() => {
@@ -233,6 +234,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       title="Add Plugin Modal"
       isOpen={pluginMenuState.showPluginMenu}
       setIsOpen={handleModalClose}
+      data-qa="plugin-menu-modal"
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
@@ -280,7 +282,10 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           option={item}
           selected={currentIndex === currentlyFocusedItem}
           tooltipPosition={getTooltipPosition(index)}
-          onInsertPlugin={onInsertPlugin}
+          onInsertPlugin={(type: EditorPluginType) => {
+            onInsertPlugin(type)
+            setSearchString('')
+          }}
           onFocus={() => handleItemFocus(currentIndex)}
           onBlur={handleItemBlur}
           onMouseEnter={() => handleItemFocus(currentIndex)}

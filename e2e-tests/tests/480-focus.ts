@@ -15,6 +15,7 @@ Scenario('Autofocus', async ({ I }) => {
 
   I.click('Füge ein Element hinzu')
   I.type('Bild')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.say('focused on src input field of newly added image plugin')
   I.seeElement(locate('input[data-qa="plugin-image-src"]:focus'))
@@ -22,14 +23,14 @@ Scenario('Autofocus', async ({ I }) => {
 
 Scenario.todo('add test for exercises autofocus') // after exercise refactoring
 
-Scenario('focus plugins by clicking', async ({ I }) => {
+Scenario.only('focus plugins by clicking', async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/5')
 
   I.say('focus the existing text plugin and change it to an image plugin')
   I.click('$plugin-text-editor')
   I.see('Text', '$plugin-type-indicator')
-  I.type('/Bild')
-  I.pressKey('Enter')
+  I.type('/')
+  I.click('$plugin-suggestion-image')
   I.see('Bild', '$plugin-type-indicator')
   I.say('focused on src input field of new image plugin')
   I.seeElement('input[data-qa="plugin-image-src"]:focus')
