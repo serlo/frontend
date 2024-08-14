@@ -189,7 +189,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
       {interactiveOptions.length > 0 && (
         <>
-          <h1 className="pl-6 pt-4 text-lg font-bold">
+          <h1 className="pl-6 pt-1 text-lg font-bold">
             {editorStrings.addPluginsModal.interactivePluginsTitle}
           </h1>
           <div className="grid grid-cols-5 gap-4 p-4">
