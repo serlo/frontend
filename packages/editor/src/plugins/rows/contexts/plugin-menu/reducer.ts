@@ -20,14 +20,14 @@ export const pluginMenuReducer = (
         ...state,
         showPluginMenu: true,
         insertIndex: action.payload.insertIndex,
-        insertCallback: action.payload.insertCallback,
+        onInsertComplete: action.payload.onInsertComplete,
       }
     case PluginMenuActionTypes.CLOSE:
       return {
         ...state,
         showPluginMenu: false,
         insertIndex: undefined,
-        insertCallback: undefined,
+        onInsertComplete: undefined,
       }
   }
 }

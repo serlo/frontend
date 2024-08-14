@@ -66,7 +66,7 @@ export const useEditableKeydownHandler = (
                 insertIndex: parent.children?.findIndex(
                   (child) => child.id === id
                 ),
-                insertCallback: () => {
+                onInsertComplete: () => {
                   dispatch(
                     removePluginChild({
                       parent: parent.id,

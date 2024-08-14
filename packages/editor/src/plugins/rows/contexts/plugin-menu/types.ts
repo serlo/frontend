@@ -23,7 +23,7 @@ interface PluginMenuPayload {
   }
   [PluginMenuActionTypes.OPEN_WITH_SLASH_KEY]: {
     insertIndex: number | undefined
-    insertCallback: () => void
+    onInsertComplete: () => void
   }
   [PluginMenuActionTypes.CLOSE]: undefined
 }
@@ -35,7 +35,7 @@ export interface PluginMenuState {
   allowedChildPlugins: string[] | undefined
   showPluginMenu: boolean
   insertIndex: number | undefined
-  insertCallback: (() => void) | undefined
+  onInsertComplete: (() => void) | undefined
 }
 
 export interface PluginMenuItemType {
