@@ -37,9 +37,11 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       ? wrapExercisePlugin(pluginType)
       : { plugin: pluginType }
 
-    state.insert(pluginMenuState.insertIndex, pluginToInsert)
-
-    pluginMenuState.onInsertComplete?.()
+    if (pluginMenuState.insertCallback) {
+      pluginMenuState.insertCallback(pluginToInsert)
+    } else {
+      state.insert(pluginMenuState.insertIndex, pluginToInsert)
+    }
 
     pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
   }

@@ -7,7 +7,6 @@ import {
 import {
   focusNext,
   focusPrevious,
-  removePluginChild,
   selectChildTree,
   selectChildTreeOfParent,
   store,
@@ -20,6 +19,7 @@ import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { insertPlugin } from '../utils/insert-plugin'
 import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 
@@ -71,13 +71,14 @@ export const useEditableKeydownHandler = (
               type: PluginMenuActionTypes.OPEN_WITH_SLASH_KEY,
               payload: {
                 insertIndex,
-                onInsertComplete: () => {
-                  dispatch(
-                    removePluginChild({
-                      parent: parent.id,
-                      child: id,
-                    })
-                  )
+                insertCallback: (plugin) => {
+                  insertPlugin({
+                    pluginType: plugin.plugin,
+                    editor,
+                    id,
+                    dispatch,
+                    state: plugin.state,
+                  })
                 },
               },
             })

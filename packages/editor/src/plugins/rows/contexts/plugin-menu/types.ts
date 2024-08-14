@@ -1,4 +1,5 @@
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import type { EditorPluginType } from '@editor/types/editor-plugin-type'
+import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -23,7 +24,7 @@ interface PluginMenuPayload {
   }
   [PluginMenuActionTypes.OPEN_WITH_SLASH_KEY]: {
     insertIndex: number | undefined
-    onInsertComplete: () => void
+    insertCallback: (plugin: AnyEditorDocument) => void
   }
   [PluginMenuActionTypes.CLOSE]: undefined
 }
@@ -35,7 +36,7 @@ export interface PluginMenuState {
   allowedChildPlugins: string[] | undefined
   showPluginMenu: boolean
   insertIndex: number | undefined
-  onInsertComplete: (() => void) | undefined
+  insertCallback: ((plugin: AnyEditorDocument) => void) | undefined
 }
 
 export interface PluginMenuItemType {
