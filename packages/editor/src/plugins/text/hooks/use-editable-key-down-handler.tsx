@@ -53,7 +53,7 @@ export const useEditableKeydownHandler = (
       if (selection && Range.isCollapsed(selection)) {
         const isListActive = isSelectionWithinList(editor)
 
-        if (event.key === '/') {
+        if (event.key === '/' && !isListActive) {
           const { path } = selection.focus
           const node = Node.get(editor, path)
 
