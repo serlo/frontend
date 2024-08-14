@@ -13,7 +13,7 @@ interface PluginMenuItemProps {
   onInsertPlugin: (pluginType: EditorPluginType) => void
   onFocus: () => void
   onBlur: () => void
-  onMouseEnter: () => void
+  onMouseMove: () => void
   onMouseLeave: () => void
 }
 
@@ -28,7 +28,7 @@ export const PluginMenuItem = forwardRef<
     onInsertPlugin,
     onFocus,
     onBlur,
-    onMouseEnter,
+    onMouseMove,
     onMouseLeave,
   } = props
 
@@ -54,7 +54,7 @@ export const PluginMenuItem = forwardRef<
       }}
       onFocus={onFocus}
       onBlur={onBlur}
-      onMouseEnter={onMouseEnter}
+      onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className={cn(
         'group serlo-tooltip-trigger flex cursor-auto flex-col items-center rounded-md border border-0 border-transparent pb-0'

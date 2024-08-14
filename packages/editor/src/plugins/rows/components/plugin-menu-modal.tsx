@@ -219,7 +219,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           }}
           onFocus={() => handleItemFocus(currentIndex)}
           onBlur={handleItemBlur}
-          onMouseEnter={() => handleItemFocus(currentIndex)}
+          onMouseMove={() => handleItemFocus(currentIndex)}
           onMouseLeave={() => {
             handleItemBlur()
             itemRefs.current[currentIndex]?.blur()
