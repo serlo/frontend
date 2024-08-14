@@ -170,7 +170,6 @@ Scenario('Undo', async ({ I }) => {
   I.amOnPage(pageUrl)
 
   addNewTextPlugin(I)
-  I.pressKey('Backspace')
 
   I.type('Some text')
   I.see('Some text')
