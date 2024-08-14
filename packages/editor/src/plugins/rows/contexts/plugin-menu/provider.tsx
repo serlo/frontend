@@ -1,4 +1,4 @@
-import { type ReactNode, useReducer, useRef } from 'react'
+import { type ReactNode, useReducer } from 'react'
 
 import { PluginMenuContext } from './context'
 import { pluginMenuReducer } from './reducer'
