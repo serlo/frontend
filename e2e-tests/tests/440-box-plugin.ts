@@ -101,7 +101,7 @@ Scenario(
   }
 )
 
-Scenario.skip('Set box type using keyboard', async ({ I }) => {
+Scenario('Set box type using keyboard', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Create box plugin')
@@ -112,10 +112,10 @@ Scenario.skip('Set box type using keyboard', async ({ I }) => {
   I.seeElement('$plugin-box-initial-type-chooser')
 
   I.say('Use the Tab key to select a box type')
-  I.pressKey('Tab')
-  I.pressKey('Tab')
+  I.pressKey(['Shift', 'Tab'])
+  I.pressKey(['Shift', 'Tab'])
   I.pressKey('Enter')
-  I.see('Beispiel', locate('span.text-brand').inside('$plugin-box'))
+  I.see('Satz', locate('span.text-brand').inside('$plugin-box'))
   I.dontSeeElement('$plugin-box-initial-type-chooser')
 })
 
