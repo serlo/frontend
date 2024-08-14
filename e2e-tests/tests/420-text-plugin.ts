@@ -253,8 +253,7 @@ Scenario('Copy/cut/paste text', async ({ I }) => {
   I.see('CUTCUTCUT')
 })
 
-// TODO: Fix, find another way to check lines, leaf element is no longer rendered
-Scenario.skip('Empty line restrictions while typing', async ({ I }) => {
+Scenario('Empty line restrictions while typing', async ({ I }) => {
   I.amOnPage(pageUrl)
 
   I.click(locate(selectors.textEditor).inside('.plugin-rows'))
