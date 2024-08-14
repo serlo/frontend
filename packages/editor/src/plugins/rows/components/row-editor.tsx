@@ -30,9 +30,9 @@ export function RowEditor({
   const plugins = editorPlugins.getAllWithData()
   const dropContainer = useRef<HTMLDivElement>(null)
 
-  function handleAddPluginButtonClick(event: MouseEvent) {
-    event.preventDefault()
-    onAddButtonClick(index + 1)
+  function handleAddPluginButtonClick(e: MouseEvent, insertIndex: number) {
+    e.preventDefault()
+    onAddButtonClick(insertIndex)
   }
 
   return (
@@ -45,7 +45,7 @@ export function RowEditor({
       {isRootRow && index === 0 && (
         <AddRowButtonFloating
           focused={focused}
-          onClick={handleAddPluginButtonClick}
+          onClick={(e) => handleAddPluginButtonClick(e, index)}
         />
       )}
       <EditorRowRenderer
@@ -59,7 +59,7 @@ export function RowEditor({
       {hideAddButton ? null : (
         <AddRowButtonFloating
           focused={focused}
-          onClick={handleAddPluginButtonClick}
+          onClick={(e) => handleAddPluginButtonClick(e, index + 1)}
         />
       )}
     </div>

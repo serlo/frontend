@@ -63,9 +63,14 @@ export const useEditableKeydownHandler = (
             const currentIndex = parent.children?.findIndex(
               (child) => child.id === id
             )
+
+            const currentChild = parent.children?.find(
+              (child) => child.id === id
+            )
             const insertIndex =
               currentIndex !== undefined ? currentIndex + 1 : undefined
 
+            console.log('currentChild', currentChild)
             pluginMenuDispatch({
               type: PluginMenuActionTypes.OPEN_WITH_SLASH_KEY,
               payload: {
