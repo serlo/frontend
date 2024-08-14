@@ -1,15 +1,9 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - formatting options')
 
 Before(popupWarningFix)
-
-function addNewTextPlugin(I) {
-  I.click('$add-new-plugin-row-button')
-  I.type('Text')
-  I.pressKey('Tab')
-  I.pressKey('Enter')
-}
 
 Scenario(
   'Toggle text formatting options using keyboard shortcuts',

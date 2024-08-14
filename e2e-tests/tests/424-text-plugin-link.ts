@@ -1,15 +1,9 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - link')
 
 Before(popupWarningFix)
-
-function addNewTextPlugin(I) {
-  I.click('$add-new-plugin-row-button')
-  I.type('Text')
-  I.pressKey('Tab')
-  I.pressKey('Enter')
-}
 
 Scenario('Add a link using link suggestion menu', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')

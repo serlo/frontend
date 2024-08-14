@@ -1,4 +1,6 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { selectors } from './helpers/selectors'
 
 Feature('Serlo Editor - Text plugin basic interactions')
 
@@ -8,21 +10,6 @@ Before(popupWarningFix)
 // second is the default empty Text plugin.
 const initialTextPluginCount = 2
 const pageUrl = '/entity/create/Article/1377'
-const selectors = {
-  textEditor: '$plugin-text-editor',
-  addNewPluginButton: '$add-new-plugin-row-button',
-  multimediaWrapper: '$plugin-multimedia-wrapper',
-  toolbarUndoButton: '$editor-toolbar-undo',
-  toolbarRedoButton: '$editor-toolbar-redo',
-  numberedListButton: '$plugin-toolbar-button-nummerierte-liste',
-}
-
-export function addNewTextPlugin(I) {
-  I.click(selectors.addNewPluginButton)
-  I.type('Text')
-  I.pressKey('Tab')
-  I.pressKey('Enter')
-}
 
 function focusTextPlugin(I, position = 'first') {
   if (position === 'first') {

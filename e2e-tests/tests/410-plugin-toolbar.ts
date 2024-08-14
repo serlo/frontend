@@ -1,4 +1,4 @@
-import { addNewTextPlugin } from './420-text-plugin'
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - plugin toolbar')
