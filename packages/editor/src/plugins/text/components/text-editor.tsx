@@ -3,7 +3,7 @@ import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect } from 'react'
 import { createEditor, Node, Transforms } from 'slate'
-import { Editable, Slate, withReact } from 'slate-react'
+import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
@@ -94,6 +94,10 @@ export function TextEditor(props: TextEditorProps) {
     if (text === '') {
       Transforms.select(editor, { offset: 0, path: [0, 0] })
       instanceStateStore[id].selection = editor.selection
+    }
+
+    if (focused) {
+      ReactEditor.focus(editor)
     }
   }, [editor, focused, id])
 
