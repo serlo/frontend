@@ -680,6 +680,9 @@ export const loggedInData = {
         searchInputPlaceholder: 'Search...',
         basicPluginsTitle: 'Content Elements',
         interactivePluginsTitle: 'Exercises',
+        noPluginsFoundTitle: 'Sorry, no elements match your search.',
+        noPluginsFoundDescription:
+          'Please try different keywords or browse through all available elements.',
       },
       plugins: {
         anchor: {

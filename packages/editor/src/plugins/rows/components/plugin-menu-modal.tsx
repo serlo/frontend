@@ -1,3 +1,4 @@
+import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
@@ -67,19 +68,24 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       : allowedByContext
   }, [allWithData, pluginMenuState.allowedChildPlugins])
 
-  const { basicOptions, interactiveOptions } = useMemo(() => {
+  const { basicOptions, interactiveOptions, isEmpty } = useMemo(() => {
     const allOptions = allowedPlugins.map((type) => {
       return createOption(type as EditorPluginType, pluginsStrings)
     })
     const allowed = filterOptions(allOptions, searchString)
 
+    const basicOptions = allowed.filter(
+      (option) => !interactivePluginTypes.has(option.pluginType)
+    )
+
+    const interactiveOptions = allowed.filter((option) =>
+      interactivePluginTypes.has(option.pluginType)
+    )
+
     return {
-      basicOptions: allowed.filter(
-        (option) => !interactivePluginTypes.has(option.pluginType)
-      ),
-      interactiveOptions: allowed.filter((option) =>
-        interactivePluginTypes.has(option.pluginType)
-      ),
+      basicOptions,
+      interactiveOptions,
+      isEmpty: basicOptions.length === 0 && interactiveOptions.length === 0,
     }
   }, [allowedPlugins, pluginsStrings, searchString])
 
@@ -159,18 +165,38 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           className="ml-8 block"
         />
       </div>
-      <h1 className="pl-6 pt-4 text-lg font-bold">
-        {editorStrings.addPluginsModal.basicPluginsTitle}
-      </h1>
-      <div className="grid grid-cols-5 gap-4 p-4">
-        {renderPluginItems(basicOptions)}
-      </div>
-      <h1 className="pl-6 pt-4 text-lg font-bold">
-        {editorStrings.addPluginsModal.interactivePluginsTitle}
-      </h1>
-      <div className="grid grid-cols-5 gap-4 p-4">
-        {renderPluginItems(interactiveOptions, basicOptions.length)}
-      </div>
+      {isEmpty && (
+        <div className="mt-4 flex flex-col items-center justify-center space-y-2 p-10 pt-4 text-center">
+          <IconEmptyPluginsModal className="mb-4" />
+          <div>
+            <h3 className="pb-4 text-lg font-bold">
+              {editorStrings.addPluginsModal.noPluginsFoundTitle}
+            </h3>
+            <p>{editorStrings.addPluginsModal.noPluginsFoundDescription}</p>
+          </div>
+        </div>
+      )}
+      {basicOptions.length > 0 && (
+        <>
+          <h1 className="pl-6 pt-4 text-lg font-bold">
+            {editorStrings.addPluginsModal.basicPluginsTitle}
+          </h1>
+          <div className="grid grid-cols-5 gap-4 p-4">
+            {renderPluginItems(basicOptions)}
+          </div>
+        </>
+      )}
+
+      {interactiveOptions.length > 0 && (
+        <>
+          <h1 className="pl-6 pt-4 text-lg font-bold">
+            {editorStrings.addPluginsModal.interactivePluginsTitle}
+          </h1>
+          <div className="grid grid-cols-5 gap-4 p-4">
+            {renderPluginItems(interactiveOptions, basicOptions.length)}
+          </div>
+        </>
+      )}
     </ModalWithCloseButton>
   )
 
