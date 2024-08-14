@@ -16,6 +16,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // root plugin (like a template plugin or article plugin)
   // this should not change – so we don't need to use useAppSelector here
   const parentType = selectParentPluginType(store.getState(), id)
+
   const isParentTemplatePlugin = parentType?.startsWith('type-')
   const showLargeAddButton =
     parentType === EditorPluginType.Article || isParentTemplatePlugin
@@ -56,6 +57,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
               index={index}
               rows={state}
               row={row}
+              isRootRow={parentType === EditorPluginType.Rows}
               hideAddButton={!!hideAddButton}
               onAddButtonClick={handleOpenPluginMenu}
             />

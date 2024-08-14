@@ -14,6 +14,7 @@ interface RowEditorProps {
   row: StateTypeReturnType<RowsPluginState>[0]
   hideAddButton: boolean
   onAddButtonClick: (insertIndex: number) => void
+  isRootRow?: boolean
 }
 
 export function RowEditor({
@@ -23,6 +24,7 @@ export function RowEditor({
   rows,
   hideAddButton,
   onAddButtonClick,
+  isRootRow,
 }: RowEditorProps) {
   const focused = useAppSelector((state) => selectIsFocused(state, row.id))
   const plugins = editorPlugins.getAllWithData()
@@ -40,6 +42,12 @@ export function RowEditor({
       // bigger drop zone with padding hack
       className="rows-child relative -ml-12 pl-12"
     >
+      {isRootRow && index === 0 && (
+        <AddRowButtonFloating
+          focused={focused}
+          onClick={handleAddPluginButtonClick}
+        />
+      )}
       <EditorRowRenderer
         config={config}
         row={row}
