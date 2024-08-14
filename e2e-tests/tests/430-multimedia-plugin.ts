@@ -13,7 +13,6 @@ export async function addMultimediaPlugin(I: CodeceptJS.I) {
 
   I.say('Replace default Text plugin with a Multimedia plugin')
   I.click(locate('$plugin-text-editor').inside('.plugin-rows'))
-  // I.type('/')
   I.click(selectors.addNewPluginButton)
   I.type('Multimedia')
   I.pressKey('Tab')

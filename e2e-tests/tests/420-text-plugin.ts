@@ -4,6 +4,8 @@ Feature('Serlo Editor - Text plugin basic interactions')
 
 Before(popupWarningFix)
 
+// First Text plugin is the multimedia explanation,
+// second is the default empty Text plugin.
 const initialTextPluginCount = 2
 const pageUrl = '/entity/create/Article/1377'
 const selectors = {
