@@ -94,25 +94,21 @@ Scenario('Ordered list shortcuts', ({ I }) => {
   })
 })
 
-// TODO: Investigate how to not open modal inside list
-Scenario.skip(
-  "Don't show suggestions when '/' is inside of a list",
-  ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+Scenario("Don't show suggestions when '/' is inside of a list", ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
 
-    I.say('Add a new text plugin, check for suggestions, delete the backslash')
-    addNewTextPlugin(I)
+  I.say('Add a new text plugin, check for suggestions, delete the backslash')
+  addNewTextPlugin(I)
 
-    I.say(
-      'Create an unordered list, type in a backslash, check that suggestions are not showing'
-    )
-    I.type('- Some text')
-    I.see('Some text', 'ul')
-    I.pressKey('Enter')
-    I.type('/')
-    I.dontSee('Schreibe Text und Matheformeln, und formatiere sie.')
-  }
-)
+  I.say(
+    'Create an unordered list, type in a backslash, check that suggestions are not showing'
+  )
+  I.type('- Some text')
+  I.see('Some text', 'ul')
+  I.pressKey('Enter')
+  I.type('/')
+  I.dontSee('Schreibe Text und Matheformeln, und formatiere sie.')
+})
 
 Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
