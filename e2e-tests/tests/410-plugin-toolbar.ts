@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './420-text-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - plugin toolbar')
@@ -13,8 +14,7 @@ Scenario('Duplicate plugin', async ({ I }) => {
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.moveCursorTo(
@@ -30,8 +30,8 @@ Scenario('Delete plugin', async ({ I }) => {
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
+
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.moveCursorTo(

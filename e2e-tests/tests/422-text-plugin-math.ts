@@ -4,11 +4,17 @@ Feature('Serlo Editor - Text plugin - math formula')
 
 Before(popupWarningFix)
 
+function addNewTextPlugin(I) {
+  I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
+}
+
 Scenario('Add a math formula', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
@@ -20,9 +26,7 @@ Scenario('Add a math formula', async ({ I }) => {
 Scenario('Close math formula using arrow keys', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
-
+  addNewTextPlugin(I)
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
   I.type('\\frac12')
@@ -48,8 +52,7 @@ Scenario('Close math formula using arrow keys', async ({ I }) => {
 Scenario('Close math formula using Escape', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
@@ -63,9 +66,7 @@ Scenario('Close math formula using Escape', async ({ I }) => {
 
 Scenario('Close math formula using close button', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
-
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])

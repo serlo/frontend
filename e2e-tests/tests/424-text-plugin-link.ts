@@ -4,12 +4,17 @@ Feature('Serlo Editor - Text plugin - link')
 
 Before(popupWarningFix)
 
+function addNewTextPlugin(I) {
+  I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
+}
+
 Scenario('Add a link using link suggestion menu', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
-
+  addNewTextPlugin(I)
   I.say('Create text of link and select it')
   I.type('Some text')
   I.pressKey(['CommandOrControl', 'A'])
@@ -60,8 +65,7 @@ Scenario('Add a link using link suggestion menu', async ({ I }) => {
 Scenario('Edit existing link', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create a link')
   I.type('Some text')
@@ -91,8 +95,7 @@ Scenario('Edit existing link', async ({ I }) => {
 Scenario('Remove existing link', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create a link')
   I.type('Some text')

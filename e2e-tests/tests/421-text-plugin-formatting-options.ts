@@ -4,13 +4,19 @@ Feature('Serlo Editor - Text plugin - formatting options')
 
 Before(popupWarningFix)
 
+function addNewTextPlugin(I) {
+  I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
+}
+
 Scenario(
   'Toggle text formatting options using keyboard shortcuts',
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    I.click('$add-new-plugin-row-button')
-    I.pressKey('Backspace')
+    addNewTextPlugin(I)
     I.type('Some text')
     I.see('Some text')
 
@@ -117,9 +123,7 @@ Scenario(
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    I.click('$add-new-plugin-row-button')
-
-    I.pressKey('Backspace')
+    addNewTextPlugin(I)
 
     I.type('Some text')
 
