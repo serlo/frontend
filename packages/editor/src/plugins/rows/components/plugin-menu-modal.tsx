@@ -9,27 +9,19 @@ import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allow
 import { selectAncestorPluginTypes, store } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
-  EditorStrings,
-  useEditorStrings,
-} from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItem } from './plugin-menu-item'
 import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
+import {
+  createOption,
+  filterOptions,
+  isInteractivePluginType,
+} from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-
-export const interactivePluginTypes = new Set([
-  EditorPluginType.TextAreaExercise,
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.BlanksExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.Solution,
-  EditorPluginType.DropzoneImage,
-])
 
 interface PluginMenuModalProps {
   onInsertPlugin: (pluginType: EditorPluginType) => void
@@ -53,7 +45,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       .filter(
         ({ type, visibleInSuggestions }) =>
           visibleInSuggestions ||
-          interactivePluginTypes.has(type as EditorPluginType)
+          isInteractivePluginType(type as EditorPluginType)
       )
       .map(({ type }) => type)
 
@@ -75,11 +67,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     const allowed = filterOptions(allOptions, searchString)
 
     const basicOptions = allowed.filter(
-      (option) => !interactivePluginTypes.has(option.pluginType)
+      (option) => !isInteractivePluginType(option.pluginType)
     )
 
     const interactiveOptions = allowed.filter((option) =>
-      interactivePluginTypes.has(option.pluginType)
+      isInteractivePluginType(option.pluginType)
     )
 
     return {
@@ -229,66 +221,4 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
     })
   }
-}
-
-interface PluginStrings {
-  title?: string
-  description?: string
-}
-function createOption(
-  pluginType: EditorPluginType,
-  allPluginStrings: EditorStrings['plugins']
-): PluginMenuItemType {
-  const pluginData = editorPlugins
-    .getAllWithData()
-    .find((plugin) => plugin.type === pluginType)
-
-  if (!pluginData) {
-    return { pluginType, title: pluginType }
-  }
-
-  const pluginStrings = allPluginStrings[
-    pluginType as keyof typeof allPluginStrings
-  ] as PluginStrings
-
-  const title =
-    pluginStrings?.title ?? pluginData.plugin.defaultTitle ?? pluginType
-
-  const description =
-    pluginStrings?.description ?? pluginData.plugin.defaultDescription
-
-  const icon = pluginData.icon
-
-  return {
-    pluginType,
-    title,
-    description,
-    icon,
-  }
-}
-
-function filterOptions(option: PluginMenuItemType[], text: string) {
-  const search = text.toLowerCase()
-  if (!search.length) return option
-
-  const filterResults = new Set<PluginMenuItemType>()
-
-  // title or pluginType start with search string
-  option.forEach((entry) => {
-    if (
-      entry.title.toLowerCase().startsWith(search) ||
-      entry.pluginType.startsWith(search)
-    ) {
-      filterResults.add(entry)
-    }
-  })
-
-  // title includes search string
-  option.forEach((entry) => {
-    if (entry.title.toLowerCase().includes(search)) {
-      filterResults.add(entry)
-    }
-  })
-
-  return [...filterResults]
 }

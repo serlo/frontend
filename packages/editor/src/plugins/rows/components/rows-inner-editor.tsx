@@ -3,13 +3,14 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContext } from 'react'
 
 import { AddRowButtonLarge } from './add-row-button-large'
-import { interactivePluginTypes, PluginMenuModal } from './plugin-menu-modal'
+import { PluginMenuModal } from './plugin-menu-modal'
 import { RowEditor } from './row-editor'
 import type { RowsProps } from '..'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '../contexts/plugin-menu'
+import { isInteractivePluginType } from '../utils/plugin-menu'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
@@ -31,7 +32,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   }
 
   function handleInsertPlugin(pluginType: EditorPluginType) {
-    const isInteractivePlugin = interactivePluginTypes.has(pluginType)
+    const isInteractivePlugin = isInteractivePluginType(pluginType)
 
     const pluginToInsert = isInteractivePlugin
       ? wrapExercisePlugin(pluginType)
