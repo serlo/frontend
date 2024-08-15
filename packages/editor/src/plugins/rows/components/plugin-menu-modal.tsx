@@ -94,7 +94,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }
 
   const handleModalClose = (isOpen: boolean) => {
-    if (isOpen === false) {
+    if (isOpen === false && searchString.length === 0) {
       pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
     }
     setSearchString('')
