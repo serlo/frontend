@@ -2,6 +2,7 @@ import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
 
 interface usePluginMenuKeyboardHandlerArgs {
+  enabled: boolean
   currentlyFocusedItemIndex: number
   setCurrentlyFocusedItemIndex: React.Dispatch<React.SetStateAction<number>>
   columns: number
@@ -10,11 +11,8 @@ interface usePluginMenuKeyboardHandlerArgs {
   searchInputRef: React.RefObject<HTMLInputElement>
 }
 
-const hotkeyConfig = {
-  enableOnContentEditable: true,
-  scopes: ['global'],
-}
 export function usePluginMenuKeyboardHandler({
+  enabled,
   currentlyFocusedItemIndex,
   setCurrentlyFocusedItemIndex,
   basicItemsLength,
@@ -112,14 +110,17 @@ export function usePluginMenuKeyboardHandler({
       default:
         break
     }
-
-    event.preventDefault()
   }
 
   useHotkeys(
     [Key.ArrowUp, Key.ArrowDown, Key.ArrowLeft, Key.ArrowRight],
     handleArrowKeyPress,
-    hotkeyConfig,
+    {
+      enabled,
+      preventDefault: true,
+      scopes: ['global'],
+      enableOnContentEditable: true,
+    },
     [currentlyFocusedItemIndex]
   )
 }

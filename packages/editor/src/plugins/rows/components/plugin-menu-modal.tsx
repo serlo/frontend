@@ -116,6 +116,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }, [searchInputRef])
 
   usePluginMenuKeyboardHandler({
+    enabled: pluginMenuState.showPluginMenu,
     currentlyFocusedItemIndex,
     setCurrentlyFocusedItemIndex,
     basicItemsLength: basicOptions.length,
