@@ -1,4 +1,8 @@
-import { selectParentPluginType, store } from '@editor/store'
+import {
+  selectEmptyTextPluginChildrenIndexes,
+  selectParentPluginType,
+  store,
+} from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContext } from 'react'
 
@@ -32,9 +36,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   }
 
   function handleInsertPlugin(pluginType: EditorPluginType) {
-    const isInteractivePlugin = isInteractivePluginType(pluginType)
-
-    const pluginToInsert = isInteractivePlugin
+    const pluginToInsert = isInteractivePluginType(pluginType)
       ? wrapExercisePlugin(pluginType)
       : { plugin: pluginType }
 
@@ -44,7 +46,16 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       state.insert(pluginMenuState.insertIndex, pluginToInsert)
     }
 
+    removeEmptyTextPluginChildren()
+
     pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
+  }
+
+  function removeEmptyTextPluginChildren() {
+    const indexes = selectEmptyTextPluginChildrenIndexes(store.getState(), id)
+    indexes.forEach((index) => {
+      if (index !== pluginMenuState.insertIndex) state.remove(index)
+    })
   }
 
   return (

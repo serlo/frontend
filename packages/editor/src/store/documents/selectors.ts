@@ -64,6 +64,29 @@ export const selectIsDocumentEmpty = createSelector(
     return R.equals(document.state, initialState)
   }
 )
+
+export const selectEmptyTextPluginChildrenIndexes = createSelector(
+  [selectSelf, (_state, id: string) => id],
+  (documents, id: string) => {
+    const childTree = getChildTree(documents, id)
+    if (!childTree.children) return []
+
+    const textPlugin = editorPlugins.getByType(EditorPluginType.Text)
+
+    return childTree.children.reduce((acc: Array<number>, curr, currIndex) => {
+      const childDocumentPlugin = documents[curr.id]
+
+      if (childDocumentPlugin.plugin !== EditorPluginType.Text) return acc
+
+      const isEmptyTextPlugin = textPlugin.isEmpty?.(
+        textPlugin.state.init(childDocumentPlugin.state, () => {})
+      )
+
+      return isEmptyTextPlugin ? [...acc, currIndex] : acc
+    }, [])
+  }
+)
+
 export const selectChildTree: (
   state: State,
   id?: string
