@@ -1,7 +1,7 @@
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
 
-interface usePluginMenuKeyboardHandlerProps {
+interface usePluginMenuKeyboardHandlerArgs {
   currentlyFocusedItemIndex: number
   setCurrentlyFocusedItemIndex: React.Dispatch<React.SetStateAction<number>>
   columns: number
@@ -21,7 +21,7 @@ export function usePluginMenuKeyboardHandler({
   intearctiveItemsLength,
   columns,
   searchInputRef,
-}: usePluginMenuKeyboardHandlerProps) {
+}: usePluginMenuKeyboardHandlerArgs) {
   const handleArrowKeyPress = (event: KeyboardEvent) => {
     const totalItems = basicItemsLength + intearctiveItemsLength
     const basicPluginsCount = basicItemsLength

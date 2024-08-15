@@ -15,7 +15,7 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 
 import type { RowsPluginConfig, RowsPluginState } from '.'
 import { RowDragButton } from './components/row-drag-button'
-import { useCanDrop } from './components/use-can-drop'
+import { useCanDrop } from './hooks/use-can-drop'
 
 interface RowDragObject {
   id: string

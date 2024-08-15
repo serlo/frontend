@@ -17,8 +17,8 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItem } from './plugin-menu-item'
-import { usePluginMenuKeyboardHandler } from './use-plugin-menu-keyboard-handler'
 import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
+import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export const interactivePluginTypes = new Set([
