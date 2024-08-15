@@ -44,9 +44,8 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       pluginMenuState.insertCallback(pluginToInsert)
     } else {
       state.insert(pluginMenuState.insertIndex, pluginToInsert)
+      removeEmptyTextPluginChildren()
     }
-
-    removeEmptyTextPluginChildren()
 
     pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
   }
