@@ -3,8 +3,8 @@ import { Key } from 'ts-key-enum'
 
 interface usePluginMenuKeyboardHandlerArgs {
   enabled: boolean
-  currentlyFocusedItemIndex: number
-  setCurrentlyFocusedItemIndex: React.Dispatch<React.SetStateAction<number>>
+  focusedItemIndex: number | null
+  setFocusedItemIndex: React.Dispatch<React.SetStateAction<number | null>>
   columns: number
   basicItemsLength: number
   intearctiveItemsLength: number
@@ -13,8 +13,8 @@ interface usePluginMenuKeyboardHandlerArgs {
 
 export function usePluginMenuKeyboardHandler({
   enabled,
-  currentlyFocusedItemIndex,
-  setCurrentlyFocusedItemIndex,
+  focusedItemIndex,
+  setFocusedItemIndex,
   basicItemsLength,
   intearctiveItemsLength,
   columns,
@@ -24,48 +24,46 @@ export function usePluginMenuKeyboardHandler({
     const totalItems = basicItemsLength + intearctiveItemsLength
     const basicPluginsCount = basicItemsLength
     const interactivePluginsStartIndex = basicPluginsCount
+    const assumedItemIndex = focusedItemIndex ?? 0
 
-    const isInBasicGrid =
-      currentlyFocusedItemIndex < interactivePluginsStartIndex
-    const isInInteractiveGrid =
-      currentlyFocusedItemIndex >= interactivePluginsStartIndex
+    const isInBasicGrid = assumedItemIndex < interactivePluginsStartIndex
+    const isInInteractiveGrid = assumedItemIndex >= interactivePluginsStartIndex
 
     const fullBasicRowsCount = Math.floor(basicPluginsCount / columns)
     const lastBasicRowItemCount = basicPluginsCount % columns
     const isInLastFullRowOfBasic =
-      currentlyFocusedItemIndex >= (fullBasicRowsCount - 1) * columns &&
-      currentlyFocusedItemIndex < fullBasicRowsCount * columns
+      assumedItemIndex >= (fullBasicRowsCount - 1) * columns &&
+      assumedItemIndex < fullBasicRowsCount * columns
 
-    const isInFirstRowOfBasic = currentlyFocusedItemIndex < columns
+    const isInFirstRowOfBasic = assumedItemIndex < columns
     const isInLastRowOfBasic =
-      currentlyFocusedItemIndex >= fullBasicRowsCount * columns &&
-      currentlyFocusedItemIndex < basicPluginsCount
+      assumedItemIndex >= fullBasicRowsCount * columns &&
+      assumedItemIndex < basicPluginsCount
     const isInFirstRowOfInteractive =
-      currentlyFocusedItemIndex >= interactivePluginsStartIndex &&
-      currentlyFocusedItemIndex < interactivePluginsStartIndex + columns
+      assumedItemIndex >= interactivePluginsStartIndex &&
+      assumedItemIndex < interactivePluginsStartIndex + columns
 
     switch (event.key) {
       case Key.ArrowDown:
         if (isInBasicGrid) {
           if (isInLastRowOfBasic) {
-            const indexInFirstInteractiveRow =
-              currentlyFocusedItemIndex % columns
-            setCurrentlyFocusedItemIndex(
+            const indexInFirstInteractiveRow = assumedItemIndex % columns
+            setFocusedItemIndex(
               interactivePluginsStartIndex + indexInFirstInteractiveRow
             )
           } else if (
             isInLastFullRowOfBasic &&
-            currentlyFocusedItemIndex % columns >= lastBasicRowItemCount
+            assumedItemIndex % columns >= lastBasicRowItemCount
           ) {
-            setCurrentlyFocusedItemIndex(fullBasicRowsCount * columns)
+            setFocusedItemIndex(fullBasicRowsCount * columns)
           } else {
-            setCurrentlyFocusedItemIndex((prev: number) =>
-              Math.min(prev + columns, totalItems - 1)
+            setFocusedItemIndex((prev) =>
+              Math.min((prev ?? 0) + columns, totalItems - 1)
             )
           }
         } else if (isInInteractiveGrid) {
-          setCurrentlyFocusedItemIndex((prev) =>
-            Math.min(prev + columns, totalItems - 1)
+          setFocusedItemIndex((prev) =>
+            Math.min((prev ?? 0) + columns, totalItems - 1)
           )
         }
         break
@@ -74,37 +72,34 @@ export function usePluginMenuKeyboardHandler({
         if (isInInteractiveGrid) {
           if (isInFirstRowOfInteractive) {
             const indexInLastRowOfBasic =
-              (currentlyFocusedItemIndex - interactivePluginsStartIndex) %
-              columns
+              (assumedItemIndex - interactivePluginsStartIndex) % columns
             if (indexInLastRowOfBasic < lastBasicRowItemCount) {
-              setCurrentlyFocusedItemIndex(
+              setFocusedItemIndex(
                 fullBasicRowsCount * columns + indexInLastRowOfBasic
               )
             } else {
-              setCurrentlyFocusedItemIndex(
+              setFocusedItemIndex(
                 fullBasicRowsCount * columns + lastBasicRowItemCount - 1
               )
             }
           } else {
-            setCurrentlyFocusedItemIndex((prev) => Math.max(prev - columns, 0))
+            setFocusedItemIndex((prev) => Math.max((prev ?? 0) - columns, 0))
           }
         } else if (isInBasicGrid) {
           if (isInFirstRowOfBasic) {
             searchInputRef.current?.focus()
           } else {
-            setCurrentlyFocusedItemIndex((prev) => Math.max(prev - columns, 0))
+            setFocusedItemIndex((prev) => Math.max((prev ?? 0) - columns, 0))
           }
         }
         break
 
       case Key.ArrowLeft:
-        setCurrentlyFocusedItemIndex((prev) => Math.max(prev - 1, 0))
+        setFocusedItemIndex((prev) => Math.max((prev ?? 0) - 1, 0))
         break
 
       case Key.ArrowRight:
-        setCurrentlyFocusedItemIndex((prev) =>
-          Math.min(prev + 1, totalItems - 1)
-        )
+        setFocusedItemIndex((prev) => Math.min((prev ?? 0) + 1, totalItems - 1))
         break
 
       default:
@@ -118,9 +113,7 @@ export function usePluginMenuKeyboardHandler({
     {
       enabled,
       preventDefault: true,
-      scopes: ['global'],
       enableOnContentEditable: true,
-    },
-    [currentlyFocusedItemIndex]
+    }
   )
 }

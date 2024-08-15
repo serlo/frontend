@@ -42,7 +42,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
 
   const [searchString, setSearchString] = useState('')
-  const [currentlyFocusedItemIndex, setCurrentlyFocusedItemIndex] = useState(0)
+  const [focusedItemIndex, setFocusedItemIndex] = useState<number | null>(null)
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
@@ -90,11 +90,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }, [allowedPlugins, pluginsStrings, searchString])
 
   const handleItemFocus = (index: number) => {
-    setCurrentlyFocusedItemIndex(index)
+    setFocusedItemIndex(index)
   }
 
   const handleItemBlur = () => {
-    setCurrentlyFocusedItemIndex(-1)
+    setFocusedItemIndex(-1)
   }
 
   const getTooltipPosition = (index: number): 'right' | 'left' | undefined => {
@@ -117,8 +117,8 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   usePluginMenuKeyboardHandler({
     enabled: pluginMenuState.showPluginMenu,
-    currentlyFocusedItemIndex,
-    setCurrentlyFocusedItemIndex,
+    focusedItemIndex,
+    setFocusedItemIndex,
     basicItemsLength: basicOptions.length,
     intearctiveItemsLength: interactiveOptions.length,
     columns: 5,
@@ -126,10 +126,10 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   })
 
   useEffect(() => {
-    if (itemRefs.current[currentlyFocusedItemIndex]) {
-      itemRefs.current[currentlyFocusedItemIndex]?.focus()
+    if (focusedItemIndex !== null && itemRefs.current[focusedItemIndex]) {
+      itemRefs.current[focusedItemIndex]?.focus()
     }
-  }, [currentlyFocusedItemIndex])
+  }, [focusedItemIndex])
 
   useEffect(() => {
     if (pluginMenuState.showPluginMenu) {
@@ -157,7 +157,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           onChange={(e) => setSearchString(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === Key.ArrowDown) {
-              setCurrentlyFocusedItemIndex(0)
+              setFocusedItemIndex(0)
               e.preventDefault()
             }
           }}
@@ -212,7 +212,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           key={currentIndex}
           ref={(el) => (itemRefs.current[currentIndex] = el)}
           item={item}
-          selected={currentIndex === currentlyFocusedItemIndex}
+          selected={currentIndex === focusedItemIndex}
           tooltipPosition={getTooltipPosition(index)}
           onInsertPlugin={(type: EditorPluginType) => {
             onInsertPlugin(type)
