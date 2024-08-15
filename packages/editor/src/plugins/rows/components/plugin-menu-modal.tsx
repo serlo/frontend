@@ -60,33 +60,37 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       : allowedByContext
   }, [allWithData, pluginMenuState.allowedChildPlugins])
 
-  const { basicOptions, interactiveOptions, isEmpty } = useMemo(() => {
-    const allOptions = allowedPlugins.map((type) => {
-      return createOption(type as EditorPluginType, pluginsStrings)
-    })
-    const allowed = filterOptions(allOptions, searchString)
+  const { basicOptions, interactiveOptions, firstOption, isEmpty } =
+    useMemo(() => {
+      const allOptions = allowedPlugins.map((type) => {
+        return createOption(type as EditorPluginType, pluginsStrings)
+      })
+      const allowed = filterOptions(allOptions, searchString)
 
-    const basicOptions = allowed.filter(
-      (option) => !isInteractivePluginType(option.pluginType)
-    )
+      const basicOptions = allowed.filter(
+        (option) => !isInteractivePluginType(option.pluginType)
+      )
 
-    const interactiveOptions = allowed.filter((option) =>
-      isInteractivePluginType(option.pluginType)
-    )
+      const interactiveOptions = allowed.filter((option) =>
+        isInteractivePluginType(option.pluginType)
+      )
 
-    return {
-      basicOptions,
-      interactiveOptions,
-      isEmpty: basicOptions.length === 0 && interactiveOptions.length === 0,
-    }
-  }, [allowedPlugins, pluginsStrings, searchString])
+      const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)
+
+      return {
+        basicOptions,
+        interactiveOptions,
+        firstOption,
+        isEmpty: firstOption === undefined,
+      }
+    }, [allowedPlugins, pluginsStrings, searchString])
 
   const handleItemFocus = (index: number) => {
     setFocusedItemIndex(index)
   }
 
   const handleItemBlur = () => {
-    setFocusedItemIndex(-1)
+    setFocusedItemIndex(null)
   }
 
   const getTooltipPosition = (index: number): 'right' | 'left' | undefined => {
@@ -94,7 +98,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }
 
   const handleModalClose = (isOpen: boolean) => {
-    if (isOpen === false) {
+    if (isOpen === false && searchString.length === 0) {
       pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
     }
     setSearchString('')
@@ -131,6 +135,19 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     }
   }, [pluginMenuState.showPluginMenu, searchInputRef])
 
+  function onKeyDownHandler(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === Key.ArrowDown) {
+      setFocusedItemIndex(0)
+      e.preventDefault()
+    }
+    if (e.key === Key.Enter) {
+      if (!firstOption) return
+      onInsertPlugin(firstOption.pluginType)
+      setSearchString('')
+      e.preventDefault()
+    }
+  }
+
   return (
     <ModalWithCloseButton
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
@@ -147,12 +164,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           placeholder={editorStrings.addPluginsModal.searchInputPlaceholder}
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === Key.ArrowDown) {
-              setFocusedItemIndex(0)
-              e.preventDefault()
-            }
-          }}
+          onKeyDown={onKeyDownHandler}
           inputWidth="50%"
           width="60%"
           className="ml-8 block"
