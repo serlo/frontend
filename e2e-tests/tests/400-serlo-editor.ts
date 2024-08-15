@@ -82,8 +82,7 @@ Scenario('Add plugin via slash command', async ({ I }) => {
   I.seeElement('.serlo-table')
 })
 
-//TODO: Fix
-Scenario.skip(
+Scenario(
   'Feature compatibility: "suggestions" and "empty lines restriction"',
   ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
@@ -109,9 +108,6 @@ Scenario.skip(
     I.see('Second paragraph')
 
     I.say('Remove the Image plugin and merge the split Text plugin')
-    I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
-
-    I.click('$modal-close-button') // patch to close the pixabay
 
     I.moveCursorTo(
       locate('[data-radix-collection-item]').inside('.plugin-toolbar')
