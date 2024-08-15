@@ -144,6 +144,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       if (!firstOption) return
       onInsertPlugin(firstOption.pluginType)
       setSearchString('')
+      e.preventDefault()
     }
   }
 
