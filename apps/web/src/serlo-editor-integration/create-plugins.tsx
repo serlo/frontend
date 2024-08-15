@@ -29,6 +29,7 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
@@ -83,6 +84,13 @@ export function createPlugins({
       type: EditorPluginType.Image,
       plugin: imagePlugin,
       visibleInSuggestions: true,
+      icon: <IconImage />,
+    },
+    {
+      type: EditorPluginType.ImageGallery,
+      plugin: createImageGalleryPlugin(),
+      visibleInSuggestions: true,
+      // TODO: Add icon
       icon: <IconImage />,
     },
     {
