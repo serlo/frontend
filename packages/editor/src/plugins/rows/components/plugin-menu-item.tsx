@@ -57,7 +57,7 @@ export const PluginMenuItem = forwardRef<
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
         className={cn(
-          'group serlo-tooltip-trigger flex w-full cursor-auto flex-col items-center rounded-md border border-0 border-transparent pb-0'
+          'group serlo-tooltip-trigger flex w-full cursor-auto flex-col items-center rounded-md border-0 border-transparent pb-0'
         )}
       >
         <EditorTooltip className={tooltipClassName} text={description} />
