@@ -129,7 +129,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     <ModalWithCloseButton
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
       extraTitleClassName="sr-only"
-      title="Add Plugin Modal"
+      title={pluginsStrings.rows.addAnElement}
       isOpen={pluginMenuState.showPluginMenu}
       setIsOpen={handleModalClose}
       data-qa="plugin-menu-modal"
