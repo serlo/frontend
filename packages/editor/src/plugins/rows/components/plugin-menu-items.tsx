@@ -31,9 +31,9 @@ export function PluginMenuItems({
     <>
       {basicOptions.length ? (
         <>
-          <h1 className="pl-6 pt-4 text-lg font-bold">
+          <h3 className="pl-6 pt-4 text-lg font-bold text-almost-black">
             {editorStrings.addPluginsModal.basicPluginsTitle}
-          </h1>
+          </h3>
           <ul className="grid grid-cols-5 gap-4 p-4">
             {renderListItems(basicOptions, 0)}
           </ul>
@@ -42,9 +42,9 @@ export function PluginMenuItems({
 
       {interactiveOptions.length ? (
         <>
-          <h1 className="pl-6 pt-1 text-lg font-bold">
+          <h3 className="pl-6 pt-1 text-lg font-bold text-almost-black">
             {editorStrings.addPluginsModal.interactivePluginsTitle}
-          </h1>
+          </h3>
           <ul className="grid grid-cols-5 gap-4 p-4">
             {renderListItems(interactiveOptions, basicOptions.length)}
           </ul>
@@ -59,9 +59,9 @@ export function PluginMenuItems({
       const selected = currentIndex === focusedItemIndex
       const tooltipPosition = getTooltipPosition(index)
       const tooltipClassName = tooltipPosition
-        ? tooltipPosition === 'right'
-          ? '-left-0'
-          : '-right-0'
+        ? tooltipPosition === 'left'
+          ? '-right-0 [&>span]:!min-w-80'
+          : ''
         : '-left-24'
 
       return (

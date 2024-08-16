@@ -148,29 +148,29 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           onChange={(e) => setSearchString(e.target.value)}
           onKeyDown={onKeyDownHandler}
           inputWidth="50%"
-          width="60%"
           className="ml-8 block"
         />
       </div>
-      {isEmpty && (
+      {isEmpty ? (
         <div className="mt-4 flex flex-col items-center justify-center space-y-2 p-10 pt-4 text-center">
           <IconEmptyPluginsModal className="mb-4" />
           <div>
-            <h3 className="pb-4 text-lg font-bold">
+            <h3 className="pb-4 text-lg font-bold text-almost-black">
               {editorStrings.addPluginsModal.noPluginsFoundTitle}
             </h3>
             <p>{editorStrings.addPluginsModal.noPluginsFoundDescription}</p>
           </div>
         </div>
+      ) : (
+        <PluginMenuItems
+          basicOptions={basicOptions}
+          interactiveOptions={interactiveOptions}
+          focusedItemIndex={focusedItemIndex}
+          setFocusedItemIndex={setFocusedItemIndex}
+          itemRefs={itemRefs}
+          onInsertPlugin={onInsertPlugin}
+        />
       )}
-      <PluginMenuItems
-        basicOptions={basicOptions}
-        interactiveOptions={interactiveOptions}
-        focusedItemIndex={focusedItemIndex}
-        setFocusedItemIndex={setFocusedItemIndex}
-        itemRefs={itemRefs}
-        onInsertPlugin={onInsertPlugin}
-      />
     </ModalWithCloseButton>
   )
 }
