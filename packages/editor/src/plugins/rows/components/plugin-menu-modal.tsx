@@ -186,9 +186,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           <h1 className="pl-6 pt-4 text-lg font-bold">
             {editorStrings.addPluginsModal.basicPluginsTitle}
           </h1>
-          <div className="grid grid-cols-5 gap-4 p-4">
+          <ul className="grid grid-cols-5 gap-4 p-4">
             {renderPluginItems(basicOptions)}
-          </div>
+          </ul>
         </>
       )}
 
@@ -197,9 +197,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           <h1 className="pl-6 pt-1 text-lg font-bold">
             {editorStrings.addPluginsModal.interactivePluginsTitle}
           </h1>
-          <div className="grid grid-cols-5 gap-4 p-4">
+          <ul className="grid grid-cols-5 gap-4 p-4">
             {renderPluginItems(interactiveOptions, basicOptions.length)}
-          </div>
+          </ul>
         </>
       )}
     </ModalWithCloseButton>
