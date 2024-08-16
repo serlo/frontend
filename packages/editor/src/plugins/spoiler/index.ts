@@ -30,7 +30,18 @@ function createSpoilerState(config: SpoilerConfig) {
   })
 }
 
-export const defaultConfig: SpoilerConfig = {}
+const defaultAllowedPlugins: EditorPluginType[] = [
+  EditorPluginType.Text,
+  EditorPluginType.Image,
+  EditorPluginType.Equations,
+  EditorPluginType.Multimedia,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Highlight,
+]
+
+export const defaultConfig: SpoilerConfig = {
+  allowedPlugins: defaultAllowedPlugins,
+}
 
 export function createSpoilerPlugin(
   config = defaultConfig
@@ -38,12 +49,12 @@ export function createSpoilerPlugin(
   return {
     Component: SpoilerEditor,
     state: createSpoilerState(config),
-    config: {},
+    config,
   }
 }
 
 export interface SpoilerConfig {
-  allowedPlugins?: (EditorPluginType | string)[]
+  allowedPlugins?: EditorPluginType[]
 }
 
 export type SpoilerPluginState = ReturnType<typeof createSpoilerState>

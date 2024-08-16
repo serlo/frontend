@@ -18,24 +18,15 @@ const state = object({
   contentWidth: optional(string()), // Contains values like '40rem'. Possible values ['4rem', '6rem', ...]
 })
 
-export function createEdusharingAssetPlugin(
-  config: EdusharingAssetConfig
-): EditorPlugin<EdusharingAssetState, EdusharingAssetConfig> {
+export function createEdusharingAssetPlugin(): EditorPlugin<EdusharingAssetState> {
   return {
     Component: EdusharingAssetEditor,
     state,
-    config,
+    config: {},
     defaultTitle: 'Edu-sharing Inhalt',
     defaultDescription: 'Inhalte von edu-sharing einbinden',
   }
 }
 
-export interface EdusharingAssetConfig {
-  ltik: string
-}
-
 export type EdusharingAssetState = typeof state
-export type EdusharingAssetProps = EditorPluginProps<
-  EdusharingAssetState,
-  EdusharingAssetConfig
->
+export type EdusharingAssetProps = EditorPluginProps<EdusharingAssetState>

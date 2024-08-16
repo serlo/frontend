@@ -8,9 +8,7 @@ import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedi
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
-import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
-import type { PluginsConfig } from '@editor/package/config'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -19,7 +17,10 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { createMultimediaPlugin } from '@editor/plugins/multimedia'
+import {
+  createMultimediaPlugin,
+  defaultConfig as multimediaDefaultConfig,
+} from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
@@ -38,19 +39,32 @@ import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/st
 
 import { createTestingImagePlugin } from './image-with-testing-config'
 
-export function createBasicPlugins(config: Required<PluginsConfig>) {
-  return [
+export function createBasicPlugins(
+  plugins: (EditorPluginType | TemplatePluginType)[],
+  testingSecret?: string
+) {
+  const isEdusharing = plugins.includes(EditorPluginType.EdusharingAsset)
+  const edusharingAllowedPluginsInBoxAndSpoiler = [
+    EditorPluginType.Text,
+    EditorPluginType.Equations,
+    EditorPluginType.Multimedia,
+    EditorPluginType.SerloTable,
+    EditorPluginType.Highlight,
+    EditorPluginType.EdusharingAsset,
+  ]
+
+  const allPlugins = [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
       visibleInSuggestions: true,
       icon: <IconText />,
     },
-    ...(config.general.testingSecret
+    ...(testingSecret
       ? [
           {
             type: EditorPluginType.Image,
-            plugin: createTestingImagePlugin(config.general.testingSecret),
+            plugin: createTestingImagePlugin(testingSecret),
             visibleInSuggestions: true,
             icon: <IconImage />,
           },
@@ -58,19 +72,29 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       : []),
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(createMultimediaPluginConfig(config)),
+      plugin: createMultimediaPlugin(
+        isEdusharing
+          ? {
+              ...multimediaDefaultConfig,
+              allowedPlugins: [
+                EditorPluginType.EdusharingAsset,
+                EditorPluginType.Geogebra,
+              ],
+            }
+          : undefined
+      ),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
     {
-      type: EditorPluginType.Video,
-      plugin: videoPlugin,
-      visibleInSuggestions: true,
-      icon: <IconVideo />,
-    },
-    {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(config.spoiler),
+      plugin: createSpoilerPlugin(
+        isEdusharing
+          ? {
+              allowedPlugins: edusharingAllowedPluginsInBoxAndSpoiler,
+            }
+          : undefined
+      ),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
@@ -82,13 +106,19 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin(config.box),
+      plugin: createBoxPlugin(
+        isEdusharing
+          ? {
+              allowedPlugins: edusharingAllowedPluginsInBoxAndSpoiler,
+            }
+          : undefined
+      ),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },
     {
       type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(config.table),
+      plugin: createSerloTablePlugin(),
       visibleInSuggestions: true,
       icon: <IconTable />,
     },
@@ -104,33 +134,19 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       visibleInSuggestions: true,
       icon: <IconHighlight />,
     },
-    ...(config.general.enablePlugins?.some(
-      (type) => type === EditorPluginType.EdusharingAsset
-    )
-      ? [
-          {
-            type: EditorPluginType.EdusharingAsset,
-            plugin: createEdusharingAssetPlugin({
-              ltik: config.edusharingAsset.ltik,
-            }),
-            visibleInSuggestions: true,
-            icon: <IconImage />,
-          },
-        ]
-      : []),
-    ...(config.general.enablePlugins?.some(
-      (type) => type === EditorPluginType.SerloInjection
-    )
-      ? [
-          {
-            type: EditorPluginType.SerloInjection,
-            plugin: createSerloInjectionPlugin(),
-            renderer: SerloInjectionStaticRenderer,
-            visibleInSuggestions: true,
-            icon: <IconInjection />,
-          },
-        ]
-      : []),
+    {
+      type: EditorPluginType.EdusharingAsset,
+      plugin: createEdusharingAssetPlugin(),
+      visibleInSuggestions: true,
+      icon: <IconImage />,
+    },
+    {
+      type: EditorPluginType.SerloInjection,
+      plugin: createSerloInjectionPlugin(),
+      renderer: SerloInjectionStaticRenderer,
+      visibleInSuggestions: true,
+      icon: <IconInjection />,
+    },
 
     // Exercises etc.
     // ===================================================
@@ -139,15 +155,10 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       plugin: exercisePlugin,
       visibleInSuggestions: true,
     },
-    ...(config.general.enableTextAreaExercise
-      ? [
-          {
-            type: EditorPluginType.TextAreaExercise,
-            plugin: textAreaExercisePlugin,
-            visibleInSuggestions: false,
-          },
-        ]
-      : []),
+    {
+      type: EditorPluginType.TextAreaExercise,
+      plugin: textAreaExercisePlugin,
+    },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     {
       type: EditorPluginType.InputExercise,
@@ -167,6 +178,9 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       visibleInSuggestions: false,
       icon: <IconDropzones />,
     },
+    // TODO: Enable also for integrations
+    // { type: EditorPluginType.H5p, plugin: H5pPlugin },
+
     // Special plugins, never visible in suggestions
     // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
@@ -176,23 +190,6 @@ export function createBasicPlugins(config: Required<PluginsConfig>) {
       plugin: genericContentTypePlugin,
     },
   ]
-}
 
-function createMultimediaPluginConfig(config: Required<PluginsConfig>) {
-  const { general, multimedia } = config
-
-  return {
-    ...multimedia,
-    allowedPlugins: multimedia.allowedPlugins.filter((allowedPlugin) => {
-      if (
-        // If the user didn't provide the Serlo Editor testing secret,
-        // remove the Image plugin from Multimedia config allowed plugins
-        allowedPlugin === EditorPluginType.Image &&
-        !general?.testingSecret
-      ) {
-        return false
-      }
-      return true
-    }),
-  }
+  return allPlugins.filter(({ type }) => plugins.includes(type))
 }

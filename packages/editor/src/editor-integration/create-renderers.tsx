@@ -1,7 +1,6 @@
 import type {
   InitRenderersArgs,
   LinkRenderer,
-  PluginStaticRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
@@ -32,9 +31,7 @@ import { ComponentProps } from 'react'
 import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
 import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 
-export function createRenderers(
-  customPluginRenderers: PluginStaticRenderer[]
-): InitRenderersArgs {
+export function createRenderers(): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -119,7 +116,6 @@ export function createRenderers(
         type: TemplatePluginType.GenericContent,
         renderer: GenericContentTypeStaticRenderer,
       },
-      ...customPluginRenderers,
     ],
     mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {

@@ -33,7 +33,7 @@ export interface BoxConfig {
   allowedPlugins?: (EditorPluginType | string)[]
 }
 
-const defaultAllowedPlugins: (EditorPluginType | string)[] = [
+export const defaultAllowedPlugins: (EditorPluginType | string)[] = [
   EditorPluginType.Text,
   EditorPluginType.Image,
   EditorPluginType.Equations,
@@ -42,12 +42,16 @@ const defaultAllowedPlugins: (EditorPluginType | string)[] = [
   EditorPluginType.Highlight,
 ]
 
-export function createBoxPlugin({
-  allowedPlugins = defaultAllowedPlugins,
-}): EditorPlugin<BoxPluginState> {
+const defaultConfig = {
+  allowedPlugins: defaultAllowedPlugins,
+}
+
+export function createBoxPlugin(
+  config = defaultConfig
+): EditorPlugin<BoxPluginState> {
   return {
     Component: BoxEditor,
-    state: createBoxState(allowedPlugins),
+    state: createBoxState(config.allowedPlugins),
     config: {},
   }
 }

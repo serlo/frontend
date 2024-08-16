@@ -10,27 +10,14 @@ import {
   number,
   object,
 } from '../../plugin'
-import { isProduction } from '@/helper/is-production'
+import { TemplatePluginType } from '@editor/package'
 
 export const defaultConfig: MultimediaConfig = {
-  allowedPlugins: [
-    EditorPluginType.Image,
-    EditorPluginType.Video,
-    ...(isProduction ? [] : [EditorPluginType.Audio]),
-    EditorPluginType.Geogebra,
-  ],
+  allowedPlugins: [EditorPluginType.Image, EditorPluginType.Geogebra],
   explanation: {
     plugin: EditorPluginType.Rows,
     config: {
-      allowedPlugins: [
-        EditorPluginType.Text,
-        EditorPluginType.Highlight,
-        EditorPluginType.Anchor,
-        ...(isProduction ? [] : [EditorPluginType.Audio]),
-        EditorPluginType.Equations,
-        EditorPluginType.Image,
-        EditorPluginType.SerloTable,
-      ],
+      allowedPlugins: [EditorPluginType.Text],
     },
   },
 }
@@ -58,7 +45,7 @@ export function createMultimediaPlugin(
 export type MultimediaPluginState = ReturnType<typeof createMultimediaState>
 
 export interface MultimediaConfig {
-  allowedPlugins: (EditorPluginType | string)[]
+  allowedPlugins: (EditorPluginType | TemplatePluginType)[]
   explanation: ChildStateTypeConfig
 }
 

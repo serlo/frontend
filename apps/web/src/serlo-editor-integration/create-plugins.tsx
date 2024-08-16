@@ -82,7 +82,20 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(),
+      plugin: createMultimediaPlugin({
+        allowedPlugins: [
+          EditorPluginType.Image,
+          EditorPluginType.Video,
+          ...(isProduction ? [] : [EditorPluginType.Audio]),
+          EditorPluginType.Geogebra,
+        ],
+        explanation: {
+          plugin: EditorPluginType.Rows,
+          config: {
+            allowedPlugins: [EditorPluginType.Text],
+          },
+        },
+      }),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
@@ -94,13 +107,13 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(),
+      plugin: createSpoilerPlugin({}), // Passing empty config object here allows all plugins
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin({}),
+      plugin: createBoxPlugin(),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },

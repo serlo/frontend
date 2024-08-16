@@ -9,7 +9,7 @@ import {
 } from '@editor/plugin'
 import { InteractiveToolbarTools } from '@editor/plugins/exercise/toolbar/interactive-toolbar-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { type AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
 import { H5pRenderer, parseH5pUrl } from './renderer'
