@@ -1,6 +1,5 @@
-import { EditorPlugin, EditorPluginProps, string } from '@editor/package'
-
 import { SerloInjectionEditor } from './editor'
+import { type EditorPlugin, type EditorPluginProps, string } from '../../plugin'
 
 const state = string()
 

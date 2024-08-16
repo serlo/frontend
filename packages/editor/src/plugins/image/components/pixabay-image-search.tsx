@@ -79,6 +79,7 @@ export const PixabayImageSearch = ({
       const data = (await response.json()) as PixabayResponse
       setImages(data.hits)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching images from Pixabay:', error)
     } finally {
       setIsSearching(false)

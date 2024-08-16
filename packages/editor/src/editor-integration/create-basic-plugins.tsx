@@ -4,14 +4,15 @@ import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.sv
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
+import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
-import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
+import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
@@ -23,6 +24,8 @@ import {
 } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
+import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
+import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { solutionPlugin } from '@editor/plugins/solution'
@@ -30,12 +33,8 @@ import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
-import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
-import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
-import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
 
@@ -178,8 +177,6 @@ export function createBasicPlugins(
       visibleInSuggestions: false,
       icon: <IconDropzones />,
     },
-    // TODO: Enable also for integrations
-    // { type: EditorPluginType.H5p, plugin: H5pPlugin },
 
     // Special plugins, never visible in suggestions
     // ===================================================

@@ -1,8 +1,8 @@
-import { createContext, useContext } from 'react'
-import { EdusharingAssetRenderer } from './renderer'
 import { EditorEdusharingAssetDocument } from '@editor/types/editor-plugins'
+import { useContext } from 'react'
 
-export const LtikContext = createContext<string | undefined>(undefined)
+import { LtikContext } from './ltik-context'
+import { EdusharingAssetRenderer } from './renderer'
 
 export function EdusharingAssetStaticRenderer(
   props: EditorEdusharingAssetDocument

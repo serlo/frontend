@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   store,
   selectFocused,
@@ -21,7 +22,6 @@ import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { instanceStateStore } from '../text/utils/instance-state-store'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
 

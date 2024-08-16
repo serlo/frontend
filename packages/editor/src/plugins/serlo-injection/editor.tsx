@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
+import { EditorInput, PreviewOverlay } from '@editor/editor-ui'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from 'react'
 
-import { SerloInjectionProps } from '.'
+import { type SerloInjectionProps } from '.'
 import { useSerloInjectionConfig } from './config'
 import { SerloInjectionRenderer } from './renderer'
-import { EditorInput, PreviewOverlay } from '@editor/editor-ui'
-import { FaIcon, PluginDefaultTools, PluginToolbar } from '@editor/package'
+import { FaIcon } from '../../../../../apps/web/src/components/fa-icon'
+import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { PluginToolbar } from '../../editor-ui/plugin-toolbar/plugin-toolbar'
 
 export const SerloInjectionEditor = (props: SerloInjectionProps) => {
   const { focused, id } = props
@@ -30,7 +32,6 @@ export const SerloInjectionEditor = (props: SerloInjectionProps) => {
       {cache ? (
         <PreviewOverlay
           focused={props.focused || false}
-          // Todo: nextActive should be of type SetStateAction<boolean>
           onChange={(nextActive: boolean | ((x: boolean) => boolean)) => {
             setPreview(nextActive)
             if (nextActive) {

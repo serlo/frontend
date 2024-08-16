@@ -6,6 +6,7 @@ import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
 import { CoursePluginState } from '@editor/plugins/course'
 import { DropzoneImagePluginState } from '@editor/plugins/dropzone-image'
+import type { EdusharingAssetState } from '@editor/plugins/edusharing-asset'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
@@ -20,6 +21,7 @@ import { PagePartnersPluginState } from '@editor/plugins/page-partners'
 import { PageTeamPluginState } from '@editor/plugins/page-team'
 import type { RowsPluginState } from '@editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@editor/plugins/sc-mc-exercise'
+import type { SerloInjectionPluginState } from '@editor/plugins/serlo-injection'
 import { SerloTablePluginState } from '@editor/plugins/serlo-table'
 import { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { GenericContentTypePluginState } from '@editor/plugins/serlo-template-plugins/generic-content'
@@ -33,8 +35,6 @@ import type {
 import { TextAreaExercisePluginState } from '@editor/plugins/text-area-exercise'
 import type { UnsupportedPluginState } from '@editor/plugins/unsupported'
 import type { VideoPluginState } from '@editor/plugins/video'
-import type { EdusharingAssetState } from '@editor/plugins/edusharing-asset'
-import type { SerloInjectionPluginState } from '@editor/plugins/serlo-injection'
 
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
@@ -161,11 +161,6 @@ export interface EditorDropzoneImageDocument {
 export interface EditorSpoilerDocument {
   plugin: EditorPluginType.Spoiler
   state: PrettyStaticState<SpoilerPluginState>
-  id?: string
-}
-export interface EditorInjectionDocument {
-  plugin: EditorPluginType.Injection
-  state: PrettyStaticState<InjectionPluginState>
   id?: string
 }
 export interface EditorSolutionDocument {

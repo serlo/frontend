@@ -1,7 +1,7 @@
-import { memo, useEffect, useState } from 'react'
+import IframeResizer from 'iframe-resizer-react'
 import * as t from 'io-ts'
 import Image from 'next/image'
-import IframeResizer from 'iframe-resizer-react'
+import { memo, useEffect, useState } from 'react'
 
 type RenderMethod = 'dangerously-set-inner-html' | 'iframe'
 type EmbedType =
@@ -40,7 +40,7 @@ export function EdusharingAssetRenderer(props: {
 }) {
   const { nodeId, repositoryId, ltik, contentWidth } = props
 
-  let [embedHtml, setEmbedHtml] = useState<string | null>(null)
+  const [embedHtml, setEmbedHtml] = useState<string | null>(null)
   const [renderMethod, setRenderMethod] = useState<RenderMethod>(
     'dangerously-set-inner-html'
   )
@@ -71,6 +71,7 @@ export function EdusharingAssetRenderer(props: {
       const responseJson: unknown = await response.json()
 
       if (!EmbedJson.is(responseJson)) {
+        // eslint-disable-next-line no-console
         console.log(JSON.stringify(responseJson))
         setEmbedHtml(
           'Request to /lit/get-embed-html failed. Response json was malformed. Json was logged to console.'
@@ -302,7 +303,7 @@ export function EdusharingAssetRenderer(props: {
 
     // Learning apps
     if (detailsSnippet.includes('learningapps.org/')) {
-      let iframeHtmlElement = htmlDocument.querySelector('iframe')
+      const iframeHtmlElement = htmlDocument.querySelector('iframe')
       if (!iframeHtmlElement) {
         return {
           embedType: 'unknown',
@@ -333,13 +334,13 @@ export function EdusharingAssetRenderer(props: {
   }
 
   function renderEmbed() {
-    if (embedHtml == null) return
+    if (embedHtml === null) return
 
     if (renderMethod === 'dangerously-set-inner-html') {
       // dangerouslySetInnerHTML does not execute <script> tags.
       return (
         <div
-          className={`not-prose max-w-full overflow-auto`}
+          className="not-prose max-w-full overflow-auto"
           // className={`not-prose overflow-auto max-w-full !w-[${
           //   contentWidth ? contentWidth : '100%'
           // }]`}

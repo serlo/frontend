@@ -1,12 +1,11 @@
+import { EdusharingAssetEditor } from './editor'
 import {
   object,
   string,
   optional,
-  EditorPluginProps,
-  EditorPlugin,
+  type EditorPluginProps,
+  type EditorPlugin,
 } from '../../plugin'
-
-import { EdusharingAssetEditor } from './editor'
 
 const state = object({
   edusharingAsset: optional(

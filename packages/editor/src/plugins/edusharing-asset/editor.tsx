@@ -1,10 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react'
-import type { EdusharingAssetProps } from '.'
-import Modal from 'react-modal'
-import { EdusharingAssetRenderer } from './renderer'
-import { PluginDefaultTools, PluginToolbar } from '@editor/package'
 import * as t from 'io-ts'
-import { LtikContext } from './static'
+import { useContext, useEffect, useRef, useState } from 'react'
+import Modal from 'react-modal'
+
+import type { EdusharingAssetProps } from '.'
+import { LtikContext } from './ltik-context'
+import { EdusharingAssetRenderer } from './renderer'
+import { PluginToolbar } from '../../editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 
 export const EdusharingAssetDecoder = t.type({
   nodeId: t.string,
@@ -14,7 +16,6 @@ export const EdusharingAssetDecoder = t.type({
 export function EdusharingAssetEditor({
   state,
   focused,
-  config,
   id,
 }: EdusharingAssetProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -34,7 +35,6 @@ export function EdusharingAssetEditor({
         if (state.edusharingAsset.defined === false) {
           state.edusharingAsset.create(newEdusharingAsset)
         } else {
-          // TODO: Better implementation
           state.edusharingAsset.nodeId.set(newEdusharingAsset.nodeId)
           state.edusharingAsset.repositoryId.set(
             newEdusharingAsset.repositoryId
@@ -143,14 +143,12 @@ export function EdusharingAssetEditor({
     }
   }
 
-  // TODO: Use @radix-ui/react-dialog instead of react-modal
   function renderModal(ltik: string) {
     if (!modalIsOpen) return
 
     // See https://reactcommunity.org/react-modal/accessibility/
     Modal.setAppElement(document.getElementsByTagName('body')[0])
 
-    // TODO: Create helper function
     const url = new URL(window.location.origin)
 
     url.pathname = '/lti/start-edusharing-deeplink-flow'

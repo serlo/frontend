@@ -1,6 +1,7 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { SupportedLanguage } from '@editor/types/language-data'
-import { TemplatePluginType } from '.'
+
+import { TemplatePluginType } from '../types/template-plugin-type'
 
 export const emptyDocumentState = {
   plugin: EditorPluginType.Rows,

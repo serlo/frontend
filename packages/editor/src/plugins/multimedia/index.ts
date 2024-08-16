@@ -10,7 +10,7 @@ import {
   number,
   object,
 } from '../../plugin'
-import { TemplatePluginType } from '@editor/package'
+import { TemplatePluginType } from '../../types/template-plugin-type'
 
 export const defaultConfig: MultimediaConfig = {
   allowedPlugins: [EditorPluginType.Image, EditorPluginType.Geogebra],

@@ -1,7 +1,7 @@
-import { SerloInjectionConfig, SerloInjectionPluginConfig } from '.'
+import { type SerloInjectionConfig, type SerloInjectionPluginConfig } from '.'
 
 export function useSerloInjectionConfig(
-  config: SerloInjectionConfig,
+  config: SerloInjectionConfig
 ): SerloInjectionPluginConfig {
   const { i18n = {} } = config
 
