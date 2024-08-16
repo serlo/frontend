@@ -19,6 +19,7 @@ export interface ModalWithCloseButtonProps {
   confirmCloseDescription?: string | undefined
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
 }
 
 export function ModalWithCloseButton({
@@ -30,6 +31,7 @@ export function ModalWithCloseButton({
   extraTitleClassName,
   confirmCloseDescription,
   extraCloseButtonClassName,
+  onEscapeKeyDown,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
 
@@ -91,6 +93,7 @@ export function ModalWithCloseButton({
             className={cn('serlo-modal', className)}
             data-modal-state={isOpen ? 'open' : 'closed'}
             aria-describedby={undefined}
+            onEscapeKeyDown={onEscapeKeyDown}
           >
             {title ? (
               <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>

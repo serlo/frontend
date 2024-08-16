@@ -85,7 +85,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     }, [allowedPlugins, pluginsStrings, searchString])
 
   const handleModalClose = (isOpen: boolean) => {
-    if (isOpen === false && searchString.length === 0) {
+    if (isOpen === false) {
       pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
     }
     setSearchString('')
@@ -133,6 +133,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       isOpen={pluginMenuState.showPluginMenu}
       setIsOpen={handleModalClose}
       data-qa="plugin-menu-modal"
+      onEscapeKeyDown={(e) => {
+        if (searchString.length === 0) return
+        setSearchString('')
+        e.preventDefault()
+      }}
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
