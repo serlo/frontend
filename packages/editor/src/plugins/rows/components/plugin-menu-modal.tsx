@@ -138,6 +138,15 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         setSearchString('')
         e.preventDefault()
       }}
+      onKeyDown={(e) => {
+        // make sure filtering works even when focus was somewhere else
+        if (e.altKey || e.ctrlKey || e.metaKey) return
+        const isSingleLetter = e.key.length === 1 && e.key.match(/\p{L}/u)
+        if (!isSingleLetter && e.key !== 'Backspace' && e.key !== 'Delete')
+          return
+        searchInputRef.current?.focus()
+        setFocusedItemIndex(null)
+      }}
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
