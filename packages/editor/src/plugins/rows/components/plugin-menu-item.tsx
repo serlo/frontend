@@ -39,7 +39,7 @@ export const PluginMenuItem = forwardRef<
     ? tooltipPosition === 'right'
       ? '-left-0'
       : '-right-0'
-    : ''
+    : '-left-24'
 
   return (
     <li>
