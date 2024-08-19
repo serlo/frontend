@@ -13,8 +13,7 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
-import { PluginMenuItem } from './plugin-menu-item'
-import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
+import { PluginMenuItems } from './plugin-menu-items'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
 import {
   createOption,
@@ -85,31 +84,12 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       }
     }, [allowedPlugins, pluginsStrings, searchString])
 
-  const handleItemFocus = (index: number) => {
-    setFocusedItemIndex(index)
-  }
-
-  const handleItemBlur = () => {
-    setFocusedItemIndex(null)
-  }
-
-  const getTooltipPosition = (index: number): 'right' | 'left' | undefined => {
-    return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
-  }
-
   const handleModalClose = (isOpen: boolean) => {
-    if (isOpen === false && searchString.length === 0) {
+    if (isOpen === false) {
       pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
     }
     setSearchString('')
   }
-
-  useEffect(() => {
-    const focusTimeout = setTimeout(() => {
-      searchInputRef?.current?.focus()
-    }, 0)
-    return () => clearTimeout(focusTimeout)
-  }, [searchInputRef])
 
   usePluginMenuKeyboardHandler({
     enabled: pluginMenuState.showPluginMenu,
@@ -128,11 +108,8 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }, [focusedItemIndex])
 
   useEffect(() => {
-    if (pluginMenuState.showPluginMenu) {
-      setTimeout(() => {
-        searchInputRef.current?.focus()
-      }, 0)
-    }
+    if (!pluginMenuState.showPluginMenu) return
+    setTimeout(() => searchInputRef.current?.focus(), 10)
   }, [pluginMenuState.showPluginMenu, searchInputRef])
 
   function onKeyDownHandler(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -152,10 +129,24 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     <ModalWithCloseButton
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
       extraTitleClassName="sr-only"
-      title="Add Plugin Modal"
+      title={pluginsStrings.rows.addAnElement}
       isOpen={pluginMenuState.showPluginMenu}
       setIsOpen={handleModalClose}
       data-qa="plugin-menu-modal"
+      onEscapeKeyDown={(e) => {
+        if (searchString.length === 0) return
+        setSearchString('')
+        e.preventDefault()
+      }}
+      onKeyDown={(e) => {
+        // make sure filtering works even when focus was somewhere else
+        if (e.altKey || e.ctrlKey || e.metaKey) return
+        const isSingleLetter = e.key.length === 1 && e.key.match(/\p{L}/u)
+        if (!isSingleLetter && e.key !== 'Backspace' && e.key !== 'Delete')
+          return
+        searchInputRef.current?.focus()
+        setFocusedItemIndex(null)
+      }}
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
@@ -166,71 +157,29 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           onChange={(e) => setSearchString(e.target.value)}
           onKeyDown={onKeyDownHandler}
           inputWidth="50%"
-          width="60%"
           className="ml-8 block"
         />
       </div>
-      {isEmpty && (
+      {isEmpty ? (
         <div className="mt-4 flex flex-col items-center justify-center space-y-2 p-10 pt-4 text-center">
           <IconEmptyPluginsModal className="mb-4" />
           <div>
-            <h3 className="pb-4 text-lg font-bold">
+            <h3 className="pb-4 text-lg font-bold text-almost-black">
               {editorStrings.addPluginsModal.noPluginsFoundTitle}
             </h3>
             <p>{editorStrings.addPluginsModal.noPluginsFoundDescription}</p>
           </div>
         </div>
-      )}
-      {basicOptions.length > 0 && (
-        <>
-          <h1 className="pl-6 pt-4 text-lg font-bold">
-            {editorStrings.addPluginsModal.basicPluginsTitle}
-          </h1>
-          <ul className="grid grid-cols-5 gap-4 p-4">
-            {renderPluginItems(basicOptions)}
-          </ul>
-        </>
-      )}
-
-      {interactiveOptions.length > 0 && (
-        <>
-          <h1 className="pl-6 pt-1 text-lg font-bold">
-            {editorStrings.addPluginsModal.interactivePluginsTitle}
-          </h1>
-          <ul className="grid grid-cols-5 gap-4 p-4">
-            {renderPluginItems(interactiveOptions, basicOptions.length)}
-          </ul>
-        </>
+      ) : (
+        <PluginMenuItems
+          basicOptions={basicOptions}
+          interactiveOptions={interactiveOptions}
+          focusedItemIndex={focusedItemIndex}
+          setFocusedItemIndex={setFocusedItemIndex}
+          itemRefs={itemRefs}
+          onInsertPlugin={onInsertPlugin}
+        />
       )}
     </ModalWithCloseButton>
   )
-
-  function renderPluginItems(
-    options: PluginMenuItemType[],
-    offset: number = 0
-  ) {
-    return options.map((item, index) => {
-      const currentIndex = index + offset
-      return (
-        <PluginMenuItem
-          key={currentIndex}
-          ref={(el) => (itemRefs.current[currentIndex] = el)}
-          item={item}
-          selected={currentIndex === focusedItemIndex}
-          tooltipPosition={getTooltipPosition(index)}
-          onInsertPlugin={(type: EditorPluginType) => {
-            onInsertPlugin(type)
-            setSearchString('')
-          }}
-          onFocus={() => handleItemFocus(currentIndex)}
-          onBlur={handleItemBlur}
-          onMouseMove={() => handleItemFocus(currentIndex)}
-          onMouseLeave={() => {
-            handleItemBlur()
-            itemRefs.current[currentIndex]?.blur()
-          }}
-        />
-      )
-    })
-  }
 }
