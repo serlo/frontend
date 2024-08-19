@@ -8,7 +8,6 @@ import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
 import { TextToolbar } from './text-toolbar'
-import { useDynamicPlacehoder } from '../hooks/use-dynamic-placeholder'
 import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
@@ -50,10 +49,7 @@ export function TextEditor(props: TextEditorProps) {
   }, [createTextEditor])
 
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
-    editor,
     focused,
-    placeholder: config.placeholder,
-    id,
   })
   const handleEditorChange = useEditorChange({
     editor,
@@ -70,14 +66,6 @@ export function TextEditor(props: TextEditorProps) {
   const handleEditablePaste = useEditablePasteHandler({
     editor,
     id,
-  })
-  const dynamicPlaceholder = useDynamicPlacehoder({
-    id,
-    editor,
-    focused,
-    containerRef,
-    staticPlaceholder: config.placeholder,
-    noLinebreaks: config.noLinebreaks,
   })
 
   // Workaround for setting selection when adding a new editor:
@@ -121,18 +109,10 @@ export function TextEditor(props: TextEditorProps) {
         readOnly={false}
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
+        onBlur={handleBlur}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
-        decorate={
-          dynamicPlaceholder.shouldShow
-            ? dynamicPlaceholder.decorateEmptyLines
-            : undefined
-        }
-        placeholder={
-          dynamicPlaceholder.shouldShow
-            ? undefined
-            : config.placeholder ?? textStrings.placeholder
-        }
+        placeholder={config.placeholder ?? textStrings.placeholder}
         // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
         // `outline-none` removes the ugly outline present in Slate v0.94.1
         className="outline-none focus:outline-none [&>[data-slate-node]]:mx-side"
@@ -142,4 +122,9 @@ export function TextEditor(props: TextEditorProps) {
       {focused ? <LinkControls /> : null}
     </Slate>
   )
+
+  function handleBlur() {
+    // @ts-expect-error custom operation to do special normalization only on blur.
+    editor.normalize({ force: true, operation: { type: 'blur_container' } })
+  }
 }
