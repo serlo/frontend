@@ -20,18 +20,6 @@ function focusTextPlugin(I, position = 'first') {
   }
 }
 
-Scenario('Add a new line using Enter', async ({ I }) => {
-  I.amOnPage(pageUrl)
-  I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
-
-  addNewTextPlugin(I)
-  I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
-
-  I.say('Press Enter to add a new line')
-  I.pressKey('Enter')
-  I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
-})
-
 Scenario('Add new line in plugin using Enter', async ({ I }) => {
   I.amOnPage(pageUrl)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
