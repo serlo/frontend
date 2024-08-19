@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - formatting options')
@@ -9,8 +10,7 @@ Scenario(
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    I.click('$add-new-plugin-row-button')
-    I.pressKey('Backspace')
+    addNewTextPlugin(I)
     I.type('Some text')
     I.see('Some text')
 
@@ -117,9 +117,7 @@ Scenario(
   async ({ I }) => {
     I.amOnPage('/entity/create/Article/1377')
 
-    I.click('$add-new-plugin-row-button')
-
-    I.pressKey('Backspace')
+    addNewTextPlugin(I)
 
     I.type('Some text')
 
@@ -157,6 +155,7 @@ Scenario(
     I.seeElement({ css: '.serlo-editor-hacks a' })
 
     I.say('Refocus link')
+    I.click('Some text')
     I.click('Some text')
     I.see('Hypotenuse')
 

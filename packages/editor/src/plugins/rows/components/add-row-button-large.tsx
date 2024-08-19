@@ -3,7 +3,7 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 interface AddRowButtonLargeProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement>
+  onClick: () => void
 }
 
 export function AddRowButtonLarge({ onClick }: AddRowButtonLargeProps) {

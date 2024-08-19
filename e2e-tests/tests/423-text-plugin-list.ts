@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - list')
@@ -8,8 +9,7 @@ Scenario('Unordered list shortcuts', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Add a new text plugin and delete the backslash')
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create an unordered list')
   I.type('- Some text')
@@ -53,8 +53,7 @@ Scenario('Ordered list shortcuts', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Add a new text plugin and delete the backslash')
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create an ordered list')
   I.type('First list item')
@@ -99,9 +98,7 @@ Scenario("Don't show suggestions when '/' is inside of a list", ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Add a new text plugin, check for suggestions, delete the backslash')
-  I.click('$add-new-plugin-row-button')
-  I.see('Schreibe Text und Matheformeln, und formatiere sie.')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say(
     'Create an unordered list, type in a backslash, check that suggestions are not showing'
@@ -117,8 +114,7 @@ Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Add a new text plugin and delete the backslash')
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create an unordered list and add multiple list items')
   I.type('- Some text')
@@ -134,8 +130,10 @@ Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
   I.pressKey('Enter')
   I.pressKey('Enter')
 
-  I.say('Add a Spoiler plugin using suggestions')
-  I.type('/Spo')
+  I.say('Add a Spoiler plugin using plugin modal')
+  I.type('/')
+  I.type('Spoiler')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.click('Titel eingeben')
   I.see('Spoiler')

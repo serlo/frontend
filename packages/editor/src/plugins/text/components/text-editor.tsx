@@ -1,5 +1,4 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect } from 'react'
@@ -8,14 +7,12 @@ import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
-import { Suggestions } from './suggestions'
 import { TextToolbar } from './text-toolbar'
 import { useDynamicPlacehoder } from '../hooks/use-dynamic-placeholder'
 import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
-import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { withEmptyLinesRestriction } from '../plugins'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
@@ -51,12 +48,7 @@ export function TextEditor(props: TextEditorProps) {
       editorKey: v4(),
     }
   }, [createTextEditor])
-  const { showSuggestions, suggestionsProps } = useSuggestions({
-    editor,
-    id,
-    focused,
-    isInlineChildEditor: config.isInlineChildEditor,
-  })
+
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
     editor,
     focused,
@@ -73,7 +65,6 @@ export function TextEditor(props: TextEditorProps) {
     config,
     editor,
     id,
-    showSuggestions,
     state,
   })
   const handleEditablePaste = useEditablePasteHandler({
@@ -94,15 +85,6 @@ export function TextEditor(props: TextEditorProps) {
     // Get the current text value of the editor
     const text = Node.string(editor)
 
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
-      }
-      return
-    }
-
     // If the first child of the editor is not a paragraph, do nothing
     const isFirstChildParagraph =
       'type' in editor.children[0] && editor.children[0].type === 'p'
@@ -114,11 +96,7 @@ export function TextEditor(props: TextEditorProps) {
       instanceStateStore[id].selection = editor.selection
     }
 
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-      instanceStateStore[id].selection = editor.selection
+    if (focused) {
       ReactEditor.focus(editor)
     }
   }, [editor, focused, id])
@@ -162,12 +140,6 @@ export function TextEditor(props: TextEditorProps) {
       />
 
       {focused ? <LinkControls /> : null}
-
-      {showSuggestions ? (
-        <SlateOverlay width={620}>
-          <Suggestions {...suggestionsProps} />
-        </SlateOverlay>
-      ) : null}
     </Slate>
   )
 }

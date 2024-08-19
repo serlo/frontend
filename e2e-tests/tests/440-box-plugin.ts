@@ -6,11 +6,10 @@ Before(popupWarningFix)
 
 async function addBoxPlugin(I: CodeceptJS.I, type: string) {
   I.say('Create box plugin and set type')
-  I.click('$plugin-text-editor', '$plugin-article-content')
-  I.type('/')
+  I.click('$add-new-plugin-row-button')
   I.type('Box')
+  I.pressKey('Tab')
   I.pressKey('Enter')
-  I.seeElement('$plugin-box-initial-type-chooser')
   I.click(`$plugin-box-initial-type-chooser-option-${type}`)
 }
 
@@ -67,7 +66,9 @@ Scenario(
     I.click('$plugin-text-editor', '$plugin-box-title')
     I.pressKey('ArrowDown')
     I.type('Boxinhalt')
-    I.pressKey('ArrowUp') // Set cursor to start of content text
+    // Set cursor to start of content text
+    I.pressKey(['Ctrl', 'A'])
+    I.pressKey('ArrowLeft')
     I.pressKey('ArrowUp') // Move cursor to box title
     I.type('Boxtitel')
 
@@ -104,17 +105,17 @@ Scenario('Set box type using keyboard', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
   I.say('Create box plugin')
-  I.click('$plugin-text-editor', '$plugin-article-content')
-  I.type('/')
+  I.click('$add-new-plugin-row-button')
   I.type('Box')
+  I.pressKey('Tab')
   I.pressKey('Enter')
   I.seeElement('$plugin-box-initial-type-chooser')
 
   I.say('Use the Tab key to select a box type')
-  I.pressKey('Tab')
-  I.pressKey('Tab')
+  I.pressKey(['Shift', 'Tab'])
+  I.pressKey(['Shift', 'Tab'])
   I.pressKey('Enter')
-  I.see('Beispiel', locate('span.text-brand').inside('$plugin-box'))
+  I.see('Satz', locate('span.text-brand').inside('$plugin-box'))
   I.dontSeeElement('$plugin-box-initial-type-chooser')
 })
 
