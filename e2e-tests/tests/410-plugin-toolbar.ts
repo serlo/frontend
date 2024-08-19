@@ -15,7 +15,6 @@ Scenario('Duplicate plugin', async ({ I }) => {
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
   I.click(locate('$plugin-text-editor').inside('.plugin-rows'))
-  I.type('Test')
 
   I.moveCursorTo(
     locate('[data-radix-collection-item]').inside('.plugin-toolbar')

@@ -24,6 +24,7 @@ Scenario('Add new line in plugin using Enter', async ({ I }) => {
   I.amOnPage(pageUrl)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
 
+  I.say('Focus the default Text plugin')
   I.click(locate(selectors.textEditor).inside('.plugin-rows'))
 
   const firstText = 'first'
@@ -245,6 +246,7 @@ Scenario('Copy/cut/paste text', async ({ I }) => {
 Scenario('Empty line restrictions while typing', async ({ I }) => {
   I.amOnPage(pageUrl)
 
+  I.say('Focus the default Text plugin and type in it')
   I.click(locate(selectors.textEditor).inside('.plugin-rows'))
   I.type('First line')
   I.seeNumberOfElements(
