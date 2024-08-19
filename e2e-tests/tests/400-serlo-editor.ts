@@ -108,7 +108,6 @@ Scenario(
     I.see('Second paragraph')
 
     I.say('Remove the Image plugin and merge the split Text plugin')
-
     I.moveCursorTo(
       locate('[data-radix-collection-item]').inside('.plugin-toolbar')
     )

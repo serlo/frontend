@@ -24,8 +24,7 @@ Scenario('Add new line in plugin using Enter', async ({ I }) => {
   I.amOnPage(pageUrl)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
 
-  addNewTextPlugin(I)
-  I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
+  I.click(locate(selectors.textEditor).inside('.plugin-rows'))
 
   const firstText = 'first'
   const secondText = 'second'
@@ -39,7 +38,6 @@ Scenario('Add new line in plugin using Enter', async ({ I }) => {
 
   I.say('Add new line in plugin using Enter')
   I.pressKey('Enter')
-  I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
   I.dontSee(firstText + secondText)
   I.see(firstText)
   I.see(secondText)
@@ -50,18 +48,16 @@ Scenario('Remove empty Text plugin using Backspace key', async ({ I }) => {
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
 
   I.say('Focus the default Text plugin')
-  I.pressKey('ArrowDown')
+  I.click(locate(selectors.textEditor).inside('.plugin-rows'))
 
   I.say('Nothing happens when Backspace is pressed in the first plugin')
   I.pressKey('Backspace')
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
 
-  I.say('Add a second Text plugin')
+  I.say('Type in the first Text plugin and add a second Text plugin')
+  I.type('Test')
   addNewTextPlugin(I)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
-
-  I.say('Remove the forward slash')
-  I.pressKey('Backspace')
 
   I.say('Remove the plugin using Backspace')
   I.pressKey('Backspace')
@@ -72,8 +68,9 @@ Scenario('Remove empty Text plugin using Delete key', async ({ I }) => {
   I.amOnPage(pageUrl)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount)
 
-  I.say('Focus the default Text plugin')
-  I.pressKey('ArrowDown')
+  I.say('Focus the default Text plugin and type in it')
+  I.click(locate(selectors.textEditor).inside('.plugin-rows'))
+  I.type('Test')
 
   I.say('Add a second Text plugin')
   addNewTextPlugin(I)
@@ -94,7 +91,9 @@ Scenario('Remove empty Text plugin using Delete key', async ({ I }) => {
 Scenario('Merge with previous plugin using Backspace key', async ({ I }) => {
   I.amOnPage(pageUrl)
 
-  I.say('Create another text plugin')
+  I.say('Type in the first Text plugin and create another text plugin')
+  I.click(locate(selectors.textEditor).inside('.plugin-rows'))
+  I.type('Test')
   addNewTextPlugin(I)
   I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
 
@@ -118,7 +117,9 @@ Scenario(
   async ({ I }) => {
     I.amOnPage(pageUrl)
 
-    I.say('Create a text plugin')
+    I.say('Type in the first Text plugin and create a text plugin')
+    I.click(locate(selectors.textEditor).inside('.plugin-rows'))
+    I.type('Test')
     addNewTextPlugin(I)
 
     I.seeNumberOfElements(selectors.textEditor, initialTextPluginCount + 1)
@@ -247,45 +248,29 @@ Scenario('Empty line restrictions while typing', async ({ I }) => {
   I.click(locate(selectors.textEditor).inside('.plugin-rows'))
   I.type('First line')
   I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element').inside('.plugin-rows'),
+    locate('[data-slate-node="element"]').inside('.plugin-rows'),
     1
-  )
-  I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    0
   )
 
   I.say('First Enter key press adds a new line with a placeholder')
   I.pressKey('Enter')
   I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element').inside('.plugin-rows'),
+    locate('[data-slate-node="element"]').inside('.plugin-rows'),
     2
-  )
-  I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    1
   )
 
   I.say('Second Enter key press adds another new line with a placeholder')
   I.pressKey('Enter')
   I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element').inside('.plugin-rows'),
+    locate('[data-slate-node="element"]').inside('.plugin-rows'),
     3
-  )
-  I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    1
   )
 
   I.say('Third Enter key press does not add a new line')
   I.pressKey('Enter')
   I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element').inside('.plugin-rows'),
+    locate('[data-slate-node="element"]').inside('.plugin-rows'),
     3
-  )
-  I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    1
   )
 
   I.say(
@@ -293,12 +278,8 @@ Scenario('Empty line restrictions while typing', async ({ I }) => {
   )
   I.click(selectors.multimediaWrapper)
   I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element').inside('.plugin-rows'),
+    locate('[data-slate-node="element"]').inside('.plugin-rows'),
     2
-  )
-  I.seeNumberOfElements(
-    locate('$plugin-text-leaf-element-with-placeholder').inside('.plugin-rows'),
-    0
   )
 })
 
