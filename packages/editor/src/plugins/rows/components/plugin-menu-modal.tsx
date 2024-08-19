@@ -88,7 +88,6 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     if (isOpen === false) {
       pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
     }
-    setSearchString('')
   }
 
   usePluginMenuKeyboardHandler({
@@ -120,10 +119,13 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     if (e.key === Key.Enter) {
       if (!firstOption) return
       onInsertPlugin(firstOption.pluginType)
-      setSearchString('')
       e.preventDefault()
     }
   }
+
+  useEffect(() => {
+    setSearchString('')
+  }, [pluginMenuState.showPluginMenu])
 
   return (
     <ModalWithCloseButton
@@ -135,7 +137,6 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       data-qa="plugin-menu-modal"
       onEscapeKeyDown={(e) => {
         if (searchString.length === 0) return
-        setSearchString('')
         e.preventDefault()
       }}
       onKeyDown={(e) => {
