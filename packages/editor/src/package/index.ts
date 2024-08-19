@@ -6,7 +6,6 @@ export { defaultPlugins } from './config'
 export type { BaseEditor } from '@editor/core'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
-export { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 export { string, object, optional, number } from '@editor/plugin'
 export type {
