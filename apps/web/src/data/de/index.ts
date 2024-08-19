@@ -607,6 +607,13 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
       noChangesWarning: "Bisher hast du nichts geändert",
+      addPluginsModal: {
+        searchInputPlaceholder: 'Search...',
+        basicPluginsTitle: 'Content Elements',
+        interactivePluginsTitle: 'Exercises',
+        noPluginsFoundTitle: 'Sorry, no elements match your search.',
+        noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
+      },
       plugins: {
         anchor: {
           title: "Sprungmarke",
@@ -616,7 +623,7 @@ export const loggedInData = {
         },
         box: {
           title: "Box",
-          description: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
+          description: 'Insert a container for examples, quotes, warnings, theorems, notes…',
           type: "Art der Box",
           typeTooltip: "Wähle die Art der Box",
           titlePlaceholder: "(optionaler Titel)",
@@ -625,7 +632,7 @@ export const loggedInData = {
         },
         dropzoneImage: {
           title: "Bilder mit Ablagezonen",
-          description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
+          description: 'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
           backgroundImage: "Hintergrundbild",
           addDropZone: "Ablagezone hinzufügen",
           removeDropZone: "Ablagezone entfernen",
@@ -681,7 +688,7 @@ export const loggedInData = {
         },
         equations: {
           title: "Terme und Gleichungen",
-          description: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
+          description: 'Create term transformations and solve multi-line equations.',
           leftHandSide: "linke Seite",
           transformation: "Umformung",
           mode: "Modus",
@@ -699,13 +706,13 @@ export const loggedInData = {
         },
         geogebra: {
           title: 'GeoGebra Applet',
-          description: "Binde Applets von GeoGebra Materials via Link oder ID ein.",
+          description: 'Embed GeoGebra materials applets via URL or ID.',
           chooseApplet: "Applet auswählen",
           urlOrId: "GeoGebra Materials URL oder ID"
         },
         highlight: {
           title: "Code",
-          description: "Schreibe Code und hebe ihn je nach Programmiersprache hervor.",
+          description: 'Write code and highlight it according to the programming language.',
           clickAndEnter: "Klicke hier und füge deinen Quellcode ein…",
           enterHere: "Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.",
           language: "Programmiersprache",
@@ -715,7 +722,7 @@ export const loggedInData = {
         },
         image: {
           title: "Bild",
-          description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
+          description: 'Upload images or search online for freely licensed images.',
           upload: "Bild hochladen",
           imageUrl: "Bild-URL",
           imageSource: "Bildquelle",
@@ -750,7 +757,7 @@ export const loggedInData = {
         },
         injection: {
           title: "serlo.org Inhalt",
-          description: "Binde einen Inhalt von serlo.org via ID ein.",
+          description: 'Embed an existing content from serlo.org via ID.',
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
@@ -796,7 +803,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tabelle",
-          description: "Schöne Tabellen erstellen.",
+          description: 'Create a customizable table.',
           mode: "Modus",
           columnHeaders: "Nur Spaltentitel",
           rowHeaders: "Nur Zeilentitel",
@@ -812,8 +819,12 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
+          description: 'Insert a fold-out box, e.g. for additional content or help.',
           enterATitle: "Titel eingeben"
+        },
+        solution: {
+          title: 'Non interactive exercise',
+          description: 'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.'
         },
         text: {
           title: 'Text',
@@ -849,7 +860,6 @@ export const loggedInData = {
           removeBlank: "Lücke entfernen",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
-          noItemsFound: "keine Einträge gefunden",
           colorNames: {
             blue: "Blau",
             green: "Grün",
@@ -876,7 +886,7 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          description: "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
+          description: 'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
           videoUrl: 'Video URL',
           videoDescription: "Beschreibung",
           titlePlaceholder: "Titel",
@@ -900,7 +910,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: "Eingabefeld",
-          description: "Die Lösung kann Text oder eine Formel sein"
+          description: 'Create a task where an exact input or value can be entered and validated.'
         },
         textAreaExercise: {
           title: "Freitext",
@@ -908,11 +918,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: "SC/MC Aufgabe",
-          description: "Single- oder Multiple Choice Aufgabe"
+          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+        },
+        h5p: {
+          title: 'H5P',
+          description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
           title: "Lückentext",
-          description: "Ein Text mit Lücken zum Ausfüllen",
+          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
