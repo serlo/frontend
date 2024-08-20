@@ -608,11 +608,11 @@ export const loggedInData = {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
       noChangesWarning: "Bisher hast du nichts geändert",
       addPluginsModal: {
-        searchInputPlaceholder: 'Search...',
-        basicPluginsTitle: 'Content Elements',
-        interactivePluginsTitle: 'Exercises',
-        noPluginsFoundTitle: 'Sorry, no elements match your search.',
-        noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
+        searchInputPlaceholder: "Suche...",
+        basicPluginsTitle: "Inhalte",
+        interactivePluginsTitle: "Aufgaben",
+        noPluginsFoundTitle: "Leider gibt es keine Elemente, die zu deiner Suche passen.",
+        noPluginsFoundDescription: "Versuche es mit anderen Suchbegriffen oder stöbere durch alle verfügbaren Elemente."
       },
       plugins: {
         anchor: {
@@ -623,7 +623,7 @@ export const loggedInData = {
         },
         box: {
           title: "Box",
-          description: 'Insert a container for examples, quotes, warnings, theorems, notes…',
+          description: "Füge eine Box für Beispiele, Zitate, Warnungen, Definitionen, Hinweise usw. ein.",
           type: "Art der Box",
           typeTooltip: "Wähle die Art der Box",
           titlePlaceholder: "(optionaler Titel)",
@@ -632,7 +632,7 @@ export const loggedInData = {
         },
         dropzoneImage: {
           title: "Bilder mit Ablagezonen",
-          description: 'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
+          description: "Erstelle eine Aufgabe, bei der vorgegebene Antworten in die richtigen Zonen eines Bilds oder einen leeren Hintergrund gezogen werden müssen.",
           backgroundImage: "Hintergrundbild",
           addDropZone: "Ablagezone hinzufügen",
           removeDropZone: "Ablagezone entfernen",
@@ -688,7 +688,7 @@ export const loggedInData = {
         },
         equations: {
           title: "Terme und Gleichungen",
-          description: 'Create term transformations and solve multi-line equations.',
+          description: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
           leftHandSide: "linke Seite",
           transformation: "Umformung",
           mode: "Modus",
@@ -712,7 +712,7 @@ export const loggedInData = {
         },
         highlight: {
           title: "Code",
-          description: 'Write code and highlight it according to the programming language.',
+          description: "Schreibe Code und hebe ihn je nach Programmiersprache hervor.",
           clickAndEnter: "Klicke hier und füge deinen Quellcode ein…",
           enterHere: "Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.",
           language: "Programmiersprache",
@@ -722,7 +722,7 @@ export const loggedInData = {
         },
         image: {
           title: "Bild",
-          description: 'Upload images or search online for freely licensed images.',
+          description: "Lade Bilder hoch oder suche online nach frei lizenzierten Bildern.",
           upload: "Bild hochladen",
           imageUrl: "Bild-URL",
           imageSource: "Bildquelle",
@@ -803,7 +803,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tabelle",
-          description: 'Create a customizable table.',
+          description: "Erstelle eine anpassbare Tabelle.",
           mode: "Modus",
           columnHeaders: "Nur Spaltentitel",
           rowHeaders: "Nur Zeilentitel",
@@ -819,12 +819,12 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: 'Insert a fold-out box, e.g. for additional content or help.',
+          description: "Füge eine ausklappbare Box ein, z.B. für Exkurse oder Hilfestellungen.",
           enterATitle: "Titel eingeben"
         },
         solution: {
           title: 'Non interactive exercise',
-          description: 'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.'
+          description: "Erstelle eine nicht interaktive Aufgabe, die die Lernenden manuell beantworten. Du kannst weiterhin Lösungen und Strategien einfügen."
         },
         text: {
           title: 'Text',
@@ -918,7 +918,7 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: "SC/MC Aufgabe",
-          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+          description: "Erstelle Single- oder Multiple-Choice Aufgaben und passe sie bei Bedarf mit individuellem Feedback an. "
         },
         h5p: {
           title: 'H5P',
