@@ -8,8 +8,9 @@
   - [Technical decisions](#technical-decisions)
     - [Configuration](#configuration)
     - [Text formatting options](#text-formatting-options)
-    - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
-    - [Saving state to `Redux` store](#saving-state-to-redux-store) -[Challenges](#challenges)
+    - [Plugins Menu (`serlo-editor` plugins)](#plugins-menu-serlo-editor-plugins)
+    - [Saving state to `Redux` store](#saving-state-to-redux-store)
+  - [Challenges](#challenges)
 
 ## Structure
 
@@ -46,20 +47,9 @@ The `useFormattingOptions` (`@/serlo-editor/editor-ui/plugin-toolbar/text-contro
 5. `handleMarkdownShortcuts` - handler for markdown shortcuts (like '#') for configured formatting options
 6. `handleListsShortcuts` - handler for lists shortcuts (like '-' and then 'Space'), if lists formatting is allowed
 
-### Suggestions (`serlo-editor` plugins)
+### Plugins Menu (`serlo-editor` plugins)
 
-In order to easily transform a Text plugin into another `serlo-editor` plugin, the user can simply type `/` into an empty Text plugin, and they will be presented with a list of suggestions. A hook approach was used to make the suggestions easily configurable.
-
-The `useSuggestions` hook receives:
-
-- the `editor` object (Slate instance)
-- the `id` of the Text plugin
-- `focused` and `editable` flags of the Text plugin
-
-and exposes:
-
-1. `showSuggestions` - a flag controlling if the suggestions box should be shown
-2. `suggestionsProps` - props for the `Suggestions` component
+In order to easily transform a Text plugin into another `serlo-editor` plugin, the user can simply type `/` into an empty Text plugin, and they will be presented with a list of suggestions. A context approach ( `PluginSelectionMenuContext`) was used to make the suggestions easily configurable.
 
 ### Saving state to `Redux` store
 

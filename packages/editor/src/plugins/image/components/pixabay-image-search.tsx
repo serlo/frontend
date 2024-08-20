@@ -63,7 +63,8 @@ export const PixabayImageSearch = ({
   const { lang } = useInstanceData()
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
-  const apiKey = process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+  // Pixabay API key connected to an unpaid account -> No need to keep it secret.
+  const apiKey = '44761287-06b5809c17d0a9132219f5173'
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSearch = async (searchQuery: string) => {
