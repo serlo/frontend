@@ -103,6 +103,9 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
 
           resourcesFromRelay.push({
             ...basicResource,
+            image: basicResource.name.includes('Serlo')
+              ? 'https://de.serlo.org/_assets/apple-touch-icon.png'
+              : basicResource.image,
             license: basicResource.license
               ? getLicense(basicResource.license)
               : License.OTHER,
@@ -112,6 +115,15 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
         }
 
         sub.oneose = () => {
+          resourcesFromRelay.push({
+            name: 'Lumi – Vokabeln A1 Deutsch als Fremdsprache Lückentext',
+            image:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/H5P_Logo.png/240px-H5P_Logo.png',
+            license: License.CC_BY,
+            licenseUrl: 'https://creativecommons.org/licenses/by/3.0/',
+            url: 'https://app.lumi.education/run/J3j0eR',
+          })
+
           setResources(resourcesFromRelay)
           setResults(resourcesFromRelay)
           setLoading(false)
@@ -149,7 +161,7 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
             {results.map((result) => {
               return renderEntry(
                 <div className="flex gap-2">
-                  <img src={result.image} className="block w-16" />
+                  <img src={result.image} className="block w-12" />
                   <div>{result.name}</div>
                 </div>,
                 result
@@ -160,19 +172,6 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
           'Keine Ergebnisse gefunden'
         ) : null}
         {}
-        {/* {results ? results.map(() => {
-          return renderEntry()
-        }) : null}
-          <>
-            {renderEntry(<>von serlo.org – Artikel: Dreisatz</>, 1769)}
-            {renderEntry(<>von serlo.org – Aufgaben: Dreisatz</>, 66809)}
-            {renderEntry(<>von Lumi – Dreisatz Lückentext</>)}
-            {renderEntry(
-              <>von serlo.org – Video: Rechnen mit Dreisatz</>,
-              121526
-            )}
-          </>
-        ) : null} */}
       </div>
     </div>
   )
