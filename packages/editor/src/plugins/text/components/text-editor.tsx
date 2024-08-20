@@ -1,21 +1,17 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useMemo, useEffect } from 'react'
 import { createEditor, Node, Transforms } from 'slate'
-import { Editable, Slate, withReact } from 'slate-react'
+import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
-import { Suggestions } from './suggestions'
 import { TextToolbar } from './text-toolbar'
-import { useDynamicPlacehoder } from '../hooks/use-dynamic-placeholder'
 import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
-import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { withEmptyLinesRestriction } from '../plugins'
 import { withCorrectVoidBehavior } from '../plugins/with-correct-void-behavior'
@@ -51,17 +47,9 @@ export function TextEditor(props: TextEditorProps) {
       editorKey: v4(),
     }
   }, [createTextEditor])
-  const { showSuggestions, suggestionsProps } = useSuggestions({
-    editor,
-    id,
-    focused,
-    isInlineChildEditor: config.isInlineChildEditor,
-  })
+
   const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
-    editor,
     focused,
-    placeholder: config.placeholder,
-    id,
   })
   const handleEditorChange = useEditorChange({
     editor,
@@ -73,35 +61,17 @@ export function TextEditor(props: TextEditorProps) {
     config,
     editor,
     id,
-    showSuggestions,
     state,
   })
   const handleEditablePaste = useEditablePasteHandler({
     editor,
     id,
   })
-  const dynamicPlaceholder = useDynamicPlacehoder({
-    id,
-    editor,
-    focused,
-    containerRef,
-    staticPlaceholder: config.placeholder,
-    noLinebreaks: config.noLinebreaks,
-  })
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
     // Get the current text value of the editor
     const text = Node.string(editor)
-
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
-      }
-      return
-    }
 
     // If the first child of the editor is not a paragraph, do nothing
     const isFirstChildParagraph =
@@ -114,11 +84,8 @@ export function TextEditor(props: TextEditorProps) {
       instanceStateStore[id].selection = editor.selection
     }
 
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-      instanceStateStore[id].selection = editor.selection
+    if (focused) {
+      ReactEditor.focus(editor)
     }
   }, [editor, focused, id])
 
@@ -142,18 +109,10 @@ export function TextEditor(props: TextEditorProps) {
         readOnly={false}
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
+        onBlur={handleBlur}
         renderElement={handleRenderElement}
         renderLeaf={handleRenderLeaf}
-        decorate={
-          dynamicPlaceholder.shouldShow
-            ? dynamicPlaceholder.decorateEmptyLines
-            : undefined
-        }
-        placeholder={
-          dynamicPlaceholder.shouldShow
-            ? undefined
-            : config.placeholder ?? textStrings.placeholder
-        }
+        placeholder={config.placeholder ?? textStrings.placeholder}
         // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
         // `outline-none` removes the ugly outline present in Slate v0.94.1
         className="outline-none focus:outline-none [&>[data-slate-node]]:mx-side"
@@ -161,12 +120,11 @@ export function TextEditor(props: TextEditorProps) {
       />
 
       {focused ? <LinkControls /> : null}
-
-      {showSuggestions ? (
-        <SlateOverlay width={620}>
-          <Suggestions {...suggestionsProps} />
-        </SlateOverlay>
-      ) : null}
     </Slate>
   )
+
+  function handleBlur() {
+    // @ts-expect-error custom operation to do special normalization only on blur.
+    editor.normalize({ force: true, operation: { type: 'blur_container' } })
+  }
 }

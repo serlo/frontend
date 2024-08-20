@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - link')
@@ -7,9 +8,7 @@ Before(popupWarningFix)
 Scenario('Add a link using link suggestion menu', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
-
+  addNewTextPlugin(I)
   I.say('Create text of link and select it')
   I.type('Some text')
   I.pressKey(['CommandOrControl', 'A'])
@@ -60,15 +59,14 @@ Scenario('Add a link using link suggestion menu', async ({ I }) => {
 Scenario('Edit existing link', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create a link')
   I.type('Some text')
   I.pressKey(['CommandOrControl', 'A'])
   I.click('$plugin-toolbar-button-link')
   I.type('Mathematik Start')
-  I.seeElement('$link-suggestion-1')
+  I.seeElement('$link-suggestion-0')
   I.pressKey('Enter')
   I.seeElement(
     locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/19767' })
@@ -81,7 +79,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.say('Change the link href value')
   I.pressKey(['CommandOrControl', 'A'])
   I.type('geometrie')
-  I.seeElement('$link-suggestion-1')
+  I.seeElement('$link-suggestion-0')
   I.pressKey('Enter')
   I.seeElement(
     locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/1288' })
@@ -91,8 +89,7 @@ Scenario('Edit existing link', async ({ I }) => {
 Scenario('Remove existing link', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.say('Create a link')
   I.type('Some text')

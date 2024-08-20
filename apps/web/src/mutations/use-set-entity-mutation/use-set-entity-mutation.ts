@@ -1,14 +1,8 @@
 // eslint-disable-next-line import/no-internal-modules
 import { useRouter } from 'next/router'
-import { eqBy, mapObjIndexed } from 'ramda'
 
 import { setAbstractEntityMutation } from './set-abstract-entity-mutation'
-import {
-  ChildFieldsData,
-  OnSaveData,
-  SetEntityMutationData,
-  SetEntityMutationRunnerData,
-} from './types'
+import { SetEntityMutationData, SetEntityMutationRunnerData } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { getAliasById, revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetch } from '../helper/use-mutation-fetch'
@@ -17,25 +11,6 @@ import { LoggedInData, UuidType } from '@/data-types'
 import { SetAbstractEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { successHash } from '@/helper/use-leave-confirm'
-import type { CourseSerializedState } from '@/serlo-editor-integration/convert-editor-response-to-state'
-
-const equalsWithEmptyStringIsNull = eqBy(
-  mapObjIndexed((v) => (v === '' || v === undefined ? null : v))
-)
-
-const hasNoChanges = (
-  oldVersion?: ChildFieldsData | Record<string, unknown>,
-  currentVersion?: ChildFieldsData | Record<string, unknown>
-) => {
-  return (
-    oldVersion &&
-    currentVersion &&
-    equalsWithEmptyStringIsNull(
-      oldVersion as Record<string, unknown>,
-      currentVersion as Record<string, unknown>
-    )
-  )
-}
 
 export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
@@ -48,10 +23,6 @@ export function useSetEntityMutation() {
   return async (
     data: SetEntityMutationData,
     needsReview: boolean,
-    initialState: {
-      plugin: string
-      state?: unknown
-    },
     taxonomyParentId?: number
   ) => {
     return await setEntityMutationRunner({
@@ -65,7 +36,11 @@ export function useSetEntityMutation() {
       savedParentId,
       taxonomyParentId,
     }: SetEntityMutationRunnerData) {
-      if (!data.__typename) return
+      if (!data.__typename) {
+        // eslint-disable-next-line no-console
+        console.error('no typename')
+        return false
+      }
 
       // persist current alias here since it might change on mutation
       const oldAlias = await getAliasById(data.id)
@@ -77,8 +52,13 @@ export function useSetEntityMutation() {
           data,
           needsReview
         )
-        if (!genericInput) return
+        if (!genericInput) {
+          // eslint-disable-next-line no-console
+          console.error('no generic input data')
+          return false
+        }
         const additionalInput = getAdditionalInputData(mutationStrings, data)
+
         input = {
           ...genericInput,
           ...additionalInput,
@@ -90,7 +70,7 @@ export function useSetEntityMutation() {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('error collecting data, probably missing value?')
+        console.error('error collecting data, probably missing value?', error)
         return false
       }
 
@@ -98,27 +78,18 @@ export function useSetEntityMutation() {
       try {
         //here we rely on the api not to create an empty revision
         savedId = await mutationFetch(setAbstractEntityMutation, input)
-        if (!Number.isInteger(savedId)) return false
+        if (!Number.isInteger(savedId)) {
+          // eslint-disable-next-line no-console
+          console.error('no valid savedId returned')
+          return false
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('error saving main uuid')
+        console.error('error saving main uuid', error)
         return false
       }
 
-      // check for children and save them
-      let childrenResult = undefined
-      try {
-        childrenResult = await loopNestedChildren({
-          data,
-          savedParentId: savedId as number,
-        })
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(`error saving children of ${savedId}`)
-        return false
-      }
-
-      if (!isRecursiveCall && childrenResult) {
+      if (!isRecursiveCall) {
         showToastNotice(
           needsReview
             ? mutationStrings.success.saveNeedsReview
@@ -138,82 +109,11 @@ export function useSetEntityMutation() {
 
         if (oldAlias) await revalidatePath(oldAlias)
 
-        void router.push(redirectHref + successHash)
-      }
-    }
+        setTimeout(() => {
+          void router.push(redirectHref + successHash)
+        }, 200)
 
-    async function loopNestedChildren({
-      data,
-      savedParentId,
-    }: SetEntityMutationRunnerData): Promise<boolean> {
-      if (!data.__typename) return false
-
-      let success = true
-
-      const initialStateState = Object.hasOwn(initialState, 'state')
-        ? initialState.state
-        : undefined
-
-      if (data.__typename === UuidType.Course) {
-        const course = data as CourseSerializedState & OnSaveData
-        if (!course['course-page']) return success
-        success =
-          success &&
-          (await mapField(
-            course['course-page'],
-            UuidType.CoursePage,
-            (initialStateState as CourseSerializedState)?.['course-page']
-          ))
-      }
-
-      return success
-
-      async function mapField(
-        childrenData: ChildFieldsData | ChildFieldsData[],
-        childrenType: ChildFieldsData['__typename'],
-        childrenInitialData?: ChildFieldsData | ChildFieldsData[]
-      ) {
-        const childrenArray = Array.isArray(childrenData)
-          ? childrenData
-          : [childrenData]
-
-        const childrenInitialArray = Array.isArray(childrenInitialData)
-          ? childrenInitialData
-          : [childrenInitialData]
-
-        async function syncLoop() {
-          for (const child of childrenArray) {
-            const oldVersion = childrenInitialArray.find(
-              (oldChild) => oldChild?.id === child.id
-            )
-
-            // only request new revision when entity changed
-            if (hasNoChanges(oldVersion, child)) continue
-
-            const input = {
-              ...child,
-              __typename: childrenType,
-              changes: data.changes,
-              controls: data.controls,
-            }
-
-            const success = await setEntityMutationRunner({
-              data: input as SetEntityMutationData,
-              isRecursiveCall: true,
-              savedParentId,
-            })
-            if (!success) throw 'revision of one child could not be saved'
-          }
-          return true
-        }
-
-        try {
-          return await syncLoop()
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(error)
-          return false
-        }
+        return true
       }
     }
   }
@@ -237,18 +137,22 @@ function getGenericInputData(
   data: SetEntityMutationData,
   needsReview: boolean
 ): SetAbstractEntityInput | undefined {
-  if (!data.__typename) return
-  const content =
-    data.__typename === UuidType.Course ? data.description : data.content
+  const { __typename, changes, content, controls, id } = data
+  if (!__typename) return
+
+  const changesOrFallback =
+    __typename === UuidType.Page
+      ? 'Page'
+      : getRequiredString(mutationStrings, 'changes', changes)
 
   return {
-    entityType: data.__typename,
-    changes: getRequiredString(mutationStrings, 'changes', data.changes),
+    entityType: __typename,
+    changes: changesOrFallback,
     content: getRequiredString(mutationStrings, 'content', content),
-    entityId: data.id ? data.id : undefined,
+    entityId: id ? id : undefined,
     needsReview,
-    subscribeThis: data.controls.notificationSubscription ?? false,
-    subscribeThisByEmail: data.controls.emailSubscription ?? false,
+    subscribeThis: controls.notificationSubscription ?? false,
+    subscribeThisByEmail: controls.emailSubscription ?? false,
   }
 }
 
@@ -256,32 +160,44 @@ function getAdditionalInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData
 ) {
+  const {
+    title,
+    url,
+    meta_title: metaTitle,
+    meta_description: metaDescription,
+    content,
+    description,
+  } = data
   switch (data.__typename) {
     case UuidType.Applet:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        url: getRequiredString(mutationStrings, 'url', data.url),
-        metaTitle: data['meta_title'],
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        url: getRequiredString(mutationStrings, 'url', url),
+        metaTitle,
+        metaDescription,
       }
     case UuidType.Article:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        metaTitle: data['meta_title'],
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaTitle,
+        metaDescription,
       }
     case UuidType.Course:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaDescription,
       }
-    case UuidType.CoursePage:
-      return { title: getRequiredString(mutationStrings, 'title', data.title) }
     case UuidType.Event:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        metaTitle: data['meta_title'],
-        metaDescription: data['meta_description'],
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaTitle,
+        metaDescription,
+      }
+    case UuidType.Page:
+      return {
+        title: getRequiredString(mutationStrings, 'title', title),
+        metaTitle,
+        metaDescription,
       }
     case UuidType.Exercise:
       return {}
@@ -289,13 +205,10 @@ function getAdditionalInputData(
       return {}
     case UuidType.Video:
       return {
-        title: getRequiredString(mutationStrings, 'title', data.title),
-        url: getRequiredString(mutationStrings, 'url', data.content), // url is stored in content for some reason
-        content: getRequiredString(
-          mutationStrings,
-          'content',
-          data.description
-        ),
+        title: getRequiredString(mutationStrings, 'title', title),
+        // url is stored in content for some reason
+        url: getRequiredString(mutationStrings, 'url', content),
+        content: getRequiredString(mutationStrings, 'content', description),
       }
   }
   return {}

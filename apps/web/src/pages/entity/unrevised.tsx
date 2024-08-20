@@ -15,7 +15,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<UnrevisedRevisionsProps>(({ pageData }) => {
   return (
-    <FrontendClientBase>
+    <FrontendClientBase noIndex>
       <Content data={pageData.revisionsData} />
     </FrontendClientBase>
   )

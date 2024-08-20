@@ -43,11 +43,10 @@ export function CheckoutRejectButtons({
 
   function onConfirm() {
     if (modalMode) {
-      void revisionMutation(
-        modalMode,
-        { revisionId: revisionId as number, reason },
-        isPage
-      )
+      void revisionMutation(modalMode, {
+        revisionId: revisionId as number,
+        reason,
+      })
     }
   }
 
@@ -62,7 +61,7 @@ export function CheckoutRejectButtons({
 
       <ModalWithCloseButton
         isOpen={modalMode !== null}
-        onCloseClick={onCloseClick}
+        setIsOpen={(open) => (open ? void null : onCloseClick())}
         title={
           modalMode !== null ? strings.revisions[modalMode].title : undefined
         }

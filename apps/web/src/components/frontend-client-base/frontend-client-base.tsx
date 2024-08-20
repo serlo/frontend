@@ -1,4 +1,5 @@
 import type { AuthorizationPayload } from '@serlo/authorization'
+import Head from 'next/head'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { useState, useEffect } from 'react'
@@ -10,13 +11,15 @@ import {
   fetchLoggedInData,
   getCachedLoggedInData,
 } from './logged-on-data-helper'
+import { MaintenanceBanner } from '../maintenance-banner'
 import { MaxWidthDiv } from '../navigation/max-width-div'
+// import { SessionDurationEvent } from '../session-duration-event'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import { UuidsProvider } from '@/contexts/uuids-context'
+import { type UuidsContextData, UuidsProvider } from '@/contexts/uuids-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import {
   FixedInstanceData,
@@ -28,9 +31,9 @@ export interface FrontendClientBaseProps {
   children: JSX.Element | (JSX.Element | null)[]
   noHeaderFooter?: boolean
   noContainers?: boolean
+  noIndex?: boolean
   showNav?: boolean
-  entityId?: number
-  revisionId?: number
+  serloEntityData?: UuidsContextData
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
 }
@@ -54,9 +57,9 @@ export function FrontendClientBase({
   children,
   noHeaderFooter,
   noContainers,
+  noIndex,
   showNav,
-  entityId,
-  revisionId,
+  serloEntityData,
   authorization,
   loadLoggedInData,
 }: FrontendClientBaseProps) {
@@ -113,10 +116,16 @@ export function FrontendClientBase({
   return (
     <InstanceDataProvider value={instanceData}>
       <PrintMode />
+      {noIndex ? (
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+      ) : null}
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
-          <UuidsProvider value={{ entityId, revisionId }}>
+          <UuidsProvider value={serloEntityData ?? null}>
             <Toaster />
+            {/*<SessionDurationEvent /> */}
             <ConditionalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
@@ -133,6 +142,7 @@ export function FrontendClientBase({
               >
                 {children}
               </ConditionalWrap>
+              <MaintenanceBanner />
             </ConditionalWrap>
           </UuidsProvider>
         </LoggedInDataProvider>

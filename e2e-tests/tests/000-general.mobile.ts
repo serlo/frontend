@@ -37,6 +37,8 @@ Scenario('About Serlo @mobile', ({ I }) => {
   I.scrollPageToBottom()
   I.click('Community')
 
+  I.pressKey('Escape') // close newsletter modal in case it popped up
+
   // Make sure it's the right page, wait longer to reduce flakiness
   I.waitForText("Was gibt's zu tun?", 20)
 })
@@ -119,11 +121,11 @@ Scenario('Quickbar @mobile', ({ I }) => {
   I.say('Perform another search')
   I.amOnPage('/')
   I.click('$quickbar-input')
-  I.type('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
+  I.type('Aufgaben Baumdiagramm ')
 
-  I.click('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
-  I.seeInTitle('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
-  I.see('Abiturkurs Stochastik')
+  I.click('Aufgaben zum Baumdiagramm ')
+  I.seeInTitle('Aufgaben zum Baumdiagramm')
+  I.see('Daten und Zufallsexperimente')
 })
 
 Scenario('Share modal @mobile', ({ I }) => {

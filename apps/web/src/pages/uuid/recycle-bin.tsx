@@ -1,6 +1,5 @@
 import { faTrashRestore } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
-import Head from 'next/head'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { Link } from '@/components/content/link'
@@ -19,7 +18,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { useSetUuidStateMutation } from '@/mutations/use-set-uuid-state-mutation'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))
@@ -32,9 +31,6 @@ function Content() {
 
   return (
     <>
-      <Head>
-        <meta name="robots" content="noindex" />
-      </Head>
       {renderBackButton()}
       <PageTitle title={strings.pageTitles.recycleBin} headTitle />
       <Guard data={data} error={error} needsAuth>

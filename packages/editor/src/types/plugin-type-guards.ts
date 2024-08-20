@@ -9,7 +9,6 @@ import type {
   EditorEquationsDocument,
   EditorExerciseDocument,
   EditorGeogebraDocument,
-  EditorH5PDocument,
   EditorHighlightDocument,
   EditorImageDocument,
   EditorInjectionDocument,
@@ -29,6 +28,7 @@ import type {
   EditorVideoDocument,
   EditorTemplateExerciseGroupDocument,
   EditorExerciseGroupDocument,
+  EditorCourseDocument,
 } from './editor-plugins'
 import { TemplatePluginType } from './template-plugin-type'
 
@@ -51,6 +51,11 @@ export function isBoxDocument(
   document: AnyEditorDocument
 ): document is EditorBoxDocument {
   return document.plugin === EditorPluginType.Box
+}
+export function isCourseDocument(
+  document: AnyEditorDocument
+): document is EditorCourseDocument {
+  return document.plugin === EditorPluginType.Course
 }
 export function isUnsupportedDocument(
   document: AnyEditorDocument
@@ -161,11 +166,6 @@ export function isPagePartnersDocument(
   document: AnyEditorDocument
 ): document is EditorPagePartnersDocument {
   return document.plugin === EditorPluginType.PagePartners
-}
-export function isH5PDocument(
-  document: AnyEditorDocument
-): document is EditorH5PDocument {
-  return document.plugin === EditorPluginType.H5p
 }
 export function isTemplateExerciseGroupDocument(
   document: AnyEditorDocument

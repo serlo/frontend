@@ -9,9 +9,10 @@ import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useRef, useState } from 'react'
 
 import type { ImageProps } from '.'
-import { InlineSrcControls } from './controls/inline-src-controls'
+import { ImageSelectionScreen } from './components/image-selection-screen'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
+import { isImageUrl } from './utils/check-image-url'
 import { TextEditorConfig } from '../text'
 
 const captionFormattingOptions = [
@@ -30,17 +31,23 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  const src = state.src.value.toString()
+
+  const hasValidUrl = isImageUrl(src)
+
+  // focus related logic
   const isCaptionFocused = useAppSelector((storeState) => {
     return state.caption.defined
       ? selectIsFocused(storeState, state.caption.id)
       : false
   })
+  const [isAButtonFocused, setIsAButtonFocused] = useState(false)
 
-  const hasFocus = focused || isCaptionFocused
+  const hasFocus =
+    focused || isCaptionFocused || (isAButtonFocused && !hasValidUrl)
+
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
-
-  // eslint-disable-next-line @typescript-eslint/no-base-to-string
-  const src = state.src.value.toString()
 
   const urlInputRef = useRef<HTMLInputElement>(null)
 
@@ -72,6 +79,13 @@ export function ImageEditor(props: ImageProps) {
       {hasFocus ? (
         <ImageToolbar
           {...props}
+          onClickChangeImage={() => {
+            state.src.set('')
+            state.alt.defined && state.alt.remove()
+            state.caption.defined && state.caption.remove()
+            state.link.defined && state.link.remove()
+          }}
+          showSettingsButtons={hasValidUrl}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
         />
@@ -84,23 +98,28 @@ export function ImageEditor(props: ImageProps) {
         )}
         data-qa="plugin-image-editor"
       >
-        {hasFocus && showInlineImageUrl ? (
-          <div className="absolute left-side top-side z-[3]">
-            <InlineSrcControls {...props} urlInputRef={urlInputRef} />
-          </div>
-        ) : null}
-
-        <ImageRenderer
-          image={{
-            src,
-            href: state.link.defined ? state.link.href.value : undefined,
-            alt: state.alt.defined ? state.alt.value : undefined,
-            maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
-          }}
-          caption={renderCaption()}
-          placeholder={renderPlaceholder()}
-          forceNewTab
-        />
+        {!hasValidUrl && (
+          <ImageSelectionScreen
+            {...props}
+            setIsAButtonFocused={setIsAButtonFocused}
+            urlInputRef={urlInputRef}
+          />
+        )}
+        {hasValidUrl && (
+          <ImageRenderer
+            image={{
+              src,
+              href: state.link.defined ? state.link.href.value : undefined,
+              alt: state.alt.defined ? state.alt.value : undefined,
+              maxWidth: state.maxWidth.defined
+                ? state.maxWidth.value
+                : undefined,
+            }}
+            caption={renderCaption()}
+            placeholder={renderPlaceholder()}
+            forceNewTab
+          />
+        )}
       </div>
     </>
   )

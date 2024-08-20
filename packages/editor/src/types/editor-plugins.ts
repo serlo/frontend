@@ -4,11 +4,12 @@ import type { ArticlePluginState } from '@editor/plugins/article'
 import { AudioPluginState } from '@editor/plugins/audio'
 import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
+import { CoursePluginState } from '@editor/plugins/course'
+import { DropzoneImagePluginState } from '@editor/plugins/dropzone-image'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
 import type { GeogebraPluginState } from '@editor/plugins/geogebra'
-import { H5pPluginState } from '@editor/plugins/h5p'
 import type { HighlightPluginState } from '@editor/plugins/highlight'
 import type { ImagePluginState } from '@editor/plugins/image'
 import type { InjectionPluginState } from '@editor/plugins/injection'
@@ -50,6 +51,9 @@ export interface EditorArticleDocument {
   plugin: EditorPluginType.Article
   state: PrettyStaticState<ArticlePluginState>
   id?: string
+  serloContext?: {
+    articleTitle?: string
+  }
 }
 export interface EditorArticleIntroductionDocument {
   plugin: EditorPluginType.ArticleIntroduction
@@ -60,6 +64,17 @@ export interface EditorBoxDocument {
   plugin: EditorPluginType.Box
   state: PrettyStaticState<BoxPluginState>
   id?: string
+}
+export interface EditorCourseDocument {
+  plugin: EditorPluginType.Course
+  state: PrettyStaticState<CoursePluginState>
+  id?: string
+  // additional data for serlo, not part of normal state
+  serloContext?: {
+    activeCoursePageId?: string
+    courseTitle: string
+    coursePageUrls: string[]
+  }
 }
 export interface EditorUnsupportedDocument {
   plugin: EditorPluginType.Unsupported
@@ -136,6 +151,11 @@ export interface EditorBlanksExerciseDocument {
   state: PrettyStaticState<BlanksExerciseState>
   id?: string
 }
+export interface EditorDropzoneImageDocument {
+  plugin: EditorPluginType.DropzoneImage
+  state: PrettyStaticState<DropzoneImagePluginState>
+  id?: string
+}
 export interface EditorSpoilerDocument {
   plugin: EditorPluginType.Spoiler
   state: PrettyStaticState<SpoilerPluginState>
@@ -193,11 +213,6 @@ export interface EditorPageTeamDocument {
 export interface EditorPagePartnersDocument {
   plugin: EditorPluginType.PagePartners
   state: PrettyStaticState<PagePartnersPluginState>
-  id?: string
-}
-export interface EditorH5PDocument {
-  plugin: EditorPluginType.H5p
-  state: PrettyStaticState<H5pPluginState>
   id?: string
 }
 

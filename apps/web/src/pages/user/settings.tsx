@@ -12,7 +12,7 @@ import { userByUsernameQuery } from '@/fetcher/user/query-by-username'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))

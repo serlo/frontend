@@ -51,7 +51,6 @@ export const entityIconMapping = {
   audio: faPlay,
   article: faNewspaper,
   course: faGraduationCap,
-  coursepage: faGraduationCap,
   event: faCalendarAlt,
   exercise: faFile,
   exercisegroup: faFile,

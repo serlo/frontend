@@ -89,6 +89,7 @@ export const instanceData = {
       title: "Partager",
       copyLink: "Copier le lien",
       copySuccess: "Lien copié!",
+      copyFailed: 'Error copying link! ',
       close: "Fermer",
       pdf: "Télécharger comme PDF",
       pdfNoSolutions: "PDF sans solutions"
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "As-tu une question?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "Commentaire",
       commentsMany: "Commentaires",
       submit: "Soumettre",
@@ -423,7 +424,9 @@ export const instanceData = {
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
-      verificationLinkText: 'Click here to request the verification email again.'
+      verificationLinkText: 'Click here to request the verification email again.',
+      badRole: 'You are only allowed to log in through VIDIS if you are a teacher.',
+      somethingWrong: 'Sorry, something went wrong!'
     },
     keys: {
       ctrl: 'ctrl',
@@ -491,7 +494,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "Apprendre avec Serlo!"
+  title: "Apprendre avec Serlo!",
+  topicTitleAffix: 'Basics & Exercises'
 };
 export const loggedInData = {
   authMenu: [{
@@ -527,16 +531,12 @@ export const loggedInData = {
     authorMenu: {
       log: "Historique",
       settings: "Réglages",
-      moveCoursePage: "Déplacer cette page vers un autre cours",
-      thisCoursePage: "Cette page de cours",
-      addCoursePage: "Ajouter une page de cours",
-      wholeCourse: "Tout le cours",
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: "Ajouter un exercice de texte groupé",
       changeLicense: "Modifier la licence",
       subscribe: "S'abonner",
-      subscribeNotifications: "Recevoir des notifications",
-      subscribeNotificationsAndMail: "Recevoir des notifications et des courriels",
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: "Désabonner",
       convert: "Convertir (beta)",
       history: "Histoire",
@@ -607,6 +607,13 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: 'Are you sure you want to leave without saving?',
       noChangesWarning: 'Nothing changed so there is no need to save yet',
+      addPluginsModal: {
+        searchInputPlaceholder: 'Search...',
+        basicPluginsTitle: 'Content Elements',
+        interactivePluginsTitle: "Exercices",
+        noPluginsFoundTitle: 'Sorry, no elements match your search.',
+        noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
+      },
       plugins: {
         anchor: {
           title: "Ancre",
@@ -616,12 +623,63 @@ export const loggedInData = {
         },
         box: {
           title: 'Container',
-          description: 'A container for examples, quotes, warnings, theorems, notes…',
+          description: 'Insert a container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
           typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
+        },
+        dropzoneImage: {
+          title: 'Image Dropzones',
+          description: 'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
+          backgroundImage: 'Background image',
+          addDropZone: 'Add drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          visibilityOptions: {
+            full: 'full',
+            partial: 'partial',
+            none: 'none'
+          },
+          answers: {
+            add: "Ajouter une réponse",
+            remove: 'Remove answer',
+            edit: 'Edit answer',
+            settings: 'Answer settings',
+            answersPlaceholder: 'Here you will find your dropzone answers'
+          },
+          answerZone: {
+            description: 'Description (optional)',
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: 'Duplicate zone',
+            delete: 'Delete zone'
+          },
+          backgroundType: {
+            description: 'Insert a background image or proceed with a blank background',
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: 'Background Image',
+            // 'Hintergrundbild hinzufügen'
+            blank: 'Blank background' //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: 'Choose the layout of the background',
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square',
+            //'Quadradtisch',
+            landscape: 'Landscape',
+            //'Querformat',
+            portrait: 'Portrait' // 'Hochformat'
+
+          },
+          or: "ou",
+          modal: {
+            settings: "Réglages",
+            new: 'New Drop Zone',
+            edit: 'Edit Answer',
+            wrong: 'Create Wrong Answer'
+          }
         },
         unsupported: {
           title: 'Unsupported',
@@ -630,7 +688,7 @@ export const loggedInData = {
         },
         equations: {
           title: 'Terms and equations',
-          description: 'Write term manipulations and solve multiline equations.',
+          description: 'Create term transformations and solve multi-line equations.',
           leftHandSide: "côté gauche",
           transformation: "Transformation",
           mode: 'Mode',
@@ -644,18 +702,17 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
           title: "Applet GéoGebra",
-          description: "Intégrer une applet GeoGebra par URL ou ID.",
+          description: 'Embed GeoGebra materials applets via URL or ID.',
           chooseApplet: 'Choose Applet',
           urlOrId: "URL ou ID de GeoGebra"
         },
         highlight: {
           title: "Code source",
-          description: "Surligner la syntaxe d'un code source.",
+          description: 'Write code and highlight it according to the programming language.',
           clickAndEnter: "Clique ici pour entrer du code source…",
           enterHere: "Saisie du code source",
           language: "Langue",
@@ -665,9 +722,16 @@ export const loggedInData = {
         },
         image: {
           title: 'Image',
-          description: "Télécharger des images.",
-          upload: 'Upload',
+          description: 'Upload images or search online for freely licensed images.',
+          upload: 'Upload Image',
           imageUrl: 'Image URL',
+          imageSource: 'Image Source',
+          imageSourceHelpText: 'Add the author or source of this image here',
+          invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          search: 'Suche',
+          searchOnline: 'Search online for licence-free images',
+          placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
@@ -679,11 +743,21 @@ export const loggedInData = {
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          maxWidthPlaceholder: 'Enter the maximum width',
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: 'Change image',
+          licence: 'Licence',
+          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:',
+          licenceFree: 'Licence Free Images',
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: 'These images were loaded from Pixabay.',
+          searching: 'Searching for images ...',
+          loadingImage: 'Downloading image ...',
+          noImagesFound: 'No images found'
         },
         injection: {
           title: "Contenu de serlo.org",
-          description: "Intégrer contenu de serlo.org en utilisant l'ID.",
+          description: 'Embed an existing content from serlo.org via ID.',
           illegalInjectionFound: "Injection illégale trouvée",
           serloEntitySrc: "Entité Serlo {{src}}",
           serloId: 'Serlo ID',
@@ -729,7 +803,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tableau",
-          description: 'Create pretty tables',
+          description: 'Create a customizable table.',
           mode: 'Mode',
           columnHeaders: 'Only column headers',
           rowHeaders: 'Only row headers',
@@ -745,13 +819,17 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: "Une boîte réductible.",
+          description: 'Insert a fold-out box, e.g. for additional content or help.',
           enterATitle: "Saisir un titre"
+        },
+        solution: {
+          title: 'Non interactive exercise',
+          description: 'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.'
         },
         text: {
           title: "Texte",
           description: "Créer contenu en utilisant du texte riche (RTF) et des formules mathématiques.",
-          placeholder: 'Write something or add element:',
+          placeholder: 'Write something...',
           addButtonExplanation: 'Click to insert new element',
           quote: "Citation",
           setColor: "Définir la couleur",
@@ -782,7 +860,6 @@ export const loggedInData = {
           removeBlank: 'Remove Blank',
           bold: "Gras (%ctrlOrCmd% + B)",
           italic: "Italique (%ctrlOrCmd% + I)",
-          noItemsFound: "Aucun élément trouvé",
           colorNames: {
             blue: 'Blue',
             green: 'Green',
@@ -809,7 +886,7 @@ export const loggedInData = {
         },
         video: {
           title: "Vidéo",
-          description: "Intégrer YouTube, Vimeo, Wikimedia Commons ou les vidéos BR.",
+          description: 'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
           videoUrl: "URL de la vidéo",
           videoDescription: 'Description',
           titlePlaceholder: "Titre",
@@ -833,7 +910,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: 'Input Exercise',
-          description: 'Solution can be text or math'
+          description: 'Create a task where an exact input or value can be entered and validated.'
         },
         textAreaExercise: {
           title: 'Text Box Exercise',
@@ -841,11 +918,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice'
+          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+        },
+        h5p: {
+          title: 'H5P',
+          description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
           title: 'Fill In The Blanks',
-          description: 'Text with blanks',
+          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
           placeholder: 'Write a text and add blanks',
           chooseType: "Choisissez le type d'exercice",
           chooseChildPluginType: 'Choose the answer type',
@@ -853,9 +934,6 @@ export const loggedInData = {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "Aperçu",
-          previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise',
           dummyAnswers: 'Extra incorrect answers',
           addDummyAnswer: 'Add an incorrect answer',
           removeDummyAnswer: 'Remove extra answer',
@@ -869,7 +947,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titre",
           seoTitle: "Titre pour les moteurs de recherche",
-          seoDesc: "Description pour les moteurs de recherche"
+          seoDesc: "Description pour les moteurs de recherche",
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "Écrire une courte introduction",
@@ -877,7 +957,6 @@ export const loggedInData = {
           moreOnTopic: "Tu peux en trouver plus ici :",
           addSource: "Ajouter une source",
           removeLabel: "Supprimer",
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: "Ouvrir dans un nouvel onglet",
           sources: 'Sources',
@@ -905,18 +984,14 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Supprimer la page de cours",
-          addCoursePage: "Ajouter une page de cours"
-        },
-        coursePage: {
-          explanation: "Explication",
-          video: "Vidéo",
-          question: 'Question',
-          title: "Titre"
+          addCoursePage: "Ajouter une page de cours",
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
           inputExercise: 'Input Exercise',
           textAreaExercise: 'Text Box Exercise',
+          dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: "Ajouter un exercice interactif optionnel :",

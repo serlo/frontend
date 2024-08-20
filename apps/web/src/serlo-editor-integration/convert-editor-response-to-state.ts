@@ -5,8 +5,7 @@ import {
   type Entity,
   type Uuid,
 } from '@editor/plugins/serlo-template-plugins/common/common'
-import type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course/course'
-import type { CoursePageTypePluginState } from '@editor/plugins/serlo-template-plugins/course/course-page'
+import type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course'
 import type { EventTypePluginState } from '@editor/plugins/serlo-template-plugins/event'
 import type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
@@ -24,9 +23,11 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 const entityTypes = [
   UuidType.Applet,
   UuidType.Article,
+  UuidType.Course,
   UuidType.Event,
   UuidType.Exercise,
   UuidType.ExerciseGroup,
+  UuidType.Page,
   UuidType.Video,
 ] as const
 type EntityType = (typeof entityTypes)[number]
@@ -75,15 +76,6 @@ export function convertEditorResponseToState(
   }
 
   try {
-    if (UuidType.Course === uuid.__typename) {
-      return convertCourse(uuid.__typename, uuid)
-    }
-    if (UuidType.CoursePage === uuid.__typename) {
-      return convertCoursePage(uuid.__typename, uuid)
-    }
-    if (UuidType.Page === uuid.__typename) {
-      return convertPage(uuid.__typename, uuid)
-    }
     if (UuidType.TaxonomyTerm === uuid.__typename) {
       return convertTaxonomy(uuid.__typename, uuid)
     }
@@ -115,9 +107,11 @@ export function convertEditorResponseToState(
   ):
     | StaticDocument<ArticleTypePluginState>
     | StaticDocument<AppletTypePluginState>
+    | StaticDocument<CourseTypePluginState>
     | StaticDocument<EventTypePluginState>
     | StaticDocument<TextExerciseTypePluginState>
     | StaticDocument<TextExerciseGroupTypePluginState>
+    | StaticDocument<PageTypePluginState>
     | StaticDocument<VideoTypePluginState> {
     stack.push({ id: uuid.id, type: entityType })
 
@@ -163,75 +157,6 @@ export function convertEditorResponseToState(
     }
   }
 
-  function convertCourse(
-    entityType: MainUuidType['__typename'],
-    uuid: Extract<MainUuidType, { __typename: 'Course' }>
-  ): StaticDocument<CourseTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return {
-      plugin: TemplatePluginType.Course,
-      state: {
-        ...entityFields,
-        description: serializeStaticDocument(parseStaticString(content)),
-        'course-page': (uuid.pages || [])
-          .filter((page) => page.currentRevision !== null)
-          .map((page) => {
-            return convertCoursePage('CoursePage', {
-              ...page,
-              currentRevision: {
-                id: page.id,
-                alias: page.alias,
-                title: page.currentRevision?.title ?? '',
-                content: page.currentRevision?.content ?? '',
-                date: '', // not used
-              },
-            }).state
-          }),
-      },
-    }
-  }
-
-  function convertCoursePage(
-    entityType: MainUuidType['__typename'],
-    uuid: Pick<
-      Extract<MainUuidType, { __typename: 'CoursePage' }>,
-      'id' | 'currentRevision'
-    >
-  ): StaticDocument<CoursePageTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return {
-      plugin: TemplatePluginType.CoursePage,
-      state: {
-        id: uuid.id,
-        licenseId,
-        revision,
-        changes: '',
-        icon: 'explanation',
-        title: uuid.currentRevision?.title || '',
-        content: serializeStaticDocument(
-          parseStaticString(uuid.currentRevision?.content || '')
-        ),
-        meta_title,
-        meta_description,
-      },
-    }
-  }
-
-  function convertPage(
-    entityType: MainUuidType['__typename'],
-    uuid: Extract<MainUuidType, { __typename: 'Page' }>
-  ): StaticDocument<PageTypePluginState> {
-    stack.push({ id: uuid.id, type: entityType })
-    return {
-      plugin: TemplatePluginType.Page,
-      state: {
-        ...idAndLicense,
-        title,
-        content: serializeStaticDocument(parseStaticString(content)),
-      },
-    }
-  }
-
   function convertTaxonomy(
     entityType: MainUuidType['__typename'],
     uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
@@ -243,7 +168,6 @@ export function convertEditorResponseToState(
         id: uuid.id,
         parent: uuid.parent?.id ?? 0,
         position: uuid.weight,
-        taxonomy: uuid.taxonomyId,
         term: {
           name: uuid.name,
         },
@@ -276,30 +200,6 @@ export interface AbstractSerializedState extends Entity {
   meta_description?: string
   url?: string
   cohesive?: string
-}
-
-export interface CourseSerializedState extends Entity {
-  __typename?: UuidType.Course
-  title?: string
-  description: SerializedStaticState
-  content?: SerializedStaticState // just to simplify types, will not be set
-  reasoning?: SerializedStaticState
-  meta_description?: string
-  'course-page'?: CoursePageSerializedState[]
-}
-
-export interface CoursePageSerializedState extends Entity {
-  __typename?: UuidType.CoursePage
-  title?: string
-  icon?: 'explanation' | 'play' | 'question'
-  content: SerializedStaticState
-}
-
-export interface PageSerializedState extends Uuid {
-  __typename?: UuidType.Page
-  title?: string
-  content: SerializedStaticState
-  licenseId?: number
 }
 
 export interface TaxonomySerializedState extends Uuid {

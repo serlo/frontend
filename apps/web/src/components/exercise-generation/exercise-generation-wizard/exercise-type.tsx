@@ -41,11 +41,13 @@ export function ExerciseType({
           {exerciseTypeStrings.label}
         </label>
         <MenuButton
-          value={exerciseType || ''}
+          value={exerciseType || 'default'}
           onChange={(newValue) => setExerciseType(newValue)}
-          defaultValue=""
+          defaultValue="default"
         >
-          <MenuItem value="">{exerciseTypeStrings.chooseOption}</MenuItem>
+          <MenuItem value="default">
+            {exerciseTypeStrings.chooseOption}
+          </MenuItem>
           <MenuItem value="single choice">
             {exerciseTypeStrings.singleChoice}
           </MenuItem>

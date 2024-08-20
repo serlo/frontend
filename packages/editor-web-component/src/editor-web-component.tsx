@@ -1,17 +1,27 @@
 /// <reference types="vite/client" />
 
-import { SerloEditor, SerloRenderer } from '@serlo/editor'
+import { SerloRenderer, BaseEditor } from '@serlo/editor'
 import styles from '@serlo/editor/style.css?raw'
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
 import {
+  defaultBoxAndSpoilerPlugins,
+  defaultMultimediaConfig,
+} from './default-plugins'
+import {
   exampleInitialState,
-  isInitialState,
+  isValidState,
   type InitialState,
 } from './initial-state'
 
+const LazySerloEditor = lazy(() =>
+  import('@serlo/editor').then((module) => ({ default: module.SerloEditor }))
+)
+
 type Mode = 'read' | 'write'
+
+type EditorHistory = BaseEditor['history']
 
 export class EditorWebComponent extends HTMLElement {
   private reactRoot: ReactDOM.Root | null = null
@@ -19,28 +29,26 @@ export class EditorWebComponent extends HTMLElement {
 
   private _mode: Mode = 'read'
 
+  private _history: EditorHistory | null = null
+
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
+
+  private _testingSecret: string | null = null
+
+  // By default, we are NOT attaching it to the shadow DOM
+  private _useShadowDOM: boolean = false
 
   constructor() {
     super()
 
-    // Create a shadow root for encapsulation
-    const shadow = this.attachShadow({ mode: 'open' })
     this.container = document.createElement('div')
-    shadow.appendChild(this.container)
 
-    this.loadAndApplyStyles(shadow)
-  }
-
-  loadAndApplyStyles(shadowRoot: ShadowRoot) {
-    const styleEl = document.createElement('style')
-    styleEl.textContent = styles
-    shadowRoot.appendChild(styleEl)
+    // Shadow DOM will be attached in connectedCallback if needed
   }
 
   static get observedAttributes() {
-    return ['initial-state', 'mode']
+    return ['initial-state', 'mode', 'testing-secret', 'use-shadow-dom']
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -52,6 +60,8 @@ export class EditorWebComponent extends HTMLElement {
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
+    } else if (name === 'use-shadow-dom') {
+      this._useShadowDOM = newValue !== 'false'
     }
   }
 
@@ -60,8 +70,9 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   set initialState(newState) {
-    if (isInitialState(newState)) {
+    if (isValidState(newState)) {
       this._initialState = newState
+      this._currentState = newState
       // Update the attribute
       this.setAttribute('initial-state', JSON.stringify(newState))
       this.mountReactComponent()
@@ -96,12 +107,43 @@ export class EditorWebComponent extends HTMLElement {
     )
   }
 
+  get history(): EditorHistory | null {
+    return this._history
+  }
+
+  get testingSecret(): string | null {
+    return this._testingSecret
+  }
+
+  set testingSecret(newTestingSecret) {
+    if (newTestingSecret) this.setAttribute('testing-secret', newTestingSecret)
+  }
+
   connectedCallback() {
+    if (this._useShadowDOM && !this.shadowRoot) {
+      this.attachShadow({ mode: 'open' })
+      this.shadowRoot!.appendChild(this.container)
+    } else if (!this._useShadowDOM) {
+      this.appendChild(this.container)
+    }
+
+    this.loadAndApplyStyles()
+
     if (!this.reactRoot) {
       this.reactRoot = ReactDOM.createRoot(this.container)
     }
 
     this.mountReactComponent()
+  }
+
+  loadAndApplyStyles() {
+    const styleEl = document.createElement('style')
+    styleEl.textContent = styles
+    if (this._useShadowDOM) {
+      this.shadowRoot!.appendChild(styleEl)
+    } else {
+      this.appendChild(styleEl)
+    }
   }
 
   broadcastNewState(newState: unknown): void {
@@ -113,18 +155,23 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
+    const testingSecretAttr = this.getAttribute('testing-secret')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
       : exampleInitialState
 
-    if (!isInitialState(initialState)) {
+    if (!isValidState(initialState)) {
       throw new Error('Initial state is not of type InitialState')
     }
 
-    // eslint-disable-next-line no-console
-    console.log('Mounting React Component with state:', initialState)
+    // This works even with subsequent mounts and renders because the
+    // currentState is only null upon first render. Even if you delete all the
+    // contents of the editor, there is an empty text plugin or similar present.
+    if (!this._currentState && initialState) {
+      this._currentState = initialState
+    }
 
     if (!this.reactRoot) {
       return null
@@ -132,22 +179,44 @@ export class EditorWebComponent extends HTMLElement {
 
     this.reactRoot.render(
       <React.StrictMode>
-        <div id="serlo-root">
+        <div id="serlo-root" className="relative">
           {this._mode === 'write' ? (
-            <SerloEditor
-              initialState={this.initialState}
-              onChange={({ changed, getDocument }) => {
-                if (changed) {
-                  const newState = getDocument()
-                  this._currentState = newState
-                  this.broadcastNewState(newState)
-                }
-              }}
-            >
-              {(editor) => {
-                return <div>{editor.element}</div>
-              }}
-            </SerloEditor>
+            <Suspense fallback={<div>Loading editor...</div>}>
+              <LazySerloEditor
+                initialState={this.initialState}
+                pluginsConfig={{
+                  box: {
+                    allowedPlugins: defaultBoxAndSpoilerPlugins,
+                  },
+                  spoiler: {
+                    allowedPlugins: defaultBoxAndSpoilerPlugins,
+                  },
+                  multimedia: defaultMultimediaConfig,
+                  ...(testingSecretAttr
+                    ? {
+                        general: {
+                          testingSecret: testingSecretAttr,
+                          enableTextAreaExercise: false,
+                        },
+                      }
+                    : {}),
+                }}
+                // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+                _enableImagePlugin
+                onChange={({ changed, getDocument }) => {
+                  if (changed) {
+                    const newState = getDocument()
+                    this._currentState = newState
+                    this.broadcastNewState(newState)
+                  }
+                }}
+              >
+                {(editor) => {
+                  this._history = editor.history
+                  return <div>{editor.element}</div>
+                }}
+              </LazySerloEditor>
+            </Suspense>
           ) : (
             <SerloRenderer document={this.initialState} />
           )}

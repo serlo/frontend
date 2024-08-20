@@ -15,8 +15,8 @@ import { useState } from 'react'
 import type { DatenraumIntegrationProps } from '.'
 import { SearchPanel } from './components/search-panel'
 import { hardcodedExerciseState } from './const'
-import { H5pRenderer } from '../h5p/renderer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { H5pRenderer } from '@/serlo-editor-integration/h5p/renderer'
 
 export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   const [showSearch, setShowSearch] = useState(true)
@@ -75,7 +75,7 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
         title=""
         isOpen={showSearch}
         className="top-1/2 max-h-[80vh] min-h-[60vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto"
-        onCloseClick={() => setShowSearch(false)}
+        setIsOpen={setShowSearch}
       >
         <SearchPanel onSelect={handleSelectResource} />
       </ModalWithCloseButton>

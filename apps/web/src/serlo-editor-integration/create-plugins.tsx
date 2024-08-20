@@ -1,11 +1,17 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
+import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
+import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
+import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
+import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
+import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
+import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
@@ -16,12 +22,13 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { blanksExercise } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { coursePlugin } from '@editor/plugins/course'
 import { datenraumIntegrationPlugin } from '@editor/plugins/datenraum-integration'
+import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
-import { H5pPlugin } from '@editor/plugins/h5p'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
@@ -35,8 +42,7 @@ import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { appletTypePlugin } from '@editor/plugins/serlo-template-plugins/applet'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
-import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course/course'
-import { coursePageTypePlugin } from '@editor/plugins/serlo-template-plugins/course/course-page'
+import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
 import { eventTypePlugin } from '@editor/plugins/serlo-template-plugins/event'
 import { textExerciseGroupTypePlugin } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
@@ -55,6 +61,7 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
+import { H5pPlugin } from '@/serlo-editor-integration/h5p'
 import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
 export function createPlugins({
@@ -94,6 +101,12 @@ export function createPlugins({
       plugin: createMultimediaPlugin(),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
+    },
+    {
+      type: EditorPluginType.DropzoneImage,
+      plugin: createDropzoneImagePlugin(),
+      visibleInSuggestions: false,
+      icon: <IconDropzones />,
     },
     {
       type: EditorPluginType.Spoiler,
@@ -190,18 +203,29 @@ export function createPlugins({
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: shouldUseFeature('editorExercisesInContent'),
+      visibleInSuggestions: true,
     },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      icon: <IconPencil />,
+    },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin, icon: <IconH5p /> },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
+      icon: <IconTextArea />,
     },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    {
+      type: EditorPluginType.ScMcExercise,
+      plugin: createScMcExercisePlugin(),
+      icon: <IconScMcExercise />,
+      visibleInSuggestions: true,
+    },
     {
       type: EditorPluginType.BlanksExercise,
       plugin: blanksExercise,
+      icon: <IconFillGaps />,
     },
 
     // Special plugins, never visible in suggestions
@@ -221,13 +245,12 @@ export function createPlugins({
         allowedPlugins: [EditorPluginType.Image],
       }),
     },
-
+    { type: EditorPluginType.Course, plugin: coursePlugin },
     // Internal plugins for our content types
     // ===================================================
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
     { type: TemplatePluginType.Article, plugin: articleTypePlugin },
     { type: TemplatePluginType.Course, plugin: courseTypePlugin },
-    { type: TemplatePluginType.CoursePage, plugin: coursePageTypePlugin },
     { type: TemplatePluginType.Event, plugin: eventTypePlugin },
     { type: TemplatePluginType.Page, plugin: pageTypePlugin },
     { type: TemplatePluginType.Taxonomy, plugin: taxonomyTypePlugin },

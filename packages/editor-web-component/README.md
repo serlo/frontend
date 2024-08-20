@@ -1,6 +1,8 @@
 # Serlo Editor as a web component
 
-This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repository [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) shows how this package can be used.
+This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repositories [serlo/serlo-editor-lit](https://github.com/serlo/serlo-editor-lit) and [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) show how this package can be used.
+
+If you are using React, we recommend using the Serlo Editor as a [React component](https://www.npmjs.com/package/@serlo/editor).
 
 ## Installation and usage
 
@@ -32,7 +34,7 @@ export default defineComponent({
   name: 'SerloEditorComponent',
   setup() {
     const isEditing = ref(false)
-    const initialExampleState = ref({
+    const initialState = ref({
       plugin: 'rows',
       state: [
         {
@@ -58,13 +60,24 @@ export default defineComponent({
 
     return {
       isEditing,
-      initialExampleState,
+      initialState,
       toggleMode,
       handleStateChange,
     }
   },
 })
 </script>
+```
+
+If you want to display a certain plugin as an initial state of the Serlo Editor, check out the [documentation](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins) for each JSON state of the plugins.
+
+## Shadow DOM vs. normal DOM
+
+We give you the option whether you want to render the web-component within the Shadow DOM or not. Both have their pros and cons. Outside of the Shadow DOM, it's easier to run into style collisions. However, the Serlo Editor within the Shadow DOM is still buggy in a few places, especially when it comes to focus management.
+We are fixing them, but by default we are rendering the Serlo Editor within the normal DOM. If you want to render it within the Shadow DOM, you can pass `true` to the `use-shadow-dom` argument. Bug reports and fixes in form of a PR for the use-shadow-dom mode are very welcome!
+
+```html
+<editor-web-component use-shadow-dom="true"></editor-web-component>
 ```
 
 ## Releasing a new version to npm

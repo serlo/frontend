@@ -89,6 +89,7 @@ export const instanceData = {
       title: "பகிர்!",
       copyLink: "இணைப்பை நகலெடுக்கவும்",
       copySuccess: "இணைப்பு நகலெடுக்கப்பட்டது!",
+      copyFailed: 'Error copying link! ',
       close: "நெருக்கமான",
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "உங்களுக்கு கேள்வி உள்ளதா?",
-      questionLink: 'Write it below',
+      questionLink: 'Write it here',
       commentsOne: "கருத்து",
       commentsMany: "கருத்துகள்",
       submit: "இணைக்க",
@@ -423,7 +424,9 @@ export const instanceData = {
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
-      verificationLinkText: 'Click here to request the verification email again.'
+      verificationLinkText: 'Click here to request the verification email again.',
+      badRole: 'You are only allowed to log in through VIDIS if you are a teacher.',
+      somethingWrong: 'Sorry, something went wrong!'
     },
     keys: {
       ctrl: 'ctrl',
@@ -491,7 +494,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!"
+  title: "Serlo உடன் கற்றுக்கொள்ளுங்கள்!",
+  topicTitleAffix: 'Basics & Exercises'
 };
 export const loggedInData = {
   authMenu: [{
@@ -527,16 +531,12 @@ export const loggedInData = {
     authorMenu: {
       log: "பதிவு",
       settings: "அமைப்புகள்",
-      moveCoursePage: 'Move this page to another course',
-      thisCoursePage: 'This course-page',
-      addCoursePage: 'Add course-page',
-      wholeCourse: 'Whole course',
       moveOrCopyItems: 'Move or copy items',
       addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
       subscribe: "சந்தா",
-      subscribeNotifications: 'Recieve notifications',
-      subscribeNotificationsAndMail: 'Recieve notifications and emails',
+      subscribeNotifications: 'Receive notifications',
+      subscribeNotificationsAndMail: 'Receive notifications and emails',
       unsubscribeNotifications: "சந்தாவை நிறுத்துதல்",
       convert: 'Convert (beta)',
       history: "வரலாறு",
@@ -607,6 +607,13 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: 'Are you sure you want to leave without saving?',
       noChangesWarning: 'Nothing changed so there is no need to save yet',
+      addPluginsModal: {
+        searchInputPlaceholder: 'Search...',
+        basicPluginsTitle: 'Content Elements',
+        interactivePluginsTitle: "பயிற்சிகள்",
+        noPluginsFoundTitle: 'Sorry, no elements match your search.',
+        noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
+      },
       plugins: {
         anchor: {
           title: 'Anchor',
@@ -616,12 +623,63 @@ export const loggedInData = {
         },
         box: {
           title: 'Container',
-          description: 'A container for examples, quotes, warnings, theorems, notes…',
+          description: 'Insert a container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
           typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
+        },
+        dropzoneImage: {
+          title: 'Image Dropzones',
+          description: 'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
+          backgroundImage: 'Background image',
+          addDropZone: 'Add drop zone',
+          removeDropZone: 'Remove drop zone',
+          dropzoneVisibility: 'Dropzone Visibility',
+          visibilityOptions: {
+            full: 'full',
+            partial: 'partial',
+            none: 'none'
+          },
+          answers: {
+            add: 'Add answer',
+            remove: 'Remove answer',
+            edit: 'Edit answer',
+            settings: 'Answer settings',
+            answersPlaceholder: 'Here you will find your dropzone answers'
+          },
+          answerZone: {
+            description: 'Description (optional)',
+            sizeLabel: 'Configure the size of the drop zone',
+            duplicate: 'Duplicate zone',
+            delete: 'Delete zone'
+          },
+          backgroundType: {
+            description: 'Insert a background image or proceed with a blank background',
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: 'Background Image',
+            // 'Hintergrundbild hinzufügen'
+            blank: 'Blank background' //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: 'Choose the layout of the background',
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: 'Square',
+            //'Quadradtisch',
+            landscape: 'Landscape',
+            //'Querformat',
+            portrait: 'Portrait' // 'Hochformat'
+
+          },
+          or: "அல்லது",
+          modal: {
+            settings: "அமைப்புகள்",
+            new: 'New Drop Zone',
+            edit: 'Edit Answer',
+            wrong: 'Create Wrong Answer'
+          }
         },
         unsupported: {
           title: 'Unsupported',
@@ -630,7 +688,7 @@ export const loggedInData = {
         },
         equations: {
           title: 'Terms and equations',
-          description: 'Write term manipulations and solve multiline equations.',
+          description: 'Create term transformations and solve multi-line equations.',
           leftHandSide: 'left-hand side',
           transformation: 'transformation',
           mode: 'Mode',
@@ -644,18 +702,17 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          moveUpLabel: 'Move up',
           removeRowLabel: 'Remove row'
         },
         geogebra: {
           title: 'GeoGebra Applet',
-          description: 'Embed GeoGebra Materials applets via URL or ID.',
+          description: 'Embed GeoGebra materials applets via URL or ID.',
           chooseApplet: 'Choose Applet',
           urlOrId: 'GeoGebra URL or ID'
         },
         highlight: {
           title: 'Source Code',
-          description: 'Highlight the syntax of source code.',
+          description: 'Write code and highlight it according to the programming language.',
           clickAndEnter: 'Click here and enter your source code…',
           enterHere: 'Enter your source code here',
           language: "மொழி",
@@ -665,9 +722,16 @@ export const loggedInData = {
         },
         image: {
           title: "படம்",
-          description: 'Upload images.',
-          upload: 'Upload',
+          description: 'Upload images or search online for freely licensed images.',
+          upload: 'Upload Image',
           imageUrl: 'Image URL',
+          imageSource: 'Image Source',
+          imageSourceHelpText: 'Add the author or source of this image here',
+          invalidImageUrl: 'Error: Invalid or Incomplete URL',
+          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+          search: 'Suche',
+          searchOnline: 'Search online for licence-free images',
+          placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
@@ -679,11 +743,21 @@ export const loggedInData = {
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          maxWidthPlaceholder: 'Enter the maximum width',
+          helpTooltipText: 'More information and help related to Image Plugin',
+          change: 'Change image',
+          licence: 'Licence',
+          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:',
+          licenceFree: 'Licence Free Images',
+          pixabayText: 'Images will be fetched from Pixabay',
+          pixabayLoadedText: 'These images were loaded from Pixabay.',
+          searching: 'Searching for images ...',
+          loadingImage: 'Downloading image ...',
+          noImagesFound: 'No images found'
         },
         injection: {
           title: 'serlo.org Content',
-          description: 'Embed serlo.org content via their ID.',
+          description: 'Embed an existing content from serlo.org via ID.',
           illegalInjectionFound: 'Illegal injection found',
           serloEntitySrc: 'Serlo entity {{src}}',
           serloId: 'Serlo ID',
@@ -729,7 +803,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: 'Table',
-          description: 'Create pretty tables',
+          description: 'Create a customizable table.',
           mode: 'Mode',
           columnHeaders: 'Only column headers',
           rowHeaders: 'Only row headers',
@@ -745,13 +819,17 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: 'A collapsible box.',
+          description: 'Insert a fold-out box, e.g. for additional content or help.',
           enterATitle: 'Enter a title'
+        },
+        solution: {
+          title: 'Non interactive exercise',
+          description: 'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.'
         },
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
-          placeholder: 'Write something or add element:',
+          placeholder: 'Write something...',
           addButtonExplanation: 'Click to insert new element',
           quote: 'Quote',
           setColor: 'Set color',
@@ -782,7 +860,6 @@ export const loggedInData = {
           removeBlank: 'Remove Blank',
           bold: 'Bold (%ctrlOrCmd% + B)',
           italic: 'Italic (%ctrlOrCmd% + I)',
-          noItemsFound: "உருப்படிகள் எதுவும் இல்லை",
           colorNames: {
             blue: 'Blue',
             green: 'Green',
@@ -809,7 +886,7 @@ export const loggedInData = {
         },
         video: {
           title: "காணொளி",
-          description: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
+          description: 'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
           videoUrl: 'Video URL',
           videoDescription: "விவரிப்பு:",
           titlePlaceholder: "தலைப்பு",
@@ -833,7 +910,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: 'Input Exercise',
-          description: 'Solution can be text or math'
+          description: 'Create a task where an exact input or value can be entered and validated.'
         },
         textAreaExercise: {
           title: 'Text Box Exercise',
@@ -841,11 +918,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
-          description: 'Single Choice or Multiple Choice'
+          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+        },
+        h5p: {
+          title: 'H5P',
+          description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
           title: 'Fill In The Blanks',
-          description: 'Text with blanks',
+          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -853,9 +934,6 @@ export const loggedInData = {
             typing: 'Typing',
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "முற்பார்வை",
-          previewIsActiveHint: 'Edit the exercise again',
-          previewIsDeactiveHint: 'Preview the exercise',
           dummyAnswers: 'Extra incorrect answers',
           addDummyAnswer: 'Add an incorrect answer',
           removeDummyAnswer: 'Remove extra answer',
@@ -869,7 +947,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "தலைப்பு",
           seoTitle: 'Title for search engines',
-          seoDesc: 'Description for search engines'
+          seoDesc: 'Description for search engines',
+          moveUpLabel: 'Move up',
+          moveDownLabel: 'Move down'
         },
         article: {
           writeShortIntro: "ஒரு சிறிய அறிமுகத்தை எழுதுங்கள்",
@@ -877,7 +957,6 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: "நீக்கு",
-          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: "புதியத் தாவலில் திற",
           sources: 'Sources',
@@ -905,18 +984,14 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: 'Remove course page',
-          addCoursePage: 'Add course page'
-        },
-        coursePage: {
-          explanation: "விளக்கம்",
-          video: "காணொளி",
-          question: "கேள்வி",
-          title: "தலைப்பு"
+          addCoursePage: 'Add course page',
+          confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
           scMcExercise: 'Choice Exercise',
           inputExercise: 'Input Exercise',
           textAreaExercise: 'Text Box Exercise',
+          dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',

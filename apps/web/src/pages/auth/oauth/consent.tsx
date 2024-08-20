@@ -7,7 +7,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Consent />
   </FrontendClientBase>
 ))

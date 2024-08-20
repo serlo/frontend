@@ -17,12 +17,7 @@ import { useCanDo } from '@/auth/use-can-do'
 import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  ExerciseInlineType,
-  UuidRevType,
-  UuidType,
-  UuidWithRevType,
-} from '@/data-types'
+import { ExerciseInlineType, UuidType, UuidWithRevType } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -43,7 +38,6 @@ export enum Tool {
   Log = 'log',
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
-  SortCoursePages = 'sortCoursePages',
   SortEntities = 'sortEntities',
   Trash = 'trash',
   DirectLink = 'directLink',
@@ -77,7 +71,6 @@ export interface AuthorToolsData {
     current: boolean
   }
   unrevisedRevisions?: number
-  unrevisedCourseRevisions?: number
 }
 
 export interface AuthorToolsProps {
@@ -114,10 +107,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     history: {
       url: getHistoryUrl(entityId),
       canDo: true,
-    },
-    sortCoursePages: {
-      url: `/entity/link/order/${entityId}/link`,
-      canDo: canDo(Entity.orderChildren),
     },
     edit: {
       url: getEditUrl(entityId),
@@ -369,8 +358,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 function typeToAuthorizationType(
   type: AuthorToolsData['typename']
 ): AuthUuidType {
-  if (type === UuidType.Page) return 'Page'
-  if (type === UuidRevType.Page) return 'PageRevision'
+  if (type === UuidType.Page) return UuidType.Page
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }

@@ -208,7 +208,6 @@ export interface EntityPageBase {
   metaData?: HeadData
   horizonData?: HorizonData
   newsletterPopup: boolean
-  cacheKey?: string // save page data to session storage
   authorization: AuthorizationPayload
 }
 
@@ -235,6 +234,7 @@ export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
 
 export interface HeadData {
   title: string
+  canonicalUrl?: string
   contentType?: string
   metaDescription?: string
   metaImage?: string
@@ -280,9 +280,7 @@ export interface EntityData {
   schemaData?: SchemaData
   content?: AnyEditorDocument | AnyEditorDocument[]
   licenseId?: number
-  courseData?: CourseData
   unrevisedRevisions?: number
-  unrevisedCourseRevisions?: number
   isUnrevised: boolean
 }
 
@@ -349,7 +347,6 @@ export enum UuidType {
   Applet = 'Applet',
   Article = 'Article',
   Course = 'Course',
-  CoursePage = 'CoursePage',
   Event = 'Event',
   Exercise = 'Exercise',
   ExerciseGroup = 'ExerciseGroup',
@@ -402,25 +399,6 @@ export interface LicenseData {
   isDefault?: boolean
   shortTitle?: string // show this if not default
   agreement: string
-}
-
-// Data for a course page.
-
-export interface CourseData {
-  id: number
-  title: string
-  pages: CoursePagesData
-  index: number
-}
-
-export type CoursePagesData = CoursePageEntry[]
-
-export interface CoursePageEntry {
-  title: string
-  url: string
-  id: number
-  active?: boolean
-  noCurrentRevision?: boolean
 }
 
 // Taxonomy: Folders with other entities, sorted by category, first level of subfolders and exercises are shown directly

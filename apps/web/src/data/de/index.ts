@@ -89,6 +89,7 @@ export const instanceData = {
       title: "Weitergeben!",
       copyLink: "Link kopieren",
       copySuccess: "In die Zwischenablage kopiert!",
+      copyFailed: "Sorry, Link konnte nicht automatisch kopiert werden.",
       close: "Schließen",
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
@@ -189,7 +190,7 @@ export const instanceData = {
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
-      questionLink: "Kommentiere unten",
+      questionLink: "Kommentiere hier",
       commentsOne: "Kommentar",
       commentsMany: "Kommentare",
       submit: "Abschicken",
@@ -423,7 +424,9 @@ export const instanceData = {
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
       verificationProblem: "Wenn du keine Mail bekommen hast",
-      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
+      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten.",
+      badRole: "Du darfst dich leider nur über VIDIS einloggen, wenn du Lehrkraft bist.",
+      somethingWrong: "Sorry, irgendwas ist schief gegangen."
     },
     keys: {
       ctrl: "Strg",
@@ -491,7 +494,8 @@ export const instanceLandingData = {
   }
 };
 export const serverSideStrings = {
-  title: "lernen mit Serlo!"
+  title: "lernen mit Serlo!",
+  topicTitleAffix: "Grundlagen & Übungen"
 };
 export const loggedInData = {
   authMenu: [{
@@ -527,10 +531,6 @@ export const loggedInData = {
     authorMenu: {
       log: "Aktivitätenlog",
       settings: "Einstellungen",
-      moveCoursePage: "Kursseite in einen anderen Kurs verschieben",
-      thisCoursePage: "Diese Kursseite",
-      addCoursePage: "Kursseite hinzufügen",
-      wholeCourse: "Gesamter Kurs",
       moveOrCopyItems: "Elemente verschieben oder kopieren",
       addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
@@ -607,6 +607,13 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
       noChangesWarning: "Bisher hast du nichts geändert",
+      addPluginsModal: {
+        searchInputPlaceholder: "Suche...",
+        basicPluginsTitle: "Inhalte",
+        interactivePluginsTitle: "Aufgaben",
+        noPluginsFoundTitle: "Leider gibt es keine Elemente, die zu deiner Suche passen.",
+        noPluginsFoundDescription: "Versuche es mit anderen Suchbegriffen oder stöbere durch alle verfügbaren Elemente."
+      },
       plugins: {
         anchor: {
           title: "Sprungmarke",
@@ -616,12 +623,63 @@ export const loggedInData = {
         },
         box: {
           title: "Box",
-          description: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
+          description: "Füge eine Box für Beispiele, Zitate, Warnungen, Definitionen, Hinweise usw. ein.",
           type: "Art der Box",
           typeTooltip: "Wähle die Art der Box",
           titlePlaceholder: "(optionaler Titel)",
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
+        },
+        dropzoneImage: {
+          title: "Bilder mit Ablagezonen",
+          description: "Erstelle eine Aufgabe, bei der vorgegebene Antworten in die richtigen Zonen eines Bilds oder einen leeren Hintergrund gezogen werden müssen.",
+          backgroundImage: "Hintergrundbild",
+          addDropZone: "Ablagezone hinzufügen",
+          removeDropZone: "Ablagezone entfernen",
+          dropzoneVisibility: "Ablagezone Sichtbarkeit",
+          visibilityOptions: {
+            full: "Voll",
+            partial: "Nur Rahmen",
+            none: "Kein"
+          },
+          answers: {
+            add: "Antwort hinzufügen",
+            remove: "Antwort entfernen",
+            edit: "Antwort bearbeiten",
+            settings: "Antworteinstellungen",
+            answersPlaceholder: "Hier findest du deine Antworten"
+          },
+          answerZone: {
+            description: "Beschreibung (optional)",
+            sizeLabel: "Größe der Zone manuell festlegen",
+            duplicate: "Zone duplizieren",
+            delete: "Zone entfernen"
+          },
+          backgroundType: {
+            description: "Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund",
+            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
+            image: "Hintergrundbild hinzufügen",
+            // 'Hintergrundbild hinzufügen'
+            blank: "Leerer Hintergrund" //  'Leerer Hintergrund'
+
+          },
+          backgroundShapes: {
+            description: "Lege die Ausrichtung des Hintergrundes fest",
+            // 'Lege die Ausrichtung des Hintergrundes fest'
+            square: "Quadratisch",
+            //'Quadradtisch',
+            landscape: "Querformat",
+            //'Querformat',
+            portrait: "Hochformat" // 'Hochformat'
+
+          },
+          or: "oder",
+          modal: {
+            settings: "Einstellungen",
+            new: "Neue Ablagezone",
+            edit: "Antwort bearbeiten",
+            wrong: "Falsche Antwort hinzufügen"
+          }
         },
         unsupported: {
           title: "Nicht unterstützt",
@@ -644,12 +702,11 @@ export const loggedInData = {
           combineLikeTerms: "Fasse die Terme zusammen.",
           setEqual: "Setze die Terme gleich.",
           firstExplanation: "Erste Erklärung",
-          moveUpLabel: "Zeile eins nach oben verschieben",
           removeRowLabel: "Zeile entfernen"
         },
         geogebra: {
           title: 'GeoGebra Applet',
-          description: "Binde Applets von GeoGebra Materials via Link oder ID ein.",
+          description: "Binde GeoGebra Inhalte via Link oder ID ein.",
           chooseApplet: "Applet auswählen",
           urlOrId: "GeoGebra Materials URL oder ID"
         },
@@ -665,25 +722,42 @@ export const loggedInData = {
         },
         image: {
           title: "Bild",
-          description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          upload: "Hochladen",
+          description: "Lade Bilder hoch oder suche online nach frei lizenzierten Bildern.",
+          upload: "Bild hochladen",
           imageUrl: "Bild-URL",
+          imageSource: "Bildquelle",
+          imageSourceHelpText: "Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.",
+          invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
+          invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
+          search: 'Suche',
+          searchOnline: "Online nach lizenzfreien Bildern suchen",
+          placeholderSource: "Quelle (optional)",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
           retry: "Erneut versuchen",
           failedUpload: "Hochladen fehlgeschlagen",
-          captionPlaceholder: "Optionale Bildunterschrift",
+          captionPlaceholder: "Bildunterschrift (optional)",
           href: 'Link',
           hrefPlaceholder: "Bild verlinken",
-          alt: "Beschreibung (wird nicht angezeigt)",
+          alt: "Alternativtext (wird nicht angezeigt)",
           altPlaceholder: "Was ist auf dem Bild zu sehen?",
           maxWidth: "Maximale Breite",
-          maxWidthPlaceholder: "Gib die maximal Breite an"
+          maxWidthPlaceholder: "Gib die maximal Breite an",
+          helpTooltipText: "Mehr Informationen und Hilfe",
+          change: "Bild ändern",
+          licence: "Lizenz",
+          licenceHelpText: "Externe Inhalte mit den folgenden Lizenzen können auf serlo.org integriert werden:",
+          licenceFree: "Frei lizenzierte Bilder",
+          pixabayText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
+          pixabayLoadedText: "Die Bilder werden von der freien Bilder-Datenbank von Pixabay zur Verfügung gestellt",
+          searching: "Suche nach Bildern ...",
+          loadingImage: "Bilder werden heruntergeladen ...",
+          noImagesFound: "Keine Bilder gefunden"
         },
         injection: {
           title: "serlo.org Inhalt",
-          description: "Binde einen Inhalt von serlo.org via ID ein.",
+          description: "Binde einen bestehenden Inhalt von serlo.org via ID ein.",
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
@@ -729,7 +803,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tabelle",
-          description: "Schöne Tabellen erstellen.",
+          description: "Erstelle eine anpassbare Tabelle.",
           mode: "Modus",
           columnHeaders: "Nur Spaltentitel",
           rowHeaders: "Nur Zeilentitel",
@@ -745,13 +819,17 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
+          description: "Füge eine ausklappbare Box ein, z.B. für Exkurse oder Hilfestellungen.",
           enterATitle: "Titel eingeben"
+        },
+        solution: {
+          title: "Freitext Aufgabe\n",
+          description: "Erstelle eine nicht interaktive Aufgabe, die die Lernenden manuell beantworten. Du kannst weiterhin Lösungen und Strategien einfügen."
         },
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
-          placeholder: "Schreib etwas oder füge Elemente ein:",
+          placeholder: "Schreibe etwas …",
           addButtonExplanation: "Klicke, um ein neues Element einzufügen",
           quote: "Zitat",
           setColor: "Einfärben",
@@ -782,7 +860,6 @@ export const loggedInData = {
           removeBlank: "Lücke entfernen",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
-          noItemsFound: "keine Einträge gefunden",
           colorNames: {
             blue: "Blau",
             green: "Grün",
@@ -809,7 +886,7 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          description: "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
+          description: "Binde Videos von z.B. YouTube, Vimeo oder Wikimedia Commons ein.",
           videoUrl: 'Video URL',
           videoDescription: "Beschreibung",
           titlePlaceholder: "Titel",
@@ -833,7 +910,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: "Eingabefeld",
-          description: "Die Lösung kann Text oder eine Formel sein"
+          description: "Erstelle eine Aufgabe, bei der eine exakte Eingabe oder ein Wert eingegeben und validiert werden kann."
         },
         textAreaExercise: {
           title: "Freitext",
@@ -841,11 +918,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: "SC/MC Aufgabe",
-          description: "Single- oder Multiple Choice Aufgabe"
+          description: "Erstelle Single- oder Multiple-Choice Aufgaben und passe sie bei Bedarf mit individuellem Feedback an. "
+        },
+        h5p: {
+          title: 'H5P',
+          description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
           title: "Lückentext",
-          description: "Ein Text mit Lücken zum Ausfüllen",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die korrekten Antworten eingetippt werden.",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -853,9 +934,6 @@ export const loggedInData = {
             typing: "Tippen",
             'drag-and-drop': 'Drag & Drop'
           },
-          previewMode: "Vorschau",
-          previewIsActiveHint: "Die Aufgabe wieder bearbeiten",
-          previewIsDeactiveHint: "Vorschau der Aufgabe anzeigen",
           dummyAnswers: "Falsche Antwortmöglichkeiten",
           addDummyAnswer: "Falsche Antwort hinzufügen",
           removeDummyAnswer: "Falsche Antwort entfernen",
@@ -869,7 +947,9 @@ export const loggedInData = {
         entity: {
           titlePlaceholder: "Titel",
           seoTitle: "Titel für Suchmaschinen",
-          seoDesc: "Beschreibung für Suchmaschinen"
+          seoDesc: "Beschreibung für Suchmaschinen",
+          moveUpLabel: "Eins nach oben verschieben",
+          moveDownLabel: "Nach unten verschieben"
         },
         article: {
           writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
@@ -877,7 +957,6 @@ export const loggedInData = {
           moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
           addSource: "Quellenangabe hinzufügen",
           removeLabel: "Löschen",
-          moveUpLabel: "Eins nach oben verschieben",
           dragLabel: "Ziehen, um die Reihenfolge zu ändern",
           openInTab: "Öffne den Link in einem neuen Tab",
           sources: "Quellen",
@@ -905,18 +984,14 @@ export const loggedInData = {
         },
         course: {
           removeCoursePage: "Kursseite entfernen",
-          addCoursePage: "Kursseite hinzufügen"
-        },
-        coursePage: {
-          explanation: "Erklärung",
-          video: 'Video',
-          question: "Frage",
-          title: "Titel"
+          addCoursePage: "Kursseite hinzufügen",
+          confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
         },
         exercise: {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
           textAreaExercise: "Freitext",
+          dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",

@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { DatenraumIntegrationDocument } from '@editor/plugins/datenraum-integration/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import type { MathElement } from '@editor/plugins/text'
@@ -14,7 +15,6 @@ import type {
   EditorBlanksExerciseDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
-  EditorH5PDocument,
   EditorHighlightDocument,
   EditorInjectionDocument,
   EditorInputExerciseDocument,
@@ -26,11 +26,13 @@ import type {
   EditorSolutionDocument,
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
+  EditorDropzoneImageDocument,
 } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
+import { EditorH5PDocument } from './h5p'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
@@ -56,9 +58,9 @@ const ExerciseSerloStaticRenderer = dynamic<EditorExerciseDocument>(() =>
   ).then((mod) => mod.ExerciseSerloStaticRenderer)
 )
 const H5pSerloStaticRenderer = dynamic<EditorH5PDocument>(() =>
-  import(
-    '@/serlo-editor-integration/serlo-plugin-wrappers/h5p-serlo-static'
-  ).then((mod) => mod.H5pSerloStaticRenderer)
+  import('@/serlo-editor-integration/h5p/h5p-serlo-static').then(
+    (mod) => mod.H5pSerloStaticRenderer
+  )
 )
 const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
   import(
@@ -81,6 +83,14 @@ const SpoilerSerloStaticRenderer = dynamic<
 >(() =>
   import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
     (mod) => mod.SpoilerSerloStaticRenderer
+  )
+)
+
+const DropzoneImageSerloStaticRenderer = dynamic<
+  EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
+>(() =>
+  import('@editor/plugins/dropzone-image/static').then(
+    (mod) => mod.DropzoneImageStaticRenderer
   )
 )
 
@@ -156,7 +166,12 @@ export function createRenderers(): InitRenderersArgs {
           )
         },
       },
+      {
+        type: EditorPluginType.DropzoneImage,
+        renderer: DropzoneImageSerloStaticRenderer,
+      },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,

@@ -168,6 +168,7 @@ export function EquationsEditor(props: EquationsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
+  const entityStrings = useEditorStrings().templatePlugins.entity
   const equationsStrings = useEditorStrings().plugins.equations
 
   if (!nestedFocus) {
@@ -222,10 +223,10 @@ export function EquationsEditor(props: EquationsProps) {
                   <td />
                   {transformationTarget === 'term' ? (
                     <td colSpan={2}>
-                      <div className="flex">
+                      <span className="flex">
                         {renderArrow()}
                         {renderExplanation()}
-                      </div>
+                      </span>
                     </td>
                   ) : (
                     <>
@@ -239,13 +240,13 @@ export function EquationsEditor(props: EquationsProps) {
 
             function renderArrow() {
               if (!selectIsDocumentEmpty(store.getState(), step.explanation.id))
-                return <div className="text-center">{renderDownArrow()}</div>
+                return <span className="text-center">{renderDownArrow()}</span>
               return null
             }
 
             function renderExplanation() {
               return (
-                <div className=" min-w-[10rem]">
+                <span className=" min-w-[10rem]">
                   {step.explanation.render({
                     config: {
                       isInlineChildEditor: true,
@@ -256,7 +257,7 @@ export function EquationsEditor(props: EquationsProps) {
                           : equationsStrings.explanation,
                     },
                   })}
-                </div>
+                </span>
               )
             }
           })}
@@ -283,13 +284,14 @@ export function EquationsEditor(props: EquationsProps) {
           </td>
         </tr>
         <tr className="h-8">
-          <td />
-          {!selectIsDocumentEmpty(
-            store.getState(),
-            state.firstExplanation.id
-          ) ? (
-            <div className="text-center">{renderDownArrow()}</div>
-          ) : null}
+          <td>
+            {!selectIsDocumentEmpty(
+              store.getState(),
+              state.firstExplanation.id
+            ) ? (
+              <span className="text-center">{renderDownArrow()}</span>
+            ) : null}
+          </td>
         </tr>
       </tbody>
     )
@@ -338,13 +340,13 @@ export function EquationsEditor(props: EquationsProps) {
     )
 
     return (
-      <div className="ml-6 text-right">
+      <span className="ml-6 text-right">
         {row === 0 ? null : (
           <button
             onClick={() => state.steps.move(row, row - 1)}
             className={buttonClass}
           >
-            <EditorTooltip text={equationsStrings.moveUpLabel} />
+            <EditorTooltip text={entityStrings.moveUpLabel} />
             <FaIcon icon={faArrowCircleUp} className="-ml-0.25 align-[-3px]" />
           </button>
         )}
@@ -352,7 +354,7 @@ export function EquationsEditor(props: EquationsProps) {
           <EditorTooltip text={equationsStrings.removeRowLabel} />
           <FaIcon icon={faTrashAlt} className="align-baseline text-[15px]" />
         </button>
-      </div>
+      </span>
     )
   }
 }

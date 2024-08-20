@@ -21,6 +21,7 @@ export function StaticRenderer({
       <>
         {document.map((item, index) => {
           if (!item) return null
+
           return (
             <Fragment key={item.id ?? `${item.plugin}${index}`}>
               <StaticRenderer document={item} />

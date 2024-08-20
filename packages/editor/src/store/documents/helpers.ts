@@ -1,5 +1,6 @@
 import type { ToStaticHelpers } from '@editor/plugin'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import * as R from 'ramda'
 
 import { ChildTreeNode } from './types'
 import { ROOT } from '../root/constants'
@@ -70,4 +71,19 @@ export function getStaticDocument({
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     state: plugin.state.toStaticState(document.state, toStaticHelpers),
   }
+}
+
+export function isPluginEmpty(document: DocumentState) {
+  const plugin = editorPlugins.getByType(document.plugin)
+
+  if (typeof plugin.isEmpty === 'function') {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const state = plugin.state.init(document.state, () => {})
+    return plugin.isEmpty(state)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const initialState = plugin.state.createInitialState({
+    createDocument: () => {},
+  })
+  return R.equals(document.state, initialState)
 }

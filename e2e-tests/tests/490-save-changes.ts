@@ -13,7 +13,9 @@ Scenario('Save changes', async ({ I }) => {
 
   I.click('$add-new-plugin-row-button')
 
-  I.pressKey('Backspace')
+  I.type('Text')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
 
   I.type('Some text')
 

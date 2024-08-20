@@ -4,14 +4,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const embedUrl = `https://app.Lumi.education/api/v1/run/${
+  const embedUrl = `https://api.lumi.education/api/v1/run/${
     req.query.id as string
-  }/embed`
+  }`
 
   const lumiRes = await fetch(embedUrl)
   const html = await lumiRes.text()
 
-  let prepared = html
+  res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')
+
+  res.send(html)
+
+  /* let prepared = html
     .replace(
       '<link rel="stylesheet" href="https://lumi.s3.fr-par.scw.cloud/h5p/core/styles/h5p.css?version=1.24-master"/>',
       '<link rel="stylesheet" href="/_assets/h5p/h5p.css"/>'
@@ -83,5 +87,5 @@ export default async function handler(
   //console.log(prepared)
   res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')
 
-  res.send(prepared)
+  res.send(prepared)*/
 }

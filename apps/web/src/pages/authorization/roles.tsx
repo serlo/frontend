@@ -22,7 +22,7 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { useUserAddOrRemoveRoleMutation } from '@/mutations/use-user-role-mutation'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <Content />
   </FrontendClientBase>
 ))

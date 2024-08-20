@@ -16,8 +16,8 @@ export interface PluginsConfig {
   spoiler?: SpoilerConfig
   table?: SerloTableConfig
   general?: {
+    testingSecret?: string
     enableTextAreaExercise: boolean
-    exerciseVisibleInSuggestion: boolean
   }
 }
 
@@ -37,7 +37,6 @@ const defaultPluginsConfig: Required<PluginsConfig> = {
     allowImageInTableCells: true,
   },
   general: {
-    exerciseVisibleInSuggestion: true,
     enableTextAreaExercise: false,
   },
 }

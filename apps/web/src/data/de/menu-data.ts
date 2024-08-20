@@ -13,7 +13,7 @@ export const landingSubjectsData: LandingSubjectsData = {
     { url: '/chemie', title: 'Chemie', icon: 'chemistry' },
     { url: '/informatik', title: 'Informatik', icon: 'informatics' },
     {
-      url: '/community/neue-fächer-themen',
+      url: '/106081',
       title: 'Fächer im Aufbau',
       icon: 'new',
     },
@@ -38,7 +38,7 @@ export const headerData: InstanceData['headerData'] = [
       { url: '/chemie', title: 'Chemie' },
       { url: '/lerntipps', title: 'Lerntipps' },
       {
-        url: '/community/neue-fächer-themen',
+        url: '/106081',
         title: 'Fächer im Aufbau',
       },
     ],

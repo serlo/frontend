@@ -58,6 +58,7 @@ export default function Overview() {
     <div className="mx-auto max-w-[800px] pt-16">
       <Head>
         <title>Aufgabenordner Übersicht</title>
+        <meta name="robots" content="noindex" />
       </Head>
       <h1 className="mb-4 text-3xl">Aufgabenordner Übersicht</h1>
       <div className="text-right">

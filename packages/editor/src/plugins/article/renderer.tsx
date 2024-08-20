@@ -12,6 +12,7 @@ export interface ArticleRendererProps {
   }
   relatedContentExtra?: JSX.Element | null
   sources: JSX.Element | null
+  title?: string
 }
 
 export function ArticleRenderer({
@@ -22,6 +23,7 @@ export function ArticleRenderer({
   relatedContent,
   relatedContentExtra,
   sources,
+  title,
 }: ArticleRendererProps) {
   const { strings } = useInstanceData()
 
@@ -33,7 +35,10 @@ export function ArticleRenderer({
       {content}
       {exercises || exercisesFolder ? (
         <>
-          <h2 className="serlo-h2 mb-16">{strings.content.exercisesTitle}</h2>
+          <h2 className="serlo-h2 mb-16">
+            {strings.content.exercisesTitle}
+            {title ? `: ${title}` : null}
+          </h2>
 
           {exercises}
 

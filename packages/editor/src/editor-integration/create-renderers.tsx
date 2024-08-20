@@ -7,10 +7,10 @@ import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
-import { H5pStaticRenderer } from '@editor/plugins/h5p/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
@@ -48,6 +48,10 @@ export function createRenderers(
         type: EditorPluginType.Spoiler,
         renderer: SpoilerStaticRenderer,
       },
+      {
+        type: EditorPluginType.DropzoneImage,
+        renderer: DropzoneImageStaticRenderer,
+      },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
@@ -77,7 +81,6 @@ export function createRenderers(
         type: EditorPluginType.Highlight,
         renderer: HighlightStaticRenderer,
       },
-      { type: EditorPluginType.H5p, renderer: H5pStaticRenderer },
       {
         type: EditorPluginType.InputExercise,
         renderer: InputExerciseStaticRenderer,

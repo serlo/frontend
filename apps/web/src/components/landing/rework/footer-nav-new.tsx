@@ -14,11 +14,11 @@ export function FooterNavNew() {
       `)}
     >
       <div className="text-center md:mr-5 md:text-left">
-        <h1 className="-mt-2 mb-10 font-handwritten text-4xl">
+        <p className="-mt-2 mb-10 font-handwritten text-4xl">
           Serlo:
           <br />
           Die freie Lernplattform
-        </h1>
+        </p>
         <div className="mx-auto max-w-[190px] md:mx-0">
           <Link
             className="serlo-new-landing-button max-w-xs md:mx-0"

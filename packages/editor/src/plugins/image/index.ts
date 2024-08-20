@@ -4,6 +4,7 @@ import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import type { FileError } from '@serlo/frontend/src/serlo-editor-integration/image-with-serlo-config'
 
 import { ImageEditor } from './editor'
+import { isImageUrl } from './utils/check-image-url'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -22,6 +23,8 @@ const imageState = object({
   src: upload(''),
   link: optional(object({ href: string('') })),
   alt: optional(string('')),
+  imageSource: optional(string('')),
+  licence: optional(string('')),
   maxWidth: optional(number(0)),
   caption: optional(
     child({
@@ -66,7 +69,7 @@ export function createImagePlugin(
         }
       }
       // ==================
-      if (/\.(gif|jpe?g|png|svg|webp)$/.test(value.toLowerCase())) {
+      if (isImageUrl(value.toLowerCase())) {
         return {
           state: {
             src: value,
@@ -88,6 +91,8 @@ export function createImagePlugin(
               src: { pending: files[0] },
               link: undefined,
               alt: undefined,
+              licence: undefined,
+              imageSource: undefined,
               maxWidth: undefined,
               caption: { plugin: EditorPluginType.Text },
             },
@@ -112,6 +117,7 @@ export type ImagePluginState = typeof imageState
 export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
+  disableFileUpload?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
   upload: UploadHandler<string>
   validate: UploadValidator<FileError[]>
 }

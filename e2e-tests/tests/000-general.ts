@@ -24,9 +24,12 @@ Scenario('About Serlo', ({ I }) => {
   I.click('Pädagogisches Konzept')
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
+  // close newsletter modal in case it popped up
+  I.wait(2)
+  I.pressKey('Escape')
   I.click('Community')
 
-  // Make sure it's the right page, wait longer to reduce flakiness
+  // Make sure it's the right page (this page sometimes load slowly)
   I.waitForText("Was gibt's zu tun?", 20)
 })
 
@@ -112,11 +115,11 @@ Scenario('Quickbar', ({ I }) => {
   I.say('Perform another search')
   I.amOnPage('/')
   I.click('$quickbar-input')
-  I.type('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
+  I.type('Aufgaben Baumdiagramm ')
 
-  I.click('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
-  I.seeInTitle('Beispiel zu Zufallsexperimente und Wahrscheinlichkeit')
-  I.see('Abiturkurs Stochastik')
+  I.click('Aufgaben zum Baumdiagramm ')
+  I.seeInTitle('Aufgaben zum Baumdiagramm')
+  I.see('Daten und Zufallsexperimente')
 })
 
 Scenario('Share modal', ({ I }) => {
@@ -265,7 +268,7 @@ Scenario('Meta robots tags', ({ I }) => {
   I.seeElementInDOM('meta[content=noindex]')
 
   // hide trashed
-  I.amOnPage('/268814')
+  I.amOnPage('/271924')
   I.seeElementInDOM('meta[content=noindex]')
 })
 

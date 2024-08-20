@@ -1,8 +1,5 @@
 import type {
   AbstractSerializedState,
-  CoursePageSerializedState,
-  CourseSerializedState,
-  PageSerializedState,
   TaxonomySerializedState,
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
@@ -14,15 +11,10 @@ export interface OnSaveData {
   }
 }
 
-export type SupportedTypesSerializedState =
-  | AbstractSerializedState
-  | CourseSerializedState
-  | CoursePageSerializedState
+export type SupportedTypesSerializedState = AbstractSerializedState
 
 export type SetEntityMutationData = SupportedTypesSerializedState & OnSaveData
-export type AddPageRevisionMutationData = PageSerializedState & {
-  __typename?: 'Page'
-}
+
 export type TaxonomyCreateOrUpdateMutationData = Pick<
   TaxonomySerializedState,
   'id' | 'term' | 'description'
@@ -37,5 +29,3 @@ export interface SetEntityMutationRunnerData {
   savedParentId?: number
   taxonomyParentId?: number
 }
-
-export type ChildFieldsData = CoursePageSerializedState

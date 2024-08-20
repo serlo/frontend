@@ -9,7 +9,7 @@ import { LicenseDetailProps } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<LicenseDetailProps>(({ pageData }) => (
-  <FrontendClientBase>
+  <FrontendClientBase noIndex>
     <LicenseDetail {...pageData.licenseData} />
   </FrontendClientBase>
 ))
@@ -40,7 +40,6 @@ export const getStaticProps: GetStaticProps<LicenseDetailProps> = async (
         },
       },
     },
-    revalidate: 60 * 60 * 24, // 1 day
   }
 }
 

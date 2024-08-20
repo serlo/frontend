@@ -11,17 +11,17 @@ export const features = {
     activeInDev: true,
     hideInProduction: false,
   },
-  editorExercisesInContent: {
-    cookieName: 'useEditorExercisesInContent',
-    isActive: false,
-    activeInDev: true,
-    hideInProduction: false,
-  },
   edtrPasteHack: {
     cookieName: 'useEdtrPasteHack',
     isActive: false,
     activeInDev: true,
     hideInProduction: true,
+  },
+  authVidis: {
+    cookieName: 'useAllowVidisLogin',
+    isActive: false,
+    activeInDev: false,
+    hideInProduction: false,
   },
 }
 
@@ -88,15 +88,6 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {shouldBeVisible('editorExercisesInContent') ? (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('editorExercisesInContent')} Editor: Exercises
-            In Content
-          </h3>
-          <p className="serlo-p">Wird bald für Alle freigegeben.</p>
-        </div>
-      ) : null}
       {shouldBeVisible('editorIntermediateTasks') ? (
         <div>
           <h3 className="serlo-h3 mb-3">
@@ -116,6 +107,16 @@ export function ProfileExperimental() {
           </h3>
           <p className="serlo-p">
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
+          </p>
+        </div>
+      ) : null}
+      {shouldBeVisible('authVidis') ? (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('authVidis')} ✹
+          </h3>
+          <p className="serlo-p">
+            Experimentelles Feature: Login mit VIDIS SSO anzeigen
           </p>
         </div>
       ) : null}

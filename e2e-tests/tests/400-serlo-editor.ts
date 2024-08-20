@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor')
@@ -7,7 +8,7 @@ Before(popupWarningFix)
 Scenario('Basic text interactions', async ({ I }) => {
   I.amOnPage('/entity/repository/add-revision/74888')
 
-  I.click('$plugin-text-editor')
+  addNewTextPlugin(I)
 
   const testString = 'TESTTESTTEST'
   I.type(testString)
@@ -20,35 +21,36 @@ Scenario('Basic text interactions', async ({ I }) => {
 
 Scenario('Add new plugins', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
+
+  // Spoiler
+  I.say('I insert a text plugin')
   I.click('$add-new-plugin-row-button')
+  I.type('Text')
+  I.pressKey('Tab')
   I.pressKey('Enter')
 
   // Only one text plugin visible
-  I.see('Schreib etwas oder füge')
+  I.see('Schreibe etwas')
 
   // workaround: plugin toolbar is hiding add-new-plugin-row-button
   // unfocus to make it visible
   I.click('$entity-title-input')
-  I.click('$add-new-plugin-row-button')
 
-  for (let i = 0; i < 3; i++) {
-    I.pressKey('ArrowDown')
-  }
   // Spoiler
   I.say('I insert a spoiler plugin')
+  I.click('$add-new-plugin-row-button')
+  I.type('Spoiler')
+  I.pressKey('Tab')
   I.pressKey('Enter')
 
-  I.see('Spoiler')
   I.see('Titel eingeben')
 
-  I.pressKey('ArrowDown')
-  I.pressKey('/')
-  for (let i = 0; i < 4; i++) {
-    I.pressKey('ArrowDown')
-  }
   // Box
-  I.pressKey('Enter')
   I.say('I insert a box plugin')
+  I.click('$add-new-plugin-row-button')
+  I.type('Box')
+  I.pressKey('Tab')
+  I.pressKey('Enter')
 
   I.see('Art der Box')
   I.click('Merke')
@@ -59,23 +61,12 @@ Scenario('Add new plugins', async ({ I }) => {
 Scenario('Close plugin selection modal', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
   I.click('Füge ein Element hinzu')
-  const textPluginDescription =
-    'Schreibe Text und Matheformeln, und formatiere sie.'
-  I.see(textPluginDescription)
+  const menuModal = 'Exercises'
+  I.see(menuModal)
 
   I.pressKey('Escape')
   // Modal should be closed
-  I.dontSee(textPluginDescription)
-
-  // Open modal again
-  I.type('/')
-  I.see(textPluginDescription)
-
-  // focus something different by clicking outside of the modal, in this
-  // instance into the quickbar
-  I.click('$quickbar-input')
-  // Modal should now be closed
-  I.dontSee(textPluginDescription)
+  I.dontSee(menuModal)
 })
 
 Scenario('Add plugin via slash command', async ({ I }) => {
@@ -85,6 +76,7 @@ Scenario('Add plugin via slash command', async ({ I }) => {
   I.dontSeeElement('.serlo-table')
   I.click('$add-new-plugin-row-button')
   I.type('Tabelle')
+  I.pressKey('Tab')
   I.pressKey('Enter')
 
   I.seeElement('.serlo-table')
@@ -106,7 +98,9 @@ Scenario(
 
     I.say('Add an Image plugin in place of the empty line using suggestions')
     I.pressKey('ArrowUp')
-    I.type('/Bild')
+    I.type('/')
+    I.type('Bild')
+    I.pressKey('Tab')
     I.pressKey('Enter')
 
     I.see('First paragraph')
@@ -114,7 +108,6 @@ Scenario(
     I.see('Second paragraph')
 
     I.say('Remove the Image plugin and merge the split Text plugin')
-    I.click(locate('$plugin-image-editor').inside('.plugin-rows'))
     I.moveCursorTo(
       locate('[data-radix-collection-item]').inside('.plugin-toolbar')
     )
@@ -128,7 +121,9 @@ Scenario(
     I.pressKey('Enter')
     I.pressKey('Enter')
     I.pressKey('ArrowUp')
-    I.type('/Bild')
+    I.type('/')
+    I.type('Bild')
+    I.pressKey('Tab')
     I.pressKey('Enter')
 
     I.see('First paragraph')
@@ -181,6 +176,8 @@ Scenario(
     // beginning of each page already contains one. But, we do need to focus it,
     // in order to make the src input visible
     I.click('$plugin-image-editor')
+    I.click('$modal-close-button') // patch to close the pixabay modal
+
     const imagePluginUrlInput =
       'input[placeholder="https://example.com/image.png"]'
 

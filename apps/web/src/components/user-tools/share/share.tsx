@@ -23,7 +23,7 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
     [
       UuidType.Page,
       UuidType.Article,
-      UuidType.CoursePage,
+      UuidType.Course,
       UuidType.ExerciseGroup,
       UuidType.Exercise,
     ].includes(data.typename as UuidType)
@@ -39,7 +39,7 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
       {shareOpen ? (
         <ShareModal
           isOpen={shareOpen}
-          onClose={() => setShareOpen(false)}
+          setIsOpen={setShareOpen}
           showPdf={showPdf}
         />
       ) : null}

@@ -47,67 +47,6 @@ export const revisionQuery = gql`
           }
         }
       }
-
-      ... on CourseRevision {
-        repository {
-          pages(trashed: false, hasCurrentRevision: true) {
-            id
-            alias
-            currentRevision {
-              ...abstractEntityRevision
-            }
-          }
-        }
-      }
-      ... on CoursePageRevision {
-        repository {
-          course {
-            licenseId
-            ...taxonomyTermsV2
-            revisions(unrevised: true) {
-              totalCount
-              nodes {
-                id
-                title
-                trashed
-              }
-            }
-            id
-            currentRevision {
-              title
-            }
-            pages(trashed: false, hasCurrentRevision: true) {
-              id
-              alias
-              currentRevision {
-                title
-                trashed
-              }
-            }
-          }
-        }
-      }
-      ... on PageRevision {
-        ...abstractRevision
-        repository {
-          licenseId
-          trashed
-          instance
-          id
-          alias
-          currentRevision {
-            ...abstractRevision
-          }
-          revisions(unrevised: false) {
-            totalCount
-            nodes {
-              id
-              title
-              trashed
-            }
-          }
-        }
-      }
     }
   }
 

@@ -17,7 +17,7 @@ export interface HistoryRevisionProps {
 }
 
 export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
-  <FrontendClientBase entityId={props.id}>
+  <FrontendClientBase serloEntityData={{ entityId: props.id }} noIndex>
     <Content {...props} />
   </FrontendClientBase>
 ))
@@ -119,22 +119,6 @@ export const revisionHistoryQuery = gql`
               ...basicUserData
             }
             changes
-            date
-          }
-        }
-      }
-
-      ... on Page {
-        currentRevision {
-          id
-        }
-        revisions {
-          nodes {
-            id
-            trashed
-            author {
-              ...basicUserData
-            }
             date
           }
         }

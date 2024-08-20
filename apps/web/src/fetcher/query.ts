@@ -40,54 +40,19 @@ export const dataQuery = gql`
         }
       }
 
-      ... on Page {
-        currentRevision {
-          ...abstractRevision
-        }
-      }
-
-      ... on CoursePage {
-        course {
-          id
-          licenseId
-          currentRevision {
-            title
-          }
-          revisions(unrevised: true) {
-            totalCount
-            nodes {
-              id
-              trashed
-              title
-            }
-          }
-          pages(trashed: false, hasCurrentRevision: true) {
-            alias
-            id
-            currentRevision {
-              title
-              trashed
-            }
-          }
-          ...taxonomyTermsV2
-        }
-      }
-
       ... on Exercise {
         ...exercise
       }
 
       ... on Course {
-        pages(trashed: false) {
-          alias
-          id
-          currentRevision {
-            id
-            title
-            content
-          }
-        }
         ...taxonomyTermsV2
+      }
+
+      ... on CoursePage {
+        course {
+          id
+          alias
+        }
       }
 
       ... on TaxonomyTerm {
@@ -98,7 +63,6 @@ export const dataQuery = gql`
         name
         description
         weight
-        taxonomyId
         trashed
         parent {
           id
@@ -171,15 +135,6 @@ export const dataQuery = gql`
         title
         trashed
         id
-      }
-    }
-
-    ... on Course {
-      pages {
-        id
-        currentRevision {
-          id
-        }
       }
     }
   }
