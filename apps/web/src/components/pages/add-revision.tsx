@@ -1,4 +1,5 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { useRouter } from 'next/router'
 import { finalizeEvent, generateSecretKey } from 'nostr-tools/pure'
 import { Relay } from 'nostr-tools/relay'
 import { useEffect, useState } from 'react'
@@ -42,6 +43,7 @@ export function AddRevision({
 
   const setEntityMutation = useSetEntityMutation()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
+  const router = useRouter()
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
@@ -125,21 +127,12 @@ export function AddRevision({
 
     console.log('published')
 
-    const success =
-      type === UuidType.TaxonomyTerm
-        ? await taxonomyCreateOrUpdateMutation(
-            data as TaxonomyCreateOrUpdateMutationData
-          )
-        : await setEntityMutation(
-            {
-              ...data,
-              __typename: type,
-            } as SetEntityMutationData,
-            willNeedReview,
-            taxonomyParentId
-          )
+    setTimeout(() => {
+      window.onbeforeunload = null
+      void router.push('/60730#success')
+    }, 200)
 
-    return success ? Promise.resolve() : Promise.reject()
+    return Promise.resolve()
   }
 
   const typeString = getTranslatedType(strings, type)
