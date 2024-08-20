@@ -5451,6 +5451,7 @@ __metadata:
     "@types/uuid": ^9.0.8
     "@typescript-eslint/eslint-plugin": ^7.7.1
     "@typescript-eslint/parser": ^7.7.1
+    "@xapi/xapi": ^2.2.8
     array-move: ^4.0.0
     autoprefixer: ^10.4.19
     canvas-confetti: ^1.9.2
@@ -5523,7 +5524,6 @@ __metadata:
     tailwindcss-animate: ^1.0.7
     timeago-react: ^3.0.6
     timeago.js: ^4.0.2
-    tincanjs: ^0.50.0
     tiny-warning: ^1.0.3
     tippy.js: ^6.3.7
     ts-debounce: ^4.0.0
@@ -6799,6 +6799,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xapi/xapi@npm:^2.2.8":
+  version: 2.2.8
+  resolution: "@xapi/xapi@npm:2.2.8"
+  dependencies:
+    axios: ^1.6.0
+  checksum: 458b4c3c60a4c5e703360bedc965a4aaee93ba6b37a11fe5afe86571e3b809ba5b6883e1c20f2dac7a8844743ee2dee333afbb9a2c86ad53635059df306de646
+  languageName: node
+  linkType: hard
+
 "@xmldom/xmldom@npm:^0.8.3":
   version: 0.8.10
   resolution: "@xmldom/xmldom@npm:0.8.10"
@@ -7209,13 +7218,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arraybuffer-slice@npm:0.1.2":
-  version: 0.1.2
-  resolution: "arraybuffer-slice@npm:0.1.2"
-  checksum: c1218287647686141f19b23e018f19786ddb2d0a8531401862faf0650e302f56a38695753fd824834de40fbd39d411f4bd21262766dabf99d0ea81f25b345b26
-  languageName: node
-  linkType: hard
-
 "arraybuffer.prototype.slice@npm:^1.0.2":
   version: 1.0.2
   resolution: "arraybuffer.prototype.slice@npm:1.0.2"
@@ -7377,6 +7379,17 @@ __metadata:
   version: 4.7.0
   resolution: "axe-core@npm:4.7.0"
   checksum: f086bcab42be1761ba2b0b127dec350087f4c3a853bba8dd58f69d898cefaac31a1561da23146f6f3c07954c76171d1f2ce460e555e052d2b02cd79af628fa4a
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.0":
+  version: 1.7.4
+  resolution: "axios@npm:1.7.4"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 0c17039a9acfe6a566fca8431ba5c1b455c83d30ea6157fec68a6722878fcd30f3bd32d172f6bee0c51fe75ca98e6414ddcd968a87b5606b573731629440bfaf
   languageName: node
   linkType: hard
 
@@ -12747,13 +12760,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-polyfills@npm:0.1.22":
-  version: 0.1.22
-  resolution: "js-polyfills@npm:0.1.22"
-  checksum: 122c8b64a84188e205df4032fb40cb539bb747c3fcdd9b069a66be0e2fd18b13badb32966c8a484c3cd657d1c8b89d4d799bf30e89565283bc808d64d82796b4
-  languageName: node
-  linkType: hard
-
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -17864,13 +17870,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"text-encoding@npm:0.6.0":
-  version: 0.6.0
-  resolution: "text-encoding@npm:0.6.0"
-  checksum: c137a602f64c94d4ad4344720fff0e80c103589325bd430a86ab10867eabdcd001f768a0a33d52bea6459f3af1263b2d30578517dc42ddf2c24fe4f911f1cc52
-  languageName: node
-  linkType: hard
-
 "text-table@npm:^0.2.0, text-table@npm:~0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -17932,18 +17931,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 4.0.2
   resolution: "timeago.js@npm:4.0.2"
   checksum: c785a06988717cb5a00bb96b00ebaa56e83f4b5ed5d87c4c3931fb1bb2591a0e13a7ddc4b6c12c6ee7de64b440ed903c7bd4e0edddb37aade9bfc9ceab5d0db3
-  languageName: node
-  linkType: hard
-
-"tincanjs@npm:^0.50.0":
-  version: 0.50.0
-  resolution: "tincanjs@npm:0.50.0"
-  dependencies:
-    arraybuffer-slice: 0.1.2
-    js-polyfills: 0.1.22
-    text-encoding: 0.6.0
-    xhr2: 0.0.7
-  checksum: a6a20795b075675b119c9327d04d37e2ecf46db590a0dd8d344f828f120d7c11259ab2814d98787e7209afdac25e18d3f83075e8609717d5ff1404a624f5dda8
   languageName: node
   linkType: hard
 
@@ -19343,13 +19330,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     utf-8-validate:
       optional: true
   checksum: c3c100a181b731f40b7f2fddf004aa023f79d64f489706a28bc23ff88e87f6a64b3c6651fbec3a84a53960b75159574d7a7385709847a62ddb7ad6af76f49138
-  languageName: node
-  linkType: hard
-
-"xhr2@npm:0.0.7":
-  version: 0.0.7
-  resolution: "xhr2@npm:0.0.7"
-  checksum: 1a49ec52dba209d464acf2f678690b7bc3f61d255c55bf35daa5578412864761acc24e47d7f4480566e09c78c30dc7742001f14510266f71a7e798ae5b25177a
   languageName: node
   linkType: hard
 

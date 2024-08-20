@@ -1,34 +1,18 @@
 import { NextPage } from 'next'
-import { useEffect, useState } from 'react'
-//@ts-expect-error no types available
-import TinCan from 'tincanjs'
+import XAPI from '@xapi/xapi'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 
+const endpoint = 'https://watershedlrs.com/api/organizations/25975/lrs'
+const key = '97c9dcdcc2b2d8' //
+const secret = '44ac953d3f72a4'
+const auth = XAPI.toBasicAuth(key, secret)
+const xapi = new XAPI({
+  endpoint,
+  auth,
+})
+
 const ContentPage: NextPage = () => {
-  const [tincan, setTincan] = useState<null | {
-    sendStatement: (
-      param: object,
-      onErr: (p1: object, p2: object) => void
-    ) => void
-  }>(null)
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    const _tincan = new TinCan({
-      recordStores: [
-        {
-          endpoint: 'https://watershedlrs.com/api/organizations/25975/lrs/',
-          username: '97c9dcdcc2b2d8', // key
-          password: '44ac953d3f72a4', // secret
-          allowFail: false,
-        },
-      ],
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    setTincan(_tincan)
-  }, [])
-
   return (
     <FrontendClientBase
       noHeaderFooter
@@ -42,26 +26,25 @@ const ContentPage: NextPage = () => {
         <button
           className="serlo-button-blue text-xl"
           onClick={() => {
-            if (!tincan) return
-            tincan.sendStatement(
-              {
+            void xapi.sendStatement({
+              statement: {
                 actor: {
-                  mbox: 'mailto:test@serlo.org',
+                  name: 'Botho',
+                  mbox: 'mailto:botho@serlo.org',
+                  objectType: 'Agent',
                 },
                 verb: {
-                  id: 'http://adlnet.gov/expapi/verbs/attempted',
+                  id: 'http://example.com/verbs/tested',
+                  display: {
+                    'en-GB': 'tested',
+                  },
                 },
-                target: {
-                  id: 'https://experienceapi.com/activities/sending-my-first-statement',
+                object: {
+                  objectType: 'Activity',
+                  id: 'https://serlo.org/___xapi_trigger',
                 },
               },
-              function (err: object, result: object) {
-                // eslint-disable-next-line no-console
-                console.error(err)
-                // eslint-disable-next-line no-console
-                console.log(result)
-              }
-            )
+            })
           }}
         >
           Click to send xAPI statement
