@@ -1,31 +1,63 @@
-import { H5pRenderer } from '@editor/plugins/h5p/renderer'
 import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useRef, useState } from 'react'
+import * as t from 'io-ts'
+import { Relay } from 'nostr-tools/relay'
+import { useRef, useState, useEffect, useCallback } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface SearchPanelProps {
   onSelect: () => void
 }
 
+export enum License {
+  CC0 = 'CC0',
+  CC_BY = 'CC_BY',
+  CC_BY_SA = 'CC_BY_SA',
+  OTHER = 'OTHER',
+}
+
+const NostrEvent = t.type({
+  kind: t.literal(30142),
+  tags: t.array(t.tuple([t.string, t.string])),
+})
+
+const NostrResource = t.type({
+  id: t.string,
+  image: t.string,
+  name: t.string,
+  license: t.string,
+  author: t.string,
+})
+
 export function SearchPanel({ onSelect }: SearchPanelProps) {
   const [query, setQuery] = useState('')
 
+  const [resources, setResources] = useState<LearningResource[] | null>(null)
   const [results, setResults] = useState<LearningResource[] | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const lastInputChange = useRef<number | null>(null)
 
-  const handleSearch = async (_query = query) => {
-    if (loading) return
+  const handleSearch = useCallback(
+    (_query = query) => {
+      if (resources === null) return
 
-    setLoading(true)
-    await search(_query)
-    setLoading(false)
-  }
+      if (query.trim() === '') {
+        setResults(resources)
+        return
+      } else {
+        const searchQuery = query.trim().toLowerCase()
+        const searchResults = resources?.filter((resource) =>
+          resource.name.toLowerCase().includes(searchQuery)
+        )
+
+        setResults(searchResults)
+      }
+    },
+    [query, resources]
+  )
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
@@ -45,6 +77,50 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
       void handleSearch()
     }
   }
+
+  useEffect(() => {
+    if (resources !== null) return
+
+    void loadResources()
+
+    async function loadResources() {
+      const relay = new Relay('wss://relay.sc24.steffen-roertgen.de')
+      const resourcesFromRelay: LearningResource[] = []
+
+      try {
+        await relay.connect()
+
+        const sub = relay.subscribe([{ kinds: [30142] }], {})
+
+        sub.onevent = (event) => {
+          if (!NostrEvent.is(event)) return
+
+          const basicResource = Object.fromEntries(event.tags)
+
+          if (!NostrResource.is(basicResource)) return
+
+          if (resourcesFromRelay.find((x) => x.url === basicResource.id)) return
+
+          resourcesFromRelay.push({
+            ...basicResource,
+            license: basicResource.license
+              ? getLicense(basicResource.license)
+              : License.OTHER,
+            licenseUrl: basicResource.license,
+            url: basicResource.id,
+          })
+        }
+
+        sub.oneose = () => {
+          setResources(resourcesFromRelay)
+          setResults(resourcesFromRelay)
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }, [resources, handleSearch, query])
 
   return (
     <div className="min-h-[100vh]">
@@ -70,15 +146,13 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
       <div className="mx-side">
         {results && results.length > 0 ? (
           <>
-            {renderEntry(
-              <>Lumi – Vokabeln A1 Deutsch als Fremdsprache Lückentext</>
-            )}
             {results.map((result) => {
               return renderEntry(
-                <>
-                  {getSource(result)} – {result.title}
-                </>,
-                result.url
+                <div className="flex gap-2">
+                  <img src={result.image} className="block w-16" />
+                  <div>{result.name}</div>
+                </div>,
+                result
               )
             })}
           </>
@@ -103,14 +177,14 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
     </div>
   )
 
-  function renderEntry(title: JSX.Element, path?: string) {
+  function renderEntry(title: JSX.Element, resource: LearningResource) {
     return (
       <div
         onClick={
-          path
+          !resource.url.includes('lumi')
             ? () => {
                 showToastNotice(
-                  'In dieser Demo klappt nur die Auswahl des H5P-Elements (Bitte ersten Treffer auswählen)'
+                  'Bitte klicke auf das H5P-Element für diese Demo'
                 )
               }
             : onSelect
@@ -123,59 +197,32 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
             <FaIcon icon={faPlus} className="-ml-0.5" />
           </button>
         </div>
-
-        <div className="absolute right-12 z-50 hidden h-96 w-96 border border-gray-100 shadow-menu group-hover:block">
-          <div className="absolute left-0 top-0 z-10 h-96 w-96">
-            {path ? (
-              <iframe
-                src={`${path}?contentOnly`}
-                className="h-[48rem] w-[48rem] origin-top-left scale-50 overflow-hidden"
-                scrolling="no"
-              />
-            ) : (
-              <H5pRenderer url="https://app.lumi.education/run/J3j0eR" />
-            )}
-          </div>
-          <div className="relative z-0 mt-24">
-            <LoadingSpinner noText />
-          </div>
-        </div>
       </div>
     )
-  }
-
-  async function search(query: string) {
-    if (query === '') {
-      setResults(null)
-      return
-    }
-
-    const response = await fetch(
-      `/api/experimental/search-datenraum?q=${query}`
-    )
-
-    if (!response.ok) {
-      alert('Failed to fetch search results: ' + (await response.text()))
-      setResults(null)
-      return
-    }
-
-    setResults((await response.json()) as LearningResource[])
-  }
-}
-
-function getSource(resource: LearningResource) {
-  if (resource.url.includes('serlo')) {
-    return 'Serlo'
-  } else if (resource.url.includes('vhs')) {
-    return 'VHS'
-  } else {
-    return 'Datenraum'
   }
 }
 
 export interface LearningResource {
   url: string
-  title: string
-  description: string
+  name: string
+  image: string
+  license: License
+  licenseUrl: string
+}
+
+function getLicense(license: string): License {
+  const lowerCaseLicense = license.toLowerCase()
+
+  if (
+    lowerCaseLicense.includes('cc0') ||
+    lowerCaseLicense.includes('publicdomain')
+  ) {
+    return License.CC0
+  } else if (lowerCaseLicense.includes('by-sa')) {
+    return License.CC_BY_SA
+  } else if (lowerCaseLicense.includes('cc-by')) {
+    return License.CC_BY
+  } else {
+    return License.OTHER
+  }
 }

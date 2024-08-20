@@ -943,8 +943,8 @@ export const loggedInData = {
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },
         datenraumIntegration: {
-          title: 'Datenraum Inhalte',
-          description: 'Importiere und Editiere Inhalte aus dem Datenraum',
+          title: 'Inhalte vom Bildungs-Feed',
+          description: 'Importiere und Editiere Inhalte aus dem Bildungs-Feed',
         },
       },
       templatePlugins: {
