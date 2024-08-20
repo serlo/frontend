@@ -757,7 +757,7 @@ export const loggedInData = {
         },
         injection: {
           title: "serlo.org Inhalt",
-          description: 'Embed an existing content from serlo.org via ID.',
+          description: "Binde einen bestehenden Inhalt von serlo.org via ID ein.",
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
@@ -823,7 +823,7 @@ export const loggedInData = {
           enterATitle: "Titel eingeben"
         },
         solution: {
-          title: 'Non interactive exercise',
+          title: "Freitext Aufgabe\n",
           description: "Erstelle eine nicht interaktive Aufgabe, die die Lernenden manuell beantworten. Du kannst weiterhin Lösungen und Strategien einfügen."
         },
         text: {
@@ -886,7 +886,7 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          description: 'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
+          description: "Binde Videos von z.B. YouTube, Vimeo oder Wikimedia Commons ein.",
           videoUrl: 'Video URL',
           videoDescription: "Beschreibung",
           titlePlaceholder: "Titel",
@@ -910,7 +910,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: "Eingabefeld",
-          description: 'Create a task where an exact input or value can be entered and validated.'
+          description: "Erstelle eine Aufgabe, bei der eine exakte Eingabe oder ein Wert eingegeben und validiert werden kann."
         },
         textAreaExercise: {
           title: "Freitext",
@@ -922,11 +922,11 @@ export const loggedInData = {
         },
         h5p: {
           title: 'H5P',
-          description: 'Import an interactive task from H5P via URL.'
+          description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
           title: "Lückentext",
-          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die korrekten Antworten eingetippt werden.",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
