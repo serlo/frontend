@@ -18,6 +18,19 @@ export enum License {
   OTHER = 'OTHER',
 }
 
+function toLicenseString(license: License): string {
+  switch (license) {
+    case License.CC0:
+      return '(CC0)'
+    case License.CC_BY:
+      return '(CC BY)'
+    case License.CC_BY_SA:
+      return '(CC BY-SA)'
+    default:
+      return ''
+  }
+}
+
 const NostrEvent = t.type({
   kind: t.literal(30142),
   tags: t.array(t.tuple([t.string, t.string])),
@@ -162,7 +175,9 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
               return renderEntry(
                 <div className="flex gap-2">
                   <img src={result.image} className="block w-12" />
-                  <div>{result.name}</div>
+                  <div>
+                    {result.name} {toLicenseString(result.license)}
+                  </div>
                 </div>,
                 result
               )
