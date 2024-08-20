@@ -93,30 +93,25 @@ export function AddRevision({
 
     const relay = await Relay.connect('wss://relay.sc24.steffen-roertgen.de')
 
+    const title =
+      ('title' in data ? data.title : undefined) ?? 'Neuer Serlo Artikel'
+    const id = 'https://serlo.org/60730?title=' + encodeURIComponent(title)
+
     await relay.publish(
       finalizeEvent(
         {
           kind: 30142,
           created_at: Math.floor(Date.now() / 1000),
           tags: [
-            ['d', 'https://serlo.org/42'],
-            ['r', 'https://serlo.org/42'],
-            ['id', 'https://serlo.org/42'],
-            [
-              'name',
-              'title' in data
-                ? data.title ?? 'Neuer Serlo Artikel'
-                : 'Neuer Serlo Artikel',
-            ],
-            ['author', '', 'Serlo Education'],
+            ['d', id],
+            ['r', id],
+            ['id', id],
+            ['name', title],
+            ['author', 'Serlo Education'],
             ['image', 'https://de.serlo.org/_assets/apple-touch-icon.png'],
             ['resourceType', 'Article'],
             ['inLanguage', 'de'],
-            [
-              'license',
-              'https://creativecommons.org/licenses/by-sa/3.0',
-              'cc-by-sa',
-            ],
+            ['license', 'https://creativecommons.org/licenses/by-sa/3.0'],
             ['source', 'https://serlo.org/', 'Serlo'],
           ],
           content: '',

@@ -33,7 +33,7 @@ function toLicenseString(license: License): string {
 
 const NostrEvent = t.type({
   kind: t.literal(30142),
-  tags: t.array(t.tuple([t.string, t.string])),
+  tags: t.array(t.array(t.string)),
 })
 
 const NostrResource = t.type({
@@ -41,7 +41,6 @@ const NostrResource = t.type({
   image: t.string,
   name: t.string,
   license: t.string,
-  author: t.string,
 })
 
 export function SearchPanel({ onSelect }: SearchPanelProps) {
@@ -108,7 +107,9 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
         sub.onevent = (event) => {
           if (!NostrEvent.is(event)) return
 
-          const basicResource = Object.fromEntries(event.tags)
+          const basicResource = Object.fromEntries(
+            event.tags.map(([x, y]) => [x, y])
+          )
 
           if (!NostrResource.is(basicResource)) return
 
