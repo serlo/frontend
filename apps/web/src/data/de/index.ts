@@ -706,7 +706,7 @@ export const loggedInData = {
         },
         geogebra: {
           title: 'GeoGebra Applet',
-          description: 'Embed GeoGebra materials applets via URL or ID.',
+          description: "Binde GeoGebra Inhalte via Link oder ID ein.",
           chooseApplet: "Applet auswählen",
           urlOrId: "GeoGebra Materials URL oder ID"
         },
