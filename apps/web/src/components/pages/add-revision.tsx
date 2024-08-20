@@ -1,4 +1,6 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { finalizeEvent, generateSecretKey } from 'nostr-tools/pure'
+import { Relay } from 'nostr-tools/relay'
 import { useEffect, useState } from 'react'
 
 import { loginUrl } from './auth/utils'
@@ -23,6 +25,8 @@ import {
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
+
+const sk = generateSecretKey()
 
 export function AddRevision({
   initialState,
@@ -84,6 +88,42 @@ export function AddRevision({
     const willNeedReview = Object.hasOwn(data, 'controls')
       ? !(data as OnSaveData).controls.noReview
       : entityNeedsReview
+
+    const relay = await Relay.connect('wss://relay.sc24.steffen-roertgen.de')
+
+    await relay.publish(
+      finalizeEvent(
+        {
+          kind: 30142,
+          created_at: Math.floor(Date.now() / 1000),
+          tags: [
+            ['d', 'https://serlo.org/42'],
+            ['r', 'https://serlo.org/42'],
+            ['id', 'https://serlo.org/42'],
+            [
+              'name',
+              'title' in data
+                ? data.title ?? 'Neuer Serlo Artikel'
+                : 'Neuer Serlo Artikel',
+            ],
+            ['author', '', 'Serlo Education'],
+            ['image', 'https://de.serlo.org/_assets/apple-touch-icon.png'],
+            ['resourceType', 'Article'],
+            ['inLanguage', 'de'],
+            [
+              'license',
+              'https://creativecommons.org/licenses/by-sa/3.0',
+              'cc-by-sa',
+            ],
+            ['source', 'https://serlo.org/', 'Serlo'],
+          ],
+          content: '',
+        },
+        sk
+      )
+    )
+
+    console.log('published')
 
     const success =
       type === UuidType.TaxonomyTerm

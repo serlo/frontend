@@ -70,6 +70,7 @@
     "mathlive": "^0.98.6",
     "next": "^14.2.2",
     "next-query-params": "^4.3.0",
+    "nostr-tools": "^2.7.2",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.38",
     "qrcode.react": "^3.1.0",
