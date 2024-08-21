@@ -1,6 +1,6 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImages } from './components/add-images'
@@ -23,6 +23,18 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(-1)
   const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
+
+  // Restore correct view based on state
+  // If there are images in the state, set the view to GALLERY
+  useEffect(() => {
+    if (
+      currentView === ImageGalleryPluginViewType.EMPTY &&
+      state.images.length > 0
+    ) {
+      setCurrentView(ImageGalleryPluginViewType.GALLERY)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleMultipleImageUpload = (files: File[]) => {
     for (const file of files) {
