@@ -3,12 +3,11 @@ import { isTempFile } from '@editor/plugin'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import React, { useState, type RefObject } from 'react'
 
-import { PixabayImageSearch } from './pixabay-image-search'
+import { PixabaySearchButton } from './pixabay-search-button'
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
 import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -34,13 +33,10 @@ export function ImageSelectionScreen(
   const imageUrl = src.get() as string
   const showErrorMessage = imageUrl.length > 5 && !isImageUrl(imageUrl)
 
-  const [showPixabayModal, setShowPixabayModal] = useState(false)
-
   const onSelectPixabayImage = (imageUrl: string) => {
     state.src.set(imageUrl)
     if (!licence.defined) licence.create('Pixabay')
     else licence.set('Pixabay')
-    setShowPixabayModal(false)
   }
 
   const showPixabayButton = !disableFileUpload
@@ -50,13 +46,6 @@ export function ImageSelectionScreen(
       className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
       data-qa="plugin-image-empty-wrapper"
     >
-      <ModalWithCloseButton
-        isOpen={showPixabayModal}
-        setIsOpen={setShowPixabayModal}
-        className="max-h-[700px] w-[900px] max-w-[90vw] pt-0"
-      >
-        <PixabayImageSearch onSelectImage={onSelectPixabayImage} />
-      </ModalWithCloseButton>
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton
           onFocus={() => setIsAButtonFocused(true)}
@@ -64,18 +53,11 @@ export function ImageSelectionScreen(
           {...props}
         />
         {showPixabayButton && (
-          <button
-            data-qa="plugin-image-pixabay-search-button"
-            onClick={() => setShowPixabayModal(true)}
+          <PixabaySearchButton
             onFocus={() => setIsAButtonFocused(true)}
             onBlur={() => setIsAButtonFocused(false)}
-            className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-almost-black text-gray-800 hover:bg-editor-primary-300"
-          >
-            <span className="mr-2 inline-block">
-              <FaIcon icon={faMagnifyingGlass} />
-            </span>
-            {imageStrings.searchOnline}
-          </button>
+            onSelectImage={onSelectPixabayImage}
+          />
         )}
         <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
           {imageStrings.imageUrl}
