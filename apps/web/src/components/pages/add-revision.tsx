@@ -19,12 +19,10 @@ import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
-  OnSaveData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
 } from '@/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
-import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
 import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 const sk = generateSecretKey()
@@ -42,7 +40,6 @@ export function AddRevision({
   const auth = useAuthentication()
 
   const setEntityMutation = useSetEntityMutation()
-  const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
   const router = useRouter()
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
@@ -87,9 +84,6 @@ export function AddRevision({
   const onSave = async (
     data: SetEntityMutationData | TaxonomyCreateOrUpdateMutationData
   ) => {
-    const willNeedReview = Object.hasOwn(data, 'controls')
-      ? !(data as OnSaveData).controls.noReview
-      : entityNeedsReview
 
     const relay = await Relay.connect('wss://relay.sc24.steffen-roertgen.de')
 
