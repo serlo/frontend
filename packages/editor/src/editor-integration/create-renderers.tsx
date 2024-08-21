@@ -13,6 +13,7 @@ import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
+import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
@@ -40,6 +41,10 @@ export function createRenderers(
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       { type: EditorPluginType.Image, renderer: ImageStaticRenderer },
+      {
+        type: EditorPluginType.ImageGallery,
+        renderer: ImageGalleryStaticRenderer,
+      },
       {
         type: EditorPluginType.Multimedia,
         renderer: MultimediaStaticRenderer,
