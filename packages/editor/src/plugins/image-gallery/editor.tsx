@@ -8,7 +8,7 @@ import { ImageGalleryToolbar } from './toolbar'
 
 export enum ImageGalleryPluginViewType {
   INIT = 'INIT', // Initial state, no images
-  ADD_IMAGES = 'ADD_IMAGES', // Image selection screen
+  SINGLE_IMAGE_MODAL = 'SINGLE_IMAGE_MODAL', // Image selection modal
   GALLERY = 'GALLERY', // Image grid
 }
 
@@ -68,25 +68,33 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
         return (
           <AddImages
             onAddImages={() => {
-              setCurrentView(ImageGalleryPluginViewType.ADD_IMAGES)
               setCurrentImageIndex(0)
+              setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
             }}
             {...props}
           />
         )
-      case ImageGalleryPluginViewType.ADD_IMAGES:
+      case ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL:
         return (
           <SingleImageModal
             {...props}
             currentImageIndex={currentImageIndex}
-            onAddImage={() => {
-              prepareDebugData()
+            onAddImage={(isDebugRun: boolean) => {
+              isDebugRun && prepareDebugData()
               setCurrentView(ImageGalleryPluginViewType.GALLERY)
             }}
           />
         )
       case ImageGalleryPluginViewType.GALLERY:
-        return <ImageGrid {...props} />
+        return (
+          <ImageGrid
+            {...props}
+            onClickImage={(index: number) => {
+              setCurrentImageIndex(index)
+              setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
+            }}
+          />
+        )
 
       default:
         return null

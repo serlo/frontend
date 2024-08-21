@@ -5,7 +5,7 @@ import type { ImageGalleryProps } from '..'
 
 interface SingleImageModalProps extends ImageGalleryProps {
   currentImageIndex: number
-  onAddImage: () => void
+  onAddImage: (isDebugRun: boolean) => void
 }
 
 export function SingleImageModal(props: SingleImageModalProps) {
@@ -19,7 +19,9 @@ export function SingleImageModal(props: SingleImageModalProps) {
       onOpenChange={(isOpen) => {
         setOpen(isOpen)
         if (!isOpen) {
-          onAddImage()
+          const shouldAddMockImagesToState =
+            currentImageIndex === state.images.length - 1
+          onAddImage(shouldAddMockImagesToState)
         }
       }}
     >

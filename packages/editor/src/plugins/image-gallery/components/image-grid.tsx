@@ -9,7 +9,9 @@ import { loadGalleryPhotos } from '../util/helpers'
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-photo-album/rows.css'
 
-interface ImageGridProps extends ImageGalleryProps {}
+interface ImageGridProps extends ImageGalleryProps {
+  onClickImage: (index: number) => void
+}
 
 export const getImageSrcFromState = (imageId: string) => {
   const imgDocument = selectStaticDocument(store.getState(), imageId)
@@ -17,7 +19,7 @@ export const getImageSrcFromState = (imageId: string) => {
 }
 
 export function ImageGrid(props: ImageGridProps) {
-  const { state } = props
+  const { state, onClickImage } = props
 
   const [photos, setPhotos] = useState<Photo[]>([])
 
@@ -51,6 +53,9 @@ export function ImageGrid(props: ImageGridProps) {
       photos={photos}
       rowConstraints={{ maxPhotos: 2 }}
       targetRowHeight={200}
+      onClick={({ index }) => {
+        onClickImage(index)
+      }}
     />
   )
 }
