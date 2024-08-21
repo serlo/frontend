@@ -10,7 +10,6 @@ export const ImageGalleryToolbar = (props: ImageGalleryProps) => {
   return (
     <PluginToolbar
       pluginType={EditorPluginType.ImageGallery}
-      // pluginTooltipText={editorStrings.plugins.image.helpTooltipText}
       pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )
