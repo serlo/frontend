@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImages, createImagePlugin } from './components/add-images'
@@ -20,6 +20,18 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   )
 
   const [currentImageIndex, setCurrentImageIndex] = useState(-1)
+
+  // Restore correct view based on state
+  // If there are images in the state, set the view to GALLERY
+  useEffect(() => {
+    if (
+      currentView === ImageGalleryPluginViewType.INIT &&
+      state.images.length > 0
+    ) {
+      setCurrentView(ImageGalleryPluginViewType.GALLERY)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // TODO: When Upload button is working with multiple files, this will be removed
   const prepareDebugData = () => {
