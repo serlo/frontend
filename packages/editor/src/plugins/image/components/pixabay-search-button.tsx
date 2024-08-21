@@ -16,7 +16,6 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PixabayResponse {
   total: number

@@ -1,13 +1,11 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@editor/plugin'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import React, { useState, type RefObject } from 'react'
+import React, { type RefObject } from 'react'
 
 import { PixabaySearchButton } from './pixabay-search-button'
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
-import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
