@@ -5347,6 +5347,7 @@ __metadata:
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
+    react-photo-album: ^3.0.1
     react-redux: ^8.1.3
     react-resizable: ^3.0.5
     react-simple-star-rating: ^5.1.7
@@ -15942,6 +15943,19 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     react: ^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: ed764b1a1644670f3d5a320ccf764fadc89f86b689757bbb346ee053e6b0cab9c624ce56cc02836af2a3ba15dc57b6998c3d015b6f51183f13e6942e79964854
+  languageName: node
+  linkType: hard
+
+"react-photo-album@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "react-photo-album@npm:3.0.1"
+  peerDependencies:
+    "@types/react": ">=18"
+    react: ">=18"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 9a60a069021cb6431ddd2fcbb532f8824be7e05bfee6608675cb5f13fb22691a1a0fe381d415e9c1badeb19b810d5376f8880cb54fba559512f99a7c61791212
   languageName: node
   linkType: hard
 
