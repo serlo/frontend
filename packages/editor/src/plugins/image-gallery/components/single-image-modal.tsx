@@ -28,7 +28,7 @@ export function SingleImageModal(props: SingleImageModalProps) {
     >
       {image.render({
         config: {
-          multipleUploadCallback: handleMultipleImageUpload,
+          onMultipleUploadCallback: handleMultipleImageUpload,
         },
       })}
     </FittingModal>

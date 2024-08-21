@@ -118,7 +118,7 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
   multiple?: boolean
-  multipleUploadCallback: (files: File[]) => void
+  onMultipleUploadCallback?: (files: File[]) => void
   disableFileUpload?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
   upload: UploadHandler<string>
   validate: UploadValidator<FileError[]>
