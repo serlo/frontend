@@ -1,11 +1,11 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 
 import type { ScMcExerciseRendererProps } from './renderer'
 
@@ -34,6 +34,12 @@ export function ScRenderer({
                   onChange={() => {
                     setShowFeedback(false)
                     setSelected(i)
+
+                    editorLearnerEvent.trigger?.({
+                      verb: 'interacted',
+                      value: i,
+                      contentType: 'sc-exercise',
+                    })
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') setShowFeedback(true)
@@ -72,6 +78,7 @@ export function ScRenderer({
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({
+              verb: 'answered',
               correct: answers[selected ?? 0].isCorrect,
               value: selected,
               contentType: 'sc-exercise',

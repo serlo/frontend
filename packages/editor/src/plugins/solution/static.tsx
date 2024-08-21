@@ -38,7 +38,11 @@ export function StaticSolutionRenderer({
   ) : null
 
   function onSolutionOpen() {
-    editorLearnerEvent.trigger?.({ contentType: 'solution', value: 'open' })
+    editorLearnerEvent.trigger?.({
+      verb: 'opened',
+      contentType: 'solution',
+      value: 'open',
+    })
   }
 
   return (

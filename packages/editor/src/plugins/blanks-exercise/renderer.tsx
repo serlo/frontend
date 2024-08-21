@@ -1,5 +1,4 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import {
   lazy,
   Suspense,
@@ -43,16 +42,17 @@ export interface BlanksExerciseRendererProps {
   isEditing?: boolean
 }
 
-export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
-  const {
-    childPlugin,
-    childPluginState,
-    mode,
-    extraDraggableAnswers,
-    initialTextInBlank,
-    isEditing,
-  } = props
-
+export function BlanksExerciseRenderer({
+  childPlugin,
+  childPluginState,
+  mode,
+  extraDraggableAnswers,
+  initialTextInBlank,
+  isEditing,
+  onEvaluate,
+}: BlanksExerciseRendererProps & {
+  onEvaluate?: (correct: boolean) => void
+}) {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState<boolean>(false)
 
   // Maps blankId to the learner feedback after clicking solution check button
@@ -278,13 +278,9 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
       newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
     })
 
-    editorLearnerEvent.trigger?.({
-      correct: [...newBlankAnswersCorrectList].every(
-        (entry) => entry[1].isCorrect
-      ),
-      // value: selected,
-      contentType: 'blanks-exercise',
-    })
+    onEvaluate?.(
+      [...newBlankAnswersCorrectList].every((entry) => entry[1].isCorrect)
+    )
 
     setFeedbackForBlanks(newBlankAnswersCorrectList)
     setIsFeedbackVisible(true)

@@ -14,6 +14,7 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
 
       if (e_id === id) {
         editorLearnerEvent.trigger?.({
+          verb: 'answered',
           correct: e.type === 'h5pExerciseCorrect',
           contentType: 'h5p-exercise',
         })

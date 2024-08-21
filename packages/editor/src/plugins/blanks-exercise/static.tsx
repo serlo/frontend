@@ -1,3 +1,4 @@
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 
@@ -14,6 +15,13 @@ export function BlanksExerciseStaticRenderer({
       mode={mode as BlanksExerciseMode}
       initialTextInBlank="empty"
       extraDraggableAnswers={extraDraggableAnswers}
+      onEvaluate={(correct: boolean) => {
+        editorLearnerEvent.trigger?.({
+          verb: 'answered',
+          correct,
+          contentType: 'blanks-exercise',
+        })
+      }}
     />
   )
 }

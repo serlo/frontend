@@ -1,4 +1,5 @@
 export interface LearnerEvent {
+  verb: 'opened' | 'attempted' | 'interacted' | 'answered'
   contentType:
     | 'input-exercise'
     | 'sc-exercise'
@@ -16,19 +17,19 @@ export const editorLearnerEvent = (function (): {
   init: (triggerIn: Trigger) => void
   trigger: Trigger | null
 } {
-  let learnerEventTrigger: Trigger | null = null
+  let triggerLearnerEvent: Trigger | null = null
 
   // simple way to provide integrations to adapt to their xAPI needs
   function init(triggerIn: Trigger) {
-    if (learnerEventTrigger) return // only initialize once
+    if (triggerLearnerEvent) return // only initialize once
 
-    learnerEventTrigger = triggerIn
+    triggerLearnerEvent = triggerIn
     // Ensure the highest integrity level that JS provides
-    Object.freeze(learnerEventTrigger)
+    Object.freeze(triggerLearnerEvent)
   }
 
   function trigger(data: LearnerEvent) {
-    learnerEventTrigger?.(data)
+    triggerLearnerEvent?.(data)
   }
 
   return { init, trigger }

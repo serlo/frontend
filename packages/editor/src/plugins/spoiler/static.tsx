@@ -21,7 +21,11 @@ export function SpoilerStaticRenderer({
 
   function onOpen() {
     if (openOverwrite || eventAlreadySent) return
-    editorLearnerEvent.trigger?.({ contentType: 'spoiler', value: 'open' })
+    editorLearnerEvent.trigger?.({
+      verb: 'opened',
+      contentType: 'spoiler',
+      value: 'open',
+    })
     setEventAlreadySent(true)
   }
 

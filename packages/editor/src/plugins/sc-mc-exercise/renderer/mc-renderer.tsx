@@ -46,6 +46,12 @@ export function McRenderer({
                     const newArr = selectedArray.slice(0)
                     newArr[i] = !newArr[i]
                     setSelectedArray(newArr)
+
+                    editorLearnerEvent.trigger?.({
+                      verb: 'interacted',
+                      value: i,
+                      contentType: 'mc-exercise',
+                    })
                   }}
                 />
                 <label
@@ -83,6 +89,7 @@ export function McRenderer({
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({
+              verb: 'answered',
               correct: allCorrect,
               // value: selected,
               contentType: 'mc-exercise',
