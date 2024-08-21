@@ -1,3 +1,4 @@
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
@@ -11,12 +12,10 @@ export function StaticSolutionRenderer({
   solutionVisibleOnInit,
   beforeSlot,
   afterSlot,
-  onSolutionOpen,
 }: EditorSolutionDocument & {
   solutionVisibleOnInit: boolean
   afterSlot?: JSX.Element | null
   beforeSlot?: JSX.Element | null
-  onSolutionOpen?: () => void
 }) {
   const { prerequisite, strategy, steps } = state
 
@@ -37,6 +36,10 @@ export function StaticSolutionRenderer({
       <>{prerequisite.title}</>
     </LinkRenderer>
   ) : null
+
+  function onSolutionOpen() {
+    editorLearnerEvent.trigger?.({ contentType: 'solution', value: 'open' })
+  }
 
   return (
     <SolutionRenderer

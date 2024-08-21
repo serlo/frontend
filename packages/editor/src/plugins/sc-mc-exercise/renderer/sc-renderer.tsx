@@ -5,12 +5,12 @@ import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function ScRenderer({
   answers,
-  onEvaluate,
   renderExtraAnswerContent,
   isPrintMode,
 }: ScMcExerciseRendererProps) {
@@ -71,7 +71,11 @@ export function ScRenderer({
           data-qa="plugin-exercise-check-answer-button"
           onClick={() => {
             setShowFeedback(true)
-            if (onEvaluate) onEvaluate(answers[selected ?? 0].isCorrect, 'sc')
+            editorLearnerEvent.trigger?.({
+              correct: answers[selected ?? 0].isCorrect,
+              value: selected,
+              contentType: 'sc-exercise',
+            })
           }}
         >
           {selected !== undefined

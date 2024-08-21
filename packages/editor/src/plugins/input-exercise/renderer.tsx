@@ -1,4 +1,5 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useState } from 'react'
@@ -18,7 +19,6 @@ interface InputExersiseRendererProps {
   type: InputExerciseType
   unit: string
   answers: InputExerciseAnswer[]
-  onEvaluate?: (correct: boolean, val: string) => void
 }
 
 export interface FeedbackData {
@@ -30,7 +30,6 @@ export function InputExerciseRenderer({
   type,
   unit,
   answers,
-  onEvaluate,
 }: InputExersiseRendererProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
@@ -46,7 +45,12 @@ export function InputExerciseRenderer({
     const hasCorrectAnswer = !!answer?.isCorrect
     const customFeedbackNode = answer?.feedback ?? null
 
-    if (onEvaluate) onEvaluate(hasCorrectAnswer, value)
+    editorLearnerEvent.trigger?.({
+      correct: hasCorrectAnswer,
+      value,
+      contentType: 'input-exercise',
+    })
+
     setFeedback({
       correct: hasCorrectAnswer,
       message: customFeedbackNode ?? (

@@ -1,5 +1,4 @@
-import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
-import { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import { LearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
@@ -9,28 +8,31 @@ import { useEntityData } from '@/contexts/uuids-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
-export function BlanksExerciseSerloStaticRenderer(
-  props: EditorBlanksExerciseDocument
-) {
+export function useTriggerLearnerEvent() {
   const { asPath } = useRouter()
   const ab = useAB()
   const { revisionId } = useEntityData()
   const { exerciseTrackingId } = useContext(ExerciseContext)
   const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
-  return <BlanksExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />
+  function triggerLearnerEvent(data: LearnerEvent) {
+    // eslint-disable-next-line no-console
+    console.log(data)
 
-  function onEvaluate(correct: boolean) {
+    const { correct, contentType } = data
+
     exerciseSubmission(
       {
         path: asPath,
         entityId: exerciseTrackingId,
         revisionId,
         result: correct ? 'correct' : 'wrong',
-        type: 'blanks',
+        // @ts-expect-error differing type strings
+        type: contentType,
       },
       ab,
       trackExperiment
     )
   }
+  return triggerLearnerEvent
 }

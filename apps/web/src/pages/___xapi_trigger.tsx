@@ -1,5 +1,5 @@
-import { NextPage } from 'next'
 import XAPI from '@xapi/xapi'
+import { NextPage } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 
