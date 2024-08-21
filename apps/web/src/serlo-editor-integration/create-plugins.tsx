@@ -16,6 +16,7 @@ import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
+import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg'
 import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
@@ -86,13 +87,16 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconImage />,
     },
-    {
-      type: EditorPluginType.ImageGallery,
-      plugin: createImageGalleryPlugin(),
-      visibleInSuggestions: true,
-      // TODO: Add icon
-      icon: <IconImage />,
-    },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.ImageGallery,
+            plugin: createImageGalleryPlugin(),
+            visibleInSuggestions: true,
+            icon: <IconImageGallery />,
+          },
+        ]),
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(),
