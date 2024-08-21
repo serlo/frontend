@@ -84,7 +84,6 @@ export function AddRevision({
   const onSave = async (
     data: SetEntityMutationData | TaxonomyCreateOrUpdateMutationData
   ) => {
-
     const relay = await Relay.connect('wss://relay.sc24.steffen-roertgen.de')
 
     const title =
