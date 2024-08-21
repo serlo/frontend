@@ -13,6 +13,7 @@ import { debounce } from 'ts-debounce'
 
 import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
