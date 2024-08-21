@@ -12,14 +12,10 @@ async function addImageGalleryPlugin(I: CodeceptJS.I) {
   I.pressKey('Enter')
 }
 
-// Enable when plugin is on production
-Scenario.skip(
-  'Create Image Gallery Plugin, see initial screen',
-  async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+Scenario('Create Image Gallery Plugin, see initial screen', async ({ I }) => {
+  I.amOnPage('/entity/create/Article/1377')
 
-    addImageGalleryPlugin(I)
+  addImageGalleryPlugin(I)
 
-    I.seeElement('$plugin-image-gallery-wrapper')
-  }
-)
+  I.seeElement('$plugin-image-gallery-wrapper')
+})
