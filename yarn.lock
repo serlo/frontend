@@ -1645,6 +1645,55 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dnd-kit/accessibility@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@dnd-kit/accessibility@npm:3.1.0"
+  dependencies:
+    tslib: ^2.0.0
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: fcb88c961e2f4c226ab575bc4a13712419884bb0f60761befcaa23bcb6c9939dc2cac6633416f2a07baee9a8830350c6df444039332408cdaaf27cad17c6b64b
+  languageName: node
+  linkType: hard
+
+"@dnd-kit/core@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@dnd-kit/core@npm:6.1.0"
+  dependencies:
+    "@dnd-kit/accessibility": ^3.1.0
+    "@dnd-kit/utilities": ^3.2.2
+    tslib: ^2.0.0
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 3b8f46d2f4d2723abad4721c7bc4d1df2c4f6f26ce54673243666212cfa6f34f33e3255b53144a847da469dc736c966c19e4c45330f967ce8c01f8f878ec7f5b
+  languageName: node
+  linkType: hard
+
+"@dnd-kit/sortable@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@dnd-kit/sortable@npm:8.0.0"
+  dependencies:
+    "@dnd-kit/utilities": ^3.2.2
+    tslib: ^2.0.0
+  peerDependencies:
+    "@dnd-kit/core": ^6.1.0
+    react: ">=16.8.0"
+  checksum: 26589fd23c18d930a949489b232a7345c0bee4abb6be91d3673232bc79085f13cb5d82087c2068edbc51cbdd3d47c2fe386bada92dc7f2d0dcde13d6be379daa
+  languageName: node
+  linkType: hard
+
+"@dnd-kit/utilities@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@dnd-kit/utilities@npm:3.2.2"
+  dependencies:
+    tslib: ^2.0.0
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 8a5015c2faa52760ab82a64287b2ac6a3d798867a1bca5ccbc1178560dbd9a1f9f1a21faea80f590ba1a4277c3eb7e7c4d3b4a39f1f32171bf6bc8174b370547
+  languageName: node
+  linkType: hard
+
 "@emotion/cache@npm:^10.0.27":
   version: 10.0.29
   resolution: "@emotion/cache@npm:10.0.29"
@@ -5240,6 +5289,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@serlo/editor@workspace:packages/editor"
   dependencies:
+    "@dnd-kit/core": ^6.1.0
+    "@dnd-kit/sortable": ^8.0.0
     "@fortawesome/fontawesome-svg-core": 6.5.2
     "@fortawesome/free-brands-svg-icons": 6.5.2
     "@fortawesome/free-regular-svg-icons": 6.5.2
@@ -5295,6 +5346,7 @@ __metadata:
     autoprefixer: ^10.4.19
     clsx: ^2.1.0
     cross-env: ^7.0.3
+    dnd-kit: ^0.0.2
     dotenv: ^16.4.5
     eslint: ^8.57.0
     eslint-config-next: ^14.2.2
@@ -5347,6 +5399,7 @@ __metadata:
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
+    react-photo-album: ^3.0.1
     react-redux: ^8.1.3
     react-resizable: ^3.0.5
     react-simple-star-rating: ^5.1.7
@@ -5375,6 +5428,7 @@ __metadata:
     vite-plugin-css-injected-by-js: ^3.5.1
     vite-plugin-dts: 3.8.3
     vite-plugin-svgr: ^4.2.0
+    yet-another-react-lightbox: ^3.21.4
   languageName: unknown
   linkType: soft
 
@@ -9055,6 +9109,13 @@ __metadata:
     "@react-dnd/invariant": ^4.0.1
     redux: ^4.2.0
   checksum: b7d3ef4664f433af796f440ddd27ad9d7fef0205f26c4b7c0af6ebf612ffa9b33e64d095d3e79190c4baaed34aa36570f321ebe0d2cc8ff1031ff158a0907b3f
+  languageName: node
+  linkType: hard
+
+"dnd-kit@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "dnd-kit@npm:0.0.2"
+  checksum: fb3587aaddde8a67341e1569fac23b753ac686c95180bfeb32365a46a3af1a21d0e15702738606ced20ff60fa0086f0506420083283e0298fb874f3b04095790
   languageName: node
   linkType: hard
 
@@ -15945,6 +16006,19 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
+"react-photo-album@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "react-photo-album@npm:3.0.1"
+  peerDependencies:
+    "@types/react": ">=18"
+    react: ">=18"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 9a60a069021cb6431ddd2fcbb532f8824be7e05bfee6608675cb5f13fb22691a1a0fe381d415e9c1badeb19b810d5376f8880cb54fba559512f99a7c61791212
+  languageName: node
+  linkType: hard
+
 "react-redux@npm:^8.1.3":
   version: 8.1.3
   resolution: "react-redux@npm:8.1.3"
@@ -19452,6 +19526,16 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     y18n: ^5.0.5
     yargs-parser: ^21.1.1
   checksum: 73b572e863aa4a8cbef323dd911d79d193b772defd5a51aab0aca2d446655216f5002c42c5306033968193bdbf892a7a4c110b0d77954a7fdf563e653967b56a
+  languageName: node
+  linkType: hard
+
+"yet-another-react-lightbox@npm:^3.21.4":
+  version: 3.21.4
+  resolution: "yet-another-react-lightbox@npm:3.21.4"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: a5006d24bbd98c9a587925ba1c595373dfc10961c61c466befae51ad1f2277b82cc506b391f52840cff5649e923546fce36bb66003b9c618482dd1922329da80
   languageName: node
   linkType: hard
 
