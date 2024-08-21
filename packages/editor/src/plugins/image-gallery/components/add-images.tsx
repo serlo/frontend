@@ -7,7 +7,7 @@ export function AddImages() {
         className="mx-auto my-20 block rounded-md"
         data-qa="plugin-image-gallery-add-images-button"
       >
-        <IconChoose className=" text-editor-primary-100 hover:cursor-pointer hover:text-editor-primary-200" />
+        <IconChoose className="text-editor-primary-100 hover:cursor-pointer hover:text-editor-primary-200" />
       </button>
     </div>
   )
