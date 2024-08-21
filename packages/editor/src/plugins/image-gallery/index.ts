@@ -13,7 +13,14 @@ export const defaultConfig: ImageGalleryConfig = {}
 
 function createImageGalleryState() {
   return object({
-    images: list(child({ plugin: EditorPluginType.Image })),
+    images: list(
+      child({
+        plugin: EditorPluginType.Image,
+        config: {
+          multiple: true,
+        },
+      })
+    ),
   })
 }
 

@@ -17,6 +17,7 @@ interface UploadButtonProps {
   onFocus?: () => void
   onBlur?: () => void
 }
+
 export function UploadButton({
   config,
   state,
@@ -28,6 +29,7 @@ export function UploadButton({
   const isFailed = isTempFile(src.value) && src.value.failed
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)
+
   return (
     <>
       <label
@@ -60,7 +62,20 @@ export function UploadButton({
           className="sr-only"
           onChange={({ target }) => {
             if (target.files && target.files.length) {
-              void src.upload(target.files[0], config.upload)
+              const filesArray = Array.from(target.files)
+
+              // Upload the first file like normal
+              void src.upload(filesArray[0], config.upload)
+
+              // If multiple files are allowed and more than one file is selected,
+              // call the multipleUploadCallback callback with the remaining files
+              if (
+                config.multiple &&
+                filesArray.length > 1 &&
+                config.multipleUploadCallback
+              ) {
+                config.multipleUploadCallback(filesArray.slice(1))
+              }
             }
           }}
           data-qa="plugin-image-upload"

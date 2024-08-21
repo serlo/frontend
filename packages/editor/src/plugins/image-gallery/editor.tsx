@@ -20,6 +20,10 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(-1)
 
+  const handleMultipleImageUpload = (files: File[]) => {
+    console.log(files)
+  }
+
   const renderContent = () => {
     switch (currentView) {
       case ImageGalleryPluginViewType.INIT:
@@ -40,6 +44,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
             onAddImage={() => {
               setCurrentView(ImageGalleryPluginViewType.INIT)
             }}
+            handleMultipleImageUpload={handleMultipleImageUpload}
           />
         )
       default:

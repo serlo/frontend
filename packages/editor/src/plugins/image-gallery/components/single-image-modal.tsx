@@ -6,13 +6,16 @@ import type { ImageGalleryProps } from '..'
 interface SingleImageModalProps extends ImageGalleryProps {
   currentImageIndex: number
   onAddImage: () => void
+  handleMultipleImageUpload: (files: File[]) => void
 }
 
 export function SingleImageModal(props: SingleImageModalProps) {
-  const { state, currentImageIndex, onAddImage } = props
+  const { state, currentImageIndex, onAddImage, handleMultipleImageUpload } =
+    props
   const image = state.images[currentImageIndex]
 
   const [open, setOpen] = useState(true)
+
   return (
     <FittingModal
       open={open}
@@ -24,7 +27,9 @@ export function SingleImageModal(props: SingleImageModalProps) {
       }}
     >
       {image.render({
-        config: { multiple: true },
+        config: {
+          multipleUploadCallback: handleMultipleImageUpload,
+        },
       })}
     </FittingModal>
   )
