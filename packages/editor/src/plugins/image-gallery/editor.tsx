@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImages } from './components/add-images'
+import { ImageGrid } from './components/image-grid'
 import { SingleImageModal } from './components/single-image-modal'
 import { ImageGalleryToolbar } from './toolbar'
 
@@ -14,7 +15,7 @@ enum ImageGalleryPluginViewType {
 }
 
 export function ImageGalleryEditor(props: ImageGalleryProps) {
-  const { state, focused } = props
+  const { focused, state } = props
 
   const [currentView, setCurrentView] = useState(
     ImageGalleryPluginViewType.EMPTY
@@ -60,6 +61,10 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
           }}
           handleMultipleImageUpload={handleMultipleImageUpload}
         />
+      )}
+
+      {currentView === ImageGalleryPluginViewType.GALLERY && (
+        <ImageGrid {...props} />
       )}
     </div>
   )
