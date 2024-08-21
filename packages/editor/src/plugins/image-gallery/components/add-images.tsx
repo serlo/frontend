@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import type { ImageGalleryProps } from '..'
 
-export function createImagePlugin(url: string, caption: string) {
+export function createImagePlugin(url: string) {
   return {
     plugin: EditorPluginType.Image,
     state: {
@@ -16,7 +16,7 @@ export function createImagePlugin(url: string, caption: string) {
             type: 'p',
             children: [
               {
-                text: caption,
+                text: '',
               },
             ],
           },
@@ -35,7 +35,7 @@ interface AddImagesProps extends ImageGalleryProps {
 export function AddImages(props: AddImagesProps) {
   const { state, onAddImages } = props
   const onClickAddImages = () => {
-    state.images.insert(0, createImagePlugin('', ''))
+    state.images.insert(0, createImagePlugin(''))
     onAddImages()
   }
   return (
