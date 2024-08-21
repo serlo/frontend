@@ -1,3 +1,4 @@
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import type { Element } from 'slate'
 
@@ -5,7 +6,6 @@ import type { InputExerciseType } from './input-exercise-type'
 import { InputExerciseRenderer } from './renderer'
 import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 
 export function InputExerciseStaticRenderer({
   state,
