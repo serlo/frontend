@@ -23,7 +23,9 @@ export function SingleImageModal(props: SingleImageModalProps) {
         }
       }}
     >
-      {image.render()}
+      {image.render({
+        config: { multiple: true },
+      })}
     </FittingModal>
   )
 }
