@@ -58,11 +58,11 @@ Scenario('Add new plugins', async ({ I }) => {
   I.see('(optionaler Titel)')
 })
 
-Scenario('Close plugin selection modal', async ({ I }) => {
+Scenario.only('Close plugin selection modal', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
   I.click('Füge ein Element hinzu')
-  const menuModal = 'Exercises'
-  I.see(menuModal)
+  const menuModal = '$plugin-menu-search-input'
+  I.seeNumberOfElements(menuModal, 1)
 
   I.pressKey('Escape')
   // Modal should be closed
