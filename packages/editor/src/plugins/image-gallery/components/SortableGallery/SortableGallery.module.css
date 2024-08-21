@@ -1,7 +1,10 @@
 .gallery :global(.react-photo-album) {
   --position-indicator-width: 4px;
   --position-indicator-offset: calc(
-    (var(--react-photo-album--spacing, 0) * 1px + var(--position-indicator-width)) / -2
+    (
+        var(--react-photo-album--spacing, 0) * 1px +
+          var(--position-indicator-width)
+      ) / -2
   );
 }
 
@@ -31,48 +34,72 @@
   -webkit-touch-callout: none;
 }
 
-.gallery :global(.react-photo-album--photo)[data-active="true"] {
+.gallery :global(.react-photo-album--photo)[data-active='true'] {
   opacity: 0.3;
 }
 
-.gallery :global(.react-photo-album--photo)[data-position="after"]:after,
-.gallery :global(.react-photo-album--photo)[data-position="before"]:before {
-  content: "";
+.gallery :global(.react-photo-album--photo)[data-position='after']:after,
+.gallery :global(.react-photo-album--photo)[data-position='before']:before {
+  content: '';
   position: absolute;
   background-color: #2196f3;
   border-radius: var(--position-indicator-width);
 }
 
-.gallery :global(.react-photo-album--rows) :global(.react-photo-album--photo)[data-position="after"]:after,
-.gallery :global(.react-photo-album--rows) :global(.react-photo-album--photo)[data-position="before"]:before {
+.gallery
+  :global(.react-photo-album--rows)
+  :global(.react-photo-album--photo)[data-position='after']:after,
+.gallery
+  :global(.react-photo-album--rows)
+  :global(.react-photo-album--photo)[data-position='before']:before {
   top: 0;
   bottom: 0;
   width: var(--position-indicator-width);
 }
 
-.gallery :global(.react-photo-album--rows) :global(.react-photo-album--photo)[data-position="after"]:after {
+.gallery
+  :global(.react-photo-album--rows)
+  :global(.react-photo-album--photo)[data-position='after']:after {
   right: var(--position-indicator-offset);
 }
 
-.gallery :global(.react-photo-album--rows) :global(.react-photo-album--photo)[data-position="before"]:before {
+.gallery
+  :global(.react-photo-album--rows)
+  :global(.react-photo-album--photo)[data-position='before']:before {
   left: var(--position-indicator-offset);
 }
 
-.gallery :global(.react-photo-album--columns) :global(.react-photo-album--photo)[data-position="after"]:after,
-.gallery :global(.react-photo-album--masonry) :global(.react-photo-album--photo)[data-position="after"]:after,
-.gallery :global(.react-photo-album--columns) :global(.react-photo-album--photo)[data-position="before"]:before,
-.gallery :global(.react-photo-album--masonry) :global(.react-photo-album--photo)[data-position="before"]:before {
+.gallery
+  :global(.react-photo-album--columns)
+  :global(.react-photo-album--photo)[data-position='after']:after,
+.gallery
+  :global(.react-photo-album--masonry)
+  :global(.react-photo-album--photo)[data-position='after']:after,
+.gallery
+  :global(.react-photo-album--columns)
+  :global(.react-photo-album--photo)[data-position='before']:before,
+.gallery
+  :global(.react-photo-album--masonry)
+  :global(.react-photo-album--photo)[data-position='before']:before {
   left: 0;
   right: 0;
   height: var(--position-indicator-width);
 }
 
-.gallery :global(.react-photo-album--columns) :global(.react-photo-album--photo)[data-position="after"]:after,
-.gallery :global(.react-photo-album--masonry) :global(.react-photo-album--photo)[data-position="after"]:after {
+.gallery
+  :global(.react-photo-album--columns)
+  :global(.react-photo-album--photo)[data-position='after']:after,
+.gallery
+  :global(.react-photo-album--masonry)
+  :global(.react-photo-album--photo)[data-position='after']:after {
   bottom: var(--position-indicator-offset);
 }
 
-.gallery :global(.react-photo-album--columns) :global(.react-photo-album--photo)[data-position="before"]:before,
-.gallery :global(.react-photo-album--masonry) :global(.react-photo-album--photo)[data-position="before"]:before {
+.gallery
+  :global(.react-photo-album--columns)
+  :global(.react-photo-album--photo)[data-position='before']:before,
+.gallery
+  :global(.react-photo-album--masonry)
+  :global(.react-photo-album--photo)[data-position='before']:before {
   top: var(--position-indicator-offset);
 }
