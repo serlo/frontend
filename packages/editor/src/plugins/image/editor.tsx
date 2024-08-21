@@ -23,7 +23,7 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { focused, state, config, id } = props
+  const { focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -101,7 +101,6 @@ export function ImageEditor(props: ImageProps) {
         {!hasValidUrl && (
           <ImageSelectionScreen
             {...props}
-            pluginId={id}
             setIsAButtonFocused={setIsAButtonFocused}
             urlInputRef={urlInputRef}
           />

@@ -1,6 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@editor/plugin'
-// import { selectParentPluginType, store } from '@editor/store'
 import React, { type RefObject } from 'react'
 
 import { PixabaySearchButton } from './pixabay-search-button'
@@ -12,7 +11,6 @@ import { cn } from '@/helper/cn'
 
 export function ImageSelectionScreen(
   props: ImageProps & {
-    pluginId: string
     urlInputRef: RefObject<HTMLInputElement>
     setIsAButtonFocused: (isFocused: boolean) => void
   }
@@ -20,8 +18,6 @@ export function ImageSelectionScreen(
   const editorStrings = useEditorStrings()
   const { state, urlInputRef, setIsAButtonFocused } = props
   const { src, licence } = state
-
-  // const parentType = selectParentPluginType(store.getState(), pluginId)
 
   const imageStrings = editorStrings.plugins.image
   const disableFileUpload = props.config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.

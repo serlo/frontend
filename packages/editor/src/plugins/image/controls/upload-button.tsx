@@ -55,6 +55,7 @@ export function UploadButton({
         </span>
         <input
           type="file"
+          multiple={config.multiple}
           accept="image/*"
           className="sr-only"
           onChange={({ target }) => {
