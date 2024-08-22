@@ -70,7 +70,7 @@ export function UploadButton({
               // If multiple files are allowed and more than one file is selected,
               // call the onMultipleUploadCallback callback with the remaining files
               if (config.onMultipleUploadCallback && filesArray.length > 1) {
-                config.onMultipleUploadCallback(filesArray.slice(1))
+                config.onMultipleUploadCallback(filesArray.slice(1, 8))
               }
             }
           }}

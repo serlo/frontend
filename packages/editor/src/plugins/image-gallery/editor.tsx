@@ -1,3 +1,5 @@
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
@@ -20,9 +22,18 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   )
 
   const [currentImageIndex, setCurrentImageIndex] = useState(-1)
+  const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
 
   const handleMultipleImageUpload = (files: File[]) => {
-    console.log(files)
+    for (const file of files) {
+      const newImagePluginState = imagePlugin.onFiles?.([file])
+      const newImagePlugin = {
+        plugin: EditorPluginType.Image,
+        state: newImagePluginState?.state as unknown,
+        pluginType: [EditorPluginType.Image],
+      }
+      state.images.insert(currentImageIndex, newImagePlugin)
+    }
   }
 
   const renderContent = () => {
