@@ -12,11 +12,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 const js = (value: string) => JSON.stringify(value)
 
-const productionKeys = [
-  'process.env.NODE_ENV',
-  'process.env.NEXT_PUBLIC_ENV',
-  'process.env.PIXABAY_API_KEY',
-]
+const productionKeys = ['process.env.NODE_ENV', 'process.env.NEXT_PUBLIC_ENV']
 
 const notProvidedKeys = [
   '__NEXT_I18N_SUPPORT',

@@ -57,5 +57,4 @@ export interface RowsPluginConfig {
 
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>
 
-export * from './allowed-child-plugins-context'
 export * from './store'
