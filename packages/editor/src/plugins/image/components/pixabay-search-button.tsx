@@ -134,8 +134,8 @@ export const PixabaySearchButton = ({
       <button
         data-qa="plugin-image-pixabay-search-button"
         onClick={() => setIsOpen(true)}
-        onFocus={() => onFocus()}
-        onBlur={() => onBlur()}
+        onFocus={onFocus}
+        onBlur={onBlur}
         className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-almost-black text-gray-800 hover:bg-editor-primary-300"
       >
         <span className="mr-2 inline-block">
