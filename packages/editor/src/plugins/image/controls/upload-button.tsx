@@ -85,7 +85,9 @@ export function UploadButton({
           }}
           data-qa="plugin-image-upload"
         />
-        {imageStrings.upload}
+        {!config.onMultipleUploadCallback
+          ? imageStrings.upload
+          : imageStrings.uploadMultiple}
       </label>
 
       {isFailed ? (

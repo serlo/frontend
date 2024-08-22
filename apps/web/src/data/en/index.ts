@@ -794,6 +794,7 @@ export const loggedInData = {
           description:
             'Upload images or search online for freely licensed images.',
           upload: 'Upload Image',
+          uploadMultiple: 'Upload Images',
           imageUrl: 'Image URL',
           imageSource: 'Image Source',
           imageSourceHelpText: 'Add the author or source of this image here',
