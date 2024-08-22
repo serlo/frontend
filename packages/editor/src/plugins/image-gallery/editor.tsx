@@ -30,7 +30,6 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       const newImagePlugin = {
         plugin: EditorPluginType.Image,
         state: newImagePluginState?.state as unknown,
-        pluginType: [EditorPluginType.Image],
       }
       state.images.insert(currentImageIndex, newImagePlugin)
     }
