@@ -66,10 +66,7 @@ export function UploadButton({
               const filesArray = Array.from(target.files)
 
               if (target.files.length > 8) {
-                showToastNotice(
-                  'You can only upload up to 8 images at once.',
-                  'warning'
-                )
+                showToastNotice(imageStrings.tooManyImagesError, 'warning')
                 return
               }
 

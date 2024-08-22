@@ -807,6 +807,7 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
+          tooManyImagesError: 'You can only upload up to 8 images at once.',
           retry: 'Retry',
           failedUpload: 'Upload failed',
           captionPlaceholder: 'Optional caption',
