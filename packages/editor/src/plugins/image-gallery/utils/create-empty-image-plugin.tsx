@@ -1,4 +1,4 @@
-import { EditorPluginType } from '@editor/package'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { v4 as uuidv4 } from 'uuid'
 
 export function createEmptyImagePlugin(url: string, caption: string) {
