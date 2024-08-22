@@ -13,10 +13,12 @@ import {
   type PluginsConfig,
   defaultSerloEditorProps,
   type CustomPlugin,
-} from './config'
-import { editorData } from './editor-data'
+} from './config.js'
+import { editorData } from './editor-data.js'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
+
+import '@/assets-webkit/styles/serlo-tailwind.css'
 
 export interface SerloEditorProps {
   children: EditorProps['children']
