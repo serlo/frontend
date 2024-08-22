@@ -39,20 +39,13 @@ export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
   testingSecret?: string
 ) {
-  const isEdusharing = plugins.includes(EditorPluginType.EdusharingAsset)
-  const edusharingAllowedPluginsInBoxAndSpoiler = [
-    EditorPluginType.Text,
-    EditorPluginType.Equations,
-    EditorPluginType.Multimedia,
-    EditorPluginType.SerloTable,
-    EditorPluginType.Highlight,
-    EditorPluginType.EdusharingAsset,
-  ]
-
-  if (plugins.includes(EditorPluginType.Image) && testingSecret === undefined)
-    throw new Error(
-      'The image plugin needs the `testingSecret`. Either provide it or deactivate the image plugin in the editor API.'
+  if (plugins.includes(EditorPluginType.Image) && testingSecret === undefined) {
+    /* eslint-disable no-console */
+    console.log(
+      'The image plugin needs the `testingSecret` but it is missing. Image plugin was disabled. Either provide it or deactivate the image plugin in the editor API.'
     )
+    plugins = plugins.filter((plugin) => plugin !== EditorPluginType.Image)
+  }
 
   const allPlugins = [
     {
