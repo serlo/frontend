@@ -16,6 +16,7 @@ import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
+import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg'
 import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
@@ -29,6 +30,7 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
@@ -85,6 +87,16 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconImage />,
     },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.ImageGallery,
+            plugin: createImageGalleryPlugin(),
+            visibleInSuggestions: true,
+            icon: <IconImageGallery />,
+          },
+        ]),
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(),

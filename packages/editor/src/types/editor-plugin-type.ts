@@ -10,6 +10,7 @@ export enum EditorPluginType {
   H5p = 'h5p',
   Highlight = 'highlight',
   Image = 'image',
+  ImageGallery = 'imageGallery',
   Injection = 'injection',
   Multimedia = 'multimedia',
 

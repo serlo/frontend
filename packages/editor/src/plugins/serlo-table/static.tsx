@@ -5,6 +5,9 @@ import {
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorSerloTableDocument } from '@editor/types/editor-plugins'
 
+/**
+ * called SerloTable for historic reasons but used in all integrations
+ **/
 export function SerloTableStaticRenderer({ state }: EditorSerloTableDocument) {
   const { rows, tableType } = state
   if (!rows || rows.length === 0) return null
