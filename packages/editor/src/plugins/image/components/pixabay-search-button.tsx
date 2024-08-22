@@ -134,9 +134,9 @@ export const PixabaySearchButton = ({
       <button
         data-qa="plugin-image-pixabay-search-button"
         onClick={() => setIsOpen(true)}
-        onFocus={() => onFocus()}
-        onBlur={() => onBlur()}
-        className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-almost-black text-gray-800 hover:bg-editor-primary-300"
+        onFocus={onFocus}
+        onBlur={onBlur}
+        className="serlo-button-editor-primary mb-4 min-w-full rounded-lg px-1 py-2 font-semibold"
       >
         <span className="mr-2 inline-block">
           <FaIcon icon={faMagnifyingGlass} />
@@ -205,7 +205,7 @@ export const PixabaySearchButton = ({
           <div
             className={cn(
               'max-h-[500px]',
-              'mt-4 flex flex-wrap px-8',
+              'mt-4 flex flex-wrap pl-8 pr-10',
               isLoadingImage && 'max-h-100 border-1 border border-red-500',
               isLoadingImage ? 'overflow-hidden' : 'overflow-auto'
             )}
