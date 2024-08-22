@@ -26,7 +26,10 @@ import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { createMultimediaPlugin } from '@editor/plugins/multimedia'
+import {
+  createArticleIntroduction,
+  createMultimediaPlugin,
+} from '@editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@editor/plugins/page-partners'
 import { pageTeamPlugin } from '@editor/plugins/page-team'
@@ -82,20 +85,12 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin({
-        allowedPlugins: [
-          EditorPluginType.Image,
-          EditorPluginType.Video,
-          ...(isProduction ? [] : [EditorPluginType.Audio]),
-          EditorPluginType.Geogebra,
-        ],
-        explanation: {
-          plugin: EditorPluginType.Rows,
-          config: {
-            allowedPlugins: [EditorPluginType.Text],
-          },
-        },
-      }),
+      plugin: createMultimediaPlugin([
+        EditorPluginType.Image,
+        EditorPluginType.Video,
+        ...(isProduction ? [] : [EditorPluginType.Audio]),
+        EditorPluginType.Geogebra,
+      ]),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
@@ -221,15 +216,9 @@ export function createPlugins({
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {
       type: EditorPluginType.ArticleIntroduction,
-      plugin: createMultimediaPlugin({
-        explanation: {
-          plugin: EditorPluginType.Text,
-          config: {
-            placeholder: editorStrings.templatePlugins.article.writeShortIntro,
-          },
-        },
-        allowedPlugins: [EditorPluginType.Image],
-      }),
+      plugin: createArticleIntroduction(
+        editorStrings.templatePlugins.article.writeShortIntro
+      ),
     },
     { type: EditorPluginType.Course, plugin: coursePlugin },
     // Internal plugins for our content types

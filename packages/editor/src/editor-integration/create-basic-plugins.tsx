@@ -18,10 +18,7 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import {
-  createMultimediaPlugin,
-  defaultConfig as multimediaDefaultConfig,
-} from '@editor/plugins/multimedia'
+import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
@@ -52,6 +49,11 @@ export function createBasicPlugins(
     EditorPluginType.EdusharingAsset,
   ]
 
+  if (plugins.includes(EditorPluginType.Image) && testingSecret === undefined)
+    throw new Error(
+      'The image plugin needs the `testingSecret`. Either provide it or deactivate the image plugin in the editor API.'
+    )
+
   const allPlugins = [
     {
       type: EditorPluginType.Text,
@@ -71,17 +73,7 @@ export function createBasicPlugins(
       : []),
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(
-        isEdusharing
-          ? {
-              ...multimediaDefaultConfig,
-              allowedPlugins: [
-                EditorPluginType.EdusharingAsset,
-                EditorPluginType.Geogebra,
-              ],
-            }
-          : undefined
-      ),
+      plugin: createMultimediaPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
