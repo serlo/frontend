@@ -136,7 +136,7 @@ export const PixabaySearchButton = ({
         onClick={() => setIsOpen(true)}
         onFocus={onFocus}
         onBlur={onBlur}
-        className="mb-4 flex min-w-full flex-shrink-0 items-center justify-center rounded-lg bg-editor-primary-200 p-1 py-2 font-semibold text-almost-black text-gray-800 hover:bg-editor-primary-300"
+        className="serlo-button-editor-primary mb-4 min-w-full rounded-lg px-1 py-2 font-semibold"
       >
         <span className="mr-2 inline-block">
           <FaIcon icon={faMagnifyingGlass} />
