@@ -10,6 +10,7 @@ import { useState } from 'react'
 
 import type { ImageProps } from '..'
 import { cn } from '@/helper/cn'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface UploadButtonProps {
   config: ImageProps['config']
@@ -64,13 +65,21 @@ export function UploadButton({
             if (target.files && target.files.length) {
               const filesArray = Array.from(target.files)
 
+              if (target.files.length > 8) {
+                showToastNotice(
+                  'You can only upload up to 8 images at once.',
+                  'warning'
+                )
+                return
+              }
+
               // Upload the first file like normal
               void src.upload(filesArray[0], config.upload)
 
               // If multiple files are allowed and more than one file is selected,
               // call the onMultipleUploadCallback callback with the remaining files
               if (config.onMultipleUploadCallback && filesArray.length > 1) {
-                config.onMultipleUploadCallback(filesArray.slice(1, 8))
+                config.onMultipleUploadCallback(filesArray.slice(1))
               }
             }
           }}
