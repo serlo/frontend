@@ -169,8 +169,8 @@ export const PixabaySearchButton = ({
               className="w-full rounded-lg border-0 bg-yellow-100 py-2 pl-4 pr-10 text-gray-600"
             />
             {query && (
-              <div
-                className="absolute bottom-0 right-0 top-0 flex cursor-pointer items-center justify-center px-4 text-gray-400"
+              <button
+                className="absolute right-0 items-center p-2 text-gray-400 hover:text-black"
                 onClick={() => {
                   setQuery('')
                   setImages([])
@@ -181,7 +181,7 @@ export const PixabaySearchButton = ({
                 }}
               >
                 <FaIcon icon={faXmarkCircle} />
-              </div>
+              </button>
             )}
           </div>
 
