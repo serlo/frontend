@@ -6,7 +6,6 @@ import type { ImageGalleryProps } from '.'
 import { AddImages } from './components/add-images'
 import { SingleImageModal } from './components/single-image-modal'
 import { ImageGalleryToolbar } from './toolbar'
-import { createEmptyImagePlugin } from './utils/create-empty-image-plugin'
 
 export enum ImageGalleryPluginViewType {
   INIT = 'INIT', // Initial state, no images
@@ -41,7 +40,9 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
         return (
           <AddImages
             onAddImages={() => {
-              state.images.insert(0, createEmptyImagePlugin('', ''))
+              state.images.insert(0, {
+                plugin: EditorPluginType.Image,
+              })
               setCurrentView(ImageGalleryPluginViewType.ADD_IMAGES)
               setCurrentImageIndex(0)
             }}
