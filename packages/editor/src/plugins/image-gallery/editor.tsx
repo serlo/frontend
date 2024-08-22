@@ -8,16 +8,16 @@ import { SingleImageModal } from './components/single-image-modal'
 import { ImageGalleryToolbar } from './toolbar'
 
 enum ImageGalleryPluginViewType {
-  INIT = 'INIT', // Initial state, no images
-  ADD_IMAGES = 'ADD_IMAGES', // Image selection screen
-  GALLERY = 'GALLERY', // Image grid
+  EMPTY = 'EMPTY',
+  SINGLE_IMAGE_MODAL = 'SINGLE_IMAGE_MODAL',
+  GALLERY = 'GALLERY',
 }
 
 export function ImageGalleryEditor(props: ImageGalleryProps) {
   const { state, focused } = props
 
   const [currentView, setCurrentView] = useState(
-    ImageGalleryPluginViewType.INIT
+    ImageGalleryPluginViewType.EMPTY
   )
 
   const [currentImageIndex, setCurrentImageIndex] = useState(-1)
@@ -38,25 +38,25 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     <div data-qa="plugin-image-gallery-wrapper">
       {focused ? <ImageGalleryToolbar {...props} /> : null}
 
-      {currentView === ImageGalleryPluginViewType.INIT && (
+      {currentView === ImageGalleryPluginViewType.EMPTY && (
         <AddImages
           onAddImages={() => {
             state.images.insert(0, {
               plugin: EditorPluginType.Image,
             })
-            setCurrentView(ImageGalleryPluginViewType.ADD_IMAGES)
+            setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
             setCurrentImageIndex(0)
           }}
           {...props}
         />
       )}
 
-      {currentView === ImageGalleryPluginViewType.ADD_IMAGES && (
+      {currentView === ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL && (
         <SingleImageModal
           {...props}
           currentImageIndex={currentImageIndex}
           onAddImage={() => {
-            setCurrentView(ImageGalleryPluginViewType.INIT)
+            setCurrentView(ImageGalleryPluginViewType.EMPTY)
           }}
           handleMultipleImageUpload={handleMultipleImageUpload}
         />
