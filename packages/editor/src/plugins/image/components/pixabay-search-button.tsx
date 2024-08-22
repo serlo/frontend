@@ -205,7 +205,7 @@ export const PixabaySearchButton = ({
           <div
             className={cn(
               'max-h-[500px]',
-              'mt-4 flex flex-wrap px-8',
+              'mt-4 flex flex-wrap pl-8 pr-10',
               isLoadingImage && 'max-h-100 border-1 border border-red-500',
               isLoadingImage ? 'overflow-hidden' : 'overflow-auto'
             )}
