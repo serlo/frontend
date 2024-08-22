@@ -79,13 +79,7 @@ export function createBasicPlugins(
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(
-        isEdusharing
-          ? {
-              allowedPlugins: edusharingAllowedPluginsInBoxAndSpoiler,
-            }
-          : undefined
-      ),
+      plugin: createSpoilerPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
@@ -97,13 +91,7 @@ export function createBasicPlugins(
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin(
-        isEdusharing
-          ? {
-              allowedPlugins: edusharingAllowedPluginsInBoxAndSpoiler,
-            }
-          : undefined
-      ),
+      plugin: createBoxPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },

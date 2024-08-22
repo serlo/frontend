@@ -1,4 +1,5 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { SpoilerEditor } from './editor'
 import {
@@ -10,7 +11,7 @@ import {
   optional,
 } from '../../plugin'
 
-function createSpoilerState(config: SpoilerConfig) {
+function createSpoilerState(allowedPlugins: EditorPluginType[]) {
   return object({
     title: optional(string('')),
     richTitle: optional(
@@ -21,35 +22,50 @@ function createSpoilerState(config: SpoilerConfig) {
     ),
     content: child({
       plugin: EditorPluginType.Rows,
-      ...(config.allowedPlugins !== undefined && {
-        config: {
-          allowedPlugins: config.allowedPlugins,
-        },
-      }),
+      config: {
+        allowedPlugins,
+      },
     }),
   })
 }
 
-const defaultAllowedPlugins: EditorPluginType[] = [
+const possiblePlugins: EditorPluginType[] = [
   EditorPluginType.Text,
   EditorPluginType.Image,
-  EditorPluginType.Equations,
+  EditorPluginType.ImageGallery,
   EditorPluginType.Multimedia,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Box,
   EditorPluginType.SerloTable,
+  EditorPluginType.Injection,
+  EditorPluginType.Equations,
+  EditorPluginType.Geogebra,
   EditorPluginType.Highlight,
+  EditorPluginType.Video,
+  EditorPluginType.Audio,
+  EditorPluginType.Exercise,
+  EditorPluginType.EdusharingAsset,
+
+  EditorPluginType.DropzoneImage,
+  EditorPluginType.H5p,
+  EditorPluginType.InputExercise,
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.BlanksExercise,
 ]
 
-export const defaultConfig: SpoilerConfig = {
-  allowedPlugins: defaultAllowedPlugins,
-}
-
 export function createSpoilerPlugin(
-  config = defaultConfig
+  plugins: (EditorPluginType | TemplatePluginType)[]
 ): EditorPlugin<SpoilerPluginState> {
+  const allowedPlugins = possiblePlugins.filter((pluginType) =>
+    plugins.includes(pluginType)
+  )
+
   return {
     Component: SpoilerEditor,
-    state: createSpoilerState(config),
-    config,
+    state: createSpoilerState(allowedPlugins),
+    config: {
+      allowedPlugins,
+    },
   }
 }
 
