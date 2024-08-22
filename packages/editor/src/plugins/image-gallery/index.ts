@@ -16,9 +16,6 @@ function createImageGalleryState() {
     images: list(
       child({
         plugin: EditorPluginType.Image,
-        config: {
-          multiple: true,
-        },
       })
     ),
   })

@@ -57,7 +57,7 @@ export function UploadButton({
         </span>
         <input
           type="file"
-          multiple={config.multiple}
+          multiple={config.onMultipleUploadCallback ? true : false}
           accept="image/*"
           className="sr-only"
           onChange={({ target }) => {
@@ -69,11 +69,7 @@ export function UploadButton({
 
               // If multiple files are allowed and more than one file is selected,
               // call the onMultipleUploadCallback callback with the remaining files
-              if (
-                config.multiple &&
-                filesArray.length > 1 &&
-                config.onMultipleUploadCallback
-              ) {
+              if (config.onMultipleUploadCallback && filesArray.length > 1) {
                 config.onMultipleUploadCallback(filesArray.slice(1))
               }
             }
