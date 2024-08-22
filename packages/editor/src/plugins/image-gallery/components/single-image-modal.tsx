@@ -3,16 +3,14 @@ import { useState } from 'react'
 import { FittingModal } from './fitting-modal'
 import type { ImageGalleryProps } from '..'
 
-interface SingleImageModalProps extends ImageGalleryProps {
-  currentImageIndex: number
+interface SingleImageModalProps {
+  currentImageState: ImageGalleryProps['state']['images'][0]
   onAddImage: () => void
   handleMultipleImageUpload: (files: File[]) => void
 }
 
 export function SingleImageModal(props: SingleImageModalProps) {
-  const { state, currentImageIndex, onAddImage, handleMultipleImageUpload } =
-    props
-  const image = state.images[currentImageIndex]
+  const { currentImageState, onAddImage, handleMultipleImageUpload } = props
 
   const [open, setOpen] = useState(true)
 
@@ -26,7 +24,7 @@ export function SingleImageModal(props: SingleImageModalProps) {
         }
       }}
     >
-      {image.render({
+      {currentImageState.render({
         config: {
           onMultipleUploadCallback: handleMultipleImageUpload,
         },

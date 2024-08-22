@@ -54,7 +54,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {currentView === ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL && (
         <SingleImageModal
           {...props}
-          currentImageIndex={currentImageIndex}
+          currentImageState={state.images[currentImageIndex]}
           onAddImage={() => {
             setCurrentView(ImageGalleryPluginViewType.EMPTY)
           }}
