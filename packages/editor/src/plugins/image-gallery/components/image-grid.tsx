@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Photo, RowsPhotoAlbum } from 'react-photo-album'
 
 import type { ImageGalleryProps } from '..'
-import { loadGalleryPhotos } from '../util/helpers'
+import { loadGalleryPhotos } from '../utils/helpers'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-photo-album/rows.css'

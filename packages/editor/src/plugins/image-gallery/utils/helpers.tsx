@@ -55,7 +55,7 @@ export const loadGalleryPhotos = async (
   }
 }
 
-export function createImagePlugin(url: string, caption: string) {
+export function createEmptyImagePlugin(url: string) {
   return {
     plugin: EditorPluginType.Image,
     state: {
@@ -67,7 +67,7 @@ export function createImagePlugin(url: string, caption: string) {
             type: 'p',
             children: [
               {
-                text: caption,
+                text: '',
               },
             ],
           },

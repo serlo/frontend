@@ -8,7 +8,7 @@ import { Photo, RowsPhotoAlbum } from 'react-photo-album'
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-photo-album/rows.css'
 // eslint-disable-next-line import/order
-import { loadGalleryPhotos } from './util/helpers'
+import { loadGalleryPhotos } from './utils/helpers'
 
 export function ImageGalleryStaticRenderer({
   state,
