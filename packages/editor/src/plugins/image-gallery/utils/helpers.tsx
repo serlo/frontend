@@ -27,7 +27,7 @@ export const createGalleryPhoto = (
     mockImage.onload = function () {
       const aspect = aspectRatio(mockImage.height, mockImage.width)
       resolve({
-        key: imageId,
+        id: imageId,
         src: imageUrl,
         width: aspect.width,
         height: aspect.height,
@@ -52,12 +52,8 @@ export const loadGalleryPhotos = async (
     const loadedPhotos = await Promise.all(photoPromises)
     return orderedIds
       ? loadedPhotos.sort((a, b) => {
-          const indexA = orderedIds.findIndex(
-            (orderedId) => orderedId === a.key
-          )
-          const indexB = orderedIds.findIndex(
-            (orderedId) => orderedId === b.key
-          )
+          const indexA = orderedIds.findIndex((orderedId) => orderedId === a.id)
+          const indexB = orderedIds.findIndex((orderedId) => orderedId === b.id)
           return indexA - indexB
         })
       : loadedPhotos

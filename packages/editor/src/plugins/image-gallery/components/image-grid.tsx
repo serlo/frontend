@@ -29,7 +29,7 @@ export function ImageGrid(props: ImageGridProps) {
           const width2Percentage = (width2 / (width1 + width2)) * 100
 
           return (
-            <React.Fragment key={photo.key}>
+            <React.Fragment key={photo.id}>
               <div
                 className="flex-grow p-1"
                 style={{ width: `${width1Percentage}%` }}
@@ -37,7 +37,7 @@ export function ImageGrid(props: ImageGridProps) {
               >
                 <img
                   src={photo.src}
-                  alt={`Image ${photo.key}`}
+                  alt={`Image ${photo.id}`}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -48,7 +48,7 @@ export function ImageGrid(props: ImageGridProps) {
               >
                 <img
                   src={photos[index + 1].src}
-                  alt={`Image ${photos[index + 1].key}`}
+                  alt={`Image ${photos[index + 1].id}`}
                   className="h-full w-full object-cover"
                 />
               </div>

@@ -1,5 +1,5 @@
 export interface GridImage {
-  key: string
+  id: string
   src: string
   width: number
   height: number
