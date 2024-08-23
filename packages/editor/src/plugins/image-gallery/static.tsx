@@ -38,7 +38,7 @@ export function ImageGalleryStaticRenderer({
 
   const onClickImage = (index: number) => {
     console.log('Clicked image at index:', index)
-    // TODO: Open lightbox
+    // Lightbox feature will be implemented, linear issue PE-57
   }
 
   return (

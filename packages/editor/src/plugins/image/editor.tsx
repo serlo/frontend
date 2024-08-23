@@ -50,7 +50,10 @@ export function ImageEditor(props: ImageProps) {
   const [isAButtonFocused, setIsAButtonFocused] = useState(false)
 
   const hasFocus =
-    focused || isCaptionFocused || (isAButtonFocused && !hasValidUrl)
+    focused ||
+    isCaptionFocused ||
+    (isAButtonFocused && !hasValidUrl) ||
+    config.onMultipleUploadCallback
 
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
