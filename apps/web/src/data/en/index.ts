@@ -835,6 +835,7 @@ export const loggedInData = {
             'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle:
             'Modal displaying single image options for caption and settings.',
+          addImages: 'Add Images',
         },
         injection: {
           title: 'serlo.org Content',
