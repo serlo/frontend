@@ -1,3 +1,5 @@
+import { selectStaticDocument, store } from '@editor/store'
+import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { Photo } from 'react-photo-album'
 
 const aspectRatio = (height: number, width: number) => {
@@ -6,6 +8,11 @@ const aspectRatio = (height: number, width: number) => {
   } else {
     return { height: 1, width: width / height }
   }
+}
+
+export const getImageSrcFromState = (imageId: string) => {
+  const imgDocument = selectStaticDocument(store.getState(), imageId)
+  return isImageDocument(imgDocument) ? (imgDocument.state.src as string) : ''
 }
 
 export const createGalleryPhoto = (

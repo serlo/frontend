@@ -7,6 +7,7 @@ import { AddImages } from './components/add-images'
 import { ImageGrid } from './components/image-grid'
 import { SingleImageModal } from './components/single-image-modal'
 import { ImageGalleryToolbar } from './toolbar'
+import { getImageSrcFromState } from './utils/helpers'
 
 enum ImageGalleryPluginViewType {
   EMPTY = 'EMPTY',
@@ -21,6 +22,8 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     ImageGalleryPluginViewType.EMPTY
   )
 
+  const [isGalleryInitialised, setIsGalleryInitialised] = useState(false)
+
   const [currentImageIndex, setCurrentImageIndex] = useState(-1)
   const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
 
@@ -31,6 +34,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       currentView === ImageGalleryPluginViewType.EMPTY &&
       state.images.length > 0
     ) {
+      setIsGalleryInitialised(true)
       setCurrentView(ImageGalleryPluginViewType.GALLERY)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,9 +58,11 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {currentView === ImageGalleryPluginViewType.EMPTY && (
         <AddImages
           onAddImages={() => {
-            state.images.insert(0, {
-              plugin: EditorPluginType.Image,
-            })
+            if (state.images.length === 0) {
+              state.images.insert(0, {
+                plugin: EditorPluginType.Image,
+              })
+            }
             setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
             setCurrentImageIndex(0)
           }}
@@ -69,16 +75,20 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
           {...props}
           currentImageState={state.images[currentImageIndex]}
           onClose={() => {
+            const src = getImageSrcFromState(state.images[0].get())
+            const didSetImage = src !== ''
+            if (!didSetImage) {
+              setCurrentView(ImageGalleryPluginViewType.EMPTY)
+              return
+            }
+            setIsGalleryInitialised(didSetImage)
             setCurrentView(ImageGalleryPluginViewType.GALLERY)
           }}
           handleMultipleImageUpload={handleMultipleImageUpload}
         />
       )}
 
-      {[
-        ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL,
-        ImageGalleryPluginViewType.GALLERY,
-      ].includes(currentView) && (
+      {isGalleryInitialised && (
         <ImageGrid
           {...props}
           onClickImage={(index: number) => {

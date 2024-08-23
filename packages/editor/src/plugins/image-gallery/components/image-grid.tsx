@@ -1,21 +1,14 @@
-import { selectStaticDocument, store } from '@editor/store'
-import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
 import { Photo, RowsPhotoAlbum } from 'react-photo-album'
 
 import type { ImageGalleryProps } from '..'
-import { loadGalleryPhotos } from '../utils/helpers'
+import { getImageSrcFromState, loadGalleryPhotos } from '../utils/helpers'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-photo-album/rows.css'
 
 interface ImageGridProps extends ImageGalleryProps {
   onClickImage: (index: number) => void
-}
-
-export const getImageSrcFromState = (imageId: string) => {
-  const imgDocument = selectStaticDocument(store.getState(), imageId)
-  return isImageDocument(imgDocument) ? (imgDocument.state.src as string) : ''
 }
 
 export function ImageGrid(props: ImageGridProps) {
