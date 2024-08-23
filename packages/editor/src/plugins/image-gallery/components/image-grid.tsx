@@ -21,7 +21,23 @@ export function ImageGrid(props: ImageGridProps) {
   return (
     <div className="flex-gap-1 flex flex-wrap">
       {photos.map((photo, index) => {
-        if (index % 2 === 0 && index + 1 < photos.length) {
+        if (index % 2 === 0) {
+          // If the photo is the last one in the array, render it as a single image
+          if (index + 1 === photos.length) {
+            return (
+              <div
+                key={photo.id}
+                className="flex-grow p-1"
+                onClick={() => onClickImage(index)}
+              >
+                <img
+                  src={photo.src}
+                  alt={`Image ${photo.id}`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            )
+          }
           const [width1, width2] = calculateDimensions(photo, photos[index + 1])
 
           // Calculate the percentage widths based on the calculated dimensions
