@@ -791,6 +791,7 @@ export const loggedInData = {
         },
         image: {
           title: 'Image',
+          galleryTitle: 'Gallery',
           description:
             'Upload images or search online for freely licensed images.',
           upload: 'Upload Image',

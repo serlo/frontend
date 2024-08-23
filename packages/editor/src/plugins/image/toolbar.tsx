@@ -12,6 +12,7 @@ import { SettingsModalControls } from './controls/settings-modal-controls'
 
 export const ImageToolbar = (
   props: ImageProps & {
+    title?: string
     showSettingsButtons?: boolean
     showSettingsModal: boolean
     setShowSettingsModal: Dispatch<SetStateAction<boolean>>
@@ -20,6 +21,7 @@ export const ImageToolbar = (
 ) => {
   const {
     id,
+    title,
     showSettingsModal,
     setShowSettingsModal,
     showSettingsButtons = true,
@@ -61,6 +63,7 @@ export const ImageToolbar = (
 
   return (
     <PluginToolbar
+      pluginTitle={title}
       pluginType={EditorPluginType.Image}
       pluginSettings={pluginSettings}
       noWhiteShadow
