@@ -18,7 +18,7 @@ export function SingleImageModal(props: SingleImageModalProps) {
 
   return (
     <ModalWithCloseButton
-      className="p-0"
+      className="my-6 p-0"
       extraTitleClassName="sr-only"
       extraCloseButtonClassName="sr-only"
       isOpen={open}
