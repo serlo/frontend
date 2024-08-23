@@ -833,6 +833,8 @@ export const loggedInData = {
           title: 'Image Gallery',
           description:
             'Add an image gallery to display related images in an organized way.',
+          modalScreenReaderTitle:
+            'Modal displaying single image options for caption and settings.',
         },
         injection: {
           title: 'serlo.org Content',
