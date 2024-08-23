@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { FittingModal } from './fitting-modal'
 import type { ImageGalleryProps } from '..'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface SingleImageModalProps {
   currentImageState: ImageGalleryProps['state']['images'][0]
@@ -15,20 +15,24 @@ export function SingleImageModal(props: SingleImageModalProps) {
   const [open, setOpen] = useState(true)
 
   return (
-    <FittingModal
-      open={open}
-      onOpenChange={(isOpen) => {
+    <ModalWithCloseButton
+      className="p-0"
+      extraCloseButtonClassName="sr-only"
+      isOpen={open}
+      setIsOpen={(isOpen) => {
         setOpen(isOpen)
         if (!isOpen) {
           onAddImage()
         }
       }}
     >
-      {currentImageState.render({
-        config: {
-          onMultipleUploadCallback: handleMultipleImageUpload,
-        },
-      })}
-    </FittingModal>
+      <div className="-mb-6 pt-10">
+        {currentImageState.render({
+          config: {
+            onMultipleUploadCallback: handleMultipleImageUpload,
+          },
+        })}
+      </div>
+    </ModalWithCloseButton>
   )
 }
