@@ -15,7 +15,9 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   ).then((mod) => mod.AuthorToolsExercises)
 )
 
-// Special version for serlo.org with author tools and license
+/**
+ * Special version for serlo.org with author tools and license
+ */
 export function ExerciseGroupSerloStaticRenderer(
   props: EditorExerciseGroupDocument
 ) {
