@@ -63,6 +63,7 @@ export const ImageToolbar = (
     <PluginToolbar
       pluginType={EditorPluginType.Image}
       pluginSettings={pluginSettings}
+      noWhiteShadow
       // pluginTooltipText={editorStrings.plugins.image.helpTooltipText}
       pluginControls={<PluginDefaultTools pluginId={id} />}
     />
