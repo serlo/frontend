@@ -6,12 +6,12 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface SingleImageModalProps {
   currentImageState: ImageGalleryProps['state']['images'][0]
-  onAddImage: () => void
+  onClose: () => void
   handleMultipleImageUpload: (files: File[]) => void
 }
 
 export function SingleImageModal(props: SingleImageModalProps) {
-  const { currentImageState, onAddImage, handleMultipleImageUpload } = props
+  const { currentImageState, onClose, handleMultipleImageUpload } = props
 
   const [open, setOpen] = useState(true)
   const pluginStrings = useEditorStrings().plugins.imageGallery
@@ -26,7 +26,7 @@ export function SingleImageModal(props: SingleImageModalProps) {
       setIsOpen={(isOpen) => {
         setOpen(isOpen)
         if (!isOpen) {
-          onAddImage()
+          onClose()
         }
       }}
     >

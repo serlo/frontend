@@ -68,15 +68,24 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
         <SingleImageModal
           {...props}
           currentImageState={state.images[currentImageIndex]}
-          onAddImage={() => {
-            setCurrentView(ImageGalleryPluginViewType.EMPTY)
+          onClose={() => {
+            setCurrentView(ImageGalleryPluginViewType.GALLERY)
           }}
           handleMultipleImageUpload={handleMultipleImageUpload}
         />
       )}
 
-      {currentView === ImageGalleryPluginViewType.GALLERY && (
-        <ImageGrid {...props} />
+      {[
+        ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL,
+        ImageGalleryPluginViewType.GALLERY,
+      ].includes(currentView) && (
+        <ImageGrid
+          {...props}
+          onClickImage={(index: number) => {
+            setCurrentImageIndex(index)
+            setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
+          }}
+        />
       )}
     </div>
   )

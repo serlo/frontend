@@ -42,11 +42,17 @@ export const loadGalleryPhotos = async (
 
   try {
     const loadedPhotos = await Promise.all(photoPromises)
-    return loadedPhotos.sort((a, b) => {
-      const indexA = orderedIds.findIndex((orderedId) => orderedId === a.key)
-      const indexB = orderedIds.findIndex((orderedId) => orderedId === b.key)
-      return indexA - indexB
-    })
+    return orderedIds
+      ? loadedPhotos.sort((a, b) => {
+          const indexA = orderedIds.findIndex(
+            (orderedId) => orderedId === a.key
+          )
+          const indexB = orderedIds.findIndex(
+            (orderedId) => orderedId === b.key
+          )
+          return indexA - indexB
+        })
+      : loadedPhotos
   } catch (error) {
     console.error('Error loading images:', error)
     throw error
