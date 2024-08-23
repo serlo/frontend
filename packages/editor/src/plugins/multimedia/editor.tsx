@@ -1,4 +1,3 @@
-import { AreImagesDisabledInTableContext } from '@editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
   selectAncestorPluginTypes,
   selectIsFocused,
@@ -96,13 +95,11 @@ export function MultimediaEditor(props: MultimediaProps) {
         </button>
       )}
       <div className={pluginToolbarAndStyleHacks}>
-        <AreImagesDisabledInTableContext.Provider value>
-          <MultimediaRenderer
-            media={<>{multimedia.render()}</>}
-            explanation={<>{explanation.render()}</>}
-            mediaWidth={width.value}
-          />
-        </AreImagesDisabledInTableContext.Provider>
+        <MultimediaRenderer
+          media={<>{multimedia.render()}</>}
+          explanation={<>{explanation.render()}</>}
+          mediaWidth={width.value}
+        />
       </div>
     </div>
   )

@@ -33,7 +33,10 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { createMultimediaPlugin } from '@editor/plugins/multimedia'
+import {
+  createArticleIntroduction,
+  createMultimediaPlugin,
+} from '@editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@editor/plugins/page-partners'
 import { pageTeamPlugin } from '@editor/plugins/page-team'
@@ -74,7 +77,57 @@ export function createPlugins({
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
-  return [
+  const plugins = [
+    EditorPluginType.Anchor,
+    EditorPluginType.Article,
+    EditorPluginType.Audio,
+    EditorPluginType.ArticleIntroduction,
+    EditorPluginType.Box,
+    EditorPluginType.Course,
+    EditorPluginType.Equations,
+    EditorPluginType.Geogebra,
+    EditorPluginType.H5p,
+    EditorPluginType.Highlight,
+    EditorPluginType.Image,
+    EditorPluginType.ImageGallery,
+    EditorPluginType.Injection,
+    EditorPluginType.Multimedia,
+
+    EditorPluginType.PageLayout,
+    EditorPluginType.PagePartners,
+    EditorPluginType.PageTeam,
+    EditorPluginType.PasteHack,
+
+    EditorPluginType.Rows,
+    EditorPluginType.SerloTable,
+    EditorPluginType.Spoiler,
+
+    EditorPluginType.Text,
+    EditorPluginType.Video,
+
+    EditorPluginType.DropzoneImage,
+    EditorPluginType.ExerciseGroup,
+    EditorPluginType.Exercise,
+    EditorPluginType.ScMcExercise,
+    EditorPluginType.InputExercise,
+    EditorPluginType.BlanksExercise,
+    EditorPluginType.Solution,
+
+    EditorPluginType.Unsupported,
+
+    TemplatePluginType.Applet,
+    TemplatePluginType.Article,
+    TemplatePluginType.Course,
+    TemplatePluginType.Event,
+    TemplatePluginType.Page,
+    TemplatePluginType.Taxonomy,
+    TemplatePluginType.TextExercise,
+    TemplatePluginType.TextExerciseGroup,
+    TemplatePluginType.User,
+    TemplatePluginType.Video,
+  ]
+
+  const allPlugins = [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
@@ -99,7 +152,12 @@ export function createPlugins({
         ]),
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(),
+      plugin: createMultimediaPlugin([
+        EditorPluginType.Image,
+        EditorPluginType.Video,
+        ...(isProduction ? [] : [EditorPluginType.Audio]),
+        EditorPluginType.Geogebra,
+      ]),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
@@ -111,13 +169,13 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(),
+      plugin: createSpoilerPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin({}),
+      plugin: createBoxPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },
@@ -236,15 +294,9 @@ export function createPlugins({
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {
       type: EditorPluginType.ArticleIntroduction,
-      plugin: createMultimediaPlugin({
-        explanation: {
-          plugin: EditorPluginType.Text,
-          config: {
-            placeholder: editorStrings.templatePlugins.article.writeShortIntro,
-          },
-        },
-        allowedPlugins: [EditorPluginType.Image],
-      }),
+      plugin: createArticleIntroduction(
+        editorStrings.templatePlugins.article.writeShortIntro
+      ),
     },
     { type: EditorPluginType.Course, plugin: coursePlugin },
     // Internal plugins for our content types
@@ -263,4 +315,6 @@ export function createPlugins({
     { type: TemplatePluginType.User, plugin: userTypePlugin },
     { type: TemplatePluginType.Video, plugin: videoTypePlugin },
   ]
+
+  return allPlugins.filter(({ type }) => plugins.includes(type))
 }

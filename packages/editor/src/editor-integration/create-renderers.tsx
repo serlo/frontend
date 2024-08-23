@@ -1,13 +1,13 @@
 import type {
   InitRenderersArgs,
   LinkRenderer,
-  PluginStaticRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/static'
+import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
@@ -17,6 +17,7 @@ import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/stat
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
+import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { SerloTableStaticRenderer } from '@editor/plugins/serlo-table/static'
 import { GenericContentTypeStaticRenderer } from '@editor/plugins/serlo-template-plugins/generic-content/static'
 import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
@@ -30,9 +31,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
-export function createRenderers(
-  customPluginRenderers: PluginStaticRenderer[]
-): InitRenderersArgs {
+export function createRenderers(): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -98,6 +97,14 @@ export function createRenderers(
         renderer: TextAreaExerciseStaticRenderer,
       },
       {
+        type: EditorPluginType.EdusharingAsset,
+        renderer: EdusharingAssetStaticRenderer,
+      },
+      {
+        type: EditorPluginType.SerloInjection,
+        renderer: SerloInjectionStaticRenderer,
+      },
+      {
         type: EditorPluginType.Unsupported,
         renderer: (state: unknown) => {
           // eslint-disable-next-line no-console
@@ -109,7 +116,6 @@ export function createRenderers(
         type: TemplatePluginType.GenericContent,
         renderer: GenericContentTypeStaticRenderer,
       },
-      ...customPluginRenderers,
     ],
     mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {

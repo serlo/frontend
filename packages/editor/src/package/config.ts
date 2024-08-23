@@ -1,45 +1,7 @@
-import type { PluginWithData } from '@editor/plugin/helpers/editor-plugins'
-import type { PluginStaticRenderer } from '@editor/plugin/helpers/editor-renderer'
-import type { BoxConfig } from '@editor/plugins/box'
-import {
-  defaultConfig as defaultMultimediaConfig,
-  type MultimediaConfig,
-} from '@editor/plugins/multimedia'
-import type { SerloTableConfig } from '@editor/plugins/serlo-table'
-import type { SpoilerConfig } from '@editor/plugins/spoiler'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { SupportedLanguage } from '@editor/types/language-data'
 
-export interface PluginsConfig {
-  box?: BoxConfig
-  multimedia?: MultimediaConfig
-  spoiler?: SpoilerConfig
-  table?: SerloTableConfig
-  general?: {
-    testingSecret?: string
-    enableTextAreaExercise: boolean
-  }
-}
-
-// Custom plugins and renderers are an Edusharing specific feature,
-// and will not be supported in the future
-export type CustomPlugin = PluginWithData & PluginStaticRenderer
-
-const defaultPluginsConfig: Required<PluginsConfig> = {
-  box: {
-    allowedPlugins: [],
-  },
-  multimedia: defaultMultimediaConfig,
-  spoiler: {
-    allowedPlugins: [],
-  },
-  table: {
-    allowImageInTableCells: true,
-  },
-  general: {
-    enableTextAreaExercise: false,
-  },
-}
+import { TemplatePluginType } from '../types/template-plugin-type'
 
 export const emptyDocumentState = {
   plugin: EditorPluginType.Rows,
@@ -51,11 +13,30 @@ export const emptyDocumentState = {
   ],
 }
 
+export const defaultPlugins = [
+  EditorPluginType.Text,
+  EditorPluginType.Image,
+  EditorPluginType.Multimedia,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Box,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Equations,
+  EditorPluginType.Geogebra,
+  EditorPluginType.Highlight,
+  EditorPluginType.Exercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.BlanksExercise,
+  EditorPluginType.DropzoneImage,
+  EditorPluginType.Solution,
+  EditorPluginType.Rows,
+  EditorPluginType.Unsupported,
+  TemplatePluginType.GenericContent,
+]
+
 export const defaultSerloEditorProps = {
-  children: null,
+  plugins: defaultPlugins,
   onChange: undefined,
-  pluginsConfig: defaultPluginsConfig,
-  customPlugins: [] as CustomPlugin[],
   initialState: emptyDocumentState,
   language: 'de' as SupportedLanguage,
 }
