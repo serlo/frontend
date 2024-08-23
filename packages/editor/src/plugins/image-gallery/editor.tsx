@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImages } from './components/add-images'
-import { ImageGrid } from './components/image-grid'
+import { EditorImageGrid } from './components/editor-image-grid'
 import { SingleImageModal } from './components/single-image-modal'
 import { ImageGalleryToolbar } from './toolbar'
 import { getImageSrcFromState } from './utils/helpers'
@@ -89,7 +89,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       )}
 
       {isGalleryInitialised && (
-        <ImageGrid
+        <EditorImageGrid
           {...props}
           onClickImage={(index: number) => {
             setCurrentImageIndex(index)

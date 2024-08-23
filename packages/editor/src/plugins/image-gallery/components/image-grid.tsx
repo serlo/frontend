@@ -1,54 +1,62 @@
-import { useEffect, useState } from 'react'
-import { Photo, RowsPhotoAlbum } from 'react-photo-album'
+import React from 'react'
 
-import type { ImageGalleryProps } from '..'
-import { getImageSrcFromState, loadGalleryPhotos } from '../utils/helpers'
+import { GridImage } from '../types'
 
-// eslint-disable-next-line import/no-unassigned-import
-import 'react-photo-album/rows.css'
-
-interface ImageGridProps extends ImageGalleryProps {
+interface ImageGridProps {
+  photos: GridImage[]
   onClickImage: (index: number) => void
 }
 
+const calculateDimensions = (photo1: GridImage, photo2: GridImage) => {
+  const commonHeight = Math.min(photo1.height, photo2.height)
+  const width1 = (photo1.width / photo1.height) * commonHeight
+  const width2 = (photo2.width / photo2.height) * commonHeight
+
+  return [width1, width2]
+}
+
 export function ImageGrid(props: ImageGridProps) {
-  const { state, onClickImage } = props
-
-  const [photos, setPhotos] = useState<Photo[]>([])
-
-  useEffect(() => {
-    const images = state.images.map((id) => ({
-      id: id.get(),
-      src: getImageSrcFromState(id.get()),
-    }))
-
-    const initialOrderedIds = state.orderedIds.get()
-      ? (JSON.parse(state.orderedIds.get()) as string[])
-      : []
-
-    const loadPhotosAsync = async () => {
-      try {
-        const sortedPhotos = await loadGalleryPhotos(images, initialOrderedIds)
-        setPhotos(sortedPhotos)
-      } catch (error) {
-        console.error('Failed to load photos:', error)
-      }
-    }
-
-    void loadPhotosAsync()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { photos, onClickImage } = props
 
   return (
-    <RowsPhotoAlbum
-      spacing={16}
-      padding={0}
-      photos={photos}
-      rowConstraints={{ maxPhotos: 2 }}
-      targetRowHeight={200}
-      onClick={({ index }) => {
-        onClickImage(index)
-      }}
-    />
+    <div className="flex-gap-1 flex flex-wrap">
+      {photos.map((photo, index) => {
+        if (index % 2 === 0 && index + 1 < photos.length) {
+          const [width1, width2] = calculateDimensions(photo, photos[index + 1])
+
+          // Calculate the percentage widths based on the calculated dimensions
+          const width1Percentage = (width1 / (width1 + width2)) * 100
+          const width2Percentage = (width2 / (width1 + width2)) * 100
+
+          return (
+            <React.Fragment key={photo.key}>
+              <div
+                className="flex-grow p-1"
+                style={{ width: `${width1Percentage}%` }}
+                onClick={() => onClickImage(index)}
+              >
+                <img
+                  src={photo.src}
+                  alt={`Image ${photo.key}`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div
+                className="flex-grow p-1"
+                style={{ width: `${width2Percentage}%` }}
+                onClick={() => onClickImage(index + 1)}
+              >
+                <img
+                  src={photos[index + 1].src}
+                  alt={`Image ${photos[index + 1].key}`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </React.Fragment>
+          )
+        }
+        return null
+      })}
+    </div>
   )
 }

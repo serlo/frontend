@@ -3,12 +3,13 @@ import {
   EditorImageGalleryDocument,
 } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
-import { Photo, RowsPhotoAlbum } from 'react-photo-album'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-photo-album/rows.css'
 // eslint-disable-next-line import/order
 import { loadGalleryPhotos } from './utils/helpers'
+import { ImageGrid } from './components/image-grid'
+import { GridImage } from './types'
 
 export function ImageGalleryStaticRenderer({
   state,
@@ -19,7 +20,7 @@ export function ImageGalleryStaticRenderer({
     src: state.src as string,
   }))
 
-  const [photos, setPhotos] = useState<Photo[]>([])
+  const [photos, setPhotos] = useState<GridImage[]>([])
 
   useEffect(() => {
     const orderedIds = state.orderedIds
@@ -38,15 +39,14 @@ export function ImageGalleryStaticRenderer({
     void loadPhotos()
   }, [images, state.orderedIds])
 
+  const onClickImage = (index: number) => {
+    console.log('Clicked image at index:', index)
+    // TODO: Open lightbox
+  }
+
   return (
     <div className="p-4">
-      <RowsPhotoAlbum
-        spacing={8}
-        padding={0}
-        photos={photos}
-        rowConstraints={{ maxPhotos: 2 }}
-        targetRowHeight={200}
-      />
+      <ImageGrid photos={photos} onClickImage={onClickImage} />
     </div>
   )
 }
