@@ -47,7 +47,6 @@
     "@serlo/katex-styles": "1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-photo-album": "^3.0.1",
     "react-resizable": "^3.0.5"
   },
   "devDependencies": {

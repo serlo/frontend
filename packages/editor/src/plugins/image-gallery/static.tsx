@@ -4,12 +4,9 @@ import {
 } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
-// eslint-disable-next-line import/no-unassigned-import
-import 'react-photo-album/rows.css'
-// eslint-disable-next-line import/order
-import { loadGalleryPhotos } from './utils/helpers'
 import { ImageGrid } from './components/image-grid'
 import { GridImage } from './types'
+import { loadGalleryPhotos } from './utils/helpers'
 
 export function ImageGalleryStaticRenderer({
   state,
