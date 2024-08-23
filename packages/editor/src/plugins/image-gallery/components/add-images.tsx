@@ -18,7 +18,9 @@ export function AddImages(props: AddImagesProps) {
         onClick={onAddImages}
       >
         <IconChoose className="mx-auto" />
-        <div className="mt-2 font-bold">{pluginStrings.addImages}</div>
+        <div className="mt-2 font-bold text-almost-black">
+          {pluginStrings.addImages}
+        </div>
       </button>
     </div>
   )
