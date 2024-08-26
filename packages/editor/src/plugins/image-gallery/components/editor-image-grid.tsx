@@ -20,13 +20,9 @@ export function EditorImageGrid(props: EditorImageGridProps) {
       src: getImageSrcFromState(id.get()),
     }))
 
-    const initialOrderedIds = state.orderedIds.get()
-      ? (JSON.parse(state.orderedIds.get()) as string[])
-      : []
-
     const loadPhotosAsync = async () => {
       try {
-        const sortedPhotos = await loadGalleryPhotos(images, initialOrderedIds)
+        const sortedPhotos = await loadGalleryPhotos(images)
         setPhotos(sortedPhotos)
       } catch (error) {
         console.error('Failed to load photos:', error)

@@ -43,20 +43,12 @@ export const createGalleryPhoto = (
 }
 
 export const loadGalleryPhotos = async (
-  images: { id: string; src: string }[],
-  orderedIds: string[]
+  images: { id: string; src: string }[]
 ): Promise<GridImage[]> => {
   const photoPromises = images.map(({ id, src }) => createGalleryPhoto(id, src))
 
   try {
-    const loadedPhotos = await Promise.all(photoPromises)
-    return orderedIds
-      ? loadedPhotos.sort((a, b) => {
-          const indexA = orderedIds.findIndex((orderedId) => orderedId === a.id)
-          const indexB = orderedIds.findIndex((orderedId) => orderedId === b.id)
-          return indexA - indexB
-        })
-      : loadedPhotos
+    return await Promise.all(photoPromises)
   } catch (error) {
     console.error('Error loading images:', error)
     throw error

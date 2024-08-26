@@ -20,13 +20,9 @@ export function ImageGalleryStaticRenderer({
   const [photos, setPhotos] = useState<GridImage[]>([])
 
   useEffect(() => {
-    const orderedIds = state.orderedIds
-      ? (JSON.parse(state.orderedIds) as string[])
-      : []
-
     const loadPhotos = async () => {
       try {
-        const sortedPhotos = await loadGalleryPhotos(images, orderedIds)
+        const sortedPhotos = await loadGalleryPhotos(images)
         setPhotos(sortedPhotos)
       } catch (error) {
         console.error('Failed to load photos:', error)
@@ -34,7 +30,7 @@ export function ImageGalleryStaticRenderer({
     }
 
     void loadPhotos()
-  }, [images, state.orderedIds])
+  }, [images])
 
   const onClickImage = (index: number) => {
     console.log('Clicked image at index:', index)
