@@ -7,7 +7,6 @@ import {
   child,
   object,
   list,
-  string,
 } from '../../plugin'
 
 export const defaultConfig: ImageGalleryConfig = {}
