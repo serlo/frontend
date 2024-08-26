@@ -60,13 +60,15 @@ Scenario('Add new plugins', async ({ I }) => {
 
 Scenario('Close plugin selection modal', async ({ I }) => {
   I.amOnPage('/entity/create/Article/1377')
+  const textPlugin = '$plugin-suggestion-text'
+  I.dontSeeElement(textPlugin)
   I.click('Füge ein Element hinzu')
-  const menuModal = '$plugin-menu-search-input'
-  I.seeNumberOfElements(menuModal, 1)
+
+  I.seeNumberOfElements(textPlugin, 1)
 
   I.pressKey('Escape')
   // Modal should be closed
-  I.dontSee(menuModal)
+  I.dontSeeElement(textPlugin)
 })
 
 Scenario('Add plugin via slash command', async ({ I }) => {
