@@ -755,6 +755,10 @@ export const loggedInData = {
           loadingImage: "Bilder werden heruntergeladen ...",
           noImagesFound: "Keine Bilder gefunden"
         },
+        imageGallery: {
+          title: "Bilder Galerie",
+          description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen."
+        },
         injection: {
           title: "serlo.org Inhalt",
           description: "Binde einen bestehenden Inhalt von serlo.org via ID ein.",
