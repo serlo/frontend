@@ -151,6 +151,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     >
       <div className="sticky top-0 z-10 bg-white pb-3 pl-6 pt-7 shadow-stickysearch">
         <EditorInput
+          data-qa="plugin-menu-search-input"
           ref={searchInputRef}
           autoFocus
           placeholder={editorStrings.addPluginsModal.searchInputPlaceholder}
