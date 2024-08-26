@@ -50,16 +50,9 @@ export function filterOptions(option: PluginMenuItemType[], text: string) {
   // title or pluginType start with search string
   option.forEach((entry) => {
     if (
-      entry.title.toLowerCase().startsWith(search) ||
-      entry.pluginType.startsWith(search)
+      entry.title.toLowerCase().includes(search) ||
+      entry.pluginType.toLowerCase().includes(search)
     ) {
-      filterResults.add(entry)
-    }
-  })
-
-  // title includes search string
-  option.forEach((entry) => {
-    if (entry.title.toLowerCase().includes(search)) {
       filterResults.add(entry)
     }
   })
