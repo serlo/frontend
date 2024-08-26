@@ -30,7 +30,7 @@ export interface BaseEditor {
   selectRootDocument: () => AnyEditorDocument
 }
 
-type GetDocument = () => DocumentState | null
+export type GetDocument = () => DocumentState | null
 
 export type OnEditorChange = (payload: {
   changed: boolean
