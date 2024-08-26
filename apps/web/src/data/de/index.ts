@@ -756,8 +756,8 @@ export const loggedInData = {
           noImagesFound: "Keine Bilder gefunden"
         },
         imageGallery: {
-          title: 'Image Gallery',
-          description: 'Add an image gallery to display related images in an organized way.'
+          title: "Bilder Galerie",
+          description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen."
         },
         injection: {
           title: "serlo.org Inhalt",
