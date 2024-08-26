@@ -1,4 +1,5 @@
 import * as t from 'io-ts'
+import { v4 as uuid_v4 } from 'uuid'
 
 import { getEditorVersion } from './editor-version'
 
@@ -8,7 +9,7 @@ const documentType = 'https://serlo.org/editor'
 type Migration = (state: { version: number }) => { version: number }
 
 const migrations: Migration[] = [
-  // Migration: Add `editorVersion`
+  // Migration: Add `editorVersion` and `id`
   (state): StorageFormat => {
     const expectedType = t.type({
       type: t.literal(documentType),
@@ -26,10 +27,12 @@ const migrations: Migration[] = [
       )
 
     const editorVersion = getEditorVersion()
+    const id = uuid_v4()
 
     return {
       ...state,
       editorVersion,
+      id,
     }
   },
   // ...
@@ -42,6 +45,7 @@ export function createEmptyDocument(
   editorVariant: EditorVariant
 ): StorageFormat {
   return {
+    id: uuid_v4(),
     type: documentType,
     variant: editorVariant,
     version: currentVersion,
@@ -114,6 +118,7 @@ export type EditorVariant = t.TypeOf<typeof EditorVariantType>
 
 const StorageFormatType = t.type({
   // Constant values (set at creation)
+  id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
   type: t.literal(documentType),
   variant: EditorVariantType,
 

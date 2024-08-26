@@ -105,11 +105,9 @@ export function SerloEditor(props: SerloEditorProps) {
         const document = payload.getDocument()
         if (!document) return null
         return {
+          ...migratedState,
           dateModified,
           editorVersion: getEditorVersion(),
-          type: migratedState.type,
-          variant: migratedState.variant,
-          version: migratedState.version,
           document,
         }
       },
