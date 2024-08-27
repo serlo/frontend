@@ -6,13 +6,13 @@ import type { SupportedLanguage } from '@editor/types/language-data'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
-import { StorageFormat, migrate } from './storage-format'
+import { migrate } from './storage-format'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 export interface SerloRendererProps {
   language?: SupportedLanguage
-  state: StorageFormat
+  state: unknown
   _ltik?: string
 }
 
