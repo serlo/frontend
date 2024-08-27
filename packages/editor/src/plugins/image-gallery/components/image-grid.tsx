@@ -1,18 +1,11 @@
 import React, { MouseEvent } from 'react'
 
 import { GridImage } from '../types'
+import { getRowPercentages } from '../utils/helpers'
 
 interface ImageGridProps {
   photos: GridImage[]
   onImageMouseDown: (event: MouseEvent<HTMLDivElement>, index: number) => void
-}
-
-const calculateDimensions = (photo1: GridImage, photo2: GridImage) => {
-  const commonHeight = Math.min(photo1.height, photo2.height)
-  const width1 = (photo1.width / photo1.height) * commonHeight
-  const width2 = (photo2.width / photo2.height) * commonHeight
-
-  return [width1, width2]
 }
 
 export function ImageGrid(props: ImageGridProps) {
@@ -39,16 +32,13 @@ export function ImageGrid(props: ImageGridProps) {
             </div>
           )
         }
-        const [width1, width2] = calculateDimensions(photo, photos[index + 1])
 
-        // Calculate the percentage widths based on the calculated dimensions
-        const width1Percentage = (width1 / (width1 + width2)) * 100
-        const width2Percentage = (width2 / (width1 + width2)) * 100
+        const rowPercentages = getRowPercentages(photo, photos[index + 1])
 
         return (
           <React.Fragment key={photo.src}>
             <div
-              style={{ width: `calc(${width1Percentage}% - 0.5rem)` }}
+              style={{ width: `calc(${rowPercentages.left}% - 0.5rem)` }}
               onMouseDown={(event) => onImageMouseDown(event, index)}
             >
               <img
@@ -58,7 +48,7 @@ export function ImageGrid(props: ImageGridProps) {
               />
             </div>
             <div
-              style={{ width: `calc(${width2Percentage}% - 0.5rem)` }}
+              style={{ width: `calc(${rowPercentages.right}% - 0.5rem)` }}
               onMouseDown={(event) => onImageMouseDown(event, index + 1)}
             >
               <img

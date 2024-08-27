@@ -37,3 +37,15 @@ export const loadGalleryPhotos = async (
   const photoPromises = imageUrls.map((src) => createGalleryPhoto(src))
   return await Promise.all(photoPromises)
 }
+
+export const getRowPercentages = (photo1: GridImage, photo2: GridImage) => {
+  const commonHeight = Math.min(photo1.height, photo2.height)
+
+  const leftWidth = (photo1.width / photo1.height) * commonHeight
+  const rightWidth = (photo2.width / photo2.height) * commonHeight
+
+  const leftPercentage = (leftWidth / (leftWidth + rightWidth)) * 100
+  const rightPercentage = (rightWidth / (leftWidth + rightWidth)) * 100
+
+  return { left: leftPercentage, right: rightPercentage }
+}
