@@ -27,13 +27,13 @@ export function ImageGrid(props: ImageGridProps) {
         if (index + 1 === photos.length) {
           return (
             <div
-              key={photo.id}
+              key={photo.src}
               className="flex-grow p-1"
               onMouseDown={(event) => onImageMouseDown(event, index)}
             >
               <img
                 src={photo.src}
-                alt={`Image ${photo.id}`}
+                alt={`Image ${photo.src}`}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -46,7 +46,7 @@ export function ImageGrid(props: ImageGridProps) {
         const width2Percentage = (width2 / (width1 + width2)) * 100
 
         return (
-          <React.Fragment key={photo.id}>
+          <React.Fragment key={photo.src}>
             <div
               className="flex-grow p-1"
               style={{ width: `${width1Percentage}%` }}
@@ -54,7 +54,7 @@ export function ImageGrid(props: ImageGridProps) {
             >
               <img
                 src={photo.src}
-                alt={`Image ${photo.id}`}
+                alt={`Image ${photo.src}`}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -65,7 +65,7 @@ export function ImageGrid(props: ImageGridProps) {
             >
               <img
                 src={photos[index + 1].src}
-                alt={`Image ${photos[index + 1].id}`}
+                alt={`Image ${photos[index + 1].src}`}
                 className="h-full w-full object-cover"
               />
             </div>

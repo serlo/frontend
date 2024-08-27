@@ -1,9 +1,11 @@
+import { selectStaticDocuments, useAppSelector } from '@editor/store'
+import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { MouseEvent, useEffect, useState } from 'react'
 
 import { ImageGrid } from './image-grid'
 import type { ImageGalleryProps } from '..'
 import { GridImage } from '../types'
-import { getImageSrcFromState, loadGalleryPhotos } from '../utils/helpers'
+import { loadGalleryPhotos } from '../utils/helpers'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
@@ -15,24 +17,25 @@ export function EditorImageGrid(props: EditorImageGridProps) {
 
   const [photos, setPhotos] = useState<GridImage[]>([])
 
-  useEffect(() => {
-    const images = state.images.map((id) => ({
-      id: id.get(),
-      src: getImageSrcFromState(id.get()),
-    }))
+  const imageIds = state.images.map((id) => id.get())
+  const imageDocuments = useAppSelector((state) =>
+    selectStaticDocuments(state, imageIds)
+  )
+  const filteredImageDocuments = imageDocuments.filter(isImageDocument)
+  const imageUrls = filteredImageDocuments.map(
+    (imageDocument) => imageDocument.state.src as string
+  )
 
+  useEffect(() => {
     const loadPhotosAsync = async () => {
-      try {
-        const sortedPhotos = await loadGalleryPhotos(images)
-        setPhotos(sortedPhotos)
-      } catch (error) {
-        console.error('Failed to load photos:', error)
-      }
+      setPhotos(await loadGalleryPhotos(imageUrls))
     }
 
     void loadPhotosAsync()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [imageUrls])
+
+  // TODO: Implement loading screen if Gregor approves
+  if (photos.length === 0) return <div>Loading...</div>
 
   return <ImageGrid photos={photos} onImageMouseDown={onImageMouseDown} />
 }

@@ -1,55 +1,42 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { focus, selectFocused, store, useAppDispatch } from '@editor/store'
+import {
+  focus,
+  selectHasFocusedChild,
+  useAppDispatch,
+  useAppSelector,
+} from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { MouseEvent, useEffect, useState } from 'react'
+import { MouseEvent, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImagesButton } from './components/add-images-button'
 import { EditorImageGrid } from './components/editor-image-grid'
-import { SingleImageModal } from './components/single-image-modal'
 import { ImageGalleryToolbar } from './toolbar'
-import { getImageSrcFromState } from './utils/helpers'
-
-enum ImageGalleryPluginViewType {
-  EMPTY = 'EMPTY',
-  SINGLE_IMAGE_MODAL = 'SINGLE_IMAGE_MODAL',
-  GALLERY = 'GALLERY',
-}
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ImageGalleryEditor(props: ImageGalleryProps) {
   const { id, focused, state } = props
 
-  const [currentView, setCurrentView] = useState(
-    ImageGalleryPluginViewType.EMPTY
-  )
+  const [hasImages, setHasImages] = useState(state.images.length > 0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(-1)
+  const imageGalleryStrings = useEditorStrings().plugins.imageGallery
+
   const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
 
   const dispatch = useAppDispatch()
 
-  // Restore correct view based on state
-  // If there are images in the state, set the view to GALLERY
-  useEffect(() => {
-    if (
-      currentView === ImageGalleryPluginViewType.EMPTY &&
-      state.images.length > 0
-    ) {
-      setCurrentView(ImageGalleryPluginViewType.GALLERY)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const isAnyImageFocused = state.images.some(
-    ({ id }) => id === selectFocused(store.getState())
+  const isAnyImageFocused = useAppSelector((state) =>
+    selectHasFocusedChild(state, id)
   )
 
   function handleAddImagesButtonClick() {
     if (state.images.length === 0) {
       state.images.insert(0, { plugin: EditorPluginType.Image })
     }
-    setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
-    setCurrentImageIndex(0)
+    setIsModalOpen(true)
   }
 
   function handleMultipleImageUpload(files: File[]) {
@@ -61,16 +48,12 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       }
       state.images.insert(currentImageIndex, newImagePlugin)
     }
+    setHasImages(true)
+    setIsModalOpen(false)
   }
 
   function handleImageModalClose() {
-    const src = getImageSrcFromState(state.images[0].get())
-    const didSetImage = src !== ''
-    setCurrentView(
-      didSetImage
-        ? ImageGalleryPluginViewType.GALLERY
-        : ImageGalleryPluginViewType.EMPTY
-    )
+    setIsModalOpen(false)
     dispatch(focus(id))
   }
 
@@ -81,7 +64,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       dispatch(focus(id))
     } else {
       setCurrentImageIndex(index)
-      setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
+      setIsModalOpen(true)
     }
   }
 
@@ -89,24 +72,40 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     <div data-qa="plugin-image-gallery-wrapper">
       {focused || isAnyImageFocused ? <ImageGalleryToolbar id={id} /> : null}
 
-      {currentView === ImageGalleryPluginViewType.EMPTY ? (
-        <AddImagesButton onClick={handleAddImagesButtonClick} />
-      ) : null}
-
-      {currentView === ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL ? (
-        <SingleImageModal
-          currentImageState={state.images[currentImageIndex]}
-          onClose={handleImageModalClose}
-          onMultipleUploadCallback={handleMultipleImageUpload}
-        />
-      ) : null}
-
-      {currentView === ImageGalleryPluginViewType.GALLERY ? (
+      {hasImages ? (
         <EditorImageGrid
           state={state}
           onImageMouseDown={handleImageMouseDown}
         />
-      ) : null}
+      ) : (
+        <AddImagesButton onClick={handleAddImagesButtonClick} />
+      )}
+
+      <ModalWithCloseButton
+        className="my-6 p-0 [&_.plugin-image]:!-ml-[5px] [&_img]:max-h-[70vh] "
+        extraTitleClassName="sr-only"
+        extraCloseButtonClassName="sr-only"
+        isOpen={isModalOpen}
+        title={imageGalleryStrings.modalScreenReaderTitle}
+        setIsOpen={(isOpen) => {
+          if (!isOpen) handleImageModalClose()
+        }}
+      >
+        {state.images.map((image, index) => {
+          return (
+            <div
+              key={image.id}
+              className={`-mb-6 pt-10 ${index === currentImageIndex ? '' : 'hidden'}`}
+            >
+              {image.render({
+                config: {
+                  onMultipleUploadCallback: handleMultipleImageUpload,
+                },
+              })}
+            </div>
+          )
+        })}
+      </ModalWithCloseButton>
     </div>
   )
 }
