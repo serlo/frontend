@@ -1,3 +1,5 @@
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import * as t from 'io-ts'
 import { v4 as uuid_v4 } from 'uuid'
 
@@ -52,21 +54,10 @@ export function createEmptyDocument(
     editorVersion: getEditorVersion(),
     dateModified: getCurrentDatetime(),
     document: {
-      plugin: 'type-generic-content',
+      plugin: TemplatePluginType.GenericContent,
       state: {
         content: {
-          plugin: 'rows',
-          state: [
-            {
-              plugin: 'text',
-              state: [
-                {
-                  type: 'p',
-                  children: [{ text: '' }],
-                },
-              ],
-            },
-          ],
+          plugin: EditorPluginType.Rows,
         },
       },
     },
