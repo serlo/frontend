@@ -7,6 +7,7 @@ import {
   child,
   object,
   list,
+  string,
 } from '../../plugin'
 
 export const defaultConfig: ImageGalleryConfig = {}
@@ -14,6 +15,7 @@ export const defaultConfig: ImageGalleryConfig = {}
 function createImageGalleryState() {
   return object({
     images: list(child({ plugin: EditorPluginType.Image })),
+    orderedIds: string(),
   })
 }
 

@@ -5,7 +5,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface SingleImageModalProps {
-  currentImageState: ImageGalleryProps['state']['images'][0]
+  currentImageState?: ImageGalleryProps['state']['images'][0]
   onClose: () => void
   handleMultipleImageUpload: (files: File[]) => void
 }
@@ -31,7 +31,7 @@ export function SingleImageModal(props: SingleImageModalProps) {
       }}
     >
       <div className="-mb-6 pt-10">
-        {currentImageState.render({
+        {currentImageState?.render({
           config: {
             onMultipleUploadCallback: handleMultipleImageUpload,
           },

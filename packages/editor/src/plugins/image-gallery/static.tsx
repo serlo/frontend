@@ -20,9 +20,10 @@ export function ImageGalleryStaticRenderer({
   const [photos, setPhotos] = useState<GridImage[]>([])
 
   useEffect(() => {
+    const orderedIds = state.orderedIds ? state.orderedIds.split(',') : []
     const loadPhotos = async () => {
       try {
-        const sortedPhotos = await loadGalleryPhotos(images)
+        const sortedPhotos = await loadGalleryPhotos(images, orderedIds)
         setPhotos(sortedPhotos)
       } catch (error) {
         console.error('Failed to load photos:', error)
@@ -30,10 +31,9 @@ export function ImageGalleryStaticRenderer({
     }
 
     void loadPhotos()
-  }, [images])
+  }, [images, state.orderedIds])
 
-  const onClickImage = (index: number) => {
-    console.log('Clicked image at index:', index)
+  const onClickImage = (_id: string) => {
     // Lightbox feature will be implemented, linear issue PE-57
   }
 

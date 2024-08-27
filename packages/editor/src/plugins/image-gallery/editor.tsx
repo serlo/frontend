@@ -24,7 +24,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   const [isGalleryInitialised, setIsGalleryInitialised] = useState(false)
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(-1)
+  const [currentImageId, setCurrentImageId] = useState('')
   const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
 
   // Restore correct view based on state
@@ -47,7 +47,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
         plugin: EditorPluginType.Image,
         state: newImagePluginState?.state as unknown,
       }
-      state.images.insert(currentImageIndex, newImagePlugin)
+      state.images.insert(undefined, newImagePlugin)
     }
   }
 
@@ -64,7 +64,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
               })
             }
             setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
-            setCurrentImageIndex(0)
+            setCurrentImageId('')
           }}
           {...props}
         />
@@ -73,7 +73,9 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {currentView === ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL && (
         <SingleImageModal
           {...props}
-          currentImageState={state.images[currentImageIndex]}
+          currentImageState={state.images.find(
+            (image) => image.id === currentImageId
+          )}
           onClose={() => {
             const src = getImageSrcFromState(state.images[0].get())
             const didSetImage = src !== ''
@@ -91,8 +93,8 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {isGalleryInitialised && (
         <EditorImageGrid
           {...props}
-          onClickImage={(index: number) => {
-            setCurrentImageIndex(index)
+          onClickImage={(id: string) => {
+            setCurrentImageId(id)
             setCurrentView(ImageGalleryPluginViewType.SINGLE_IMAGE_MODAL)
           }}
         />
