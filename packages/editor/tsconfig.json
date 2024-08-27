@@ -8,8 +8,7 @@
     },
     "outDir": "dist",
     "module": "ES2022",
-    "moduleResolution": "bundler",
-    "types": ["./src/vite-env.d.ts"]
+    "moduleResolution": "bundler"
   },
   "include": [
     "./custom.d.ts",
