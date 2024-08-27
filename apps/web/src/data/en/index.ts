@@ -791,9 +791,11 @@ export const loggedInData = {
         },
         image: {
           title: 'Image',
+          galleryTitle: 'Gallery',
           description:
             'Upload images or search online for freely licensed images.',
           upload: 'Upload Image',
+          uploadMultiple: 'Upload Images',
           imageUrl: 'Image URL',
           imageSource: 'Image Source',
           imageSourceHelpText: 'Add the author or source of this image here',
@@ -806,6 +808,7 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
+          tooManyImagesError: 'You can only upload up to 8 images at once.',
           retry: 'Retry',
           failedUpload: 'Upload failed',
           captionPlaceholder: 'Optional caption',
@@ -831,6 +834,9 @@ export const loggedInData = {
           title: 'Image Gallery',
           description:
             'Add an image gallery to display related images in an organized way.',
+          modalScreenReaderTitle:
+            'Modal displaying single image options for caption and settings.',
+          addImages: 'Add Images',
         },
         injection: {
           title: 'serlo.org Content',
