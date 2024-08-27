@@ -7,11 +7,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 interface SingleImageModalProps {
   currentImageState: ImageGalleryProps['state']['images'][0]
   onClose: () => void
-  handleMultipleImageUpload: (files: File[]) => void
+  onMultipleUploadCallback: (files: File[]) => void
 }
 
 export function SingleImageModal(props: SingleImageModalProps) {
-  const { currentImageState, onClose, handleMultipleImageUpload } = props
+  const { currentImageState, onClose, onMultipleUploadCallback } = props
 
   const [open, setOpen] = useState(true)
   const pluginStrings = useEditorStrings().plugins.imageGallery
@@ -25,17 +25,11 @@ export function SingleImageModal(props: SingleImageModalProps) {
       title={pluginStrings.modalScreenReaderTitle}
       setIsOpen={(isOpen) => {
         setOpen(isOpen)
-        if (!isOpen) {
-          onClose()
-        }
+        if (!isOpen) onClose()
       }}
     >
       <div className="-mb-6 pt-10">
-        {currentImageState.render({
-          config: {
-            onMultipleUploadCallback: handleMultipleImageUpload,
-          },
-        })}
+        {currentImageState.render({ config: { onMultipleUploadCallback } })}
       </div>
     </ModalWithCloseButton>
   )

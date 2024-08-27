@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 
 import { ImageGrid } from './image-grid'
 import type { ImageGalleryProps } from '..'
 import { GridImage } from '../types'
 import { getImageSrcFromState, loadGalleryPhotos } from '../utils/helpers'
 
-interface EditorImageGridProps extends ImageGalleryProps {
-  onClickImage: (index: number) => void
+interface EditorImageGridProps {
+  state: ImageGalleryProps['state']
+  onImageMouseDown: (event: MouseEvent<HTMLDivElement>, index: number) => void
 }
 
 export function EditorImageGrid(props: EditorImageGridProps) {
-  const { state, onClickImage } = props
+  const { state, onImageMouseDown } = props
 
   const [photos, setPhotos] = useState<GridImage[]>([])
 
@@ -33,5 +34,5 @@ export function EditorImageGrid(props: EditorImageGridProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <ImageGrid photos={photos} onClickImage={onClickImage} />
+  return <ImageGrid photos={photos} onImageMouseDown={onImageMouseDown} />
 }

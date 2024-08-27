@@ -12,8 +12,10 @@ const aspectRatio = (height: number, width: number) => {
 }
 
 export const getImageSrcFromState = (imageId: string) => {
-  const imgDocument = selectStaticDocument(store.getState(), imageId)
-  return isImageDocument(imgDocument) ? (imgDocument.state.src as string) : ''
+  const staticImageDocument = selectStaticDocument(store.getState(), imageId)
+  return isImageDocument(staticImageDocument)
+    ? (staticImageDocument.state.src as string)
+    : ''
 }
 
 export const createGalleryPhoto = (
