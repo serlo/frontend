@@ -722,8 +722,10 @@ export const loggedInData = {
         },
         image: {
           title: "Bild",
+          galleryTitle: 'Gallery',
           description: "Lade Bilder hoch oder suche online nach frei lizenzierten Bildern.",
           upload: "Bild hochladen",
+          uploadMultiple: 'Upload Images',
           imageUrl: "Bild-URL",
           imageSource: "Bildquelle",
           imageSourceHelpText: "Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.",
@@ -735,6 +737,7 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
+          tooManyImagesError: 'You can only upload up to 8 images at once.',
           retry: "Erneut versuchen",
           failedUpload: "Hochladen fehlgeschlagen",
           captionPlaceholder: "Bildunterschrift (optional)",
@@ -757,7 +760,9 @@ export const loggedInData = {
         },
         imageGallery: {
           title: "Bilder Galerie",
-          description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen."
+          description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
+          modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
+          addImages: 'Add Images'
         },
         injection: {
           title: "serlo.org Inhalt",
