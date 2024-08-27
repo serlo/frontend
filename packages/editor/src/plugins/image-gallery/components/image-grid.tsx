@@ -19,7 +19,7 @@ export function ImageGrid(props: ImageGridProps) {
   const { photos, onImageMouseDown } = props
 
   return (
-    <div className="flex-gap-1 flex flex-wrap">
+    <div className="flex flex-wrap gap-4">
       {photos.map((photo, index) => {
         if (index % 2 !== 0) return null
 
@@ -28,7 +28,7 @@ export function ImageGrid(props: ImageGridProps) {
           return (
             <div
               key={photo.src}
-              className="flex-grow p-1"
+              className="flex-grow"
               onMouseDown={(event) => onImageMouseDown(event, index)}
             >
               <img
@@ -48,8 +48,7 @@ export function ImageGrid(props: ImageGridProps) {
         return (
           <React.Fragment key={photo.src}>
             <div
-              className="flex-grow p-1"
-              style={{ width: `${width1Percentage}%` }}
+              style={{ width: `calc(${width1Percentage}% - 0.5rem)` }}
               onMouseDown={(event) => onImageMouseDown(event, index)}
             >
               <img
@@ -59,8 +58,7 @@ export function ImageGrid(props: ImageGridProps) {
               />
             </div>
             <div
-              className="flex-grow p-1"
-              style={{ width: `${width2Percentage}%` }}
+              style={{ width: `calc(${width2Percentage}% - 0.5rem)` }}
               onMouseDown={(event) => onImageMouseDown(event, index + 1)}
             >
               <img
