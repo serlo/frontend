@@ -36,6 +36,11 @@ export function ImageEditor(props: ImageProps) {
 
   const hasValidUrl = isImageUrl(src)
 
+  const toolbarTitle =
+    config.onMultipleUploadCallback && !hasValidUrl
+      ? imageStrings.galleryTitle
+      : undefined
+
   // focus related logic
   const isCaptionFocused = useAppSelector((storeState) => {
     return state.caption.defined
@@ -85,6 +90,7 @@ export function ImageEditor(props: ImageProps) {
             state.caption.defined && state.caption.remove()
             state.link.defined && state.link.remove()
           }}
+          title={toolbarTitle}
           showSettingsButtons={hasValidUrl}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}

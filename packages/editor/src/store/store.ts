@@ -23,6 +23,8 @@ export const store = configureStore({
           'documents/runChangeDocumentSaga',
           'history/commitTemporaryActionToHistory',
         ],
+        ignoredActionPaths: [/.*\.state.src.pending$/],
+        ignoredPaths: [/.*\.state.src.pending$/],
       },
     }).concat([sagaMiddleware]),
 })
