@@ -6,7 +6,7 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImagesButton } from './components/add-images-button'
@@ -18,6 +18,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 export function ImageGalleryEditor(props: ImageGalleryProps) {
   const { id, focused, state } = props
 
+  const [oldFocusState, setOldFocusState] = useState(focused)
   const [hasImages, setHasImages] = useState(state.images.length > 0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -57,25 +58,27 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     setIsModalOpen(false)
   }
 
-  function handleImageMouseDown(event: MouseEvent, index: number) {
-    if (!focused && !isAnyImageFocused) {
-      event.stopPropagation()
-      dispatch(focus(id))
-    } else {
-      setCurrentImageIndex(index)
-      setIsModalOpen(true)
-    }
+  function handleImageClick(event: MouseEvent, index: number) {
+    // first click on plugin should focus it, not open the modal
+    if (!oldFocusState) return
+    setCurrentImageIndex(index)
+    setIsModalOpen(true)
   }
+
+  // to make sure the modal does not open on first click
+  // we need to store the old focus state
+  // (otherwise the mouseDown event would focus it and the modal would open immediately)
+  useEffect(() => {
+    if (focused) setTimeout(() => setOldFocusState(true), 100)
+    else setOldFocusState(false)
+  }, [focused])
 
   return (
     <div data-qa="plugin-image-gallery-wrapper">
       {focused || isAnyImageFocused ? <ImageGalleryToolbar id={id} /> : null}
 
       {hasImages ? (
-        <EditorImageGrid
-          state={state}
-          onImageMouseDown={handleImageMouseDown}
-        />
+        <EditorImageGrid state={state} handleImageClick={handleImageClick} />
       ) : (
         <AddImagesButton onClick={handleAddImagesButtonClick} />
       )}

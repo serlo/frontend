@@ -5,12 +5,13 @@ import { getRowPercentages } from '../utils/helpers'
 
 interface ImageGridProps {
   images: GridImage[]
-  onImageMouseDown: (event: MouseEvent<HTMLDivElement>, index: number) => void
+  handleImageClick: (
+    event: MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => void
 }
 
-export function ImageGrid(props: ImageGridProps) {
-  const { images, onImageMouseDown } = props
-
+export function ImageGrid({ images, handleImageClick }: ImageGridProps) {
   return (
     <div className="flex flex-wrap gap-4">
       {images.map((image, index) => {
@@ -19,17 +20,17 @@ export function ImageGrid(props: ImageGridProps) {
         // If the image is the last one in the array, render it as a single image
         if (index + 1 === images.length) {
           return (
-            <div
+            <button
               key={image.src}
               className="mx-auto"
-              onMouseDown={(event) => onImageMouseDown(event, index)}
+              onMouseDown={(event) => handleImageClick(event, index)}
             >
               <img
                 src={image.src}
                 alt={`Image ${image.src}`}
                 className="max-h-96"
               />
-            </div>
+            </button>
           )
         }
 
@@ -37,21 +38,21 @@ export function ImageGrid(props: ImageGridProps) {
 
         return (
           <Fragment key={image.src}>
-            <div
+            <button
               style={{ width: `calc(${rowPercentages.left}% - 0.5rem)` }}
-              onMouseDown={(event) => onImageMouseDown(event, index)}
+              onClick={(event) => handleImageClick(event, index)}
             >
               <img src={image.src} alt={`Image ${image.src}`} />
-            </div>
-            <div
+            </button>
+            <button
               style={{ width: `calc(${rowPercentages.right}% - 0.5rem)` }}
-              onMouseDown={(event) => onImageMouseDown(event, index + 1)}
+              onClick={(event) => handleImageClick(event, index)}
             >
               <img
                 src={images[index + 1].src}
                 alt={`Image ${images[index + 1].src}`}
               />
-            </div>
+            </button>
           </Fragment>
         )
       })}

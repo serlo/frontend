@@ -24,14 +24,14 @@ export function ImageGalleryStaticRenderer({
     void loadImages()
   }, [imageSources])
 
-  function handleImageMouseDown(_event: MouseEvent, index: number) {
+  function handleImageClick(_event: MouseEvent, index: number) {
     console.log('Clicked image at index:', index)
     // TODO: Lightbox feature will be implemented, linear issue PE-57
   }
 
   return (
     <div className="p-4">
-      <ImageGrid images={images} onImageMouseDown={handleImageMouseDown} />
+      <ImageGrid images={images} handleImageClick={handleImageClick} />
     </div>
   )
 }

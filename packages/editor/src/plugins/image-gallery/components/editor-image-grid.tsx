@@ -10,12 +10,16 @@ import { loadGalleryImages } from '../utils/helpers'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
-  onImageMouseDown: (event: MouseEvent<HTMLDivElement>, index: number) => void
+  handleImageClick: (
+    event: MouseEvent<HTMLButtonElement>,
+    index: number
+  ) => void
 }
 
-export function EditorImageGrid(props: EditorImageGridProps) {
-  const { state, onImageMouseDown } = props
-
+export function EditorImageGrid({
+  state,
+  handleImageClick,
+}: EditorImageGridProps) {
   const [images, setImages] = useState<GridImage[]>([])
 
   const imageIds = state.images.map((id) => id.get())
@@ -38,5 +42,5 @@ export function EditorImageGrid(props: EditorImageGridProps) {
 
   if (images.length === 0) return <ImageGridSkeleton />
 
-  return <ImageGrid images={images} onImageMouseDown={onImageMouseDown} />
+  return <ImageGrid images={images} handleImageClick={handleImageClick} />
 }
