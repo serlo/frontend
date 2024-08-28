@@ -2,7 +2,7 @@ import {
   EditorImageDocument,
   EditorImageGalleryDocument,
 } from '@editor/types/editor-plugins'
-import { MouseEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ImageGrid } from './components/image-grid'
 import { GridImage } from './types'
@@ -24,7 +24,7 @@ export function ImageGalleryStaticRenderer({
     void loadImages()
   }, [imageSources])
 
-  function handleImageClick(_event: MouseEvent, index: number) {
+  function handleImageClick(index: number) {
     console.log('Clicked image at index:', index)
     // TODO: Lightbox feature will be implemented, linear issue PE-57
   }
