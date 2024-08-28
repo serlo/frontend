@@ -8,7 +8,7 @@ const aspectRatio = (height: number, width: number) => {
   }
 }
 
-const createGalleryPhoto = (imageUrl: string): Promise<GridImage> => {
+const createGalleryImages = (imageUrl: string): Promise<GridImage> => {
   return new Promise((resolve) => {
     const mockImage = document.createElement('img')
     mockImage.src = imageUrl
@@ -24,18 +24,18 @@ const createGalleryPhoto = (imageUrl: string): Promise<GridImage> => {
   })
 }
 
-export const loadGalleryPhotos = async (
+export const loadGalleryImages = async (
   imageUrls: string[]
 ): Promise<GridImage[]> => {
-  const photoPromises = imageUrls.map((src) => createGalleryPhoto(src))
-  return await Promise.all(photoPromises)
+  const imagePromises = imageUrls.map((src) => createGalleryImages(src))
+  return await Promise.all(imagePromises)
 }
 
-export const getRowPercentages = (photo1: GridImage, photo2: GridImage) => {
-  const commonHeight = Math.min(photo1.height, photo2.height)
+export const getRowPercentages = (image1: GridImage, image2: GridImage) => {
+  const commonHeight = Math.min(image1.height, image2.height)
 
-  const leftWidth = (photo1.width / photo1.height) * commonHeight
-  const rightWidth = (photo2.width / photo2.height) * commonHeight
+  const leftWidth = (image1.width / image1.height) * commonHeight
+  const rightWidth = (image2.width / image2.height) * commonHeight
 
   const leftPercentage = (leftWidth / (leftWidth + rightWidth)) * 100
   const rightPercentage = (rightWidth / (leftWidth + rightWidth)) * 100

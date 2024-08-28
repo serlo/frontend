@@ -6,32 +6,32 @@ import { MouseEvent, useEffect, useState } from 'react'
 
 import { ImageGrid } from './components/image-grid'
 import { GridImage } from './types'
-import { loadGalleryPhotos } from './utils/helpers'
+import { loadGalleryImages } from './utils/helpers'
 
 export function ImageGalleryStaticRenderer({
   state,
 }: EditorImageGalleryDocument) {
   const imagesFromState = state.images as EditorImageDocument[]
-  const images = imagesFromState.map(({ state }) => state.src as string)
+  const imageSources = imagesFromState.map(({ state }) => state.src as string)
 
-  const [photos, setPhotos] = useState<GridImage[]>([])
+  const [images, setImages] = useState<GridImage[]>([])
 
   useEffect(() => {
-    const loadPhotos = async () => {
-      setPhotos(await loadGalleryPhotos(images))
+    const loadImages = async () => {
+      setImages(await loadGalleryImages(imageSources))
     }
 
-    void loadPhotos()
-  }, [images])
+    void loadImages()
+  }, [imageSources])
 
-  function handleImageMouseDown(event: MouseEvent, index: number) {
+  function handleImageMouseDown(_event: MouseEvent, index: number) {
     console.log('Clicked image at index:', index)
-    // Lightbox feature will be implemented, linear issue PE-57
+    // TODO: Lightbox feature will be implemented, linear issue PE-57
   }
 
   return (
     <div className="p-4">
-      <ImageGrid photos={photos} onImageMouseDown={handleImageMouseDown} />
+      <ImageGrid images={images} onImageMouseDown={handleImageMouseDown} />
     </div>
   )
 }

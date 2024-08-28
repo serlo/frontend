@@ -6,7 +6,7 @@ import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
 import { GridImage } from '../types'
-import { loadGalleryPhotos } from '../utils/helpers'
+import { loadGalleryImages } from '../utils/helpers'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
@@ -16,7 +16,7 @@ interface EditorImageGridProps {
 export function EditorImageGrid(props: EditorImageGridProps) {
   const { state, onImageMouseDown } = props
 
-  const [photos, setPhotos] = useState<GridImage[]>([])
+  const [images, setImages] = useState<GridImage[]>([])
 
   const imageIds = state.images.map((id) => id.get())
   const imageDocuments = useAppSelector((state) =>
@@ -28,15 +28,15 @@ export function EditorImageGrid(props: EditorImageGridProps) {
   )
 
   useEffect(() => {
-    const loadPhotosAsync = async () => {
-      setPhotos(await loadGalleryPhotos(imageUrls))
+    const loadImagesAsync = async () => {
+      setImages(await loadGalleryImages(imageUrls))
     }
 
-    void loadPhotosAsync()
+    void loadImagesAsync()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(imageUrls)])
 
-  if (photos.length === 0) return <ImageGridSkeleton />
+  if (images.length === 0) return <ImageGridSkeleton />
 
-  return <ImageGrid photos={photos} onImageMouseDown={onImageMouseDown} />
+  return <ImageGrid images={images} onImageMouseDown={onImageMouseDown} />
 }
