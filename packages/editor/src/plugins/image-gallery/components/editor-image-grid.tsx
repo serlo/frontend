@@ -3,6 +3,7 @@ import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { MouseEvent, useEffect, useState } from 'react'
 
 import { ImageGrid } from './image-grid'
+import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
 import { GridImage } from '../types'
 import { loadGalleryPhotos } from '../utils/helpers'
@@ -34,8 +35,7 @@ export function EditorImageGrid(props: EditorImageGridProps) {
     void loadPhotosAsync()
   }, [imageUrls])
 
-  // TODO: Implement loading screen if Gregor approves
-  if (photos.length === 0) return <div>Loading...</div>
+  if (photos.length === 0) return <ImageGridSkeleton />
 
   return <ImageGrid photos={photos} onImageMouseDown={onImageMouseDown} />
 }
