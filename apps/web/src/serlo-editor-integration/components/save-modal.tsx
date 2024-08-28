@@ -255,7 +255,8 @@ export function SaveModal({
               const { checked } = e.target as HTMLInputElement
               setEmailSubscription(checked)
             }}
-          />{' Inhalt als OER im Bildungsfeed veröffentlichen'}
+          />{' '}
+          {editorStrings.enableNotifsMail}
         </label>
       </>
     )

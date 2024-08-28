@@ -43,7 +43,7 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
           className="serlo-button-editor-primary p-3"
           onClick={() => setShowSearch(true)}
         >
-          <FontAwesomeIcon icon={faSearch} /> Suche im Datenraum
+          <FontAwesomeIcon icon={faSearch} /> Suche im Bildungs-Feed
         </button>
       </div>
     )
