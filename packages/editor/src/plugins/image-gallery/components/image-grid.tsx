@@ -16,7 +16,7 @@ const hoverOverlayClassNames = cn(
 interface ImageGridProps {
   images: GridImage[]
   onImageClick: (index: number) => void
-  onRemoveImageButtonClick: (index: number) => void
+  onRemoveImageButtonClick?: (index: number) => void
 }
 
 export function ImageGrid({
@@ -84,6 +84,7 @@ export function ImageGrid({
   )
 
   function renderRemoveImageButton(index: number) {
+    if (!onRemoveImageButtonClick) return null
     return (
       <button
         className={cn(

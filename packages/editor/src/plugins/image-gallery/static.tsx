@@ -3,26 +3,32 @@ import {
   EditorImageGalleryDocument,
 } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
+import { Node } from 'slate'
 
 import { ImageGrid } from './components/image-grid'
 import { GridImage } from './types'
-import { loadGalleryImages } from './utils/helpers'
+import { createGalleryImage } from './utils/helpers'
 
 export function ImageGalleryStaticRenderer({
   state,
 }: EditorImageGalleryDocument) {
   const imagesFromState = state.images as EditorImageDocument[]
-  const imageSources = imagesFromState.map(({ state }) => state.src as string)
+  const imagesData = imagesFromState.map(({ state: { src, caption } }) => ({
+    src: src as string,
+    // @ts-expect-error - Get caption text
+    caption: caption?.state?.[0] ? Node.string(caption.state[0] as Node) : '',
+  }))
 
   const [images, setImages] = useState<GridImage[]>([])
 
   useEffect(() => {
-    const loadImages = async () => {
-      setImages(await loadGalleryImages(imageSources))
+    const createGalleryImages = async () => {
+      const result = await Promise.all(imagesData.map(createGalleryImage))
+      setImages(result)
     }
 
-    void loadImages()
-  }, [imageSources])
+    void createGalleryImages()
+  }, [imagesData])
 
   function handleImageClick(index: number) {
     console.log('Clicked image at index:', index)
