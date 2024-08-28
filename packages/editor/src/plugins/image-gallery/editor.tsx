@@ -63,16 +63,15 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     dispatch(focus(id))
   }
 
-  function pruneEmptyImagePlugins() {
-    state.images.forEach((image, index) => {
-      if (selectIsDocumentEmpty(store.getState(), image.id)) {
-        state.images.remove(index)
-      }
-    })
+  function removeDefaultEmptyImagePlugin() {
+    const defaultImagePluginId = state.images[currentImageIndex].id
+    if (selectIsDocumentEmpty(store.getState(), defaultImagePluginId)) {
+      state.images.remove(currentImageIndex)
+    }
   }
 
   function handleImageModalClose() {
-    pruneEmptyImagePlugins()
+    removeDefaultEmptyImagePlugin()
     setIsModalOpen(false)
   }
 
