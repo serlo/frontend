@@ -16,6 +16,9 @@ import { EditorImageGrid } from './components/editor-image-grid'
 import { ImageGalleryToolbar } from './toolbar'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
+
+const MAX_IMAGES = 8
 
 export function ImageGalleryEditor(props: ImageGalleryProps) {
   const { id, focused, state } = props
@@ -42,14 +45,19 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   }
 
   function handleMultipleImageUpload(files: File[]) {
-    for (const file of files) {
-      const newImagePluginState = imagePlugin.onFiles?.([file])
-      const newImagePlugin = {
-        plugin: EditorPluginType.Image,
-        state: newImagePluginState?.state as unknown,
+    if (state.images.length + files.length > MAX_IMAGES) {
+      showToastNotice(imageGalleryStrings.tooManyImagesMessage, 'warning')
+    } else {
+      for (const file of files) {
+        const newImagePluginState = imagePlugin.onFiles?.([file])
+        const newImagePlugin = {
+          plugin: EditorPluginType.Image,
+          state: newImagePluginState?.state as unknown,
+        }
+        state.images.insert(currentImageIndex, newImagePlugin)
       }
-      state.images.insert(currentImageIndex, newImagePlugin)
     }
+
     setHasImages(true)
     setIsModalOpen(false)
     dispatch(focus(id))
@@ -88,6 +96,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {focused || isAnyImageFocused ? (
         <ImageGalleryToolbar
           id={id}
+          showAddImagesButton={state.images.length < MAX_IMAGES}
           onAddImagesButtonClick={handleAddImagesButtonClick}
         />
       ) : null}
