@@ -33,7 +33,8 @@ export function EditorImageGrid(props: EditorImageGridProps) {
     }
 
     void loadPhotosAsync()
-  }, [imageUrls])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(imageUrls)])
 
   if (photos.length === 0) return <ImageGridSkeleton />
 
