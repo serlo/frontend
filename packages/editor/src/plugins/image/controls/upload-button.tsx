@@ -58,7 +58,7 @@ export function UploadButton({
         </span>
         <input
           type="file"
-          multiple={!!config.onMultipleUploadCallback}
+          multiple={!!config.onMultipleUpload}
           accept="image/*"
           className="sr-only"
           onChange={({ target }) => {
@@ -73,16 +73,14 @@ export function UploadButton({
               // Upload the first file like normal
               void src.upload(filesArray[0], config.upload)
 
-              // If multiple files are allowed and more than one file is selected,
-              // call the onMultipleUploadCallback callback with the remaining files
-              if (config.onMultipleUploadCallback && filesArray.length > 1) {
-                config.onMultipleUploadCallback(filesArray.slice(1))
-              }
+              // If multiple upload is allowed, call the multiple upload callback
+              // with the remaining files
+              config.onMultipleUpload?.(filesArray.slice(1))
             }
           }}
           data-qa="plugin-image-upload"
         />
-        {!config.onMultipleUploadCallback
+        {!config.onMultipleUpload
           ? imageStrings.upload
           : imageStrings.uploadMultiple}
       </label>

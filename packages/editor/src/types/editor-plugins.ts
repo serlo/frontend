@@ -13,6 +13,7 @@ import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
 import type { GeogebraPluginState } from '@editor/plugins/geogebra'
 import type { HighlightPluginState } from '@editor/plugins/highlight'
 import type { ImagePluginState } from '@editor/plugins/image'
+import { ImageGalleryPluginState } from '@editor/plugins/image-gallery'
 import type { InjectionPluginState } from '@editor/plugins/injection'
 import type { InputExercisePluginState } from '@editor/plugins/input-exercise'
 import type { MultimediaPluginState } from '@editor/plugins/multimedia'
@@ -116,6 +117,11 @@ export interface EditorHighlightDocument {
 export interface EditorImageDocument {
   plugin: EditorPluginType.Image
   state: PrettyStaticState<ImagePluginState>
+  id?: string
+}
+export interface EditorImageGalleryDocument {
+  plugin: EditorPluginType.ImageGallery
+  state: PrettyStaticState<ImageGalleryPluginState>
   id?: string
 }
 export interface EditorInjectionDocument {
@@ -270,6 +276,7 @@ export type SupportedEditorDocument =
   | EditorSpoilerDocument
   | EditorBoxDocument
   | EditorImageDocument
+  | EditorImageGalleryDocument
   | EditorTextDocument
   | EditorRowsDocument
   | EditorEquationsDocument

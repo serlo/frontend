@@ -2,9 +2,11 @@ import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import type { ImageGalleryProps } from '.'
+interface ImageGalleryToolbarProps {
+  id: string
+}
 
-export const ImageGalleryToolbar = (props: ImageGalleryProps) => {
+export const ImageGalleryToolbar = (props: ImageGalleryToolbarProps) => {
   const { id } = props
 
   return (
