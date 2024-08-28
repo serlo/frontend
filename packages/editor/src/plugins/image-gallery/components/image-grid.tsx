@@ -25,7 +25,7 @@ export function ImageGrid({
 }: ImageGridProps) {
   return (
     <DndWrapper>
-      <div className="flex-gap-1 flex flex-wrap">
+      <div className="flex flex-wrap">
         {photos.map((photo, index) => {
           if (index % 2 === 0) {
             // If the photo is the last one in the array, render it as a single image
@@ -36,13 +36,12 @@ export function ImageGrid({
                   id={photo.id}
                   index={index}
                   onMovePhoto={onMovePhoto}
-                  className="flex-grow p-1"
                   onClick={() => onClickImage(photo.id)}
                 >
                   <img
                     src={photo.src}
                     alt={`Image ${photo.id}`}
-                    className="h-full w-full object-cover"
+                    className="h-full max-h-40 w-full object-cover"
                   />
                 </DraggableImage>
               )
@@ -61,7 +60,6 @@ export function ImageGrid({
                   id={photo.id}
                   index={index}
                   onMovePhoto={onMovePhoto}
-                  className="flex-grow p-1"
                   style={{ width: `${width1Percentage}%` }}
                   onClick={() => onClickImage(photo.id)}
                 >
@@ -75,10 +73,10 @@ export function ImageGrid({
                   id={photos[index + 1].id}
                   index={index + 1}
                   onMovePhoto={onMovePhoto}
-                  className="flex-grow p-1"
                   style={{ width: `${width2Percentage}%` }}
                   onClick={() => onClickImage(photos[index + 1].id)}
                 >
+                  {/* TODO: copy code from image plugin to get alt text */}
                   <img
                     src={photos[index + 1].src}
                     alt={`Image ${photos[index + 1].id}`}

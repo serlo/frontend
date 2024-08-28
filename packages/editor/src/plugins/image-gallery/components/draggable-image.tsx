@@ -1,13 +1,12 @@
-import React, { useRef, useState, useMemo } from 'react'
+import { useRef, useState } from 'react'
 import { DropTargetMonitor, XYCoord, useDrag, useDrop } from 'react-dnd'
 
 import { cn } from '@/helper/cn'
 
-export interface DraggableImageProps {
+interface DraggableImageProps {
   id: string
   index: number
   onMovePhoto?: (dragIndex: number, hoverIndex: number) => void
-  className?: string
   style?: React.CSSProperties
   onClick?: () => void
   children: React.ReactNode
@@ -22,7 +21,6 @@ export function DraggableImage({
   id,
   index,
   onMovePhoto,
-  className,
   style,
   onClick,
   children,
@@ -40,9 +38,7 @@ export function DraggableImage({
     const hoverClientX = clientOffset.x - hoverBoundingRect.left
     const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2
 
-    if (hoverClientX < hoverMiddleX) return 'left'
-    if (hoverClientX > hoverMiddleX) return 'right'
-    return null
+    return hoverClientX < hoverMiddleX ? 'left' : 'right'
   }
 
   const [{ isHovering }, drop] = useDrop<
@@ -88,30 +84,26 @@ export function DraggableImage({
     }),
   })
 
-  const combinedClassName = useMemo(
-    () =>
-      cn(className, {
-        'border-l-dashed border-l-4 border-l-brand-500':
-          isHovering && hoverPosition === 'left',
-        'border-r-dashed border-r-4 border-r-brand-500':
-          isHovering && hoverPosition === 'right',
-        'shadow-md': isHovering,
-        'rotate-5 transform': isDragging,
-      }),
-    [className, isHovering, hoverPosition, isDragging]
-  )
-
-  const opacity = isDragging ? 0.5 : 1
-
   drag(drop(ref))
 
   return (
     <div
       ref={ref}
-      className={combinedClassName}
-      style={{ ...style, opacity }}
+      className={cn(
+        'relative flex-grow p-2',
+        isDragging ? 'opacity-20' : 'opacity-100'
+      )}
+      style={style}
       onClick={onClick}
     >
+      <div
+        className={cn(
+          'absolute bottom-0 top-0 w-1.5 bg-brand-500 opacity-0 transition-opacity',
+          isHovering && hoverPosition === 'left' && '-left-[3px]',
+          isHovering && hoverPosition === 'right' && '-right-[3px]',
+          isHovering && 'opacity-100'
+        )}
+      ></div>
       {children}
     </div>
   )

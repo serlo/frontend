@@ -156,9 +156,6 @@ export default {
       cursor: {
         'zoom-in': 'zoom-in',
       },
-      rotate: {
-        5: '5deg',
-      },
     },
     screens: {
       mobile: '500px',
