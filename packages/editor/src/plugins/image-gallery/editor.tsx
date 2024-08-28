@@ -90,18 +90,16 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
           if (!isOpen) handleImageModalClose()
         }}
       >
-        {state.images.map((image, index) => {
-          return (
-            <div
-              key={image.id}
-              className={`-mb-6 pt-10 ${index === currentImageIndex ? '' : 'hidden'}`}
-            >
-              {image.render({
-                config: { onMultipleUpload: handleMultipleImageUpload },
-              })}
-            </div>
-          )
-        })}
+        {state.images.map((image, index) => (
+          <div
+            key={image.id}
+            className={`-mb-6 pt-10 ${index === currentImageIndex ? '' : 'hidden'}`}
+          >
+            {image.render({
+              config: { onMultipleUpload: handleMultipleImageUpload },
+            })}
+          </div>
+        ))}
       </ModalWithCloseButton>
     </div>
   )
