@@ -737,7 +737,6 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
-          tooManyImagesError: "Du kannst maximal acht Bilder hochladen.",
           retry: "Erneut versuchen",
           failedUpload: "Hochladen fehlgeschlagen",
           captionPlaceholder: "Bildunterschrift (optional)",
@@ -762,7 +761,8 @@ export const loggedInData = {
           title: "Bilder Galerie",
           description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
-          addImages: "Bilder hinzufügen"
+          addImages: "Bilder hinzufügen",
+          tooManyImagesMessage: 'Image Gallery can only contain up to 8 images.'
         },
         injection: {
           title: "serlo.org Inhalt",
