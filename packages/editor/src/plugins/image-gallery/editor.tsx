@@ -50,6 +50,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     }
     setHasImages(true)
     setIsModalOpen(false)
+    dispatch(focus(id))
   }
 
   function handleImageModalClose() {
