@@ -21,13 +21,13 @@ export function ImageGrid(props: ImageGridProps) {
           return (
             <div
               key={image.src}
-              className="flex-grow"
+              className="mx-auto"
               onMouseDown={(event) => onImageMouseDown(event, index)}
             >
               <img
                 src={image.src}
                 alt={`Image ${image.src}`}
-                className="h-full w-full object-cover"
+                className="max-h-96"
               />
             </div>
           )
@@ -41,11 +41,7 @@ export function ImageGrid(props: ImageGridProps) {
               style={{ width: `calc(${rowPercentages.left}% - 0.5rem)` }}
               onMouseDown={(event) => onImageMouseDown(event, index)}
             >
-              <img
-                src={image.src}
-                alt={`Image ${image.src}`}
-                className="h-full w-full object-cover"
-              />
+              <img src={image.src} alt={`Image ${image.src}`} />
             </div>
             <div
               style={{ width: `calc(${rowPercentages.right}% - 0.5rem)` }}
@@ -54,7 +50,6 @@ export function ImageGrid(props: ImageGridProps) {
               <img
                 src={images[index + 1].src}
                 alt={`Image ${images[index + 1].src}`}
-                className="h-full w-full object-cover"
               />
             </div>
           </Fragment>
