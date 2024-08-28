@@ -5,13 +5,10 @@ import { getRowPercentages } from '../utils/helpers'
 
 interface ImageGridProps {
   images: GridImage[]
-  handleImageClick: (
-    event: MouseEvent<HTMLButtonElement>,
-    index: number
-  ) => void
+  onImageClick: (event: MouseEvent<HTMLButtonElement>, index: number) => void
 }
 
-export function ImageGrid({ images, handleImageClick }: ImageGridProps) {
+export function ImageGrid({ images, onImageClick }: ImageGridProps) {
   return (
     <div className="flex flex-wrap gap-4">
       {images.map((image, index) => {
@@ -23,7 +20,7 @@ export function ImageGrid({ images, handleImageClick }: ImageGridProps) {
             <button
               key={image.src}
               className="mx-auto"
-              onMouseDown={(event) => handleImageClick(event, index)}
+              onMouseDown={(event) => onImageClick(event, index)}
             >
               <img
                 src={image.src}
@@ -40,13 +37,13 @@ export function ImageGrid({ images, handleImageClick }: ImageGridProps) {
           <Fragment key={image.src}>
             <button
               style={{ width: `calc(${rowPercentages.left}% - 0.5rem)` }}
-              onClick={(event) => handleImageClick(event, index)}
+              onClick={(event) => onImageClick(event, index)}
             >
               <img src={image.src} alt={`Image ${image.src}`} />
             </button>
             <button
               style={{ width: `calc(${rowPercentages.right}% - 0.5rem)` }}
-              onClick={(event) => handleImageClick(event, index + 1)}
+              onClick={(event) => onImageClick(event, index + 1)}
             >
               <img
                 src={images[index + 1].src}

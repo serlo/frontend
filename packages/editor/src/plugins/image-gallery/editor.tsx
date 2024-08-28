@@ -78,7 +78,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {focused || isAnyImageFocused ? <ImageGalleryToolbar id={id} /> : null}
 
       {hasImages ? (
-        <EditorImageGrid state={state} handleImageClick={handleImageClick} />
+        <EditorImageGrid state={state} onImageClick={handleImageClick} />
       ) : (
         <AddImagesButton onClick={handleAddImagesButtonClick} />
       )}

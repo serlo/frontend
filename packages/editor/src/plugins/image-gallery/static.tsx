@@ -31,7 +31,7 @@ export function ImageGalleryStaticRenderer({
 
   return (
     <div className="p-4">
-      <ImageGrid images={images} handleImageClick={handleImageClick} />
+      <ImageGrid images={images} onImageClick={handleImageClick} />
     </div>
   )
 }
