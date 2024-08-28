@@ -1,6 +1,8 @@
+import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { Fragment } from 'react'
+import { Descendant } from 'slate'
 
 import { GridImage } from '../types'
 import { getRowPercentages } from '../utils/helpers'
@@ -74,10 +76,10 @@ export function ImageGrid({
     </div>
   )
 
-  function renderHoverOverlay(caption: string, index: number) {
+  function renderHoverOverlay(caption: Descendant, index: number) {
     return (
       <div className={hoverOverlayClassNames}>
-        {caption}
+        <StaticSlate element={caption} />
         {onRemoveImageButtonClick !== undefined ? (
           <button
             className={cn(

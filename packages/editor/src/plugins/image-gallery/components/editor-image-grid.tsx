@@ -1,7 +1,7 @@
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
-import { Node } from 'slate'
+import { Descendant } from 'slate'
 
 import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
@@ -32,7 +32,7 @@ export function EditorImageGrid({
     ({ state: { src, caption } }) => ({
       src: src as string,
       // @ts-expect-error - Get caption text
-      caption: caption?.state?.[0] ? Node.string(caption.state[0] as Node) : '',
+      caption: caption?.state?.[0] as Descendant,
     })
   )
 

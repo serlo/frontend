@@ -1,6 +1,8 @@
+import { Descendant } from 'slate'
+
 export interface GridImage {
   src: string
-  caption: string
+  caption: Descendant
   width: number
   height: number
 }
