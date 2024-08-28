@@ -1,6 +1,7 @@
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
+import { Node } from 'slate'
 
 import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
@@ -22,13 +23,17 @@ export function EditorImageGrid({ state, onImageClick }: EditorImageGridProps) {
     selectStaticDocuments(state, imageIds)
   )
   const filteredImageDocuments = imageDocuments.filter(isImageDocument)
-  const imageUrls = filteredImageDocuments.map(
-    (imageDocument) => imageDocument.state.src as string
+  const imagesData = filteredImageDocuments.map(
+    ({ state: { src, caption } }) => ({
+      src: src as string,
+      // @ts-expect-error - Get caption text
+      caption: caption?.state?.[0] ? Node.string(caption.state[0] as Node) : '',
+    })
   )
 
   useEffect(() => {
     const loadImagesAsync = async () => {
-      const loadedImages = await loadGalleryImages(imageUrls)
+      const loadedImages = await loadGalleryImages(imagesData)
       setImages(loadedImages)
       setIsLoading(false)
     }
@@ -36,7 +41,7 @@ export function EditorImageGrid({ state, onImageClick }: EditorImageGridProps) {
     setIsLoading(true)
     void loadImagesAsync()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(imageUrls)])
+  }, [JSON.stringify(imagesData)])
 
   if (isLoading) return <ImageGridSkeleton />
 

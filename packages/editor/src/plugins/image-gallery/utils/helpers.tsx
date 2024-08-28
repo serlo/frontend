@@ -1,5 +1,7 @@
 import { GridImage } from '../types'
 
+type GridImageWithoutDimensions = Omit<GridImage, 'width' | 'height'>
+
 const aspectRatio = (height: number, width: number) => {
   if (height > width) {
     return { width: 1, height: height / width }
@@ -8,15 +10,19 @@ const aspectRatio = (height: number, width: number) => {
   }
 }
 
-const createGalleryImages = (imageUrl: string): Promise<GridImage> => {
+const createGalleryImages = ({
+  src,
+  caption,
+}: GridImageWithoutDimensions): Promise<GridImage> => {
   return new Promise((resolve) => {
     const mockImage = document.createElement('img')
-    mockImage.src = imageUrl
+    mockImage.src = src
 
     mockImage.onload = function () {
       const aspect = aspectRatio(mockImage.height, mockImage.width)
       resolve({
-        src: imageUrl,
+        src,
+        caption,
         width: aspect.width,
         height: aspect.height,
       })
@@ -25,9 +31,9 @@ const createGalleryImages = (imageUrl: string): Promise<GridImage> => {
 }
 
 export const loadGalleryImages = async (
-  imageUrls: string[]
+  images: GridImageWithoutDimensions[]
 ): Promise<GridImage[]> => {
-  const imagePromises = imageUrls.map((src) => createGalleryImages(src))
+  const imagePromises = images.map((image) => createGalleryImages(image))
   return await Promise.all(imagePromises)
 }
 
