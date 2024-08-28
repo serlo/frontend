@@ -10,22 +10,20 @@ import { useState } from 'react'
 
 import type { ImageProps } from '..'
 import { cn } from '@/helper/cn'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface UploadButtonProps {
   config: ImageProps['config']
-  state: ImageProps['state']
+  src: ImageProps['state']['src']
   onFocus?: () => void
   onBlur?: () => void
 }
 
 export function UploadButton({
   config,
-  state,
+  src,
   onFocus,
   onBlur,
 }: UploadButtonProps) {
-  const { src } = state
   const imageStrings = useEditorStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 
@@ -64,11 +62,6 @@ export function UploadButton({
           onChange={({ target }) => {
             if (target.files && target.files.length) {
               const filesArray = Array.from(target.files)
-
-              if (target.files.length > 8) {
-                showToastNotice(imageStrings.tooManyImagesError, 'warning')
-                return
-              }
 
               // Upload the first file like normal
               void src.upload(filesArray[0], config.upload)

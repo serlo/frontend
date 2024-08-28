@@ -1,11 +1,11 @@
-import { Fragment, MouseEvent } from 'react'
+import { Fragment } from 'react'
 
 import { GridImage } from '../types'
 import { getRowPercentages } from '../utils/helpers'
 
 interface ImageGridProps {
   images: GridImage[]
-  onImageClick: (event: MouseEvent<HTMLButtonElement>, index: number) => void
+  onImageClick: (index: number) => void
 }
 
 export function ImageGrid({ images, onImageClick }: ImageGridProps) {
@@ -20,7 +20,7 @@ export function ImageGrid({ images, onImageClick }: ImageGridProps) {
             <button
               key={image.src}
               className="mx-auto"
-              onMouseDown={(event) => onImageClick(event, index)}
+              onMouseDown={() => onImageClick(index)}
             >
               <img
                 src={image.src}
@@ -37,13 +37,13 @@ export function ImageGrid({ images, onImageClick }: ImageGridProps) {
           <Fragment key={image.src}>
             <button
               style={{ width: `calc(${rowPercentages.left}% - 0.5rem)` }}
-              onClick={(event) => onImageClick(event, index)}
+              onClick={() => onImageClick(index)}
             >
               <img src={image.src} alt={`Image ${image.src}`} />
             </button>
             <button
               style={{ width: `calc(${rowPercentages.right}% - 0.5rem)` }}
-              onClick={(event) => onImageClick(event, index + 1)}
+              onClick={() => onImageClick(index + 1)}
             >
               <img
                 src={images[index + 1].src}
