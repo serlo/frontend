@@ -6,7 +6,7 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { MouseEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
 import { AddImagesButton } from './components/add-images-button'
@@ -34,9 +34,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   )
 
   function handleAddImagesButtonClick() {
-    if (state.images.length === 0) {
-      state.images.insert(0, { plugin: EditorPluginType.Image })
-    }
+    state.images.insert(state.images.length, { plugin: EditorPluginType.Image })
     setIsModalOpen(true)
   }
 
@@ -58,7 +56,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     setIsModalOpen(false)
   }
 
-  function handleImageClick(event: MouseEvent, index: number) {
+  function handleImageClick(index: number) {
     // first click on plugin should focus it, not open the modal
     if (!oldFocusState) return
     setCurrentImageIndex(index)

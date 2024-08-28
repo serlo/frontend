@@ -1,6 +1,6 @@
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
-import { MouseEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
@@ -10,7 +10,7 @@ import { loadGalleryImages } from '../utils/helpers'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
-  onImageClick: (event: MouseEvent<HTMLButtonElement>, index: number) => void
+  onImageClick: (index: number) => void
 }
 
 export function EditorImageGrid({ state, onImageClick }: EditorImageGridProps) {
