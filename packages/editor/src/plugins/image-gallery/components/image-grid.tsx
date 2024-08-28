@@ -46,7 +46,7 @@ export function ImageGrid({ images, handleImageClick }: ImageGridProps) {
             </button>
             <button
               style={{ width: `calc(${rowPercentages.right}% - 0.5rem)` }}
-              onClick={(event) => handleImageClick(event, index)}
+              onClick={(event) => handleImageClick(event, index + 1)}
             >
               <img
                 src={images[index + 1].src}
