@@ -37,7 +37,7 @@ export function ImageEditor(props: ImageProps) {
   const hasValidUrl = isImageUrl(src)
 
   const toolbarTitle =
-    config.onMultipleUploadCallback && !hasValidUrl
+    config.onMultipleUpload && !hasValidUrl
       ? imageStrings.galleryTitle
       : undefined
 
@@ -53,7 +53,7 @@ export function ImageEditor(props: ImageProps) {
     focused ||
     isCaptionFocused ||
     (isAButtonFocused && !hasValidUrl) ||
-    config.onMultipleUploadCallback
+    config.onMultipleUpload
 
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 

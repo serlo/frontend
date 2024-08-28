@@ -97,9 +97,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
               className={`-mb-6 pt-10 ${index === currentImageIndex ? '' : 'hidden'}`}
             >
               {image.render({
-                config: {
-                  onMultipleUploadCallback: handleMultipleImageUpload,
-                },
+                config: { onMultipleUpload: handleMultipleImageUpload },
               })}
             </div>
           )
