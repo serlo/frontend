@@ -16,7 +16,7 @@ export function ImageSelectionScreen(
   }
 ) {
   const editorStrings = useEditorStrings()
-  const { state, urlInputRef, setIsAButtonFocused } = props
+  const { config, state, urlInputRef, setIsAButtonFocused } = props
   const { src, licence } = state
 
   const imageStrings = editorStrings.plugins.image
@@ -33,8 +33,11 @@ export function ImageSelectionScreen(
 
   const onSelectPixabayImage = (imageUrl: string) => {
     state.src.set(imageUrl)
+
     if (!licence.defined) licence.create('Pixabay')
     else licence.set('Pixabay')
+
+    config.onMultipleUpload?.([])
   }
 
   const showPixabayButton = !disableFileUpload
@@ -66,7 +69,14 @@ export function ImageSelectionScreen(
             placeholder={placeholder}
             value={!isTempFile(src.value) ? src.value : ''}
             disabled={isTempFile(src.value) && !src.value.failed}
-            onChange={(e) => state.src.set(e.target.value)}
+            onChange={(e) => {
+              state.src.set(e.target.value)
+              if (config.onMultipleUpload) {
+                setTimeout(() => {
+                  config.onMultipleUpload?.([])
+                })
+              }
+            }}
             className={cn(
               'w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600',
               showErrorMessage && 'outline outline-1 outline-red-500'
