@@ -1,7 +1,5 @@
 import { GridImage } from '../types'
 
-type GridImageWithoutDimensions = Omit<GridImage, 'width' | 'height'>
-
 const aspectRatio = (height: number, width: number) => {
   if (height > width) {
     return { width: 1, height: height / width }
@@ -13,7 +11,7 @@ const aspectRatio = (height: number, width: number) => {
 export const createGalleryImage = ({
   src,
   caption,
-}: GridImageWithoutDimensions): Promise<GridImage> => {
+}: Omit<GridImage, 'width' | 'height'>): Promise<GridImage> => {
   return new Promise((resolve) => {
     const mockImage = document.createElement('img')
     mockImage.src = src
