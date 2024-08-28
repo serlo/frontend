@@ -737,7 +737,6 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
-          tooManyImagesError: 'You can only upload up to 8 images at once.',
           retry: 'Retry',
           failedUpload: 'Upload failed',
           captionPlaceholder: 'Optional caption',
@@ -762,7 +761,8 @@ export const loggedInData = {
           title: 'Image Gallery',
           description: 'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
-          addImages: 'Add Images'
+          addImages: 'Add Images',
+          tooManyImagesMessage: 'Image Gallery can only contain up to 8 images.'
         },
         injection: {
           title: 'serlo.org Content',
