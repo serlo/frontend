@@ -9,7 +9,7 @@ const aspectRatio = (height: number, width: number) => {
 }
 
 const createGalleryPhoto = (imageUrl: string): Promise<GridImage> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const mockImage = document.createElement('img')
     mockImage.src = imageUrl
 
@@ -20,13 +20,6 @@ const createGalleryPhoto = (imageUrl: string): Promise<GridImage> => {
         width: aspect.width,
         height: aspect.height,
       })
-    }
-
-    mockImage.onerror = function (error: Event | string) {
-      // TODO: Implement error handling
-      reject(
-        `Failed to load image: ${typeof error === 'string' ? error : error.type}`
-      )
     }
   })
 }
