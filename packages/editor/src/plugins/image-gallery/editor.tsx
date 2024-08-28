@@ -2,6 +2,8 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   focus,
   selectHasFocusedChild,
+  selectIsDocumentEmpty,
+  store,
   useAppDispatch,
   useAppSelector,
 } from '@editor/store'
@@ -35,6 +37,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   function handleAddImagesButtonClick() {
     state.images.insert(state.images.length, { plugin: EditorPluginType.Image })
+    setCurrentImageIndex(state.images.length)
     setIsModalOpen(true)
   }
 
@@ -52,7 +55,16 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     dispatch(focus(id))
   }
 
+  function pruneEmptyImagePlugins() {
+    state.images.forEach((image, index) => {
+      if (selectIsDocumentEmpty(store.getState(), image.id)) {
+        state.images.remove(index)
+      }
+    })
+  }
+
   function handleImageModalClose() {
+    pruneEmptyImagePlugins()
     setIsModalOpen(false)
   }
 
@@ -73,7 +85,12 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   return (
     <div data-qa="plugin-image-gallery-wrapper">
-      {focused || isAnyImageFocused ? <ImageGalleryToolbar id={id} /> : null}
+      {focused || isAnyImageFocused ? (
+        <ImageGalleryToolbar
+          id={id}
+          onAddImagesButtonClick={handleAddImagesButtonClick}
+        />
+      ) : null}
 
       {hasImages ? (
         <EditorImageGrid state={state} onImageClick={handleImageClick} />
