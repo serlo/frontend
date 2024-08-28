@@ -54,12 +54,10 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   function handleImageModalClose() {
     setIsModalOpen(false)
-    dispatch(focus(id))
   }
 
   function handleImageMouseDown(event: MouseEvent, index: number) {
     if (!focused && !isAnyImageFocused) {
-      event.preventDefault()
       event.stopPropagation()
       dispatch(focus(id))
     } else {
@@ -82,7 +80,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       )}
 
       <ModalWithCloseButton
-        className="my-6 p-0 [&_.plugin-image]:!-ml-[5px] [&_img]:max-h-[70vh] "
+        className="my-6 p-0 [&_.plugin-image]:!-ml-[5px] [&_img]:max-h-[70vh]"
         extraTitleClassName="sr-only"
         extraCloseButtonClassName="sr-only"
         isOpen={isModalOpen}
