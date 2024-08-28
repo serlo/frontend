@@ -7,7 +7,7 @@ import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
 import { GridImage } from '../types'
-import { loadGalleryImages } from '../utils/helpers'
+import { createGalleryImage } from '../utils/helpers'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
@@ -32,14 +32,14 @@ export function EditorImageGrid({ state, onImageClick }: EditorImageGridProps) {
   )
 
   useEffect(() => {
-    const loadImagesAsync = async () => {
-      const loadedImages = await loadGalleryImages(imagesData)
-      setImages(loadedImages)
+    const createGalleryImages = async () => {
+      const result = await Promise.all(imagesData.map(createGalleryImage))
+      setImages(result)
       setIsLoading(false)
     }
 
     setIsLoading(true)
-    void loadImagesAsync()
+    void createGalleryImages()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(imagesData)])
 

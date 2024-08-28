@@ -10,7 +10,7 @@ const aspectRatio = (height: number, width: number) => {
   }
 }
 
-const createGalleryImages = ({
+export const createGalleryImage = ({
   src,
   caption,
 }: GridImageWithoutDimensions): Promise<GridImage> => {
@@ -19,22 +19,10 @@ const createGalleryImages = ({
     mockImage.src = src
 
     mockImage.onload = function () {
-      const aspect = aspectRatio(mockImage.height, mockImage.width)
-      resolve({
-        src,
-        caption,
-        width: aspect.width,
-        height: aspect.height,
-      })
+      const { width, height } = aspectRatio(mockImage.height, mockImage.width)
+      resolve({ src, caption, width, height })
     }
   })
-}
-
-export const loadGalleryImages = async (
-  images: GridImageWithoutDimensions[]
-): Promise<GridImage[]> => {
-  const imagePromises = images.map((image) => createGalleryImages(image))
-  return await Promise.all(imagePromises)
 }
 
 export const getRowPercentages = (image1: GridImage, image2: GridImage) => {
