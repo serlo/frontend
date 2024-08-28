@@ -82,6 +82,14 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
     setIsModalOpen(true)
   }
 
+  function handleRemoveImageButtonClick(index: number) {
+    state.images.remove(index)
+  }
+
+  useEffect(() => {
+    if (state.images.length === 0) setHasImages(false)
+  }, [state.images.length])
+
   // to make sure the modal does not open on first click
   // we need to store the old focus state
   // (otherwise the mouseDown event would focus it and the modal would open immediately)
@@ -101,7 +109,11 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       ) : null}
 
       {hasImages ? (
-        <EditorImageGrid state={state} onImageClick={handleImageClick} />
+        <EditorImageGrid
+          state={state}
+          onImageClick={handleImageClick}
+          onRemoveImageButtonClick={handleRemoveImageButtonClick}
+        />
       ) : (
         <AddImagesButton onClick={handleAddImagesButtonClick} />
       )}
