@@ -14,18 +14,17 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface UploadButtonProps {
   config: ImageProps['config']
-  state: ImageProps['state']
+  src: ImageProps['state']['src']
   onFocus?: () => void
   onBlur?: () => void
 }
 
 export function UploadButton({
   config,
-  state,
+  src,
   onFocus,
   onBlur,
 }: UploadButtonProps) {
-  const { src } = state
   const imageStrings = useEditorStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 

@@ -9,18 +9,24 @@ import { isImageUrl } from '../utils/check-image-url'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
-export function ImageSelectionScreen(
-  props: ImageProps & {
-    urlInputRef: RefObject<HTMLInputElement>
-    setIsAButtonFocused: (isFocused: boolean) => void
-  }
-) {
+interface ImageSelectionScreenProps {
+  config: ImageProps['config']
+  state: ImageProps['state']
+  urlInputRef: RefObject<HTMLInputElement>
+  setIsAButtonFocused: (isFocused: boolean) => void
+}
+
+export function ImageSelectionScreen({
+  config,
+  state,
+  urlInputRef,
+  setIsAButtonFocused,
+}: ImageSelectionScreenProps) {
   const editorStrings = useEditorStrings()
-  const { config, state, urlInputRef, setIsAButtonFocused } = props
   const { src, licence } = state
 
   const imageStrings = editorStrings.plugins.image
-  const disableFileUpload = props.config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+  const disableFileUpload = config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
 
   const placeholder = !isTempFile(src.value)
     ? imageStrings.placeholderEmpty
@@ -49,9 +55,10 @@ export function ImageSelectionScreen(
     >
       <div className="mx-auto my-8 w-[60%]">
         <UploadButton
+          config={config}
+          src={src}
           onFocus={() => setIsAButtonFocused(true)}
           onBlur={() => setIsAButtonFocused(false)}
-          {...props}
         />
         {showPixabayButton && (
           <PixabaySearchButton
