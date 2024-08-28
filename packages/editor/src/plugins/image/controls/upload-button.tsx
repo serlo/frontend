@@ -73,8 +73,8 @@ export function UploadButton({
               // Upload the first file like normal
               void src.upload(filesArray[0], config.upload)
 
-              // If multiple files are allowed and more than one file is selected,
-              // call the onMultipleUpload callback with the remaining files
+              // If multiple upload is allowed, call the multiple upload callback
+              // with the remaining files
               config.onMultipleUpload?.(filesArray.slice(1))
             }
           }}
