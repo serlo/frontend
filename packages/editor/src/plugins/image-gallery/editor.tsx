@@ -20,6 +20,10 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 const MAX_IMAGES = 8
 
+function replaceWithMaxImages(input: string) {
+  return input.replace('%max_images%', MAX_IMAGES.toString())
+}
+
 export function ImageGalleryEditor(props: ImageGalleryProps) {
   const { id, focused, state } = props
 
@@ -39,6 +43,14 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   )
 
   function handleAddImagesButtonClick() {
+    if (state.images.length >= MAX_IMAGES) {
+      showToastNotice(
+        replaceWithMaxImages(imageGalleryStrings.alreadyMaxImagesMessage),
+        'warning'
+      )
+      return
+    }
+
     state.images.insert(state.images.length, { plugin: EditorPluginType.Image })
     setCurrentImageIndex(state.images.length)
     setIsModalOpen(true)
@@ -46,7 +58,10 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
 
   function handleMultipleImageUpload(files: File[]) {
     if (state.images.length + files.length > MAX_IMAGES) {
-      showToastNotice(imageGalleryStrings.tooManyImagesMessage, 'warning')
+      showToastNotice(
+        replaceWithMaxImages(imageGalleryStrings.tooManyImagesMessage),
+        'warning'
+      )
     } else {
       for (const file of files) {
         const newImagePluginState = imagePlugin.onFiles?.([file])
@@ -103,7 +118,6 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       {focused || isAnyImageFocused ? (
         <ImageGalleryToolbar
           id={id}
-          showAddImagesButton={state.images.length < MAX_IMAGES}
           onAddImagesButtonClick={handleAddImagesButtonClick}
         />
       ) : null}
