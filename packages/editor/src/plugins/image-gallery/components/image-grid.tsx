@@ -40,10 +40,7 @@ export function ImageGrid({
                   className="max-h-96"
                 />
               </button>
-              <div className={hoverOverlayClassNames}>
-                {image.caption}
-                {renderRemoveImageButton(index)}
-              </div>
+              {renderHoverOverlay(image.caption, index)}
             </div>
           )
         }
@@ -60,10 +57,7 @@ export function ImageGrid({
               <button onClick={() => onImageClick(index)}>
                 <img src={leftImage.src} alt={`leftImage ${leftImage.src}`} />
               </button>
-              <div className={hoverOverlayClassNames}>
-                {leftImage.caption}
-                {renderRemoveImageButton(index)}
-              </div>
+              {renderHoverOverlay(leftImage.caption, index)}
             </div>
             <div
               className={wrapperClassNames}
@@ -72,10 +66,7 @@ export function ImageGrid({
               <button onClick={() => onImageClick(index + 1)}>
                 <img src={rightImage.src} alt={`Image ${rightImage.src}`} />
               </button>
-              <div className={hoverOverlayClassNames}>
-                {rightImage.caption}
-                {renderRemoveImageButton(index + 1)}
-              </div>
+              {renderHoverOverlay(rightImage.caption, index + 1)}
             </div>
           </Fragment>
         )
@@ -83,21 +74,25 @@ export function ImageGrid({
     </div>
   )
 
-  function renderRemoveImageButton(index: number) {
-    if (!onRemoveImageButtonClick) return null
+  function renderHoverOverlay(caption: string, index: number) {
     return (
-      <button
-        className={cn(
-          'pointer-events-auto absolute right-4 top-4 h-8 w-8 rounded-full p-1',
-          'bg-black bg-opacity-20 text-white hover:bg-opacity-50'
-        )}
-        onClick={(event) => {
-          event.stopPropagation()
-          onRemoveImageButtonClick(index)
-        }}
-      >
-        <FaIcon icon={faTrashCan} className="text-sm" />
-      </button>
+      <div className={hoverOverlayClassNames}>
+        {caption}
+        {onRemoveImageButtonClick !== undefined ? (
+          <button
+            className={cn(
+              'pointer-events-auto absolute right-4 top-4 h-8 w-8 rounded-full p-1',
+              'bg-black bg-opacity-20 text-white hover:bg-opacity-50'
+            )}
+            onClick={(event) => {
+              event.stopPropagation()
+              onRemoveImageButtonClick(index)
+            }}
+          >
+            <FaIcon icon={faTrashCan} className="text-sm" />
+          </button>
+        ) : null}
+      </div>
     )
   }
 }
