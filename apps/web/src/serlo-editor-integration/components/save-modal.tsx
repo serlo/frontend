@@ -222,12 +222,8 @@ export function SaveModal({
             const { checked } = e.target as HTMLInputElement
             setHasAgreedLicense(checked)
           }}
-        />{' '}
-        <span
-          className="license-wrapper [&_a]:!text-brand hover:[&_a]:underline"
-          dangerouslySetInnerHTML={{ __html: licenseAgreement }}
-        />{' '}
-        <span className="font-bold text-red-500">*</span>
+        />
+        {' Material als OER im Bildungsfeed veröffentlichen'}
       </label>
     )
   }
