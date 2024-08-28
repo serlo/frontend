@@ -36,16 +36,12 @@ const NostrEvent = t.type({
   tags: t.array(t.array(t.string)),
 })
 
-const NostrResource = t.intersection([
-  t.type({
-    id: t.string,
-    image: t.string,
-    name: t.string,
-  }),
-  t.partial({
-    license: t.string,
-  }),
-])
+const NostrResource = t.type({
+  id: t.string,
+  image: t.string,
+  name: t.string,
+  license: t.string,
+})
 
 export function SearchPanel({ onSelect }: SearchPanelProps) {
   const [query, setQuery] = useState('')
@@ -115,8 +111,6 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
             event.tags.map(([x, y]) => [x, y])
           )
 
-          console.log(basicResource)
-
           if (!NostrResource.is(basicResource)) return
 
           if (resourcesFromRelay.find((x) => x.url === basicResource.id)) return
@@ -129,6 +123,7 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
             license: basicResource.license
               ? getLicense(basicResource.license)
               : License.OTHER,
+            licenseUrl: basicResource.license,
             url: basicResource.id,
           })
         }
@@ -139,6 +134,7 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
             image:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/H5P_Logo.png/240px-H5P_Logo.png',
             license: License.CC_BY,
+            licenseUrl: 'https://creativecommons.org/licenses/by/3.0/',
             url: 'https://app.lumi.education/run/J3j0eR',
           })
 
@@ -154,7 +150,7 @@ export function SearchPanel({ onSelect }: SearchPanelProps) {
 
   return (
     <div className="min-h-[100vh]">
-      <h1 className="serlo-h4 mt-4">Bildungs-Feed Suche</h1>
+      <h1 className="serlo-h4 mt-4">Datenraum Suche</h1>
       <div className="relative mt-8">
         <input
           type="text"
@@ -226,6 +222,7 @@ export interface LearningResource {
   name: string
   image: string
   license: License
+  licenseUrl: string
 }
 
 function getLicense(license: string): License {
