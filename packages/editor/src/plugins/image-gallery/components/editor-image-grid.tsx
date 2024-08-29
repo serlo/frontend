@@ -1,6 +1,6 @@
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Descendant } from 'slate'
 
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
@@ -8,6 +8,7 @@ import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
 import { getDimensions } from '../utils/helpers'
+import { cn } from '@/helper/cn'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
@@ -37,6 +38,8 @@ export function EditorImageGrid({
     })
   )
 
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     const setDimensions = async (src: string, index: number) => {
       const dimensions = await getDimensions(src)
@@ -51,32 +54,42 @@ export function EditorImageGrid({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(images)])
 
+  useEffect(() => {
+    if (images.some((image) => image.dimensions.width === 0)) return
+    // leave some time for images to render
+    setTimeout(() => setIsLoading(false), 1000)
+  }, [images])
+
   function handleDrop(dragIndex: number, hoverIndex: number) {
     state.images.move(dragIndex, hoverIndex)
   }
 
-  const isLoading = images.some((image) => image.dimensions.width === 0)
-
-  if (isLoading) return <ImageGridSkeleton />
-
   return (
     <>
-      <ImageGrid
-        images={images}
-        extraChildren={images.map((_, index) => {
-          return (
-            <DragAndDropOverlay
-              key={index}
-              onDrop={handleDrop}
-              onClick={() => onImageClick(index)}
-              index={index}
-              id={index.toString()}
-            />
-          )
-        })}
-        onImageClick={onImageClick}
-        onRemoveImageButtonClick={onRemoveImageButtonClick}
-      />
+      <ImageGridSkeleton className={isLoading ? 'block' : 'hidden'} />
+      <div
+        className={cn(
+          'transition-opacity duration-500',
+          isLoading ? 'opacity-0' : 'opacity-100'
+        )}
+      >
+        <ImageGrid
+          images={images}
+          extraChildren={images.map((_, index) => {
+            return (
+              <DragAndDropOverlay
+                key={index}
+                onDrop={handleDrop}
+                onClick={() => onImageClick(index)}
+                index={index}
+                id={index.toString()}
+              />
+            )
+          })}
+          onImageClick={onImageClick}
+          onRemoveImageButtonClick={onRemoveImageButtonClick}
+        />
+      </div>
     </>
   )
 }
