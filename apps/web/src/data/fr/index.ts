@@ -762,7 +762,8 @@ export const loggedInData = {
           description: 'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
           addImages: 'Add Images',
-          tooManyImagesMessage: 'Image Gallery can only contain up to 8 images.'
+          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
         },
         injection: {
           title: "Contenu de serlo.org",
