@@ -50,6 +50,7 @@ export function EditorImageGrid({
   }, [JSON.stringify(imagesData)])
 
   function handleDrop(dragIndex: number, hoverIndex: number) {
+    if (dragIndex === hoverIndex) return
     state.images.move(
       dragIndex,
       state.images.length === hoverIndex ? hoverIndex - 1 : hoverIndex
