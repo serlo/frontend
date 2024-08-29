@@ -27,7 +27,7 @@ function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
   return (
     <SerloEditor
       initialState={initialState}
-      editorVariant="https://github.com/serlo/serlo-editor-for-edusharing"
+      editorVariant="edusharing"
       onChange={({ changed, getState }) => {
         if (changed){
           console.log(`New state: `, getState())
@@ -103,7 +103,7 @@ See below for the current API specification.
 
 - **`language` (optional)**: The default language is `de`.
 
-- **`editorVariant`**: The variant (integration) of the Serlo editor. For example `serlo-editor-for-edusharing` or `serlo-org`. The editor adds this information to the `StorageFormat` that will be saved. Might become useful for example if we need to apply a migration only to one variant of the editor.
+- **`editorVariant`**: The variant (integration) of the Serlo editor. For example `edusharing` or `serlo-org`. The editor adds this information to the `StorageFormat` that will be saved. Might become useful for example if we need to apply a migration only to one variant of the editor.
 
 - **`_testingSecret` (optional)**: Required to use Image plugin in testing. A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
 
