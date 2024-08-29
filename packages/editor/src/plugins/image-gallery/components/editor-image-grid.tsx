@@ -5,10 +5,9 @@ import { Descendant } from 'slate'
 
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
 import { ImageGrid } from './image-grid'
-import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
 import { GridImage } from '../types'
-import { createGalleryImage } from '../utils/helpers'
+import { getDimensions } from '../utils/helpers'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']
@@ -16,36 +15,51 @@ interface EditorImageGridProps {
   onRemoveImageButtonClick: (index: number) => void
 }
 
+const fallbackSrc =
+  'https://assets.serlo.org/e4dccca0-65bb-11ef-9c32-0d3a496f07ec/image.jpg'
+
 export function EditorImageGrid({
   state,
   onImageClick,
   onRemoveImageButtonClick,
 }: EditorImageGridProps) {
   const [images, setImages] = useState<GridImage[]>([])
-  const [isLoading, setIsLoading] = useState(false)
 
-  const imageIds = state.images.map((id) => id.get())
+  const imageIds = state.images.map(({ imagePlugin }) => imagePlugin.get())
   const imageDocuments = useAppSelector((state) =>
     selectStaticDocuments(state, imageIds)
   )
   const filteredImageDocuments = imageDocuments.filter(isImageDocument)
   const imagesData = filteredImageDocuments.map(
-    ({ state: { src, caption } }) => ({
+    ({ state: { src, caption } }, index) => ({
       src: src as string,
+      dimensions: state.images[index].dimensions,
       // @ts-expect-error - Get caption text
       caption: caption?.state?.[0] as Descendant,
     })
   )
 
   useEffect(() => {
-    const createGalleryImages = async () => {
-      const result = await Promise.all(imagesData.map(createGalleryImage))
-      setImages(result)
-      setIsLoading(false)
+    const setDimensions = async (src: string, index: number) => {
+      const dimensions = await getDimensions(src)
+      state.images[index].dimensions.width.set(dimensions.width)
+      state.images[index].dimensions.height.set(dimensions.height)
     }
 
-    setIsLoading(true)
-    void createGalleryImages()
+    imagesData.forEach((image, index) => {
+      if (!image.src || image.dimensions.width.value !== 0) return
+      void setDimensions(image.src, index)
+    })
+
+    setImages(
+      imagesData.map((image) => ({
+        src: image.src,
+        width: image.dimensions.width.value,
+        height: image.dimensions.height.value,
+        caption: image.caption,
+      }))
+    )
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(imagesData)])
 
@@ -53,11 +67,21 @@ export function EditorImageGrid({
     state.images.move(dragIndex, hoverIndex)
   }
 
-  if (isLoading) return <ImageGridSkeleton />
+  const imagesWithFallback = images.map((image) => {
+    if (!image.src.length) {
+      return {
+        src: fallbackSrc,
+        width: 300,
+        height: 100,
+        caption: image.caption,
+      }
+    }
+    return image
+  })
 
   return (
     <ImageGrid
-      images={images}
+      images={imagesWithFallback}
       extraChildren={imagesData.map((_, index) => {
         return (
           <DragAndDropOverlay

@@ -8,16 +8,18 @@ import { Descendant } from 'slate'
 
 import { ImageGrid } from './components/image-grid'
 import { GridImage } from './types'
-import { createGalleryImage } from './utils/helpers'
 
 export function ImageGalleryStaticRenderer({
   state,
 }: EditorImageGalleryDocument) {
-  const imageDocuments = state.images as EditorImageDocument[]
+  const imageDocuments = state.images.map(
+    (item) => item.imagePlugin
+  ) as EditorImageDocument[]
   const filteredImageDocuments = imageDocuments.filter(isImageDocument)
   const imagesData = filteredImageDocuments.map(
-    ({ state: { src, caption } }) => ({
+    ({ state: { src, caption } }, index) => ({
       src: src as string,
+      dimensions: state.images[index].dimensions,
       // @ts-expect-error - Get caption text
       caption: caption?.state?.[0] as Descendant,
     })
@@ -26,12 +28,15 @@ export function ImageGalleryStaticRenderer({
   const [images, setImages] = useState<GridImage[]>([])
 
   useEffect(() => {
-    const createGalleryImages = async () => {
-      const result = await Promise.all(imagesData.map(createGalleryImage))
-      setImages(result)
-    }
+    setImages(
+      imagesData.map((image) => ({
+        src: image.src,
+        width: image.dimensions.width,
+        height: image.dimensions.height,
+        caption: image.caption,
+      }))
+    )
 
-    void createGalleryImages()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(imagesData)])
 

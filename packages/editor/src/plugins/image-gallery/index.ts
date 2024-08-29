@@ -7,13 +7,19 @@ import {
   child,
   object,
   list,
+  number,
 } from '../../plugin'
 
 export const defaultConfig: ImageGalleryConfig = {}
 
 function createImageGalleryState() {
   return object({
-    images: list(child({ plugin: EditorPluginType.Image })),
+    images: list(
+      object({
+        imagePlugin: child({ plugin: EditorPluginType.Image }),
+        dimensions: object({ width: number(0), height: number(0) }),
+      })
+    ),
   })
 }
 

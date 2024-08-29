@@ -51,7 +51,10 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
       return
     }
 
-    state.images.insert(state.images.length, { plugin: EditorPluginType.Image })
+    state.images.insert(state.images.length, {
+      imagePlugin: { plugin: EditorPluginType.Image },
+      dimensions: { width: 0, height: 0 },
+    })
     setCurrentImageIndex(state.images.length)
     setIsModalOpen(true)
   }
@@ -69,7 +72,10 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
           plugin: EditorPluginType.Image,
           state: newImagePluginState?.state as unknown,
         }
-        state.images.insert(currentImageIndex, newImagePlugin)
+        state.images.insert(currentImageIndex, {
+          imagePlugin: newImagePlugin,
+          dimensions: { width: 0, height: 0 },
+        })
       }
     }
 
@@ -79,7 +85,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   }
 
   function removeDefaultEmptyImagePlugin() {
-    const defaultImagePluginId = state.images[currentImageIndex].id
+    const defaultImagePluginId = state.images[currentImageIndex].imagePlugin.id
     if (selectIsDocumentEmpty(store.getState(), defaultImagePluginId)) {
       state.images.remove(currentImageIndex)
     }
@@ -142,12 +148,12 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
           if (!isOpen) handleImageModalClose()
         }}
       >
-        {state.images.map((image, index) => (
+        {state.images.map(({ imagePlugin }, index) => (
           <div
-            key={image.id}
+            key={imagePlugin.id}
             className={`-mb-6 pt-10 ${index === currentImageIndex ? '' : 'hidden'}`}
           >
-            {image.render({
+            {imagePlugin.render({
               config: { onMultipleUpload: handleMultipleImageUpload },
             })}
           </div>
