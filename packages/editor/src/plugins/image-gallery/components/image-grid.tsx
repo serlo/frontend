@@ -6,7 +6,7 @@ import { Descendant } from 'slate'
 import { GridImage } from '../types'
 import { cn } from '@/helper/cn'
 
-const wrapperClassNames = 'group relative'
+const wrapperClassNames = 'group relative transition-[flex]'
 const hoverOverlayClassNames = cn(
   'pointer-events-none absolute inset-0 flex items-end justify-center p-3 italic text-white',
   'bg-gradient-to-b opacity-0 transition-all duration-100 group-hover:opacity-100',
@@ -20,8 +20,8 @@ interface ImageGridProps {
   onRemoveImageButtonClick?: (index: number) => void
 }
 
-function getFlexString({ dimensions }: GridImage) {
-  return `calc(${dimensions.width} / ${dimensions.height})`
+function getFlex({ dimensions }: GridImage) {
+  return { flex: `calc(${dimensions.width} / ${dimensions.height})` }
 }
 
 export function ImageGrid({
@@ -35,14 +35,15 @@ export function ImageGrid({
       {images.map((leftImage, index) => {
         if (index % 2 !== 0) return null
 
-        const isLastImage = index + 1 === images.length
-        const rightImage = isLastImage ? undefined : images[index + 1]
+        const rightIndex = index + 1
+        const isLastImage = rightIndex === images.length
+        const rightImage = isLastImage ? undefined : images[rightIndex]
 
         return (
           <div className="mb-4 flex gap-4" key={index + leftImage.src}>
             <div
               className={cn(wrapperClassNames, isLastImage && 'mx-auto')}
-              style={isLastImage ? {} : { flex: getFlexString(leftImage) }}
+              style={isLastImage ? {} : getFlex(leftImage)}
             >
               <button onClick={() => onImageClick(index)}>
                 <img
@@ -56,15 +57,12 @@ export function ImageGrid({
               {renderHoverOverlay(leftImage.caption, index)}
             </div>
             {rightImage ? (
-              <div
-                className={wrapperClassNames}
-                style={{ flex: getFlexString(rightImage) }}
-              >
-                <button onClick={() => onImageClick(index + 1)}>
+              <div className={wrapperClassNames} style={getFlex(rightImage)}>
+                <button onClick={() => onImageClick(rightIndex)}>
                   <img src={rightImage.src} alt={`Image ${rightImage.src}`} />
                 </button>
-                {extraChildren?.[index + 1]}
-                {renderHoverOverlay(rightImage.caption, index + 1)}
+                {extraChildren?.[rightIndex]}
+                {renderHoverOverlay(rightImage.caption, rightIndex)}
               </div>
             ) : null}
           </div>
