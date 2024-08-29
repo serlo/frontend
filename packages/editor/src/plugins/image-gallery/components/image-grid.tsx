@@ -20,8 +20,8 @@ interface ImageGridProps {
   onRemoveImageButtonClick?: (index: number) => void
 }
 
-function getFlexString(img: GridImage) {
-  return `calc(${img.width} / ${img.height})`
+function getFlexString({ dimensions }: GridImage) {
+  return `calc(${dimensions.width} / ${dimensions.height})`
 }
 
 export function ImageGrid({

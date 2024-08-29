@@ -25,10 +25,13 @@ export function EditorImageGrid({
     selectStaticDocuments(state, imageIds)
   )
   const filteredImageDocuments = imageDocuments.filter(isImageDocument)
-  const imagesData = filteredImageDocuments.map(
+  const images = filteredImageDocuments.map(
     ({ state: { src, caption } }, index) => ({
       src: src as string,
-      dimensions: state.images[index].dimensions,
+      dimensions: {
+        width: state.images[index].dimensions.width.value,
+        height: state.images[index].dimensions.height.value,
+      },
       // @ts-expect-error - Get caption text
       caption: caption?.state?.[0] as Descendant,
     })
@@ -41,48 +44,39 @@ export function EditorImageGrid({
       state.images[index].dimensions.height.set(dimensions.height)
     }
 
-    imagesData.forEach((image, index) => {
-      if (!image.src || image.dimensions.width.value !== 0) return
+    images.forEach((image, index) => {
+      if (!image.src || image.dimensions.width !== 0) return
       void setDimensions(image.src, index)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(imagesData)])
+  }, [JSON.stringify(images)])
 
   function handleDrop(dragIndex: number, hoverIndex: number) {
     state.images.move(dragIndex, hoverIndex)
   }
 
-  const isLoading = imagesData.some(
-    (image) => image.dimensions.width.value === 0
-  )
+  const isLoading = images.some((image) => image.dimensions.width === 0)
 
   if (isLoading) return <ImageGridSkeleton />
 
-  const imagesWithFallback = imagesData.map((image, index) => {
-    return {
-      src: image.src,
-      width: imagesData[index].dimensions.width.value,
-      height: imagesData[index].dimensions.height.value,
-      caption: image.caption,
-    }
-  })
-
   return (
-    <ImageGrid
-      images={imagesWithFallback}
-      extraChildren={imagesData.map((_, index) => {
-        return (
-          <DragAndDropOverlay
-            key={index}
-            onDrop={handleDrop}
-            onClick={() => onImageClick(index)}
-            index={index}
-            id={index.toString()}
-          />
-        )
-      })}
-      onImageClick={onImageClick}
-      onRemoveImageButtonClick={onRemoveImageButtonClick}
-    />
+    <>
+      <ImageGrid
+        images={images}
+        extraChildren={images.map((_, index) => {
+          return (
+            <DragAndDropOverlay
+              key={index}
+              onDrop={handleDrop}
+              onClick={() => onImageClick(index)}
+              index={index}
+              id={index.toString()}
+            />
+          )
+        })}
+        onImageClick={onImageClick}
+        onRemoveImageButtonClick={onRemoveImageButtonClick}
+      />
+    </>
   )
 }
