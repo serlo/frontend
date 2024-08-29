@@ -30,7 +30,6 @@ export function ImageGrid({
 }: ImageGridProps) {
   return (
     <div>
-      {}
       {images.map((leftImage, index) => {
         if (index % 2 !== 0) return null
 
