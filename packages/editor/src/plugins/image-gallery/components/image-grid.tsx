@@ -20,8 +20,8 @@ interface ImageGridProps {
   onRemoveImageButtonClick?: (index: number) => void
 }
 
-function getFlexString(img: GridImage) {
-  return `calc(${img.width} / ${img.height})`
+function getFlex(img: GridImage) {
+  return { flex: `calc(${img.width} / ${img.height})` }
 }
 
 export function ImageGrid({
@@ -43,7 +43,7 @@ export function ImageGrid({
           <div className="mb-4 flex gap-4" key={leftImage.src}>
             <div
               className={cn(wrapperClassNames, isLastImage && 'mx-auto')}
-              style={isLastImage ? {} : { flex: getFlexString(leftImage) }}
+              style={isLastImage ? {} : getFlex(leftImage)}
             >
               <button onClick={() => onImageClick(index)}>
                 <img
@@ -57,10 +57,7 @@ export function ImageGrid({
               {renderHoverOverlay(leftImage.caption, index)}
             </div>
             {rightImage ? (
-              <div
-                className={wrapperClassNames}
-                style={{ flex: getFlexString(rightImage) }}
-              >
+              <div className={wrapperClassNames} style={getFlex(rightImage)}>
                 <button onClick={() => onImageClick(rightIndex)}>
                   <img src={rightImage.src} alt={`Image ${rightImage.src}`} />
                 </button>

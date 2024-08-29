@@ -19,7 +19,7 @@ export function DragAndDropOverlay({
   const [{ isHovering }, drop] = useDrop({
     accept: imageGalleryType,
     collect: (monitor) => ({ isHovering: monitor.isOver() }),
-    drop: (item) => onDrop((item as { index: number }).index, index),
+    drop: (item: { index: number }) => onDrop(item.index, index),
   })
 
   const [{ isDragging }, drag] = useDrag({
