@@ -30,7 +30,8 @@ export function ImageGalleryStaticRenderer({
 
   const isLoading = images.some((image) => image.dimensions.width === 0)
 
-  if (isLoading) return <>…</>
+  // Only happens in editor preview
+  if (isLoading) return null
 
   return (
     <div className="p-4">
