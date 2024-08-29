@@ -762,7 +762,8 @@ export const loggedInData = {
           description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
           addImages: "Bilder hinzufügen",
-          tooManyImagesMessage: 'Image Gallery can only contain up to 8 images.'
+          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
         },
         injection: {
           title: "serlo.org Inhalt",
