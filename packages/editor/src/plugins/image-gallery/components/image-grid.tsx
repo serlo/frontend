@@ -6,10 +6,10 @@ import { Descendant } from 'slate'
 import { GridImage } from '../types'
 import { cn } from '@/helper/cn'
 
-const wrapperClassNames = 'group relative transition-[flex]'
+const wrapperClassNames = 'group relative'
 const hoverOverlayClassNames = cn(
   'pointer-events-none absolute inset-0 flex items-end justify-center p-3 italic text-white',
-  'bg-gradient-to-b opacity-0 transition-all duration-100 group-hover:opacity-100',
+  'opacity-0 transition-opacity duration-100 group-hover:opacity-100',
   'bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.15)] via-70% to-[rgba(0,0,0,0.8)] to-85%'
 )
 
@@ -20,8 +20,8 @@ interface ImageGridProps {
   onRemoveImageButtonClick?: (index: number) => void
 }
 
-function getFlex(img: GridImage) {
-  return { flex: `calc(${img.width} / ${img.height})` }
+function getFlex({ dimensions }: GridImage) {
+  return { flex: `calc(${dimensions.width} / ${dimensions.height})` }
 }
 
 export function ImageGrid({
@@ -40,7 +40,7 @@ export function ImageGrid({
         const rightImage = isLastImage ? undefined : images[rightIndex]
 
         return (
-          <div className="mb-4 flex gap-4" key={leftImage.src}>
+          <div className="mb-4 flex gap-4" key={index + leftImage.src}>
             <div
               className={cn(wrapperClassNames, isLastImage && 'mx-auto')}
               style={isLastImage ? {} : getFlex(leftImage)}

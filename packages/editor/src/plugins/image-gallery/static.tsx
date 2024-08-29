@@ -3,42 +3,35 @@ import {
   EditorImageGalleryDocument,
 } from '@editor/types/editor-plugins'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
-import { useEffect, useState } from 'react'
 import { Descendant } from 'slate'
 
 import { ImageGrid } from './components/image-grid'
-import { GridImage } from './types'
-import { createGalleryImage } from './utils/helpers'
 
 export function ImageGalleryStaticRenderer({
   state,
 }: EditorImageGalleryDocument) {
-  const imageDocuments = state.images as EditorImageDocument[]
+  const imageDocuments = state.images.map(
+    (item) => item.imagePlugin
+  ) as EditorImageDocument[]
   const filteredImageDocuments = imageDocuments.filter(isImageDocument)
-  const imagesData = filteredImageDocuments.map(
-    ({ state: { src, caption } }) => ({
+  const images = filteredImageDocuments.map(
+    ({ state: { src, caption } }, index) => ({
       src: src as string,
+      dimensions: state.images[index].dimensions,
       // @ts-expect-error - Get caption text
       caption: caption?.state?.[0] as Descendant,
     })
   )
 
-  const [images, setImages] = useState<GridImage[]>([])
-
-  useEffect(() => {
-    const createGalleryImages = async () => {
-      const result = await Promise.all(imagesData.map(createGalleryImage))
-      setImages(result)
-    }
-
-    void createGalleryImages()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(imagesData)])
-
   function handleImageClick(index: number) {
     console.log('Clicked image at index:', index)
     // TODO: Lightbox feature will be implemented, linear issue PE-57
   }
+
+  const isLoading = images.some((image) => image.dimensions.width === 0)
+
+  // Only happens in editor preview
+  if (isLoading) return null
 
   return (
     <div className="p-4">
