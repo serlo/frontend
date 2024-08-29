@@ -1,5 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { getCurrentDatetime } from '@editor/util/get-current-datetime'
 import * as t from 'io-ts'
 import { v4 as uuid_v4 } from 'uuid'
 
@@ -123,7 +124,3 @@ const StorageFormatType = t.type({
   }),
 })
 export type StorageFormat = t.TypeOf<typeof StorageFormatType>
-
-export function getCurrentDatetime() {
-  return new Date().toISOString()
-}

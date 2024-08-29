@@ -8,6 +8,7 @@ import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { getCurrentDatetime } from '@editor/util/get-current-datetime'
 import React from 'react'
 
 import { defaultSerloEditorProps } from './config'
@@ -16,12 +17,12 @@ import { getEditorVersion } from './editor-version'
 import {
   type StorageFormat,
   createEmptyDocument,
-  getCurrentDatetime,
   migrate,
   type EditorVariant,
 } from './storage-format'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
+
 import '@/assets-webkit/styles/serlo-tailwind.css'
 
 export interface SerloEditorProps {
