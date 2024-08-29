@@ -39,7 +39,7 @@ export function ImageGrid({
         const rightImage = isLastImage ? undefined : images[index + 1]
 
         return (
-          <div className="mb-4 flex gap-4" key={leftImage.src}>
+          <div className="mb-4 flex gap-4" key={index + leftImage.src}>
             <div
               className={cn(wrapperClassNames, isLastImage && 'mx-auto')}
               style={isLastImage ? {} : { flex: getFlexString(leftImage) }}

@@ -1,12 +1,12 @@
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Descendant } from 'slate'
 
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
 import { ImageGrid } from './image-grid'
+import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
-import { GridImage } from '../types'
 import { getDimensions } from '../utils/helpers'
 
 interface EditorImageGridProps {
@@ -15,16 +15,11 @@ interface EditorImageGridProps {
   onRemoveImageButtonClick: (index: number) => void
 }
 
-const fallbackSrc =
-  'https://assets.serlo.org/e4dccca0-65bb-11ef-9c32-0d3a496f07ec/image.jpg'
-
 export function EditorImageGrid({
   state,
   onImageClick,
   onRemoveImageButtonClick,
 }: EditorImageGridProps) {
-  const [images, setImages] = useState<GridImage[]>([])
-
   const imageIds = state.images.map(({ imagePlugin }) => imagePlugin.get())
   const imageDocuments = useAppSelector((state) =>
     selectStaticDocuments(state, imageIds)
@@ -50,16 +45,6 @@ export function EditorImageGrid({
       if (!image.src || image.dimensions.width.value !== 0) return
       void setDimensions(image.src, index)
     })
-
-    setImages(
-      imagesData.map((image) => ({
-        src: image.src,
-        width: image.dimensions.width.value,
-        height: image.dimensions.height.value,
-        caption: image.caption,
-      }))
-    )
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(imagesData)])
 
@@ -67,16 +52,19 @@ export function EditorImageGrid({
     state.images.move(dragIndex, hoverIndex)
   }
 
-  const imagesWithFallback = images.map((image) => {
-    if (!image.src.length) {
-      return {
-        src: fallbackSrc,
-        width: 300,
-        height: 100,
-        caption: image.caption,
-      }
+  const isLoading = imagesData.some(
+    (image) => image.dimensions.width.value === 0
+  )
+
+  if (isLoading) return <ImageGridSkeleton />
+
+  const imagesWithFallback = imagesData.map((image, index) => {
+    return {
+      src: image.src,
+      width: imagesData[index].dimensions.width.value,
+      height: imagesData[index].dimensions.height.value,
+      caption: image.caption,
     }
-    return image
   })
 
   return (
