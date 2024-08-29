@@ -6,7 +6,7 @@ import { Descendant } from 'slate'
 import { GridImage } from '../types'
 import { cn } from '@/helper/cn'
 
-const wrapperClassNames = 'group relative transition-[flex]'
+const wrapperClassNames = 'group relative'
 const hoverOverlayClassNames = cn(
   'pointer-events-none absolute inset-0 flex items-end justify-center p-3 italic text-white',
   'opacity-0 transition-opacity duration-100 group-hover:opacity-100',
