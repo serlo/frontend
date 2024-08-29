@@ -3,11 +3,9 @@ import {
   EditorImageGalleryDocument,
 } from '@editor/types/editor-plugins'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
-import { useEffect, useState } from 'react'
 import { Descendant } from 'slate'
 
 import { ImageGrid } from './components/image-grid'
-import { GridImage } from './types'
 
 export function ImageGalleryStaticRenderer({
   state,
@@ -25,25 +23,21 @@ export function ImageGalleryStaticRenderer({
     })
   )
 
-  const [images, setImages] = useState<GridImage[]>([])
-
-  useEffect(() => {
-    setImages(
-      imagesData.map((image) => ({
-        src: image.src,
-        width: image.dimensions.width,
-        height: image.dimensions.height,
-        caption: image.caption,
-      }))
-    )
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(imagesData)])
-
   function handleImageClick(index: number) {
     console.log('Clicked image at index:', index)
     // TODO: Lightbox feature will be implemented, linear issue PE-57
   }
+
+  const isLoading = imagesData.some((image) => image.dimensions.width === 0)
+
+  if (isLoading) return <>…</>
+
+  const images = imagesData.map((image) => ({
+    src: image.src,
+    width: image.dimensions.width,
+    height: image.dimensions.height,
+    caption: image.caption,
+  }))
 
   return (
     <div className="p-4">
