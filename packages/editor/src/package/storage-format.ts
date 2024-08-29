@@ -103,8 +103,11 @@ export function migrate(stateBeforeMigration: unknown): {
 
 /** The variant of the Serlo editor that created this saved data */
 const EditorVariantType = t.union([
-  t.literal('https://github.com/serlo/serlo-editor-for-edusharing'),
-  t.literal('https://github.com/serlo/serlo-editor-as-lti-tool/'),
+  t.literal('edusharing'),
+  t.literal('lti-tool'),
+  t.literal('serlo-org'),
+  t.literal('moodle'),
+  t.literal('chancenwerk'),
 ])
 export type EditorVariant = t.TypeOf<typeof EditorVariantType>
 
