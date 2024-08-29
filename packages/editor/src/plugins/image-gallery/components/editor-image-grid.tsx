@@ -3,6 +3,7 @@ import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
 import { Descendant } from 'slate'
 
+import { DragAndDropOverlay } from './drag-and-drop-overlay'
 import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
 import type { ImageGalleryProps } from '..'
@@ -48,11 +49,26 @@ export function EditorImageGrid({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(imagesData)])
 
+  function handleDrop(dragIndex: number, hoverIndex: number) {
+    state.images.move(dragIndex, hoverIndex)
+  }
+
   if (isLoading) return <ImageGridSkeleton />
 
   return (
     <ImageGrid
       images={images}
+      extraChildren={imagesData.map((_, index) => {
+        return (
+          <DragAndDropOverlay
+            key={index}
+            onDrop={handleDrop}
+            onClick={() => onImageClick(index)}
+            index={index}
+            id={index.toString()}
+          />
+        )
+      })}
       onImageClick={onImageClick}
       onRemoveImageButtonClick={onRemoveImageButtonClick}
     />

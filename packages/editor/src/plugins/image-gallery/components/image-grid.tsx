@@ -15,6 +15,7 @@ const hoverOverlayClassNames = cn(
 
 interface ImageGridProps {
   images: GridImage[]
+  extraChildren?: JSX.Element[]
   onImageClick: (index: number) => void
   onRemoveImageButtonClick?: (index: number) => void
 }
@@ -25,6 +26,7 @@ function getFlexString(img: GridImage) {
 
 export function ImageGrid({
   images,
+  extraChildren,
   onImageClick,
   onRemoveImageButtonClick,
 }: ImageGridProps) {
@@ -50,6 +52,7 @@ export function ImageGrid({
                   className={cn(isLastImage && 'max-h-96')}
                 />
               </button>
+              {extraChildren?.[index]}
               {renderHoverOverlay(leftImage.caption, index)}
             </div>
             {rightImage ? (
@@ -60,6 +63,7 @@ export function ImageGrid({
                 <button onClick={() => onImageClick(index + 1)}>
                   <img src={rightImage.src} alt={`Image ${rightImage.src}`} />
                 </button>
+                {extraChildren?.[index + 1]}
                 {renderHoverOverlay(rightImage.caption, index + 1)}
               </div>
             ) : null}
