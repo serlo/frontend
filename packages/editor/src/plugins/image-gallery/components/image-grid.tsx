@@ -1,6 +1,4 @@
 import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { Descendant } from 'slate'
 
 import { GridImage } from '../types'
@@ -17,7 +15,7 @@ interface ImageGridProps {
   images: GridImage[]
   extraChildren?: JSX.Element[]
   onImageClick: (index: number) => void
-  onRemoveImageButtonClick?: (index: number) => void
+  renderRemoveImageButton?: (index: number) => JSX.Element
 }
 
 function getFlex({ dimensions }: GridImage) {
@@ -28,7 +26,7 @@ export function ImageGrid({
   images,
   extraChildren,
   onImageClick,
-  onRemoveImageButtonClick,
+  renderRemoveImageButton,
 }: ImageGridProps) {
   return (
     <div>
@@ -77,20 +75,7 @@ export function ImageGrid({
         <div className="pointer-events-auto [&_a]:text-brand-400">
           <StaticSlate element={caption} />
         </div>
-        {onRemoveImageButtonClick !== undefined ? (
-          <button
-            className={cn(
-              'pointer-events-auto absolute right-4 top-4 h-8 w-8 rounded-full p-1',
-              'bg-black bg-opacity-20 text-white hover:bg-opacity-50'
-            )}
-            onClick={(event) => {
-              event.stopPropagation()
-              onRemoveImageButtonClick(index)
-            }}
-          >
-            <FaIcon icon={faTrashCan} className="text-sm" />
-          </button>
-        ) : null}
+        {renderRemoveImageButton?.(index)}
       </div>
     )
   }

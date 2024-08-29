@@ -6,6 +6,7 @@ import { Descendant } from 'slate'
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
 import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
+import { RemoveImageButton } from './remove-image-button'
 import type { ImageGalleryProps } from '..'
 import { getDimensions } from '../utils/helpers'
 import { cn } from '@/helper/cn'
@@ -90,9 +91,13 @@ export function EditorImageGrid({
             )
           })}
           onImageClick={onImageClick}
-          onRemoveImageButtonClick={onRemoveImageButtonClick}
+          renderRemoveImageButton={renderRemoveImageButton}
         />
       </div>
     </>
   )
+
+  function renderRemoveImageButton(index: number) {
+    return <RemoveImageButton onClick={() => onRemoveImageButtonClick(index)} />
+  }
 }
