@@ -74,7 +74,9 @@ export function ImageGrid({
   function renderHoverOverlay(caption: Descendant, index: number) {
     return (
       <div className={hoverOverlayClassNames}>
-        <StaticSlate element={caption} />
+        <div className="pointer-events-auto">
+          <StaticSlate element={caption} />
+        </div>
         {onRemoveImageButtonClick !== undefined ? (
           <button
             className={cn(
