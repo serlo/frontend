@@ -7,16 +7,15 @@ import { cn } from '@/helper/cn'
 
 interface ImageGalleryToolbarProps {
   id: string
-  showAddImagesButton: boolean
   onAddImagesButtonClick: () => void
 }
 
 export const ImageGalleryToolbar = (props: ImageGalleryToolbarProps) => {
-  const { id, showAddImagesButton, onAddImagesButtonClick } = props
+  const { id, onAddImagesButtonClick } = props
 
   const imageGalleryStrings = useEditorStrings().plugins.imageGallery
 
-  const pluginSettings = showAddImagesButton ? (
+  const pluginSettings = (
     <button
       onClick={onAddImagesButtonClick}
       className={cn(
@@ -26,7 +25,7 @@ export const ImageGalleryToolbar = (props: ImageGalleryToolbarProps) => {
     >
       {imageGalleryStrings.addImages} {' +'}
     </button>
-  ) : undefined
+  )
 
   return (
     <PluginToolbar
