@@ -1,9 +1,11 @@
+import { cn } from '@/helper/cn'
+
 const baseClasses =
   'flex items-center justify-center h-40 animate-pulse bg-gray-300'
 
-export function ImageGridSkeleton() {
+export function ImageGridSkeleton({ className }: { className?: string }) {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className={cn(className, 'flex flex-wrap gap-4')}>
       <div className={`${baseClasses} w-[calc(34%-0.5rem)]`}>
         {renderImageIcon()}
       </div>

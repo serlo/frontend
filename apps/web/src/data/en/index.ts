@@ -837,7 +837,9 @@ export const loggedInData = {
             'Modal displaying single image options for caption and settings.',
           addImages: 'Add Images',
           tooManyImagesMessage:
-            'Image Gallery can only contain up to 8 images.',
+            'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage:
+            'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.',
         },
         injection: {
           title: 'serlo.org Content',

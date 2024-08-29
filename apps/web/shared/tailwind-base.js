@@ -128,6 +128,11 @@ export default {
       },
       backgroundSize: {
         '100%': '100% 100%',
+        'size-200': '200% 200%',
+      },
+      backgroundPosition: {
+        'pos-0': '0% 0%',
+        'pos-100': '100% 100%',
       },
       minHeight: {
         8: '32px',
