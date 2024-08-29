@@ -50,7 +50,10 @@ export function EditorImageGrid({
   }, [JSON.stringify(imagesData)])
 
   function handleDrop(dragIndex: number, hoverIndex: number) {
-    state.images.move(dragIndex, hoverIndex)
+    state.images.move(
+      dragIndex,
+      state.images.length === hoverIndex ? hoverIndex - 1 : hoverIndex
+    )
   }
 
   if (isLoading) return <ImageGridSkeleton />
@@ -65,6 +68,7 @@ export function EditorImageGrid({
             onDrop={handleDrop}
             onClick={() => onImageClick(index)}
             index={index}
+            isLast={index + 1 === images.length}
             id={index.toString()}
           />
         )

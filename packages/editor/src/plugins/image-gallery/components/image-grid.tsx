@@ -35,8 +35,9 @@ export function ImageGrid({
       {images.map((leftImage, index) => {
         if (index % 2 !== 0) return null
 
-        const isLastImage = index + 1 === images.length
-        const rightImage = isLastImage ? undefined : images[index + 1]
+        const rightIndex = index + 1
+        const isLastImage = rightIndex === images.length
+        const rightImage = isLastImage ? undefined : images[rightIndex]
 
         return (
           <div className="mb-4 flex gap-4" key={leftImage.src}>
@@ -60,11 +61,11 @@ export function ImageGrid({
                 className={wrapperClassNames}
                 style={{ flex: getFlexString(rightImage) }}
               >
-                <button onClick={() => onImageClick(index + 1)}>
+                <button onClick={() => onImageClick(rightIndex)}>
                   <img src={rightImage.src} alt={`Image ${rightImage.src}`} />
                 </button>
-                {extraChildren?.[index + 1]}
-                {renderHoverOverlay(rightImage.caption, index + 1)}
+                {extraChildren?.[rightIndex]}
+                {renderHoverOverlay(rightImage.caption, rightIndex)}
               </div>
             ) : null}
           </div>
