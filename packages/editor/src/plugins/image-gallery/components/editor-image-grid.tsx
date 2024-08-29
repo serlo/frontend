@@ -68,7 +68,6 @@ export function EditorImageGrid({
             onDrop={handleDrop}
             onClick={() => onImageClick(index)}
             index={index}
-            id={index.toString()}
           />
         )
       })}
