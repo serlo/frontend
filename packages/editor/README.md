@@ -28,10 +28,8 @@ function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
     <SerloEditor
       initialState={initialState}
       editorVariant="edusharing"
-      onChange={({ changed, getState }) => {
-        if (changed){
-          console.log(`New state: `, getState())
-        }
+      onChange={(newState) => {
+        console.log(`New state: `, newState)
       }}
     >
       {({ editor }) => (
@@ -99,7 +97,7 @@ See below for the current API specification.
 
 - **`initialState` (optional)**: Pass in an `initialState` to the `SerloEditor` component to prevent seeing an empty editor state. [Here is the documentation](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins) for sample initial states of each plugin, in case you want to render the Editor displaying a particular plugin by default.
 
-- **`onChange` (optional)**: To receive state changes of the editor and persist the content into your own infrastructure, use the `onChange` callback of the `SerloEditor` component. It's a function with the signature `({ changed, getState }) => void` of which you can call `getState()` to fetch the latest content state.
+- **`onChange` (optional)**: To receive state changes of the editor and persist the content into your own infrastructure, use the `onChange` callback of the `SerloEditor` component. It's a function with the signature `(state: StorageFormat) => void`.
 
 - **`language` (optional)**: The default language is `de`.
 
