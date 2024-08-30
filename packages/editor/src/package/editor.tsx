@@ -29,10 +29,7 @@ export interface SerloEditorProps {
   children: EditorProps['children']
   plugins?: (EditorPluginType | TemplatePluginType)[]
   initialState?: unknown // Either type `StorageFormat` or outdated storage format that will be migrated to `StorageFormat`
-  onChange?: (payload: {
-    changed: boolean
-    getState: () => StorageFormat | null
-  }) => void
+  onChange?: (state: StorageFormat) => void
   language?: SupportedLanguage
   editorVariant: EditorVariant
   _testingSecret?: string
@@ -61,12 +58,7 @@ export function SerloEditor(props: SerloEditorProps) {
   const { migratedState, stateChanged } = migrate(initialState)
 
   if (onChange && stateChanged) {
-    onChange({
-      changed: true,
-      getState: () => {
-        return migratedState
-      },
-    })
+    onChange(migratedState)
   }
 
   const { instanceData, loggedInData } = editorData[language]
@@ -94,24 +86,16 @@ export function SerloEditor(props: SerloEditorProps) {
     </InstanceDataProvider>
   )
 
-  function handleDocumentChange(payload: {
-    changed: boolean
-    getDocument: GetDocument
-  }) {
+  // Parameter `changed` is ignored. Even if it is false, we still want to call onChange.
+  function handleDocumentChange({ getDocument }: { getDocument: GetDocument }) {
     if (!onChange) return
-    const dateModified = getCurrentDatetime()
+    const document = getDocument()
+    if (!document) return
     onChange({
-      changed: payload.changed,
-      getState: () => {
-        const document = payload.getDocument()
-        if (!document) return null
-        return {
-          ...migratedState,
-          dateModified,
-          editorVersion: getEditorVersion(),
-          document,
-        }
-      },
+      ...migratedState,
+      dateModified: getCurrentDatetime(),
+      editorVersion: getEditorVersion(),
+      document,
     })
   }
 }
