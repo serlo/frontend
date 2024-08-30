@@ -30,9 +30,10 @@ export interface BaseEditor {
   selectRootDocument: () => AnyEditorDocument
 }
 
-type GetDocument = () => DocumentState | null
+export type GetDocument = () => DocumentState | null
 
 export type OnEditorChange = (payload: {
+  /** False if the user undos all changes and arrives back at the initial state */
   changed: boolean
   getDocument: GetDocument
 }) => void

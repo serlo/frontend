@@ -99,4 +99,8 @@ export default defineConfig({
       },
     }),
   ],
+  define: {
+    // Makes Vite pull the version from editor/package.json and make it available in editor code
+    __EDITOR_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
 })
