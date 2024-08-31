@@ -4,7 +4,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEffect, useRef } from 'react'
-import { Key } from 'ts-key-enum'
 
 interface StaticLightboxSliderProps {
   enabled: boolean
@@ -24,11 +23,11 @@ export function StaticLightboxSlider({
 
   useEffect(() => {
     function handleDocumentKeyPress(event: KeyboardEvent) {
-      if (event.key === Key.ArrowLeft) {
+      if (event.key === 'ArrowLeft') {
         onPrevious()
         previousButton.current?.focus()
       }
-      if (event.key === Key.ArrowRight) {
+      if (event.key === 'ArrowRight') {
         onNext()
         nextButton.current?.focus()
       }
