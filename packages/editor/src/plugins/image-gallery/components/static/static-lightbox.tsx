@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 
 import { StaticLightboxImage } from './static-lightbox-image'
 import { StaticLightboxSlider } from './static-lightbox-slider'
@@ -36,17 +36,17 @@ export function StaticLightbox({
     setIsOpen(false)
   }
 
-  function goToPreviousImage() {
+  const goToPreviousImage = useCallback(() => {
     setCurrentImageIndex(
       currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1
     )
-  }
+  }, [currentImageIndex, images.length, setCurrentImageIndex])
 
-  function goToNextImage() {
+  const goToNextImage = useCallback(() => {
     setCurrentImageIndex(
       currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1
     )
-  }
+  }, [currentImageIndex, images.length, setCurrentImageIndex])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

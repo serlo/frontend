@@ -3,8 +3,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useRef } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
+import { useEffect, useRef } from 'react'
 import { Key } from 'ts-key-enum'
 
 interface StaticLightboxSliderProps {
@@ -23,18 +22,26 @@ export function StaticLightboxSlider({
   const previousButton = useRef<HTMLButtonElement>(null)
   const nextButton = useRef<HTMLButtonElement>(null)
 
-  useHotkeys([Key.ArrowLeft, Key.ArrowRight], handleArrowKeyPress, { enabled })
+  useEffect(() => {
+    function handleDocumentKeyPress(event: KeyboardEvent) {
+      if (event.key === Key.ArrowLeft) {
+        onPrevious()
+        previousButton.current?.focus()
+      }
+      if (event.key === Key.ArrowRight) {
+        onNext()
+        nextButton.current?.focus()
+      }
+    }
 
-  function handleArrowKeyPress(event: KeyboardEvent) {
-    if (event.key === Key.ArrowLeft) {
-      onPrevious()
-      previousButton.current?.focus()
+    if (enabled) {
+      document.addEventListener('keydown', handleDocumentKeyPress)
+    } else {
+      document.removeEventListener('keydown', handleDocumentKeyPress)
     }
-    if (event.key === Key.ArrowRight) {
-      onNext()
-      nextButton.current?.focus()
-    }
-  }
+
+    return () => document.removeEventListener('keydown', handleDocumentKeyPress)
+  }, [enabled, onNext, onPrevious])
 
   return (
     <>
