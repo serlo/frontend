@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Descendant } from 'slate'
 
 import { ImageGrid } from './components/image-grid'
+import { StaticCarousel } from './components/static/static-carousel'
 import { StaticLightbox } from './components/static/static-lightbox'
 
 export function ImageGalleryStaticRenderer({
@@ -39,18 +40,24 @@ export function ImageGalleryStaticRenderer({
   if (isLoading) return null
 
   return (
-    <div className="p-4">
-      <ImageGrid images={images} onImageClick={handleImageClick} />
+    <>
+      <div className="hidden p-4 sm:block">
+        <ImageGrid images={images} onImageClick={handleImageClick} />
 
-      {images.length && currentImageIndex !== null ? (
-        <StaticLightbox
-          images={images}
-          isOpen={isLightboxOpen}
-          currentImageIndex={currentImageIndex}
-          setIsOpen={setIsLightboxOpen}
-          setCurrentImageIndex={setCurrentImageIndex}
-        />
-      ) : null}
-    </div>
+        {images.length && currentImageIndex !== null ? (
+          <StaticLightbox
+            images={images}
+            isOpen={isLightboxOpen}
+            currentImageIndex={currentImageIndex}
+            setIsOpen={setIsLightboxOpen}
+            setCurrentImageIndex={setCurrentImageIndex}
+          />
+        ) : null}
+      </div>
+
+      <div className="sm:hidden">
+        <StaticCarousel images={images} />
+      </div>
+    </>
   )
 }
