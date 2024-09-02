@@ -761,6 +761,7 @@ export const loggedInData = {
           title: "Bilder Galerie",
           description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
+          lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
           addImages: "Bilder hinzufügen",
           tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
           alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
