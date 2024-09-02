@@ -67,7 +67,8 @@ export function ImageGrid({
         className={cn(
           'absolute inset-0 flex items-end justify-center p-3 italic text-white',
           'pointer-events-none opacity-0 transition-opacity duration-100 group-hover:opacity-100',
-          'bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.15)] via-70% to-[rgba(0,0,0,0.8)] to-85%'
+          caption &&
+            'bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.15)] via-70% to-[rgba(0,0,0,0.8)] to-85%'
         )}
       >
         {caption ? (
