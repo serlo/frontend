@@ -1,3 +1,4 @@
+import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
@@ -34,8 +35,10 @@ export function EditorImageGrid({
         width: state.images[index].dimensions.width.value,
         height: state.images[index].dimensions.height.value,
       },
-      // @ts-expect-error - Get caption text
-      caption: caption?.state?.[0] as Descendant,
+      caption: isEmptyTextDocument(caption)
+        ? undefined
+        : // @ts-expect-error - Get caption text
+          (caption?.state?.[0] as Descendant),
     })
   )
 
