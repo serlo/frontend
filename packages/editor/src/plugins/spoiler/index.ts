@@ -47,10 +47,12 @@ const possiblePlugins: EditorPluginType[] = [
   EditorPluginType.EdusharingAsset,
 
   EditorPluginType.DropzoneImage,
+  EditorPluginType.Solution,
   EditorPluginType.H5p,
   EditorPluginType.InputExercise,
   EditorPluginType.ScMcExercise,
   EditorPluginType.BlanksExercise,
+  EditorPluginType.TextAreaExercise,
 ]
 
 export function createSpoilerPlugin(
