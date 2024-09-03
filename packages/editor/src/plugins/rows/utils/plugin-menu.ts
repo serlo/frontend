@@ -16,7 +16,6 @@ export function createOption(
   const pluginData = editorPlugins
     .getAllWithData()
     .find((plugin) => plugin.type === pluginType)
-  console.log(pluginData)
 
   if (!pluginData) {
     return { pluginType, title: pluginType }
