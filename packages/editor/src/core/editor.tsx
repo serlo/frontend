@@ -13,9 +13,7 @@ export function Editor(props: EditorProps) {
   return (
     <Provider store={store}>
       <DndWrapper>
-        <HotkeysProvider
-          initiallyActiveScopes={['global', 'root-up-down-enter']}
-        >
+        <HotkeysProvider initiallyActiveScopes={['global']}>
           <InnerDocument {...props} />
         </HotkeysProvider>
       </DndWrapper>
