@@ -22,6 +22,11 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // this should not change – so we don't need to use useAppSelector here
   const parentType = selectParentPluginType(store.getState(), id)
 
+  // TODO: For finally integrating AI into the editor it would be better to
+  // create a new plugin type for the main content type, something like a
+  // plugin "learningResource"
+  const isRootRow = parentType === EditorPluginType.Rows
+
   const isParentTemplatePlugin = parentType?.startsWith('type-')
   const showLargeAddButton =
     parentType === EditorPluginType.Article || isParentTemplatePlugin
@@ -36,6 +41,11 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   }
 
   function handleInsertPlugin(pluginType: EditorPluginType) {
+    if (pluginType === EditorPluginType.AiGeneratedContent) {
+      handleInsertAiGeneratedContent()
+      return
+    }
+
     const pluginToInsert = isInteractivePluginType(pluginType)
       ? wrapExercisePlugin(pluginType)
       : { plugin: pluginType }
@@ -47,6 +57,11 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       removeEmptyTextPluginChildren()
     }
 
+    pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
+  }
+
+  function handleInsertAiGeneratedContent() {
+    alert('AI generated content is not yet implemented')
     pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
   }
 
@@ -69,7 +84,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
               index={index}
               rows={state}
               row={row}
-              isRootRow={parentType === EditorPluginType.Rows}
+              isRootRow={isRootRow}
               hideAddButton={!!hideAddButton}
               onAddButtonClick={handleOpenPluginMenu}
             />
@@ -83,7 +98,10 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
           }}
         />
       ) : null}
-      <PluginMenuModal onInsertPlugin={handleInsertPlugin} />
+      <PluginMenuModal
+        onInsertPlugin={handleInsertPlugin}
+        isRootRow={isRootRow}
+      />
     </>
   )
 }

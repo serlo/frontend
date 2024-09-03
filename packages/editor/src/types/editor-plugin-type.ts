@@ -39,4 +39,9 @@ export enum EditorPluginType {
   EdusharingAsset = 'edusharingAsset',
 
   Unsupported = 'unsupported',
+
+  // This is a hack to make the prototype work as fast as possible => We simulate
+  // to hava a plugin "aiGeneratedContent" which does not exist in the editor.
+  // When this is selected we know that AI content shall be generated.
+  AiGeneratedContent = 'aiGeneratedContent',
 }

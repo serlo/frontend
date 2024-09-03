@@ -24,9 +24,13 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PluginMenuModalProps {
   onInsertPlugin: (pluginType: EditorPluginType) => void
+  isRootRow: boolean
 }
 
-export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
+export function PluginMenuModal({
+  onInsertPlugin,
+  isRootRow,
+}: PluginMenuModalProps) {
   const editorStrings = useEditorStrings()
   const pluginsStrings = editorStrings.plugins
 
@@ -76,13 +80,21 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)
 
+      // Hack to add the AI generated content option in the menu
+      if (isRootRow) {
+        basicOptions.unshift({
+          pluginType: EditorPluginType.AiGeneratedContent,
+          title: 'Inhalt per AI generieren',
+        })
+      }
+
       return {
         basicOptions,
         interactiveOptions,
         firstOption,
         isEmpty: firstOption === undefined,
       }
-    }, [allowedPlugins, pluginsStrings, searchString])
+    }, [allowedPlugins, pluginsStrings, searchString, isRootRow])
 
   const handleModalClose = (isOpen: boolean) => {
     if (isOpen === false) {
