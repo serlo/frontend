@@ -5266,6 +5266,7 @@ __metadata:
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12
+    "@tanstack/react-query": ^5.53.3
     "@tippyjs/react": ^4.2.6
     "@types/escape-html": ^1.0.4
     "@types/iframe-resizer": ^3.5.13
@@ -5879,6 +5880,24 @@ __metadata:
   peerDependencies:
     tailwindcss: "*"
   checksum: b2037e73d83ad5bd8ca00b22314feb6c72706bf1ae5be087c41805923f06e90bc95c7410f071a36f1d72f9cff850a369e16321f12f7d6e85d78f9fedd8e480ac
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.53.3":
+  version: 5.53.3
+  resolution: "@tanstack/query-core@npm:5.53.3"
+  checksum: 58692328047b16ebd52752f63a5f1bc5539b9d258c5b2d3921ebf45e0a6ee6746c5dc7a8e3503b6bc9d06ffbe6af59b0bfb2a3a1621eb79b98e0c9f2a68e4b42
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.53.3":
+  version: 5.53.3
+  resolution: "@tanstack/react-query@npm:5.53.3"
+  dependencies:
+    "@tanstack/query-core": 5.53.3
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 108839b2f77ebd50fce895caaaee1a3fbd84fab7f3991dd5a7d6094aa01bd95e80f925fb145b2332d0f48f17d6f64c3186da2cd748904be5bd8197fffead2bb7
   languageName: node
   linkType: hard
 

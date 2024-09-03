@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
+    "@tanstack/react-query": "^5.53.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-resizable": "^3.0.5"

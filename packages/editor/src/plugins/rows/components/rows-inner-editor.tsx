@@ -1,9 +1,12 @@
 import {
+  DocumentState,
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,
   store,
 } from '@editor/store'
+import { getStaticDocument } from '@editor/store/documents/helpers'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useMutation } from '@tanstack/react-query'
 import { useContext } from 'react'
 
 import { AddRowButtonLarge } from './add-row-button-large'
@@ -24,7 +27,8 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
 
   // TODO: For finally integrating AI into the editor it would be better to
   // create a new plugin type for the main content type, something like a
-  // plugin "learningResource"
+  // plugin "learningResource" => At this level we can then enable / disable
+  // the AI features instead of using this flag.
   const isRootRow = parentType === EditorPluginType.Rows
 
   const isParentTemplatePlugin = parentType?.startsWith('type-')
@@ -32,6 +36,54 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     parentType === EditorPluginType.Article || isParentTemplatePlugin
 
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
+
+  const generateAiContent = useMutation({
+    mutationFn: async ({ prompt }: { insertIndex: number; prompt: string }) => {
+      const document = getStaticDocument({
+        id,
+        documents: store.getState().documents,
+      }) as { plugin: EditorPluginType.Rows; state: DocumentState[] }
+
+      const before = {
+        plugin: EditorPluginType.Rows,
+        state: document.state.slice(0, pluginMenuState.insertIndex),
+      }
+      const after = {
+        plugin: EditorPluginType.Rows,
+        state: document.state.slice(pluginMenuState.insertIndex),
+      }
+
+      const url = new URL(
+        '/api/experimental/generate-content',
+        window.location.href
+      )
+
+      url.searchParams.append('prompt', prompt)
+      url.searchParams.append('before', JSON.stringify(before))
+      url.searchParams.append('after', JSON.stringify(after))
+
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate AI content')
+      }
+
+      // TODO: For a production implementation we need to check the response
+      // schema whether a valid editor document was send to us
+      return (await response.json()) as {
+        plugin: EditorPluginType.Rows
+        state: DocumentState[]
+      }
+    },
+    onSuccess: (newContent, { insertIndex }) => {
+      for (const row of newContent.state) {
+        state.insert(insertIndex, row)
+        insertIndex++
+      }
+    },
+  })
 
   function handleOpenPluginMenu(insertIndex: number) {
     pluginMenuDispatch({
@@ -61,8 +113,20 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   }
 
   function handleInsertAiGeneratedContent() {
-    alert('AI generated content is not yet implemented')
     pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
+
+    // This should never happen, but just to be sure
+    if (pluginMenuState.insertIndex === undefined) return
+
+    // TODO: Make a more beatufiul prompt
+    const prompt = window.prompt('Prompt für AI:')
+
+    if (prompt === null || prompt.trim() === '') return
+
+    generateAiContent.mutate({
+      insertIndex: pluginMenuState.insertIndex,
+      prompt,
+    })
   }
 
   function removeEmptyTextPluginChildren() {
