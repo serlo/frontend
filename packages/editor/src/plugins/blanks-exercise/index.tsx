@@ -18,16 +18,18 @@ export type BlankId = string
 
 export type DraggableId = string
 
-export const blanksExercise: EditorPlugin<BlanksExerciseState> = {
-  Component: BlanksExerciseEditor,
-  config: {},
-  state: createState(),
+export function createBlanksExercisePlugin(
+  config: BlanksExerciseConfig
+): EditorPlugin<BlanksExerciseState> {
+  return {
+    Component: BlanksExerciseEditor,
+    config,
+    state: createState(config),
+  }
 }
 
-export type BlanksExerciseState = ReturnType<typeof createState>
-
-function createState() {
-  const defaultMode: BlanksExerciseMode = 'typing'
+function createState(config: BlanksExerciseConfig) {
+  const defaultMode: BlanksExerciseMode = config.defaultMode || 'typing'
 
   return object({
     // text can also be a table plugin
@@ -51,4 +53,13 @@ function createState() {
   })
 }
 
-export type BlanksExerciseProps = EditorPluginProps<BlanksExerciseState>
+export type BlanksExerciseConfig = BlanksExercisePluginConfig
+export type BlanksExerciseState = ReturnType<typeof createState>
+export type BlanksExerciseProps = EditorPluginProps<
+  BlanksExerciseState,
+  BlanksExerciseConfig
+>
+
+export interface BlanksExercisePluginConfig {
+  defaultMode?: BlanksExerciseMode
+}

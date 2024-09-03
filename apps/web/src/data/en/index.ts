@@ -1043,6 +1043,11 @@ export const loggedInData = {
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },
+        blanksExerciseDragAndDrop: {
+          title: 'Drag&Drop exercise',
+          description:
+            'Create a fill-in-the-gap text or a table where the correct answers are inserted via drag and drop.',
+        },
       },
       templatePlugins: {
         entity: {
@@ -1095,7 +1100,8 @@ export const loggedInData = {
           inputExercise: 'Input Exercise',
           textAreaExercise: 'Text Box Exercise',
           dropzoneImage: 'Image Dropzones Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
+          blanksExerciseTyping: 'Fill In The Blanks Exercise',
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',

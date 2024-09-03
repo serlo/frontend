@@ -16,6 +16,7 @@ export function createOption(
   const pluginData = editorPlugins
     .getAllWithData()
     .find((plugin) => plugin.type === pluginType)
+  console.log(pluginData)
 
   if (!pluginData) {
     return { pluginType, title: pluginType }
@@ -59,6 +60,7 @@ const interactivePluginTypes = new Set([
   EditorPluginType.ScMcExercise,
   EditorPluginType.H5p,
   EditorPluginType.BlanksExercise,
+  EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.InputExercise,
   EditorPluginType.Solution,
   EditorPluginType.DropzoneImage,

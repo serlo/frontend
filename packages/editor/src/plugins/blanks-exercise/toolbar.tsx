@@ -26,7 +26,7 @@ export const BlanksExerciseToolbar = ({
 
   return (
     <PluginToolbar
-      pluginType={EditorPluginType.BlanksExercise}
+      pluginType={state.mode.value}
       className="top-[-33px]"
       pluginSettings={
         <>

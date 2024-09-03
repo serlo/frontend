@@ -1,5 +1,5 @@
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
-import { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import { EditorBlanksExerciseTypingDocument } from '@editor/types/editor-plugins'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
@@ -10,7 +10,7 @@ import { exerciseSubmission } from '@/helper/exercise-submission'
 import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function BlanksExerciseSerloStaticRenderer(
-  props: EditorBlanksExerciseDocument
+  props: EditorBlanksExerciseTypingDocument
 ) {
   const { asPath } = useRouter()
   const ab = useAB()

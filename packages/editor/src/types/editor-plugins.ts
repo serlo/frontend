@@ -154,8 +154,13 @@ export interface EditorScMcExerciseDocument {
   state: PrettyStaticState<ScMcExercisePluginState>
   id?: string
 }
-export interface EditorBlanksExerciseDocument {
+export interface EditorBlanksExerciseTypingDocument {
   plugin: EditorPluginType.BlanksExercise
+  state: PrettyStaticState<BlanksExerciseState>
+  id?: string
+}
+export interface EditorBlanksExerciseDragAndDropDocument {
+  plugin: EditorPluginType.BlanksExerciseDragAndDrop
   state: PrettyStaticState<BlanksExerciseState>
   id?: string
 }

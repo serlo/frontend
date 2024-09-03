@@ -20,6 +20,7 @@ const exerciseState = object({
       | EditorPluginType.TextAreaExercise
       | EditorPluginType.H5p
       | EditorPluginType.BlanksExercise
+      | EditorPluginType.BlanksExerciseDragAndDrop
       | EditorPluginType.DropzoneImage
     >({
       plugin: EditorPluginType.ScMcExercise,

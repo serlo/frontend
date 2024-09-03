@@ -1,9 +1,10 @@
 import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
+import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg'
+import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
-import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
@@ -14,7 +15,7 @@ import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
-import { blanksExercise } from '@editor/plugins/blanks-exercise'
+import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
@@ -154,8 +155,13 @@ export function createBasicPlugins(
     },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: blanksExercise,
-      icon: <IconFillGaps />,
+      plugin: createBlanksExercisePlugin({ defaultMode: 'typing' }),
+      icon: <IconBlanksTyping />,
+    },
+    {
+      type: EditorPluginType.BlanksExerciseDragAndDrop,
+      plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
+      icon: <IconBlanksDragAndDrop />,
     },
     {
       type: EditorPluginType.DropzoneImage,

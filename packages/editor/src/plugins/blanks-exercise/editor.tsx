@@ -6,7 +6,7 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import type { EditorBlanksExerciseTypingDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
@@ -53,7 +53,7 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
 
   const staticDocument = useAppSelector(
     (storeState) =>
-      selectStaticDocument(storeState, id) as EditorBlanksExerciseDocument
+      selectStaticDocument(storeState, id) as EditorBlanksExerciseTypingDocument
   )
 
   const childPluginConfig = useMemo(() => {
