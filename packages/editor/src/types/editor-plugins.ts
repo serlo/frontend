@@ -159,11 +159,6 @@ export interface EditorBlanksExerciseDocument {
   state: PrettyStaticState<BlanksExerciseState>
   id?: string
 }
-export interface EditorBlanksExerciseDragAndDropDocument {
-  plugin: EditorPluginType.BlanksExerciseDragAndDrop
-  state: PrettyStaticState<BlanksExerciseState>
-  id?: string
-}
 export interface EditorDropzoneImageDocument {
   plugin: EditorPluginType.DropzoneImage
   state: PrettyStaticState<DropzoneImagePluginState>
