@@ -1,6 +1,5 @@
 import type { EditorPlugin } from '@editor/plugin'
-import { useEffect } from 'react'
-import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import {
   focusNext,
@@ -24,11 +23,6 @@ export const useEnableEditorHotkeys = (
   const isDocumentEmpty = useAppSelector((state) =>
     selectIsDocumentEmpty(state, id)
   )
-
-  const { enableScope } = useHotkeysContext()
-  useEffect(() => {
-    enableScope('root-up-down-enter')
-  }, [enableScope])
 
   const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
     if (
