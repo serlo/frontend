@@ -154,7 +154,7 @@ export interface EditorScMcExerciseDocument {
   state: PrettyStaticState<ScMcExercisePluginState>
   id?: string
 }
-export interface EditorBlanksExerciseTypingDocument {
+export interface EditorBlanksExerciseDocument {
   plugin: EditorPluginType.BlanksExercise
   state: PrettyStaticState<BlanksExerciseState>
   id?: string

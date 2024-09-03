@@ -1100,7 +1100,7 @@ export const loggedInData = {
           inputExercise: 'Input Exercise',
           textAreaExercise: 'Text Box Exercise',
           dropzoneImage: 'Image Dropzones Exercise',
-          blanksExerciseTyping: 'Fill In The Blanks Exercise',
+          blanksExercise: 'Fill In The Blanks Exercise',
           blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',

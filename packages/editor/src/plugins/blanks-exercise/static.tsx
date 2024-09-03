@@ -1,5 +1,5 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-import type { EditorBlanksExerciseTypingDocument } from '@editor/types/editor-plugins'
+import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 
 import type { BlanksExerciseMode } from '.'
 import { BlanksExerciseRenderer, BlanksExerciseRendererProps } from './renderer'
@@ -7,7 +7,7 @@ import { BlanksExerciseRenderer, BlanksExerciseRendererProps } from './renderer'
 export function BlanksExerciseStaticRenderer({
   state: { text: childPlugin, mode, extraDraggableAnswers },
   onEvaluate,
-}: EditorBlanksExerciseTypingDocument & {
+}: EditorBlanksExerciseDocument & {
   onEvaluate?: BlanksExerciseRendererProps['onEvaluate']
 }) {
   return (

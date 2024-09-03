@@ -12,7 +12,7 @@ import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
-  EditorBlanksExerciseTypingDocument,
+  EditorBlanksExerciseDocument,
   EditorEquationsDocument,
   EditorExerciseDocument,
   EditorHighlightDocument,
@@ -61,11 +61,10 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const BlanksSerloStaticRenderer = dynamic<EditorBlanksExerciseTypingDocument>(
-  () =>
-    import(
-      '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
-    ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
+const BlanksSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
+  ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
 )
 const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import(
