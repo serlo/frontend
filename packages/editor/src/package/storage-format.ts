@@ -88,13 +88,8 @@ export function migrate(
     !StorageFormat.is(stateBeforeMigration)
   ) {
     migratedState = {
-      id: uuid_v4(),
-      type: documentType,
-      variant,
-      domainOrigin: window.location.origin,
+      ...createEmptyDocument(variant),
       version: 0,
-      editorVersion: getEditorVersion(),
-      dateModified: getCurrentDatetime(),
       document: stateBeforeMigration,
     }
     stateChanged = true
