@@ -41,14 +41,17 @@ class ErrorBoundary extends Component<
     if (children !== this.props.children) this.setState({ error: null })
   }
 
-  // TODO: Style this
   render() {
     if (this.state.error !== null) {
       // You can render any custom fallback UI
       return (
-        <p>
-          <b>Something went wrong:</b> {this.state.error.message}
-        </p>
+        <div className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side md:-mt-9">
+          <b>
+            Leider wurde ein fehlerhafter Inhalt generiert. Die Fehlermeldung
+            lautet:
+          </b>{' '}
+          {this.state.error.message}
+        </div>
       )
     }
 
