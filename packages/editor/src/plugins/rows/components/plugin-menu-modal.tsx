@@ -1,3 +1,4 @@
+import IconAiContentGeneration from '@editor/editor-ui/assets/plugin-icons/icon-ai-content-generation.svg'
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
@@ -80,6 +81,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       basicOptions.unshift({
         pluginType: EditorPluginType.AiGeneratedContent,
         title: 'Inhalt per AI generieren',
+        icon: <IconAiContentGeneration />,
       })
 
       return {
