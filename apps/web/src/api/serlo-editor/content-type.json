@@ -103,6 +103,9 @@
     "ContentType": {
       "anyOf": [
         {
+          "$ref": "#/definitions/Highlight"
+        },
+        {
           "$ref": "#/definitions/RichText"
         },
         {
@@ -116,9 +119,6 @@
         },
         {
           "$ref": "#/definitions/Equations"
-        },
-        {
-          "$ref": "#/definitions/Highlight"
         },
         {
           "$ref": "#/definitions/Image"
@@ -270,14 +270,19 @@
       "type": "object"
     },
     "Highlight": {
-      "description": "Represents the Highlight plugin.",
       "properties": {
         "plugin": {
           "const": "highlight",
           "type": "string"
         },
+        "priority": {
+          "type": "number"
+        },
         "state": {
           "$ref": "#/definitions/HighlightState"
+        },
+        "type": {
+          "$ref": "#/definitions/HighlightType"
         }
       },
       "type": "object"
@@ -296,6 +301,10 @@
         }
       },
       "type": "object"
+    },
+    "HighlightType": {
+      "enum": ["grammar-error", "highlight", "spelling-error"],
+      "type": "string"
     },
     "Image": {
       "properties": {
