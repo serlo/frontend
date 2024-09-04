@@ -21,6 +21,7 @@ import {
 import { isInteractivePluginType } from '../utils/plugin-menu'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { cn } from '@/helper/cn'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
@@ -279,14 +280,16 @@ function AiContentGenerationPrompt({
       setIsOpen={onClose}
       title="Prompt für Inhaltserstellung"
     >
-      <div className="p-8">
-        <h2 className="text-xl font-bold">Inhalt per AI generieren</h2>
-        <p className="mt-4">
-          Gib einen Satz ein, der als Inspiration für die AI dienen soll.
-        </p>
-        <input
-          className="mt-4 w-full rounded border border-gray-300 p-2"
+      <div className="mx-4">
+        <textarea
+          className={cn(
+            'w-full rounded-xl border-2 border-editor-primary-100',
+            'bg-editor-primary-100 px-2.5 py-[3px] text-almost-black',
+            'focus:border-editor-primary focus:outline-none'
+          )}
           value={prompt}
+          rows={5}
+          placeholder='z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende"'
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -295,10 +298,10 @@ function AiContentGenerationPrompt({
           }}
         />
         <button
-          className="bg-editor-primary-500 mt-4 rounded p-2 text-white"
+          className="serlo-button-editor-primary serlo-tooltip-trigger mt-4 px-4"
           onClick={() => onEnter(prompt)}
         >
-          Generieren
+          Inhalt generieren
         </button>
       </div>
     </ModalWithCloseButton>
