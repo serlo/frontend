@@ -26,6 +26,7 @@ const migrations: Migration[] = [
         type: documentType,
         variant,
         version: 0,
+        domainOrigin: window.location.origin,
         editorVersion: getEditorVersion(),
         dateModified: getCurrentDatetime(),
         document: state,
@@ -58,6 +59,7 @@ const migrations: Migration[] = [
     return {
       ...state,
       editorVersion,
+      domainOrigin: window.location.origin,
       id,
     }
   },
@@ -74,6 +76,7 @@ export function createEmptyDocument(
     id: uuid_v4(),
     type: documentType,
     variant: editorVariant,
+    domainOrigin: window.location.origin,
     version: currentVersion,
     editorVersion: getEditorVersion(),
     dateModified: getCurrentDatetime(),
@@ -167,6 +170,7 @@ const StorageFormatType = t.type({
   id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
   type: t.literal(documentType),
   variant: EditorVariantType,
+  domainOrigin: t.string,
 
   // Variable values (can change when state modified)
   version: t.number, // Index of the next migration to apply (if there is one). Example: 2 -> Apply migration[2], migration[3], ... until end of array
