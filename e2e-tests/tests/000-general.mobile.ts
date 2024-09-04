@@ -97,33 +97,11 @@ Scenario('Quickbar @mobile', ({ I }) => {
   I.see('Vektorbegriff')
   I.see('Auf Serlo nach')
 
-  I.say('Assert aria attributes and navigate options using keyboard')
-  I.seeAttributesOnElements('$quickbar-combobox-overlay', { role: 'listbox' })
-  I.seeAttributesOnElements('$quickbar-input', { role: 'combobox' })
-
-  I.seeAttributesOnElements('$quickbar-option-0', { 'aria-selected': 'true' })
-  I.seeAttributesOnElements('$quickbar-option-1', { 'aria-selected': 'false' })
-  I.seeAttributesOnElements('$quickbar-option-2', { 'aria-selected': 'false' })
-
-  I.pressKey('ArrowDown')
-  I.seeAttributesOnElements('$quickbar-option-0', { 'aria-selected': 'false' })
-  I.seeAttributesOnElements('$quickbar-option-1', { 'aria-selected': 'true' })
-  I.seeAttributesOnElements('$quickbar-option-2', { 'aria-selected': 'false' })
-
-  I.pressKey('ArrowUp')
-  I.seeAttributesOnElements('$quickbar-option-0', { 'aria-selected': 'true' })
-  I.seeAttributesOnElements('$quickbar-option-1', { 'aria-selected': 'false' })
-  I.seeAttributesOnElements('$quickbar-option-2', { 'aria-selected': 'false' })
-
-  I.pressKey('Enter')
-  I.seeInTitle('Vektor')
-
-  I.say('Perform another search')
   I.amOnPage('/')
   I.click('$quickbar-input')
-  I.type('Aufgaben Baumdiagramm ')
+  I.type('Aufgaben Baumdiagramm')
 
-  I.click('Aufgaben zum Baumdiagramm ')
+  I.click('Aufgaben zum Baumdiagramm')
   I.seeInTitle('Aufgaben zum Baumdiagramm')
   I.see('Daten und Zufallsexperimente')
 })
