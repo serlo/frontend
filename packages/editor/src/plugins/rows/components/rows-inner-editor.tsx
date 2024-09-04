@@ -203,7 +203,8 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     // TODO: Design spinner
     return prompts.map((prompt, index) => (
       <div key={index} className="text-xs text-gray-500">
-        <FaIcon icon={faSpinner} /> ...generiere Inhalt für: „{prompt}“
+        <FaIcon icon={faSpinner} className="animate-spin-slow" /> ...generiere
+        Inhalt für: „{prompt}“
       </div>
     ))
   }
