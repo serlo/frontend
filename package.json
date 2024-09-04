@@ -38,7 +38,7 @@
     "format": "yarn workspace @serlo/frontend format",
     "format:eslint": "yarn workspace @serlo/frontend format:eslint",
     "format:prettier": "yarn workspaces foreach -Ap run format:prettier",
-    "generate": "yarn typescript-json-schema apps/web/src/api/serlo-editor/content-type.ts ListOfContent | yarn prettier --stdin-filepath apps/web/src/api/serlo-editor/content-type.json > apps/web/src/api/serlo-editor/content-type.json",
+    "generate": "yarn typescript-json-schema apps/web/src/api/serlo-editor/content-type.ts ListOfContent | yarn prettier --stdin-filepath apps/web/src/api/serlo-editor/content-type.json > /tmp/schema.json && mv /tmp/schema.json apps/web/src/api/serlo-editor/content-type.json",
     "lint": "yarn workspace @serlo/frontend lint",
     "lint:eslint": "cross-env FORCE_COLOR=true yarn workspaces foreach -Aip run lint:eslint",
     "lint:prettier": "cross-env FORCE_COLOR=true yarn workspaces foreach -Aip run lint:prettier",
