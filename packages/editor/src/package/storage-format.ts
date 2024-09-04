@@ -9,7 +9,7 @@ import { getEditorVersion } from './editor-version'
 /** The creator of the saved data -> Serlo editor */
 const documentType = 'https://serlo.org/editor'
 
-type Migration = (state: unknown, variant: EditorVariant) => unknown
+type Migration = (state: unknown, variant: EditorVariant) => StorageFormat
 
 const migrations: Migration[] = [
   // Migration 1: Add editorVersion, domainOrigin and id
@@ -108,7 +108,7 @@ export function migrate(
   const nextMigrationIndex = migratedState.version
 
   for (let i = nextMigrationIndex; i < migrations.length; i++) {
-    migratedState = migrations[i](migratedState, variant) as StorageFormat
+    migratedState = migrations[i](migratedState, variant)
     stateChanged = true
     migratedState.version = i + 1
   }
