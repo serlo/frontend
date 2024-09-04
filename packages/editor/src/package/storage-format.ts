@@ -15,7 +15,7 @@ const migrations: Migration[] = [
   // Migration 1: Add editorVersion, domainOrigin and id
   (state): StorageFormat => {
     // We already have the right format, we can skip this migration.
-    if (StorageFormatType.is(state)) {
+    if (StorageFormat.is(state)) {
       return state
     }
 
@@ -85,7 +85,7 @@ export function migrate(
   // Check if the state is the (old format)
   if (
     DocumentType.is(stateBeforeMigration) &&
-    !StorageFormatType.is(stateBeforeMigration)
+    !StorageFormat.is(stateBeforeMigration)
   ) {
     migratedState = {
       id: uuid_v4(),
@@ -113,7 +113,7 @@ export function migrate(
     migratedState.version = i + 1
   }
 
-  if (!StorageFormatType.is(migratedState))
+  if (!StorageFormat.is(migratedState))
     throw new Error(
       'Storage format after migrations does not match StorageFormatType'
     )
@@ -145,7 +145,7 @@ const DocumentType = t.type({
   state: t.unknown,
 })
 
-const StorageFormatType = t.intersection([
+const StorageFormat = t.intersection([
   t.type({
     // Constant values (set at creation)
     id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
@@ -163,4 +163,4 @@ const StorageFormatType = t.intersection([
     domainOrigin: t.string,
   }),
 ])
-export type StorageFormat = t.TypeOf<typeof StorageFormatType>
+export type StorageFormat = t.TypeOf<typeof StorageFormat>
