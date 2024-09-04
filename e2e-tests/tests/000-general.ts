@@ -110,14 +110,15 @@ Scenario('Quickbar', ({ I }) => {
   I.seeAttributesOnElements('$quickbar-option-2', { 'aria-selected': 'false' })
 
   I.pressKey('Enter')
+  I.waitForURL('**/1775', 10)
   I.seeInTitle('Vektor')
 
   I.say('Perform another search')
   I.amOnPage('/')
   I.click('$quickbar-input')
-  I.type('Aufgaben Baumdiagramm ')
+  I.type('Aufgaben Baumdiagramm')
 
-  I.click('Aufgaben zum Baumdiagramm ')
+  I.click('Aufgaben zum Baumdiagramm')
   I.seeInTitle('Aufgaben zum Baumdiagramm')
   I.see('Daten und Zufallsexperimente')
 })
