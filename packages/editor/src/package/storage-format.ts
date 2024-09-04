@@ -12,31 +12,6 @@ const documentType = 'https://serlo.org/editor'
 type Migration = (state: unknown, variant: EditorVariant) => unknown
 
 const migrations: Migration[] = [
-  // Migration 0: Transform old format to new StorageFormat
-  (state, variant): StorageFormat => {
-    // No need to run this migration if the state is in the correct format
-    if (StorageFormatType.is(state)) {
-      return state
-    }
-
-    // Check if the state is in our old document format
-    if (isValidDocument(state)) {
-      return {
-        id: uuid_v4(),
-        type: documentType,
-        variant,
-        version: 0,
-        domainOrigin: window.location.origin,
-        editorVersion: getEditorVersion(),
-        dateModified: getCurrentDatetime(),
-        document: state,
-      }
-    }
-
-    // State is neither in the new format nor the old format, probably the old
-    // edusharing format! Return state as is and keep running the migrations
-    return state as StorageFormat
-  },
   // Migration 1: Add editorVersion, domainOrigin and id
   (state): StorageFormat => {
     // We already have the right format, we can skip this migration.
