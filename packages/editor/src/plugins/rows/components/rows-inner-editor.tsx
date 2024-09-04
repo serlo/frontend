@@ -200,11 +200,13 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       .filter((p) => p.insertIndex === index)
       .map((p) => p.prompt)
 
-    // TODO: Design spinner
     return prompts.map((prompt, index) => (
-      <div key={index} className="text-xs text-gray-500">
-        <FaIcon icon={faSpinner} className="animate-spin-slow" /> ...generiere
-        Inhalt für: „{prompt}“
+      <div
+        key={index}
+        className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side"
+      >
+        <FaIcon icon={faSpinner} className="animate-spin-slow" /> Generiere
+        Inhalt für „{prompt}“
       </div>
     ))
   }
