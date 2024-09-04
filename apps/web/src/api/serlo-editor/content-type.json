@@ -514,9 +514,19 @@
       "description": "A math element similar to a <math> tag in HTML.",
       "properties": {
         "children": {
-          "items": {
-            "$ref": "#/definitions/CustomText"
-          },
+          "items": [
+            {
+              "properties": {
+                "text": {
+                  "const": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          ],
+          "maxItems": 1,
+          "minItems": 1,
           "type": "array"
         },
         "inline": {

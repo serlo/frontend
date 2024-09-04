@@ -516,7 +516,7 @@ interface MathElement {
    * Set to false if the math element should be displayed as a block like $$...$$ in LaTeX.
    */
   inline: boolean
-  children: CustomText[]
+  children: [{ text: '' }]
 }
 
 /**
