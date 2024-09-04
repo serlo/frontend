@@ -42,9 +42,9 @@ import { createTestingImagePlugin } from './image-with-testing-config'
 
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
-  testingSecret?: string
+  testingSecret?: string | null
 ) {
-  if (plugins.includes(EditorPluginType.Image) && testingSecret === undefined) {
+  if (plugins.includes(EditorPluginType.Image) && !testingSecret) {
     /* eslint-disable no-console */
     console.log(
       'The image plugin needs the `testingSecret` but it is missing. Image plugin was disabled. Either provide it or deactivate the image plugin in the editor API.'

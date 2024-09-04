@@ -6,7 +6,7 @@ import type { SupportedLanguage } from '@editor/types/language-data'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
-import { migrate } from './storage-format'
+import { migrate, EditorVariant } from './storage-format'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
@@ -14,16 +14,18 @@ export interface SerloRendererProps {
   language?: SupportedLanguage
   state: unknown
   _ltik?: string
+  editorVariant: EditorVariant
 }
 
 export function SerloRenderer(props: SerloRendererProps) {
-  const { language, _ltik, state } = {
+  const { language, _ltik, state, editorVariant } = {
     ...defaultSerloEditorProps,
     ...props,
   }
 
-  // Side note: Migrated state will not be persisted since we cannot save in static renderer view
-  const { migratedState } = migrate(state)
+  // Side note: Migrated state will not be persisted since we cannot save in
+  // static renderer view
+  const { migratedState } = migrate(state, editorVariant)
 
   const { instanceData, loggedInData } = editorData[language]
 

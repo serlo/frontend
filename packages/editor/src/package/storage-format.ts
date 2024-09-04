@@ -9,11 +9,16 @@ import { getEditorVersion } from './editor-version'
 /** The creator of the saved data -> Serlo editor */
 const documentType = 'https://serlo.org/editor'
 
-type Migration = (state: { version: number }) => { version: number }
+type Migration = (state: unknown, variant: EditorVariant) => StorageFormat
 
 const migrations: Migration[] = [
-  // Migration: Add `editorVersion` and `id`
+  // Migration 1: Add editorVersion, domainOrigin and id
   (state): StorageFormat => {
+    // We already have the right format, we can skip this migration.
+    if (StorageFormat.is(state)) {
+      return state
+    }
+
     const expectedType = t.type({
       type: t.literal(documentType),
       variant: EditorVariantType,
@@ -29,13 +34,11 @@ const migrations: Migration[] = [
         `Unexpected type during migration. Expected ${JSON.stringify(expectedType)} but got ${JSON.stringify(state)}`
       )
 
-    const editorVersion = getEditorVersion()
-    const id = uuid_v4()
-
     return {
       ...state,
-      editorVersion,
-      id,
+      editorVersion: getEditorVersion(),
+      domainOrigin: window.location.origin,
+      id: uuid_v4(),
     }
   },
   // ...
@@ -51,6 +54,7 @@ export function createEmptyDocument(
     id: uuid_v4(),
     type: documentType,
     variant: editorVariant,
+    domainOrigin: window.location.origin,
     version: currentVersion,
     editorVersion: getEditorVersion(),
     dateModified: getCurrentDatetime(),
@@ -65,30 +69,41 @@ export function createEmptyDocument(
   }
 }
 
-export function migrate(stateBeforeMigration: unknown): {
+export function migrate(
+  stateBeforeMigration: unknown,
+  variant: EditorVariant
+): {
   migratedState: StorageFormat
   stateChanged: boolean
 } {
-  if (!t.type({ version: t.number }).is(stateBeforeMigration))
-    throw new Error(
-      `Missing property 'version: number' in state while trying to perform migrations. Got ${JSON.stringify(stateBeforeMigration)}`
-    )
-
-  // Only apply migrations for this version number and higher
-  const nextMigrationIndex = stateBeforeMigration.version
-
-  // Create deep copy
-  let migratedState = JSON.parse(JSON.stringify(stateBeforeMigration)) as {
-    version: number
-  }
+  let migratedState: StorageFormat
   let stateChanged = false
-  for (let i = nextMigrationIndex; i < migrations.length; i++) {
-    migratedState = migrations[i](migratedState)
+
+  // Check if the state is the (old format)
+  if (
+    DocumentType.is(stateBeforeMigration) &&
+    !StorageFormat.is(stateBeforeMigration)
+  ) {
+    migratedState = {
+      ...createEmptyDocument(variant),
+      version: 0,
+      document: stateBeforeMigration,
+    }
+    stateChanged = true
+  } else {
+    // Make a deep copy
+    migratedState = JSON.parse(
+      JSON.stringify(stateBeforeMigration)
+    ) as StorageFormat
+  }
+
+  for (let i = migratedState.version; i < migrations.length; i++) {
+    migratedState = migrations[i](migratedState, variant)
     stateChanged = true
     migratedState.version = i + 1
   }
 
-  if (!StorageFormatType.is(migratedState))
+  if (!StorageFormat.is(migratedState))
     throw new Error(
       'Storage format after migrations does not match StorageFormatType'
     )
@@ -106,24 +121,36 @@ const EditorVariantType = t.union([
   t.literal('https://github.com/serlo/serlo-editor-for-edusharing'),
   t.literal('lti-tool'),
   t.literal('serlo-org'),
+  t.literal('kiron'),
+  t.literal('scobees'),
   t.literal('moodle'),
   t.literal('chancenwerk'),
+  t.literal('unknown'),
 ])
+
 export type EditorVariant = t.TypeOf<typeof EditorVariantType>
 
-const StorageFormatType = t.type({
-  // Constant values (set at creation)
-  id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
-  type: t.literal(documentType),
-  variant: EditorVariantType,
-
-  // Variable values (can change when state modified)
-  version: t.number, // Index of the next migration to apply (if there is one). Example: 2 -> Apply migration[2], migration[3], ... until end of array
-  editorVersion: t.string,
-  dateModified: t.string,
-  document: t.type({
-    plugin: t.string,
-    state: t.unknown,
-  }),
+const DocumentType = t.type({
+  plugin: t.string,
+  state: t.unknown,
 })
-export type StorageFormat = t.TypeOf<typeof StorageFormatType>
+
+const StorageFormat = t.intersection([
+  t.type({
+    // Constant values (set at creation)
+    id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
+    type: t.literal(documentType),
+    variant: EditorVariantType,
+
+    // Variable values (can change when state modified)
+    version: t.number, // Index of the next migration to apply
+    editorVersion: t.string,
+    dateModified: t.string,
+    document: DocumentType,
+  }),
+  t.partial({
+    // Optional fields
+    domainOrigin: t.string,
+  }),
+])
+export type StorageFormat = t.TypeOf<typeof StorageFormat>

@@ -32,7 +32,7 @@ export interface SerloEditorProps {
   onChange?: (state: StorageFormat) => void
   language?: SupportedLanguage
   editorVariant: EditorVariant
-  _testingSecret?: string
+  _testingSecret?: string | null
   _ltik?: string
 }
 
@@ -55,7 +55,7 @@ export function SerloEditor(props: SerloEditorProps) {
     ? createEmptyDocument(editorVariant)
     : props.initialState
 
-  const { migratedState, stateChanged } = migrate(initialState)
+  const { migratedState, stateChanged } = migrate(initialState, editorVariant)
 
   if (onChange && stateChanged) {
     onChange(migratedState)
