@@ -84,7 +84,7 @@ export function migrate(
 
   // Check if the state is the (old format)
   if (
-    isValidDocument(stateBeforeMigration) &&
+    DocumentType.is(stateBeforeMigration) &&
     !StorageFormatType.is(stateBeforeMigration)
   ) {
     migratedState = {
@@ -144,12 +144,6 @@ const DocumentType = t.type({
   plugin: t.string,
   state: t.unknown,
 })
-
-type Document = t.TypeOf<typeof DocumentType>
-
-function isValidDocument(obj: unknown): obj is Document {
-  return DocumentType.is(obj)
-}
 
 const StorageFormatType = t.intersection([
   t.type({
