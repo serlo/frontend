@@ -6,8 +6,9 @@ import {
 } from '@editor/store'
 import { getStaticDocument } from '@editor/store/documents/helpers'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useMutation } from '@tanstack/react-query'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 import { AddRowButtonLarge } from './add-row-button-large'
 import { PluginMenuModal } from './plugin-menu-modal'
@@ -18,6 +19,7 @@ import {
   PluginMenuContext,
 } from '../contexts/plugin-menu'
 import { isInteractivePluginType } from '../utils/plugin-menu'
+import { FaIcon } from '@/components/fa-icon'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
@@ -37,8 +39,20 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
 
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
 
+  const [startedContentGenerations, setStartedContentGenerations] = useState<
+    Array<{ insertIndex: number; prompt: string }>
+  >([])
+
   const generateAiContent = useMutation({
-    mutationFn: async ({ prompt }: { insertIndex: number; prompt: string }) => {
+    mutationFn: async ({
+      prompt,
+      insertIndex,
+    }: {
+      insertIndex: number
+      prompt: string
+    }) => {
+      setStartedContentGenerations((prev) => [...prev, { insertIndex, prompt }])
+
       const document = getStaticDocument({
         id,
         documents: store.getState().documents,
@@ -77,11 +91,22 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
         state: DocumentState[]
       }
     },
-    onSuccess: (newContent, { insertIndex }) => {
+    onSuccess: (newContent, { insertIndex, prompt }) => {
+      setStartedContentGenerations((prev) =>
+        prev.filter((p) => p.prompt !== prompt || p.insertIndex !== insertIndex)
+      )
+
       for (const row of newContent.state) {
         state.insert(insertIndex, row)
         insertIndex++
       }
+    },
+    onError: (error, { insertIndex, prompt }) => {
+      setStartedContentGenerations((prev) =>
+        prev.filter((p) => p.prompt !== prompt || p.insertIndex !== insertIndex)
+      )
+
+      console.error('Failed to generate AI content', error)
     },
   })
 
@@ -142,19 +167,23 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
         {state.map((row, index) => {
           const hideAddButton = showLargeAddButton && index === state.length - 1
           return (
-            <RowEditor
-              config={config}
-              key={row.id}
-              index={index}
-              rows={state}
-              row={row}
-              isRootRow={isRootRow}
-              hideAddButton={!!hideAddButton}
-              onAddButtonClick={handleOpenPluginMenu}
-            />
+            <>
+              {renderSpinnerforGeneratingContent(index)}
+              <RowEditor
+                config={config}
+                key={row.id}
+                index={index}
+                rows={state}
+                row={row}
+                isRootRow={isRootRow}
+                hideAddButton={!!hideAddButton}
+                onAddButtonClick={handleOpenPluginMenu}
+              />
+            </>
           )
         })}
       </div>
+      {renderSpinnerforGeneratingContent(state.length)}
       {showLargeAddButton ? (
         <AddRowButtonLarge
           onClick={() => {
@@ -168,6 +197,19 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       />
     </>
   )
+
+  function renderSpinnerforGeneratingContent(index: number) {
+    const prompts = startedContentGenerations
+      .filter((p) => p.insertIndex === index)
+      .map((p) => p.prompt)
+
+    // TODO: Design spinner
+    return prompts.map((prompt, index) => (
+      <div key={index} className="text-xs text-gray-500">
+        <FaIcon icon={faSpinner} /> ...generiere Inhalt für: „{prompt}“
+      </div>
+    ))
+  }
 }
 
 function wrapExercisePlugin(pluginType: EditorPluginType) {
