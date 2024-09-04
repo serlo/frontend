@@ -142,8 +142,11 @@ const EditorVariantType = t.union([
   t.literal('https://github.com/serlo/serlo-editor-for-edusharing'),
   t.literal('lti-tool'),
   t.literal('serlo-org'),
+  t.literal('kiron'),
+  t.literal('scobees'),
   t.literal('moodle'),
   t.literal('chancenwerk'),
+  t.literal('unknown'),
 ])
 
 export type EditorVariant = t.TypeOf<typeof EditorVariantType>
