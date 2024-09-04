@@ -1,7 +1,7 @@
 import { StateTypeReturnType } from '@editor/plugin'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { selectIsFocused, useAppSelector } from '@editor/store'
-import { type MouseEvent, useRef } from 'react'
+import { type MouseEvent, useRef, Component, type ReactNode } from 'react'
 
 import { AddRowButtonFloating } from './add-row-button-floating'
 import type { RowsPluginConfig, RowsPluginState } from '..'
@@ -15,6 +15,45 @@ interface RowEditorProps {
   hideAddButton: boolean
   onAddButtonClick: (insertIndex: number) => void
   isRootRow?: boolean
+}
+
+// TODO: Move this to an appropriate place
+class ErrorBoundary extends Component<
+  { children: ReactNode },
+  { error: Error | null }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props)
+    this.state = { error: null }
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, info: unknown) {
+    // You can also log the error to an error reporting service
+    console.error('ErrorBoundary caught an error', error, info)
+  }
+
+  componentDidUpdate({ children }: { children: ReactNode }): void {
+    if (children !== this.props.children) this.setState({ error: null })
+  }
+
+  // TODO: Style this
+  render() {
+    if (this.state.error !== null) {
+      // You can render any custom fallback UI
+      return (
+        <p>
+          <b>Something went wrong:</b> {this.state.error.message}
+        </p>
+      )
+    }
+
+    return this.props.children
+  }
 }
 
 export function RowEditor({
@@ -36,32 +75,34 @@ export function RowEditor({
   }
 
   return (
-    <div
-      key={row.id}
-      ref={dropContainer}
-      // bigger drop zone with padding hack
-      className="rows-child relative -ml-12 pl-12"
-    >
-      {isRootRow && index === 0 && (
-        <AddRowButtonFloating
-          focused={focused}
-          onClick={(e) => handleAddPluginButtonClick(e, index)}
+    <ErrorBoundary>
+      <div
+        key={row.id}
+        ref={dropContainer}
+        // bigger drop zone with padding hack
+        className="rows-child relative -ml-12 pl-12"
+      >
+        {isRootRow && index === 0 && (
+          <AddRowButtonFloating
+            focused={focused}
+            onClick={(e) => handleAddPluginButtonClick(e, index)}
+          />
+        )}
+        <EditorRowRenderer
+          config={config}
+          row={row}
+          rows={rows}
+          index={index}
+          plugins={plugins}
+          dropContainer={dropContainer}
         />
-      )}
-      <EditorRowRenderer
-        config={config}
-        row={row}
-        rows={rows}
-        index={index}
-        plugins={plugins}
-        dropContainer={dropContainer}
-      />
-      {hideAddButton ? null : (
-        <AddRowButtonFloating
-          focused={focused}
-          onClick={(e) => handleAddPluginButtonClick(e, index + 1)}
-        />
-      )}
-    </div>
+        {hideAddButton ? null : (
+          <AddRowButtonFloating
+            focused={focused}
+            onClick={(e) => handleAddPluginButtonClick(e, index + 1)}
+          />
+        )}
+      </div>
+    </ErrorBoundary>
   )
 }
