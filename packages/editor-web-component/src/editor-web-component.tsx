@@ -32,8 +32,7 @@ export class EditorWebComponent extends HTMLElement {
 
   private _testingSecret: string | null = null
 
-  // Default to Moodle for now
-  private _editorVariant: EditorVariant = 'moodle'
+  private _editorVariant: EditorVariant = 'unknown'
 
   // By default, we are NOT attaching it to the shadow DOM
   private _useShadowDOM: boolean = false
@@ -192,7 +191,7 @@ export class EditorWebComponent extends HTMLElement {
           {this._mode === 'write' ? (
             <Suspense fallback={<div>Loading editor...</div>}>
               <LazySerloEditor
-                editorVariant="moodle"
+                editorVariant={this.editorVariant}
                 initialState={this.initialState}
                 _testingSecret={testingSecretAttr}
                 onChange={(newState) => {
@@ -207,7 +206,10 @@ export class EditorWebComponent extends HTMLElement {
               </LazySerloEditor>
             </Suspense>
           ) : (
-            <SerloRenderer state={this.initialState} editorVariant="moodle" />
+            <SerloRenderer
+              state={this.initialState}
+              editorVariant={this.editorVariant}
+            />
           )}
         </div>
       </React.StrictMode>
