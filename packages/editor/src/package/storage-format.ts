@@ -34,14 +34,11 @@ const migrations: Migration[] = [
         `Unexpected type during migration. Expected ${JSON.stringify(expectedType)} but got ${JSON.stringify(state)}`
       )
 
-    const editorVersion = getEditorVersion()
-    const id = uuid_v4()
-
     return {
       ...state,
-      editorVersion,
+      editorVersion: getEditorVersion(),
       domainOrigin: window.location.origin,
-      id,
+      id: uuid_v4(),
     }
   },
   // ...
@@ -100,9 +97,7 @@ export function migrate(
     ) as StorageFormat
   }
 
-  const nextMigrationIndex = migratedState.version
-
-  for (let i = nextMigrationIndex; i < migrations.length; i++) {
+  for (let i = migratedState.version; i < migrations.length; i++) {
     migratedState = migrations[i](migratedState, variant)
     stateChanged = true
     migratedState.version = i + 1
