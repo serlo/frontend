@@ -98,33 +98,42 @@ export function migrate(
   migratedState: StorageFormat
   stateChanged: boolean
 } {
-  let migratedState: unknown = stateBeforeMigration
+  let migratedState: StorageFormat
   let stateChanged = false
-  let startIndex = 0
 
-  // Check if the state is in the old format
+  // Check if the state is the (old format)
   if (
-    typeof migratedState === 'object' &&
-    migratedState !== null &&
-    'plugin' in migratedState
+    isValidDocument(stateBeforeMigration) &&
+    !StorageFormatType.is(stateBeforeMigration)
   ) {
-    startIndex = 0
+    migratedState = {
+      id: uuid_v4(),
+      type: documentType,
+      variant,
+      domainOrigin: window.location.origin,
+      version: 0,
+      editorVersion: getEditorVersion(),
+      dateModified: getCurrentDatetime(),
+      document: stateBeforeMigration,
+    }
     stateChanged = true
-  } else if (t.type({ version: t.number }).is(migratedState)) {
-    startIndex = migratedState.version
+  } else if (StorageFormatType.is(stateBeforeMigration)) {
+    // deep copy
+    migratedState = JSON.parse(
+      JSON.stringify(stateBeforeMigration)
+    ) as StorageFormat
   } else {
     throw new Error(
-      `Invalid state format. Got ${JSON.stringify(migratedState)}`
+      `Unknown, invalid state format. Got ${JSON.stringify(stateBeforeMigration)}`
     )
   }
 
-  // Apply migrations
-  for (let i = startIndex; i < migrations.length; i++) {
-    migratedState = migrations[i](migratedState, variant)
+  const nextMigrationIndex = migratedState.version
+
+  for (let i = nextMigrationIndex; i < migrations.length; i++) {
+    migratedState = migrations[i](migratedState, variant) as StorageFormat
     stateChanged = true
-    if (t.type({ version: t.number }).is(migratedState)) {
-      migratedState.version = i + 1
-    }
+    migratedState.version = i + 1
   }
 
   if (!StorageFormatType.is(migratedState))

@@ -23,7 +23,8 @@ export function SerloRenderer(props: SerloRendererProps) {
     ...props,
   }
 
-  // Side note: Migrated state will not be persisted since we cannot save in static renderer view
+  // Side note: Migrated state will not be persisted since we cannot save in
+  // static renderer view
   const { migratedState } = migrate(state, editorVariant)
 
   const { instanceData, loggedInData } = editorData[language]
