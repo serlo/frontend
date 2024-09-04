@@ -33,11 +33,17 @@ const migrations: Migration[] = [
       }
     }
 
-    // State is neither in the new format nor the old format, throw!
-    throw new Error('Invalid state format')
+    // State is neither in the new format nor the old format, probably the old
+    // edusharing format! Return state as is and keep running the migrations
+    return state as StorageFormat
   },
-  // Migration 1: Add `editorVersion` and `id`
+  // Migration 1: Add editorVersion, domainOrigin and id
   (state): StorageFormat => {
+    // We already have the right format, we can skip this migration.
+    if (StorageFormatType.is(state)) {
+      return state
+    }
+
     const expectedType = t.type({
       type: t.literal(documentType),
       variant: EditorVariantType,
@@ -117,15 +123,11 @@ export function migrate(
       document: stateBeforeMigration,
     }
     stateChanged = true
-  } else if (StorageFormatType.is(stateBeforeMigration)) {
-    // deep copy
+  } else {
+    // Make a deep copy
     migratedState = JSON.parse(
       JSON.stringify(stateBeforeMigration)
     ) as StorageFormat
-  } else {
-    throw new Error(
-      `Unknown, invalid state format. Got ${JSON.stringify(stateBeforeMigration)}`
-    )
   }
 
   const nextMigrationIndex = migratedState.version
@@ -174,17 +176,22 @@ function isValidDocument(obj: unknown): obj is Document {
   return DocumentType.is(obj)
 }
 
-const StorageFormatType = t.type({
-  // Constant values (set at creation)
-  id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
-  type: t.literal(documentType),
-  variant: EditorVariantType,
-  domainOrigin: t.string,
+const StorageFormatType = t.intersection([
+  t.type({
+    // Constant values (set at creation)
+    id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
+    type: t.literal(documentType),
+    variant: EditorVariantType,
 
-  // Variable values (can change when state modified)
-  version: t.number, // Index of the next migration to apply (if there is one). Example: 2 -> Apply migration[2], migration[3], ... until end of array
-  editorVersion: t.string,
-  dateModified: t.string,
-  document: DocumentType,
-})
+    // Variable values (can change when state modified)
+    version: t.number, // Index of the next migration to apply
+    editorVersion: t.string,
+    dateModified: t.string,
+    document: DocumentType,
+  }),
+  t.partial({
+    // Optional fields
+    domainOrigin: t.string,
+  }),
+])
 export type StorageFormat = t.TypeOf<typeof StorageFormatType>
