@@ -104,7 +104,7 @@ Scenario('Quickbar @mobile', ({ I }) => {
   I.click('Aufgaben zum Baumdiagramm')
   I.waitForURL('**/25616', 10)
   I.seeInTitle('Aufgaben zum Baumdiagramm')
-  I.see('Daten und Zufallsexperimente')
+  I.see('Baumdiagramm und Vierfeldertafel')
 })
 
 Scenario('Share modal @mobile', ({ I }) => {
