@@ -191,10 +191,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
           }}
         />
       ) : null}
-      <PluginMenuModal
-        onInsertPlugin={handleInsertPlugin}
-        isRootRow={isRootRow}
-      />
+      <PluginMenuModal onInsertPlugin={handleInsertPlugin} />
     </>
   )
 
