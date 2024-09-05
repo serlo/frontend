@@ -16,7 +16,7 @@ import {
   ExecutePromptStatus,
   useExecuteAIPrompt,
 } from './exercise-generation-wizard/execute-ai-prompt'
-import {Skeleton} from '../skeleton'
+import { Skeleton } from '../skeleton'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
