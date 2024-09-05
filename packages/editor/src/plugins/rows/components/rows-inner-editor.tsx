@@ -20,6 +20,8 @@ import {
 } from '../contexts/plugin-menu'
 import { isInteractivePluginType } from '../utils/plugin-menu'
 import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { cn } from '@/helper/cn'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
@@ -39,20 +41,12 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
 
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
 
-  const [startedContentGenerations, setStartedContentGenerations] = useState<
-    Array<{ insertIndex: number; prompt: string }>
+  const [aiContentGenerationStates, setAiContentGenerationStates] = useState<
+    Array<AiContentGenerationState>
   >([])
 
   const generateAiContent = useMutation({
-    mutationFn: async ({
-      prompt,
-      insertIndex,
-    }: {
-      insertIndex: number
-      prompt: string
-    }) => {
-      setStartedContentGenerations((prev) => [...prev, { insertIndex, prompt }])
-
+    mutationFn: async ({ prompt }: { insertIndex: number; prompt: string }) => {
       const document = getStaticDocument({
         id,
         documents: store.getState().documents,
@@ -92,8 +86,13 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       }
     },
     onSuccess: (newContent, { insertIndex, prompt }) => {
-      setStartedContentGenerations((prev) =>
-        prev.filter((p) => p.prompt !== prompt || p.insertIndex !== insertIndex)
+      setAiContentGenerationStates((prev) =>
+        prev.filter(
+          (p) =>
+            p.type !== 'generateNewContent' ||
+            p.prompt !== prompt ||
+            p.insertIndex !== insertIndex
+        )
       )
 
       for (const row of newContent.state) {
@@ -102,8 +101,14 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       }
     },
     onError: (error, { insertIndex, prompt }) => {
-      setStartedContentGenerations((prev) =>
-        prev.filter((p) => p.prompt !== prompt || p.insertIndex !== insertIndex)
+      // FIXME: Copy & Pasted code from onSuccess...
+      setAiContentGenerationStates((prev) =>
+        prev.filter(
+          (p) =>
+            p.type !== 'generateNewContent' ||
+            p.prompt !== prompt ||
+            p.insertIndex !== insertIndex
+        )
       )
 
       console.error('Failed to generate AI content', error)
@@ -140,18 +145,15 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   function handleInsertAiGeneratedContent() {
     pluginMenuDispatch({ type: PluginMenuActionTypes.CLOSE })
 
+    const insertIndex = pluginMenuState.insertIndex
+
     // This should never happen, but just to be sure
-    if (pluginMenuState.insertIndex === undefined) return
+    if (insertIndex === undefined) return
 
-    // TODO: Make a more beatufiul prompt
-    const prompt = window.prompt('Prompt für AI:')
-
-    if (prompt === null || prompt.trim() === '') return
-
-    generateAiContent.mutate({
-      insertIndex: pluginMenuState.insertIndex,
-      prompt,
-    })
+    setAiContentGenerationStates((prev) => [
+      ...prev,
+      { type: 'insertPrompt', insertIndex },
+    ])
   }
 
   function removeEmptyTextPluginChildren() {
@@ -168,7 +170,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
           const hideAddButton = showLargeAddButton && index === state.length - 1
           return (
             <>
-              {renderSpinnerforGeneratingContent(index)}
+              {renderAiContentGeneration(index)}
               <RowEditor
                 config={config}
                 key={row.id}
@@ -183,7 +185,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
           )
         })}
       </div>
-      {renderSpinnerforGeneratingContent(state.length)}
+      {renderAiContentGeneration(state.length)}
       {showLargeAddButton ? (
         <AddRowButtonLarge
           onClick={() => {
@@ -191,22 +193,61 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
           }}
         />
       ) : null}
-      <PluginMenuModal
-        onInsertPlugin={handleInsertPlugin}
-        isRootRow={isRootRow}
-      />
+      <PluginMenuModal onInsertPlugin={handleInsertPlugin} />
     </>
   )
 
-  function renderSpinnerforGeneratingContent(index: number) {
-    const prompts = startedContentGenerations
+  function renderAiContentGeneration(index: number) {
+    return (
+      <>
+        {renderAiContentGenerationPrompts(index)}
+        {renderAiContentGenerationSpinner(index)}
+      </>
+    )
+  }
+
+  function renderAiContentGenerationPrompts(index: number) {
+    if (
+      !aiContentGenerationStates
+        .filter(isInsertPrompt)
+        .some((p) => p.insertIndex === index)
+    ) {
+      return
+    }
+
+    return (
+      <AiContentGenerationPrompt
+        onClose={() => {
+          setAiContentGenerationStates((prev) =>
+            prev.filter((x) => !isInsertPrompt(x) || x.insertIndex !== index)
+          )
+        }}
+        onEnter={(prompt) => {
+          setAiContentGenerationStates((prev) => [
+            ...prev.filter(
+              (x) => !isInsertPrompt(x) || x.insertIndex !== index
+            ),
+            { type: 'generateNewContent', insertIndex: index, prompt },
+          ])
+          generateAiContent.mutate({ insertIndex: index, prompt })
+        }}
+      ></AiContentGenerationPrompt>
+    )
+  }
+
+  function renderAiContentGenerationSpinner(index: number) {
+    const prompts = aiContentGenerationStates
+      .filter(isGenerateNewContent)
       .filter((p) => p.insertIndex === index)
       .map((p) => p.prompt)
 
-    // TODO: Design spinner
     return prompts.map((prompt, index) => (
-      <div key={index} className="text-xs text-gray-500">
-        <FaIcon icon={faSpinner} /> ...generiere Inhalt für: „{prompt}“
+      <div
+        key={index}
+        className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side"
+      >
+        <FaIcon icon={faSpinner} className="animate-spin-slow" /> Generiere
+        Inhalt für „{prompt}“
       </div>
     ))
   }
@@ -222,4 +263,72 @@ function wrapExercisePlugin(pluginType: EditorPluginType) {
       },
     },
   }
+}
+
+function AiContentGenerationPrompt({
+  onClose,
+  onEnter,
+}: {
+  onClose: () => void
+  onEnter: (prompt: string) => void
+}) {
+  const [prompt, setPrompt] = useState('')
+
+  return (
+    <ModalWithCloseButton
+      isOpen
+      setIsOpen={onClose}
+      title="Prompt für Inhaltserstellung"
+    >
+      <div className="mx-4">
+        <textarea
+          className={cn(
+            'w-full rounded-xl border-2 border-editor-primary-100',
+            'bg-editor-primary-100 px-2.5 py-[3px] text-almost-black',
+            'focus:border-editor-primary focus:outline-none'
+          )}
+          value={prompt}
+          rows={5}
+          placeholder='z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende"'
+          onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onEnter(prompt)
+            }
+          }}
+        />
+        <button
+          className="serlo-button-editor-primary serlo-tooltip-trigger mt-4 px-4"
+          onClick={() => onEnter(prompt)}
+        >
+          Inhalt generieren
+        </button>
+      </div>
+    </ModalWithCloseButton>
+  )
+}
+
+type AiContentGenerationState = InsertPrompt | GenerateNewContent
+
+interface InsertPrompt {
+  type: 'insertPrompt'
+  insertIndex: number
+}
+
+interface GenerateNewContent {
+  type: 'generateNewContent'
+  insertIndex: number
+  prompt: string
+}
+
+function isInsertPrompt(
+  state: AiContentGenerationState
+): state is InsertPrompt {
+  return state.type === 'insertPrompt'
+}
+
+function isGenerateNewContent(
+  state: AiContentGenerationState
+): state is GenerateNewContent {
+  return state.type === 'generateNewContent'
 }

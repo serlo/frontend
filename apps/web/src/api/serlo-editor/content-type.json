@@ -1,7 +1,16 @@
 {
-  "$ref": "#/definitions/ListOfContent",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "Answer": {
+      "properties": {
+        "answer": {
+          "description": "The answer to the question.",
+          "type": "string"
+        }
+      },
+      "required": ["answer"],
+      "type": "object"
+    },
     "Blank": {
       "description": "Represents a blank space in the editor in a blank exercise.",
       "properties": {
@@ -23,12 +32,7 @@
         "correctAnswers": {
           "description": "List of correct answers for this blank.",
           "items": {
-            "properties": {
-              "answer": {
-                "type": "string"
-              }
-            },
-            "type": "object"
+            "$ref": "#/definitions/Answer"
           },
           "type": "array"
         },
@@ -38,6 +42,7 @@
           "type": "string"
         }
       },
+      "required": ["blankId", "children", "correctAnswers", "type"],
       "type": "object"
     },
     "BlankExercise": {
@@ -52,12 +57,7 @@
             "extraDraggableAnswers": {
               "description": "Optional list of extra draggable answers which are all wrong for a drag & drop exercise.",
               "items": {
-                "properties": {
-                  "answer": {
-                    "type": "string"
-                  }
-                },
-                "type": "object"
+                "$ref": "#/definitions/Answer"
               },
               "type": "array"
             },
@@ -71,9 +71,11 @@
               "description": "The text with the blanks"
             }
           },
+          "required": ["mode", "text"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "Box": {
@@ -86,7 +88,7 @@
         "state": {
           "properties": {
             "content": {
-              "$ref": "#/definitions/ListOfContent"
+              "$ref": "#/definitions/SecondLevelListOfContent"
             },
             "title": {
               "$ref": "#/definitions/RichText"
@@ -95,9 +97,11 @@
               "type": "string"
             }
           },
+          "required": ["content", "title", "type"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "ContentType": {
@@ -162,6 +166,17 @@
           "type": "string"
         }
       },
+      "required": ["text"],
+      "type": "object"
+    },
+    "EmptyText": {
+      "properties": {
+        "text": {
+          "const": "",
+          "type": "string"
+        }
+      },
+      "required": ["text"],
       "type": "object"
     },
     "Equations": {
@@ -175,6 +190,7 @@
           "$ref": "#/definitions/EquationsState"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "EquationsState": {
@@ -194,6 +210,7 @@
           "type": "string"
         }
       },
+      "required": ["firstExplanation", "steps", "transformationTarget"],
       "type": "object"
     },
     "Exercise": {
@@ -206,7 +223,7 @@
         "state": {
           "properties": {
             "content": {
-              "$ref": "#/definitions/ListOfContent",
+              "$ref": "#/definitions/SecondLevelListOfContent",
               "description": "The axtucal task / exercise"
             },
             "interactive": {
@@ -228,9 +245,11 @@
               "description": "The solution of this exercise."
             }
           },
+          "required": ["content", "solution"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "Geogebra": {
@@ -245,6 +264,7 @@
           "type": "string"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "Heading": {
@@ -267,6 +287,7 @@
           "type": "string"
         }
       },
+      "required": ["children", "level", "type"],
       "type": "object"
     },
     "Highlight": {
@@ -285,6 +306,7 @@
           "$ref": "#/definitions/HighlightType"
         }
       },
+      "required": ["plugin", "priority", "state", "type"],
       "type": "object"
     },
     "HighlightState": {
@@ -300,6 +322,7 @@
           "type": "boolean"
         }
       },
+      "required": ["code", "language", "showLineNumbers"],
       "type": "object"
     },
     "HighlightType": {
@@ -316,6 +339,7 @@
           "$ref": "#/definitions/ImageState"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "ImageLink": {
@@ -328,6 +352,7 @@
           "type": "boolean"
         }
       },
+      "required": ["href", "openInNewTab"],
       "type": "object"
     },
     "ImageState": {
@@ -349,6 +374,7 @@
           "type": "string"
         }
       },
+      "required": ["src"],
       "type": "object"
     },
     "InputExercise": {
@@ -364,21 +390,7 @@
             "answers": {
               "description": "multiple answers can be entered",
               "items": {
-                "properties": {
-                  "feedback": {
-                    "$ref": "#/definitions/RichText",
-                    "description": "customizable text feedback for the user, e.g. \"Well done!\""
-                  },
-                  "isCorrect": {
-                    "description": "whether the given answer is correct",
-                    "type": "boolean"
-                  },
-                  "value": {
-                    "description": "the answer as a string",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
+                "$ref": "#/definitions/InputExerciseAnswer"
               },
               "type": "array"
             },
@@ -396,9 +408,29 @@
               "type": "string"
             }
           },
+          "required": ["answers", "type", "unit"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "InputExerciseAnswer": {
+      "properties": {
+        "feedback": {
+          "$ref": "#/definitions/RichText",
+          "description": "customizable text feedback for the user, e.g. \"Well done!\""
+        },
+        "isCorrect": {
+          "description": "whether the given answer is correct",
+          "type": "boolean"
+        },
+        "value": {
+          "description": "the answer as a string",
+          "type": "string"
+        }
+      },
+      "required": ["feedback", "isCorrect", "value"],
       "type": "object"
     },
     "Link": {
@@ -406,14 +438,7 @@
       "properties": {
         "children": {
           "items": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/CustomText"
-              },
-              {
-                "$ref": "#/definitions/MathElement"
-              }
-            ]
+            "$ref": "#/definitions/CustomText"
           },
           "type": "array"
         },
@@ -426,56 +451,26 @@
           "type": "string"
         }
       },
+      "required": ["children", "href", "type"],
       "type": "object"
     },
     "ListItem": {
       "description": "A list item similar to an <li> tag in HTML.",
       "properties": {
         "children": {
-          "anyOf": [
-            {
-              "items": [
-                {
-                  "$ref": "#/definitions/ListItemText"
-                }
-              ],
-              "maxItems": 1,
-              "minItems": 1,
-              "type": "array"
-            },
-            {
-              "items": [
-                {
-                  "$ref": "#/definitions/ListItemText"
-                },
-                {
-                  "$ref": "#/definitions/UnorderedList"
-                }
-              ],
-              "maxItems": 2,
-              "minItems": 2,
-              "type": "array"
-            },
-            {
-              "items": [
-                {
-                  "$ref": "#/definitions/ListItemText"
-                },
-                {
-                  "$ref": "#/definitions/OrderedList"
-                }
-              ],
-              "maxItems": 2,
-              "minItems": 2,
-              "type": "array"
-            }
-          ]
+          "items": {
+            "$ref": "#/definitions/ListItemText"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
         },
         "type": {
           "const": "list-item",
           "type": "string"
         }
       },
+      "required": ["children", "type"],
       "type": "object"
     },
     "ListItemText": {
@@ -492,39 +487,16 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "ListOfContent": {
-      "description": "A list of content elements like boy, richtext or exercises...",
-      "properties": {
-        "plugin": {
-          "const": "rows",
-          "type": "string"
-        },
-        "state": {
-          "items": {
-            "$ref": "#/definitions/ContentType"
-          },
-          "type": "array"
-        }
-      },
+      "required": ["children", "type"],
       "type": "object"
     },
     "MathElement": {
       "description": "A math element similar to a <math> tag in HTML.",
       "properties": {
         "children": {
-          "items": [
-            {
-              "properties": {
-                "text": {
-                  "const": "",
-                  "type": "string"
-                }
-              },
-              "type": "object"
-            }
-          ],
+          "items": {
+            "$ref": "#/definitions/EmptyText"
+          },
           "maxItems": 1,
           "minItems": 1,
           "type": "array"
@@ -542,6 +514,7 @@
           "type": "string"
         }
       },
+      "required": ["children", "inline", "src", "type"],
       "type": "object"
     },
     "Multimedia": {
@@ -555,13 +528,14 @@
           "$ref": "#/definitions/MultimediaState"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "MultimediaState": {
       "description": "Represents the state of the Multimedia plugin.",
       "properties": {
         "explanation": {
-          "$ref": "#/definitions/ListOfContent"
+          "$ref": "#/definitions/SecondLevelListOfContent"
         },
         "illustrating": {
           "type": "boolean"
@@ -583,6 +557,7 @@
           "type": "number"
         }
       },
+      "required": ["explanation", "illustrating", "multimedia", "width"],
       "type": "object"
     },
     "OrderedList": {
@@ -599,6 +574,7 @@
           "type": "string"
         }
       },
+      "required": ["children", "type"],
       "type": "object"
     },
     "Paragraph": {
@@ -616,6 +592,7 @@
           "type": "string"
         }
       },
+      "required": ["children", "type"],
       "type": "object"
     },
     "RichText": {
@@ -632,6 +609,7 @@
           "type": "array"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "ScMcExercise": {
@@ -647,22 +625,7 @@
             "answers": {
               "description": "multiple answers can be entered",
               "items": {
-                "properties": {
-                  "content": {
-                    "$ref": "#/definitions/RichText",
-                    "description": "each answer contains a text content"
-                  },
-                  "feedback": {
-                    "$ref": "#/definitions/RichText",
-                    "description": "text feedback for the user when this solution is selected"
-                  },
-                  "isCorrect": {
-                    "const": false,
-                    "description": "flag whether answer is correct or false",
-                    "type": "boolean"
-                  }
-                },
-                "type": "object"
+                "$ref": "#/definitions/ScMcExerciseAnswer"
               },
               "type": "array"
             },
@@ -672,9 +635,65 @@
               "type": "boolean"
             }
           },
+          "required": ["answers", "isSingleChoice"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "ScMcExerciseAnswer": {
+      "properties": {
+        "content": {
+          "$ref": "#/definitions/RichText",
+          "description": "each answer contains a text content"
+        },
+        "feedback": {
+          "$ref": "#/definitions/RichText",
+          "description": "text feedback for the user when this solution is selected"
+        },
+        "isCorrect": {
+          "const": false,
+          "description": "flag whether answer is correct or false",
+          "type": "boolean"
+        }
+      },
+      "required": ["content", "feedback", "isCorrect"],
+      "type": "object"
+    },
+    "SecondLevelContentType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RichText"
+        },
+        {
+          "$ref": "#/definitions/Video"
+        },
+        {
+          "$ref": "#/definitions/Image"
+        },
+        {
+          "$ref": "#/definitions/Table"
+        },
+        {
+          "$ref": "#/definitions/SerloInjection"
+        }
+      ]
+    },
+    "SecondLevelListOfContent": {
+      "properties": {
+        "plugin": {
+          "const": "rows",
+          "type": "string"
+        },
+        "state": {
+          "items": {
+            "$ref": "#/definitions/SecondLevelContentType"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "SerloInjection": {
@@ -688,6 +707,7 @@
           "type": "string"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "SlateBlock": {
@@ -741,10 +761,11 @@
                   "type": "string"
                 }
               },
+              "required": ["id", "title"],
               "type": "object"
             },
             "steps": {
-              "$ref": "#/definitions/ListOfContent",
+              "$ref": "#/definitions/SecondLevelListOfContent",
               "description": "the solution is structured into different steps where each step can contain text, images or other content types"
             },
             "strategy": {
@@ -752,9 +773,11 @@
               "description": "solution strategy described textually"
             }
           },
+          "required": ["steps", "strategy"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "Spoiler": {
@@ -765,21 +788,26 @@
           "type": "string"
         },
         "state": {
-          "$ref": "#/definitions/SpoilerState"
+          "$ref": "#/definitions/SpoilerState",
+          "description": "The state of the Spoiler plugin."
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "SpoilerState": {
       "description": "Represents the state of the Spoiler plugin.",
       "properties": {
         "content": {
-          "$ref": "#/definitions/ListOfContent"
+          "$ref": "#/definitions/SecondLevelListOfContent",
+          "description": "The content of the spoiler."
         },
         "title": {
+          "description": "The title of the spoiler.",
           "type": "string"
         }
       },
+      "required": ["content", "title"],
       "type": "object"
     },
     "Step": {
@@ -801,6 +829,7 @@
           "type": "string"
         }
       },
+      "required": ["explanation", "left", "right", "sign", "transform"],
       "type": "object"
     },
     "Table": {
@@ -813,39 +842,41 @@
         "state": {
           "properties": {
             "rows": {
-              "items": [
-                {
-                  "properties": {
-                    "columns": {
-                      "items": [
-                        {
-                          "properties": {
-                            "content": {
-                              "$ref": "#/definitions/RichText"
-                            }
-                          },
-                          "type": "object"
-                        }
-                      ],
-                      "maxItems": 1,
-                      "minItems": 1,
-                      "type": "array"
-                    }
-                  },
-                  "type": "object"
-                }
-              ],
-              "maxItems": 1,
-              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/TableRow"
+              },
               "type": "array"
             },
             "tableType": {
               "type": "string"
             }
           },
+          "required": ["rows", "tableType"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "TableCell": {
+      "properties": {
+        "content": {
+          "$ref": "#/definitions/RichText"
+        }
+      },
+      "required": ["content"],
+      "type": "object"
+    },
+    "TableRow": {
+      "properties": {
+        "columns": {
+          "items": {
+            "$ref": "#/definitions/TableCell"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["columns"],
       "type": "object"
     },
     "UnorderedList": {
@@ -862,6 +893,7 @@
           "type": "string"
         }
       },
+      "required": ["children", "type"],
       "type": "object"
     },
     "Video": {
@@ -882,11 +914,27 @@
               "type": "string"
             }
           },
+          "required": ["alt", "src"],
           "type": "object"
         }
       },
+      "required": ["plugin", "state"],
       "type": "object"
     }
   },
-  "description": "A list of content elements like boy, richtext or exercises..."
+  "description": "A list of content elements like boy, richtext or exercises...",
+  "properties": {
+    "plugin": {
+      "const": "rows",
+      "type": "string"
+    },
+    "state": {
+      "items": {
+        "$ref": "#/definitions/ContentType"
+      },
+      "type": "array"
+    }
+  },
+  "required": ["plugin", "state"],
+  "type": "object"
 }
