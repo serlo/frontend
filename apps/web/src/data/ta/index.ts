@@ -933,8 +933,8 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
-          title: 'Fill In The Blanks',
-          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -949,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values'
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1001,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: 'Text Box Exercise',
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
