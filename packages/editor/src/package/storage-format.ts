@@ -12,13 +12,8 @@ const documentType = 'https://serlo.org/editor'
 type Migration = (state: unknown, variant: EditorVariant) => StorageFormat
 
 const migrations: Migration[] = [
-  // Migration 1: Add editorVersion, domainOrigin and id
+  // Migration 0: Add editorVersion, domainOrigin and id
   (state): StorageFormat => {
-    // We already have the right format, we can skip this migration.
-    if (StorageFormat.is(state)) {
-      return state
-    }
-
     const expectedType = t.type({
       type: t.literal(documentType),
       variant: EditorVariantType,
