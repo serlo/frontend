@@ -50,7 +50,6 @@
     "@serlo/editor": "workspace:*",
     "@serlo/katex-styles": "1.0.1",
     "@tippyjs/react": "^4.2.6",
-    "@xapi/xapi": "^2.2.8",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.19",
     "canvas-confetti": "^1.9.2",

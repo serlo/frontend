@@ -19,7 +19,7 @@ export const editorLearnerEvent = (function (): {
 } {
   let triggerLearnerEvent: Trigger | null = null
 
-  // simple way to provide integrations to adapt to their xAPI needs
+  // simple way to provide integrations to adapt to their learner tracking or xAPI needs
   function init(triggerIn: Trigger) {
     if (triggerLearnerEvent) return // only initialize once
 
