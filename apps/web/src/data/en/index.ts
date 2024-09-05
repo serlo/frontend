@@ -1025,9 +1025,9 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.',
         },
         blanksExercise: {
-          title: 'Fill In The Blanks',
+          title: 'Fill in the Blanks',
           description:
-            'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+            'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -1044,9 +1044,9 @@ export const loggedInData = {
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },
         blanksExerciseDragAndDrop: {
-          title: 'Drag&Drop exercise',
+          title: 'Fill in the Blanks (drag&drop)',
           description:
-            'Create a fill-in-the-gap text or a table where the correct answers are inserted via drag and drop.',
+            'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',
         },
       },
       templatePlugins: {
