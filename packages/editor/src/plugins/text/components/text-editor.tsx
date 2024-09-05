@@ -152,15 +152,18 @@ export function TextEditor(props: TextEditorProps) {
 
     if (!Point.equals(anchor, end)) return
 
-    // TODO: Get until selection
-    const suffix = Node.string(editor).trim()
+    const start = Editor.start(editor, [])
+    const suffix = Editor.string(editor, {
+      anchor: start,
+      focus: anchor,
+    })
 
     setTimeout(() => {
       if (
         lastChange.current === lastChangeOfThisCall &&
         !fetchSuggestion.isPending &&
         suggestionsEnabled.current &&
-        suffix.length > 0
+        suffix.trim().length > 0
       ) {
         fetchSuggestion.mutate({ suffix, lastChangeOfThisCall })
       }
