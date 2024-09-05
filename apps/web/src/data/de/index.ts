@@ -760,7 +760,7 @@ export const loggedInData = {
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
           lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
           addImages: "Bilder hinzufügen",
-          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          tooManyImagesMessage: "Du kannst maximal 8 Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
           alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
         },
         injection: {
