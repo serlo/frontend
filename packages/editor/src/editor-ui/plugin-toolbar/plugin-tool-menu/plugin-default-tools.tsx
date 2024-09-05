@@ -9,7 +9,11 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faClone, faWandMagicSparkles, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faClone,
+  faWandMagicSparkles,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useCallback, useContext, useMemo } from 'react'
 
