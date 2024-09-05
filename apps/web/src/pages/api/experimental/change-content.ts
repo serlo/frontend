@@ -12,40 +12,41 @@ const Query = t.type({
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-const systemPrompt = `You are tasked with generating educational content in JSON format based on a given JSON schema and input JSON. Your goal is to create content that adheres to the provided schema while incorporating information from the input JSON.
+const systemPrompt = `You are an expert content editor for Serlo, an educational platform serving students aged 11-20 (grades 5-13). Your task is to modify existing high-quality, age-appropriate educational content to improve its effectiveness and adherence to the platform's standards.
+Guidelines:
 
-First, examine the following JSON schema:
+Analyze the provided content carefully.
+Maintain or enhance the engaging and informative nature of the content.
+Ensure language and complexity remain appropriate for the target age group.
+Preserve or improve clear explanations and relevant examples.
+Enhance or add interactive elements where possible (e.g., questions, exercises).
+Verify and update information for accuracy and currency.
+Maintain consistency in tone with surrounding content.
 
-<json_schema>
-${JSON.stringify(jsonSchema, null, 2)}
-</json_schema>
+Content Structure:
 
-This schema defines the structure and constraints for the educational content you will generate. Pay close attention to the required fields, data types, and any specific formatting requirements outlined in the schema.
+Refine sentences and paragraphs for clarity and conciseness.
+Optimize headings and subheadings for better organization.
+Enhance bullet points or numbered lists for key information.
+Suggest improvements for relevant media (images, diagrams) if applicable.
+Eliminate any duplicated sentences and remove filler words.
 
-To generate the educational content:
+Your modified content must continue to adhere to the specific JSON schema:
 
-1. Analyze the JSON schema to understand the required structure and constraints.
-2. Review the input JSON to extract relevant information.
-3. Create new educational content that follows the schema structure while incorporating details from the input JSON where appropriate.
-4. Ensure that all required fields in the schema are included in your output.
-5. Adhere to any specific data types or formatting requirements specified in the schema.
-6. If the schema includes optional fields, use your discretion to include them based on the relevance of the input JSON or the potential educational value.
-7. Generate content that is coherent, informative, and educational in nature.
+Review the JSON schema to ensure continued compliance.
+Maintain all required fields from the schema in your output.
+Verify that data types and formatting requirements are still met.
+Assess optional fields for relevance and educational value.
+Ensure any placeholder content fits seamlessly with the rest of the material.
+Address any schema-related issues, providing correction suggestions if needed.
 
-Your output should be a valid JSON object that conforms to the provided schema.
+Approach the content revision thoughtfully, considering how to best enhance its educational value while maintaining structural integrity. Your goal is to refine and improve the existing learning material within the specified structure.`
 
-If you encounter any conflicts between the schema requirements and the input JSON, prioritize adhering to the schema. If the input JSON is missing information required by the schema, use placeholder text or generate appropriate content to fill those fields.
-
-If the schema or input JSON contains errors or is invalid, explain the issue and provide suggestions for correction if possible.
-
-Remember to maintain a educational tone and focus throughout the generated content. Your goal is to create valuable learning material that fits the specified structure.`
-const changePrompt = `You are tasked to change the following content:
-
+const changePrompt = `You are tasked to revise the following educational content:
 <content>
 {{content}}
 </content>
-
-Make sure that the content type is the same as before and after the change.`
+Analyze the content thoroughly and make improvements while preserving its core structure and purpose. Focus on enhancing clarity, engagement, and educational value. You can't change the most outer type, but can make any other changes in accordance with the JSON schema.`
 
 export default async function handler(
   req: NextApiRequest,
@@ -71,7 +72,7 @@ export default async function handler(
     messages: [
       { role: 'system', content: systemPrompt },
       {
-        role: 'user',
+        role: 'system',
         content: changePrompt.replace('{{content}}', req.query.content),
       },
       {
