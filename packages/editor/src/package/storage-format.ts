@@ -9,20 +9,66 @@ import { getEditorVersion } from './editor-version'
 /** The creator of the saved data -> Serlo editor */
 const documentType = 'https://serlo.org/editor'
 
-type Migration = (state: unknown, variant: EditorVariant) => StorageFormat
+/** The variant of the Serlo editor that created this saved data */
+const EditorVariantType = t.union([
+  t.literal('https://github.com/serlo/serlo-editor-for-edusharing'),
+  t.literal('lti-tool'),
+  t.literal('serlo-org'),
+  t.literal('kiron'),
+  t.literal('scobees'),
+  t.literal('moodle'),
+  t.literal('chancenwerk'),
+  t.literal('unknown'),
+])
 
+export type EditorVariant = t.TypeOf<typeof EditorVariantType>
+
+// A migration takes an unknown state with `version: number` and returns an unknown state with `version: number`.
+type Migration = (
+  state: unknown & { version: number }
+) => unknown & { version: number }
+
+const StateBeforeMigrationZeroType = t.type({
+  type: t.literal(documentType),
+  variant: EditorVariantType,
+  version: t.literal(0),
+  dateModified: t.string,
+  document: t.type({
+    plugin: t.string,
+    state: t.unknown,
+  }),
+})
+
+type StateBeforeMigrationZeroType = t.TypeOf<
+  typeof StateBeforeMigrationZeroType
+>
+
+// Usage: Do not change existing migrations. Only if you are sure that they never ran in any system where content needs to be supported long term. Instead, create a new migration. It needs to be at the end of the array. The last migration should return `StorageFormat`
 const migrations: Migration[] = [
-  // Migration 0: Add editorVersion, domainOrigin and id
+  // Migration 0: Add editorVersion & id
+  (state) => {
+    if (!StateBeforeMigrationZeroType.is(state))
+      throw new Error(
+        `Unexpected type during migration. Expected ${JSON.stringify(StateBeforeMigrationZeroType)} but got ${JSON.stringify(state)}`
+      )
+
+    return {
+      ...state,
+      editorVersion: getEditorVersion(),
+      id: uuid_v4(),
+    }
+  },
+
+  // Migration 1: Add domainOrigin
   (state): StorageFormat => {
     const expectedType = t.type({
+      id: t.string,
       type: t.literal(documentType),
       variant: EditorVariantType,
       version: t.number,
+      editorVersion: t.string,
       dateModified: t.string,
-      document: t.type({
-        plugin: t.string,
-        state: t.unknown,
-      }),
+      document: DocumentType,
     })
     if (!expectedType.is(state))
       throw new Error(
@@ -31,11 +77,10 @@ const migrations: Migration[] = [
 
     return {
       ...state,
-      editorVersion: getEditorVersion(),
       domainOrigin: window.location.origin,
-      id: uuid_v4(),
     }
   },
+
   // ...
   // Add new migrations here. Make sure the last one returns the new StorageFormat.
 ]
@@ -64,6 +109,11 @@ export function createEmptyDocument(
   }
 }
 
+function deepCopy(obj: unknown) {
+  return JSON.parse(JSON.stringify(obj)) as unknown
+}
+
+/** Migrates outdated states to the most recent `StorageFormat`. */
 export function migrate(
   stateBeforeMigration: unknown,
   variant: EditorVariant
@@ -71,81 +121,66 @@ export function migrate(
   migratedState: StorageFormat
   stateChanged: boolean
 } {
-  let migratedState: StorageFormat
   let stateChanged = false
 
-  // Check if the state is the (old format)
-  if (
-    DocumentType.is(stateBeforeMigration) &&
-    !StorageFormat.is(stateBeforeMigration)
-  ) {
-    migratedState = {
-      ...createEmptyDocument(variant),
-      version: 0,
-      document: stateBeforeMigration,
+  // If the state is in the old format ({ plugin: string, state: unknown }) & missing `version` property -> Add metadata (including `version`) so that type matches what should be present before running migrations[0]
+  let migratingState = prepareStateForMigrations()
+  function prepareStateForMigrations() {
+    if (!t.type({ version: t.number }).is(stateBeforeMigration)) {
+      stateChanged = true
+      const statePlusMetadata: StateBeforeMigrationZeroType = {
+        type: documentType,
+        variant,
+        version: 0,
+        dateModified: getCurrentDatetime(),
+        document: deepCopy(stateBeforeMigration) as t.TypeOf<
+          typeof DocumentType
+        >,
+      }
+      return statePlusMetadata
+    } else {
+      return deepCopy(stateBeforeMigration) as { version: number }
     }
-    stateChanged = true
-  } else {
-    // Make a deep copy
-    migratedState = JSON.parse(
-      JSON.stringify(stateBeforeMigration)
-    ) as StorageFormat
   }
 
-  for (let i = migratedState.version; i < migrations.length; i++) {
-    migratedState = migrations[i](migratedState, variant)
+  // The property `version` tells us which entries in the migrations array we still have to run. Example: `version: 2` means we need to run migration[2], migration[3], ... if they exist
+  const nextMigrationIndex = migratingState.version
+  for (let i = nextMigrationIndex; i < migrations.length; i++) {
+    migratingState = migrations[i](migratingState)
     stateChanged = true
-    migratedState.version = i + 1
+    migratingState.version = i + 1
   }
 
-  if (!StorageFormat.is(migratedState))
+  if (!StorageFormatType.is(migratingState))
     throw new Error(
       'Storage format after migrations does not match StorageFormatType'
     )
 
   if (stateChanged) {
-    migratedState.editorVersion = getEditorVersion()
-    migratedState.dateModified = getCurrentDatetime()
+    migratingState.editorVersion = getEditorVersion()
+    migratingState.dateModified = getCurrentDatetime()
   }
 
-  return { migratedState, stateChanged }
+  return { migratedState: migratingState, stateChanged }
 }
-
-/** The variant of the Serlo editor that created this saved data */
-const EditorVariantType = t.union([
-  t.literal('https://github.com/serlo/serlo-editor-for-edusharing'),
-  t.literal('lti-tool'),
-  t.literal('serlo-org'),
-  t.literal('kiron'),
-  t.literal('scobees'),
-  t.literal('moodle'),
-  t.literal('chancenwerk'),
-  t.literal('unknown'),
-])
-
-export type EditorVariant = t.TypeOf<typeof EditorVariantType>
 
 const DocumentType = t.type({
   plugin: t.string,
   state: t.unknown,
 })
 
-const StorageFormat = t.intersection([
-  t.type({
-    // Constant values (set at creation)
-    id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
-    type: t.literal(documentType),
-    variant: EditorVariantType,
+const StorageFormatType = t.type({
+  // Constant values (set at creation)
+  id: t.string, // https://dini-ag-kim.github.io/amb/20231019/#id
+  type: t.literal(documentType),
+  variant: EditorVariantType,
+  domainOrigin: t.string,
 
-    // Variable values (can change when state modified)
-    version: t.number, // Index of the next migration to apply
-    editorVersion: t.string,
-    dateModified: t.string,
-    document: DocumentType,
-  }),
-  t.partial({
-    // Optional fields
-    domainOrigin: t.string,
-  }),
-])
-export type StorageFormat = t.TypeOf<typeof StorageFormat>
+  // Variable values (can change when state modified)
+  version: t.literal(currentVersion), // Index of the next migration to apply
+  editorVersion: t.string,
+  dateModified: t.string,
+  document: DocumentType,
+})
+
+export type StorageFormat = t.TypeOf<typeof StorageFormatType>
