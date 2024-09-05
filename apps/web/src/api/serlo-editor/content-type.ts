@@ -12,6 +12,13 @@ type ContentType =
   | SerloInjection
   | Exercise
 
+type SecondLevelContentType = RichText | Video | Image | Table | SerloInjection
+
+interface SecondLevelListOfContent {
+  plugin: 'rows'
+  state: SecondLevelContentType[]
+}
+
 /**
  * The exercise plugin combines the task description and the responses
  */
@@ -22,7 +29,7 @@ interface Exercise {
     /**
      * The axtucal task / exercise
      */
-    content: ListOfContent
+    content: SecondLevelListOfContent
     /**
      * The solution of this exercise.
      */
@@ -51,21 +58,23 @@ interface ScMcExercise {
     /**
      * multiple answers can be entered
      */
-    answers: {
-      /**
-       * each answer contains a text content
-       */
-      content: RichText
-      /**
-       * flag whether answer is correct or false
-       */
-      isCorrect: false
-      /**
-       * text feedback for the user when this solution is selected
-       */
-      feedback: RichText
-    }[]
+    answers: ScMcExerciseAnswer[]
   }
+}
+
+interface ScMcExerciseAnswer {
+  /**
+   * each answer contains a text content
+   */
+  content: RichText
+  /**
+   * flag whether answer is correct or false
+   */
+  isCorrect: false
+  /**
+   * text feedback for the user when this solution is selected
+   */
+  feedback: RichText
 }
 
 /**
@@ -85,7 +94,7 @@ interface BlankExercise {
      */
     mode: 'typing' | 'drag-and-drop'
     /** Optional list of extra draggable answers which are all wrong for a drag & drop exercise. */
-    extraDraggableAnswers?: { answer: string }[]
+    extraDraggableAnswers?: Answer[]
   }
 }
 
@@ -114,21 +123,23 @@ interface InputExercise {
     /**
      * multiple answers can be entered
      */
-    answers: {
-      /**
-       * the answer as a string
-       */
-      value: string
-      /**
-       * whether the given answer is correct
-       */
-      isCorrect: boolean
-      /**
-       * customizable text feedback for the user, e.g. "Well done!"
-       */
-      feedback: RichText
-    }[]
+    answers: InputExerciseAnswer[]
   }
+}
+
+interface InputExerciseAnswer {
+  /**
+   * the answer as a string
+   */
+  value: string
+  /**
+   * whether the given answer is correct
+   */
+  isCorrect: boolean
+  /**
+   * customizable text feedback for the user, e.g. "Well done!"
+   */
+  feedback: RichText
 }
 
 /**
@@ -153,7 +164,7 @@ interface Solution {
     /**
      * the solution is structured into different steps where each step can contain text, images or other content types
      */
-    steps: ListOfContent
+    steps: SecondLevelListOfContent
   }
 }
 
@@ -188,7 +199,7 @@ interface Box {
     title: RichText
     // a box can contain text, code, equations, image, multimedia content or a table
     // any of the above is wrapped in a rows plugin
-    content: ListOfContent
+    content: SecondLevelListOfContent
   }
 }
 
@@ -328,7 +339,7 @@ interface Image {
  * @property width - The width of the multimedia object.
  */
 interface MultimediaState {
-  explanation: ListOfContent
+  explanation: SecondLevelListOfContent
   multimedia: Image | Video | Geogebra
   illustrating: boolean
   width: number
@@ -346,21 +357,26 @@ interface Multimedia {
 
 /**
  * Represents the state of the Spoiler plugin.
- * @property title - The title of the spoiler.
- * @property content - The content of the spoiler, which contains rows of text or other content types.
  */
 interface SpoilerState {
+  /**
+   * The title of the spoiler.
+   */
   title: string
-  content: ListOfContent
+  /**
+   * The content of the spoiler.
+   */
+  content: SecondLevelListOfContent
 }
 
 /**
  * Represents the Spoiler plugin.
- * @property plugin - The type of plugin, which is "spoiler".
- * @property state - The state of the Spoiler plugin.
  */
 interface Spoiler {
   plugin: 'spoiler'
+  /**
+   * The state of the Spoiler plugin.
+   */
   state: SpoilerState
 }
 
@@ -380,19 +396,19 @@ interface Table {
 
   // The Serlo Table is structured into rows where each row contains a column list. Each row-column entry is a text content.
   state: {
-    rows: [
-      {
-        columns: [
-          {
-            content: RichText
-          },
-        ]
-      },
-    ]
+    rows: TableRow[]
     // Specifies whether only column headers or
     // only row headers or both are displayed
     tableType: string
   }
+}
+
+interface TableRow {
+  columns: TableCell[]
+}
+
+interface TableCell {
+  content: RichText
 }
 
 type SlateBlock = Paragraph | Heading | UnorderedList | OrderedList
@@ -420,12 +436,19 @@ interface Blank {
   /**
    * List of correct answers for this blank.
    */
-  correctAnswers: { answer: string }[]
+  correctAnswers: Answer[]
 
   /**
    * Optional: Specifies whether math equivalents are accepted.
    */
   acceptMathEquivalents?: boolean
+}
+
+interface Answer {
+  /**
+   * The answer to the question.
+   */
+  answer: string
 }
 
 /**
@@ -464,7 +487,7 @@ interface Link {
    * The URL that the link points
    */
   href: string
-  children: (CustomText | MathElement)[]
+  children: CustomText[]
 }
 
 /**
@@ -488,10 +511,11 @@ interface OrderedList {
  */
 interface ListItem {
   type: 'list-item'
-  children:
-    | [ListItemText]
-    | [ListItemText, UnorderedList]
-    | [ListItemText, OrderedList]
+  /**
+   * @minItems 1
+   * @maxItems 1
+   */
+  children: ListItemText[]
 }
 
 /**
@@ -516,7 +540,15 @@ interface MathElement {
    * Set to false if the math element should be displayed as a block like $$...$$ in LaTeX.
    */
   inline: boolean
-  children: [{ text: '' }]
+  /**
+   * @minItems 1
+   * @maxItems 1
+   */
+  children: EmptyText[]
+}
+
+interface EmptyText {
+  text: ''
 }
 
 /**

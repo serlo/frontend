@@ -45,6 +45,65 @@
       "required": ["blankId", "children", "correctAnswers", "type"],
       "type": "object"
     },
+    "BlankExercise": {
+      "description": "An exercise with blanks wich needs to be be filled out by the students with\nthe correct answer. The blanks are given in the text by blanks in the rich text. This exerciser can\ne a fill ein the gap exercise when mode is \"typing\" and a drag and drop exercise when mode is\n\"drag-and-drop\".",
+      "properties": {
+        "plugin": {
+          "const": "blanksExercise",
+          "type": "string"
+        },
+        "state": {
+          "properties": {
+            "extraDraggableAnswers": {
+              "description": "Optional list of extra draggable answers which are all wrong for a drag & drop exercise.",
+              "items": {
+                "$ref": "#/definitions/Answer"
+              },
+              "type": "array"
+            },
+            "mode": {
+              "description": "The mode of the content type.\nSet to \"typing\" for fill in the gap exercise.\nSet to \"drag-and-drop\" for Drag & Drop Exercise",
+              "enum": ["drag-and-drop", "typing"],
+              "type": "string"
+            },
+            "text": {
+              "$ref": "#/definitions/RichText",
+              "description": "The text with the blanks"
+            }
+          },
+          "required": ["mode", "text"],
+          "type": "object"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "Box": {
+      "description": "A semantic box like an example, a definition, a theorem, a hint, etc.",
+      "properties": {
+        "plugin": {
+          "const": "box",
+          "type": "string"
+        },
+        "state": {
+          "properties": {
+            "content": {
+              "$ref": "#/definitions/SecondLevelListOfContent"
+            },
+            "title": {
+              "$ref": "#/definitions/RichText"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": ["content", "title", "type"],
+          "type": "object"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
     "ContentType": {
       "anyOf": [
         {
@@ -54,16 +113,34 @@
           "$ref": "#/definitions/RichText"
         },
         {
+          "$ref": "#/definitions/Box"
+        },
+        {
           "$ref": "#/definitions/Video"
         },
         {
           "$ref": "#/definitions/Geogebra"
         },
         {
+          "$ref": "#/definitions/Equations"
+        },
+        {
           "$ref": "#/definitions/Image"
         },
         {
+          "$ref": "#/definitions/Multimedia"
+        },
+        {
+          "$ref": "#/definitions/Spoiler"
+        },
+        {
           "$ref": "#/definitions/Table"
+        },
+        {
+          "$ref": "#/definitions/SerloInjection"
+        },
+        {
+          "$ref": "#/definitions/Exercise"
         }
       ]
     },
@@ -100,6 +177,79 @@
         }
       },
       "required": ["text"],
+      "type": "object"
+    },
+    "Equations": {
+      "description": "Represents the Equations plugin.",
+      "properties": {
+        "plugin": {
+          "const": "equations",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/EquationsState"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "EquationsState": {
+      "description": "Represents the state of the Equations plugin.",
+      "properties": {
+        "firstExplanation": {
+          "$ref": "#/definitions/RichText"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/definitions/Step"
+          },
+          "type": "array"
+        },
+        "transformationTarget": {
+          "enum": ["equation", "term"],
+          "type": "string"
+        }
+      },
+      "required": ["firstExplanation", "steps", "transformationTarget"],
+      "type": "object"
+    },
+    "Exercise": {
+      "description": "The exercise plugin combines the task description and the responses",
+      "properties": {
+        "plugin": {
+          "const": "exercise",
+          "type": "string"
+        },
+        "state": {
+          "properties": {
+            "content": {
+              "$ref": "#/definitions/SecondLevelListOfContent",
+              "description": "The axtucal task / exercise"
+            },
+            "interactive": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ScMcExercise"
+                },
+                {
+                  "$ref": "#/definitions/InputExercise"
+                },
+                {
+                  "$ref": "#/definitions/BlankExercise"
+                }
+              ],
+              "description": "The responses, either of type scMcExercise or inputExercise"
+            },
+            "solution": {
+              "$ref": "#/definitions/Solution",
+              "description": "The solution of this exercise."
+            }
+          },
+          "required": ["content", "solution"],
+          "type": "object"
+        }
+      },
+      "required": ["plugin", "state"],
       "type": "object"
     },
     "Geogebra": {
@@ -227,6 +377,62 @@
       "required": ["src"],
       "type": "object"
     },
+    "InputExercise": {
+      "description": "An input exercise where the user has to enter a text, number or mathematical expression which is the right solution.",
+      "properties": {
+        "plugin": {
+          "const": "inputExercise",
+          "type": "string"
+        },
+        "state": {
+          "description": "The input exercise contains only the response part of the\nexercise (the task is a separate content)",
+          "properties": {
+            "answers": {
+              "description": "multiple answers can be entered",
+              "items": {
+                "$ref": "#/definitions/InputExerciseAnswer"
+              },
+              "type": "array"
+            },
+            "type": {
+              "description": "response type: either text, number or mathematical expression",
+              "enum": [
+                "input-expression-equal-match-challenge",
+                "input-number-exact-match-challenge",
+                "input-string-normalized-match-challenge"
+              ],
+              "type": "string"
+            },
+            "unit": {
+              "description": "option to specifiy unit for answer (e.g. \"kg\")",
+              "type": "string"
+            }
+          },
+          "required": ["answers", "type", "unit"],
+          "type": "object"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "InputExerciseAnswer": {
+      "properties": {
+        "feedback": {
+          "$ref": "#/definitions/RichText",
+          "description": "customizable text feedback for the user, e.g. \"Well done!\""
+        },
+        "isCorrect": {
+          "description": "whether the given answer is correct",
+          "type": "boolean"
+        },
+        "value": {
+          "description": "the answer as a string",
+          "type": "string"
+        }
+      },
+      "required": ["feedback", "isCorrect", "value"],
+      "type": "object"
+    },
     "Link": {
       "description": "A link similar to an <a> tag in HTML.",
       "properties": {
@@ -311,6 +517,49 @@
       "required": ["children", "inline", "src", "type"],
       "type": "object"
     },
+    "Multimedia": {
+      "description": "Represents the Multimedia plugin.",
+      "properties": {
+        "plugin": {
+          "const": "multimedia",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/MultimediaState"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "MultimediaState": {
+      "description": "Represents the state of the Multimedia plugin.",
+      "properties": {
+        "explanation": {
+          "$ref": "#/definitions/SecondLevelListOfContent"
+        },
+        "illustrating": {
+          "type": "boolean"
+        },
+        "multimedia": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Video"
+            },
+            {
+              "$ref": "#/definitions/Geogebra"
+            },
+            {
+              "$ref": "#/definitions/Image"
+            }
+          ]
+        },
+        "width": {
+          "type": "number"
+        }
+      },
+      "required": ["explanation", "illustrating", "multimedia", "width"],
+      "type": "object"
+    },
     "OrderedList": {
       "description": "An ordered list similar to an <ol> tag in HTML.",
       "properties": {
@@ -363,6 +612,104 @@
       "required": ["plugin", "state"],
       "type": "object"
     },
+    "ScMcExercise": {
+      "description": "single or multiple choice exercise",
+      "properties": {
+        "plugin": {
+          "const": "scMcExercise",
+          "type": "string"
+        },
+        "state": {
+          "description": "The scmc exercise contains only the response part of the exercise (the task is a separate content)",
+          "properties": {
+            "answers": {
+              "description": "multiple answers can be entered",
+              "items": {
+                "$ref": "#/definitions/ScMcExerciseAnswer"
+              },
+              "type": "array"
+            },
+            "isSingleChoice": {
+              "const": false,
+              "description": "single or multiple choice",
+              "type": "boolean"
+            }
+          },
+          "required": ["answers", "isSingleChoice"],
+          "type": "object"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "ScMcExerciseAnswer": {
+      "properties": {
+        "content": {
+          "$ref": "#/definitions/RichText",
+          "description": "each answer contains a text content"
+        },
+        "feedback": {
+          "$ref": "#/definitions/RichText",
+          "description": "text feedback for the user when this solution is selected"
+        },
+        "isCorrect": {
+          "const": false,
+          "description": "flag whether answer is correct or false",
+          "type": "boolean"
+        }
+      },
+      "required": ["content", "feedback", "isCorrect"],
+      "type": "object"
+    },
+    "SecondLevelContentType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RichText"
+        },
+        {
+          "$ref": "#/definitions/Video"
+        },
+        {
+          "$ref": "#/definitions/Image"
+        },
+        {
+          "$ref": "#/definitions/Table"
+        },
+        {
+          "$ref": "#/definitions/SerloInjection"
+        }
+      ]
+    },
+    "SecondLevelListOfContent": {
+      "properties": {
+        "plugin": {
+          "const": "rows",
+          "type": "string"
+        },
+        "state": {
+          "items": {
+            "$ref": "#/definitions/SecondLevelContentType"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "SerloInjection": {
+      "description": "Represents the SerloInjection plugin.",
+      "properties": {
+        "plugin": {
+          "const": "injection",
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
     "SlateBlock": {
       "anyOf": [
         {
@@ -394,6 +741,96 @@
           "$ref": "#/definitions/Blank"
         }
       ]
+    },
+    "Solution": {
+      "description": "The solution of an exercise",
+      "properties": {
+        "plugin": {
+          "const": "solution",
+          "type": "string"
+        },
+        "state": {
+          "properties": {
+            "prerequisite": {
+              "description": "prerequisites specified for understanding the exercise",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              },
+              "required": ["id", "title"],
+              "type": "object"
+            },
+            "steps": {
+              "$ref": "#/definitions/SecondLevelListOfContent",
+              "description": "the solution is structured into different steps where each step can contain text, images or other content types"
+            },
+            "strategy": {
+              "$ref": "#/definitions/RichText",
+              "description": "solution strategy described textually"
+            }
+          },
+          "required": ["steps", "strategy"],
+          "type": "object"
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "Spoiler": {
+      "description": "Represents the Spoiler plugin.",
+      "properties": {
+        "plugin": {
+          "const": "spoiler",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/SpoilerState",
+          "description": "The state of the Spoiler plugin."
+        }
+      },
+      "required": ["plugin", "state"],
+      "type": "object"
+    },
+    "SpoilerState": {
+      "description": "Represents the state of the Spoiler plugin.",
+      "properties": {
+        "content": {
+          "$ref": "#/definitions/SecondLevelListOfContent",
+          "description": "The content of the spoiler."
+        },
+        "title": {
+          "description": "The title of the spoiler.",
+          "type": "string"
+        }
+      },
+      "required": ["content", "title"],
+      "type": "object"
+    },
+    "Step": {
+      "description": "Represents a single transformation step in an equation.",
+      "properties": {
+        "explanation": {
+          "$ref": "#/definitions/RichText"
+        },
+        "left": {
+          "type": "string"
+        },
+        "right": {
+          "type": "string"
+        },
+        "sign": {
+          "type": "string"
+        },
+        "transform": {
+          "type": "string"
+        }
+      },
+      "required": ["explanation", "left", "right", "sign", "transform"],
+      "type": "object"
     },
     "Table": {
       "description": "Represents a table with rows and columns similar to <table> in HTML.",
