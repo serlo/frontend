@@ -4,13 +4,13 @@ import {
   selectParentPluginType,
   store,
 } from '@editor/store'
-import { getStaticDocument } from '@editor/store/documents/helpers'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useMutation } from '@tanstack/react-query'
 import { useContext, useState } from 'react'
 
 import { AddRowButtonLarge } from './add-row-button-large'
+import { getBeforeAndAfterText } from './content-generation-helper'
 import { PluginMenuModal } from './plugin-menu-modal'
 import { RowEditor } from './row-editor'
 import type { RowsProps } from '..'
@@ -46,20 +46,17 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   >([])
 
   const generateAiContent = useMutation({
-    mutationFn: async ({ prompt }: { insertIndex: number; prompt: string }) => {
-      const document = getStaticDocument({
+    mutationFn: async ({
+      prompt,
+      insertIndex,
+    }: {
+      insertIndex: number
+      prompt: string
+    }) => {
+      const { before, after } = getBeforeAndAfterText({
         id,
-        documents: store.getState().documents,
-      }) as { plugin: EditorPluginType.Rows; state: DocumentState[] }
-
-      const before = {
-        plugin: EditorPluginType.Rows,
-        state: document.state.slice(0, pluginMenuState.insertIndex),
-      }
-      const after = {
-        plugin: EditorPluginType.Rows,
-        state: document.state.slice(pluginMenuState.insertIndex),
-      }
+        insertionIndex: insertIndex,
+      })
 
       const url = new URL(
         '/api/experimental/generate-content',
@@ -169,19 +166,16 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
         {state.map((row, index) => {
           const hideAddButton = showLargeAddButton && index === state.length - 1
           return (
-            <>
-              {renderAiContentGeneration(index)}
-              <RowEditor
-                config={config}
-                key={row.id}
-                index={index}
-                rows={state}
-                row={row}
-                isRootRow={isRootRow}
-                hideAddButton={!!hideAddButton}
-                onAddButtonClick={handleOpenPluginMenu}
-              />
-            </>
+            <RowEditor
+              config={config}
+              key={row.id}
+              index={index}
+              rows={state}
+              row={row}
+              isRootRow={isRootRow}
+              hideAddButton={!!hideAddButton}
+              onAddButtonClick={handleOpenPluginMenu}
+            />
           )
         })}
       </div>
@@ -243,7 +237,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
 
     return prompts.map((prompt, index) => (
       <div
-        key={index}
+        key={`prompt-${index}`}
         className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side"
       >
         <FaIcon icon={faSpinner} className="animate-spin-slow" /> Generiere
@@ -277,7 +271,11 @@ function AiContentGenerationPrompt({
   return (
     <ModalWithCloseButton
       isOpen
-      setIsOpen={onClose}
+      setIsOpen={(open) => {
+        if (!open) {
+          onClose()
+        }
+      }}
       title="Prompt für Inhaltserstellung"
     >
       <div className="mx-4">
@@ -299,7 +297,9 @@ function AiContentGenerationPrompt({
         />
         <button
           className="serlo-button-editor-primary serlo-tooltip-trigger mt-4 px-4"
-          onClick={() => onEnter(prompt)}
+          onClick={() => {
+            onEnter(prompt)
+          }}
         >
           Inhalt generieren
         </button>
