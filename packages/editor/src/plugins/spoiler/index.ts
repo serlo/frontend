@@ -52,6 +52,7 @@ const possiblePlugins: EditorPluginType[] = [
   EditorPluginType.InputExercise,
   EditorPluginType.ScMcExercise,
   EditorPluginType.BlanksExercise,
+  EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.TextAreaExercise,
 ]
 
