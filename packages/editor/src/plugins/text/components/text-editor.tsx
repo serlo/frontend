@@ -3,7 +3,7 @@ import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useMutation } from '@tanstack/react-query'
 import React, { useMemo, useEffect } from 'react'
-import { createEditor, Node, Transforms, Range, Editor } from 'slate'
+import { createEditor, Node, Transforms, Range, Editor, Point } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
@@ -137,7 +137,21 @@ export function TextEditor(props: TextEditorProps) {
 
     if (nextNode !== null && 'text' in nextNode && nextNode.suggestion) return
 
-    // TODO: Check that selection is on end of the line
+    // Check that the selection is at the end of the line
+    const { anchor } = selection
+    const [block] = Editor.nodes(editor, {
+      match: (n) => 'type' in n && n.type === 'p',
+    })
+
+    if (!block) {
+      return false
+    }
+
+    const [, path] = block
+    const end = Editor.end(editor, path)
+
+    if (!Point.equals(anchor, end)) return
+
     // TODO: Get until selection
     const suffix = Node.string(editor).trim()
 
