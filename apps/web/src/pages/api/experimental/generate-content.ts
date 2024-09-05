@@ -73,7 +73,7 @@ export default async function handler(
   }
 
   const openAIResponse = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'gpt-4o-2024-08-06',
     messages: [
       { role: 'system', content: systemPrompt },
       {
@@ -88,7 +88,13 @@ export default async function handler(
       },
     ],
     temperature: 0.25,
-    response_format: { type: 'json_object' },
+    response_format: {
+      type: 'json_schema',
+      json_schema: {
+        schema: jsonSchema,
+        name: 'serlo-editor-content-format',
+      },
+    },
   })
 
   // TODO: Check content of openAIResponse for errors
