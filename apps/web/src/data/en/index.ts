@@ -1025,7 +1025,7 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.',
         },
         blanksExercise: {
-          title: 'Fill in the Blanks',
+          title: 'Fill In The Blanks (Typing)',
           description:
             'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: 'Write a text and add blanks',
@@ -1044,7 +1044,7 @@ export const loggedInData = {
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },
         blanksExerciseDragAndDrop: {
-          title: 'Fill in the Blanks (drag&drop)',
+          title: 'Fill In The Blanks (Drag&Drop)',
           description:
             'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',
         },
@@ -1101,7 +1101,7 @@ export const loggedInData = {
           textAreaExercise: 'Text Box Exercise',
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (drag&drop)',
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
