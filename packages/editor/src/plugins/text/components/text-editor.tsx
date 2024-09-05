@@ -3,7 +3,15 @@ import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useMutation } from '@tanstack/react-query'
 import React, { useMemo, useEffect } from 'react'
-import { createEditor, Node, Transforms, Range, Editor, Point } from 'slate'
+import {
+  createEditor,
+  Node,
+  Transforms,
+  Range,
+  Editor,
+  Point,
+  Path,
+} from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
@@ -40,12 +48,31 @@ export function TextEditor(props: TextEditorProps) {
   const { createTextEditor, toolbarControls } = textFormattingOptions
 
   const { editor, editorKey } = useMemo(() => {
+    const editor = createTextEditor(
+      withReact(
+        withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
+      )
+    )
+
+    const { normalizeNode } = editor
+
+    editor.normalizeNode = (entry) => {
+      const [node, path] = entry
+      const { selection } = editor
+
+      if ('text' in node && node.suggestion && selection !== null) {
+        const { anchor } = selection
+
+        if (!Path.equals(anchor.path, path)) {
+          Transforms.delete(editor, { at: path })
+        }
+      }
+
+      normalizeNode(entry)
+    }
+
     return {
-      editor: createTextEditor(
-        withReact(
-          withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
-        )
-      ),
+      editor,
       // Fast Refresh will rerun useMemo and create a new editor instance,
       // but <Slate /> is confused by it
       // Generate a unique key per editor instance and set it on the component
