@@ -19,8 +19,8 @@ import {
   PluginMenuContext,
 } from '../contexts/plugin-menu'
 import { isInteractivePluginType } from '../utils/plugin-menu'
-import { Skeleton } from '@/components/exercise-generation/exercise-preview-page'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { Skeleton } from '@/components/skeleton'
 import { cn } from '@/helper/cn'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
