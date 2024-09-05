@@ -758,7 +758,7 @@ export const loggedInData = {
           title: "Bilder Galerie",
           description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
-          lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
+          lightboxScreenReaderTitle: "Modale Anzeige eines großen Bildes mit Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren",
           addImages: "Bilder hinzufügen",
           tooManyImagesMessage: "Du kannst maximal %max_images% Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
           alreadyMaxImagesMessage: "Maximal %max_images% Bilder erlaubt. Bitte entferne ein oder mehrere Bilder, um neue hochzuladen."
@@ -933,8 +933,8 @@ export const loggedInData = {
           description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
-          title: 'Fill In The Blanks (Typing)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
+          title: "Lückentext (Eintippen)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden.",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -951,8 +951,8 @@ export const loggedInData = {
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
         },
         blanksExerciseDragAndDrop: {
-          title: 'Fill In The Blanks (Drag&Drop)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
+          title: "Lückentext (Drag&Drop)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
         }
       },
       templatePlugins: {
@@ -1005,7 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Freitext",
           dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
+          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
