@@ -9,7 +9,7 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faClone, faMagic, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faClone, faWandMagicSparkles, faTrashAlt, faW } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useCallback, useContext, useMemo } from 'react'
 
@@ -85,7 +85,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         <DropdownButton
           onClick={onChangeCurrentRowPerAi}
           label="Aktuelles Plugin per AI überarbeiten"
-          icon={faMagic}
+          icon={faWandMagicSparkles}
         />
       ) : null}
       {hasRowsParent ? (
