@@ -2,25 +2,30 @@ import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import type { SupportedLanguage } from '@editor/types/language-data'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
+import { migrate, EditorVariant } from './storage-format'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 export interface SerloRendererProps {
   language?: SupportedLanguage
-  document?: AnyEditorDocument | AnyEditorDocument[]
+  state: unknown
   _ltik?: string
+  editorVariant: EditorVariant
 }
 
 export function SerloRenderer(props: SerloRendererProps) {
-  const { language, _ltik } = {
+  const { language, _ltik, state, editorVariant } = {
     ...defaultSerloEditorProps,
     ...props,
   }
+
+  // Side note: Migrated state will not be persisted since we cannot save in
+  // static renderer view
+  const { migratedState } = migrate(state, editorVariant)
 
   const { instanceData, loggedInData } = editorData[language]
 
@@ -32,7 +37,7 @@ export function SerloRenderer(props: SerloRendererProps) {
       <LoggedInDataProvider value={loggedInData}>
         <LtikContext.Provider value={_ltik}>
           <div className="serlo-editor-hacks">
-            <StaticRenderer {...props} />
+            <StaticRenderer document={migratedState.document} />
           </div>
         </LtikContext.Provider>
       </LoggedInDataProvider>

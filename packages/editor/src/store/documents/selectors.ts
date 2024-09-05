@@ -39,6 +39,11 @@ export const selectStaticDocument = createDeepEqualSelector(
   (documents, id) => getStaticDocument({ documents, id })
 )
 
+export const selectStaticDocuments = createDeepEqualSelector(
+  [selectSelf, (_state, ids: string[]) => ids],
+  (documents, ids) => ids.map((id) => getStaticDocument({ documents, id }))
+)
+
 export const selectStaticDocumentWithoutIds = createDeepEqualSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => getStaticDocument({ documents, id, omitId: true })

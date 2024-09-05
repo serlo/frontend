@@ -2,12 +2,12 @@ import IconChoose from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon
 
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-interface AddImagesProps {
-  onAddImages: () => void
+interface AddImagesButtonProps {
+  onClick: () => void
 }
 
-export function AddImages(props: AddImagesProps) {
-  const { onAddImages } = props
+export function AddImagesButton(props: AddImagesButtonProps) {
+  const { onClick } = props
   const pluginStrings = useEditorStrings().plugins.imageGallery
 
   return (
@@ -15,7 +15,7 @@ export function AddImages(props: AddImagesProps) {
       <button
         className="mx-auto my-8 rounded-md bg-editor-primary-100 px-16 pb-2 pt-4 hover:cursor-pointer hover:bg-editor-primary-200"
         data-qa="plugin-image-gallery-add-images-button"
-        onClick={onAddImages}
+        onClick={onClick}
       >
         <IconChoose className="mx-auto" />
         <div className="mt-2 font-bold text-almost-black">

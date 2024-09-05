@@ -19,6 +19,7 @@ export interface ModalWithCloseButtonProps {
   confirmCloseDescription?: string | undefined
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
+  extraOverlayClassName?: string
   onEscapeKeyDown?: (event: KeyboardEvent) => void
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void
 }
@@ -32,6 +33,7 @@ export function ModalWithCloseButton({
   extraTitleClassName,
   confirmCloseDescription,
   extraCloseButtonClassName,
+  extraOverlayClassName,
   onEscapeKeyDown,
   onKeyDown,
 }: ModalWithCloseButtonProps) {
@@ -90,7 +92,9 @@ export function ModalWithCloseButton({
       <div ref={shadowRootRef}></div>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
         <Dialog.Portal container={appElement}>
-          <Dialog.Overlay className={defaultModalOverlayStyles} />
+          <Dialog.Overlay
+            className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
+          />
           <Dialog.Content
             className={cn('serlo-modal', className)}
             data-modal-state={isOpen ? 'open' : 'closed'}

@@ -5,35 +5,35 @@ import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { Dispatch, SetStateAction } from 'react'
+import { useState } from 'react'
 
 import type { ImageProps } from '.'
 import { SettingsModalControls } from './controls/settings-modal-controls'
 
-export const ImageToolbar = (
-  props: ImageProps & {
-    title?: string
-    showSettingsButtons?: boolean
-    showSettingsModal: boolean
-    setShowSettingsModal: Dispatch<SetStateAction<boolean>>
-    onClickChangeImage: () => void
-  }
-) => {
-  const {
-    id,
-    title,
-    showSettingsModal,
-    setShowSettingsModal,
-    showSettingsButtons = true,
-    onClickChangeImage,
-  } = props
+interface ImageToolbarProps {
+  id: ImageProps['id']
+  state: ImageProps['state']
+  title: string | undefined
+  showSettingsButtons: boolean
+  onChangeImageButtonClick: () => void
+}
+
+export function ImageToolbar({
+  id,
+  state,
+  title,
+  showSettingsButtons,
+  onChangeImageButtonClick,
+}: ImageToolbarProps) {
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
+
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
 
   const pluginSettings = showSettingsButtons ? (
     <>
       <button
-        onClick={() => onClickChangeImage()}
+        onClick={onChangeImageButtonClick}
         className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
       >
         {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
@@ -55,7 +55,7 @@ export const ImageToolbar = (
         </h3>
 
         <div className="mx-side mb-3">
-          <SettingsModalControls state={props.state} />
+          <SettingsModalControls state={state} />
         </div>
       </ModalWithCloseButton>
     </>
@@ -63,12 +63,11 @@ export const ImageToolbar = (
 
   return (
     <PluginToolbar
-      pluginTitle={title}
       pluginType={EditorPluginType.Image}
       pluginSettings={pluginSettings}
-      noWhiteShadow
-      // pluginTooltipText={editorStrings.plugins.image.helpTooltipText}
       pluginControls={<PluginDefaultTools pluginId={id} />}
+      pluginTitle={title}
+      noWhiteShadow
     />
   )
 }

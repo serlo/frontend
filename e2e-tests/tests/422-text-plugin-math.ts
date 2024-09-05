@@ -68,6 +68,7 @@ Scenario('Close math formula using close button', async ({ I }) => {
 
   I.say('Close math editor with close button')
   I.click('$plugin-math-close-formula-editor')
+  I.wait(0.5)
   I.dontSeeElement('$plugin-math-latex-editor')
   I.seeElement('span.katex')
 })

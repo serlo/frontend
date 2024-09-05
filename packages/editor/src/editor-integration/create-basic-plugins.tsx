@@ -1,11 +1,16 @@
+import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
+import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
+import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
+import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
+import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
@@ -37,9 +42,9 @@ import { createTestingImagePlugin } from './image-with-testing-config'
 
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
-  testingSecret?: string
+  testingSecret?: string | null
 ) {
-  if (plugins.includes(EditorPluginType.Image) && testingSecret === undefined) {
+  if (plugins.includes(EditorPluginType.Image) && !testingSecret) {
     /* eslint-disable no-console */
     console.log(
       'The image plugin needs the `testingSecret` but it is missing. Image plugin was disabled. Either provide it or deactivate the image plugin in the editor API.'
@@ -130,19 +135,27 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.TextAreaExercise,
       plugin: textAreaExercisePlugin,
+      icon: <IconFallback />,
     },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      icon: <IconPencil />,
+    },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
+      icon: <IconTextArea />,
     },
     {
       type: EditorPluginType.ScMcExercise,
       plugin: createScMcExercisePlugin(),
+      icon: <IconScMcExercise />,
     },
     {
       type: EditorPluginType.BlanksExercise,
       plugin: blanksExercise,
+      icon: <IconFillGaps />,
     },
     {
       type: EditorPluginType.DropzoneImage,
