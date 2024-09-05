@@ -251,9 +251,6 @@ export const instanceData = {
       reviewers: "Revisor@s",
       reviewersUrl: "https://es.serlo.org/262065",
       help2: "Todo el mundo puede previsualizar las ediciones y continuar editando. Dentro de la vista previa l@s revisor@s pueden aceptar la edición y también dar su opinión.",
-      help3: "¿Quieres ser revisor@? Ponte en contacto con:%contactLink%.",
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: "https://es.serlo.org/user/163773/LinaMaria",
       help4: "¿Cómo revisar? Mira %guidelineLink%.",
       guideline: "Directrices para la revisión",
       guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
@@ -737,7 +734,6 @@ export const loggedInData = {
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
-          tooManyImagesError: 'You can only upload up to 8 images at once.',
           retry: "Reintentar",
           failedUpload: "Carga fallida",
           captionPlaceholder: "Leyenda opcional",
@@ -762,7 +758,10 @@ export const loggedInData = {
           title: 'Image Gallery',
           description: 'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
-          addImages: 'Add Images'
+          lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
+          addImages: 'Add Images',
+          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
         },
         injection: {
           title: "serlo.org Contenido",
@@ -934,8 +933,8 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
-          title: "Completa los espacios en blanco",
-          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
@@ -950,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1002,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Ejercicio de cajas de texto",
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: "Ejercicio de rellenar los espacios en blanco",
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
