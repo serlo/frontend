@@ -139,13 +139,14 @@ export function TextEditor(props: TextEditorProps) {
 
     // TODO: Check that selection is on end of the line
     // TODO: Get until selection
-    const suffix = Node.string(editor)
+    const suffix = Node.string(editor).trim()
 
     setTimeout(() => {
       if (
         lastChange.current === lastChangeOfThisCall &&
         !fetchSuggestion.isPending &&
-        suggestionsEnabled.current
+        suggestionsEnabled.current &&
+        suffix.length > 0
       ) {
         fetchSuggestion.mutate({ suffix, lastChangeOfThisCall })
       }
