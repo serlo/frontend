@@ -283,7 +283,7 @@ export function ExercisePreviewPage({
   )
 }
 
-function Skeleton() {
+export function Skeleton() {
   return (
     <div className="relative h-full w-full">
       <div className="flex animate-pulse flex-col space-y-4">

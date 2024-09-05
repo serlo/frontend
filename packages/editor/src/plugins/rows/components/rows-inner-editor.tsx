@@ -6,7 +6,6 @@ import {
 } from '@editor/store'
 import { getStaticDocument } from '@editor/store/documents/helpers'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useMutation } from '@tanstack/react-query'
 import { useContext, useState } from 'react'
 
@@ -20,7 +19,7 @@ import {
   PluginMenuContext,
 } from '../contexts/plugin-menu'
 import { isInteractivePluginType } from '../utils/plugin-menu'
-import { FaIcon } from '@/components/fa-icon'
+import { Skeleton } from '@/components/exercise-generation/exercise-preview-page'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
 
@@ -259,10 +258,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
                   />
                 </ChangeRowPerAiContext.Provider>
               ) : (
-                <Spinner
-                  key={-index}
-                  message={`Verändere Inhalt mit Prompt „${prompts[0]}“`}
-                />
+                <Spinner key={-index} />
               )}
             </>
           )
@@ -363,25 +359,14 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       .filter((p) => p.insertIndex === index)
       .map((p) => p.prompt)
 
-    return prompts.map((prompt, index) => (
-      <Spinner key={index} message={`Generiere Inhalt für „${prompt}“`} />
-    ))
+    return prompts.map((_prompt, index) => <Spinner key={index} />)
   }
 }
 
-function Spinner({
-  children,
-  message,
-}: {
-  children?: React.ReactNode
-  message: string
-}) {
+function Spinner() {
   return (
     <div className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side text-almost-black">
-      <p>
-        <FaIcon icon={faSpinner} className="animate-spin-slow" /> {message}
-      </p>
-      {children}{' '}
+      <Skeleton />
     </div>
   )
 }
