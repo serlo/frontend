@@ -7,20 +7,14 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AddRowButtonFloatingProps {
+  focused: boolean
   onClick: React.MouseEventHandler<HTMLButtonElement>
-  focused?: boolean
-  hide?: boolean
 }
 
-export function AddRowButtonFloating({
-  onClick,
-  focused,
-  hide,
-}: AddRowButtonFloatingProps) {
+export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
+  const { focused, onClick } = props
   const rowsStrings = useEditorStrings().plugins.rows
   const buttonRef = useRef<HTMLButtonElement>(null)
-
-  if (hide) return null
 
   const baseStyles = `
     opacity-0 transition-opacity duration-300
@@ -42,14 +36,7 @@ export function AddRowButtonFloating({
     <button
       ref={buttonRef}
       className={cn(baseStyles, stateStyles, interactionStyles)}
-      onClick={(event) => {
-        onClick(event)
-
-        // Imperatively calling blur, because inside the Shadow DOM, the
-        // button somehow retains focus which shifts the suggestion menu
-        // to the right!
-        buttonRef?.current?.blur()
-      }}
+      onClick={onClick}
     >
       {/* Divider line */}
       <span className="flex-grow border-t-2 border-gray-300" />

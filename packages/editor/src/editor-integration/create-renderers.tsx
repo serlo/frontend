@@ -1,22 +1,24 @@
 import type {
   InitRenderersArgs,
   LinkRenderer,
-  PluginStaticRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/static'
+import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
+import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
+import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { SerloTableStaticRenderer } from '@editor/plugins/serlo-table/static'
 import { GenericContentTypeStaticRenderer } from '@editor/plugins/serlo-template-plugins/generic-content/static'
 import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
@@ -30,9 +32,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { ComponentProps } from 'react'
 
-export function createRenderers(
-  customPluginRenderers: PluginStaticRenderer[]
-): InitRenderersArgs {
+export function createRenderers(): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -40,6 +40,10 @@ export function createRenderers(
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       { type: EditorPluginType.Image, renderer: ImageStaticRenderer },
+      {
+        type: EditorPluginType.ImageGallery,
+        renderer: ImageGalleryStaticRenderer,
+      },
       {
         type: EditorPluginType.Multimedia,
         renderer: MultimediaStaticRenderer,
@@ -94,8 +98,20 @@ export function createRenderers(
         renderer: BlanksExerciseStaticRenderer,
       },
       {
+        type: EditorPluginType.BlanksExerciseDragAndDrop,
+        renderer: BlanksExerciseStaticRenderer,
+      },
+      {
         type: EditorPluginType.TextAreaExercise,
         renderer: TextAreaExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.EdusharingAsset,
+        renderer: EdusharingAssetStaticRenderer,
+      },
+      {
+        type: EditorPluginType.SerloInjection,
+        renderer: SerloInjectionStaticRenderer,
       },
       {
         type: EditorPluginType.Unsupported,
@@ -109,7 +125,6 @@ export function createRenderers(
         type: TemplatePluginType.GenericContent,
         renderer: GenericContentTypeStaticRenderer,
       },
-      ...customPluginRenderers,
     ],
     mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {

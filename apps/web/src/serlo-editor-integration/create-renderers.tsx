@@ -6,6 +6,7 @@ import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
+import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
@@ -60,11 +61,10 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const BlanksExerciseSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(
-  () =>
-    import(
-      '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
-    ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
+const BlanksSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
+  ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
 )
 const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import(
@@ -79,7 +79,7 @@ const SpoilerSerloStaticRenderer = dynamic<
   )
 )
 
-const DropzoneImageSerloStaticRenderer = dynamic<
+const DropzoneImageStaticRenderer = dynamic<
   EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
 >(() =>
   import('@editor/plugins/dropzone-image/static').then(
@@ -102,17 +102,17 @@ const PagePartnersStaticRenderer = dynamic<EditorPagePartnersDocument>(() =>
     (mod) => mod.PagePartnersStaticRenderer
   )
 )
-const SerloScMcExerciseStaticRenderer = dynamic<EditorScMcExerciseDocument>(
-  () =>
-    import(
-      '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
-    ).then((mod) => mod.ScMcSerloStaticRenderer)
+const ScMcSerloStaticRenderer = dynamic<EditorScMcExerciseDocument>(() =>
+  import(
+    '@/serlo-editor-integration/serlo-plugin-wrappers/sc-mc-serlo-static-renderer'
+  ).then((mod) => mod.ScMcSerloStaticRenderer)
 )
 const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/solution-serlo-static-renderer'
   ).then((mod) => mod.SolutionSerloStaticRenderer)
 )
+
 const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
   import('@editor/plugins/serlo-table/static').then(
     (mod) => mod.SerloTableStaticRenderer
@@ -144,6 +144,10 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       { type: EditorPluginType.Image, renderer: ImageSerloStaticRenderer },
       {
+        type: EditorPluginType.ImageGallery,
+        renderer: ImageGalleryStaticRenderer,
+      },
+      {
         type: EditorPluginType.Multimedia,
         // special renderer for frontend because it uses nextjs dynamic import
         renderer: MultimediaSerloStaticRenderer,
@@ -161,7 +165,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.DropzoneImage,
-        renderer: DropzoneImageSerloStaticRenderer,
+        renderer: DropzoneImageStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
       { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
@@ -229,11 +233,15 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.ScMcExercise,
-        renderer: SerloScMcExerciseStaticRenderer,
+        renderer: ScMcSerloStaticRenderer,
       },
       {
         type: EditorPluginType.BlanksExercise,
-        renderer: BlanksExerciseSerloStaticRenderer,
+        renderer: BlanksSerloStaticRenderer,
+      },
+      {
+        type: EditorPluginType.BlanksExerciseDragAndDrop,
+        renderer: BlanksSerloStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,

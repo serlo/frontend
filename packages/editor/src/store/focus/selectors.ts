@@ -22,17 +22,3 @@ export const selectHasFocusedChild = createSelector(
     return R.any((node) => node.id === focused, tree.children)
   }
 )
-
-export const selectHasFocusedDescendant = createSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state, id: string): boolean => {
-    const tree = selectChildTree(state, id)
-    if (!tree || !tree.children) return false
-    return R.any(
-      (node) =>
-        selectIsFocused(state, node.id) ||
-        selectHasFocusedDescendant(state, node.id),
-      tree.children
-    )
-  }
-)

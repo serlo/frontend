@@ -251,9 +251,6 @@ export const instanceData = {
       reviewers: "Reviewer*innen",
       reviewersUrl: "/community/202923/rollen-der-serlo-community",
       help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
-      help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: "https://community.serlo.org/direct/Alexandra-Wolfram",
       help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
       guideline: "Anleitung",
       guidelineUrl: "/140473",
@@ -607,6 +604,13 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
       noChangesWarning: "Bisher hast du nichts geändert",
+      addPluginsModal: {
+        searchInputPlaceholder: "Suche...",
+        basicPluginsTitle: "Inhalte",
+        interactivePluginsTitle: "Aufgaben",
+        noPluginsFoundTitle: "Leider gibt es keine Elemente, die zu deiner Suche passen.",
+        noPluginsFoundDescription: "Versuche es mit anderen Suchbegriffen oder stöbere durch alle verfügbaren Elemente."
+      },
       plugins: {
         anchor: {
           title: "Sprungmarke",
@@ -616,7 +620,7 @@ export const loggedInData = {
         },
         box: {
           title: "Box",
-          description: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
+          description: "Füge eine Box für Beispiele, Zitate, Warnungen, Definitionen, Hinweise usw. ein.",
           type: "Art der Box",
           typeTooltip: "Wähle die Art der Box",
           titlePlaceholder: "(optionaler Titel)",
@@ -625,7 +629,7 @@ export const loggedInData = {
         },
         dropzoneImage: {
           title: "Bilder mit Ablagezonen",
-          description: "Erstelle eine Aufgabe mit interaktiven Bildern für Zuordnungen und Beschriftungen",
+          description: "Erstelle eine Aufgabe, bei der vorgegebene Antworten in die richtigen Zonen eines Bilds oder einen leeren Hintergrund gezogen werden müssen.",
           backgroundImage: "Hintergrundbild",
           addDropZone: "Ablagezone hinzufügen",
           removeDropZone: "Ablagezone entfernen",
@@ -699,7 +703,7 @@ export const loggedInData = {
         },
         geogebra: {
           title: 'GeoGebra Applet',
-          description: "Binde Applets von GeoGebra Materials via Link oder ID ein.",
+          description: "Binde GeoGebra Inhalte via Link oder ID ein.",
           chooseApplet: "Applet auswählen",
           urlOrId: "GeoGebra Materials URL oder ID"
         },
@@ -715,8 +719,10 @@ export const loggedInData = {
         },
         image: {
           title: "Bild",
-          description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
+          galleryTitle: "Galerie",
+          description: "Lade Bilder hoch oder suche online nach frei lizenzierten Bildern.",
           upload: "Bild hochladen",
+          uploadMultiple: "Bilder hochladen",
           imageUrl: "Bild-URL",
           imageSource: "Bildquelle",
           imageSourceHelpText: "Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.",
@@ -748,9 +754,18 @@ export const loggedInData = {
           loadingImage: "Bilder werden heruntergeladen ...",
           noImagesFound: "Keine Bilder gefunden"
         },
+        imageGallery: {
+          title: "Bilder Galerie",
+          description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
+          modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
+          lightboxScreenReaderTitle: "Modale Anzeige eines großen Bildes mit Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren",
+          addImages: "Bilder hinzufügen",
+          tooManyImagesMessage: "Du kannst maximal %max_images% Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
+          alreadyMaxImagesMessage: "Maximal %max_images% Bilder erlaubt. Bitte entferne ein oder mehrere Bilder, um neue hochzuladen."
+        },
         injection: {
           title: "serlo.org Inhalt",
-          description: "Binde einen Inhalt von serlo.org via ID ein.",
+          description: "Binde einen bestehenden Inhalt von serlo.org via ID ein.",
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
           serloId: 'Serlo ID',
@@ -796,7 +811,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tabelle",
-          description: "Schöne Tabellen erstellen.",
+          description: "Erstelle eine anpassbare Tabelle.",
           mode: "Modus",
           columnHeaders: "Nur Spaltentitel",
           rowHeaders: "Nur Zeilentitel",
@@ -812,8 +827,12 @@ export const loggedInData = {
         },
         spoiler: {
           title: 'Spoiler',
-          description: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
+          description: "Füge eine ausklappbare Box ein, z.B. für Exkurse oder Hilfestellungen.",
           enterATitle: "Titel eingeben"
+        },
+        solution: {
+          title: "Freitext Aufgabe\n",
+          description: "Erstelle eine nicht interaktive Aufgabe, die die Lernenden manuell beantworten. Du kannst weiterhin Lösungen und Strategien einfügen."
         },
         text: {
           title: 'Text',
@@ -849,7 +868,6 @@ export const loggedInData = {
           removeBlank: "Lücke entfernen",
           bold: "Fett (%ctrlOrCmd% + B)",
           italic: "Kursiv (%ctrlOrCmd% + I)",
-          noItemsFound: "keine Einträge gefunden",
           colorNames: {
             blue: "Blau",
             green: "Grün",
@@ -876,7 +894,7 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          description: "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
+          description: "Binde Videos von z.B. YouTube, Vimeo oder Wikimedia Commons ein.",
           videoUrl: 'Video URL',
           videoDescription: "Beschreibung",
           titlePlaceholder: "Titel",
@@ -900,7 +918,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: "Eingabefeld",
-          description: "Die Lösung kann Text oder eine Formel sein"
+          description: "Erstelle eine Aufgabe, bei der eine exakte Eingabe oder ein Wert eingegeben und validiert werden kann."
         },
         textAreaExercise: {
           title: "Freitext",
@@ -908,11 +926,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: "SC/MC Aufgabe",
-          description: "Single- oder Multiple Choice Aufgabe"
+          description: "Erstelle Single- oder Multiple-Choice Aufgaben und passe sie bei Bedarf mit individuellem Feedback an. "
+        },
+        h5p: {
+          title: 'H5P',
+          description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
-          title: "Lückentext",
-          description: "Ein Text mit Lücken zum Ausfüllen",
+          title: "Lückentext (Eintippen)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden.",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -927,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
+        },
+        blanksExerciseDragAndDrop: {
+          title: "Lückentext (Drag&Drop)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
         }
       },
       templatePlugins: {
@@ -979,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Freitext",
           dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
+          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",

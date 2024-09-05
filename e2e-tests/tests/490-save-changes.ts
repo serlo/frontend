@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - save changes')
@@ -11,9 +12,7 @@ Scenario('Save changes', async ({ I }) => {
 
   I.type('Test save changes')
 
-  I.click('$add-new-plugin-row-button')
-
-  I.pressKey('Backspace')
+  addNewTextPlugin(I)
 
   I.type('Some text')
 

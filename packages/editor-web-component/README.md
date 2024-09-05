@@ -2,7 +2,7 @@
 
 This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repositories [serlo/serlo-editor-lit](https://github.com/serlo/serlo-editor-lit) and [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) show how this package can be used.
 
-If you are using React, we recommend using the Serlo Editor as a [React component](https://www.npmjs.com/package/@serlo/editor).
+If you are using React, we recommend using the Serlo Editor as a [React component](https://www.npmjs.com/package/@serlo/editor). Please also read the documentation of all the properties we expose there. The latest supported attributes and properties of the editor-web-component can be found [here](https://github.com/serlo/frontend/blob/staging/packages/editor-web-component/src/editor-web-component.tsx#L22).
 
 ## Installation and usage
 

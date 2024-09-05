@@ -1,19 +1,25 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
+  PluginMenuContext,
+  PluginMenuActionTypes,
+} from '@editor/plugins/rows/contexts/plugin-menu'
+import {
   focusNext,
   focusPrevious,
   selectChildTree,
+  selectChildTreeOfParent,
   store,
   useAppDispatch,
 } from '@editor/store'
 import isHotkey from 'is-hotkey'
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { insertPlugin } from '../utils/insert-plugin'
 import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 
@@ -21,17 +27,18 @@ interface UseEditableKeydownHandlerArgs {
   config: ReturnType<typeof useTextConfig>
   editor: SlateEditor
   id: string
-  showSuggestions: boolean
   state: TextEditorProps['state']
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { showSuggestions, config, editor, id, state } = args
+  const { config, editor, id, state } = args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
+
+  const { pluginMenuDispatch } = useContext(PluginMenuContext)
 
   return useCallback(
     (event: React.KeyboardEvent) => {
@@ -41,10 +48,43 @@ export const useEditableKeydownHandler = (
       }
 
       // Handle specific keyboard commands
-      // (only if selection is collapsed and suggestions are not shown)
+      // (only if selection is collapsed)
       const { selection } = editor
-      if (selection && Range.isCollapsed(selection) && !showSuggestions) {
+      if (selection && Range.isCollapsed(selection)) {
         const isListActive = isSelectionWithinList(editor)
+
+        if (event.key === '/' && !isListActive) {
+          const { path } = selection.focus
+          const node = Node.get(editor, path)
+
+          const parent = selectChildTreeOfParent(store.getState(), id)
+
+          if (Object.hasOwn(node, 'text') && node.text.length === 0 && parent) {
+            const currentIndex = parent.children?.findIndex(
+              (child) => child.id === id
+            )
+
+            const insertIndex =
+              currentIndex !== undefined ? currentIndex + 1 : undefined
+
+            pluginMenuDispatch({
+              type: PluginMenuActionTypes.OPEN_WITH_SLASH_KEY,
+              payload: {
+                insertIndex,
+                insertCallback: (plugin) => {
+                  insertPlugin({
+                    pluginType: plugin.plugin,
+                    editor,
+                    id,
+                    dispatch,
+                    state: plugin.state,
+                  })
+                },
+              },
+            })
+            event.preventDefault()
+          }
+        }
 
         // Special handler for links. If you move right and end up at the right edge of a link,
         // this handler unselects the link, so you can write normal text behind it.
@@ -159,12 +199,12 @@ export const useEditableKeydownHandler = (
     },
     [
       config.noLinebreaks,
-      dispatch,
       editor,
-      id,
-      showSuggestions,
-      state,
       textFormattingOptions,
+      pluginMenuDispatch,
+      id,
+      state,
+      dispatch,
     ]
   )
 }

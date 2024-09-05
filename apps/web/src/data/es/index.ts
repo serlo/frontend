@@ -251,9 +251,6 @@ export const instanceData = {
       reviewers: "Revisor@s",
       reviewersUrl: "https://es.serlo.org/262065",
       help2: "Todo el mundo puede previsualizar las ediciones y continuar editando. Dentro de la vista previa l@s revisor@s pueden aceptar la edición y también dar su opinión.",
-      help3: "¿Quieres ser revisor@? Ponte en contacto con:%contactLink%.",
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: "https://es.serlo.org/user/163773/LinaMaria",
       help4: "¿Cómo revisar? Mira %guidelineLink%.",
       guideline: "Directrices para la revisión",
       guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
@@ -607,6 +604,13 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
       noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
+      addPluginsModal: {
+        searchInputPlaceholder: 'Search...',
+        basicPluginsTitle: 'Content Elements',
+        interactivePluginsTitle: "Ejercicios",
+        noPluginsFoundTitle: 'Sorry, no elements match your search.',
+        noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
+      },
       plugins: {
         anchor: {
           title: "Ancla",
@@ -616,7 +620,7 @@ export const loggedInData = {
         },
         box: {
           title: "Contenedor",
-          description: "Un contenedor para ejemplos, comillas, advertencias, teoremas, notas…",
+          description: 'Insert a container for examples, quotes, warnings, theorems, notes…',
           type: "Tipo de contenedor",
           typeTooltip: "Elige el tipo de caja",
           titlePlaceholder: "(título opcional)",
@@ -625,7 +629,7 @@ export const loggedInData = {
         },
         dropzoneImage: {
           title: 'Image Dropzones',
-          description: 'Create an exercise with interactive images for matching and labeling',
+          description: 'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
           backgroundImage: "Imagen de fondo",
           addDropZone: 'Add drop zone',
           removeDropZone: 'Remove drop zone',
@@ -681,7 +685,7 @@ export const loggedInData = {
         },
         equations: {
           title: "Términos y ecuaciones",
-          description: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
+          description: 'Create term transformations and solve multi-line equations.',
           leftHandSide: "Lado izquierdo",
           transformation: "transformación",
           mode: "Modalidad",
@@ -699,13 +703,13 @@ export const loggedInData = {
         },
         geogebra: {
           title: "Aplicación GeoGebra",
-          description: "Insertar el Material de la aplicación GeoGebra a través de URL o ID.",
+          description: 'Embed GeoGebra materials applets via URL or ID.',
           chooseApplet: "Elegir Applet",
           urlOrId: "URL o ID de GeoGebra"
         },
         highlight: {
           title: "Código fuente",
-          description: "Resalta la sintaxis del código fuente.",
+          description: 'Write code and highlight it according to the programming language.',
           clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
           enterHere: "Introduce tu código fuente aquí",
           language: "Idioma",
@@ -715,8 +719,10 @@ export const loggedInData = {
         },
         image: {
           title: "Imagen",
-          description: "Subir imágenes.",
+          galleryTitle: 'Gallery',
+          description: 'Upload images or search online for freely licensed images.',
           upload: "Subir imagen",
+          uploadMultiple: 'Upload Images',
           imageUrl: "URL de la imagen",
           imageSource: 'Image Source',
           imageSourceHelpText: 'Add the author or source of this image here',
@@ -748,9 +754,18 @@ export const loggedInData = {
           loadingImage: 'Downloading image ...',
           noImagesFound: 'No images found'
         },
+        imageGallery: {
+          title: 'Image Gallery',
+          description: 'Add an image gallery to display related images in an organized way.',
+          modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
+          lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
+          addImages: 'Add Images',
+          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
+        },
         injection: {
           title: "serlo.org Contenido",
-          description: "Insertar el contenido de serlo.org a través de su ID.",
+          description: 'Embed an existing content from serlo.org via ID.',
           illegalInjectionFound: "Entrada ilegal encontrada",
           serloEntitySrc: "entidad de Serlo {{src}}",
           serloId: 'Serlo ID',
@@ -796,7 +811,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tabla",
-          description: "Crear tablas bonitas",
+          description: 'Create a customizable table.',
           mode: "Modalidad",
           columnHeaders: "Sólo las etiquetas de las columnas",
           rowHeaders: "Sólo las etiquetas de las filas",
@@ -812,8 +827,12 @@ export const loggedInData = {
         },
         spoiler: {
           title: "Spoiler/desplegable",
-          description: "Una caja colapsable.",
+          description: 'Insert a fold-out box, e.g. for additional content or help.',
           enterATitle: "Introduzca un título"
+        },
+        solution: {
+          title: 'Non interactive exercise',
+          description: 'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.'
         },
         text: {
           title: "Texto",
@@ -849,7 +868,6 @@ export const loggedInData = {
           removeBlank: "Eliminar espacio en blanc",
           bold: "Negrilla (%ctrlOrCmd% + B)",
           italic: "Itálica (%ctrlOrCmd% + I)",
-          noItemsFound: "Elementos no encontrados",
           colorNames: {
             blue: "Azul",
             green: "Verde",
@@ -876,7 +894,7 @@ export const loggedInData = {
         },
         video: {
           title: "Vídeo",
-          description: "Inserta vídeos de YouTube, Vimeo, Wikimedia Commons o BR.",
+          description: 'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
           videoUrl: "URL del vídeo",
           videoDescription: "Descripción",
           titlePlaceholder: "Título",
@@ -900,7 +918,7 @@ export const loggedInData = {
         },
         inputExercise: {
           title: "Ejercicio de respuesta escrita",
-          description: "La solución puede ser texto o matemático"
+          description: 'Create a task where an exact input or value can be entered and validated.'
         },
         textAreaExercise: {
           title: "Ejercicio de cajas de texto",
@@ -908,11 +926,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: "Ejercicio SC/MC",
-          description: "Opción única o múltiple"
+          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+        },
+        h5p: {
+          title: 'H5P',
+          description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
-          title: "Completa los espacios en blanco",
-          description: "Textos con blancos",
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
@@ -927,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -979,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Ejercicio de cajas de texto",
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: "Ejercicio de rellenar los espacios en blanco",
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",

@@ -1,21 +1,28 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
+import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
+import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg'
+import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
+import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
+import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
+import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
+import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg'
 import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
-import { blanksExercise } from '@editor/plugins/blanks-exercise'
+import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { coursePlugin } from '@editor/plugins/course'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -24,9 +31,13 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { createMultimediaPlugin } from '@editor/plugins/multimedia'
+import {
+  createArticleIntroduction,
+  createMultimediaPlugin,
+} from '@editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@editor/plugins/page-partners'
 import { pageTeamPlugin } from '@editor/plugins/page-team'
@@ -67,7 +78,58 @@ export function createPlugins({
 }): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
-  return [
+  const plugins = [
+    EditorPluginType.Anchor,
+    EditorPluginType.Article,
+    EditorPluginType.Audio,
+    EditorPluginType.ArticleIntroduction,
+    EditorPluginType.Box,
+    EditorPluginType.Course,
+    EditorPluginType.Equations,
+    EditorPluginType.Geogebra,
+    EditorPluginType.H5p,
+    EditorPluginType.Highlight,
+    EditorPluginType.Image,
+    EditorPluginType.ImageGallery,
+    EditorPluginType.Injection,
+    EditorPluginType.Multimedia,
+
+    EditorPluginType.PageLayout,
+    EditorPluginType.PagePartners,
+    EditorPluginType.PageTeam,
+    EditorPluginType.PasteHack,
+
+    EditorPluginType.Rows,
+    EditorPluginType.SerloTable,
+    EditorPluginType.Spoiler,
+
+    EditorPluginType.Text,
+    EditorPluginType.Video,
+
+    EditorPluginType.DropzoneImage,
+    EditorPluginType.ExerciseGroup,
+    EditorPluginType.Exercise,
+    EditorPluginType.ScMcExercise,
+    EditorPluginType.InputExercise,
+    EditorPluginType.BlanksExercise,
+    EditorPluginType.BlanksExerciseDragAndDrop,
+    EditorPluginType.Solution,
+
+    EditorPluginType.Unsupported,
+
+    TemplatePluginType.Applet,
+    TemplatePluginType.Article,
+    TemplatePluginType.Course,
+    TemplatePluginType.Event,
+    TemplatePluginType.Page,
+    TemplatePluginType.Taxonomy,
+    TemplatePluginType.TextExercise,
+    TemplatePluginType.TextExerciseGroup,
+    TemplatePluginType.User,
+    TemplatePluginType.Video,
+  ]
+
+  const allPlugins = [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
@@ -80,9 +142,24 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconImage />,
     },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.ImageGallery,
+            plugin: createImageGalleryPlugin(),
+            visibleInSuggestions: true,
+            icon: <IconImageGallery />,
+          },
+        ]),
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(),
+      plugin: createMultimediaPlugin([
+        EditorPluginType.Image,
+        EditorPluginType.Video,
+        ...(isProduction ? [] : [EditorPluginType.Audio]),
+        EditorPluginType.Geogebra,
+      ]),
       visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
@@ -94,13 +171,13 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(),
+      plugin: createSpoilerPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin({}),
+      plugin: createBoxPlugin(plugins),
       visibleInSuggestions: true,
       icon: <IconBox />,
     },
@@ -189,16 +266,32 @@ export function createPlugins({
       plugin: exercisePlugin,
       visibleInSuggestions: true,
     },
-    { type: EditorPluginType.Solution, plugin: solutionPlugin },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    {
+      type: EditorPluginType.Solution,
+      plugin: solutionPlugin,
+      icon: <IconPencil />,
+    },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin, icon: <IconH5p /> },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
+      icon: <IconTextArea />,
     },
-    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    {
+      type: EditorPluginType.ScMcExercise,
+      plugin: createScMcExercisePlugin(),
+      icon: <IconScMcExercise />,
+      visibleInSuggestions: true,
+    },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: blanksExercise,
+      plugin: createBlanksExercisePlugin({ defaultMode: 'typing' }),
+      icon: <IconBlanksTyping />,
+    },
+    {
+      type: EditorPluginType.BlanksExerciseDragAndDrop,
+      plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
+      icon: <IconBlanksDragAndDrop />,
     },
 
     // Special plugins, never visible in suggestions
@@ -208,15 +301,9 @@ export function createPlugins({
     { type: EditorPluginType.Article, plugin: articlePlugin },
     {
       type: EditorPluginType.ArticleIntroduction,
-      plugin: createMultimediaPlugin({
-        explanation: {
-          plugin: EditorPluginType.Text,
-          config: {
-            placeholder: editorStrings.templatePlugins.article.writeShortIntro,
-          },
-        },
-        allowedPlugins: [EditorPluginType.Image],
-      }),
+      plugin: createArticleIntroduction(
+        editorStrings.templatePlugins.article.writeShortIntro
+      ),
     },
     { type: EditorPluginType.Course, plugin: coursePlugin },
     // Internal plugins for our content types
@@ -235,4 +322,6 @@ export function createPlugins({
     { type: TemplatePluginType.User, plugin: userTypePlugin },
     { type: TemplatePluginType.Video, plugin: videoTypePlugin },
   ]
+
+  return allPlugins.filter(({ type }) => plugins.includes(type))
 }

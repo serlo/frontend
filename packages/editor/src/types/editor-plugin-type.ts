@@ -10,6 +10,7 @@ export enum EditorPluginType {
   H5p = 'h5p',
   Highlight = 'highlight',
   Image = 'image',
+  ImageGallery = 'imageGallery',
   Injection = 'injection',
   Multimedia = 'multimedia',
 
@@ -32,7 +33,11 @@ export enum EditorPluginType {
   InputExercise = 'inputExercise',
   TextAreaExercise = 'textAreaExercise',
   BlanksExercise = 'blanksExercise',
+  BlanksExerciseDragAndDrop = 'blanksExerciseDragAndDrop',
   Solution = 'solution',
+
+  SerloInjection = 'serloInjection',
+  EdusharingAsset = 'edusharingAsset',
 
   Unsupported = 'unsupported',
 }

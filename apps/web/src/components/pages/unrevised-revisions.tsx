@@ -33,12 +33,9 @@ export function UnrevisedRevisionsOverview({
     const {
       help1,
       help2,
-      help3,
       help4,
       reviewers,
       reviewersUrl,
-      contactPerson,
-      contactPersonUrl,
       guideline,
       guidelineUrl,
     } = strings.unrevisedRevisions
@@ -54,10 +51,6 @@ export function UnrevisedRevisionsOverview({
           {replacePlaceholders(help2, { eyeIcon: <FaIcon icon={faEye} /> })}
         </p>
         <p className="serlo-p font-bold">
-          {replacePlaceholders(help3, {
-            contactLink: <Link href={contactPersonUrl}>{contactPerson}</Link>,
-          })}
-          <br />
           {replacePlaceholders(help4, {
             guidelineLink: <Link href={guidelineUrl}>{guideline}</Link>,
           })}

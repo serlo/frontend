@@ -1,3 +1,4 @@
+import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - plugin toolbar')
@@ -13,16 +14,14 @@ Scenario('Duplicate plugin', async ({ I }) => {
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
-  I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
+  I.click(locate('$plugin-text-editor').inside('.plugin-rows'))
 
   I.moveCursorTo(
     locate('[data-radix-collection-item]').inside('.plugin-toolbar')
   )
   I.click('$duplicate-plugin-button')
 
-  I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 2)
+  I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 })
 
 Scenario('Delete plugin', async ({ I }) => {
@@ -30,8 +29,10 @@ Scenario('Delete plugin', async ({ I }) => {
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
-  I.click('$add-new-plugin-row-button')
-  I.pressKey('Backspace')
+  I.click(locate('$plugin-text-editor').inside('.plugin-rows'))
+  I.type('Test')
+  addNewTextPlugin(I)
+
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.moveCursorTo(

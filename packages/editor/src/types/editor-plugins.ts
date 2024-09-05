@@ -6,12 +6,14 @@ import { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import { BoxPluginState } from '@editor/plugins/box'
 import { CoursePluginState } from '@editor/plugins/course'
 import { DropzoneImagePluginState } from '@editor/plugins/dropzone-image'
+import type { EdusharingAssetState } from '@editor/plugins/edusharing-asset'
 import { EquationsPluginState } from '@editor/plugins/equations'
 import type { ExercisePluginState } from '@editor/plugins/exercise'
 import { ExerciseGroupPluginState } from '@editor/plugins/exercise-group'
 import type { GeogebraPluginState } from '@editor/plugins/geogebra'
 import type { HighlightPluginState } from '@editor/plugins/highlight'
 import type { ImagePluginState } from '@editor/plugins/image'
+import { ImageGalleryPluginState } from '@editor/plugins/image-gallery'
 import type { InjectionPluginState } from '@editor/plugins/injection'
 import type { InputExercisePluginState } from '@editor/plugins/input-exercise'
 import type { MultimediaPluginState } from '@editor/plugins/multimedia'
@@ -20,6 +22,7 @@ import { PagePartnersPluginState } from '@editor/plugins/page-partners'
 import { PageTeamPluginState } from '@editor/plugins/page-team'
 import type { RowsPluginState } from '@editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@editor/plugins/sc-mc-exercise'
+import type { SerloInjectionPluginState } from '@editor/plugins/serlo-injection'
 import { SerloTablePluginState } from '@editor/plugins/serlo-table'
 import { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { GenericContentTypePluginState } from '@editor/plugins/serlo-template-plugins/generic-content'
@@ -116,6 +119,11 @@ export interface EditorImageDocument {
   state: PrettyStaticState<ImagePluginState>
   id?: string
 }
+export interface EditorImageGalleryDocument {
+  plugin: EditorPluginType.ImageGallery
+  state: PrettyStaticState<ImageGalleryPluginState>
+  id?: string
+}
 export interface EditorInjectionDocument {
   plugin: EditorPluginType.Injection
   state: PrettyStaticState<InjectionPluginState>
@@ -159,11 +167,6 @@ export interface EditorDropzoneImageDocument {
 export interface EditorSpoilerDocument {
   plugin: EditorPluginType.Spoiler
   state: PrettyStaticState<SpoilerPluginState>
-  id?: string
-}
-export interface EditorSerloInjectionDocument {
-  plugin: EditorPluginType.Injection
-  state: PrettyStaticState<InjectionPluginState>
   id?: string
 }
 export interface EditorSolutionDocument {
@@ -233,6 +236,18 @@ export interface EditorExerciseGroupDocument {
   }
 }
 
+export interface EditorSerloInjectionDocument {
+  plugin: EditorPluginType.SerloInjection
+  state: PrettyStaticState<SerloInjectionPluginState>
+  id?: string
+}
+
+export interface EditorEdusharingAssetDocument {
+  plugin: EditorPluginType.EdusharingAsset
+  state: PrettyStaticState<EdusharingAssetState>
+  id?: string
+}
+
 // Template Plugins
 export interface EditorTemplateExerciseGroupDocument {
   plugin: TemplatePluginType.TextExerciseGroup
@@ -256,11 +271,12 @@ export type SupportedEditorDocument =
   | EditorAudioDocument
   | EditorSerloTableDocument
   | EditorHighlightDocument
-  | EditorSerloInjectionDocument
+  | EditorInjectionDocument
   | EditorMultimediaDocument
   | EditorSpoilerDocument
   | EditorBoxDocument
   | EditorImageDocument
+  | EditorImageGalleryDocument
   | EditorTextDocument
   | EditorRowsDocument
   | EditorEquationsDocument
@@ -268,6 +284,8 @@ export type SupportedEditorDocument =
   | EditorPageLayoutDocument
   | EditorPageTeamDocument
   | EditorPagePartnersDocument
+  | EditorEdusharingAssetDocument
+  | EditorSerloInjectionDocument
 
 export interface UnknownEditorDocument {
   plugin: string

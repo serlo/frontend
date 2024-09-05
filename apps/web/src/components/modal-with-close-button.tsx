@@ -19,6 +19,9 @@ export interface ModalWithCloseButtonProps {
   confirmCloseDescription?: string | undefined
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
+  extraOverlayClassName?: string
+  onEscapeKeyDown?: (event: KeyboardEvent) => void
+  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void
 }
 
 export function ModalWithCloseButton({
@@ -30,12 +33,15 @@ export function ModalWithCloseButton({
   extraTitleClassName,
   confirmCloseDescription,
   extraCloseButtonClassName,
+  extraOverlayClassName,
+  onEscapeKeyDown,
+  onKeyDown,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
 
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-  const shadowRoot = useShadowRoot(ref)
+  const shadowRootRef = useRef<HTMLDivElement>(null)
+  const shadowRoot = useShadowRoot(shadowRootRef)
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
 
   const appElement = getFirstElementOrUndefined(shadowRoot)
@@ -83,13 +89,18 @@ export function ModalWithCloseButton({
 
   return (
     <>
-      <div ref={ref}></div>
+      <div ref={shadowRootRef}></div>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
         <Dialog.Portal container={appElement}>
-          <Dialog.Overlay className={defaultModalOverlayStyles} />
+          <Dialog.Overlay
+            className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
+          />
           <Dialog.Content
             className={cn('serlo-modal', className)}
             data-modal-state={isOpen ? 'open' : 'closed'}
+            aria-describedby={undefined}
+            onEscapeKeyDown={onEscapeKeyDown}
+            onKeyDown={onKeyDown}
           >
             {title ? (
               <Dialog.Title className={cn('serlo-h2', extraTitleClassName)}>
@@ -103,7 +114,7 @@ export function ModalWithCloseButton({
               onClick={() => onOpenChange(false)}
               title={title}
               className={cn(
-                `z-2 absolute right-3.5 top-3.5 inline-flex h-9 w-9 cursor-pointer items-center
+                `absolute right-3.5 top-3.5 z-20 inline-flex h-9 w-9 cursor-pointer items-center
               justify-center rounded-full border-none leading-tight
               text-almost-black hover:bg-brand hover:text-white`,
                 extraCloseButtonClassName

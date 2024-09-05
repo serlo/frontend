@@ -1,12 +1,11 @@
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { createSelector } from '@reduxjs/toolkit'
-import * as R from 'ramda'
 
 import {
   getChildTree,
   findChildTreeNodeParentById,
   getStaticDocument,
+  isPluginEmpty,
 } from './helpers'
 import { ChildTreeNode } from './types'
 import {
@@ -40,6 +39,11 @@ export const selectStaticDocument = createDeepEqualSelector(
   (documents, id) => getStaticDocument({ documents, id })
 )
 
+export const selectStaticDocuments = createDeepEqualSelector(
+  [selectSelf, (_state, ids: string[]) => ids],
+  (documents, ids) => ids.map((id) => getStaticDocument({ documents, id }))
+)
+
 export const selectStaticDocumentWithoutIds = createDeepEqualSelector(
   [selectSelf, (_state, id: string) => id],
   (documents, id) => getStaticDocument({ documents, id, omitId: true })
@@ -47,23 +51,30 @@ export const selectStaticDocumentWithoutIds = createDeepEqualSelector(
 
 export const selectIsDocumentEmpty = createSelector(
   [selectSelf, (_state, id: string) => id],
+  (documents, id: string) => isPluginEmpty(documents[id])
+)
+
+export const selectEmptyTextPluginChildrenIndexes = createSelector(
+  [selectSelf, (_state, id: string) => id],
   (documents, id: string) => {
-    const document = documents[id]
-    const plugin = editorPlugins.getByType(document.plugin)
+    const { children } = getChildTree(documents, id)
+    if (!children) return []
 
-    if (typeof plugin.isEmpty === 'function') {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const state = plugin.state.init(document.state, () => {})
-      return plugin.isEmpty(state)
-    }
+    const emptyIndexes = children
+      .map((child, index) => {
+        const childDocument = documents[child.id]
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const initialState = plugin.state.createInitialState({
-      createDocument: () => {},
-    })
-    return R.equals(document.state, initialState)
+        return childDocument.plugin === EditorPluginType.Text &&
+          isPluginEmpty(childDocument)
+          ? index
+          : null
+      })
+      .filter(Number.isInteger)
+
+    return emptyIndexes as number[]
   }
 )
+
 export const selectChildTree: (
   state: State,
   id?: string

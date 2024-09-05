@@ -6,10 +6,11 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { BoxEditor } from './editor'
 
-function createBoxState(allowedPlugins: (EditorPluginType | string)[]) {
+function createBoxState(allowedPlugins: EditorPluginType[]) {
   return object({
     type: string(''),
     title: child({
@@ -33,21 +34,28 @@ export interface BoxConfig {
   allowedPlugins?: (EditorPluginType | string)[]
 }
 
-const defaultAllowedPlugins: (EditorPluginType | string)[] = [
+const possiblePlugins: EditorPluginType[] = [
   EditorPluginType.Text,
   EditorPluginType.Image,
   EditorPluginType.Equations,
   EditorPluginType.Multimedia,
   EditorPluginType.SerloTable,
   EditorPluginType.Highlight,
+  EditorPluginType.EdusharingAsset,
 ]
 
-export function createBoxPlugin({
-  allowedPlugins = defaultAllowedPlugins,
-}): EditorPlugin<BoxPluginState> {
+export function createBoxPlugin(
+  plugins: (EditorPluginType | TemplatePluginType)[]
+): EditorPlugin<BoxPluginState> {
+  const allowedPlugins = possiblePlugins.filter((pluginType) =>
+    plugins.includes(pluginType)
+  )
+
   return {
     Component: BoxEditor,
     state: createBoxState(allowedPlugins),
-    config: {},
+    config: {
+      allowedPlugins,
+    },
   }
 }

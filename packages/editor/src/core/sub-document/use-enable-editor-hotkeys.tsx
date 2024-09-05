@@ -1,13 +1,10 @@
 import type { EditorPlugin } from '@editor/plugin'
-import { useEffect } from 'react'
-import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
-import { Key } from 'ts-key-enum'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import {
   focusNext,
   focusPrevious,
   selectChildTreeOfParent,
-  insertPluginChildAfter,
   removePluginChild,
   selectChildTree,
   useAppDispatch,
@@ -27,11 +24,6 @@ export const useEnableEditorHotkeys = (
     selectIsDocumentEmpty(state, id)
   )
 
-  const { enableScope } = useHotkeysContext()
-  useEffect(() => {
-    enableScope('root-up-down-enter')
-  }, [enableScope])
-
   const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
     if (
       event &&
@@ -45,28 +37,6 @@ export const useEnableEditorHotkeys = (
     event && event.preventDefault()
     callback()
   }
-
-  useHotkeys(
-    Key.Enter,
-    (e) => {
-      handleKeyDown(e, () => {
-        const parent = selectChildTreeOfParent(store.getState(), id)
-        if (!parent) return
-        dispatch(
-          insertPluginChildAfter({
-            parent: parent.id,
-            sibling: id,
-          })
-        )
-      })
-    },
-    {
-      enableOnContentEditable: true,
-      enableOnFormTags: false,
-      scopes: ['root-up-down-enter'],
-      enabled: isFocused,
-    }
-  )
 
   useHotkeys('backspace, del', (e) => {
     if (isDocumentEmpty) {
