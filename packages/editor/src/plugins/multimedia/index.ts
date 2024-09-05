@@ -10,33 +10,24 @@ import {
   number,
   object,
 } from '../../plugin'
-import { isProduction } from '@/helper/is-production'
+import { TemplatePluginType } from '../../types/template-plugin-type'
 
-export const defaultConfig: MultimediaConfig = {
-  allowedPlugins: [
-    EditorPluginType.Image,
-    EditorPluginType.Video,
-    ...(isProduction ? [] : [EditorPluginType.Audio]),
-    EditorPluginType.Geogebra,
-  ],
-  explanation: {
-    plugin: EditorPluginType.Rows,
-    config: {
-      allowedPlugins: [
-        EditorPluginType.Text,
-        EditorPluginType.Highlight,
-        EditorPluginType.Anchor,
-        ...(isProduction ? [] : [EditorPluginType.Audio]),
-        EditorPluginType.Equations,
-        EditorPluginType.Image,
-        EditorPluginType.SerloTable,
-      ],
-    },
+const possiblePlugins = [
+  EditorPluginType.Image,
+  EditorPluginType.EdusharingAsset,
+  EditorPluginType.Video,
+  EditorPluginType.Audio,
+  EditorPluginType.Geogebra,
+]
+
+const explanation = {
+  plugin: EditorPluginType.Rows,
+  config: {
+    allowedPlugins: [EditorPluginType.Text],
   },
 }
 
-function createMultimediaState(config: MultimediaConfig) {
-  const { allowedPlugins, explanation } = config
+function createMultimediaState(allowedPlugins: EditorPluginType[]) {
   return object({
     explanation: child(explanation),
     multimedia: child({ plugin: allowedPlugins[0] }),
@@ -46,19 +37,47 @@ function createMultimediaState(config: MultimediaConfig) {
 }
 
 export function createMultimediaPlugin(
-  config = defaultConfig
+  plugins: (EditorPluginType | TemplatePluginType)[]
 ): EditorPlugin<MultimediaPluginState, MultimediaConfig> {
+  const allowedPlugins = possiblePlugins.filter((pluginType) =>
+    plugins.includes(pluginType)
+  )
+
   return {
     Component: MultimediaEditor,
-    config,
-    state: createMultimediaState(config),
+    config: {
+      allowedPlugins,
+      explanation,
+    },
+    state: createMultimediaState(allowedPlugins),
+  }
+}
+
+export function createArticleIntroduction(placeholderText: string) {
+  return {
+    Component: MultimediaEditor,
+    config: {
+      allowedPlugins: [EditorPluginType.Image],
+      explanation: {
+        plugin: EditorPluginType.Text,
+        config: {
+          placeholder: placeholderText,
+        },
+      },
+    },
+    state: object({
+      explanation: child({ plugin: EditorPluginType.Text }),
+      multimedia: child({ plugin: EditorPluginType.Image }),
+      illustrating: boolean(true),
+      width: number(50), // percent
+    }),
   }
 }
 
 export type MultimediaPluginState = ReturnType<typeof createMultimediaState>
 
 export interface MultimediaConfig {
-  allowedPlugins: (EditorPluginType | string)[]
+  allowedPlugins: (EditorPluginType | TemplatePluginType)[]
   explanation: ChildStateTypeConfig
 }
 

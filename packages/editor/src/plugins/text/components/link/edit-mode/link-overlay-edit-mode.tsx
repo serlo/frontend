@@ -8,7 +8,6 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { useEffect, useState, KeyboardEvent } from 'react'
-import { useHotkeysContext } from 'react-hotkeys-hook'
 
 import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
@@ -44,18 +43,12 @@ export function LinkOverlayEditMode({
     setQuery(value)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
-  const { enableScope, disableScope } = useHotkeysContext()
 
   useEffect(() => {
     if (isSerloLinkSearchActive) setSelectedIndex(0)
   }, [query, quickbarData, value, isSerloLinkSearchActive])
 
   const results = quickbarData ? findResults(quickbarData, query) : []
-  useEffect(() => {
-    disableScope('root-up-down-enter')
-
-    return () => enableScope('root-up-down-enter')
-  }, [enableScope, disableScope])
 
   function chooseEntry(index?: number) {
     const activeIndex = index ?? selectedIndex

@@ -267,9 +267,6 @@ export const instanceData = {
         'https://de.serlo.org/community/202923/rollen-der-serlo-community',
       help2:
         'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
-      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
       guidelineUrl:
@@ -791,9 +788,11 @@ export const loggedInData = {
         },
         image: {
           title: 'Image',
+          galleryTitle: 'Gallery',
           description:
             'Upload images or search online for freely licensed images.',
           upload: 'Upload Image',
+          uploadMultiple: 'Upload Images',
           imageUrl: 'Image URL',
           imageSource: 'Image Source',
           imageSourceHelpText: 'Add the author or source of this image here',
@@ -831,6 +830,15 @@ export const loggedInData = {
           title: 'Image Gallery',
           description:
             'Add an image gallery to display related images in an organized way.',
+          modalScreenReaderTitle:
+            'Modal displaying single image options for caption and settings.',
+          lightboxScreenReaderTitle:
+            'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
+          addImages: 'Add Images',
+          tooManyImagesMessage:
+            'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage:
+            'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.',
         },
         injection: {
           title: 'serlo.org Content',

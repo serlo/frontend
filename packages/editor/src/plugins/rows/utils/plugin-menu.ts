@@ -42,29 +42,16 @@ export function createOption(
 }
 
 export function filterOptions(option: PluginMenuItemType[], text: string) {
+  if (!text.length) return option
+
   const search = text.toLowerCase()
-  if (!search.length) return option
 
-  const filterResults = new Set<PluginMenuItemType>()
-
-  // title or pluginType start with search string
-  option.forEach((entry) => {
-    if (
-      entry.title.toLowerCase().startsWith(search) ||
-      entry.pluginType.startsWith(search)
-    ) {
-      filterResults.add(entry)
-    }
-  })
-
-  // title includes search string
-  option.forEach((entry) => {
-    if (entry.title.toLowerCase().includes(search)) {
-      filterResults.add(entry)
-    }
-  })
-
-  return [...filterResults]
+  // title (localized) or pluginType includes search string
+  return option.filter(
+    (entry) =>
+      entry.title.toLowerCase().includes(search) ||
+      entry.pluginType.toLowerCase().includes(search)
+  )
 }
 
 const interactivePluginTypes = new Set([

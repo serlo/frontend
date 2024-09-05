@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   store,
   selectFocused,
@@ -16,7 +17,6 @@ import { KeyboardEvent, useState } from 'react'
 
 import type { SerloTableProps } from '.'
 import { CellSwitchButton } from './cell-switch-button'
-import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
 import { getTableType } from './utils/get-table-type'
@@ -33,8 +33,6 @@ export function SerloTableEditor(props: SerloTableProps) {
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
-
-  const areImagesDisabled = useAreImagesDisabledInTable()
 
   const tableStrings = useEditorStrings().plugins.serloTable
 
@@ -119,7 +117,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : props.config.cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells && !areImagesDisabled ? (
+              {editorPlugins.getByType(EditorPluginType.Image) ? (
                 <CellSwitchButton
                   cell={cell}
                   isHead={isHead}

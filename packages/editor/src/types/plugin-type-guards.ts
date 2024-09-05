@@ -20,6 +20,7 @@ import type {
   EditorRowsDocument,
   EditorScMcExerciseDocument,
   EditorSerloInjectionDocument,
+  EditorEdusharingAssetDocument,
   EditorSerloTableDocument,
   EditorSolutionDocument,
   EditorSpoilerDocument,
@@ -122,11 +123,6 @@ export function isSpoilerDocument(
 ): document is EditorSpoilerDocument {
   return document.plugin === EditorPluginType.Spoiler
 }
-export function isSerloInjection(
-  document: AnyEditorDocument
-): document is EditorSerloInjectionDocument {
-  return document.plugin === EditorPluginType.Injection
-}
 export function isSolutionDocument(
   document: AnyEditorDocument
 ): document is EditorSolutionDocument {
@@ -171,4 +167,14 @@ export function isTemplateExerciseGroupDocument(
   document: AnyEditorDocument
 ): document is EditorTemplateExerciseGroupDocument {
   return document.plugin === TemplatePluginType.TextExerciseGroup
+}
+export function isEdusharingAssetDocument(
+  document: AnyEditorDocument
+): document is EditorEdusharingAssetDocument {
+  return document.plugin === EditorPluginType.EdusharingAsset
+}
+export function isSerloInjectionDocument(
+  document: AnyEditorDocument
+): document is EditorSerloInjectionDocument {
+  return document.plugin === EditorPluginType.SerloInjection
 }

@@ -35,5 +35,8 @@ export enum EditorPluginType {
   BlanksExercise = 'blanksExercise',
   Solution = 'solution',
 
+  SerloInjection = 'serloInjection',
+  EdusharingAsset = 'edusharingAsset',
+
   Unsupported = 'unsupported',
 }

@@ -2,6 +2,8 @@ import { SerloEditorProps } from '@serlo/editor'
 
 export type InitialState = SerloEditorProps['initialState']
 
+export type EditorVariant = SerloEditorProps['editorVariant']
+
 export function isValidState(obj: any): obj is InitialState {
   return (
     obj !== null &&
@@ -11,6 +13,10 @@ export function isValidState(obj: any): obj is InitialState {
   )
 }
 
+/**
+ * This will get automatically migrated into our new storage format. See
+ * storage-format for more info.
+ */
 export const exampleInitialState: InitialState = {
   plugin: 'rows',
   state: [

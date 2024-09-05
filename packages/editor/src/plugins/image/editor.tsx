@@ -13,7 +13,6 @@ import { ImageSelectionScreen } from './components/image-selection-screen'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { isImageUrl } from './utils/check-image-url'
-import { TextEditorConfig } from '../text'
 
 const captionFormattingOptions = [
   TextEditorFormattingOption.richTextBold,
@@ -23,10 +22,9 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { focused, state, config } = props
+  const { id, focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
 
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)
 
   usePendingFileUploader(state.src, config.upload)
@@ -36,16 +34,23 @@ export function ImageEditor(props: ImageProps) {
 
   const hasValidUrl = isImageUrl(src)
 
-  // focus related logic
-  const isCaptionFocused = useAppSelector((storeState) => {
-    return state.caption.defined
+  const toolbarTitle =
+    config.onMultipleUpload && !hasValidUrl
+      ? imageStrings.galleryTitle
+      : undefined
+
+  const isCaptionFocused = useAppSelector((storeState) =>
+    state.caption.defined
       ? selectIsFocused(storeState, state.caption.id)
       : false
-  })
+  )
   const [isAButtonFocused, setIsAButtonFocused] = useState(false)
 
   const hasFocus =
-    focused || isCaptionFocused || (isAButtonFocused && !hasValidUrl)
+    focused ||
+    isCaptionFocused ||
+    (isAButtonFocused && !hasValidUrl) ||
+    config.onMultipleUpload
 
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
@@ -74,20 +79,22 @@ export function ImageEditor(props: ImageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  function handleChangeImageButtonClick() {
+    state.src.set('')
+    state.alt.defined && state.alt.remove()
+    state.caption.defined && state.caption.remove()
+    state.link.defined && state.link.remove()
+  }
+
   return (
     <>
       {hasFocus ? (
         <ImageToolbar
-          {...props}
-          onClickChangeImage={() => {
-            state.src.set('')
-            state.alt.defined && state.alt.remove()
-            state.caption.defined && state.caption.remove()
-            state.link.defined && state.link.remove()
-          }}
+          id={id}
+          state={state}
+          title={toolbarTitle}
           showSettingsButtons={hasValidUrl}
-          showSettingsModal={showSettingsModal}
-          setShowSettingsModal={setShowSettingsModal}
+          onChangeImageButtonClick={handleChangeImageButtonClick}
         />
       ) : null}
 
@@ -98,14 +105,7 @@ export function ImageEditor(props: ImageProps) {
         )}
         data-qa="plugin-image-editor"
       >
-        {!hasValidUrl && (
-          <ImageSelectionScreen
-            {...props}
-            setIsAButtonFocused={setIsAButtonFocused}
-            urlInputRef={urlInputRef}
-          />
-        )}
-        {hasValidUrl && (
+        {hasValidUrl ? (
           <ImageRenderer
             image={{
               src,
@@ -118,6 +118,13 @@ export function ImageEditor(props: ImageProps) {
             caption={renderCaption()}
             placeholder={renderPlaceholder()}
             forceNewTab
+          />
+        ) : (
+          <ImageSelectionScreen
+            config={config}
+            state={state}
+            setIsAButtonFocused={setIsAButtonFocused}
+            urlInputRef={urlInputRef}
           />
         )}
       </div>
@@ -147,7 +154,7 @@ export function ImageEditor(props: ImageProps) {
         placeholder: imageStrings.captionPlaceholder,
         formattingOptions: captionFormattingOptions,
         isInlineChildEditor: true,
-      } as TextEditorConfig,
+      },
     })
   }
 }

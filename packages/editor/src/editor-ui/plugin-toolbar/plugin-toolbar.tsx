@@ -15,6 +15,7 @@ interface PluginToolbarProps {
   pluginSettings?: ReactElement
   pluginControls?: ReactElement
   pluginTooltipText?: string
+  pluginTitle?: string
   className?: string
   noWhiteShadow?: true
 }
@@ -24,6 +25,7 @@ export function PluginToolbar({
   contentControls,
   pluginSettings,
   pluginControls,
+  pluginTitle,
   pluginTooltipText,
   className,
   noWhiteShadow,
@@ -55,7 +57,7 @@ export function PluginToolbar({
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
         <div className="mx-4 text-sm font-bold" data-qa="plugin-type-indicator">
-          {getPluginTitle(pluginStrings, pluginType)}
+          {pluginTitle ?? getPluginTitle(pluginStrings, pluginType)}
         </div>
 
         {pluginTooltipText ? (

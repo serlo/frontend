@@ -16,6 +16,7 @@ const productionKeys = ['process.env.NODE_ENV', 'process.env.NEXT_PUBLIC_ENV']
 
 const notProvidedKeys = [
   '__NEXT_I18N_SUPPORT',
+  '__NEXT_IMAGE_OPTS',
   '__NEXT_ROUTER_BASEPATH',
   '__NEXT_CLIENT_ROUTER_D_FILTER',
   '__NEXT_CLIENT_ROUTER_S_FILTER',
@@ -99,4 +100,8 @@ export default defineConfig({
       },
     }),
   ],
+  define: {
+    // Makes Vite pull the version from editor/package.json and make it available in editor code
+    __EDITOR_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
 })

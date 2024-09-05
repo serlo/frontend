@@ -1,20 +1,25 @@
 import { Editor, type EditorProps } from '@editor/core'
+import { type GetDocument } from '@editor/core/types'
 import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
-import ImageIcon from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { createImagePlugin } from '@editor/plugins/image'
-import { ImageStaticRenderer } from '@editor/plugins/image/static'
+import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { getCurrentDatetime } from '@editor/util/get-current-datetime'
 import React from 'react'
 
+import { defaultSerloEditorProps } from './config'
+import { editorData } from './editor-data'
+import { getEditorVersion } from './editor-version'
 import {
-  type PluginsConfig,
-  defaultSerloEditorProps,
-  type CustomPlugin,
-} from './config.js'
-import { editorData } from './editor-data.js'
+  type StorageFormat,
+  createEmptyDocument,
+  migrate,
+  type EditorVariant,
+} from './storage-format'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
@@ -22,67 +27,75 @@ import '@/assets-webkit/styles/serlo-tailwind.css'
 
 export interface SerloEditorProps {
   children: EditorProps['children']
-  pluginsConfig?: PluginsConfig
-  customPlugins?: CustomPlugin[]
-  initialState?: EditorProps['initialState']
-  onChange?: EditorProps['onChange']
+  plugins?: (EditorPluginType | TemplatePluginType)[]
+  initialState?: unknown // Either type `StorageFormat` or outdated storage format that will be migrated to `StorageFormat`
+  onChange?: (state: StorageFormat) => void
   language?: SupportedLanguage
-  _enableImagePlugin?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+  editorVariant: EditorVariant
+  _testingSecret?: string | null
+  _ltik?: string
 }
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const { children, customPlugins, initialState, onChange, language } = {
+  const {
+    children,
+    editorVariant,
+    onChange,
+    language,
+    plugins,
+    _testingSecret,
+    _ltik,
+  } = {
     ...defaultSerloEditorProps,
     ...props,
   }
-  const pluginsConfig = {
-    ...defaultSerloEditorProps.pluginsConfig,
-    ...props.pluginsConfig,
+
+  const initialState = !props.initialState
+    ? createEmptyDocument(editorVariant)
+    : props.initialState
+
+  const { migratedState, stateChanged } = migrate(initialState, editorVariant)
+
+  if (onChange && stateChanged) {
+    onChange(migratedState)
   }
 
   const { instanceData, loggedInData } = editorData[language]
 
-  const basicPlugins = createBasicPlugins(pluginsConfig)
-  let allPlugins = [...basicPlugins, ...customPlugins]
-  // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
-  if (props._enableImagePlugin) {
-    const imagePluginNoFileUpload = createImagePlugin({
-      disableFileUpload: true,
-      upload: (_) => {
-        return new Promise<string>((resolve, _) => {
-          resolve('')
-        })
-      },
-      validate: (_) => {
-        return { valid: false, errors: [] }
-      },
-    })
-    allPlugins = [
-      ...allPlugins,
-      {
-        type: 'image',
-        plugin: imagePluginNoFileUpload,
-        renderer: ImageStaticRenderer,
-        visibleInSuggestions: true,
-        icon: <ImageIcon />,
-      },
-    ]
-  }
+  const allPlugins = createBasicPlugins(plugins, _testingSecret)
   editorPlugins.init(allPlugins)
 
-  const basicRenderers = createRenderers(customPlugins)
+  const basicRenderers = createRenderers()
   editorRenderers.init(basicRenderers)
 
   return (
     <InstanceDataProvider value={instanceData}>
       <LoggedInDataProvider value={loggedInData}>
-        <div className="serlo-editor-hacks">
-          <Editor initialState={initialState} onChange={onChange}>
-            {children}
-          </Editor>
-        </div>
+        <LtikContext.Provider value={_ltik}>
+          <div className="serlo-editor-hacks">
+            <Editor
+              initialState={migratedState.document}
+              onChange={handleDocumentChange}
+            >
+              {children}
+            </Editor>
+          </div>
+        </LtikContext.Provider>
       </LoggedInDataProvider>
     </InstanceDataProvider>
   )
+
+  // Parameter `changed` is ignored. Even if it is false, we still want to call onChange.
+  function handleDocumentChange({ getDocument }: { getDocument: GetDocument }) {
+    if (!onChange) return
+    const document = getDocument()
+    if (!document) return
+    onChange({
+      ...migratedState,
+      dateModified: getCurrentDatetime(),
+      editorVersion: getEditorVersion(),
+      document,
+    })
+  }
 }

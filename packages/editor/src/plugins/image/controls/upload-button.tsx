@@ -13,21 +13,22 @@ import { cn } from '@/helper/cn'
 
 interface UploadButtonProps {
   config: ImageProps['config']
-  state: ImageProps['state']
+  src: ImageProps['state']['src']
   onFocus?: () => void
   onBlur?: () => void
 }
+
 export function UploadButton({
   config,
-  state,
+  src,
   onFocus,
   onBlur,
 }: UploadButtonProps) {
-  const { src } = state
   const imageStrings = useEditorStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)
+
   return (
     <>
       <label
@@ -55,16 +56,26 @@ export function UploadButton({
         </span>
         <input
           type="file"
+          multiple={!!config.onMultipleUpload}
           accept="image/*"
           className="sr-only"
           onChange={({ target }) => {
             if (target.files && target.files.length) {
-              void src.upload(target.files[0], config.upload)
+              const filesArray = Array.from(target.files)
+
+              // Upload the first file like normal
+              void src.upload(filesArray[0], config.upload)
+
+              // If multiple upload is allowed, call the multiple upload callback
+              // with the remaining files
+              config.onMultipleUpload?.(filesArray.slice(1))
             }
           }}
           data-qa="plugin-image-upload"
         />
-        {imageStrings.upload}
+        {!config.onMultipleUpload
+          ? imageStrings.upload
+          : imageStrings.uploadMultiple}
       </label>
 
       {isFailed ? (
