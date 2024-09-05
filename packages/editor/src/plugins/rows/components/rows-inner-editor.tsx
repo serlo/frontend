@@ -14,6 +14,7 @@ import { AddRowButtonLarge } from './add-row-button-large'
 import { PluginMenuModal } from './plugin-menu-modal'
 import { RowEditor } from './row-editor'
 import type { RowsProps } from '..'
+import { ChangeRowPerAiContext } from '../contexts/change-row-per-ai'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
@@ -41,9 +42,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
 
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)
 
-  const [aiContentGenerationStates, setAiContentGenerationStates] = useState<
-    Array<AiContentGenerationState>
-  >([])
+  const [aiCommands, setAiCommands] = useState<Array<AiCommand>>([])
 
   const generateAiContent = useMutation({
     mutationFn: async ({ prompt }: { insertIndex: number; prompt: string }) => {
@@ -86,7 +85,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       }
     },
     onSuccess: (newContent, { insertIndex, prompt }) => {
-      setAiContentGenerationStates((prev) =>
+      setAiCommands((prev) =>
         prev.filter(
           (p) =>
             p.type !== 'generateNewContent' ||
@@ -102,10 +101,73 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     },
     onError: (error, { insertIndex, prompt }) => {
       // FIXME: Copy & Pasted code from onSuccess...
-      setAiContentGenerationStates((prev) =>
+      setAiCommands((prev) =>
         prev.filter(
           (p) =>
             p.type !== 'generateNewContent' ||
+            p.prompt !== prompt ||
+            p.insertIndex !== insertIndex
+        )
+      )
+
+      console.error('Failed to generate AI content', error)
+    },
+  })
+
+  const changeAiContent = useMutation({
+    mutationFn: async ({
+      prompt,
+      insertIndex,
+    }: {
+      insertIndex: number
+      prompt: string
+    }) => {
+      const document = getStaticDocument({
+        id,
+        documents: store.getState().documents,
+      }) as { plugin: EditorPluginType.Rows; state: DocumentState[] }
+
+      const content = document.state[insertIndex]
+
+      const url = new URL(
+        '/api/experimental/change-content',
+        window.location.href
+      )
+
+      url.searchParams.append('prompt', prompt)
+      url.searchParams.append('content', JSON.stringify(content))
+
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate AI content')
+      }
+
+      // TODO: For a production implementation we need to check the response
+      // schema whether a valid editor document was send to us
+      return (await response.json()) as DocumentState
+    },
+    onSuccess: (newContent, { insertIndex, prompt }) => {
+      setAiCommands((prev) =>
+        prev.filter(
+          (p) =>
+            p.type !== 'changeContent' ||
+            p.prompt !== prompt ||
+            p.insertIndex !== insertIndex
+        )
+      )
+
+      state.remove(insertIndex)
+      state.insert(insertIndex, newContent)
+    },
+    onError: (error, { insertIndex, prompt }) => {
+      // FIXME: Copy & Pasted code from onSuccess...
+      setAiCommands((prev) =>
+        prev.filter(
+          (p) =>
+            p.type !== 'changeContent' ||
             p.prompt !== prompt ||
             p.insertIndex !== insertIndex
         )
@@ -150,9 +212,9 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     // This should never happen, but just to be sure
     if (insertIndex === undefined) return
 
-    setAiContentGenerationStates((prev) => [
+    setAiCommands((prev) => [
       ...prev,
-      { type: 'insertPrompt', insertIndex },
+      { type: 'promptNewContent', insertIndex },
     ])
   }
 
@@ -168,19 +230,40 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       <div className="relative mt-6">
         {state.map((row, index) => {
           const hideAddButton = showLargeAddButton && index === state.length - 1
+          const prompts = aiCommands
+            .filter(isChangeContent)
+            .filter((p) => p.insertIndex === index)
+            .map((p) => p.prompt)
           return (
             <>
               {renderAiContentGeneration(index)}
-              <RowEditor
-                config={config}
-                key={row.id}
-                index={index}
-                rows={state}
-                row={row}
-                isRootRow={isRootRow}
-                hideAddButton={!!hideAddButton}
-                onAddButtonClick={handleOpenPluginMenu}
-              />
+              {renderAiChangeContentPrompt(index)}
+              {prompts.length === 0 ? (
+                <ChangeRowPerAiContext.Provider
+                  value={() =>
+                    setAiCommands((prev) => [
+                      ...prev,
+                      { type: 'promptChangeContent', insertIndex: index },
+                    ])
+                  }
+                >
+                  <RowEditor
+                    config={config}
+                    key={row.id}
+                    index={index}
+                    rows={state}
+                    row={row}
+                    isRootRow={isRootRow}
+                    hideAddButton={!!hideAddButton}
+                    onAddButtonClick={handleOpenPluginMenu}
+                  />
+                </ChangeRowPerAiContext.Provider>
+              ) : (
+                <Spinner
+                  key={-index}
+                  message={`Verändere Inhalt mit Prompt „${prompts[0]}“`}
+                />
+              )}
             </>
           )
         })}
@@ -200,57 +283,107 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   function renderAiContentGeneration(index: number) {
     return (
       <>
-        {renderAiContentGenerationPrompts(index)}
+        {renderAiContentGenerationPrompt(index)}
         {renderAiContentGenerationSpinner(index)}
       </>
     )
   }
 
-  function renderAiContentGenerationPrompts(index: number) {
+  function renderAiContentGenerationPrompt(index: number) {
     if (
-      !aiContentGenerationStates
-        .filter(isInsertPrompt)
+      !aiCommands
+        .filter(isPromptNewContent)
         .some((p) => p.insertIndex === index)
     ) {
       return
     }
 
     return (
-      <AiContentGenerationPrompt
+      <AiPrompt
+        title="Was soll generiert werden?"
+        placeholder='z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende"'
+        buttonText="Inhalt generieren"
         onClose={() => {
-          setAiContentGenerationStates((prev) =>
-            prev.filter((x) => !isInsertPrompt(x) || x.insertIndex !== index)
+          setAiCommands((prev) =>
+            prev.filter(
+              (x) => !isPromptNewContent(x) || x.insertIndex !== index
+            )
           )
         }}
         onEnter={(prompt) => {
-          setAiContentGenerationStates((prev) => [
+          setAiCommands((prev) => [
             ...prev.filter(
-              (x) => !isInsertPrompt(x) || x.insertIndex !== index
+              (x) => !isPromptNewContent(x) || x.insertIndex !== index
             ),
             { type: 'generateNewContent', insertIndex: index, prompt },
           ])
           generateAiContent.mutate({ insertIndex: index, prompt })
         }}
-      ></AiContentGenerationPrompt>
+      ></AiPrompt>
+    )
+  }
+
+  function renderAiChangeContentPrompt(index: number) {
+    if (
+      !aiCommands
+        .filter(isPromptChangeContent)
+        .some((p) => p.insertIndex === index)
+    ) {
+      return
+    }
+
+    return (
+      <AiPrompt
+        title="Was soll verändert werden?"
+        placeholder="z.B. „Übersetze ins Englische“"
+        buttonText="Inhalt überarbeiten"
+        onClose={() => {
+          setAiCommands((prev) =>
+            prev.filter(
+              (x) => !isPromptChangeContent(x) || x.insertIndex !== index
+            )
+          )
+        }}
+        onEnter={(prompt) => {
+          setAiCommands((prev) => [
+            ...prev.filter(
+              (x) => !isPromptChangeContent(x) || x.insertIndex !== index
+            ),
+            { type: 'changeContent', insertIndex: index, prompt },
+          ])
+          changeAiContent.mutate({ insertIndex: index, prompt })
+        }}
+      ></AiPrompt>
     )
   }
 
   function renderAiContentGenerationSpinner(index: number) {
-    const prompts = aiContentGenerationStates
+    const prompts = aiCommands
       .filter(isGenerateNewContent)
       .filter((p) => p.insertIndex === index)
       .map((p) => p.prompt)
 
     return prompts.map((prompt, index) => (
-      <div
-        key={index}
-        className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side"
-      >
-        <FaIcon icon={faSpinner} className="animate-spin-slow" /> Generiere
-        Inhalt für „{prompt}“
-      </div>
+      <Spinner key={index} message={`Generiere Inhalt für „${prompt}“`} />
     ))
   }
+}
+
+function Spinner({
+  children,
+  message,
+}: {
+  children?: React.ReactNode
+  message: string
+}) {
+  return (
+    <div className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side text-almost-black">
+      <p>
+        <FaIcon icon={faSpinner} className="animate-spin-slow" /> {message}
+      </p>
+      {children}{' '}
+    </div>
+  )
 }
 
 function wrapExercisePlugin(pluginType: EditorPluginType) {
@@ -265,21 +398,23 @@ function wrapExercisePlugin(pluginType: EditorPluginType) {
   }
 }
 
-function AiContentGenerationPrompt({
+function AiPrompt({
   onClose,
   onEnter,
+  title,
+  placeholder,
+  buttonText,
 }: {
   onClose: () => void
   onEnter: (prompt: string) => void
+  title: string
+  placeholder: string
+  buttonText: string
 }) {
   const [prompt, setPrompt] = useState('')
 
   return (
-    <ModalWithCloseButton
-      isOpen
-      setIsOpen={onClose}
-      title="Prompt für Inhaltserstellung"
-    >
+    <ModalWithCloseButton isOpen setIsOpen={onClose} title={title}>
       <div className="mx-4">
         <textarea
           className={cn(
@@ -289,7 +424,7 @@ function AiContentGenerationPrompt({
           )}
           value={prompt}
           rows={5}
-          placeholder='z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende"'
+          placeholder={placeholder}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -301,17 +436,21 @@ function AiContentGenerationPrompt({
           className="serlo-button-editor-primary serlo-tooltip-trigger mt-4 px-4"
           onClick={() => onEnter(prompt)}
         >
-          Inhalt generieren
+          {buttonText}
         </button>
       </div>
     </ModalWithCloseButton>
   )
 }
 
-type AiContentGenerationState = InsertPrompt | GenerateNewContent
+type AiCommand =
+  | PromptNewContent
+  | GenerateNewContent
+  | PromptChangeContent
+  | ChangeContent
 
-interface InsertPrompt {
-  type: 'insertPrompt'
+interface PromptNewContent {
+  type: 'promptNewContent'
   insertIndex: number
 }
 
@@ -321,14 +460,29 @@ interface GenerateNewContent {
   prompt: string
 }
 
-function isInsertPrompt(
-  state: AiContentGenerationState
-): state is InsertPrompt {
-  return state.type === 'insertPrompt'
+interface PromptChangeContent {
+  type: 'promptChangeContent'
+  insertIndex: number
 }
 
-function isGenerateNewContent(
-  state: AiContentGenerationState
-): state is GenerateNewContent {
+interface ChangeContent {
+  type: 'changeContent'
+  insertIndex: number
+  prompt: string
+}
+
+function isPromptNewContent(state: AiCommand): state is PromptNewContent {
+  return state.type === 'promptNewContent'
+}
+
+function isGenerateNewContent(state: AiCommand): state is GenerateNewContent {
   return state.type === 'generateNewContent'
+}
+
+function isPromptChangeContent(state: AiCommand): state is PromptChangeContent {
+  return state.type === 'promptChangeContent'
+}
+
+function isChangeContent(state: AiCommand): state is ChangeContent {
+  return state.type === 'changeContent'
 }

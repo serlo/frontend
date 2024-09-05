@@ -1,3 +1,4 @@
+import { ChangeRowPerAiContext } from '@editor/plugins/rows/contexts/change-row-per-ai'
 import {
   insertPluginChildAfter,
   removePluginChild,
@@ -8,7 +9,7 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faClone, faMagic, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useCallback, useContext, useMemo } from 'react'
 
@@ -25,6 +26,7 @@ interface PluginDefaultToolsProps {
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
+  const onChangeCurrentRowPerAi = useContext(ChangeRowPerAiContext)
 
   // using useContext directly so result can also be null for edusharing
   const serloEntityId = useContext(UuidsContext)?.entityId
@@ -79,12 +81,22 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
 
   return (
     <>
+      {onChangeCurrentRowPerAi !== null ? (
+        <DropdownButton
+          onClick={onChangeCurrentRowPerAi}
+          label="Aktuelles Plugin per AI überarbeiten"
+          icon={faMagic}
+        />
+      ) : null}
       {hasRowsParent ? (
         <>
           <DropdownButton
             onClick={handleDuplicatePlugin}
             label={pluginStrings.rows.duplicate}
             icon={faClone}
+            className={
+              onChangeCurrentRowPerAi !== null ? 'mt-2.5 border-t pt-2.5' : ''
+            }
             dataQa="duplicate-plugin-button"
           />
           <DropdownButton
