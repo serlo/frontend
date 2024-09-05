@@ -20,6 +20,7 @@ export function TextLeafRenderer({
   if (leaf.color !== undefined) styles.color = colors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
+  if (leaf.suggestion) styles.color = 'grey'
   const styleCount = Object.keys(styles).length
 
   const LeafTag = leaf.strong
