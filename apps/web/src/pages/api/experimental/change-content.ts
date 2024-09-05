@@ -72,8 +72,7 @@ export default async function handler(
       { role: 'system', content: systemPrompt },
       {
         role: 'user',
-        content: changePrompt
-          .replace('{{content}}', req.query.content)
+        content: changePrompt.replace('{{content}}', req.query.content),
       },
       {
         role: 'user',
