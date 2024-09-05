@@ -171,7 +171,7 @@ interface Solution {
 /**
  * A list of content elements like boy, richtext or exercises...
  */
-interface ListOfContent {
+export interface ListOfContent {
   plugin: 'rows'
   state: ContentType[]
 }
