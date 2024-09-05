@@ -760,8 +760,8 @@ export const loggedInData = {
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
           lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
           addImages: "Bilder hinzufügen",
-          tooManyImagesMessage: "Du kannst maximal 8 Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
-          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
+          tooManyImagesMessage: "Du kannst maximal %max_images% Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
+          alreadyMaxImagesMessage: "Maximal %max_images% Bilder erlaubt. Bitte entferne ein oder mehrere Bilder, um neue hochzuladen."
         },
         injection: {
           title: "serlo.org Inhalt",
@@ -933,8 +933,8 @@ export const loggedInData = {
           description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
-          title: "Lückentext",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die korrekten Antworten eingetippt werden.",
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -949,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1001,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Freitext",
           dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
