@@ -15,7 +15,7 @@ import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
 import { getEditorVersion } from './editor-version'
 import {
-  type StorageFormatType,
+  type StorageFormat,
   createEmptyDocument,
   migrate,
   type EditorVariant,
