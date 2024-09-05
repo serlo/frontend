@@ -267,9 +267,6 @@ export const instanceData = {
         'https://de.serlo.org/community/202923/rollen-der-serlo-community',
       help2:
         'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
-      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
       guidelineUrl:

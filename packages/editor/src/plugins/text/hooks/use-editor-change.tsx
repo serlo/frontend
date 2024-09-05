@@ -108,8 +108,6 @@ function isEditorInDOM(editor: Editor) {
       rootNode = rootNode.host.getRootNode() as ShadowRoot | Document
     }
 
-    console.warn("Editor is not in DOM. Can't focus item", { editor, domNode })
-
     return false
   } catch (error) {
     // eslint-disable-next-line no-console
