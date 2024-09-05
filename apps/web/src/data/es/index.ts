@@ -933,8 +933,8 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
-          title: "Completa los espacios en blanco",
-          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
@@ -949,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1001,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Ejercicio de cajas de texto",
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: "Ejercicio de rellenar los espacios en blanco",
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
