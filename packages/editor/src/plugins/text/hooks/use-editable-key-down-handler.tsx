@@ -60,6 +60,7 @@ export const useEditableKeydownHandler = (
           Transforms.collapse(editor, { edge: 'end' })
 
           event.preventDefault()
+          suggestionsEnabled.current = false
         } else {
           if (
             event.key.length === 1 &&
