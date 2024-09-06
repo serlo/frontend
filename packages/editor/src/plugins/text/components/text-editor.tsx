@@ -2,7 +2,7 @@ import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-cont
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useMutation } from '@tanstack/react-query'
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useContext } from 'react'
 import {
   createEditor,
   Node,
@@ -17,6 +17,7 @@ import { v4 } from 'uuid'
 
 import { LinkControls } from './link/link-controls'
 import { TextToolbar } from './text-toolbar'
+import { AiAutocompleteContext } from '../ai-autocomplete-context'
 import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
@@ -41,6 +42,7 @@ export function TextEditor(props: TextEditorProps) {
 
   const { state, id, focused, containerRef } = props
 
+  const { enabled } = useContext(AiAutocompleteContext)
   const textStrings = useEditorStrings().plugins.text
   const config = useTextConfig(props.config)
 
@@ -190,12 +192,13 @@ export function TextEditor(props: TextEditorProps) {
         lastChange.current === lastChangeOfThisCall &&
         !fetchSuggestion.isPending &&
         suggestionsEnabled.current &&
-        suffix.trim().length > 0
+        suffix.trim().length > 0 &&
+        enabled
       ) {
         fetchSuggestion.mutate({ suffix, lastChangeOfThisCall })
       }
     }, waitTimeForSuggestion)
-  }, [editor, fetchSuggestion, waitTimeForSuggestion])
+  }, [editor, enabled, fetchSuggestion])
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
