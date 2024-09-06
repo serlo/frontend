@@ -1,8 +1,17 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import type { EditorPluginProps } from '@editor/plugin'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useMutation } from '@tanstack/react-query'
 import React, { useMemo, useEffect } from 'react'
-import { createEditor, Node, Transforms } from 'slate'
+import {
+  createEditor,
+  Node,
+  Transforms,
+  Range,
+  Editor,
+  Point,
+  Path,
+} from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { v4 } from 'uuid'
 
@@ -25,6 +34,11 @@ export type TextEditorProps = EditorPluginProps<
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
+  const waitTimeForSuggestion = 400
+  const controller = React.useRef<AbortController | null>(null)
+  const lastChange = React.useRef<number>(Date.now())
+  const suggestionsEnabled = React.useRef<boolean>(true)
+
   const { state, id, focused, containerRef } = props
 
   const textStrings = useEditorStrings().plugins.text
@@ -34,12 +48,31 @@ export function TextEditor(props: TextEditorProps) {
   const { createTextEditor, toolbarControls } = textFormattingOptions
 
   const { editor, editorKey } = useMemo(() => {
+    const editor = createTextEditor(
+      withReact(
+        withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
+      )
+    )
+
+    const { normalizeNode } = editor
+
+    editor.normalizeNode = (entry) => {
+      const [node, path] = entry
+      const { selection } = editor
+
+      if ('text' in node && node.suggestion && selection !== null) {
+        const { anchor } = selection
+
+        if (!Path.equals(anchor.path, path)) {
+          Transforms.delete(editor, { at: path })
+        }
+      }
+
+      normalizeNode(entry)
+    }
+
     return {
-      editor: createTextEditor(
-        withReact(
-          withEmptyLinesRestriction(withCorrectVoidBehavior(createEditor()))
-        )
-      ),
+      editor,
       // Fast Refresh will rerun useMemo and create a new editor instance,
       // but <Slate /> is confused by it
       // Generate a unique key per editor instance and set it on the component
@@ -62,11 +95,107 @@ export function TextEditor(props: TextEditorProps) {
     editor,
     id,
     state,
+    suggestionsEnabled,
   })
   const handleEditablePaste = useEditablePasteHandler({
     editor,
     id,
   })
+
+  const fetchSuggestion = useMutation({
+    mutationFn: async ({
+      suffix,
+    }: {
+      suffix: string
+      lastChangeOfThisCall: number
+    }) => {
+      controller.current = new AbortController()
+
+      const url = new URL(
+        '/api/experimental/complete-text',
+        window.location.href
+      )
+
+      url.searchParams.append('suffix', suffix)
+
+      const response = await fetch(url.toString(), {
+        signal: controller.current.signal,
+        method: 'POST',
+      })
+
+      if (!response.ok) {
+        console.error('Failed to fetch suggestion', await response.text())
+        throw new Error('Failed to fetch suggestion')
+      }
+
+      return (await response.json()) as {
+        suggestion: string
+      }
+    },
+    onSuccess: ({ suggestion }, { lastChangeOfThisCall }) => {
+      const { selection } = editor
+
+      if (selection === null || !Range.isCollapsed(selection)) return
+
+      if (lastChange.current === lastChangeOfThisCall) {
+        Transforms.insertNodes(editor, {
+          text: suggestion,
+          suggestion: true,
+        })
+        editor.setSelection(selection)
+      }
+    },
+  })
+
+  const onChange = React.useCallback(() => {
+    const lastChangeOfThisCall = Date.now()
+    lastChange.current = lastChangeOfThisCall
+
+    if (controller.current) {
+      controller.current.abort()
+      controller.current = null
+    }
+
+    const { selection } = editor
+
+    if (selection === null || !Range.isCollapsed(selection)) return
+
+    const [nextNode] = Editor.next(editor) ?? [null]
+
+    if (nextNode !== null && 'text' in nextNode && nextNode.suggestion) return
+
+    // Check that the selection is at the end of the line
+    const { anchor } = selection
+    const [block] = Editor.nodes(editor, {
+      match: (n) => 'type' in n && n.type === 'p',
+    })
+
+    if (!block) {
+      return false
+    }
+
+    const [, path] = block
+    const end = Editor.end(editor, path)
+
+    if (!Point.equals(anchor, end)) return
+
+    const start = Editor.start(editor, [])
+    const suffix = Editor.string(editor, {
+      anchor: start,
+      focus: anchor,
+    })
+
+    setTimeout(() => {
+      if (
+        lastChange.current === lastChangeOfThisCall &&
+        !fetchSuggestion.isPending &&
+        suggestionsEnabled.current &&
+        suffix.trim().length > 0
+      ) {
+        fetchSuggestion.mutate({ suffix, lastChangeOfThisCall })
+      }
+    }, waitTimeForSuggestion)
+  }, [editor, fetchSuggestion, waitTimeForSuggestion])
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
@@ -93,7 +222,10 @@ export function TextEditor(props: TextEditorProps) {
     <Slate
       editor={editor}
       initialValue={instanceStateStore[id].value}
-      onChange={handleEditorChange}
+      onChange={(newValue) => {
+        onChange()
+        handleEditorChange(newValue)
+      }}
       key={editorKey}
     >
       {focused ? (

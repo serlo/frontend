@@ -65,6 +65,7 @@ export interface CustomText {
   em?: true
   code?: true
   color?: number
+  suggestion?: boolean
   showPlaceholder?: boolean
 }
 

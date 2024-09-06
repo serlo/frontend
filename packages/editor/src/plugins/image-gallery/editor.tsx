@@ -18,7 +18,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
-const MAX_IMAGES = 8
+const MAX_IMAGES = 6
 
 function replaceWithMaxImages(input: string) {
   return input.replace('%max_images%', MAX_IMAGES.toString())

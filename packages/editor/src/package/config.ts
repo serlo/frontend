@@ -16,6 +16,7 @@ export const defaultPlugins = [
   EditorPluginType.InputExercise,
   EditorPluginType.ScMcExercise,
   EditorPluginType.BlanksExercise,
+  EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.DropzoneImage,
   EditorPluginType.Solution,
   EditorPluginType.Rows,

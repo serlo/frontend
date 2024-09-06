@@ -15,6 +15,7 @@ import {
 import isHotkey from 'is-hotkey'
 import { useCallback, useContext } from 'react'
 import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
+import { ReactEditor } from 'slate-react'
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
@@ -28,12 +29,13 @@ interface UseEditableKeydownHandlerArgs {
   editor: SlateEditor
   id: string
   state: TextEditorProps['state']
+  suggestionsEnabled: React.MutableRefObject<boolean>
 }
 
 export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
-  const { config, editor, id, state } = args
+  const { config, editor, id, state, suggestionsEnabled } = args
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -42,6 +44,45 @@ export const useEditableKeydownHandler = (
 
   return useCallback(
     (event: React.KeyboardEvent) => {
+      const { selection } = editor
+
+      if (selection === null || !Range.isCollapsed(selection)) return
+
+      const [nextNode] = SlateEditor.next(editor) ?? [null]
+
+      if (nextNode !== null && 'text' in nextNode && nextNode.suggestion) {
+        if (event.key === 'Tab') {
+          Transforms.select(
+            editor,
+            SlateEditor.range(editor, ReactEditor.findPath(editor, nextNode))
+          )
+          SlateEditor.addMark(editor, 'suggestion', false)
+          Transforms.collapse(editor, { edge: 'end' })
+
+          event.preventDefault()
+        } else {
+          if (
+            event.key.length === 1 &&
+            Node.string(nextNode).startsWith(event.key)
+          ) {
+            SlateEditor.deleteForward(editor)
+            SlateEditor.addMark(editor, 'suggestion', false)
+            SlateEditor.insertText(editor, event.key)
+            event.preventDefault()
+          } else if (!isModifierKey(event.key) && !isFunctionKey(event.key)) {
+            Transforms.select(
+              editor,
+              SlateEditor.range(editor, ReactEditor.findPath(editor, nextNode))
+            )
+            SlateEditor.deleteFragment(editor)
+            SlateEditor.addMark(editor, 'suggestion', false)
+            suggestionsEnabled.current = false
+          }
+        }
+      } else if (event.key.length === 1 || event.key === 'Enter') {
+        suggestionsEnabled.current = true
+      }
+
       // If linebreaks are disabled in the config, prevent any enter key handling
       if (config.noLinebreaks && event.key === 'Enter') {
         event.preventDefault()
@@ -49,7 +90,6 @@ export const useEditableKeydownHandler = (
 
       // Handle specific keyboard commands
       // (only if selection is collapsed)
-      const { selection } = editor
       if (selection && Range.isCollapsed(selection)) {
         const isListActive = isSelectionWithinList(editor)
 
@@ -207,4 +247,27 @@ export const useEditableKeydownHandler = (
       dispatch,
     ]
   )
+}
+
+function isModifierKey(key: string): boolean {
+  const modifierKeys: string[] = ['Shift', 'Control', 'Alt', 'Meta']
+  return modifierKeys.includes(key)
+}
+
+function isFunctionKey(key: string): boolean {
+  const functionKeys: string[] = [
+    'F1',
+    'F2',
+    'F3',
+    'F4',
+    'F5',
+    'F6',
+    'F7',
+    'F8',
+    'F9',
+    'F10',
+    'F11',
+    'F12',
+  ]
+  return functionKeys.includes(key)
 }
