@@ -20,7 +20,7 @@ export function getBeforeAndAfterText({
 
   const beforeDocument = {
     plugin: EditorPluginType.Rows,
-    state: document.state.slice(insertionIndex),
+    state: document.state.slice(0, insertionIndex),
   }
 
   const afterDocument = {
