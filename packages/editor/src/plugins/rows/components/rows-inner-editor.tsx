@@ -7,9 +7,10 @@ import {
 import { getStaticDocument } from '@editor/store/documents/helpers'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 
 import { AddRowButtonLarge } from './add-row-button-large'
+import { getBeforeAndAfterText } from './content-generation-helper'
 import { PluginMenuModal } from './plugin-menu-modal'
 import { RowEditor } from './row-editor'
 import type { RowsProps } from '..'
@@ -44,20 +45,17 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   const [aiCommands, setAiCommands] = useState<Array<AiCommand>>([])
 
   const generateAiContent = useMutation({
-    mutationFn: async ({ prompt }: { insertIndex: number; prompt: string }) => {
-      const document = getStaticDocument({
+    mutationFn: async ({
+      prompt,
+      insertIndex,
+    }: {
+      insertIndex: number
+      prompt: string
+    }) => {
+      const { before, after } = getBeforeAndAfterText({
         id,
-        documents: store.getState().documents,
-      }) as { plugin: EditorPluginType.Rows; state: DocumentState[] }
-
-      const before = {
-        plugin: EditorPluginType.Rows,
-        state: document.state.slice(0, pluginMenuState.insertIndex),
-      }
-      const after = {
-        plugin: EditorPluginType.Rows,
-        state: document.state.slice(pluginMenuState.insertIndex),
-      }
+        insertionIndex: insertIndex,
+      })
 
       const url = new URL(
         '/api/experimental/generate-content',
@@ -234,7 +232,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
             .filter((p) => p.insertIndex === index)
             .map((p) => p.prompt)
           return (
-            <>
+            <Fragment key={index}>
               {renderAiContentGeneration(index)}
               {renderAiChangeContentPrompt(index)}
               {prompts.length === 0 ? (
@@ -248,7 +246,6 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
                 >
                   <RowEditor
                     config={config}
-                    key={row.id}
                     index={index}
                     rows={state}
                     row={row}
@@ -260,7 +257,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
               ) : (
                 <Spinner key={-index} />
               )}
-            </>
+            </Fragment>
           )
         })}
       </div>
@@ -386,20 +383,28 @@ function wrapExercisePlugin(pluginType: EditorPluginType) {
 function AiPrompt({
   onClose,
   onEnter,
-  title,
   placeholder,
   buttonText,
+  title,
 }: {
+  title: string
   onClose: () => void
   onEnter: (prompt: string) => void
-  title: string
   placeholder: string
   buttonText: string
 }) {
   const [prompt, setPrompt] = useState('')
 
   return (
-    <ModalWithCloseButton isOpen setIsOpen={onClose} title={title}>
+    <ModalWithCloseButton
+      isOpen
+      setIsOpen={(open) => {
+        if (!open) {
+          onClose()
+        }
+      }}
+      title={title}
+    >
       <div className="mx-4">
         <textarea
           className={cn(
@@ -419,7 +424,9 @@ function AiPrompt({
         />
         <button
           className="serlo-button-editor-primary serlo-tooltip-trigger mt-4 px-4"
-          onClick={() => onEnter(prompt)}
+          onClick={() => {
+            onEnter(prompt)
+          }}
         >
           {buttonText}
         </button>

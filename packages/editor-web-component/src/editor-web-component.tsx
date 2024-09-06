@@ -105,7 +105,7 @@ export class EditorWebComponent extends HTMLElement {
 
   set currentState(_) {
     throw new Error(
-      'currentState is a readonly property. To modify state, please change the initialState.'
+      'currentState is a readonly property. To modify state, please change the initialState (will cause remounts which can reset focus).'
     )
   }
 

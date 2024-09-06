@@ -5292,7 +5292,7 @@ __metadata:
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.12
-    "@tanstack/react-query": ^5.53.3
+    "@tanstack/react-query": ^5.54.1
     "@tippyjs/react": ^4.2.6
     "@types/escape-html": ^1.0.4
     "@types/iframe-resizer": ^3.5.13
@@ -5515,7 +5515,7 @@ __metadata:
     next-query-params: ^4.3.0
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
-    openai: ^4.57.1
+    openai: ^4.57.3
     postcss: ^8.4.38
     postcss-flexbugs-fixes: ^5.0.2
     postcss-nested: ^6.0.1
@@ -5911,21 +5911,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.53.3":
-  version: 5.53.3
-  resolution: "@tanstack/query-core@npm:5.53.3"
-  checksum: 58692328047b16ebd52752f63a5f1bc5539b9d258c5b2d3921ebf45e0a6ee6746c5dc7a8e3503b6bc9d06ffbe6af59b0bfb2a3a1621eb79b98e0c9f2a68e4b42
+"@tanstack/query-core@npm:5.54.1":
+  version: 5.54.1
+  resolution: "@tanstack/query-core@npm:5.54.1"
+  checksum: 2d097ae20a2e499f1966689e6084cc26da194a56eaa59345af41d3b68e70bff1edd73e8205b7d7cf1da58f74d8f23a1867d67593aae3408f28d9253328d3217e
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.53.3":
-  version: 5.53.3
-  resolution: "@tanstack/react-query@npm:5.53.3"
+"@tanstack/react-query@npm:^5.54.1":
+  version: 5.54.1
+  resolution: "@tanstack/react-query@npm:5.54.1"
   dependencies:
-    "@tanstack/query-core": 5.53.3
+    "@tanstack/query-core": 5.54.1
   peerDependencies:
     react: ^18 || ^19
-  checksum: 108839b2f77ebd50fce895caaaee1a3fbd84fab7f3991dd5a7d6094aa01bd95e80f925fb145b2332d0f48f17d6f64c3186da2cd748904be5bd8197fffead2bb7
+  checksum: a329a5882cbdc693114a40ba676772803abb7ed9201aff1880211f97c7bed6bebbc959b629bcc9f34bb9784538aa98ba09d68b7c9e5464929e5b0cfa1c204516
   languageName: node
   linkType: hard
 
@@ -6356,7 +6356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:^6.9.7":
+"@types/qs@npm:^6.9.15":
   version: 6.9.15
   resolution: "@types/qs@npm:6.9.15"
   checksum: 97d8208c2b82013b618e7a9fc14df6bd40a73e1385ac479b6896bafc7949a46201c15f42afd06e86a05e914f146f495f606b6fb65610cc60cf2e0ff743ec38a2
@@ -15012,13 +15012,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:^4.57.1":
-  version: 4.57.1
-  resolution: "openai@npm:4.57.1"
+"openai@npm:^4.57.3":
+  version: 4.57.3
+  resolution: "openai@npm:4.57.3"
   dependencies:
     "@types/node": ^18.11.18
     "@types/node-fetch": ^2.6.4
-    "@types/qs": ^6.9.7
+    "@types/qs": ^6.9.15
     abort-controller: ^3.0.0
     agentkeepalive: ^4.2.1
     form-data-encoder: 1.7.2
@@ -15032,7 +15032,7 @@ __metadata:
       optional: true
   bin:
     openai: bin/cli
-  checksum: 038bca91b2320d34f1fcf3728dadb5ae3d135220639202cf0e7c491a1dfeb5c38c116f900303d90fcc6f0699e70e7eb2c49289e7dcf7bc198521becfb25ea60f
+  checksum: 6e8cef99975af5fd8e9a06685f05396a6fabecda38bd77fa62db4b7ea9bdfa0b4c762c5f74e99e42212af81f74f50748c5034bf78c9abcf74cc6eb984f3dcffa
   languageName: node
   linkType: hard
 
