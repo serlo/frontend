@@ -16,6 +16,7 @@ const productionKeys = ['process.env.NODE_ENV', 'process.env.NEXT_PUBLIC_ENV']
 
 const notProvidedKeys = [
   '__NEXT_I18N_SUPPORT',
+  '__NEXT_IMAGE_OPTS',
   '__NEXT_ROUTER_BASEPATH',
   '__NEXT_CLIENT_ROUTER_D_FILTER',
   '__NEXT_CLIENT_ROUTER_S_FILTER',

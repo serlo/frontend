@@ -240,6 +240,10 @@ export function createRenderers(): InitRenderersArgs {
         renderer: BlanksSerloStaticRenderer,
       },
       {
+        type: EditorPluginType.BlanksExerciseDragAndDrop,
+        renderer: BlanksSerloStaticRenderer,
+      },
+      {
         type: EditorPluginType.Solution,
         renderer: SolutionSerloStaticRenderer,
       },

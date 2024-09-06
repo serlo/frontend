@@ -9,10 +9,12 @@ export function DragAndDropOverlay({
   index,
   onDrop,
   onClick,
+  isLast,
 }: {
   index: number
   onDrop: (dragIndex: number, hoverIndex: number) => void
   onClick?: () => void
+  isLast?: boolean
 }) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -43,8 +45,9 @@ export function DragAndDropOverlay({
     >
       <div
         className={cn(
-          'absolute -left-2.5 bottom-0 top-0 w-1.5 bg-brand-500 transition-opacity',
-          isHovering ? 'opacity-100' : 'opacity-0'
+          'absolute bottom-0 top-0 w-1.5 bg-brand-500 transition-opacity',
+          isHovering ? 'opacity-100' : 'opacity-0',
+          isLast ? '-right-2.5' : '-left-2.5'
         )}
       ></div>
     </div>

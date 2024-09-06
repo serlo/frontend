@@ -251,9 +251,6 @@ export const instanceData = {
       reviewers: 'Reviewers',
       reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
       help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
-      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
       guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
@@ -737,7 +734,6 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
-          tooManyImagesError: 'You can only upload up to 8 images at once.',
           retry: 'Retry',
           failedUpload: 'Upload failed',
           captionPlaceholder: 'Optional caption',
@@ -762,7 +758,10 @@ export const loggedInData = {
           title: 'Image Gallery',
           description: 'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
-          addImages: 'Add Images'
+          lightboxScreenReaderTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
+          addImages: 'Add Images',
+          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
+          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
         },
         injection: {
           title: 'serlo.org Content',
@@ -934,8 +933,8 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
-          title: 'Fill In The Blanks',
-          description: 'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -950,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values'
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1002,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: 'Text Box Exercise',
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',

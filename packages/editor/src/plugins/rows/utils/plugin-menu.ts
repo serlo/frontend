@@ -59,6 +59,7 @@ const interactivePluginTypes = new Set([
   EditorPluginType.ScMcExercise,
   EditorPluginType.H5p,
   EditorPluginType.BlanksExercise,
+  EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.InputExercise,
   EditorPluginType.Solution,
   EditorPluginType.DropzoneImage,

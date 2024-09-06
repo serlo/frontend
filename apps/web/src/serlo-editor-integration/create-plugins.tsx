@@ -1,9 +1,10 @@
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
 import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
+import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg'
+import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
-import IconFillGaps from '@editor/editor-ui/assets/plugin-icons/icon-fill-the-gap.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -21,7 +22,7 @@ import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
-import { blanksExercise } from '@editor/plugins/blanks-exercise'
+import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { coursePlugin } from '@editor/plugins/course'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -111,6 +112,7 @@ export function createPlugins({
     EditorPluginType.ScMcExercise,
     EditorPluginType.InputExercise,
     EditorPluginType.BlanksExercise,
+    EditorPluginType.BlanksExerciseDragAndDrop,
     EditorPluginType.Solution,
 
     EditorPluginType.Unsupported,
@@ -283,8 +285,13 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: blanksExercise,
-      icon: <IconFillGaps />,
+      plugin: createBlanksExercisePlugin({ defaultMode: 'typing' }),
+      icon: <IconBlanksTyping />,
+    },
+    {
+      type: EditorPluginType.BlanksExerciseDragAndDrop,
+      plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
+      icon: <IconBlanksDragAndDrop />,
     },
 
     // Special plugins, never visible in suggestions
