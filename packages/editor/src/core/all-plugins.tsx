@@ -70,14 +70,14 @@ const getInternationalizedPluginStrings = (type: EditorPluginType) => ({
   en: getPluginNameAndDescription('en', type),
 })
 
-export const AllPlugins = [
+export const AllPlugins = {
   // {
   //   ...getInternationalizedPluginStrings(EditorPluginType.Audio),
   //   icon: IconAudio,
   //   type: EditorPluginType.Audio,
   //   initialState: { plugin: 'audio', state: { src: '' } },
   // },
-  {
+  [EditorPluginType.Box]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Box),
     icon: IconBox,
     type: EditorPluginType.Box,
@@ -107,7 +107,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Equations]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Equations),
     icon: IconEquation,
     type: EditorPluginType.Equations,
@@ -149,7 +149,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Geogebra]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Geogebra),
     icon: IconGeogebra,
     type: EditorPluginType.Geogebra,
@@ -158,7 +158,7 @@ export const AllPlugins = [
       state: [{ plugin: 'geogebra', state: '' }],
     },
   },
-  {
+  [EditorPluginType.H5p]: {
     ...getInternationalizedPluginStrings(EditorPluginType.H5p),
     icon: IconH5p,
     type: EditorPluginType.H5p,
@@ -183,7 +183,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Highlight]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Highlight),
     icon: IconHighlight,
     type: EditorPluginType.Highlight,
@@ -197,7 +197,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Image]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Image),
     icon: IconImage,
     type: EditorPluginType.Image,
@@ -217,13 +217,13 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.ImageGallery]: {
     ...getInternationalizedPluginStrings(EditorPluginType.ImageGallery),
     icon: undefined,
     type: EditorPluginType.ImageGallery,
     initialState: { plugin: 'imageGallery', state: { images: [] } },
   },
-  {
+  [EditorPluginType.Injection]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Injection),
     icon: IconInjection,
     type: EditorPluginType.Injection,
@@ -232,7 +232,7 @@ export const AllPlugins = [
       state: [{ plugin: 'injection', state: '' }],
     },
   },
-  {
+  [EditorPluginType.Multimedia]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Multimedia),
     icon: IconMultimedia,
     type: EditorPluginType.Multimedia,
@@ -263,7 +263,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.SerloTable]: {
     ...getInternationalizedPluginStrings(EditorPluginType.SerloTable),
     icon: IconTable,
     type: EditorPluginType.SerloTable,
@@ -345,7 +345,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Spoiler]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Spoiler),
     icon: IconSpoiler,
     type: EditorPluginType.Spoiler,
@@ -373,7 +373,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Text]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Text),
     icon: IconText,
     type: EditorPluginType.Text,
@@ -384,7 +384,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.Video]: {
     ...getInternationalizedPluginStrings(EditorPluginType.Video),
     icon: IconVideo,
     type: EditorPluginType.Video,
@@ -393,7 +393,7 @@ export const AllPlugins = [
       state: [{ plugin: 'video', state: { src: '', alt: '' } }],
     },
   },
-  {
+  [EditorPluginType.DropzoneImage]: {
     ...getInternationalizedPluginStrings(EditorPluginType.DropzoneImage),
     icon: IconDropzones,
     type: EditorPluginType.DropzoneImage,
@@ -402,7 +402,7 @@ export const AllPlugins = [
       state: { src: '', dropzones: [] },
     },
   },
-  {
+  [EditorPluginType.ScMcExercise]: {
     ...getInternationalizedPluginStrings(EditorPluginType.ScMcExercise),
     icon: IconScMcExercise,
     type: EditorPluginType.ScMcExercise,
@@ -456,7 +456,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.InputExercise]: {
     ...getInternationalizedPluginStrings(EditorPluginType.InputExercise),
     icon: IconTextArea,
     type: EditorPluginType.InputExercise,
@@ -497,13 +497,13 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.TextAreaExercise]: {
     ...getInternationalizedPluginStrings(EditorPluginType.TextAreaExercise),
     icon: IconTextArea,
     type: EditorPluginType.TextAreaExercise,
     initialState: { plugin: 'textAreaExercise', state: { feedback: '' } },
   },
-  {
+  [EditorPluginType.BlanksExercise]: {
     ...getInternationalizedPluginStrings(EditorPluginType.BlanksExercise),
     icon: IconBlanksTyping,
     type: EditorPluginType.BlanksExercise,
@@ -537,7 +537,7 @@ export const AllPlugins = [
       ],
     },
   },
-  {
+  [EditorPluginType.BlanksExerciseDragAndDrop]: {
     ...getInternationalizedPluginStrings(
       EditorPluginType.BlanksExerciseDragAndDrop
     ),
@@ -573,4 +573,4 @@ export const AllPlugins = [
       ],
     },
   },
-]
+}
