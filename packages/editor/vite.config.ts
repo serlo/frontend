@@ -70,6 +70,7 @@ export default defineConfig({
       '@': resolve(__dirname, '../../apps/web/src'),
     },
   },
+  assetsInclude: ['./src/editor-ui/assets/plugin-icons/**/*.svg'],
   plugins: [
     replace({ ...envReplacements, preventAssignment: false }),
     react(),
