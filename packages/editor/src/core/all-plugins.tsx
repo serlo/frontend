@@ -18,8 +18,8 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { Instance } from '@/fetcher/graphql-types/operations'
-import { getLoggedInData } from '@/helper/feature-i18n'
+import { loggedInData as loggedInDataDe } from '@/data/de'
+import { loggedInData as loggedInDataEn } from '@/data/en'
 
 // Need this tiny interface, because the mergeDeepObject seems to
 // screw up the types of our i18n strings
@@ -31,10 +31,10 @@ type PluginStrings = Record<
   }
 >
 
-const germanPluginStrings = getLoggedInData(Instance.De).strings.editor
+const germanPluginStrings = loggedInDataDe.strings.editor
   .plugins as unknown as PluginStrings
 
-const englishPluginStrings = getLoggedInData(Instance.En).strings.editor
+const englishPluginStrings = loggedInDataEn.strings.editor
   .plugins as unknown as PluginStrings
 
 const getPluginNameAndDescription = (
