@@ -70,7 +70,7 @@ const getInternationalizedPluginStrings = (type: EditorPluginType) => ({
   en: getPluginNameAndDescription('en', type),
 })
 
-export const ALL_PLUGINS = [
+export const AllPlugins = [
   // {
   //   ...getInternationalizedPluginStrings(EditorPluginType.Audio),
   //   icon: IconAudio,
