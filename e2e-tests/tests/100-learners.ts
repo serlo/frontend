@@ -171,19 +171,23 @@ Scenario('Taxonomy', ({ I }) => {
 
   // Meta nav
   I.click('Realschule')
-
-  // Running around a bit more
+  I.waitForURL('**/16157', 10)
   I.see('Klasse 5')
   I.see('Klasse 6')
-  I.click('Klasse 7')
-  I.see('Klasse 7')
-  I.click('Grundwissenstest 7. Klasse')
-  I.see('Aufgaben')
-  I.click('2021')
 
-  // Takes a long time to load
+  I.click('Klasse 7')
+  I.waitForURL('**/16160', 10)
+  I.see('Klasse 7')
+
+  I.click('Grundwissenstest 7. Klasse')
+  I.waitForURL('**/220404', 10)
+  I.see('Aufgaben')
+
+  I.click('2021')
+  I.waitForURL('**/247918', 10)
   I.see('Berechne')
 
+  // check content type headers
   I.amOnPage('/24370')
   I.see('Artikel')
   I.see('Videos')
