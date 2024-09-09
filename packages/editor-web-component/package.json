@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
-    "@serlo/editor": "0.12.1",
+    "@serlo/editor": "file:.yalc/@serlo/editor",
     "@serlo/typescript-config": "workspace:*",
     "@types/escodegen": "^0.0.10",
     "@types/estraverse": "^5.1.7",
