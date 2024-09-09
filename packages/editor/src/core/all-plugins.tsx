@@ -501,7 +501,43 @@ export const AllPlugins = {
     ...getInternationalizedPluginStrings(EditorPluginType.TextAreaExercise),
     icon: IconTextArea,
     type: EditorPluginType.TextAreaExercise,
-    initialState: { plugin: 'textAreaExercise', state: { feedback: '' } },
+    initialState: {
+      plugin: 'rows',
+      state: [
+        {
+          plugin: 'exercise',
+          state: {
+            content: {
+              plugin: 'rows',
+              state: [
+                {
+                  plugin: 'text',
+                  state: [{ type: 'p', children: [{ text: '' }] }],
+                },
+              ],
+            },
+            interactive: {
+              plugin: 'solution',
+              state: {
+                strategy: {
+                  plugin: 'text',
+                  state: [{ type: 'p', children: [{ text: '' }] }],
+                },
+                steps: {
+                  plugin: 'rows',
+                  state: [
+                    {
+                      plugin: 'text',
+                      state: [{ type: 'p', children: [{ text: '' }] }],
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   },
   [EditorPluginType.BlanksExercise]: {
     ...getInternationalizedPluginStrings(EditorPluginType.BlanksExercise),
