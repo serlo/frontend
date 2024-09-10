@@ -37,7 +37,7 @@ export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
       ref={buttonRef}
       className={cn(baseStyles, stateStyles, interactionStyles)}
       onClick={onClick}
-      id="add-row-button"
+      data-button-type="add-row"
     >
       {/* Divider line */}
       <span className="flex-grow border-t-2 border-gray-300" />
