@@ -7,11 +7,13 @@ import { Descendant } from 'slate'
 import { ImageGrid } from './components/image-grid'
 import { StaticCarousel } from './components/static/static-carousel'
 import { StaticLightbox } from './components/static/static-lightbox'
+import { StaticLightboxMobile } from './components/static/static-lightbox-mobile'
 
 export function ImageGalleryStaticRenderer({
   state,
 }: EditorImageGalleryDocument) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [isMobileLightboxOpen, setIsMobileLightboxOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
     null
   )
@@ -29,9 +31,14 @@ export function ImageGalleryStaticRenderer({
     })
   )
 
-  function handleImageClick(index: number) {
+  function handleGridImageClick(index: number) {
     setCurrentImageIndex(index)
     setIsLightboxOpen(true)
+  }
+
+  function handleCarouselImageClick(index: number) {
+    setCurrentImageIndex(index)
+    setIsMobileLightboxOpen(true)
   }
 
   const isLoading = images.some((image) => image.dimensions.width === 0)
@@ -42,7 +49,7 @@ export function ImageGalleryStaticRenderer({
   return (
     <>
       <div className="hidden p-4 sm:block">
-        <ImageGrid images={images} onImageClick={handleImageClick} />
+        <ImageGrid images={images} onImageClick={handleGridImageClick} />
 
         {images.length && currentImageIndex !== null ? (
           <StaticLightbox
@@ -56,7 +63,20 @@ export function ImageGalleryStaticRenderer({
       </div>
 
       <div className="sm:hidden">
-        <StaticCarousel images={images} />
+        <StaticCarousel
+          images={images}
+          onImageClick={handleCarouselImageClick}
+        />
+
+        {images.length && currentImageIndex !== null ? (
+          <StaticLightboxMobile
+            images={images}
+            isOpen={isMobileLightboxOpen}
+            currentImageIndex={currentImageIndex}
+            setIsOpen={setIsMobileLightboxOpen}
+            setCurrentImageIndex={setCurrentImageIndex}
+          />
+        ) : null}
       </div>
     </>
   )

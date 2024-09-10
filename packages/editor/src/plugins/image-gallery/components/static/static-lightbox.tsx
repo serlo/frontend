@@ -4,7 +4,7 @@ import { StaticLightboxImage } from './static-lightbox-image'
 import { StaticLightboxSlider } from './static-lightbox-slider'
 import { StaticLightboxThumbnail } from './static-lightbox-thumbnail'
 import { GridImage } from '../../types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
 const ModalWithCloseButton = lazy(() =>
@@ -28,7 +28,7 @@ export function StaticLightbox({
   setIsOpen,
   setCurrentImageIndex,
 }: StaticLightboxProps) {
-  const imageGalleryStrings = useEditorStrings().plugins.imageGallery
+  const title = useInstanceData().strings.content.imageGalleryLightboxSrTitle
 
   function closeModal(isOpen: boolean) {
     if (isOpen) return
@@ -55,7 +55,7 @@ export function StaticLightbox({
         extraCloseButtonClassName="text-gray-400 hover:bg-gray-600 hover:text-gray-200"
         extraOverlayClassName="bg-gray-700 bg-opacity-80"
         extraTitleClassName="sr-only"
-        title={imageGalleryStrings.lightboxScreenReaderTitle}
+        title={title}
         isOpen={isOpen}
         setIsOpen={closeModal}
       >
