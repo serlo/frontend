@@ -38,7 +38,7 @@ export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
       className={cn(baseStyles, stateStyles, interactionStyles)}
       onClick={onClick}
       //  needed so that the "add plugin" row can be hidden in CSS for editor
-      //  integrations
+      //  integrations: [data-button-type="add-row"] { display: none; }
       data-button-type="add-row"
     >
       {/* Divider line */}
