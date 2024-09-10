@@ -16,7 +16,7 @@ import {
 
 export const editorData: Record<SupportedLanguage, LanguageData> = {
   de: {
-    instanceData: instanceDataDe as InstanceData,
+    instanceData: instanceDataDe as unknown as InstanceData,
     loggedInData: loggedInDataDe as unknown as LoggedInData,
   },
   en: {
