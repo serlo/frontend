@@ -94,27 +94,13 @@ function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
   const internationalizedStrings = getInternationalizedPluginStrings(type)
 
   let initialState: PluginState = {
+    // ? All plugins and the migration algorithm seem to be reliant on this
+    // structure. How could we remove the rows plugin from the initial state?
     plugin: EditorPluginType.Rows,
     state: [{ plugin: type }],
   }
 
   switch (type) {
-    // Simple plugins, some of them should work without the rows too. See TODO
-    // below
-    case EditorPluginType.Text:
-    case EditorPluginType.Image:
-    case EditorPluginType.Video:
-    case EditorPluginType.Highlight:
-    case EditorPluginType.Spoiler:
-    case EditorPluginType.Box:
-    case EditorPluginType.SerloTable:
-    case EditorPluginType.Equations:
-    case EditorPluginType.Geogebra:
-    case EditorPluginType.Injection:
-    case EditorPluginType.H5p:
-    case EditorPluginType.Multimedia:
-      break
-
     // Following types need to be wrapped in exercises
     case EditorPluginType.ScMcExercise:
     case EditorPluginType.InputExercise:
@@ -137,12 +123,20 @@ function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
         ],
       }
       break
+    case EditorPluginType.Text:
+    case EditorPluginType.Image:
+    case EditorPluginType.Video:
+    case EditorPluginType.Highlight:
+    case EditorPluginType.Spoiler:
+    case EditorPluginType.Box:
+    case EditorPluginType.SerloTable:
+    case EditorPluginType.Equations:
+    case EditorPluginType.Geogebra:
+    case EditorPluginType.Injection:
+    case EditorPluginType.H5p:
+    case EditorPluginType.Multimedia:
     case EditorPluginType.DropzoneImage:
     case EditorPluginType.ImageGallery:
-      // These don't need to be wrapped in Rows
-      // eslint-disable-next-line no-warning-comments
-      // TODO figure out which plugins don't rely on rows plugin
-      initialState = { plugin: type }
       break
     default:
       console.warn(`Unhandled plugin type: ${type}`)
@@ -157,6 +151,12 @@ function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
 }
 
 export const AllPlugins = {
+  [EditorPluginType.Text]: pluginFactory(EditorPluginType.Text, IconText),
+  [EditorPluginType.Multimedia]: pluginFactory(
+    EditorPluginType.Multimedia,
+    IconMultimedia
+  ),
+  [EditorPluginType.Video]: pluginFactory(EditorPluginType.Video, IconVideo),
   [EditorPluginType.Box]: pluginFactory(EditorPluginType.Box, IconBox),
   [EditorPluginType.Equations]: pluginFactory(
     EditorPluginType.Equations,
@@ -180,10 +180,6 @@ export const AllPlugins = {
     EditorPluginType.Injection,
     IconInjection
   ),
-  [EditorPluginType.Multimedia]: pluginFactory(
-    EditorPluginType.Multimedia,
-    IconMultimedia
-  ),
   [EditorPluginType.SerloTable]: pluginFactory(
     EditorPluginType.SerloTable,
     IconTable
@@ -192,8 +188,6 @@ export const AllPlugins = {
     EditorPluginType.Spoiler,
     IconSpoiler
   ),
-  [EditorPluginType.Text]: pluginFactory(EditorPluginType.Text, IconText),
-  [EditorPluginType.Video]: pluginFactory(EditorPluginType.Video, IconVideo),
   [EditorPluginType.DropzoneImage]: pluginFactory(
     EditorPluginType.DropzoneImage,
     IconDropzones

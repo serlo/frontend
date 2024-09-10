@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.6.0",
+  "version": "0.5.0",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
