@@ -16,6 +16,7 @@ import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg?
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg?raw'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
+import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { loggedInData as loggedInDataDe } from '@/data/de'
@@ -70,543 +71,151 @@ const getInternationalizedPluginStrings = (type: EditorPluginType) => ({
   en: getPluginNameAndDescription('en', type),
 })
 
+interface PluginState {
+  plugin: EditorPluginType
+  state?: any
+}
+
+interface PluginInfo {
+  de: {
+    name: string
+    description: string
+  }
+  en: {
+    name: string
+    description: string
+  }
+  icon: string
+  type: EditorPluginType
+  initialState: PluginState
+}
+
+function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
+  const internationalizedStrings = getInternationalizedPluginStrings(type)
+
+  let initialState: PluginState = {
+    plugin: EditorPluginType.Rows,
+    state: [{ plugin: type }],
+  }
+
+  switch (type) {
+    // Simple plugins, some of them should work without the rows too. See TODO
+    // below
+    case EditorPluginType.Text:
+    case EditorPluginType.Image:
+    case EditorPluginType.Video:
+    case EditorPluginType.Highlight:
+    case EditorPluginType.Spoiler:
+    case EditorPluginType.Box:
+    case EditorPluginType.SerloTable:
+    case EditorPluginType.Equations:
+    case EditorPluginType.Geogebra:
+    case EditorPluginType.Injection:
+    case EditorPluginType.H5p:
+    case EditorPluginType.Multimedia:
+      break
+
+    // Following types need to be wrapped in exercises
+    case EditorPluginType.ScMcExercise:
+    case EditorPluginType.InputExercise:
+    case EditorPluginType.TextAreaExercise:
+    case EditorPluginType.BlanksExercise:
+    case EditorPluginType.BlanksExerciseDragAndDrop:
+      initialState = {
+        plugin: EditorPluginType.Rows,
+        state: [
+          {
+            plugin: EditorPluginType.Exercise,
+            state: {
+              content: {
+                plugin: EditorPluginType.Rows,
+                state: [{ plugin: EditorPluginType.Text }],
+              },
+              interactive: { plugin: type },
+            },
+          },
+        ],
+      }
+      break
+    case EditorPluginType.DropzoneImage:
+    case EditorPluginType.ImageGallery:
+      // These don't need to be wrapped in Rows
+      // eslint-disable-next-line no-warning-comments
+      // TODO figure out which plugins don't rely on rows plugin
+      initialState = { plugin: type }
+      break
+    default:
+      console.warn(`Unhandled plugin type: ${type}`)
+  }
+
+  return {
+    ...internationalizedStrings,
+    icon,
+    type,
+    initialState,
+  }
+}
+
 export const AllPlugins = {
-  // {
-  //   ...getInternationalizedPluginStrings(EditorPluginType.Audio),
-  //   icon: IconAudio,
-  //   type: EditorPluginType.Audio,
-  //   initialState: { plugin: 'audio', state: { src: '' } },
-  // },
-  [EditorPluginType.Box]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Box),
-    icon: IconBox,
-    type: EditorPluginType.Box,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'box',
-          state: {
-            type: 'example',
-            title: {
-              plugin: 'text',
-              state: [{ type: 'p', children: [{ text: '' }] }],
-            },
-            anchorId: '',
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.Equations]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Equations),
-    icon: IconEquation,
-    type: EditorPluginType.Equations,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'equations',
-          state: {
-            steps: [
-              {
-                left: '',
-                sign: 'equals',
-                right: '',
-                transform: '',
-                explanation: {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              },
-              {
-                left: '',
-                sign: 'equals',
-                right: '',
-                transform: '',
-                explanation: {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              },
-            ],
-            firstExplanation: {
-              plugin: 'text',
-              state: [{ type: 'p', children: [{ text: '' }] }],
-            },
-            transformationTarget: 'equation',
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.Geogebra]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Geogebra),
-    icon: IconGeogebra,
-    type: EditorPluginType.Geogebra,
-    initialState: {
-      plugin: 'rows',
-      state: [{ plugin: 'geogebra', state: '' }],
-    },
-  },
-  [EditorPluginType.H5p]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.H5p),
-    icon: IconH5p,
-    type: EditorPluginType.H5p,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'exercise',
-          state: {
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-            interactive: { plugin: 'h5p', state: '' },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.Highlight]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Highlight),
-    icon: IconHighlight,
-    type: EditorPluginType.Highlight,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'highlight',
-          state: { code: '', language: 'text', showLineNumbers: false },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.Image]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Image),
-    icon: IconImage,
-    type: EditorPluginType.Image,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'image',
-          state: {
-            src: '',
-            caption: {
-              plugin: 'text',
-              state: [{ type: 'p', children: [{ text: '' }] }],
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.ImageGallery]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.ImageGallery),
-    icon: undefined,
-    type: EditorPluginType.ImageGallery,
-    initialState: { plugin: 'imageGallery', state: { images: [] } },
-  },
-  [EditorPluginType.Injection]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Injection),
-    icon: IconInjection,
-    type: EditorPluginType.Injection,
-    initialState: {
-      plugin: 'rows',
-      state: [{ plugin: 'injection', state: '' }],
-    },
-  },
-  [EditorPluginType.Multimedia]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Multimedia),
-    icon: IconMultimedia,
-    type: EditorPluginType.Multimedia,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'articleIntroduction',
-          state: {
-            explanation: {
-              plugin: 'text',
-              state: [{ type: 'p', children: [{ text: '' }] }],
-            },
-            multimedia: {
-              plugin: 'image',
-              state: {
-                src: '',
-                caption: {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              },
-            },
-            illustrating: true,
-            width: 50,
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.SerloTable]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.SerloTable),
-    icon: IconTable,
-    type: EditorPluginType.SerloTable,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'serloTable',
-          state: {
-            rows: [
-              {
-                columns: [
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                ],
-              },
-              {
-                columns: [
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                ],
-              },
-              {
-                columns: [
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                ],
-              },
-              {
-                columns: [
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                ],
-              },
-            ],
-            tableType: 'OnlyColumnHeader',
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.Spoiler]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Spoiler),
-    icon: IconSpoiler,
-    type: EditorPluginType.Spoiler,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'spoiler',
-          state: {
-            richTitle: {
-              plugin: 'text',
-              state: [{ type: 'p', children: [{ text: '' }] }],
-            },
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.Text]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Text),
-    icon: IconText,
-    type: EditorPluginType.Text,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        { plugin: 'text', state: [{ type: 'p', children: [{ text: '' }] }] },
-      ],
-    },
-  },
-  [EditorPluginType.Video]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.Video),
-    icon: IconVideo,
-    type: EditorPluginType.Video,
-    initialState: {
-      plugin: 'rows',
-      state: [{ plugin: 'video', state: { src: '', alt: '' } }],
-    },
-  },
-  [EditorPluginType.DropzoneImage]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.DropzoneImage),
-    icon: IconDropzones,
-    type: EditorPluginType.DropzoneImage,
-    initialState: {
-      plugin: 'dropzoneImage',
-      state: { src: '', dropzones: [] },
-    },
-  },
-  [EditorPluginType.ScMcExercise]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.ScMcExercise),
-    icon: IconScMcExercise,
-    type: EditorPluginType.ScMcExercise,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'exercise',
-          state: {
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-            interactive: {
-              plugin: 'scMcExercise',
-              state: {
-                isSingleChoice: false,
-                answers: [
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                    isCorrect: false,
-                    feedback: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                  {
-                    content: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                    isCorrect: false,
-                    feedback: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.InputExercise]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.InputExercise),
-    icon: IconTextArea,
-    type: EditorPluginType.InputExercise,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'exercise',
-          state: {
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-            interactive: {
-              plugin: 'inputExercise',
-              state: {
-                type: 'input-number-exact-match-challenge',
-                unit: '',
-                answers: [
-                  {
-                    value: '',
-                    isCorrect: true,
-                    feedback: {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.TextAreaExercise]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.TextAreaExercise),
-    icon: IconTextArea,
-    type: EditorPluginType.TextAreaExercise,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'exercise',
-          state: {
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-            interactive: {
-              plugin: 'solution',
-              state: {
-                strategy: {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-                steps: {
-                  plugin: 'rows',
-                  state: [
-                    {
-                      plugin: 'text',
-                      state: [{ type: 'p', children: [{ text: '' }] }],
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.BlanksExercise]: {
-    ...getInternationalizedPluginStrings(EditorPluginType.BlanksExercise),
-    icon: IconBlanksTyping,
-    type: EditorPluginType.BlanksExercise,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'exercise',
-          state: {
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-            interactive: {
-              plugin: 'blanksExercise',
-              state: {
-                text: {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-                mode: 'typing',
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
-  [EditorPluginType.BlanksExerciseDragAndDrop]: {
-    ...getInternationalizedPluginStrings(
-      EditorPluginType.BlanksExerciseDragAndDrop
-    ),
-    icon: IconBlanksDragAndDrop,
-    type: EditorPluginType.BlanksExerciseDragAndDrop,
-    initialState: {
-      plugin: 'rows',
-      state: [
-        {
-          plugin: 'exercise',
-          state: {
-            content: {
-              plugin: 'rows',
-              state: [
-                {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-              ],
-            },
-            interactive: {
-              plugin: 'blanksExercise',
-              state: {
-                text: {
-                  plugin: 'text',
-                  state: [{ type: 'p', children: [{ text: '' }] }],
-                },
-                mode: 'drag-and-drop',
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
+  [EditorPluginType.Box]: pluginFactory(EditorPluginType.Box, IconBox),
+  [EditorPluginType.Equations]: pluginFactory(
+    EditorPluginType.Equations,
+    IconEquation
+  ),
+  [EditorPluginType.Geogebra]: pluginFactory(
+    EditorPluginType.Geogebra,
+    IconGeogebra
+  ),
+  [EditorPluginType.H5p]: pluginFactory(EditorPluginType.H5p, IconH5p),
+  [EditorPluginType.Highlight]: pluginFactory(
+    EditorPluginType.Highlight,
+    IconHighlight
+  ),
+  [EditorPluginType.Image]: pluginFactory(EditorPluginType.Image, IconImage),
+  [EditorPluginType.ImageGallery]: pluginFactory(
+    EditorPluginType.ImageGallery,
+    IconImageGallery
+  ),
+  [EditorPluginType.Injection]: pluginFactory(
+    EditorPluginType.Injection,
+    IconInjection
+  ),
+  [EditorPluginType.Multimedia]: pluginFactory(
+    EditorPluginType.Multimedia,
+    IconMultimedia
+  ),
+  [EditorPluginType.SerloTable]: pluginFactory(
+    EditorPluginType.SerloTable,
+    IconTable
+  ),
+  [EditorPluginType.Spoiler]: pluginFactory(
+    EditorPluginType.Spoiler,
+    IconSpoiler
+  ),
+  [EditorPluginType.Text]: pluginFactory(EditorPluginType.Text, IconText),
+  [EditorPluginType.Video]: pluginFactory(EditorPluginType.Video, IconVideo),
+  [EditorPluginType.DropzoneImage]: pluginFactory(
+    EditorPluginType.DropzoneImage,
+    IconDropzones
+  ),
+  [EditorPluginType.ScMcExercise]: pluginFactory(
+    EditorPluginType.ScMcExercise,
+    IconScMcExercise
+  ),
+  [EditorPluginType.InputExercise]: pluginFactory(
+    EditorPluginType.InputExercise,
+    IconTextArea
+  ),
+  [EditorPluginType.TextAreaExercise]: pluginFactory(
+    EditorPluginType.TextAreaExercise,
+    IconTextArea
+  ),
+  [EditorPluginType.BlanksExercise]: pluginFactory(
+    EditorPluginType.BlanksExercise,
+    IconBlanksTyping
+  ),
+  [EditorPluginType.BlanksExerciseDragAndDrop]: pluginFactory(
+    EditorPluginType.BlanksExerciseDragAndDrop,
+    IconBlanksDragAndDrop
+  ),
 }
