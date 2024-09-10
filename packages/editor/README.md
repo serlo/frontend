@@ -107,6 +107,28 @@ See below for the current API specification.
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
 
+### `AllPlugins` constant
+
+Exports a record with following structure which you can use to create your own plugin menu for integrating the Serlo Editor.
+
+```TypeScript
+[key: EditorPluginType]: {
+  de: {
+    name: string
+    description: string
+  }
+  en: {
+    name: string
+    description: string
+  }
+  icon: string
+  type: EditorPluginType
+  initialState: PluginState
+}
+```
+
+You can iterate over this structure by using `Object.values(AllPlugins)` to get them as an array, which you can use to sort, filter and modify to your liking.
+
 ## Releasing a new version to npm
 
 Bump the version number in the package.json and
