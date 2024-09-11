@@ -56,7 +56,7 @@ export enum EducationalElement {
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
-export const EducationalElements: Record<EducationalElement, ElementInfo> = {
+export const EducationalElements: EducationalElements = {
   [EducationalElement.Text]: getInfo(EducationalElement.Text, IconText),
   [EducationalElement.Multimedia]: getInfo(
     EducationalElement.Multimedia,
@@ -120,7 +120,12 @@ export const EducationalElements: Record<EducationalElement, ElementInfo> = {
   ),
 }
 
-interface ElementInfo {
+type EducationalElements = {
+  [E in EducationalElement]: ElementInfo<E>
+}
+
+interface ElementInfo<E extends EducationalElement> {
+  type: E
   de: {
     name: string
     description: string
@@ -130,7 +135,6 @@ interface ElementInfo {
     description: string
   }
   icon: string
-  type: EducationalElement
   initialState: PluginState
 }
 
@@ -139,7 +143,10 @@ interface PluginState {
   state?: any
 }
 
-function getInfo(type: EducationalElement, icon: string): ElementInfo {
+function getInfo<E extends EducationalElement>(
+  type: E,
+  icon: string
+): ElementInfo<E> {
   return {
     ...getInternationalizedStrings(type),
     icon,
