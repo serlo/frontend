@@ -260,7 +260,7 @@ export function EditorPresentationDe() {
           final ? '' : 'bg-brand-200 text-brand hover:text-white'
         )}
       >
-        Anmelden!
+        Für Updates anmelden
       </a>
     )
   }
