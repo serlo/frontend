@@ -162,6 +162,19 @@ function getInfo<E extends EducationalElement>(
 
 function getInitialState(type: EducationalElement): PluginState {
   switch (type) {
+    case EducationalElement.BlanksExerciseDragAndDrop:
+    case EducationalElement.BlanksExercise:
+      return getEditorState({
+        plugin: InternalEditorPluginType.BlanksExercise,
+        state: {
+          text: { plugin: InternalEditorPluginType.Text },
+          mode:
+            type === EducationalElement.BlanksExerciseDragAndDrop
+              ? 'drag-and-drop'
+              : 'typing',
+        },
+      })
+
     case EducationalElement.SingleChoiceExercise:
     case EducationalElement.MultipleChoiceExercise:
       return getEditorState({
@@ -185,8 +198,6 @@ function getInitialState(type: EducationalElement): PluginState {
 
     case EducationalElement.InputExercise:
     case EducationalElement.TextAreaExercise:
-    case EducationalElement.BlanksExercise:
-    case EducationalElement.BlanksExerciseDragAndDrop:
       return getEditorState({ plugin: type })
 
     default:
