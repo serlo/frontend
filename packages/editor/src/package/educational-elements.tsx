@@ -164,59 +164,31 @@ function getInitialState(type: EducationalElement): PluginState {
   switch (type) {
     case EducationalElement.SingleChoiceExercise:
     case EducationalElement.MultipleChoiceExercise:
-      return {
-        plugin: InternalEditorPluginType.Rows,
-        state: [
-          {
-            plugin: InternalEditorPluginType.Exercise,
-            state: {
-              content: {
-                plugin: InternalEditorPluginType.Rows,
-                state: [{ plugin: InternalEditorPluginType.Text }],
-              },
-              interactive: {
-                plugin: InternalEditorPluginType.ScMcExercise,
-                state: {
-                  isSingleChoice:
-                    type === EducationalElement.SingleChoiceExercise,
-                  answers: [
-                    {
-                      content: { plugin: InternalEditorPluginType.Text },
-                      isCorrect: true,
-                      feedback: { plugin: InternalEditorPluginType.Text },
-                    },
-                    {
-                      content: { plugin: InternalEditorPluginType.Text },
-                      isCorrect: false,
-                      feedback: { plugin: InternalEditorPluginType.Text },
-                    },
-                  ],
-                },
-              },
+      return getEditorState({
+        plugin: InternalEditorPluginType.ScMcExercise,
+        state: {
+          isSingleChoice: type === EducationalElement.SingleChoiceExercise,
+          answers: [
+            {
+              content: { plugin: InternalEditorPluginType.Text },
+              isCorrect: true,
+              feedback: { plugin: InternalEditorPluginType.Text },
             },
-          },
-        ],
-      }
+            {
+              content: { plugin: InternalEditorPluginType.Text },
+              isCorrect: false,
+              feedback: { plugin: InternalEditorPluginType.Text },
+            },
+          ],
+        },
+      })
 
     case EducationalElement.InputExercise:
     case EducationalElement.TextAreaExercise:
     case EducationalElement.BlanksExercise:
     case EducationalElement.BlanksExerciseDragAndDrop:
-      return {
-        plugin: InternalEditorPluginType.Rows,
-        state: [
-          {
-            plugin: InternalEditorPluginType.Exercise,
-            state: {
-              content: {
-                plugin: InternalEditorPluginType.Rows,
-                state: [{ plugin: InternalEditorPluginType.Text }],
-              },
-              interactive: { plugin: type },
-            },
-          },
-        ],
-      }
+      return getEditorState({ plugin: type })
+
     default:
       return {
         // ? All plugins and the migration algorithm seem to be reliant on this
@@ -224,6 +196,24 @@ function getInitialState(type: EducationalElement): PluginState {
         plugin: InternalEditorPluginType.Rows,
         state: [{ plugin: type }],
       }
+  }
+}
+
+function getEditorState(interactive: unknown) {
+  return {
+    plugin: InternalEditorPluginType.Rows,
+    state: [
+      {
+        plugin: InternalEditorPluginType.Exercise,
+        state: {
+          content: {
+            plugin: InternalEditorPluginType.Rows,
+            state: [{ plugin: InternalEditorPluginType.Text }],
+          },
+          interactive,
+        },
+      },
+    ],
   }
 }
 
