@@ -1,3 +1,5 @@
+import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 
 const roadmapData = [
@@ -41,10 +43,52 @@ const roadmapData = [
   },
 ]
 
+const roadmapDataDe = [
+  {
+    title: 'Neueste Releases',
+    steps: [
+      'Verbessertes Bilder-Plugin, einfachere Uploads',
+      'Drag & Drop-Aufgabe mit Bildern (Lückenfüllung)',
+      'Aufgabenerstellung mit KI ✨',
+      'Kopieren und Einfügen von Inhalten zwischen Plugins',
+      'Web Component Release',
+      'Bildergalerien',
+    ],
+  },
+  {
+    title: 'Next up',
+    steps: [
+      'KI-gestütze Eingabefeld-Aufgaben',
+      'Einfachere Aufgabenerstellung',
+      'xAPI',
+    ],
+  },
+  {
+    title: 'Soon',
+    steps: [
+      'Verbessertes Onboarding & Hilfe',
+      'Interaktive Videos',
+      'Bessere Tastaturnavigation',
+      'Asset-Upload für Editor-Integrationen',
+    ],
+  },
+  {
+    title: 'Later',
+    steps: [
+      'Automatisiertes OER-Lizenzmanagement',
+      'Bibliothek für Lernmethoden',
+      'Erstellung individueller Lernpfade',
+      'Folien ',
+    ],
+  },
+]
 export function EditorRoadmap() {
+  const isDe = useInstanceData().lang === Instance.De
+  const data = isDe ? roadmapDataDe : roadmapData
+
   return (
     <div className="text-center text-xl sm:flex">
-      {roadmapData.map(({ title, steps }, colIndex) => {
+      {data.map(({ title, steps }, colIndex) => {
         return (
           <div key={title} className="mt-8 flex-1 px-3">
             <h3 className="mb-4 font-handwritten text-3xl text-brand">
