@@ -56,87 +56,6 @@ export enum EditorElement {
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
-const getPluginNameAndDescription = (
-  locale: 'de' | 'en',
-  pluginType: EditorElement
-) => {
-  const name =
-    locale === 'de'
-      ? germanPluginStrings[pluginType].title
-      : englishPluginStrings[pluginType].title
-  const description =
-    locale === 'de'
-      ? germanPluginStrings[pluginType].description
-      : englishPluginStrings[pluginType].description
-
-  return { name, description }
-}
-
-const getInternationalizedPluginStrings = (type: EditorElement) => ({
-  de: getPluginNameAndDescription('de', type),
-  en: getPluginNameAndDescription('en', type),
-})
-
-interface PluginState {
-  plugin: InternalEditorPluginType
-  state?: any
-}
-
-interface PluginInfo {
-  de: {
-    name: string
-    description: string
-  }
-  en: {
-    name: string
-    description: string
-  }
-  icon: string
-  type: EditorElement
-  initialState: PluginState
-}
-
-function pluginFactory(type: EditorElement, icon: string): PluginInfo {
-  return {
-    ...getInternationalizedPluginStrings(type),
-    icon,
-    type,
-    initialState: getInitialState(type),
-  }
-}
-
-function getInitialState(type: EditorElement): PluginState {
-  switch (type) {
-    case EditorElement.ScMcExercise:
-    case EditorElement.InputExercise:
-    case EditorElement.TextAreaExercise:
-    case EditorElement.BlanksExercise:
-    case EditorElement.BlanksExerciseDragAndDrop:
-      return {
-        plugin: InternalEditorPluginType.Rows,
-        state: [
-          {
-            plugin: InternalEditorPluginType.Exercise,
-            state: {
-              content: {
-                plugin: InternalEditorPluginType.Rows,
-                state: [{ plugin: InternalEditorPluginType.Text }],
-              },
-              interactive: { plugin: type },
-            },
-          },
-        ],
-      }
-    default:
-      return {
-        // ? All plugins and the migration algorithm seem to be reliant on this
-        // structure. How could we remove the rows plugin from the initial state?
-        plugin: InternalEditorPluginType.Rows,
-        state: [{ plugin: type }],
-      }
-  }
-}
-
 export const AllPlugins = {
   [EditorElement.Text]: pluginFactory(EditorElement.Text, IconText),
   [EditorElement.Multimedia]: pluginFactory(
@@ -193,4 +112,87 @@ export const AllPlugins = {
     EditorElement.BlanksExerciseDragAndDrop,
     IconBlanksDragAndDrop
   ),
+}
+
+interface PluginInfo {
+  de: {
+    name: string
+    description: string
+  }
+  en: {
+    name: string
+    description: string
+  }
+  icon: string
+  type: EditorElement
+  initialState: PluginState
+}
+
+interface PluginState {
+  plugin: InternalEditorPluginType
+  state?: any
+}
+
+function pluginFactory(type: EditorElement, icon: string): PluginInfo {
+  return {
+    ...getInternationalizedPluginStrings(type),
+    icon,
+    type,
+    initialState: getInitialState(type),
+  }
+}
+
+function getInitialState(type: EditorElement): PluginState {
+  switch (type) {
+    case EditorElement.ScMcExercise:
+    case EditorElement.InputExercise:
+    case EditorElement.TextAreaExercise:
+    case EditorElement.BlanksExercise:
+    case EditorElement.BlanksExerciseDragAndDrop:
+      return {
+        plugin: InternalEditorPluginType.Rows,
+        state: [
+          {
+            plugin: InternalEditorPluginType.Exercise,
+            state: {
+              content: {
+                plugin: InternalEditorPluginType.Rows,
+                state: [{ plugin: InternalEditorPluginType.Text }],
+              },
+              interactive: { plugin: type },
+            },
+          },
+        ],
+      }
+    default:
+      return {
+        // ? All plugins and the migration algorithm seem to be reliant on this
+        // structure. How could we remove the rows plugin from the initial state?
+        plugin: InternalEditorPluginType.Rows,
+        state: [{ plugin: type }],
+      }
+  }
+}
+
+function getInternationalizedPluginStrings(type: EditorElement) {
+  return {
+    de: getPluginNameAndDescription('de', type),
+    en: getPluginNameAndDescription('en', type),
+  }
+}
+
+function getPluginNameAndDescription(
+  locale: 'de' | 'en',
+  pluginType: EditorElement
+) {
+  const name =
+    locale === 'de'
+      ? germanPluginStrings[pluginType].title
+      : englishPluginStrings[pluginType].title
+  const description =
+    locale === 'de'
+      ? germanPluginStrings[pluginType].description
+      : englishPluginStrings[pluginType].description
+
+  return { name, description }
 }
