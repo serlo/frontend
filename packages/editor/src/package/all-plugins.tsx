@@ -22,7 +22,16 @@ import { EditorPluginType as InternalEditorPluginType } from '@editor/types/edit
 import { loggedInData as loggedInDataDe } from '@/data/de'
 import { loggedInData as loggedInDataEn } from '@/data/en'
 
-export enum EditorPluginType {
+/**
+ * An element of the Serlo editor which can be integrated as a block / plugin
+ * in another editor (for example editor.js).
+ *
+ * Note: This is not the same as the list of plugins in the Serlo Editor. For
+ * example the elements single choice question and multiple choice question
+ * are both represented by the same plugin in the Serlo Editor (they only differ
+ * by a configuration). In this list they are represented as two separate elements.
+ */
+export enum EditorElement {
   ScMcExercise = InternalEditorPluginType.ScMcExercise,
   InputExercise = InternalEditorPluginType.InputExercise,
   TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
@@ -49,7 +58,7 @@ const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
 const getPluginNameAndDescription = (
   locale: 'de' | 'en',
-  pluginType: EditorPluginType
+  pluginType: EditorElement
 ) => {
   const name =
     locale === 'de'
@@ -63,7 +72,7 @@ const getPluginNameAndDescription = (
   return { name, description }
 }
 
-const getInternationalizedPluginStrings = (type: EditorPluginType) => ({
+const getInternationalizedPluginStrings = (type: EditorElement) => ({
   de: getPluginNameAndDescription('de', type),
   en: getPluginNameAndDescription('en', type),
 })
@@ -83,11 +92,11 @@ interface PluginInfo {
     description: string
   }
   icon: string
-  type: EditorPluginType
+  type: EditorElement
   initialState: PluginState
 }
 
-function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
+function pluginFactory(type: EditorElement, icon: string): PluginInfo {
   return {
     ...getInternationalizedPluginStrings(type),
     icon,
@@ -96,13 +105,13 @@ function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
   }
 }
 
-function getInitialState(type: EditorPluginType): PluginState {
+function getInitialState(type: EditorElement): PluginState {
   switch (type) {
-    case EditorPluginType.ScMcExercise:
-    case EditorPluginType.InputExercise:
-    case EditorPluginType.TextAreaExercise:
-    case EditorPluginType.BlanksExercise:
-    case EditorPluginType.BlanksExerciseDragAndDrop:
+    case EditorElement.ScMcExercise:
+    case EditorElement.InputExercise:
+    case EditorElement.TextAreaExercise:
+    case EditorElement.BlanksExercise:
+    case EditorElement.BlanksExerciseDragAndDrop:
       return {
         plugin: InternalEditorPluginType.Rows,
         state: [
@@ -129,65 +138,59 @@ function getInitialState(type: EditorPluginType): PluginState {
 }
 
 export const AllPlugins = {
-  [EditorPluginType.Text]: pluginFactory(EditorPluginType.Text, IconText),
-  [EditorPluginType.Multimedia]: pluginFactory(
-    EditorPluginType.Multimedia,
+  [EditorElement.Text]: pluginFactory(EditorElement.Text, IconText),
+  [EditorElement.Multimedia]: pluginFactory(
+    EditorElement.Multimedia,
     IconMultimedia
   ),
-  [EditorPluginType.Video]: pluginFactory(EditorPluginType.Video, IconVideo),
-  [EditorPluginType.Box]: pluginFactory(EditorPluginType.Box, IconBox),
-  [EditorPluginType.Equations]: pluginFactory(
-    EditorPluginType.Equations,
+  [EditorElement.Video]: pluginFactory(EditorElement.Video, IconVideo),
+  [EditorElement.Box]: pluginFactory(EditorElement.Box, IconBox),
+  [EditorElement.Equations]: pluginFactory(
+    EditorElement.Equations,
     IconEquation
   ),
-  [EditorPluginType.Geogebra]: pluginFactory(
-    EditorPluginType.Geogebra,
-    IconGeogebra
-  ),
-  [EditorPluginType.H5p]: pluginFactory(EditorPluginType.H5p, IconH5p),
-  [EditorPluginType.Highlight]: pluginFactory(
-    EditorPluginType.Highlight,
+  [EditorElement.Geogebra]: pluginFactory(EditorElement.Geogebra, IconGeogebra),
+  [EditorElement.H5p]: pluginFactory(EditorElement.H5p, IconH5p),
+  [EditorElement.Highlight]: pluginFactory(
+    EditorElement.Highlight,
     IconHighlight
   ),
-  [EditorPluginType.Image]: pluginFactory(EditorPluginType.Image, IconImage),
-  [EditorPluginType.ImageGallery]: pluginFactory(
-    EditorPluginType.ImageGallery,
+  [EditorElement.Image]: pluginFactory(EditorElement.Image, IconImage),
+  [EditorElement.ImageGallery]: pluginFactory(
+    EditorElement.ImageGallery,
     IconImageGallery
   ),
-  [EditorPluginType.Injection]: pluginFactory(
-    EditorPluginType.Injection,
+  [EditorElement.Injection]: pluginFactory(
+    EditorElement.Injection,
     IconInjection
   ),
-  [EditorPluginType.SerloTable]: pluginFactory(
-    EditorPluginType.SerloTable,
+  [EditorElement.SerloTable]: pluginFactory(
+    EditorElement.SerloTable,
     IconTable
   ),
-  [EditorPluginType.Spoiler]: pluginFactory(
-    EditorPluginType.Spoiler,
-    IconSpoiler
-  ),
-  [EditorPluginType.DropzoneImage]: pluginFactory(
-    EditorPluginType.DropzoneImage,
+  [EditorElement.Spoiler]: pluginFactory(EditorElement.Spoiler, IconSpoiler),
+  [EditorElement.DropzoneImage]: pluginFactory(
+    EditorElement.DropzoneImage,
     IconDropzones
   ),
-  [EditorPluginType.ScMcExercise]: pluginFactory(
-    EditorPluginType.ScMcExercise,
+  [EditorElement.ScMcExercise]: pluginFactory(
+    EditorElement.ScMcExercise,
     IconScMcExercise
   ),
-  [EditorPluginType.InputExercise]: pluginFactory(
-    EditorPluginType.InputExercise,
+  [EditorElement.InputExercise]: pluginFactory(
+    EditorElement.InputExercise,
     IconTextArea
   ),
-  [EditorPluginType.TextAreaExercise]: pluginFactory(
-    EditorPluginType.TextAreaExercise,
+  [EditorElement.TextAreaExercise]: pluginFactory(
+    EditorElement.TextAreaExercise,
     IconTextArea
   ),
-  [EditorPluginType.BlanksExercise]: pluginFactory(
-    EditorPluginType.BlanksExercise,
+  [EditorElement.BlanksExercise]: pluginFactory(
+    EditorElement.BlanksExercise,
     IconBlanksTyping
   ),
-  [EditorPluginType.BlanksExerciseDragAndDrop]: pluginFactory(
-    EditorPluginType.BlanksExerciseDragAndDrop,
+  [EditorElement.BlanksExerciseDragAndDrop]: pluginFactory(
+    EditorElement.BlanksExerciseDragAndDrop,
     IconBlanksDragAndDrop
   ),
 }
