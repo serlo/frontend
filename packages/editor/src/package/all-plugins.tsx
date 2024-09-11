@@ -56,7 +56,7 @@ export enum EducationalElement {
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
-export const EducationalElements: EducationalElements = {
+export const educationalElements: EducationalElements = {
   [EducationalElement.Text]: getInfo(EducationalElement.Text, IconText),
   [EducationalElement.Multimedia]: getInfo(
     EducationalElement.Multimedia,
