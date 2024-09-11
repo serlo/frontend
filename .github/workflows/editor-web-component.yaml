@@ -24,9 +24,9 @@ jobs:
         run: |
           CURRENT_VERSION=$(node -p "require('./packages/editor-web-component/package.json').version")
           if npm view @serlo/editor-web-component@$CURRENT_VERSION > /dev/null 2>&1; then
-            echo "::set-output name=already_published::true"
+            echo "already_published=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=already_published::false"
+            echo "already_published=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Publish to npm
