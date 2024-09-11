@@ -228,15 +228,49 @@ function getInitialState(type: EducationalElement): PluginState {
 }
 
 function getInternationalizedStrings(type: EducationalElement) {
-  return {
-    de: getNameAndDescription('de', type),
-    en: getNameAndDescription('en', type),
+  switch (type) {
+    case EducationalElement.SingleChoiceExercise:
+      return {
+        de: {
+          name: 'Single-Choice-Aufgabe',
+          description: 'Eine Frage mit einer Auswahl an Antwortmöglichkeiten.',
+        },
+        en: {
+          name: 'Single Choice Exercise',
+          description: 'A question with a selection of answer options.',
+        },
+      }
+    case EducationalElement.MultipleChoiceExercise:
+      return {
+        de: {
+          name: 'Multiple-Choice-Aufgabe',
+          description: 'Eine Frage mit einer Auswahl an Antwortmöglichkeiten.',
+        },
+        en: {
+          name: 'Multiple Choice Exercise',
+          description: 'A question with a selection of answer options.',
+        },
+      }
+    default:
+      return {
+        de: getNameAndDescription('de', type),
+        en: getNameAndDescription('en', type),
+      }
   }
 }
 
+type PluginsWithNameAndDescription = {
+  [P in keyof typeof germanPluginStrings]: (typeof germanPluginStrings)[P] extends {
+    title: string
+    description: string
+  }
+    ? P
+    : never
+}[keyof typeof germanPluginStrings]
+
 function getNameAndDescription(
   locale: 'de' | 'en',
-  pluginType: EducationalElement
+  pluginType: PluginsWithNameAndDescription
 ) {
   const name =
     locale === 'de'
