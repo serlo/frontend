@@ -17,53 +17,50 @@ import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg?raw'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType as InternalEditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { loggedInData as loggedInDataDe } from '@/data/de'
 import { loggedInData as loggedInDataEn } from '@/data/en'
 
-// Need this tiny interface, because the mergeDeepObject seems to
-// screw up the types of our i18n strings
-type PluginStrings = Record<
-  EditorPluginType,
-  {
-    title: string
-    description: string
-  }
->
+export enum EditorPluginType {
+  ScMcExercise = InternalEditorPluginType.ScMcExercise,
+  InputExercise = InternalEditorPluginType.InputExercise,
+  TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
+  BlanksExercise = InternalEditorPluginType.BlanksExercise,
+  BlanksExerciseDragAndDrop = InternalEditorPluginType.BlanksExerciseDragAndDrop,
+  Text = InternalEditorPluginType.Text,
+  Image = InternalEditorPluginType.Image,
+  Video = InternalEditorPluginType.Video,
+  Highlight = InternalEditorPluginType.Highlight,
+  Spoiler = InternalEditorPluginType.Spoiler,
+  Box = InternalEditorPluginType.Box,
+  SerloTable = InternalEditorPluginType.SerloTable,
+  Equations = InternalEditorPluginType.Equations,
+  Geogebra = InternalEditorPluginType.Geogebra,
+  Injection = InternalEditorPluginType.Injection,
+  H5p = InternalEditorPluginType.H5p,
+  Multimedia = InternalEditorPluginType.Multimedia,
+  DropzoneImage = InternalEditorPluginType.DropzoneImage,
+  ImageGallery = InternalEditorPluginType.ImageGallery,
+}
 
-const germanPluginStrings = loggedInDataDe.strings.editor
-  .plugins as unknown as PluginStrings
-
-const englishPluginStrings = loggedInDataEn.strings.editor
-  .plugins as unknown as PluginStrings
+const germanPluginStrings = loggedInDataDe.strings.editor.plugins
+const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
 const getPluginNameAndDescription = (
   locale: 'de' | 'en',
   pluginType: EditorPluginType
 ) => {
-  let name: string
-  let description: string
-  if (locale === 'de') {
-    name = germanPluginStrings[pluginType]?.title
-    description = germanPluginStrings[pluginType]?.description
-  } else if (locale === 'en') {
-    name = englishPluginStrings[pluginType]?.title
-    description = englishPluginStrings[pluginType]?.description
-  } else {
-    throw new Error('Invalid locale')
-  }
+  const name =
+    locale === 'de'
+      ? germanPluginStrings[pluginType].title
+      : englishPluginStrings[pluginType].title
+  const description =
+    locale === 'de'
+      ? germanPluginStrings[pluginType].description
+      : englishPluginStrings[pluginType].description
 
-  if (!name || !description) {
-    throw new Error(
-      'Missing plugin name or description for plugin type' + pluginType
-    )
-  }
-
-  return {
-    name,
-    description,
-  }
+  return { name, description }
 }
 
 const getInternationalizedPluginStrings = (type: EditorPluginType) => ({
@@ -72,7 +69,7 @@ const getInternationalizedPluginStrings = (type: EditorPluginType) => ({
 })
 
 interface PluginState {
-  plugin: EditorPluginType
+  plugin: InternalEditorPluginType
   state?: any
 }
 
@@ -91,62 +88,43 @@ interface PluginInfo {
 }
 
 function pluginFactory(type: EditorPluginType, icon: string): PluginInfo {
-  const internationalizedStrings = getInternationalizedPluginStrings(type)
-
-  let initialState: PluginState = {
-    // ? All plugins and the migration algorithm seem to be reliant on this
-    // structure. How could we remove the rows plugin from the initial state?
-    plugin: EditorPluginType.Rows,
-    state: [{ plugin: type }],
+  return {
+    ...getInternationalizedPluginStrings(type),
+    icon,
+    type,
+    initialState: getInitialState(type),
   }
+}
 
+function getInitialState(type: EditorPluginType): PluginState {
   switch (type) {
-    // Following types need to be wrapped in exercises
     case EditorPluginType.ScMcExercise:
     case EditorPluginType.InputExercise:
     case EditorPluginType.TextAreaExercise:
     case EditorPluginType.BlanksExercise:
     case EditorPluginType.BlanksExerciseDragAndDrop:
-      initialState = {
-        plugin: EditorPluginType.Rows,
+      return {
+        plugin: InternalEditorPluginType.Rows,
         state: [
           {
-            plugin: EditorPluginType.Exercise,
+            plugin: InternalEditorPluginType.Exercise,
             state: {
               content: {
-                plugin: EditorPluginType.Rows,
-                state: [{ plugin: EditorPluginType.Text }],
+                plugin: InternalEditorPluginType.Rows,
+                state: [{ plugin: InternalEditorPluginType.Text }],
               },
               interactive: { plugin: type },
             },
           },
         ],
       }
-      break
-    case EditorPluginType.Text:
-    case EditorPluginType.Image:
-    case EditorPluginType.Video:
-    case EditorPluginType.Highlight:
-    case EditorPluginType.Spoiler:
-    case EditorPluginType.Box:
-    case EditorPluginType.SerloTable:
-    case EditorPluginType.Equations:
-    case EditorPluginType.Geogebra:
-    case EditorPluginType.Injection:
-    case EditorPluginType.H5p:
-    case EditorPluginType.Multimedia:
-    case EditorPluginType.DropzoneImage:
-    case EditorPluginType.ImageGallery:
-      break
     default:
-      console.warn(`Unhandled plugin type: ${type}`)
-  }
-
-  return {
-    ...internationalizedStrings,
-    icon,
-    type,
-    initialState,
+      return {
+        // ? All plugins and the migration algorithm seem to be reliant on this
+        // structure. How could we remove the rows plugin from the initial state?
+        plugin: InternalEditorPluginType.Rows,
+        state: [{ plugin: type }],
+      }
   }
 }
 
