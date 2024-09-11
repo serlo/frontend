@@ -6,6 +6,7 @@ import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
+import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
@@ -15,6 +16,7 @@ import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -36,10 +38,12 @@ import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
+import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
+import { H5pPlugin } from '@/serlo-editor-integration/h5p'
 
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
@@ -70,6 +74,12 @@ export function createBasicPlugins(
           },
         ]
       : []),
+    {
+      type: EditorPluginType.Video,
+      plugin: videoPlugin,
+      visibleInSuggestions: true,
+      icon: <IconVideo />,
+    },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),
@@ -147,6 +157,11 @@ export function createBasicPlugins(
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
       icon: <IconTextArea />,
+    },
+    {
+      type: EditorPluginType.H5p,
+      plugin: H5pPlugin,
+      icon: <IconH5p />,
     },
     {
       type: EditorPluginType.ScMcExercise,
