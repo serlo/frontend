@@ -169,7 +169,7 @@ export const instanceData = {
         theorem: "Satz",
         proof: "Beweis"
       },
-      imageGalleryLightboxSrTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
+      imageGalleryLightboxSrTitle: "Modale Anzeige eines großen Bildes mit Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren",
       loadingVideoFailed: "Etwas ist schiefgelaufen",
       loadingAudioFailed: "Etwas ist schiefgelaufen"
     },
