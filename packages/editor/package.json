@@ -38,6 +38,7 @@
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
+    "test": "jest",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
