@@ -57,64 +57,49 @@ const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
 export const AllPlugins = {
-  [EditorElement.Text]: pluginFactory(EditorElement.Text, IconText),
-  [EditorElement.Multimedia]: pluginFactory(
-    EditorElement.Multimedia,
-    IconMultimedia
-  ),
-  [EditorElement.Video]: pluginFactory(EditorElement.Video, IconVideo),
-  [EditorElement.Box]: pluginFactory(EditorElement.Box, IconBox),
-  [EditorElement.Equations]: pluginFactory(
-    EditorElement.Equations,
-    IconEquation
-  ),
-  [EditorElement.Geogebra]: pluginFactory(EditorElement.Geogebra, IconGeogebra),
-  [EditorElement.H5p]: pluginFactory(EditorElement.H5p, IconH5p),
-  [EditorElement.Highlight]: pluginFactory(
-    EditorElement.Highlight,
-    IconHighlight
-  ),
-  [EditorElement.Image]: pluginFactory(EditorElement.Image, IconImage),
-  [EditorElement.ImageGallery]: pluginFactory(
+  [EditorElement.Text]: getInfo(EditorElement.Text, IconText),
+  [EditorElement.Multimedia]: getInfo(EditorElement.Multimedia, IconMultimedia),
+  [EditorElement.Video]: getInfo(EditorElement.Video, IconVideo),
+  [EditorElement.Box]: getInfo(EditorElement.Box, IconBox),
+  [EditorElement.Equations]: getInfo(EditorElement.Equations, IconEquation),
+  [EditorElement.Geogebra]: getInfo(EditorElement.Geogebra, IconGeogebra),
+  [EditorElement.H5p]: getInfo(EditorElement.H5p, IconH5p),
+  [EditorElement.Highlight]: getInfo(EditorElement.Highlight, IconHighlight),
+  [EditorElement.Image]: getInfo(EditorElement.Image, IconImage),
+  [EditorElement.ImageGallery]: getInfo(
     EditorElement.ImageGallery,
     IconImageGallery
   ),
-  [EditorElement.Injection]: pluginFactory(
-    EditorElement.Injection,
-    IconInjection
-  ),
-  [EditorElement.SerloTable]: pluginFactory(
-    EditorElement.SerloTable,
-    IconTable
-  ),
-  [EditorElement.Spoiler]: pluginFactory(EditorElement.Spoiler, IconSpoiler),
-  [EditorElement.DropzoneImage]: pluginFactory(
+  [EditorElement.Injection]: getInfo(EditorElement.Injection, IconInjection),
+  [EditorElement.SerloTable]: getInfo(EditorElement.SerloTable, IconTable),
+  [EditorElement.Spoiler]: getInfo(EditorElement.Spoiler, IconSpoiler),
+  [EditorElement.DropzoneImage]: getInfo(
     EditorElement.DropzoneImage,
     IconDropzones
   ),
-  [EditorElement.ScMcExercise]: pluginFactory(
+  [EditorElement.ScMcExercise]: getInfo(
     EditorElement.ScMcExercise,
     IconScMcExercise
   ),
-  [EditorElement.InputExercise]: pluginFactory(
+  [EditorElement.InputExercise]: getInfo(
     EditorElement.InputExercise,
     IconTextArea
   ),
-  [EditorElement.TextAreaExercise]: pluginFactory(
+  [EditorElement.TextAreaExercise]: getInfo(
     EditorElement.TextAreaExercise,
     IconTextArea
   ),
-  [EditorElement.BlanksExercise]: pluginFactory(
+  [EditorElement.BlanksExercise]: getInfo(
     EditorElement.BlanksExercise,
     IconBlanksTyping
   ),
-  [EditorElement.BlanksExerciseDragAndDrop]: pluginFactory(
+  [EditorElement.BlanksExerciseDragAndDrop]: getInfo(
     EditorElement.BlanksExerciseDragAndDrop,
     IconBlanksDragAndDrop
   ),
 }
 
-interface PluginInfo {
+interface ElementInfo {
   de: {
     name: string
     description: string
@@ -133,9 +118,9 @@ interface PluginState {
   state?: any
 }
 
-function pluginFactory(type: EditorElement, icon: string): PluginInfo {
+function getInfo(type: EditorElement, icon: string): ElementInfo {
   return {
-    ...getInternationalizedPluginStrings(type),
+    ...getInternationalizedStrings(type),
     icon,
     type,
     initialState: getInitialState(type),
@@ -174,17 +159,14 @@ function getInitialState(type: EditorElement): PluginState {
   }
 }
 
-function getInternationalizedPluginStrings(type: EditorElement) {
+function getInternationalizedStrings(type: EditorElement) {
   return {
-    de: getPluginNameAndDescription('de', type),
-    en: getPluginNameAndDescription('en', type),
+    de: getNameAndDescription('de', type),
+    en: getNameAndDescription('en', type),
   }
 }
 
-function getPluginNameAndDescription(
-  locale: 'de' | 'en',
-  pluginType: EditorElement
-) {
+function getNameAndDescription(locale: 'de' | 'en', pluginType: EditorElement) {
   const name =
     locale === 'de'
       ? germanPluginStrings[pluginType].title
