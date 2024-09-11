@@ -144,7 +144,7 @@ interface ElementInfo<E extends EducationalElement> {
 }
 
 interface PluginState {
-  plugin: InternalEditorPluginType
+  plugin: string
   state?: any
 }
 
@@ -201,30 +201,20 @@ function getInitialState(type: EducationalElement): PluginState {
       return getEditorState({ plugin: type })
 
     default:
-      return {
-        // ? All plugins and the migration algorithm seem to be reliant on this
-        // structure. How could we remove the rows plugin from the initial state?
-        plugin: InternalEditorPluginType.Rows,
-        state: [{ plugin: type }],
-      }
+      return { plugin: type }
   }
 }
 
 function getEditorState(interactive: unknown) {
   return {
-    plugin: InternalEditorPluginType.Rows,
-    state: [
-      {
-        plugin: InternalEditorPluginType.Exercise,
-        state: {
-          content: {
-            plugin: InternalEditorPluginType.Rows,
-            state: [{ plugin: InternalEditorPluginType.Text }],
-          },
-          interactive,
-        },
+    plugin: InternalEditorPluginType.Exercise,
+    state: {
+      content: {
+        plugin: InternalEditorPluginType.Rows,
+        state: [{ plugin: InternalEditorPluginType.Text }],
       },
-    ],
+      interactive,
+    },
   }
 }
 
