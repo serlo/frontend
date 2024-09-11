@@ -32,7 +32,8 @@ import { loggedInData as loggedInDataEn } from '@/data/en'
  * by a configuration). In this list they are represented as two separate elements.
  */
 export enum EducationalElement {
-  ScMcExercise = InternalEditorPluginType.ScMcExercise,
+  SingleChoiceExercise = 'singleChoiceExercise',
+  MultipleChoiceExercise = 'multipleChoiceExercise',
   InputExercise = InternalEditorPluginType.InputExercise,
   TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
   BlanksExercise = InternalEditorPluginType.BlanksExercise,
@@ -98,8 +99,12 @@ export const educationalElements: EducationalElements = {
     EducationalElement.DropzoneImage,
     IconDropzones
   ),
-  [EducationalElement.ScMcExercise]: getInfo(
-    EducationalElement.ScMcExercise,
+  [EducationalElement.SingleChoiceExercise]: getInfo(
+    EducationalElement.SingleChoiceExercise,
+    IconScMcExercise
+  ),
+  [EducationalElement.MultipleChoiceExercise]: getInfo(
+    EducationalElement.MultipleChoiceExercise,
     IconScMcExercise
   ),
   [EducationalElement.InputExercise]: getInfo(
@@ -157,7 +162,42 @@ function getInfo<E extends EducationalElement>(
 
 function getInitialState(type: EducationalElement): PluginState {
   switch (type) {
-    case EducationalElement.ScMcExercise:
+    case EducationalElement.SingleChoiceExercise:
+    case EducationalElement.MultipleChoiceExercise:
+      return {
+        plugin: InternalEditorPluginType.Rows,
+        state: [
+          {
+            plugin: InternalEditorPluginType.Exercise,
+            state: {
+              content: {
+                plugin: InternalEditorPluginType.Rows,
+                state: [{ plugin: InternalEditorPluginType.Text }],
+              },
+              interactive: {
+                plugin: InternalEditorPluginType.ScMcExercise,
+                state: {
+                  isSingleChoice:
+                    type === EducationalElement.SingleChoiceExercise,
+                  answers: [
+                    {
+                      content: { plugin: InternalEditorPluginType.Text },
+                      isCorrect: true,
+                      feedback: { plugin: InternalEditorPluginType.Text },
+                    },
+                    {
+                      content: { plugin: InternalEditorPluginType.Text },
+                      isCorrect: false,
+                      feedback: { plugin: InternalEditorPluginType.Text },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        ],
+      }
+
     case EducationalElement.InputExercise:
     case EducationalElement.TextAreaExercise:
     case EducationalElement.BlanksExercise:
