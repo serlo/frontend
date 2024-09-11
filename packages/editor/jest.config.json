@@ -1,7 +1,0 @@
-{
-  "transform": {
-    "^.+\\.tsx?$": "ts-jest"
-  },
-  "roots": ["<rootDir>/__tests__"],
-  "testEnvironment": "jsdom"
-}
