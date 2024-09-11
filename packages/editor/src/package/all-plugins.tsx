@@ -31,7 +31,7 @@ import { loggedInData as loggedInDataEn } from '@/data/en'
  * are both represented by the same plugin in the Serlo Editor (they only differ
  * by a configuration). In this list they are represented as two separate elements.
  */
-export enum EditorElement {
+export enum EducationalElement {
   ScMcExercise = InternalEditorPluginType.ScMcExercise,
   InputExercise = InternalEditorPluginType.InputExercise,
   TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
@@ -56,45 +56,66 @@ export enum EditorElement {
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
-export const AllPlugins = {
-  [EditorElement.Text]: getInfo(EditorElement.Text, IconText),
-  [EditorElement.Multimedia]: getInfo(EditorElement.Multimedia, IconMultimedia),
-  [EditorElement.Video]: getInfo(EditorElement.Video, IconVideo),
-  [EditorElement.Box]: getInfo(EditorElement.Box, IconBox),
-  [EditorElement.Equations]: getInfo(EditorElement.Equations, IconEquation),
-  [EditorElement.Geogebra]: getInfo(EditorElement.Geogebra, IconGeogebra),
-  [EditorElement.H5p]: getInfo(EditorElement.H5p, IconH5p),
-  [EditorElement.Highlight]: getInfo(EditorElement.Highlight, IconHighlight),
-  [EditorElement.Image]: getInfo(EditorElement.Image, IconImage),
-  [EditorElement.ImageGallery]: getInfo(
-    EditorElement.ImageGallery,
+export const EducationalElements: Record<EducationalElement, ElementInfo> = {
+  [EducationalElement.Text]: getInfo(EducationalElement.Text, IconText),
+  [EducationalElement.Multimedia]: getInfo(
+    EducationalElement.Multimedia,
+    IconMultimedia
+  ),
+  [EducationalElement.Video]: getInfo(EducationalElement.Video, IconVideo),
+  [EducationalElement.Box]: getInfo(EducationalElement.Box, IconBox),
+  [EducationalElement.Equations]: getInfo(
+    EducationalElement.Equations,
+    IconEquation
+  ),
+  [EducationalElement.Geogebra]: getInfo(
+    EducationalElement.Geogebra,
+    IconGeogebra
+  ),
+  [EducationalElement.H5p]: getInfo(EducationalElement.H5p, IconH5p),
+  [EducationalElement.Highlight]: getInfo(
+    EducationalElement.Highlight,
+    IconHighlight
+  ),
+  [EducationalElement.Image]: getInfo(EducationalElement.Image, IconImage),
+  [EducationalElement.ImageGallery]: getInfo(
+    EducationalElement.ImageGallery,
     IconImageGallery
   ),
-  [EditorElement.Injection]: getInfo(EditorElement.Injection, IconInjection),
-  [EditorElement.SerloTable]: getInfo(EditorElement.SerloTable, IconTable),
-  [EditorElement.Spoiler]: getInfo(EditorElement.Spoiler, IconSpoiler),
-  [EditorElement.DropzoneImage]: getInfo(
-    EditorElement.DropzoneImage,
+  [EducationalElement.Injection]: getInfo(
+    EducationalElement.Injection,
+    IconInjection
+  ),
+  [EducationalElement.SerloTable]: getInfo(
+    EducationalElement.SerloTable,
+    IconTable
+  ),
+  [EducationalElement.Spoiler]: getInfo(
+    EducationalElement.Spoiler,
+    IconSpoiler
+  ),
+  [EducationalElement.DropzoneImage]: getInfo(
+    EducationalElement.DropzoneImage,
     IconDropzones
   ),
-  [EditorElement.ScMcExercise]: getInfo(
-    EditorElement.ScMcExercise,
+  [EducationalElement.ScMcExercise]: getInfo(
+    EducationalElement.ScMcExercise,
     IconScMcExercise
   ),
-  [EditorElement.InputExercise]: getInfo(
-    EditorElement.InputExercise,
+  [EducationalElement.InputExercise]: getInfo(
+    EducationalElement.InputExercise,
     IconTextArea
   ),
-  [EditorElement.TextAreaExercise]: getInfo(
-    EditorElement.TextAreaExercise,
+  [EducationalElement.TextAreaExercise]: getInfo(
+    EducationalElement.TextAreaExercise,
     IconTextArea
   ),
-  [EditorElement.BlanksExercise]: getInfo(
-    EditorElement.BlanksExercise,
+  [EducationalElement.BlanksExercise]: getInfo(
+    EducationalElement.BlanksExercise,
     IconBlanksTyping
   ),
-  [EditorElement.BlanksExerciseDragAndDrop]: getInfo(
-    EditorElement.BlanksExerciseDragAndDrop,
+  [EducationalElement.BlanksExerciseDragAndDrop]: getInfo(
+    EducationalElement.BlanksExerciseDragAndDrop,
     IconBlanksDragAndDrop
   ),
 }
@@ -109,7 +130,7 @@ interface ElementInfo {
     description: string
   }
   icon: string
-  type: EditorElement
+  type: EducationalElement
   initialState: PluginState
 }
 
@@ -118,7 +139,7 @@ interface PluginState {
   state?: any
 }
 
-function getInfo(type: EditorElement, icon: string): ElementInfo {
+function getInfo(type: EducationalElement, icon: string): ElementInfo {
   return {
     ...getInternationalizedStrings(type),
     icon,
@@ -127,13 +148,13 @@ function getInfo(type: EditorElement, icon: string): ElementInfo {
   }
 }
 
-function getInitialState(type: EditorElement): PluginState {
+function getInitialState(type: EducationalElement): PluginState {
   switch (type) {
-    case EditorElement.ScMcExercise:
-    case EditorElement.InputExercise:
-    case EditorElement.TextAreaExercise:
-    case EditorElement.BlanksExercise:
-    case EditorElement.BlanksExerciseDragAndDrop:
+    case EducationalElement.ScMcExercise:
+    case EducationalElement.InputExercise:
+    case EducationalElement.TextAreaExercise:
+    case EducationalElement.BlanksExercise:
+    case EducationalElement.BlanksExerciseDragAndDrop:
       return {
         plugin: InternalEditorPluginType.Rows,
         state: [
@@ -159,14 +180,17 @@ function getInitialState(type: EditorElement): PluginState {
   }
 }
 
-function getInternationalizedStrings(type: EditorElement) {
+function getInternationalizedStrings(type: EducationalElement) {
   return {
     de: getNameAndDescription('de', type),
     en: getNameAndDescription('en', type),
   }
 }
 
-function getNameAndDescription(locale: 'de' | 'en', pluginType: EditorElement) {
+function getNameAndDescription(
+  locale: 'de' | 'en',
+  pluginType: EducationalElement
+) {
   const name =
     locale === 'de'
       ? germanPluginStrings[pluginType].title
