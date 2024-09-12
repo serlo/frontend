@@ -541,15 +541,6 @@ export interface CreateEntityRevisionNotificationEvent extends AbstractNotificat
   objectId: Scalars['Int']['output'];
 }
 
-export interface CreatePageInput {
-  content: Scalars['String']['input'];
-  discussionsEnabled: Scalars['Boolean']['input'];
-  forumId?: InputMaybe<Scalars['Int']['input']>;
-  instance: Instance;
-  licenseId: Scalars['Int']['input'];
-  title: Scalars['String']['input'];
-}
-
 export interface CreateTaxonomyLinkNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CreateTaxonomyLinkNotificationEvent';
   actor: User;
@@ -934,7 +925,6 @@ export interface Mutation {
   experiment: ExperimentMutation;
   notification: NotificationMutation;
   oauth: OauthMutation;
-  page: PageMutation;
   subscription: SubscriptionMutation;
   taxonomyTerm: TaxonomyTermMutation;
   thread: ThreadMutation;
@@ -1042,38 +1032,10 @@ export interface PageThreadsArgs {
   trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
-export interface PageAddRevisionInput {
-  content: Scalars['String']['input'];
-  pageId: Scalars['Int']['input'];
-  title: Scalars['String']['input'];
-}
-
 export interface PageInfo {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
-}
-
-export interface PageMutation {
-  __typename?: 'PageMutation';
-  addRevision: DefaultResponse;
-  checkoutRevision: DefaultResponse;
-  create: DefaultResponse;
-}
-
-
-export interface PageMutationAddRevisionArgs {
-  input: PageAddRevisionInput;
-}
-
-
-export interface PageMutationCheckoutRevisionArgs {
-  input: CheckoutRevisionInput;
-}
-
-
-export interface PageMutationCreateArgs {
-  input: CreatePageInput;
 }
 
 export interface PageQuery {
