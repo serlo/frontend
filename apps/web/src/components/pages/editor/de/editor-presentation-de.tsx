@@ -64,7 +64,7 @@ export function EditorPresentationDe() {
                 Intuitive Erstellung von digitalen Lernressourcen
               </h2>
               <p className="mt-4">
-                Mit dem Serlo Editor kannst du, als Lehrkräft,{' '}
+                Mit dem Serlo Editor kannst Du, als Lehrkräft,{' '}
                 <b className="tracking-tight">
                   multimediale und interaktive digitale Lernmaterialien
                 </b>{' '}
