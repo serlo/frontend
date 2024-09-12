@@ -65,36 +65,18 @@ export const pluginMenu: PluginMenu = {
   ),
   [PluginMenuItem.Video]: getInfo(PluginMenuItem.Video, IconVideo),
   [PluginMenuItem.Box]: getInfo(PluginMenuItem.Box, IconBox),
-  [PluginMenuItem.Equations]: getInfo(
-    PluginMenuItem.Equations,
-    IconEquation
-  ),
-  [PluginMenuItem.Geogebra]: getInfo(
-    PluginMenuItem.Geogebra,
-    IconGeogebra
-  ),
+  [PluginMenuItem.Equations]: getInfo(PluginMenuItem.Equations, IconEquation),
+  [PluginMenuItem.Geogebra]: getInfo(PluginMenuItem.Geogebra, IconGeogebra),
   [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
-  [PluginMenuItem.Highlight]: getInfo(
-    PluginMenuItem.Highlight,
-    IconHighlight
-  ),
+  [PluginMenuItem.Highlight]: getInfo(PluginMenuItem.Highlight, IconHighlight),
   [PluginMenuItem.Image]: getInfo(PluginMenuItem.Image, IconImage),
   [PluginMenuItem.ImageGallery]: getInfo(
     PluginMenuItem.ImageGallery,
     IconImageGallery
   ),
-  [PluginMenuItem.Injection]: getInfo(
-    PluginMenuItem.Injection,
-    IconInjection
-  ),
-  [PluginMenuItem.SerloTable]: getInfo(
-    PluginMenuItem.SerloTable,
-    IconTable
-  ),
-  [PluginMenuItem.Spoiler]: getInfo(
-    PluginMenuItem.Spoiler,
-    IconSpoiler
-  ),
+  [PluginMenuItem.Injection]: getInfo(PluginMenuItem.Injection, IconInjection),
+  [PluginMenuItem.SerloTable]: getInfo(PluginMenuItem.SerloTable, IconTable),
+  [PluginMenuItem.Spoiler]: getInfo(PluginMenuItem.Spoiler, IconSpoiler),
   [PluginMenuItem.DropzoneImage]: getInfo(
     PluginMenuItem.DropzoneImage,
     IconDropzones
