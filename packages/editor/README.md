@@ -107,12 +107,12 @@ See below for the current API specification.
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
 
-### `AllPlugins` constant
+### `plugins` constant and `Plugin` enum
 
-Exports a record with following structure which you can use to create your own plugin menu for integrating the Serlo Editor.
+Exports a record with following structure which you can use to create your own plugin menu. This is useful when you for example want to integrate the Serlo Editor as a block / part of another editor.
 
 ```TypeScript
-[key: EditorPluginType]: {
+[key: Plugin]: {
   de: {
     name: string
     description: string
@@ -122,12 +122,12 @@ Exports a record with following structure which you can use to create your own p
     description: string
   }
   icon: string
-  type: EditorPluginType
+  type: Plugin
   initialState: PluginState
 }
 ```
 
-You can iterate over this structure by using `Object.values(AllPlugins)` to get them as an array, which you can use to sort, filter and modify to your liking.
+You can iterate over this structure by using `Object.values(plugins)` to get them as an array, which you can use to sort, filter and modify to your liking. Alternatively you can access an entry as for example `plugins[Plugin.SingleChoiceExercise]`.
 
 ## Releasing a new version to npm
 
