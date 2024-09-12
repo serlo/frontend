@@ -5992,7 +5992,6 @@ __metadata:
     "@serlo/eslint-config": "workspace:*"
     "@serlo/typescript-config": "workspace:*"
     cross-env: ^7.0.3
-    default-import: ^2.0.1
     dotenv-cli: ^7.4.1
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.5.0
@@ -9503,13 +9502,6 @@ __metadata:
   version: 4.3.1
   resolution: "deepmerge@npm:4.3.1"
   checksum: 2024c6a980a1b7128084170c4cf56b0fd58a63f2da1660dcfe977415f27b17dbe5888668b59d0b063753f3220719d5e400b7f113609489c90160bb9a5518d052
-  languageName: node
-  linkType: hard
-
-"default-import@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "default-import@npm:2.0.1"
-  checksum: ec84a3c3b43517233be151216453dc0f48e0f640813e7f16d213b897cf2feb7795b8886e99877da44ad70d7bd6e176bc073f8513af2b3448440c70ea92a22098
   languageName: node
   linkType: hard
 
