@@ -11,10 +11,14 @@
     "moduleResolution": "bundler"
   },
   "include": [
+    "./package.json",
     "./custom.d.ts",
     "./global.ts",
     "src/**/*.ts",
+    "src/**/*.d.ts",
     "src/**/*.tsx",
+    "__tests__/**/*.ts",
+    "__tests__/**/*.tsx",
     "../../apps/web/src/data/old_comment_ids.json",
     "../../apps/web/**/*ts",
     "../../apps/web/**/*tsx"
