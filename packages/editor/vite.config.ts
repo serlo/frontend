@@ -101,4 +101,10 @@ export default defineConfig({
       },
     }),
   ],
+  define: {
+    // Replaces the __EDITOR_VERSION__ variable in the code with the
+    // version from package.json at build time. So the package.json is not
+    // bundled in the final build an thus the bundle size smaller.
+    __EDITOR_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
 })
