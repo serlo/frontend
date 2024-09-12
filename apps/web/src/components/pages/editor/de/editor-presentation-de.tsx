@@ -1,4 +1,5 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import dynamic from 'next/dynamic'
 
 import { EditorContact } from '../editor-contact'
@@ -13,6 +14,7 @@ import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 
 const EducationPlugins = dynamic(() =>
   import('../education-plugins').then((mod) => mod.EducationPlugins)
@@ -62,7 +64,7 @@ export function EditorPresentationDe() {
                 Intuitive Erstellung von digitalen Lernressourcen
               </h2>
               <p className="mt-4">
-                Mit dem Serlo Editor können Lehrkräfte{' '}
+                Mit dem Serlo Editor kannst du, als Lehrkräft,{' '}
                 <b className="tracking-tight">
                   multimediale und interaktive digitale Lernmaterialien
                 </b>{' '}
@@ -76,6 +78,15 @@ export function EditorPresentationDe() {
                 kann unser <b className="tracking-tight">Open Source</b> Serlo
                 Editor an dein LMS angepasst werden.
               </p>
+            </div>
+            <div className="-mx-side mt-8 pl-2 sm:max-w-[32rem] sm:flex-1">
+              <VideoSerloStaticRenderer
+                plugin={EditorPluginType.Video}
+                state={{
+                  src: 'https://www.youtube.com/watch?v=wjaPgGdw23w',
+                  alt: 'Video introducing the Serlo Editor',
+                }}
+              />
             </div>
           </div>
         </section>
