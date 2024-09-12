@@ -31,7 +31,7 @@ import { loggedInData as loggedInDataEn } from '@/data/en'
  * are both represented by the same plugin in the Serlo Editor (they only differ
  * by a configuration). In this list they are represented as two separate elements.
  */
-export enum EducationalElement {
+export enum PluginMenuItem {
   SingleChoiceExercise = 'singleChoiceExercise',
   MultipleChoiceExercise = 'multipleChoiceExercise',
   InputExercise = InternalEditorPluginType.InputExercise,
@@ -57,79 +57,79 @@ export enum EducationalElement {
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
-export const educationalElements: EducationalElements = {
-  [EducationalElement.Text]: getInfo(EducationalElement.Text, IconText),
-  [EducationalElement.Multimedia]: getInfo(
-    EducationalElement.Multimedia,
+export const pluginMenu: PluginMenu = {
+  [PluginMenuItem.Text]: getInfo(PluginMenuItem.Text, IconText),
+  [PluginMenuItem.Multimedia]: getInfo(
+    PluginMenuItem.Multimedia,
     IconMultimedia
   ),
-  [EducationalElement.Video]: getInfo(EducationalElement.Video, IconVideo),
-  [EducationalElement.Box]: getInfo(EducationalElement.Box, IconBox),
-  [EducationalElement.Equations]: getInfo(
-    EducationalElement.Equations,
+  [PluginMenuItem.Video]: getInfo(PluginMenuItem.Video, IconVideo),
+  [PluginMenuItem.Box]: getInfo(PluginMenuItem.Box, IconBox),
+  [PluginMenuItem.Equations]: getInfo(
+    PluginMenuItem.Equations,
     IconEquation
   ),
-  [EducationalElement.Geogebra]: getInfo(
-    EducationalElement.Geogebra,
+  [PluginMenuItem.Geogebra]: getInfo(
+    PluginMenuItem.Geogebra,
     IconGeogebra
   ),
-  [EducationalElement.H5p]: getInfo(EducationalElement.H5p, IconH5p),
-  [EducationalElement.Highlight]: getInfo(
-    EducationalElement.Highlight,
+  [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
+  [PluginMenuItem.Highlight]: getInfo(
+    PluginMenuItem.Highlight,
     IconHighlight
   ),
-  [EducationalElement.Image]: getInfo(EducationalElement.Image, IconImage),
-  [EducationalElement.ImageGallery]: getInfo(
-    EducationalElement.ImageGallery,
+  [PluginMenuItem.Image]: getInfo(PluginMenuItem.Image, IconImage),
+  [PluginMenuItem.ImageGallery]: getInfo(
+    PluginMenuItem.ImageGallery,
     IconImageGallery
   ),
-  [EducationalElement.Injection]: getInfo(
-    EducationalElement.Injection,
+  [PluginMenuItem.Injection]: getInfo(
+    PluginMenuItem.Injection,
     IconInjection
   ),
-  [EducationalElement.SerloTable]: getInfo(
-    EducationalElement.SerloTable,
+  [PluginMenuItem.SerloTable]: getInfo(
+    PluginMenuItem.SerloTable,
     IconTable
   ),
-  [EducationalElement.Spoiler]: getInfo(
-    EducationalElement.Spoiler,
+  [PluginMenuItem.Spoiler]: getInfo(
+    PluginMenuItem.Spoiler,
     IconSpoiler
   ),
-  [EducationalElement.DropzoneImage]: getInfo(
-    EducationalElement.DropzoneImage,
+  [PluginMenuItem.DropzoneImage]: getInfo(
+    PluginMenuItem.DropzoneImage,
     IconDropzones
   ),
-  [EducationalElement.SingleChoiceExercise]: getInfo(
-    EducationalElement.SingleChoiceExercise,
+  [PluginMenuItem.SingleChoiceExercise]: getInfo(
+    PluginMenuItem.SingleChoiceExercise,
     IconScMcExercise
   ),
-  [EducationalElement.MultipleChoiceExercise]: getInfo(
-    EducationalElement.MultipleChoiceExercise,
+  [PluginMenuItem.MultipleChoiceExercise]: getInfo(
+    PluginMenuItem.MultipleChoiceExercise,
     IconScMcExercise
   ),
-  [EducationalElement.InputExercise]: getInfo(
-    EducationalElement.InputExercise,
+  [PluginMenuItem.InputExercise]: getInfo(
+    PluginMenuItem.InputExercise,
     IconTextArea
   ),
-  [EducationalElement.TextAreaExercise]: getInfo(
-    EducationalElement.TextAreaExercise,
+  [PluginMenuItem.TextAreaExercise]: getInfo(
+    PluginMenuItem.TextAreaExercise,
     IconTextArea
   ),
-  [EducationalElement.BlanksExercise]: getInfo(
-    EducationalElement.BlanksExercise,
+  [PluginMenuItem.BlanksExercise]: getInfo(
+    PluginMenuItem.BlanksExercise,
     IconBlanksTyping
   ),
-  [EducationalElement.BlanksExerciseDragAndDrop]: getInfo(
-    EducationalElement.BlanksExerciseDragAndDrop,
+  [PluginMenuItem.BlanksExerciseDragAndDrop]: getInfo(
+    PluginMenuItem.BlanksExerciseDragAndDrop,
     IconBlanksDragAndDrop
   ),
 }
 
-type EducationalElements = {
-  [E in EducationalElement]: ElementInfo<E>
+type PluginMenu = {
+  [E in PluginMenuItem]: PluginMenuItemInfo<E>
 }
 
-interface ElementInfo<E extends EducationalElement> {
+interface PluginMenuItemInfo<E extends PluginMenuItem> {
   type: E
   de: {
     name: string
@@ -148,10 +148,10 @@ interface PluginState {
   state?: any
 }
 
-function getInfo<E extends EducationalElement>(
+function getInfo<E extends PluginMenuItem>(
   type: E,
   icon: string
-): ElementInfo<E> {
+): PluginMenuItemInfo<E> {
   return {
     ...getInternationalizedStrings(type),
     icon,
@@ -160,27 +160,27 @@ function getInfo<E extends EducationalElement>(
   }
 }
 
-function getInitialState(type: EducationalElement): PluginState {
+function getInitialState(type: PluginMenuItem): PluginState {
   switch (type) {
-    case EducationalElement.BlanksExerciseDragAndDrop:
-    case EducationalElement.BlanksExercise:
+    case PluginMenuItem.BlanksExerciseDragAndDrop:
+    case PluginMenuItem.BlanksExercise:
       return getEditorState({
         plugin: InternalEditorPluginType.BlanksExercise,
         state: {
           text: { plugin: InternalEditorPluginType.Text },
           mode:
-            type === EducationalElement.BlanksExerciseDragAndDrop
+            type === PluginMenuItem.BlanksExerciseDragAndDrop
               ? 'drag-and-drop'
               : 'typing',
         },
       })
 
-    case EducationalElement.SingleChoiceExercise:
-    case EducationalElement.MultipleChoiceExercise:
+    case PluginMenuItem.SingleChoiceExercise:
+    case PluginMenuItem.MultipleChoiceExercise:
       return getEditorState({
         plugin: InternalEditorPluginType.ScMcExercise,
         state: {
-          isSingleChoice: type === EducationalElement.SingleChoiceExercise,
+          isSingleChoice: type === PluginMenuItem.SingleChoiceExercise,
           answers: [
             {
               content: { plugin: InternalEditorPluginType.Text },
@@ -196,8 +196,8 @@ function getInitialState(type: EducationalElement): PluginState {
         },
       })
 
-    case EducationalElement.InputExercise:
-    case EducationalElement.TextAreaExercise:
+    case PluginMenuItem.InputExercise:
+    case PluginMenuItem.TextAreaExercise:
       return getEditorState({ plugin: type })
 
     default:
@@ -218,9 +218,9 @@ function getEditorState(interactive: unknown) {
   }
 }
 
-function getInternationalizedStrings(type: EducationalElement) {
+function getInternationalizedStrings(type: PluginMenuItem) {
   switch (type) {
-    case EducationalElement.SingleChoiceExercise:
+    case PluginMenuItem.SingleChoiceExercise:
       return {
         de: {
           name: 'Single-Choice-Aufgabe',
@@ -231,7 +231,7 @@ function getInternationalizedStrings(type: EducationalElement) {
           description: 'A question with a selection of answer options.',
         },
       }
-    case EducationalElement.MultipleChoiceExercise:
+    case PluginMenuItem.MultipleChoiceExercise:
       return {
         de: {
           name: 'Multiple-Choice-Aufgabe',
