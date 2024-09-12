@@ -23,10 +23,10 @@ const EditorVariantType = t.union([
 
 export type EditorVariant = t.TypeOf<typeof EditorVariantType>
 
-const EditorStateType = t.type({
-  plugin: t.string,
-  state: t.unknown,
-})
+const EditorStateType = t.intersection([
+  t.type({ plugin: t.string }),
+  t.partial({ state: t.unknown }),
+])
 
 type EditorState = t.TypeOf<typeof EditorStateType>
 

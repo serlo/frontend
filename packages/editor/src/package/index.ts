@@ -2,7 +2,7 @@ export { SerloEditor, type SerloEditorProps } from './editor'
 export { SerloRenderer, type SerloRendererProps } from './serlo-renderer'
 
 export type { BaseEditor } from '@editor/core'
-export { educationalElements } from './educational-elements'
+export { EducationalElement, educationalElements } from './educational-elements'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
