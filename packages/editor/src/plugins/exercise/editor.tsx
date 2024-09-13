@@ -30,12 +30,9 @@ export function ExerciseEditor(props: ExerciseProps) {
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const editorStrings = useEditorStrings()
 
-  const interactiveExerciseTypes = interactivePluginTypes.filter((type) =>
-    editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
-  )
-  const interactiveExerciseMenuItems = interactiveExerciseTypes.map((type) =>
-    createOption(type, editorStrings.plugins)
-  )
+  const interactivePluginOptions = interactivePluginTypes
+    .filter((type) => editorPlugins.isSupported(type))
+    .map((type) => createOption(type, editorStrings.plugins))
 
   const templateStrings = useEditorStrings().templatePlugins
   const exTemplateStrings = templateStrings.exercise
@@ -58,7 +55,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       {focused ? (
         <ExerciseToolbar
           {...props}
-          interactiveExerciseTypes={interactiveExerciseTypes}
+          interactivePluginOptions={interactivePluginOptions}
         />
       ) : (
         <button
@@ -94,12 +91,12 @@ export function ExerciseEditor(props: ExerciseProps) {
               {exTemplateStrings.addOptionalInteractiveEx}
             </p>
             <div className="flex items-start">
-              {interactiveExerciseMenuItems.map(
-                ({ pluginType, title, icon, description }, index) => {
+              {interactivePluginOptions.map(
+                ({ pluginType, title, icon, description }, index, arr) => {
                   const tooltipClassName =
                     index === 0
                       ? 'left-0'
-                      : index + 1 < interactiveExerciseMenuItems.length
+                      : index + 1 < arr.length
                         ? '-left-24'
                         : 'right-0'
                   return (
