@@ -37,7 +37,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     onClickPlusButton,
     onClickEditAnswerButton,
   } = props
-  const name = answerZone.name.get()
+  const name = answerZone.name.value
 
   const context = useContext(AnswerZonesContext)
   const { dropzoneVisibility } = context || {}
@@ -67,7 +67,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       style={positionState}
       onClick={onClick}
-      data-qa={`answer-zone-${answerZone.id.get()}`}
+      data-qa={`answer-zone-${answerZone.id.value}`}
     >
       <div className="relative z-20">
         <ResizableBox {...resizableBoxProps}>
@@ -87,7 +87,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
             {answerZone.answers.length === 0 ? (
               <AnswerZoneEmpty
-                answerZoneId={answerZone.id.get()}
+                answerZoneId={answerZone.id.value}
                 onClickSettingsButton={onClickSettingsButton}
                 onClickPlusButton={onClickPlusButton}
               />
@@ -109,7 +109,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
             {answerZone.answers.length > 0 ? (
               <AnswerZoneSidebar
-                answerZoneId={answerZone.id.get()}
+                answerZoneId={answerZone.id.value}
                 onClickSettingsButton={onClickSettingsButton}
                 onClickPlusButton={onClickPlusButton}
               />

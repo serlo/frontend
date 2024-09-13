@@ -16,9 +16,6 @@ export function child<K extends string, S = unknown>(
   return {
     init(id, onChange) {
       return {
-        get() {
-          return id
-        },
         id,
         render: function Child(props: PluginProps = {}) {
           const pluginProps = {
@@ -67,7 +64,6 @@ export type ChildStateType<K extends string = string, S = unknown> = StateType<
   { plugin: K; state?: S; id?: string },
   string,
   {
-    get(): string
     id: string
     render: (props?: PluginProps) => React.ReactElement
     replace: (plugin: K, state?: S, id?: string) => void

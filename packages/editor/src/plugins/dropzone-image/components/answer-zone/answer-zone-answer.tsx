@@ -25,8 +25,8 @@ export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
-  const answerImageUrl = getAnswerZoneImageSrc(answer.image.get())
-  const answerText = getAnswerZoneText(answer.text.get())
+  const answerImageUrl = getAnswerZoneImageSrc(answer.image.id)
+  const answerText = getAnswerZoneText(answer.text.id)
 
   return (
     <div
@@ -55,7 +55,7 @@ export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
           />
         </button>
         <button
-          data-qa={`answer-zone-${answer.id.get()}-remove-answer-button`}
+          data-qa={`answer-zone-${answer.id.value}-remove-answer-button`}
           onClick={onRemoveAnswer}
           className="serlo-button-editor-secondary serlo-tooltip-trigger z-10 mx-1 h-6 w-6 p-0"
         >

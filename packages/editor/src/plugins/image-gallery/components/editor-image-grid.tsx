@@ -23,7 +23,7 @@ export function EditorImageGrid({
   onImageClick,
   onRemoveImageButtonClick,
 }: EditorImageGridProps) {
-  const imageIds = state.images.map(({ imagePlugin }) => imagePlugin.get())
+  const imageIds = state.images.map(({ imagePlugin }) => imagePlugin.id)
   const imageDocuments = useAppSelector((state) =>
     selectStaticDocuments(state, imageIds)
   )

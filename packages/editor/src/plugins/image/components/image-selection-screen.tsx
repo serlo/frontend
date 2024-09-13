@@ -34,7 +34,7 @@ export function ImageSelectionScreen({
       ? imageStrings.placeholderUploading
       : imageStrings.placeholderFailed
 
-  const imageUrl = src.get() as string
+  const imageUrl = src.value as string
   const showErrorMessage = imageUrl.length > 5 && !isImageUrl(imageUrl)
 
   const onSelectPixabayImage = (imageUrl: string) => {
