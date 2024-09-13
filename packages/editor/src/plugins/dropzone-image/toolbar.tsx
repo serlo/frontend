@@ -1,5 +1,4 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import type { ImageProps } from '@editor/plugins/image'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +8,7 @@ import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-co
 import { ReactNode, useState } from 'react'
 
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
+import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { cn } from '@/helper/cn'
 
 interface DropzoneImageToolbarProps {
@@ -32,8 +32,6 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
-  const pluginControls = <PluginDefaultTools pluginId={id} />
-
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
@@ -43,7 +41,7 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
           {children}
         </>
       }
-      pluginControls={pluginControls}
+      pluginControls={<InteractiveToolbarTools id={id} />}
     />
   )
 
