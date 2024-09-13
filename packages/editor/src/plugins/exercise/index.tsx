@@ -10,19 +10,12 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { ExerciseEditor } from './editor'
+import { InteractivePluginType } from './interactive-plugin-types'
 
 const exerciseState = object({
   content: child({ plugin: EditorPluginType.Rows }),
   interactive: optional(
-    child<
-      | EditorPluginType.ScMcExercise
-      | EditorPluginType.InputExercise
-      | EditorPluginType.TextAreaExercise
-      | EditorPluginType.H5p
-      | EditorPluginType.BlanksExercise
-      | EditorPluginType.BlanksExerciseDragAndDrop
-      | EditorPluginType.DropzoneImage
-    >({
+    child<InteractivePluginType>({
       plugin: EditorPluginType.ScMcExercise,
     })
   ),

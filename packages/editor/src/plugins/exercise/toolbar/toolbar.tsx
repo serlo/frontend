@@ -7,14 +7,14 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ExerciseProps } from '..'
-import type { InteractiveExerciseType } from '../editor'
+import { InteractivePluginType } from '../interactive-plugin-types'
 
 export const ExerciseToolbar = ({
   id,
   state,
   interactiveExerciseTypes,
 }: ExerciseProps & {
-  interactiveExerciseTypes: InteractiveExerciseType[]
+  interactiveExerciseTypes: InteractivePluginType[]
 }) => {
   const { interactive } = state
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
@@ -30,7 +30,7 @@ export const ExerciseToolbar = ({
       value={currentlySelected ?? ''}
       changeValue={(value) => {
         if (interactive.defined)
-          interactive.replace(value as InteractiveExerciseType)
+          interactive.replace(value as InteractivePluginType)
       }}
       options={interactiveExerciseTypes.map((type) => ({
         value: type,

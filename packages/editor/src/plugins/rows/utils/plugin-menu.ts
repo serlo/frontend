@@ -1,4 +1,8 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import {
+  type InteractivePluginType,
+  interactivePluginTypes,
+} from '@editor/plugins/exercise/interactive-plugin-types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
@@ -54,16 +58,6 @@ export function filterOptions(option: PluginMenuItemType[], text: string) {
   )
 }
 
-const interactivePluginTypes = new Set([
-  EditorPluginType.TextAreaExercise,
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.BlanksExercise,
-  EditorPluginType.BlanksExerciseDragAndDrop,
-  EditorPluginType.InputExercise,
-  EditorPluginType.DropzoneImage,
-])
-
 export function isInteractivePluginType(pluginType: EditorPluginType) {
-  return interactivePluginTypes.has(pluginType)
+  return interactivePluginTypes.includes(pluginType as InteractivePluginType)
 }

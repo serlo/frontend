@@ -1,30 +1,22 @@
 import { AddButton } from '@editor/editor-ui'
+import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useContext } from 'react'
 
-import type { ExerciseProps } from '.'
+import { type ExerciseProps } from '.'
+import {
+  type InteractivePluginType,
+  interactivePluginTypes,
+} from './interactive-plugin-types'
 import { ExerciseToolbar } from './toolbar/toolbar'
+import { createOption } from '../rows/utils/plugin-menu'
 import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
 import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
-
-const allInteractiveExerciseTypes = [
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.TextAreaExercise,
-  EditorPluginType.BlanksExercise,
-  EditorPluginType.BlanksExerciseDragAndDrop,
-  EditorPluginType.DropzoneImage,
-] as const
-
-export type InteractiveExerciseType =
-  (typeof allInteractiveExerciseTypes)[number]
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused } = props
@@ -36,9 +28,13 @@ export function ExerciseEditor(props: ExerciseProps) {
     hideInteractiveInitially,
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
+  const editorStrings = useEditorStrings()
 
-  const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
+  const interactiveExerciseTypes = interactivePluginTypes.filter((type) =>
     editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
+  )
+  const interactiveExerciseMenuItems = interactiveExerciseTypes.map((type) =>
+    createOption(type, editorStrings.plugins)
   )
 
   const templateStrings = useEditorStrings().templatePlugins
@@ -97,19 +93,36 @@ export function ExerciseEditor(props: ExerciseProps) {
             <p className="mb-2 text-gray-400">
               {exTemplateStrings.addOptionalInteractiveEx}
             </p>
-            <div className="-ml-1.5 flex">
-              {interactiveExerciseTypes.map((type) => {
-                return (
-                  <AddButton
-                    key={type}
-                    onClick={() => interactive.create({ plugin: type })}
-                    secondary
-                    dataQa={`add-exercise-${type}`}
-                  >
-                    {exTemplateStrings[type]}
-                  </AddButton>
-                )
-              })}
+            <div className="flex items-start">
+              {interactiveExerciseMenuItems.map(
+                ({ pluginType, title, icon, description }, index) => {
+                  const tooltipClassName =
+                    index === 0
+                      ? 'left-0'
+                      : index + 1 < interactiveExerciseMenuItems.length
+                        ? '-left-24'
+                        : 'right-0'
+                  return (
+                    <button
+                      key={title}
+                      data-qa={`add-exercise-${pluginType}`}
+                      onClick={() =>
+                        interactive.create({
+                          plugin: pluginType as InteractivePluginType,
+                        })
+                      }
+                      className="serlo-tooltip-trigger w-full rounded-md p-1 hover:shadow-xl focus:shadow-xl"
+                    >
+                      <EditorTooltip
+                        className={tooltipClassName}
+                        text={description}
+                      />
+                      {icon || <IconFallback />}
+                      <b className="mt-2 block text-sm">{title}</b>
+                    </button>
+                  )
+                }
+              )}
             </div>
           </>
         )}
