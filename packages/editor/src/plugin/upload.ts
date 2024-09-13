@@ -50,7 +50,6 @@ export type UploadStateType<T> = StateType<
 >
 
 export interface UploadStateReturnType<T> {
-  get(): FileState<T>
   value: FileState<T>
   isPending: boolean
   upload(file: File, handler: UploadHandler<T>): Promise<T>

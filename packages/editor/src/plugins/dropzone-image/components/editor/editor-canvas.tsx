@@ -18,8 +18,8 @@ interface EditorCanvasProps {
 export function EditorCanvas(props: EditorCanvasProps) {
   const { state, setModalType } = props
   const { answerZones, backgroundImage, canvasDimensions } = state
-  const canvasWidth = canvasDimensions.width.get()
-  const canvasHeight = canvasDimensions.height.get()
+  const canvasWidth = canvasDimensions.width.value
+  const canvasHeight = canvasDimensions.height.value
 
   const context = useContext(AnswerZonesContext)
 
@@ -28,7 +28,7 @@ export function EditorCanvas(props: EditorCanvasProps) {
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
         store.getState(),
-        backgroundImage.get()
+        backgroundImage.id
       ) as EditorImageDocument)
     : null
   const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
@@ -73,8 +73,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
         const change = monitor.getDifferenceFromInitialOffset()
         if (!change) return
 
-        const width = answerZone.layout.width.get()
-        const currentAbsoluteLeft = canvasWidth * answerZone.position.left.get()
+        const width = answerZone.layout.width.value
+        const currentAbsoluteLeft = canvasWidth * answerZone.position.left.value
         const newAbsoluteLeft = currentAbsoluteLeft + change.x
         const left = getPercentageRounded(canvasWidth, newAbsoluteLeft)
         const right = left + width
@@ -85,8 +85,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
         // Otherwise, position horizontally exactly as dropped
         else answerZone.position.left.set(left)
 
-        const height = answerZone.layout.height.get()
-        const currentAbsoluteTop = canvasHeight * answerZone.position.top.get()
+        const height = answerZone.layout.height.value
+        const currentAbsoluteTop = canvasHeight * answerZone.position.top.value
         const newAbsoluteTop = currentAbsoluteTop + change.y
         const top = getPercentageRounded(canvasHeight, newAbsoluteTop)
         const bottom = top + height
@@ -116,7 +116,7 @@ export function EditorCanvas(props: EditorCanvasProps) {
       data-qa="plugin-dropzone-image-editor-canvas"
     >
       {answerZones?.map((answerZone, index) => {
-        const id = answerZone.id.get()
+        const id = answerZone.id.value
         return (
           <AnswerZone
             key={index}

@@ -56,9 +56,6 @@ export function serializedScalar<S, T>(
         public set value(param: T) {
           this.set(param)
         }
-        public get() {
-          return state
-        }
         public set(
           param: T | ((previousValue: T) => T),
           reverse?: (previousValue: T) => T
@@ -93,7 +90,6 @@ export type SerializedScalarStateType<S, T> = StateType<
   T,
   {
     value: T
-    get(): T
     set(
       value: T | ((currentValue: T) => T),
       reverse?: (previousValue: T) => T
@@ -122,9 +118,6 @@ export function asyncScalar<T, Temp>(
     init(state, onChange) {
       return {
         value: state,
-        get() {
-          return state
-        },
         set(initial, executor) {
           onChange(
             (previousState) => {
@@ -187,7 +180,6 @@ export type AsyncScalarStateType<T, Temp> = StateType<
   T | Temp,
   {
     value: T | Temp
-    get(): T | Temp
     set(
       initial: T | Temp | ((previousValue: T | Temp) => T | Temp),
       executor?: StateExecutor<

@@ -55,7 +55,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   const backgroundImagePluginState = useAppSelector((state) =>
     selectDocument(
       state,
-      isBackgroundImagePluginDefined ? backgroundImage.get() : null
+      isBackgroundImagePluginDefined ? backgroundImage.id : null
     )
   ) as EditorImageDocument
   const backgroundImageUrlFromPlugin =
@@ -71,13 +71,13 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     duplicateAnswerZone,
   } = useAnswerZones(answerZones)
 
-  const backgroundType = state.backgroundType.get()
+  const backgroundType = state.backgroundType.value
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
   const isBackgroundTypeImage = backgroundType === BackgroundType.Image
 
   if (backgroundType === '') return <BackgroundTypeSelect {...props} />
 
-  const canvasShape = state.canvasShape.get() as BackgroundShape
+  const canvasShape = state.canvasShape.value as BackgroundShape
 
   if (!canvasShape && isBackgroundTypeBlank) {
     return <BackgroundShapeSelect {...props} />
@@ -101,7 +101,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         currentAnswerType,
         selectAnswerZone,
         selectCurrentAnswer,
-        dropzoneVisibility: dropzoneVisibility.get() as DropzoneVisibility,
+        dropzoneVisibility: dropzoneVisibility.value as DropzoneVisibility,
         extraDraggableAnswers,
       }}
     >
@@ -110,7 +110,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
           id={id}
           showSettingsButton={isBackgroundTypeImage}
           backgroundImageState={{
-            id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
+            id: isBackgroundImagePluginDefined ? backgroundImage.id : null,
             state: backgroundImagePluginState?.state as unknown as
               | ImageProps['state']
               | undefined,
