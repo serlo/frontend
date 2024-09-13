@@ -61,7 +61,6 @@ const interactivePluginTypes = new Set([
   EditorPluginType.BlanksExercise,
   EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.InputExercise,
-  EditorPluginType.Solution,
   EditorPluginType.DropzoneImage,
 ])
 
