@@ -1,13 +1,13 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 export const interactivePluginTypes = [
-  EditorPluginType.TextAreaExercise,
   EditorPluginType.ScMcExercise,
-  EditorPluginType.H5p,
+  EditorPluginType.InputExercise,
   EditorPluginType.BlanksExercise,
   EditorPluginType.BlanksExerciseDragAndDrop,
-  EditorPluginType.InputExercise,
   EditorPluginType.DropzoneImage,
+  EditorPluginType.TextAreaExercise,
+  EditorPluginType.H5p,
 ] as const
 
 export type InteractivePluginType = (typeof interactivePluginTypes)[number]
