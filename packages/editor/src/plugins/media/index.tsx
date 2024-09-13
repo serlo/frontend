@@ -54,6 +54,8 @@ function MediaPlugin(props: MediaProps) {
   }
 }
 
+// ### Resolver types
+
 const embeddingResolver: ResourceResolver = {
   [Hosting.CDN]: (resource) => {
     return {
@@ -68,18 +70,15 @@ type ResourceResolver = {
   [H in Hosting]: (resource: Resource<H>) => EmbeddingType<H>
 }
 
-interface ResourceTypes {
-  [Hosting.CDN]: CreateResourceType<
-    Hosting.CDN,
-    { embeddingType: Embedding; contentUrl: string }
-  >
+interface ResourceTypeAdditonalInformation {
+  [Hosting.CDN]: { embeddingType: Embedding; contentUrl: string }
 }
 
-type Resource<H extends Hosting = Hosting> = ResourceTypes[H]
+type Resource<H extends Hosting = Hosting> = {
+  [T in H]: ResourceTypeAdditonalInformation[T] & { hostingService: H }
+}[H]
 
-type CreateResourceType<H extends Hosting, AdditionalInformation> = {
-  hostingService: H
-} & AdditionalInformation
+// ### Embedding types
 
 interface EmbeddingTypesAdditonalInformation {
   [Embedding.Image]: { contentUrl: string }
