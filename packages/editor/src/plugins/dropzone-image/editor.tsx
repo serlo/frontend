@@ -1,15 +1,17 @@
 import { PreviewButton, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { ImageProps } from '@editor/plugins/image'
 import {
+  runChangeDocumentSaga,
   selectDocument,
   selectStaticDocument,
+  useAppDispatch,
   useAppSelector,
 } from '@editor/store'
 import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
@@ -39,8 +41,9 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     extraDraggableAnswers,
   } = state
 
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+  const dispatch = useAppDispatch()
 
+  const pluginStrings = useEditorStrings().plugins.dropzoneImage
   const visibilityOptions = Object.entries(pluginStrings.visibilityOptions)
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
@@ -71,6 +74,18 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     duplicateAnswerZone,
   } = useAnswerZones(answerZones)
 
+  const handleChangeImageButtonClick = useCallback(() => {
+    if (!backgroundImage.defined) return
+
+    dispatch(
+      runChangeDocumentSaga({
+        id: backgroundImage.id,
+        state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
+      })
+    )
+    // TODO: reset dropzone aspect ratio
+  }, [backgroundImage, dispatch])
+
   const backgroundType = state.backgroundType.value
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
   const isBackgroundTypeImage = backgroundType === BackgroundType.Image
@@ -87,6 +102,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   const isBackgroundSelected =
     isBackgroundTypeBlank || (isBackgroundTypeImage && hasBackgroundImageUrl)
 
+  // show image selection screen
   if (!isBackgroundSelected && isBackgroundImagePluginDefined) {
     return backgroundImage.render()
   }
@@ -108,6 +124,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
       {focused && (
         <DropzoneImageToolbar
           id={id}
+          onChangeImageButtonClick={handleChangeImageButtonClick}
           showSettingsButton={isBackgroundTypeImage}
           backgroundImageState={{
             id: isBackgroundImagePluginDefined ? backgroundImage.id : null,

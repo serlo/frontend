@@ -2,7 +2,7 @@ import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import type { ImageProps } from '@editor/plugins/image'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
@@ -19,6 +19,7 @@ interface DropzoneImageToolbarProps {
   }
   children?: ReactNode
   showSettingsButton?: boolean
+  onChangeImageButtonClick: () => void
 }
 
 export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
@@ -27,10 +28,12 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
     backgroundImageState,
     showSettingsButton = false,
     children,
+    onChangeImageButtonClick,
   } = props
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
+  const imageStrings = editorStrings.plugins.image
 
   const pluginControls = <PluginDefaultTools pluginId={id} />
 
@@ -73,6 +76,15 @@ export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
             {editorStrings.edtrIo.settings}:{' '}
             {editorStrings.plugins.dropzoneImage.title}
           </h3>
+
+          <div className="mx-side my-3">
+            <button
+              onClick={onChangeImageButtonClick}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            >
+              {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
+            </button>
+          </div>
 
           <div className="mx-side mb-3">
             <BackgroundImageSettings {...backgroundImageState} />
