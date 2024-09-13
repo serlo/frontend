@@ -34,6 +34,7 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { mediaPlugin } from '@editor/plugins/media'
 import {
   createArticleIntroduction,
   createMultimediaPlugin,
@@ -79,6 +80,7 @@ export function createPlugins({
   const isPage = parentType === UuidType.Page
 
   const plugins = [
+    EditorPluginType.Media,
     EditorPluginType.Anchor,
     EditorPluginType.Article,
     EditorPluginType.Audio,
@@ -130,6 +132,12 @@ export function createPlugins({
   ]
 
   const allPlugins = [
+    // TODO: Add icon
+    {
+      type: EditorPluginType.Media,
+      plugin: mediaPlugin,
+      visibleInSuggestions: true,
+    },
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
