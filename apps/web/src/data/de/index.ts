@@ -169,6 +169,7 @@ export const instanceData = {
         theorem: "Satz",
         proof: "Beweis"
       },
+      imageGalleryLightboxSrTitle: "Modale Anzeige eines großen Bildes mit Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren",
       loadingVideoFailed: "Etwas ist schiefgelaufen",
       loadingAudioFailed: "Etwas ist schiefgelaufen"
     },
@@ -758,7 +759,6 @@ export const loggedInData = {
           title: "Bilder Galerie",
           description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
-          lightboxScreenReaderTitle: "Modale Anzeige eines großen Bildes mit Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren",
           addImages: "Bilder hinzufügen",
           tooManyImagesMessage: "Du kannst maximal %max_images% Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
           alreadyMaxImagesMessage: "Maximal %max_images% Bilder erlaubt. Bitte entferne ein oder mehrere Bilder, um neue hochzuladen."

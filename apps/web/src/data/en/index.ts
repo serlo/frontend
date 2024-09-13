@@ -179,6 +179,8 @@ export const instanceData = {
         theorem: 'Theorem',
         proof: 'Proof',
       },
+      imageGalleryLightboxSrTitle:
+        'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
       loadingVideoFailed: 'Something went wrong',
       loadingAudioFailed: 'Something went wrong',
     },
@@ -832,8 +834,6 @@ export const loggedInData = {
             'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle:
             'Modal displaying single image options for caption and settings.',
-          lightboxScreenReaderTitle:
-            'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
           addImages: 'Add Images',
           tooManyImagesMessage:
             'You can only upload %max_images% images in this element. Please select fewer images and try again.',

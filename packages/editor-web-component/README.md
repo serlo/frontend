@@ -69,7 +69,16 @@ export default defineComponent({
 </script>
 ```
 
-If you want to display a certain plugin as an initial state of the Serlo Editor, check out the [documentation](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins) for each JSON state of the plugins.
+To familiarize yourself with our JSON structure, for each plugin, you can look at example JSONs [here](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins). You can also go to our editor [preview page](https://de.serlo-staging.dev/___editor_preview), enter any plugin and through the menu in the top right corner, click "copy plugin". If you paste it in your code editor, you will see the JSON structure of the plugin you selected through the toolbar.
+
+If you want to display a certain plugin as an initial state of the Serlo Editor, we recommend importing the `plugins` and `Plugin` constant/enum. Check out the [documentation](https://github.com/serlo/frontend/tree/staging/packages/editor#plugins-constant-and-plugin-enum) for more information.
+
+```typescript
+import { plugins, Plugin } from '@serlo/editor'
+
+const singleChoiceKey = Plugin.SingleChoiceExercise
+const initialStateOfSingleChoice = plugin[singleChoiceKey].initialState
+```
 
 ## Shadow DOM vs. normal DOM
 

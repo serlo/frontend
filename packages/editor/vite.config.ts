@@ -70,6 +70,7 @@ export default defineConfig({
       '@': resolve(__dirname, '../../apps/web/src'),
     },
   },
+  assetsInclude: ['./src/editor-ui/assets/plugin-icons/**/*.svg'],
   plugins: [
     replace({ ...envReplacements, preventAssignment: false }),
     react(),
@@ -100,8 +101,4 @@ export default defineConfig({
       },
     }),
   ],
-  define: {
-    // Makes Vite pull the version from editor/package.json and make it available in editor code
-    __EDITOR_VERSION__: JSON.stringify(process.env.npm_package_version),
-  },
 })

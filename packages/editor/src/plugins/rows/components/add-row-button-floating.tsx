@@ -27,7 +27,7 @@ export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
     hover:opacity-100 hover:z-50
     focus:opacity-100 focus:z-50
     ${focused ? 'opacity-40' : ''}
-    focus-visible:text-editor-primary-200 
+    focus-visible:text-editor-primary-200
   `
 
   const interactionStyles = 'cursor-pointer'
