@@ -134,11 +134,6 @@ export function createBasicPlugins(
       visibleInSuggestions: true,
     },
     {
-      type: EditorPluginType.TextAreaExercise,
-      plugin: textAreaExercisePlugin,
-      icon: <IconFallback />,
-    },
-    {
       type: EditorPluginType.Solution,
       plugin: solutionPlugin,
       icon: <IconPencil />,
@@ -168,6 +163,11 @@ export function createBasicPlugins(
       plugin: createDropzoneImagePlugin(),
       visibleInSuggestions: false,
       icon: <IconDropzones />,
+    },
+    {
+      type: EditorPluginType.TextAreaExercise,
+      plugin: textAreaExercisePlugin,
+      icon: <IconFallback />,
     },
 
     // Special plugins, never visible in suggestions
