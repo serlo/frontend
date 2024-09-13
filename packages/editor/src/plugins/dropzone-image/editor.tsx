@@ -1,4 +1,3 @@
-import { PreviewButton, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { ImageProps } from '@editor/plugins/image'
 import {
   runChangeDocumentSaga,
@@ -30,7 +29,6 @@ import {
   DropzoneVisibility,
   ModalType,
 } from './types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function DropzoneImageEditor(props: DropzoneImageProps) {
   const { state, id, focused } = props
@@ -42,9 +40,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   } = state
 
   const dispatch = useAppDispatch()
-
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
-  const visibilityOptions = Object.entries(pluginStrings.visibilityOptions)
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
@@ -132,21 +127,10 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
               | ImageProps['state']
               | undefined,
           }}
-        >
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
-          <ToolbarSelect
-            tooltipText={pluginStrings.dropzoneVisibility}
-            value={dropzoneVisibility.value}
-            changeValue={(value) => dropzoneVisibility.set(value)}
-            options={visibilityOptions.map(([key, val]) => ({
-              text: val.charAt(0).toUpperCase() + val.slice(1),
-              value: key,
-            }))}
-          />
-        </DropzoneImageToolbar>
+          dropzoneVisibility={dropzoneVisibility}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
       )}
       {previewActive ? (
         <DropzoneImageStaticRenderer {...staticDocument} />
