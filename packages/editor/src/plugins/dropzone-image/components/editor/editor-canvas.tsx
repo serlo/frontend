@@ -3,6 +3,7 @@ import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useContext, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
+import { defaultLargeCanvasDimension } from './background-shape-select'
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { AnswerZoneState, ModalType } from '../../types'
@@ -44,20 +45,17 @@ export function EditorCanvas(props: EditorCanvasProps) {
     img.src = backgroundImageUrl
     img.onload = () => {
       const imgAspectRatio = img.width / img.height
-      let newCanvasWidth = canvasWidth
-      let newCanvasHeight = canvasHeight
+      const defaultDimension = defaultLargeCanvasDimension
+      let newCanvasWidth = defaultDimension
+      let newCanvasHeight = defaultDimension
 
-      if (canvasWidth / canvasHeight > imgAspectRatio) {
-        newCanvasHeight = canvasWidth / imgAspectRatio
-        if (newCanvasHeight > canvasHeight) {
-          newCanvasHeight = canvasHeight
-          newCanvasWidth = newCanvasHeight * imgAspectRatio
+      if (imgAspectRatio < 1) {
+        if (defaultDimension / imgAspectRatio > defaultDimension) {
+          newCanvasWidth = defaultDimension * imgAspectRatio
         }
       } else {
-        newCanvasWidth = canvasHeight * imgAspectRatio
-        if (newCanvasWidth > canvasWidth) {
-          newCanvasWidth = canvasWidth
-          newCanvasHeight = newCanvasWidth / imgAspectRatio
+        if (defaultDimension * imgAspectRatio > defaultDimension) {
+          newCanvasHeight = defaultDimension / imgAspectRatio
         }
       }
       canvasDimensions.width.set(newCanvasWidth)
@@ -65,6 +63,11 @@ export function EditorCanvas(props: EditorCanvasProps) {
       setDidAdjustCanvasDimensions(true)
     }
   })
+
+  // reset canvas size when background image changes
+  useEffect(() => {
+    setDidAdjustCanvasDimensions(false)
+  }, [backgroundImageUrl])
 
   const [, drop] = useDrop(
     () => ({

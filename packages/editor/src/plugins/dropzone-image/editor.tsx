@@ -78,7 +78,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
       })
     )
-    // TODO: reset dropzone aspect ratio
   }, [backgroundImage, dispatch])
 
   const backgroundType = state.backgroundType.value

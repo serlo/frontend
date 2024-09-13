@@ -47,6 +47,8 @@ export function DropzoneImageToolbar({
   const pluginControls = <PluginDefaultTools pluginId={id} />
   const visibilityOptions = Object.entries(dropzoneStrings.visibilityOptions)
 
+  if (dropzoneVisibility === undefined) return null
+
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
