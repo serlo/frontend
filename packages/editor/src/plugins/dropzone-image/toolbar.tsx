@@ -21,27 +21,26 @@ interface DropzoneImageToolbarProps {
   showSettingsButton?: boolean
 }
 
-export const DropzoneImageToolbar = (props: DropzoneImageToolbarProps) => {
-  const {
-    id,
-    backgroundImageState,
-    showSettingsButton = false,
-    children,
-  } = props
-
+export function DropzoneImageToolbar({
+  id,
+  backgroundImageState,
+  showSettingsButton = false,
+  children,
+}: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
   const pluginControls = <PluginDefaultTools pluginId={id} />
-
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
       pluginSettings={
-        <>
-          {renderSettingsModal()}
-          {children}
-        </>
+        children ? (
+          <>
+            {renderSettingsModal()}
+            {children}
+          </>
+        ) : undefined
       }
       pluginControls={pluginControls}
     />
