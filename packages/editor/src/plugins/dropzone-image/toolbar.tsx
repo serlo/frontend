@@ -10,7 +10,7 @@ import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
@@ -22,12 +22,11 @@ interface DropzoneImageToolbarProps {
     id: string | null
     state?: ImageProps['state']
   }
-  children?: ReactNode
   showSettingsButton?: boolean
-  onChangeImageButtonClick: () => void
-  dropzoneVisibility: DropzoneImageProps['state']['dropzoneVisibility']
-  previewActive: boolean
-  setPreviewActive: (active: boolean) => void
+  onChangeImageButtonClick?: () => void
+  dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
+  previewActive?: boolean
+  setPreviewActive?: (active: boolean) => void
 }
 
 export function DropzoneImageToolbar({
@@ -64,10 +63,12 @@ export function DropzoneImageToolbar({
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>
           {renderSettingsModal()}
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
+          {previewActive !== undefined && setPreviewActive !== undefined ? (
+            <PreviewButton
+              previewActive={previewActive}
+              setPreviewActive={setPreviewActive}
+            />
+          ) : null}
           <ToolbarSelect
             tooltipText={dropzoneStrings.dropzoneVisibility}
             value={dropzoneVisibility.value}
