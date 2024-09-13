@@ -32,7 +32,7 @@ function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
         console.log(`New state: `, newState)
       }}
     >
-      {({ editor }) => (
+      {(editor) => (
         {/* Optionally configure plugins or i18n strings via the editor object */}
         <div>
           {/* Renders the actual editor content */}
