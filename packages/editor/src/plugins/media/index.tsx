@@ -24,8 +24,6 @@ function MediaPlugin(props: MediaProps) {
   const { state } = props
   const resource = state.resourceLocation.value
 
-  console.log(resource)
-
   if (!resource) {
     return (
       <div>
