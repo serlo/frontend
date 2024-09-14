@@ -44,7 +44,11 @@ function MediaPlugin(props: MediaProps) {
     )
   }
 
-  const embedding = embeddingResolver[resource.hostingService](resource)
+  // TODO: Find a way to omit the "as" statement
+  const resolveEmbedding = embeddingResolver[resource.hostingService] as (
+    resource: Resource
+  ) => EmbeddingType
+  const embedding = resolveEmbedding(resource)
 
   if (embedding.type === Embedding.HTMLImage) {
     return <img src={embedding.contentUrl} />
@@ -358,7 +362,7 @@ interface ResourceTypeAdditonalInformation {
 }
 
 type Resource<H extends Hosting = Hosting> = {
-  [T in H]: ResourceTypeAdditonalInformation[T] & { hostingService: H }
+  [T in H]: ResourceTypeAdditonalInformation[T] & { hostingService: T }
 }[H]
 
 // ### Embedding types
