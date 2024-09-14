@@ -174,12 +174,18 @@ function SelectMediaByUrl({ onSelect }: SelectMediaPanelProps) {
 
           if (result.type === 'resourceFound') {
             onSelect(result.resource)
+
+            return
           } else if (result.type === 'error') {
             updateErrorWhenNotSet(result.message)
+
+            continue
           } else if (result.type === 'aborted') {
+            // Check was aborted, so we do not need to continue checking
             return
-          } else {
-            break
+          } else if (result.type === 'cannotResolve') {
+            // Continue with the next resolver
+            continue
           }
         }
 
