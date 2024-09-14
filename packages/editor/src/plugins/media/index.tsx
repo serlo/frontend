@@ -58,6 +58,7 @@ function MediaPlugin(props: MediaProps) {
         <EmbeddedMedia resource={resource} />
       ) : (
         <SelectMediaPanel
+          extraClassName="rounded-b-md shadow-md"
           onSelect={(resource) => state.resourceLocation.set(resource)}
         />
       )}
@@ -69,7 +70,11 @@ function MediaPlugin(props: MediaProps) {
 
     return (
       <>
-        <ModalWithCloseButton isOpen={isOpen} setIsOpen={setIsOpen}>
+        <ModalWithCloseButton
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          className="bg-yellow-50"
+        >
           <SelectMediaPanel
             onSelect={(resource) => state.resourceLocation.set(resource)}
           />
@@ -105,12 +110,18 @@ function EmbeddedMedia({ resource }: { resource: Resource }) {
 }
 
 interface SelectMediaPanelProps {
+  extraClassName?: string
   onSelect: (resource: Resource) => void
 }
 
-function SelectMediaPanel({ onSelect }: SelectMediaPanelProps) {
+function SelectMediaPanel({ onSelect, extraClassName }: SelectMediaPanelProps) {
   return (
-    <div className="almost-black flex flex-col items-center space-y-4 rounded-md bg-yellow-50 p-8 shadow-md">
+    <div
+      className={cn(
+        'almost-black flex flex-col items-center space-y-4 bg-yellow-50 p-8',
+        extraClassName
+      )}
+    >
       <SelectMediaPanelButton
         onClick={() => void 0}
         icon={faArrowUpFromBracket}
