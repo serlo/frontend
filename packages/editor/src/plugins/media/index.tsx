@@ -5,11 +5,14 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   IconDefinition,
   faArrowUpFromBracket,
+  faCircle,
   faSearch,
+  faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
 
 const state = object({
@@ -46,6 +49,9 @@ function MediaPlugin(props: MediaProps) {
         <PluginToolbar
           pluginType={EditorPluginType.Media}
           pluginControls={<PluginDefaultTools pluginId={id} />}
+          {...(resource !== null
+            ? { pluginSettings: <MediaPluginSettings /> }
+            : {})}
         />
       )}
       {resource !== null ? (
@@ -57,6 +63,29 @@ function MediaPlugin(props: MediaProps) {
       )}
     </>
   )
+
+  function MediaPluginSettings() {
+    const [isOpen, setIsOpen] = useState(false)
+
+    return (
+      <>
+        <ModalWithCloseButton isOpen={isOpen} setIsOpen={setIsOpen}>
+          <SelectMediaPanel
+            onSelect={(resource) => state.resourceLocation.set(resource)}
+          />
+        </ModalWithCloseButton>
+        <button
+          className={cn(
+            'mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all',
+            'hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200'
+          )}
+          onClick={() => setIsOpen(true)}
+        >
+          Datei ändern <FaIcon icon={faSyncAlt} />
+        </button>
+      </>
+    )
+  }
 }
 
 function EmbeddedMedia({ resource }: { resource: Resource }) {
