@@ -18,27 +18,35 @@ const state = object({
   resourceLocation: scalar<Resource | null>(null),
 })
 type MediaState = typeof state
-type MediaProps = EditorPluginProps<MediaState>
+interface MediaConfig {
+  name: string
+  allowedEmbedding?: Embedding[]
+}
+type MediaProps = EditorPluginProps<MediaState, MediaConfig>
 
 enum Hosting {
   CDN = 'cdn',
   GeoGebra = 'geogebra',
 }
 
-enum Embedding {
+export enum Embedding {
   HTMLImage = 'imageTag',
   HTMLVideo = 'videoTag',
   GeoGebraApplet = 'geogebraApplet',
 }
 
-export const mediaPlugin = {
-  state,
-  config: {},
-  Component: MediaPlugin,
+export function createMediaPlugin(
+  config: MediaConfig = { name: EditorPluginType.Media }
+) {
+  return {
+    state,
+    config,
+    Component: MediaPlugin,
+  }
 }
 
 function MediaPlugin(props: MediaProps) {
-  const { state, focused, id } = props
+  const { state, focused, id, config } = props
   const resource = state.resourceLocation.value
 
   return (
@@ -46,7 +54,7 @@ function MediaPlugin(props: MediaProps) {
       {/* TODO: Add default toolbar buttons */}
       {focused && (
         <PluginToolbar
-          pluginType={EditorPluginType.Media}
+          pluginType={config.name}
           pluginControls={<PluginDefaultTools pluginId={id} />}
           {...(resource !== null
             ? { pluginSettings: <MediaPluginSettings /> }
@@ -57,6 +65,7 @@ function MediaPlugin(props: MediaProps) {
         <EmbeddedMedia resource={resource} />
       ) : (
         <SelectMediaPanel
+          allowEmbedding={config.allowedEmbedding}
           extraClassName="rounded-b-md shadow-md"
           onSelect={(resource) => state.resourceLocation.set(resource)}
         />
@@ -75,6 +84,7 @@ function MediaPlugin(props: MediaProps) {
           className="bg-yellow-50"
         >
           <SelectMediaPanel
+            allowEmbedding={config.allowedEmbedding}
             onSelect={(resource) => state.resourceLocation.set(resource)}
           />
         </ModalWithCloseButton>
@@ -93,10 +103,6 @@ function MediaPlugin(props: MediaProps) {
 }
 
 function EmbeddedMedia({ resource }: { resource: Resource }) {
-  // TODO: Find a way to omit the "as" statement
-  const resolveEmbedding = embeddingResolver[resource.hostingService] as (
-    resource: Resource
-  ) => EmbeddingType
   const embedding = resolveEmbedding(resource)
 
   if (embedding.type === Embedding.HTMLImage) {
@@ -108,12 +114,25 @@ function EmbeddedMedia({ resource }: { resource: Resource }) {
   }
 }
 
+function resolveEmbedding(resource: Resource) {
+  // TODO: Find a way to omit the "as" statement
+  const resolveFunc = embeddingResolver[resource.hostingService] as (
+    resource: Resource
+  ) => EmbeddingType
+  return resolveFunc(resource)
+}
+
 interface SelectMediaPanelProps {
   extraClassName?: string
   onSelect: (resource: Resource) => void
+  allowEmbedding?: Embedding[]
 }
 
-function SelectMediaPanel({ onSelect, extraClassName }: SelectMediaPanelProps) {
+function SelectMediaPanel({
+  onSelect,
+  extraClassName,
+  allowEmbedding,
+}: SelectMediaPanelProps) {
   return (
     <div
       className={cn(
@@ -131,17 +150,18 @@ function SelectMediaPanel({ onSelect, extraClassName }: SelectMediaPanelProps) {
         icon={faSearch}
         label="Datei suchen"
       />
-      <SelectMediaByUrl onSelect={onSelect} />
+      <SelectMediaByUrl onSelect={onSelect} allowEmbedding={allowEmbedding} />
     </div>
   )
 }
 
 // ### Select media by URL
 
-type URLResolver = (
-  url: URL,
-  signal: AbortSignal
-) => SyncOrAsync<URLResolverResult>
+interface URLResolver {
+  name: string
+  resolvableEmbeddings: Embedding[]
+  resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult>
+}
 type SyncOrAsync<T> = T | Promise<T>
 type URLResolverResult = ResourceFound | Aborted | CannotResolve | Error
 
@@ -167,95 +187,106 @@ const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv']
 
 const urlResolvers: URLResolver[] = [
-  // GegGebra applet
-  (url) => {
-    if (url.hostname === 'www.geogebra.org' && url.pathname.startsWith('/m/')) {
-      return {
-        type: 'resourceFound',
-        resource: {
-          hostingService: Hosting.GeoGebra,
-          embeddingType: Embedding.GeoGebraApplet,
-          appletId: url.pathname.slice(3),
-        },
-      }
-    } else {
-      return { type: 'cannotResolve' }
-    }
-  },
-
-  // Try to resolve the URL as an image
-  (url, signal) => {
-    return new Promise((resolve) => {
-      // Load the image to check whether the url belongs to an image
-      const img = new Image()
-
-      signal.onabort = () => {
-        resolve({ type: 'aborted' })
-      }
-
-      img.onload = () => {
-        resolve({
+  {
+    name: 'Resolve geogebra applet',
+    resolvableEmbeddings: [Embedding.GeoGebraApplet],
+    resolve: (url) => {
+      if (
+        url.hostname === 'www.geogebra.org' &&
+        url.pathname.startsWith('/m/')
+      ) {
+        return {
           type: 'resourceFound',
           resource: {
-            hostingService: Hosting.CDN,
-            embeddingType: Embedding.HTMLImage,
-            contentUrl: url.href,
+            hostingService: Hosting.GeoGebra,
+            embeddingType: Embedding.GeoGebraApplet,
+            appletId: url.pathname.slice(3),
           },
-        })
-      }
-
-      img.onerror = () => {
-        if (imageExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
-          resolve({
-            type: 'error',
-            message: 'Bild konnte nicht geladen werden.',
-          })
-        } else {
-          resolve({ type: 'cannotResolve' })
         }
+      } else {
+        return { type: 'cannotResolve' }
       }
-
-      img.src = url.href
-    })
+    },
   },
-  // Try to resolve the URL as a video
-  (url, signal) => {
-    return new Promise((resolve) => {
-      // Load the image to check whether the url belongs to an image
-      const video = document.createElement('video')
+  {
+    name: 'Resolve image from CDN',
+    resolvableEmbeddings: [Embedding.HTMLImage],
+    resolve: (url, signal) => {
+      return new Promise((resolve) => {
+        // Load the image to check whether the url belongs to an image
+        const img = new Image()
 
-      signal.onabort = () => {
-        resolve({ type: 'aborted' })
-      }
-
-      video.oncanplay = () => {
-        resolve({
-          type: 'resourceFound',
-          resource: {
-            hostingService: Hosting.CDN,
-            embeddingType: Embedding.HTMLVideo,
-            contentUrl: url.href,
-          },
-        })
-      }
-
-      video.onerror = () => {
-        if (videoExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
-          resolve({
-            type: 'error',
-            message: 'Video konnte nicht geladen werden.',
-          })
-        } else {
-          resolve({ type: 'cannotResolve' })
+        signal.onabort = () => {
+          resolve({ type: 'aborted' })
         }
-      }
 
-      video.src = url.href
-    })
+        img.onload = () => {
+          resolve({
+            type: 'resourceFound',
+            resource: {
+              hostingService: Hosting.CDN,
+              embeddingType: Embedding.HTMLImage,
+              contentUrl: url.href,
+            },
+          })
+        }
+
+        img.onerror = () => {
+          if (imageExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
+            resolve({
+              type: 'error',
+              message: 'Bild konnte nicht geladen werden.',
+            })
+          } else {
+            resolve({ type: 'cannotResolve' })
+          }
+        }
+
+        img.src = url.href
+      })
+    },
+  },
+  {
+    name: 'Resolve video from CDN',
+    resolvableEmbeddings: [Embedding.HTMLVideo],
+    resolve: (url, signal) => {
+      return new Promise((resolve) => {
+        // Load the image to check whether the url belongs to an image
+        const video = document.createElement('video')
+
+        signal.onabort = () => {
+          resolve({ type: 'aborted' })
+        }
+
+        video.oncanplay = () => {
+          resolve({
+            type: 'resourceFound',
+            resource: {
+              hostingService: Hosting.CDN,
+              embeddingType: Embedding.HTMLVideo,
+              contentUrl: url.href,
+            },
+          })
+        }
+
+        video.onerror = () => {
+          if (videoExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
+            resolve({
+              type: 'error',
+              message: 'Video konnte nicht geladen werden.',
+            })
+          } else {
+            resolve({ type: 'cannotResolve' })
+          }
+        }
+
+        video.src = url.href
+      })
+    },
   },
 ]
 
-function SelectMediaByUrl({ onSelect }: SelectMediaPanelProps) {
+function SelectMediaByUrl({ onSelect, allowEmbedding }: SelectMediaPanelProps) {
   const timeOfLastChange = useRef(Date.now())
   const checkUrlController = useRef<AbortController | null>(null)
   const waitTimeUntilCheckingUrl = 500
@@ -289,12 +320,28 @@ function SelectMediaByUrl({ onSelect }: SelectMediaPanelProps) {
         for (const resolver of urlResolvers) {
           if (controller.signal.aborted) return
 
-          const result = await resolver(url, controller.signal)
+          if (
+            allowEmbedding !== undefined &&
+            !allowEmbedding.some((embedding) =>
+              resolver.resolvableEmbeddings.includes(embedding)
+            )
+          ) {
+            continue
+          }
+
+          const result = await resolver.resolve(url, controller.signal)
 
           if (result.type === 'resourceFound') {
-            onSelect(result.resource)
+            const embedding = resolveEmbedding(result.resource)
 
-            return
+            if (
+              allowEmbedding === undefined ||
+              allowEmbedding.includes(embedding.type)
+            ) {
+              onSelect(result.resource)
+
+              return
+            }
           } else if (result.type === 'error') {
             updateErrorWhenNotSet(result.message)
 
@@ -315,7 +362,7 @@ function SelectMediaByUrl({ onSelect }: SelectMediaPanelProps) {
         }
       }
     },
-    [onSelect, updateErrorWhenNotSet]
+    [allowEmbedding, onSelect, updateErrorWhenNotSet]
   )
 
   const handleOnChange = useCallback(

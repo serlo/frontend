@@ -13,7 +13,9 @@ export enum EditorPluginType {
   ImageGallery = 'imageGallery',
   Injection = 'injection',
   Multimedia = 'multimedia',
-  Media = "media",
+  Media = 'media',
+  MediaImage = 'mediaImage',
+  MediaVideo = 'mediaVideo',
 
   PageLayout = 'pageLayout',
   PagePartners = 'pagePartners',

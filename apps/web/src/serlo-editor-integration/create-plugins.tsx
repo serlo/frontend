@@ -34,7 +34,7 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { mediaPlugin } from '@editor/plugins/media'
+import { Embedding, createMediaPlugin } from '@editor/plugins/media'
 import {
   createArticleIntroduction,
   createMultimediaPlugin,
@@ -81,6 +81,8 @@ export function createPlugins({
 
   const plugins = [
     EditorPluginType.Media,
+    EditorPluginType.MediaImage,
+    EditorPluginType.MediaVideo,
     EditorPluginType.Anchor,
     EditorPluginType.Article,
     EditorPluginType.Audio,
@@ -135,7 +137,23 @@ export function createPlugins({
     // TODO: Add icon
     {
       type: EditorPluginType.Media,
-      plugin: mediaPlugin,
+      plugin: createMediaPlugin(),
+      visibleInSuggestions: true,
+    },
+    {
+      type: EditorPluginType.MediaImage,
+      plugin: createMediaPlugin({
+        name: EditorPluginType.MediaImage,
+        allowedEmbedding: [Embedding.HTMLImage],
+      }),
+      visibleInSuggestions: true,
+    },
+    {
+      type: EditorPluginType.MediaVideo,
+      plugin: createMediaPlugin({
+        name: EditorPluginType.MediaVideo,
+        allowedEmbedding: [Embedding.HTMLVideo],
+      }),
       visibleInSuggestions: true,
     },
     {
