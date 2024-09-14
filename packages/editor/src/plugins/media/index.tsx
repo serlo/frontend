@@ -17,11 +17,13 @@ type MediaProps = EditorPluginProps<MediaState>
 
 enum Hosting {
   CDN = 'cdn',
+  GegGebra = 'geogebra',
 }
 
 enum Embedding {
   HTMLImage = 'imageTag',
   HTMLVideo = 'videoTag',
+  GeoGebraApplet = 'geogebraApplet',
 }
 
 export const mediaPlugin = {
@@ -48,6 +50,8 @@ function MediaPlugin(props: MediaProps) {
     return <img src={embedding.contentUrl} />
   } else if (embedding.type === Embedding.HTMLVideo) {
     return <video src={embedding.contentUrl} controls />
+  } else if (embedding.type === Embedding.GeoGebraApplet) {
+    return <div>GeoGebraApplet with id: ${embedding.appletId}</div>
   }
 }
 
@@ -104,6 +108,22 @@ const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv']
 
 const urlResolvers: URLResolver[] = [
+  // GegGebra applet
+  (url) => {
+    if (url.hostname === 'www.geogebra.org' && url.pathname.startsWith('/m/')) {
+      return {
+        type: 'resourceFound',
+        resource: {
+          hostingService: Hosting.GegGebra,
+          embeddingType: Embedding.GeoGebraApplet,
+          appletId: url.pathname.slice(3),
+        },
+      }
+    } else {
+      return { type: 'cannotResolve' }
+    }
+  },
+
   // Try to resolve the URL as an image
   (url, signal) => {
     return new Promise((resolve) => {
@@ -139,7 +159,7 @@ const urlResolvers: URLResolver[] = [
       img.src = url.href
     })
   },
-  // Try to resolve the URL as an image
+  // Try to resolve the URL as a video
   (url, signal) => {
     return new Promise((resolve) => {
       // Load the image to check whether the url belongs to an image
@@ -316,6 +336,13 @@ const embeddingResolver: ResourceResolver = {
       contentUrl: resource.contentUrl,
     }
   },
+  [Hosting.GegGebra]: (resource) => {
+    return {
+      resourceLocation: resource,
+      type: Embedding.GeoGebraApplet,
+      appletId: resource.appletId,
+    }
+  },
 }
 
 type ResourceResolver = {
@@ -323,7 +350,11 @@ type ResourceResolver = {
 }
 
 interface ResourceTypeAdditonalInformation {
-  [Hosting.CDN]: { embeddingType: Embedding; contentUrl: string }
+  [Hosting.CDN]: {
+    embeddingType: Embedding.HTMLImage | Embedding.HTMLVideo
+    contentUrl: string
+  }
+  [Hosting.GegGebra]: { appletId: string }
 }
 
 type Resource<H extends Hosting = Hosting> = {
@@ -335,6 +366,7 @@ type Resource<H extends Hosting = Hosting> = {
 interface EmbeddingTypesAdditonalInformation {
   [Embedding.HTMLImage]: { contentUrl: string }
   [Embedding.HTMLVideo]: { contentUrl: string }
+  [Embedding.GeoGebraApplet]: { appletId: string }
 }
 
 type EmbeddingType<
