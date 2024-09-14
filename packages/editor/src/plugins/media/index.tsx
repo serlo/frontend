@@ -4,7 +4,7 @@ import {
   faArrowUpFromBracket,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
@@ -20,7 +20,8 @@ enum Hosting {
 }
 
 enum Embedding {
-  Image = 'image',
+  HTMLImage = 'imageTag',
+  HTMLVideo = 'videoTag',
 }
 
 export const mediaPlugin = {
@@ -43,8 +44,10 @@ function MediaPlugin(props: MediaProps) {
 
   const embedding = embeddingResolver[resource.hostingService](resource)
 
-  if (embedding.type === Embedding.Image) {
+  if (embedding.type === Embedding.HTMLImage) {
     return <img src={embedding.contentUrl} />
+  } else if (embedding.type === Embedding.HTMLVideo) {
+    return <video src={embedding.contentUrl} controls />
   }
 }
 
@@ -98,6 +101,7 @@ interface Error {
 }
 
 const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv']
 
 const urlResolvers: URLResolver[] = [
   // Try to resolve the URL as an image
@@ -105,7 +109,6 @@ const urlResolvers: URLResolver[] = [
     return new Promise((resolve) => {
       // Load the image to check whether the url belongs to an image
       const img = new Image()
-      img.src = url.href
 
       signal.onabort = () => {
         resolve({ type: 'aborted' })
@@ -116,14 +119,14 @@ const urlResolvers: URLResolver[] = [
           type: 'resourceFound',
           resource: {
             hostingService: Hosting.CDN,
-            embeddingType: Embedding.Image,
+            embeddingType: Embedding.HTMLImage,
             contentUrl: url.href,
           },
         })
       }
 
       img.onerror = () => {
-        if (imageExtensions.some((ext) => url.pathname.endsWith(ext))) {
+        if (imageExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
           resolve({
             type: 'error',
             message: 'Bild konnte nicht geladen werden.',
@@ -132,6 +135,43 @@ const urlResolvers: URLResolver[] = [
           resolve({ type: 'cannotResolve' })
         }
       }
+
+      img.src = url.href
+    })
+  },
+  // Try to resolve the URL as an image
+  (url, signal) => {
+    return new Promise((resolve) => {
+      // Load the image to check whether the url belongs to an image
+      const video = document.createElement('video')
+
+      signal.onabort = () => {
+        resolve({ type: 'aborted' })
+      }
+
+      video.oncanplay = () => {
+        resolve({
+          type: 'resourceFound',
+          resource: {
+            hostingService: Hosting.CDN,
+            embeddingType: Embedding.HTMLVideo,
+            contentUrl: url.href,
+          },
+        })
+      }
+
+      video.onerror = () => {
+        if (videoExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
+          resolve({
+            type: 'error',
+            message: 'Video konnte nicht geladen werden.',
+          })
+        } else {
+          resolve({ type: 'cannotResolve' })
+        }
+      }
+
+      video.src = url.href
     })
   },
 ]
@@ -293,7 +333,8 @@ type Resource<H extends Hosting = Hosting> = {
 // ### Embedding types
 
 interface EmbeddingTypesAdditonalInformation {
-  [Embedding.Image]: { contentUrl: string }
+  [Embedding.HTMLImage]: { contentUrl: string }
+  [Embedding.HTMLVideo]: { contentUrl: string }
 }
 
 type EmbeddingType<
