@@ -5,7 +5,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   IconDefinition,
   faArrowUpFromBracket,
-  faCircle,
   faSearch,
   faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons'
@@ -353,11 +352,10 @@ function SelectMediaByUrl({ onSelect }: SelectMediaPanelProps) {
         placeholder="https://example.com/image.png"
         onChange={(e) => handleOnChange(e)}
       />
-      {error && (
-        <span className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500">
-          {error}
-        </span>
-      )}
+      <span className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500">
+        {/* Use a non-breaking space to keep the height of the element */}
+        {error ? error : '\u00A0'}
+      </span>
     </div>
   )
 }
