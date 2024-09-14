@@ -1,4 +1,11 @@
 import { EditorPluginProps, object, scalar } from '@editor/plugin'
+import {
+  IconDefinition,
+  faArrowUpFromBracket,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons'
+
+import { FaIcon } from '@/components/fa-icon'
 
 const state = object({
   resourceLocation: scalar<Resource | null>(null),
@@ -26,22 +33,9 @@ function MediaPlugin(props: MediaProps) {
 
   if (!resource) {
     return (
-      <div>
-        No media selected:{' '}
-        <button
-          className="serlo-button"
-          onClick={() =>
-            state.resourceLocation.set({
-              hostingService: Hosting.CDN,
-              contentUrl:
-                'https://cdn.pixabay.com/photo/2023/09/29/14/58/road-8284023_640.jpg',
-              embeddingType: Embedding.Image,
-            })
-          }
-        >
-          Add dummy data
-        </button>
-      </div>
+      <SelectMediaPanel
+        onSelect={(resource) => state.resourceLocation.set(resource)}
+      />
     )
   }
 
@@ -50,6 +44,56 @@ function MediaPlugin(props: MediaProps) {
   if (embedding.type === Embedding.Image) {
     return <img src={embedding.contentUrl} />
   }
+}
+
+interface SelectMediaPanel {
+  onSelect: (resource: Resource) => void
+}
+
+function SelectMediaPanel({ onSelect }: SelectMediaPanel) {
+  return (
+    <div className="almost-black flex flex-col items-center space-y-4 rounded-md bg-yellow-50 p-8 shadow-md">
+      <SelectMediaPanelButton
+        onClick={() => void 0}
+        icon={faArrowUpFromBracket}
+        label="Datei hochladen"
+      />
+      <SelectMediaPanelButton
+        onClick={() => void 0}
+        icon={faSearch}
+        label="Datei suchen"
+      />
+      <div className="flex min-w-[60%] flex-col items-center space-y-2">
+        <span>URL:</span>
+        <input
+          className="w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600"
+          placeholder="https://example.com/image.png"
+        />
+      </div>
+    </div>
+  )
+}
+
+interface SelectMediaPanelButtonProps {
+  onClick: () => void
+  icon: IconDefinition
+  label: string
+}
+
+function SelectMediaPanelButton({
+  onClick,
+  icon,
+  label,
+}: SelectMediaPanelButtonProps) {
+  return (
+    <button
+      className="min-w-[60%] rounded-md bg-editor-primary-200 p-2 font-bold hover:bg-editor-primary-300"
+      onClick={onClick}
+    >
+      <FaIcon className="mr-2" icon={icon} />
+      {label}
+    </button>
+  )
 }
 
 // ### Resolver types
