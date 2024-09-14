@@ -1,4 +1,7 @@
+import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginProps, object, scalar } from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   IconDefinition,
   faArrowUpFromBracket,
@@ -33,17 +36,30 @@ export const mediaPlugin = {
 }
 
 function MediaPlugin(props: MediaProps) {
-  const { state } = props
+  const { state, focused, id } = props
   const resource = state.resourceLocation.value
 
-  if (!resource) {
-    return (
-      <SelectMediaPanel
-        onSelect={(resource) => state.resourceLocation.set(resource)}
-      />
-    )
-  }
+  return (
+    <>
+      {/* TODO: Add default toolbar buttons */}
+      {focused && (
+        <PluginToolbar
+          pluginType={EditorPluginType.Media}
+          pluginControls={<PluginDefaultTools pluginId={id} />}
+        />
+      )}
+      {resource !== null ? (
+        <EmbeddedMedia resource={resource} />
+      ) : (
+        <SelectMediaPanel
+          onSelect={(resource) => state.resourceLocation.set(resource)}
+        />
+      )}
+    </>
+  )
+}
 
+function EmbeddedMedia({ resource }: { resource: Resource }) {
   // TODO: Find a way to omit the "as" statement
   const resolveEmbedding = embeddingResolver[resource.hostingService] as (
     resource: Resource
