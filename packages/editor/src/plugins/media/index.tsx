@@ -17,7 +17,7 @@ type MediaProps = EditorPluginProps<MediaState>
 
 enum Hosting {
   CDN = 'cdn',
-  GegGebra = 'geogebra',
+  GeoGebra = 'geogebra',
 }
 
 enum Embedding {
@@ -114,7 +114,7 @@ const urlResolvers: URLResolver[] = [
       return {
         type: 'resourceFound',
         resource: {
-          hostingService: Hosting.GegGebra,
+          hostingService: Hosting.GeoGebra,
           embeddingType: Embedding.GeoGebraApplet,
           appletId: url.pathname.slice(3),
         },
@@ -336,7 +336,7 @@ const embeddingResolver: ResourceResolver = {
       contentUrl: resource.contentUrl,
     }
   },
-  [Hosting.GegGebra]: (resource) => {
+  [Hosting.GeoGebra]: (resource) => {
     return {
       resourceLocation: resource,
       type: Embedding.GeoGebraApplet,
@@ -354,7 +354,7 @@ interface ResourceTypeAdditonalInformation {
     embeddingType: Embedding.HTMLImage | Embedding.HTMLVideo
     contentUrl: string
   }
-  [Hosting.GegGebra]: { appletId: string }
+  [Hosting.GeoGebra]: { appletId: string }
 }
 
 type Resource<H extends Hosting = Hosting> = {
