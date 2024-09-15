@@ -1,18 +1,12 @@
 import { cdnResourceResolver } from './cdn'
 import { geogebraResourceResolver } from './geogebra'
-import { Embedding, Hosting, Resource, ResourceResolver } from './types'
-
-const resourceResolvers: ResourceResolvers = {
-  [Hosting.GeoGebra]: geogebraResourceResolver,
-  [Hosting.CDN]: cdnResourceResolver,
-}
-
-type ResourceResolvers = { [H in Hosting]: ResourceResolver<H> }
+import { Hosting, Resource } from './types'
 
 export function resolveEmbedding(resource: Resource) {
-  const resolveFunc = resourceResolvers[resource.hostingService] as (
-    resource: Resource
-  ) => Embedding
-
-  return resolveFunc(resource)
+  switch (resource.hostingService) {
+    case Hosting.CDN:
+      return cdnResourceResolver(resource)
+    case Hosting.GeoGebra:
+      return geogebraResourceResolver(resource)
+  }
 }
