@@ -10,12 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
-import { Embed, EmbeddingType, Hosting, Resource } from './services/types'
+import { Embed, Embedding, Hosting, Resource } from './services/types'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
 
-export { Embed as Embed } from './services/types'
+export { Embed } from './services/types'
 
 const state = object({
   resourceLocation: scalar<Resource | null>(null),
@@ -110,7 +110,7 @@ function resolveEmbedding(resource: Resource) {
   // TODO: Find a way to omit the "as" statement
   const resolveFunc = embeddingResolver[resource.hostingService] as (
     resource: Resource
-  ) => EmbeddingType
+  ) => Embedding
   return resolveFunc(resource)
 }
 
@@ -443,5 +443,5 @@ const embeddingResolver: ResourceResolver = {
 }
 
 type ResourceResolver = {
-  [H in Hosting]: (resource: Resource<H>) => EmbeddingType<H>
+  [H in Hosting]: (resource: Resource<H>) => Embedding<H>
 }

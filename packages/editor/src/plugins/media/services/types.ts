@@ -64,7 +64,7 @@ interface EmbeddingAdditonalInformation {
  *   appletId: GeoGebraApplet
  * }
  */
-export type EmbeddingType<
+export type Embedding<
   Hosts extends Hosting = Hosting,
   Types extends Embed = Embed,
 > = {
