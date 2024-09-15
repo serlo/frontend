@@ -10,9 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
+import { Embedding, Hosting } from './services/enum-identifiers'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
+
+export { Embedding } from './services/enum-identifiers'
 
 const state = object({
   resourceLocation: scalar<Resource | null>(null),
@@ -23,17 +26,6 @@ interface MediaConfig {
   allowedEmbedding?: Embedding[]
 }
 type MediaProps = EditorPluginProps<MediaState, MediaConfig>
-
-enum Hosting {
-  CDN = 'cdn',
-  GeoGebra = 'geogebra',
-}
-
-export enum Embedding {
-  HTMLImage = 'imageTag',
-  HTMLVideo = 'videoTag',
-  GeoGebraApplet = 'geogebraApplet',
-}
 
 export function createMediaPlugin(
   config: MediaConfig = { name: EditorPluginType.Media }
