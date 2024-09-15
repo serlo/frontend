@@ -46,7 +46,6 @@ function MediaPlugin(props: MediaProps) {
 
   return (
     <>
-      {/* TODO: Add default toolbar buttons */}
       {focused && (
         <PluginToolbar
           pluginType={config.name}
