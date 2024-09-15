@@ -443,5 +443,5 @@ const embeddingResolver: ResourceResolver = {
 }
 
 type ResourceResolver = {
-  [H in Hosting]: (resource: Resource<H>) => Embedding<H>
+  [H in Hosting]: (resource: Resource<H>) => Embedding
 }

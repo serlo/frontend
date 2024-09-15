@@ -64,12 +64,8 @@ interface EmbeddingAdditonalInformation {
  *   appletId: GeoGebraApplet
  * }
  */
-export type Embedding<
-  Hosts extends Hosting = Hosting,
-  Types extends Embed = Embed,
-> = {
+export type Embedding<Types extends Embed = Embed> = {
   [T in Types]: EmbeddingAdditonalInformation[T] & {
     type: T
-    resourceLocation: Resource<Hosts>
   }
 }[Types]
