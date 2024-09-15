@@ -87,3 +87,30 @@ export type ResourceResolver<
 export type EmbeddingRenderer<E extends Embed> = (
   props: Embedding<E>
 ) => ReactNode
+
+export interface URLResolver {
+  resolvableEmbeddings: Embed[]
+  resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult>
+}
+
+type URLResolverResult = ResourceFound | Aborted | CannotResolve | Error
+
+interface ResourceFound {
+  type: 'resourceFound'
+  resource: Resource
+}
+
+interface Aborted {
+  type: 'aborted'
+}
+
+interface CannotResolve {
+  type: 'cannotResolve'
+}
+
+interface Error {
+  type: 'error'
+  message: string
+}
+
+type SyncOrAsync<T> = T | Promise<T>

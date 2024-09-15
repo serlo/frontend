@@ -12,7 +12,8 @@ import { useCallback, useRef, useState } from 'react'
 
 import { Embedding } from './services/embedding'
 import { resolveEmbedding } from './services/resolve-embedding'
-import { Embed, Hosting, Resource } from './services/types'
+import { Embed, Resource } from './services/types'
+import { urlResolvers } from './services/url-resolvers'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
@@ -130,135 +131,6 @@ function SelectMediaPanel({
 }
 
 // ### Select media by URL
-
-interface URLResolver {
-  name: string
-  resolvableEmbeddings: Embed[]
-  resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult>
-}
-type SyncOrAsync<T> = T | Promise<T>
-type URLResolverResult = ResourceFound | Aborted | CannotResolve | Error
-
-interface ResourceFound {
-  type: 'resourceFound'
-  resource: Resource
-}
-
-interface Aborted {
-  type: 'aborted'
-}
-
-interface CannotResolve {
-  type: 'cannotResolve'
-}
-
-interface Error {
-  type: 'error'
-  message: string
-}
-
-const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
-const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv']
-
-const urlResolvers: URLResolver[] = [
-  {
-    name: 'Resolve geogebra applet',
-    resolvableEmbeddings: [Embed.GeoGebraApplet],
-    resolve: (url) => {
-      if (
-        url.hostname === 'www.geogebra.org' &&
-        url.pathname.startsWith('/m/')
-      ) {
-        return {
-          type: 'resourceFound',
-          resource: {
-            hostingService: Hosting.GeoGebra,
-            embeddingType: Embed.GeoGebraApplet,
-            appletId: url.pathname.slice(3),
-          },
-        }
-      } else {
-        return { type: 'cannotResolve' }
-      }
-    },
-  },
-  {
-    name: 'Resolve image from CDN',
-    resolvableEmbeddings: [Embed.HTMLImage],
-    resolve: (url, signal) => {
-      return new Promise((resolve) => {
-        // Load the image to check whether the url belongs to an image
-        const img = new Image()
-
-        signal.onabort = () => {
-          resolve({ type: 'aborted' })
-        }
-
-        img.onload = () => {
-          resolve({
-            type: 'resourceFound',
-            resource: {
-              hostingService: Hosting.CDN,
-              embeddingType: Embed.HTMLImage,
-              contentUrl: url.href,
-            },
-          })
-        }
-
-        img.onerror = () => {
-          if (imageExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
-            resolve({
-              type: 'error',
-              message: 'Bild konnte nicht geladen werden.',
-            })
-          } else {
-            resolve({ type: 'cannotResolve' })
-          }
-        }
-
-        img.src = url.href
-      })
-    },
-  },
-  {
-    name: 'Resolve video from CDN',
-    resolvableEmbeddings: [Embed.HTMLVideo],
-    resolve: (url, signal) => {
-      return new Promise((resolve) => {
-        // Load the image to check whether the url belongs to an image
-        const video = document.createElement('video')
-
-        signal.onabort = () => {
-          resolve({ type: 'aborted' })
-        }
-
-        video.oncanplay = () => {
-          resolve({
-            type: 'resourceFound',
-            resource: {
-              hostingService: Hosting.CDN,
-              embeddingType: Embed.HTMLVideo,
-              contentUrl: url.href,
-            },
-          })
-        }
-
-        video.onerror = () => {
-          if (videoExtensions.some((ext) => url.pathname.endsWith('.' + ext))) {
-            resolve({
-              type: 'error',
-              message: 'Video konnte nicht geladen werden.',
-            })
-          } else {
-            resolve({ type: 'cannotResolve' })
-          }
-        }
-
-        video.src = url.href
-      })
-    },
-  },
-]
 
 function SelectMediaByUrl({ onSelect, allowEmbedding }: SelectMediaPanelProps) {
   const timeOfLastChange = useRef(Date.now())
