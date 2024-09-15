@@ -10,7 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
-import { Embed, Embedding, Hosting, Resource } from './services/types'
+import { resolveEmbedding } from './services/resolve-embedding'
+import { Embed, Hosting, Resource } from './services/types'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
@@ -104,14 +105,6 @@ function EmbeddedMedia({ resource }: { resource: Resource }) {
   } else if (embedding.type === Embed.GeoGebraApplet) {
     return <div>GeoGebraApplet with id: ${embedding.appletId}</div>
   }
-}
-
-function resolveEmbedding(resource: Resource) {
-  // TODO: Find a way to omit the "as" statement
-  const resolveFunc = embeddingResolver[resource.hostingService] as (
-    resource: Resource
-  ) => Embedding
-  return resolveFunc(resource)
 }
 
 interface SelectMediaPanelProps {
@@ -421,27 +414,4 @@ function SelectMediaPanelButton({
       {label}
     </button>
   )
-}
-
-// ### Resolver types
-
-const embeddingResolver: ResourceResolver = {
-  [Hosting.CDN]: (resource) => {
-    return {
-      resourceLocation: resource,
-      type: resource.embeddingType,
-      contentUrl: resource.contentUrl,
-    }
-  },
-  [Hosting.GeoGebra]: (resource) => {
-    return {
-      resourceLocation: resource,
-      type: Embed.GeoGebraApplet,
-      appletId: resource.appletId,
-    }
-  },
-}
-
-type ResourceResolver = {
-  [H in Hosting]: (resource: Resource<H>) => Embedding
 }

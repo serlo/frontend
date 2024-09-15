@@ -69,3 +69,15 @@ export type Embedding<Types extends Embed = Embed> = {
     type: T
   }
 }[Types]
+
+/**
+ * A function which resolves the embedding of a resource on a given hosting.
+ * This function is necessary for example for the edusharing service since
+ * we cannot know from the resource information alone which type of resource
+ * is described. This allows us to resolve the embedding of a resource in the
+ * editor.
+ */
+export type ResourceResolver<
+  H extends Hosting = Hosting,
+  E extends Embed = Embed,
+> = (resource: Resource<H>) => Embedding<E>
