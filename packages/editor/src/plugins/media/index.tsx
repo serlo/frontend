@@ -10,12 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
-import { Embedding, Hosting } from './services/enum-identifiers'
+import { Embedding, EmbeddingType, Hosting, Resource } from './services/types'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
 
-export { Embedding } from './services/enum-identifiers'
+export { Embedding } from './services/types'
 
 const state = object({
   resourceLocation: scalar<Resource | null>(null),
@@ -445,33 +445,3 @@ const embeddingResolver: ResourceResolver = {
 type ResourceResolver = {
   [H in Hosting]: (resource: Resource<H>) => EmbeddingType<H>
 }
-
-interface ResourceTypeAdditonalInformation {
-  [Hosting.CDN]: {
-    embeddingType: Embedding.HTMLImage | Embedding.HTMLVideo
-    contentUrl: string
-  }
-  [Hosting.GeoGebra]: { appletId: string }
-}
-
-type Resource<H extends Hosting = Hosting> = {
-  [T in H]: ResourceTypeAdditonalInformation[T] & { hostingService: T }
-}[H]
-
-// ### Embedding types
-
-interface EmbeddingTypesAdditonalInformation {
-  [Embedding.HTMLImage]: { contentUrl: string }
-  [Embedding.HTMLVideo]: { contentUrl: string }
-  [Embedding.GeoGebraApplet]: { appletId: string }
-}
-
-type EmbeddingType<
-  Hosts extends Hosting = Hosting,
-  Types extends Embedding = Embedding,
-> = {
-  [T in Types]: EmbeddingTypesAdditonalInformation[T] & {
-    type: T
-    resourceLocation: Resource<Hosts>
-  }
-}[Types]
