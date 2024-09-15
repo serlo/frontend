@@ -14,7 +14,7 @@ export enum Hosting {
  */
 interface ResourceAdditonalInformation {
   [Hosting.CDN]: {
-    embeddingType: Embedding.HTMLImage | Embedding.HTMLVideo
+    embeddingType: Embed.HTMLImage | Embed.HTMLVideo
     contentUrl: string
   }
   [Hosting.GeoGebra]: { appletId: string }
@@ -38,7 +38,7 @@ export type Resource<H extends Hosting = Hosting> = {
  * Identifiers for the different types a resource (like image, applet, etc)
  * can be embedded in the content.
  */
-export enum Embedding {
+export enum Embed {
   HTMLImage = 'imageTag',
   HTMLVideo = 'videoTag',
   GeoGebraApplet = 'geogebraApplet',
@@ -49,9 +49,9 @@ export enum Embedding {
  * for doing this kind of embedding.
  */
 interface EmbeddingAdditonalInformation {
-  [Embedding.HTMLImage]: { contentUrl: string }
-  [Embedding.HTMLVideo]: { contentUrl: string }
-  [Embedding.GeoGebraApplet]: { appletId: string }
+  [Embed.HTMLImage]: { contentUrl: string }
+  [Embed.HTMLVideo]: { contentUrl: string }
+  [Embed.GeoGebraApplet]: { appletId: string }
 }
 
 /**
@@ -66,7 +66,7 @@ interface EmbeddingAdditonalInformation {
  */
 export type EmbeddingType<
   Hosts extends Hosting = Hosting,
-  Types extends Embedding = Embedding,
+  Types extends Embed = Embed,
 > = {
   [T in Types]: EmbeddingAdditonalInformation[T] & {
     type: T

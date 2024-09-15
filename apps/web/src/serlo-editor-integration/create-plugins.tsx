@@ -34,7 +34,7 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { Embedding, createMediaPlugin } from '@editor/plugins/media'
+import { Embed, createMediaPlugin } from '@editor/plugins/media'
 import {
   createArticleIntroduction,
   createMultimediaPlugin,
@@ -144,7 +144,7 @@ export function createPlugins({
       type: EditorPluginType.MediaImage,
       plugin: createMediaPlugin({
         name: EditorPluginType.MediaImage,
-        allowedEmbedding: [Embedding.HTMLImage],
+        allowedEmbedding: [Embed.HTMLImage],
       }),
       visibleInSuggestions: true,
     },
@@ -152,7 +152,7 @@ export function createPlugins({
       type: EditorPluginType.MediaVideo,
       plugin: createMediaPlugin({
         name: EditorPluginType.MediaVideo,
-        allowedEmbedding: [Embedding.HTMLVideo],
+        allowedEmbedding: [Embed.HTMLVideo],
       }),
       visibleInSuggestions: true,
     },

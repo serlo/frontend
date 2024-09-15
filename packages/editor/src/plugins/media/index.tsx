@@ -10,12 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
-import { Embedding, EmbeddingType, Hosting, Resource } from './services/types'
+import { Embed, EmbeddingType, Hosting, Resource } from './services/types'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { cn } from '@/helper/cn'
 
-export { Embedding } from './services/types'
+export { Embed as Embed } from './services/types'
 
 const state = object({
   resourceLocation: scalar<Resource | null>(null),
@@ -23,7 +23,7 @@ const state = object({
 type MediaState = typeof state
 interface MediaConfig {
   name: string
-  allowedEmbedding?: Embedding[]
+  allowedEmbedding?: Embed[]
 }
 type MediaProps = EditorPluginProps<MediaState, MediaConfig>
 
@@ -97,11 +97,11 @@ function MediaPlugin(props: MediaProps) {
 function EmbeddedMedia({ resource }: { resource: Resource }) {
   const embedding = resolveEmbedding(resource)
 
-  if (embedding.type === Embedding.HTMLImage) {
+  if (embedding.type === Embed.HTMLImage) {
     return <img src={embedding.contentUrl} />
-  } else if (embedding.type === Embedding.HTMLVideo) {
+  } else if (embedding.type === Embed.HTMLVideo) {
     return <video src={embedding.contentUrl} controls />
-  } else if (embedding.type === Embedding.GeoGebraApplet) {
+  } else if (embedding.type === Embed.GeoGebraApplet) {
     return <div>GeoGebraApplet with id: ${embedding.appletId}</div>
   }
 }
@@ -117,7 +117,7 @@ function resolveEmbedding(resource: Resource) {
 interface SelectMediaPanelProps {
   extraClassName?: string
   onSelect: (resource: Resource) => void
-  allowEmbedding?: Embedding[]
+  allowEmbedding?: Embed[]
 }
 
 function SelectMediaPanel({
@@ -151,7 +151,7 @@ function SelectMediaPanel({
 
 interface URLResolver {
   name: string
-  resolvableEmbeddings: Embedding[]
+  resolvableEmbeddings: Embed[]
   resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult>
 }
 type SyncOrAsync<T> = T | Promise<T>
@@ -181,7 +181,7 @@ const videoExtensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv']
 const urlResolvers: URLResolver[] = [
   {
     name: 'Resolve geogebra applet',
-    resolvableEmbeddings: [Embedding.GeoGebraApplet],
+    resolvableEmbeddings: [Embed.GeoGebraApplet],
     resolve: (url) => {
       if (
         url.hostname === 'www.geogebra.org' &&
@@ -191,7 +191,7 @@ const urlResolvers: URLResolver[] = [
           type: 'resourceFound',
           resource: {
             hostingService: Hosting.GeoGebra,
-            embeddingType: Embedding.GeoGebraApplet,
+            embeddingType: Embed.GeoGebraApplet,
             appletId: url.pathname.slice(3),
           },
         }
@@ -202,7 +202,7 @@ const urlResolvers: URLResolver[] = [
   },
   {
     name: 'Resolve image from CDN',
-    resolvableEmbeddings: [Embedding.HTMLImage],
+    resolvableEmbeddings: [Embed.HTMLImage],
     resolve: (url, signal) => {
       return new Promise((resolve) => {
         // Load the image to check whether the url belongs to an image
@@ -217,7 +217,7 @@ const urlResolvers: URLResolver[] = [
             type: 'resourceFound',
             resource: {
               hostingService: Hosting.CDN,
-              embeddingType: Embedding.HTMLImage,
+              embeddingType: Embed.HTMLImage,
               contentUrl: url.href,
             },
           })
@@ -240,7 +240,7 @@ const urlResolvers: URLResolver[] = [
   },
   {
     name: 'Resolve video from CDN',
-    resolvableEmbeddings: [Embedding.HTMLVideo],
+    resolvableEmbeddings: [Embed.HTMLVideo],
     resolve: (url, signal) => {
       return new Promise((resolve) => {
         // Load the image to check whether the url belongs to an image
@@ -255,7 +255,7 @@ const urlResolvers: URLResolver[] = [
             type: 'resourceFound',
             resource: {
               hostingService: Hosting.CDN,
-              embeddingType: Embedding.HTMLVideo,
+              embeddingType: Embed.HTMLVideo,
               contentUrl: url.href,
             },
           })
@@ -436,7 +436,7 @@ const embeddingResolver: ResourceResolver = {
   [Hosting.GeoGebra]: (resource) => {
     return {
       resourceLocation: resource,
-      type: Embedding.GeoGebraApplet,
+      type: Embed.GeoGebraApplet,
       appletId: resource.appletId,
     }
   },
