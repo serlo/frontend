@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useRef, useState } from 'react'
 
+import { Embedding } from './services/embedding'
 import { resolveEmbedding } from './services/resolve-embedding'
 import { Embed, Hosting, Resource } from './services/types'
 import { FaIcon } from '@/components/fa-icon'
@@ -55,7 +56,7 @@ function MediaPlugin(props: MediaProps) {
         />
       )}
       {resource !== null ? (
-        <EmbeddedMedia resource={resource} />
+        <Embedding resource={resource} />
       ) : (
         <SelectMediaPanel
           allowEmbedding={config.allowedEmbedding}
@@ -92,18 +93,6 @@ function MediaPlugin(props: MediaProps) {
         </button>
       </>
     )
-  }
-}
-
-function EmbeddedMedia({ resource }: { resource: Resource }) {
-  const embedding = resolveEmbedding(resource)
-
-  if (embedding.type === Embed.HTMLImage) {
-    return <img src={embedding.contentUrl} />
-  } else if (embedding.type === Embed.HTMLVideo) {
-    return <video src={embedding.contentUrl} controls />
-  } else if (embedding.type === Embed.GeoGebraApplet) {
-    return <div>GeoGebraApplet with id: ${embedding.appletId}</div>
   }
 }
 

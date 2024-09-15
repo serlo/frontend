@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 /**
  * Identifiers for the kind of hosting of a resource.
  */
@@ -81,3 +83,7 @@ export type ResourceResolver<
   H extends Hosting = Hosting,
   E extends Embed = Embed,
 > = (resource: Resource<H>) => Embedding<E>
+
+export type EmbeddingRenderer<E extends Embed> = (
+  props: Embedding<E>
+) => ReactNode
