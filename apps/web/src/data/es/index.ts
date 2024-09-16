@@ -169,7 +169,7 @@ export const instanceData = {
         theorem: "Teorema",
         proof: "Prueba"
       },
-      imageGalleryLightboxSrTitle: 'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
+      imageGalleryLightboxSrTitle: "Modo que muestra una sola imagen grande, con botones para navegar a otras imágenes en la galería",
       loadingVideoFailed: "Algo ha fallado",
       loadingAudioFailed: "Algo ha fallado"
     },
@@ -423,8 +423,8 @@ export const instanceData = {
       signUp: "Registrarse",
       verificationProblem: "En caso de que no lo hayas recibido",
       verificationLinkText: "Haz clic aquí para volver a solicitar el correo electrónico de verificación.",
-      badRole: 'You are only allowed to log in through VIDIS if you are a teacher.',
-      somethingWrong: 'Sorry, something went wrong!'
+      badRole: "Sólo se te permite iniciar sesión a través de VIDIS si eres una maestra o un maestro.",
+      somethingWrong: "¡Lo sentimos, algo no ha funcionado!"
     },
     keys: {
       ctrl: 'ctrl',
@@ -533,8 +533,8 @@ export const loggedInData = {
       addGroupedTextExercise: "Añade un grupo de ejercicios de texto",
       changeLicense: "Cambiar licencia",
       subscribe: "Suscribirse",
-      subscribeNotifications: 'Receive notifications',
-      subscribeNotificationsAndMail: 'Receive notifications and emails',
+      subscribeNotifications: "Recibir notificaciones",
+      subscribeNotificationsAndMail: "Recibir notificaciones y correos electrónicos",
       unsubscribeNotifications: "Cancelar suscripción",
       convert: "Convertir (beta)",
       history: "Historial",
@@ -606,10 +606,10 @@ export const loggedInData = {
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
       noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
       addPluginsModal: {
-        searchInputPlaceholder: 'Search...',
-        basicPluginsTitle: 'Content Elements',
+        searchInputPlaceholder: "Buscar...",
+        basicPluginsTitle: "Elementos del Contenido",
         interactivePluginsTitle: "Ejercicios",
-        noPluginsFoundTitle: 'Sorry, no elements match your search.',
+        noPluginsFoundTitle: "Lo sentimos, no hay elementos que coincidan con tu búsqueda.",
         noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
       },
       plugins: {
