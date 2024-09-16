@@ -15,7 +15,6 @@ import { MaxWidthDiv } from '../navigation/max-width-div'
 import { SecondaryMenu } from '../navigation/secondary-menu'
 import { NewsletterPopup } from '../scripts/newsletter-popup'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
-import { ABProvider, useABValue } from '@/contexts/ab'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   type EntityPageBase,
@@ -120,15 +119,13 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const abValue = useABValue(entityId)
-
   const noComments =
     page.kind === 'single-entity' &&
     (page.entityData.typename === UuidType.Page ||
       page.entityData.typename === UuidType.Exercise)
 
   return (
-    <ABProvider value={abValue}>
+    <>
       {survey && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
           <div className="relative z-[1200] mx-side w-[550px] rounded-xl bg-white text-center">
@@ -253,7 +250,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           )}
         </MaxWidthDiv>
       </div>
-    </ABProvider>
+    </>
   )
 
   function triggerPopup() {
