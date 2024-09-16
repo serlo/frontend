@@ -14,7 +14,7 @@ import { IsSerloContext } from './context/is-serlo-context'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
-import { useTriggerLearnerEvent } from './use-trigger-learner-event'
+import { useSerloHandleLearnerEvent } from './use-trigger-learner-event'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -47,7 +47,7 @@ export function SerloEditor({
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
   const [useStored, setUseStored] = useState(false)
-  const triggerLearnerEvent = useTriggerLearnerEvent()
+  const handleLearnerEvent = useSerloHandleLearnerEvent()
 
   const loggedInData = useLoggedInData()
   if (!loggedInData)
@@ -70,7 +70,7 @@ export function SerloEditor({
   // some plugins rely on static renderes
   editorRenderers.init(createRenderers())
 
-  editorLearnerEvent.init(triggerLearnerEvent)
+  editorLearnerEvent.init(handleLearnerEvent)
 
   return (
     <IsSerloContext.Provider value>

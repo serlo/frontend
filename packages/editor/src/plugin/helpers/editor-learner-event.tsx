@@ -17,19 +17,19 @@ export const editorLearnerEvent = (function (): {
   init: (triggerIn: Trigger) => void
   trigger: Trigger | null
 } {
-  let triggerLearnerEvent: Trigger | null = null
+  let handleLearnerEvent: Trigger | null = null
 
   // simple way to provide integrations to adapt to their learner tracking or xAPI needs
-  function init(triggerIn: Trigger) {
-    if (triggerLearnerEvent) return // only initialize once
+  function init(handler: Trigger) {
+    if (handleLearnerEvent) return // only initialize once
 
-    triggerLearnerEvent = triggerIn
+    handleLearnerEvent = handler
     // Ensure the highest integrity level that JS provides
-    Object.freeze(triggerLearnerEvent)
+    Object.freeze(handleLearnerEvent)
   }
 
   function trigger(data: LearnerEvent) {
-    triggerLearnerEvent?.(data)
+    handleLearnerEvent?.(data)
   }
 
   return { init, trigger }

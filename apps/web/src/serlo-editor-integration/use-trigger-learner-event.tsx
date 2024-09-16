@@ -5,12 +5,12 @@ import { useContext } from 'react'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { useEntityData } from '@/contexts/uuids-context'
 
-export function useTriggerLearnerEvent() {
+export function useSerloHandleLearnerEvent() {
   const { asPath } = useRouter()
   const { revisionId } = useEntityData()
   const { exerciseTrackingId } = useContext(ExerciseContext)
 
-  function triggerLearnerEvent(data: LearnerEvent) {
+  function handleLearnerEvent(data: LearnerEvent) {
     // eslint-disable-next-line no-console
     console.log(data)
 
@@ -26,5 +26,5 @@ export function useTriggerLearnerEvent() {
     })
   }
 
-  return triggerLearnerEvent
+  return handleLearnerEvent
 }
