@@ -232,14 +232,14 @@ export const instanceData = {
       noCurrentNotice: "Todavía no hay revisión aceptada.",
       unknownNotice: "Esta revisión fue aceptada una vez o no ha sido revisada.",
       by: "Por",
-      parentFallbackLink: "A contenido padre",
+      parentFallbackLink: "Al contenido principal",
       hasChanges: "Ha habido cambios en esta área",
       positionForGrouped: "Este/a %exercise% es parte de %title%.",
       helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
       changes: "Cambios",
-      author: "Autor",
+      author: "Autor/Autora",
       date: "Fecha",
       edit: "Editar",
       editLabel: "Crear una nueva revisión a partir de esta revisión específica",
@@ -610,7 +610,7 @@ export const loggedInData = {
         basicPluginsTitle: "Elementos del Contenido",
         interactivePluginsTitle: "Ejercicios",
         noPluginsFoundTitle: "Lo sentimos, no hay elementos que coincidan con tu búsqueda.",
-        noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
+        noPluginsFoundDescription: "Prueba con otras palabras clave o explora todos los elementos disponibles."
       },
       plugins: {
         anchor: {
@@ -621,7 +621,7 @@ export const loggedInData = {
         },
         box: {
           title: "Contenedor",
-          description: 'Insert a container for examples, quotes, warnings, theorems, notes…',
+          description: "Inserta un contenedor para ejemplos, citas, advertencias, teoremas, notas...",
           type: "Tipo de contenedor",
           typeTooltip: "Elige el tipo de caja",
           titlePlaceholder: "(título opcional)",
@@ -629,32 +629,32 @@ export const loggedInData = {
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
         dropzoneImage: {
-          title: 'Image Dropzones',
-          description: 'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
+          title: "Imágenes con zonas de arrastre",
+          description: "Crear un ejercicio en el que las respuestas dadas deben ser colocadas en la zona de arrastre correctas de una imagen o en un fondo en blanco.",
           backgroundImage: "Imagen de fondo",
-          addDropZone: 'Add drop zone',
-          removeDropZone: 'Remove drop zone',
-          dropzoneVisibility: 'Dropzone Visibility',
+          addDropZone: "Añadir zona de arrastre",
+          removeDropZone: "Quitar zona de arrastre",
+          dropzoneVisibility: "Visibilidad de la zona de arrastre",
           visibilityOptions: {
-            full: 'full',
-            partial: 'partial',
-            none: 'none'
+            full: "completa",
+            partial: "parcial",
+            none: "ninguna"
           },
           answers: {
             add: "Añadir respuesta",
             remove: "Eliminar respuesta",
             edit: "Editar respuesta",
             settings: "Configuración de respuestas",
-            answersPlaceholder: 'Here you will find your dropzone answers'
+            answersPlaceholder: "Aquí encontrarás tus respustas de la zona de arrastre"
           },
           answerZone: {
             description: "Descripción (opcional)",
-            sizeLabel: 'Configure the size of the drop zone',
+            sizeLabel: "Configurar el tamaño de la zona de arrastre",
             duplicate: "Duplicar zona",
             delete: "Eliminar zona\n"
           },
           backgroundType: {
-            description: 'Insert a background image or proceed with a blank background',
+            description: "Insertar una imagen de fondo o proceder con un fondo en blanco",
             // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
             image: "Imagen de fondo",
             // 'Hintergrundbild hinzufügen'
@@ -662,19 +662,19 @@ export const loggedInData = {
 
           },
           backgroundShapes: {
-            description: 'Choose the layout of the background',
+            description: "Elegir el diseño del fondo",
             // 'Lege die Ausrichtung des Hintergrundes fest'
-            square: 'Square',
+            square: "Cuadrado",
             //'Quadradtisch',
-            landscape: 'Landscape',
+            landscape: "Orientación Horizontal",
             //'Querformat',
-            portrait: 'Portrait' // 'Hochformat'
+            portrait: "Vertical" // 'Hochformat'
 
           },
           or: "ó",
           modal: {
             settings: "Configuración",
-            new: 'New Drop Zone',
+            new: "Nueva zona de arrastre",
             edit: "Editar respuesta",
             wrong: "Crear respuesta incorrecta"
           }
@@ -686,7 +686,7 @@ export const loggedInData = {
         },
         equations: {
           title: "Términos y ecuaciones",
-          description: 'Create term transformations and solve multi-line equations.',
+          description: "Crear transformaciones de términos y resolver ecuaciones multilínea.",
           leftHandSide: "Lado izquierdo",
           transformation: "transformación",
           mode: "Modalidad",
@@ -704,13 +704,13 @@ export const loggedInData = {
         },
         geogebra: {
           title: "Aplicación GeoGebra",
-          description: 'Embed GeoGebra materials applets via URL or ID.',
+          description: "Insertar el Material de la aplicación GeoGebra a través de URL o ID.",
           chooseApplet: "Elegir Applet",
           urlOrId: "URL o ID de GeoGebra"
         },
         highlight: {
           title: "Código fuente",
-          description: 'Write code and highlight it according to the programming language.',
+          description: "Escriba código y resalte según el lenguaje de programación.",
           clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
           enterHere: "Introduce tu código fuente aquí",
           language: "Idioma",
@@ -720,18 +720,18 @@ export const loggedInData = {
         },
         image: {
           title: "Imagen",
-          galleryTitle: 'Gallery',
-          description: 'Upload images or search online for freely licensed images.',
+          galleryTitle: "Galería",
+          description: "Subir imágenes o buscar en línea imágenes con licencia libre.",
           upload: "Subir imagen",
-          uploadMultiple: 'Upload Images',
+          uploadMultiple: "Subir imagenes",
           imageUrl: "URL de la imagen",
-          imageSource: 'Image Source',
-          imageSourceHelpText: 'Add the author or source of this image here',
+          imageSource: "Fuente de la Imagen",
+          imageSourceHelpText: "Añadir el autor o la fuente de esta imagen aquí",
           invalidImageUrl: "Error: URL inválida o incompleta",
-          invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
-          search: 'Suche',
-          searchOnline: 'Search online for licence-free images',
-          placeholderSource: 'Source (optional)',
+          invalidImageUrlMessage: "La URL que ingresaste es inválida o está incompleta. Por favor, asegúrate de haber copiado y pegado la URL completa correctamente. La URL debe comenzar con \"http://\"  o \"https://\".",
+          search: "Búsqueda",
+          searchOnline: "Buscar en línea imágenes sin licencia",
+          placeholderSource: "Fuente (opcional)",
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
           placeholderUploading: "Subiendo…",
           placeholderFailed: "Carga fallida...",
@@ -744,33 +744,33 @@ export const loggedInData = {
           altPlaceholder: "Describe lo que muestra la imagen",
           maxWidth: "Ancho máximo",
           maxWidthPlaceholder: "Introduce la anchura máxima",
-          helpTooltipText: 'More information and help related to Image Plugin',
+          helpTooltipText: "Más información y ayuda sobre el plugin de imágenes",
           change: "Cambiar imagen",
-          licence: 'Licence',
-          licenceHelpText: 'External content with the following licenses may be integrated on serlo.org:',
-          licenceFree: 'Licence Free Images',
-          pixabayText: 'Images will be fetched from Pixabay',
-          pixabayLoadedText: 'These images were loaded from Pixabay.',
-          searching: 'Searching for images ...',
-          loadingImage: 'Downloading image ...',
-          noImagesFound: 'No images found'
+          licence: "Licencia",
+          licenceHelpText: "El contenido externo con las siguientes licencias puede ser integrado en serlo.org:",
+          licenceFree: "Imágenes con licencia gratuita",
+          pixabayText: "Las imágenes serán obtenidas de Pixabay",
+          pixabayLoadedText: "Estas imágenes fueron cargadas desde Pixabay.",
+          searching: "Buscando imágenes...",
+          loadingImage: "Descargando imágenes...",
+          noImagesFound: "No se encontraron imágenes"
         },
         imageGallery: {
-          title: 'Image Gallery',
-          description: 'Add an image gallery to display related images in an organized way.',
-          modalScreenReaderTitle: 'Modal displaying single image options for caption and settings.',
-          addImages: 'Add Images',
-          tooManyImagesMessage: 'You can only upload %max_images% images in this element. Please select fewer images and try again.',
-          alreadyMaxImagesMessage: 'Maximum of %max_images% images reached. Please remove one or more images to upload new ones.'
+          title: "Galería de imágenes",
+          description: "Añadir una galería de imágenes para mostrar imágenes relacionadas de una manera organizada.",
+          modalScreenReaderTitle: "Ventana modal con opciones de imagen única para subtítulo y ajustes.",
+          addImages: "Agregar imágenes",
+          tooManyImagesMessage: "Solo puede subir imágenes %max_images% en este elemento. Por favor, selecciona menos imágenes e inténtelo de nuevo.",
+          alreadyMaxImagesMessage: "Se ha alcanzado el máximo de imágenes %max_images% . Por favor, elimina una o más imágenes para subir nuevas."
         },
         injection: {
           title: "serlo.org Contenido",
-          description: 'Embed an existing content from serlo.org via ID.',
+          description: "Insertar contenido ya existente de serlo.org a través del ID.",
           illegalInjectionFound: "Entrada ilegal encontrada",
           serloEntitySrc: "entidad de Serlo {{src}}",
           serloId: 'Serlo ID',
-          placeholder: 'Serlo ID (e.g. /1565)',
-          invalidStateWarning: "Please use a valid Serlo ID (just numbers). E.g. '/1555'"
+          placeholder: "Serlo ID (p.ej. 1565)",
+          invalidStateWarning: "Por favor, utiliza un ID de Serlo válido (sólo números). Ejemplo: '/1555'"
         },
         multimedia: {
           title: "Contenido multimedia asociado con el texto",
@@ -811,7 +811,7 @@ export const loggedInData = {
         },
         serloTable: {
           title: "Tabla",
-          description: 'Create a customizable table.',
+          description: "Crear una tabla personalizable.",
           mode: "Modalidad",
           columnHeaders: "Sólo las etiquetas de las columnas",
           rowHeaders: "Sólo las etiquetas de las filas",
@@ -827,17 +827,17 @@ export const loggedInData = {
         },
         spoiler: {
           title: "Spoiler/desplegable",
-          description: 'Insert a fold-out box, e.g. for additional content or help.',
+          description: "Insertar una caja desplegable, por ejemplo, para contenido adicional o ayuda.",
           enterATitle: "Introduzca un título"
         },
         solution: {
-          title: 'Non interactive exercise',
-          description: 'Create a non-interactive task that learners answer manually. You can still include solutions and strategies.'
+          title: "Ejercicio no interactivo",
+          description: "Crea un ejercicio no interactivo que los estudiantes respondan manualmente. Todavía puedes incluir soluciones y estrategias."
         },
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
-          placeholder: 'Write something...',
+          placeholder: "Escribe algo...",
           addButtonExplanation: "Haz clic para insertar un nuevo elemento",
           quote: "Cita",
           setColor: "Elegir color",
@@ -894,7 +894,7 @@ export const loggedInData = {
         },
         video: {
           title: "Vídeo",
-          description: 'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
+          description: "Insertar videos de plataformas como YouTube, Vimeo o Wikimedia Commons.",
           videoUrl: "URL del vídeo",
           videoDescription: "Descripción",
           titlePlaceholder: "Título",
@@ -909,16 +909,16 @@ export const loggedInData = {
         exercise: {
           title: "Ejercicio",
           description: "Ejercicio interactivo o basado en texto",
-          placeholder: 'Type the assignment here (Optional)',
+          placeholder: "Escribe el ejercicio aquí (opcional)",
           hideInteractiveInitially: {
-            info: 'Interactive element collapsed on load',
-            deactivate: 'Load Interactive Element visible',
-            activate: 'Load Interactive Element collapsed'
+            info: "Elemento interactivo plegado al inicio.",
+            deactivate: "Cargar elemento interactivo visible",
+            activate: "Cargar elemento interactivo visible"
           }
         },
         inputExercise: {
           title: "Ejercicio de respuesta escrita",
-          description: 'Create a task where an exact input or value can be entered and validated.'
+          description: "Crear un ejercicio donde se pueda introducir y validar una entrada o valor exactos."
         },
         textAreaExercise: {
           title: "Ejercicio de cajas de texto",
@@ -926,15 +926,15 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: "Ejercicio SC/MC",
-          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+          description: "Crear ejercicios de opción única o múltiple y adaptarlos con retroalimentación personalizada si es necesario."
         },
         h5p: {
           title: 'H5P',
-          description: 'Import an interactive task from H5P via URL.'
+          description: "Importar una tarea interactiva desde H5P vía URL."
         },
         blanksExercise: {
-          title: 'Fill In The Blanks (Typing)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
+          title: "Ejercicio de rellenar los espacios en blanco",
+          description: "Crear un ejercicio en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo.",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
@@ -951,8 +951,8 @@ export const loggedInData = {
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
         },
         blanksExerciseDragAndDrop: {
-          title: 'Fill In The Blanks (Drag&Drop)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
+          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
+          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
         }
       },
       templatePlugins: {
@@ -960,8 +960,8 @@ export const loggedInData = {
           titlePlaceholder: "Título",
           seoTitle: "Título para motores de búsqueda",
           seoDesc: "Descripción para los motores de búsqueda",
-          moveUpLabel: 'Move up',
-          moveDownLabel: 'Move down'
+          moveUpLabel: "Mover hacia arriba",
+          moveDownLabel: "Mover hacia abajo"
         },
         article: {
           writeShortIntro: "Escribe una breve introducción",
@@ -997,15 +997,15 @@ export const loggedInData = {
         course: {
           removeCoursePage: "Eliminar página del curso",
           addCoursePage: "Añadir página del curso",
-          confirmDelete: 'Are you sure you want to delete this course page?'
+          confirmDelete: "¿Estás seguro de que quieres eliminar este contenido?"
         },
         exercise: {
           scMcExercise: "Ejercicio de elección",
           inputExercise: "Ejercicio de respuesta escrita",
           textAreaExercise: "Ejercicio de cajas de texto",
-          dropzoneImage: 'Image Dropzones Exercise',
+          dropzoneImage: "Ejercicio de áreas de arrastre y soltado de imágenes",
           blanksExercise: "Ejercicio de rellenar los espacios en blanco",
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
+          blanksExerciseDragAndDrop: "Ejercicio de Llenar Los Espacios En Blanco (Arrastrar y soltar)",
           h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
@@ -1049,9 +1049,9 @@ export const loggedInData = {
           removeExercise: "Eliminar ejercicio",
           addExercise: "Añadir ejercicio",
           kindOfExerciseGroup: "Tipo de grupo de ejercicios",
-          addIntermediateTask: 'Add Intermediate Task',
-          removeIntermediateTask: 'Remove intermediate Task',
-          intermediateTask: 'Intermediate Task'
+          addIntermediateTask: "Añadir ejercicio intermedio",
+          removeIntermediateTask: "Eliminar ejercicio intermedio",
+          intermediateTask: "Ejercicio intermedio"
         }
       },
       edtrIo: {
