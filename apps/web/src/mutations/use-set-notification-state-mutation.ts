@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
 import { NotificationSetStateInput } from '@/fetcher/graphql-types/operations'
 
@@ -15,7 +15,7 @@ const mutation = gql`
 `
 
 export function useSetNotificationStateMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
 
   return async function (input: NotificationSetStateInput) {

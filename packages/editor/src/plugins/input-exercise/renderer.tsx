@@ -18,7 +18,6 @@ interface InputExersiseRendererProps {
   type: InputExerciseType
   unit: string
   answers: InputExerciseAnswer[]
-  onEvaluate?: (correct: boolean, val: string) => void
 }
 
 export interface FeedbackData {
@@ -31,7 +30,9 @@ export function InputExerciseRenderer({
   unit,
   answers,
   onEvaluate,
-}: InputExersiseRendererProps) {
+}: InputExersiseRendererProps & {
+  onEvaluate: (correct: boolean, value: string) => void
+}) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const exStrings = useInstanceData().strings.content.exercises
@@ -46,7 +47,8 @@ export function InputExerciseRenderer({
     const hasCorrectAnswer = !!answer?.isCorrect
     const customFeedbackNode = answer?.feedback ?? null
 
-    if (onEvaluate) onEvaluate(hasCorrectAnswer, value)
+    onEvaluate(hasCorrectAnswer, value)
+
     setFeedback({
       correct: hasCorrectAnswer,
       message: customFeedbackNode ?? (

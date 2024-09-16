@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { EntityUpdateLicenseInput } from '@/fetcher/graphql-types/operations'
 
@@ -15,7 +15,7 @@ const mutation = gql`
 `
 
 export function useEntityUpdateLicenseMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const successHandler = useSuccessHandler()
 
   return async function (input: EntityUpdateLicenseInput) {

@@ -40,20 +40,19 @@ export interface BlanksExerciseRendererProps {
   initialTextInBlank: 'empty' | 'correct-answer'
   extraDraggableAnswers?: Array<{ answer: string }>
   isEditing?: boolean
-  onEvaluate?: (correct: boolean) => void
 }
 
-export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
-  const {
-    childPlugin,
-    childPluginState,
-    mode,
-    extraDraggableAnswers,
-    initialTextInBlank,
-    isEditing,
-    onEvaluate,
-  } = props
-
+export function BlanksExerciseRenderer({
+  childPlugin,
+  childPluginState,
+  mode,
+  extraDraggableAnswers,
+  initialTextInBlank,
+  isEditing,
+  onEvaluate,
+}: BlanksExerciseRendererProps & {
+  onEvaluate?: (correct: boolean) => void
+}) {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState<boolean>(false)
 
   // Maps blankId to the learner feedback after clicking solution check button
@@ -279,11 +278,9 @@ export function BlanksExerciseRenderer(props: BlanksExerciseRendererProps) {
       newBlankAnswersCorrectList.set(blankState.blankId, { isCorrect })
     })
 
-    if (onEvaluate) {
-      onEvaluate(
-        [...newBlankAnswersCorrectList].every((entry) => entry[1].isCorrect)
-      )
-    }
+    onEvaluate?.(
+      [...newBlankAnswersCorrectList].every((entry) => entry[1].isCorrect)
+    )
 
     setFeedbackForBlanks(newBlankAnswersCorrectList)
     setIsFeedbackVisible(true)

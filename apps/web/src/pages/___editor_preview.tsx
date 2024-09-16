@@ -1,4 +1,5 @@
 import { Editor } from '@editor/core'
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
@@ -23,6 +24,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-trigger-learner-event'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -57,6 +59,8 @@ function Content() {
     'state',
     withDefault(StringParam, emptyState)
   )
+
+  const handleLearnerEvent = useSerloHandleLearnerEvent()
 
   const isNotEmpty = previewState !== emptyState
 
@@ -96,6 +100,8 @@ function Content() {
   )
 
   editorRenderers.init(createRenderers())
+
+  editorLearnerEvent.init(handleLearnerEvent)
 
   return (
     <main id="content" className="flex">

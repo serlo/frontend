@@ -1,4 +1,5 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -10,7 +11,6 @@ import type { ScMcExerciseRendererProps } from './renderer'
 
 export function McRenderer({
   answers,
-  onEvaluate,
   renderExtraAnswerContent,
 }: ScMcExerciseRendererProps) {
   const [showFeedback, setShowFeedback] = useState(false)
@@ -46,6 +46,12 @@ export function McRenderer({
                     const newArr = selectedArray.slice(0)
                     newArr[i] = !newArr[i]
                     setSelectedArray(newArr)
+
+                    editorLearnerEvent.trigger?.({
+                      verb: 'interacted',
+                      value: i,
+                      contentType: 'mc-exercise',
+                    })
                   }}
                 />
                 <label
@@ -82,7 +88,12 @@ export function McRenderer({
           className="serlo-button-blue mr-3 h-8"
           onClick={() => {
             setShowFeedback(true)
-            if (onEvaluate) onEvaluate(allCorrect, 'mc')
+            editorLearnerEvent.trigger?.({
+              verb: 'answered',
+              correct: allCorrect,
+              // value: selected,
+              contentType: 'mc-exercise',
+            })
           }}
         >
           {exStrings.check}
