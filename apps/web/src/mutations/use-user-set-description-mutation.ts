@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { useAuthentication } from '@/auth/use-authentication'
 import { UserSetDescriptionInput } from '@/fetcher/graphql-types/operations'
@@ -17,7 +17,7 @@ const mutation = gql`
 
 export function useUserSetDescriptionMutation() {
   const auth = useAuthentication()
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const successHandler = useSuccessHandler()
 
   return async function (input: UserSetDescriptionInput) {

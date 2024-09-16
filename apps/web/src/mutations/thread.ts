@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { useSWRConfig } from 'swr'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
 import { useEntityData } from '@/contexts/uuids-context'
 import {
@@ -31,7 +31,7 @@ const threadArchiveMutation = gql`
 
 export function useThreadArchivedMutation() {
   const { entityId } = useEntityData()
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
 
@@ -62,7 +62,7 @@ const setThreadStateMutation = gql`
 
 export function useSetThreadStateMutation() {
   const { entityId } = useEntityData()
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
 
@@ -90,7 +90,7 @@ const setCommentStateMutation = gql`
 
 export function useSetCommentStateMutation() {
   const { entityId } = useEntityData()
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
 
@@ -117,7 +117,7 @@ const createThreadMutation = gql`
 `
 
 export function useCreateThreadMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
 
@@ -143,7 +143,7 @@ const createCommentMutation = gql`
 `
 
 export function useCreateCommentMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
   const { entityId } = useEntityData()
@@ -171,7 +171,7 @@ const editCommentMutation = gql`
 `
 
 export function useEditCommentMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
   const { entityId } = useEntityData()
@@ -199,7 +199,7 @@ const setThreadStatusMutation = gql`
 `
 
 export function useSetThreadStatusMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
 
   return async function (input: ThreadSetThreadStatusInput) {
     return await mutationFetch(setThreadStatusMutation, input)
