@@ -23,10 +23,10 @@ const resizeHandles: ResizableProps['resizeHandles'] = ['ne', 'se', 'sw', 'nw']
 export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
   const { answerZone, canvasSize } = args
   const [canvasWidth, canvasHeight] = canvasSize
-  const left = answerZone.position.left.get()
-  const top = answerZone.position.top.get()
-  const height = answerZone.layout.height.get()
-  const width = answerZone.layout.width.get()
+  const left = answerZone.position.left.value
+  const top = answerZone.position.top.value
+  const height = answerZone.layout.height.value
+  const width = answerZone.layout.width.value
 
   // Calculate the initial absolute position based on percentage values from plugin state
   const [positionState, setPositionState] = useState<PositionState>({

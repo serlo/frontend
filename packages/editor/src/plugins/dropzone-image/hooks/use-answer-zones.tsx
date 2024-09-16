@@ -32,7 +32,7 @@ export function useAnswerZones(
   )
 
   const selectAnswerZone = (id: string) => {
-    const answerZone = answerZones.find((zone) => zone.id.get() === id)
+    const answerZone = answerZones.find((zone) => zone.id.value === id)
     if (answerZone) {
       setCurrentAnswerZone(answerZone)
     }
@@ -55,29 +55,29 @@ export function useAnswerZones(
   }
 
   const duplicateAnswerZone = (idToDuplicate: string) => {
-    const toCopy = answerZones.find((zone) => zone.id.get() === idToDuplicate)
+    const toCopy = answerZones.find((zone) => zone.id.value === idToDuplicate)
     if (!toCopy) return
     const currentLength = answerZones.length
     const newZone = {
       id: `answerZone-${currentLength}`,
-      name: toCopy.name.get(),
+      name: toCopy.name.value,
       position: {
-        left: toCopy.position.left.get() + defaultAnswerZonePosition.left,
-        top: toCopy.position.top.get() + defaultAnswerZonePosition.top,
+        left: toCopy.position.left.value + defaultAnswerZonePosition.left,
+        top: toCopy.position.top.value + defaultAnswerZonePosition.top,
       },
       layout: {
-        width: toCopy.layout.width.get(),
-        height: toCopy.layout.height.get(),
+        width: toCopy.layout.width.value,
+        height: toCopy.layout.height.value,
       },
       answers: toCopy.answers.map((answer) => ({
         id: uuidv4(),
         image: {
           plugin: EditorPluginType.Image,
-          state: getAnswerZoneImageState(answer.image.get()),
+          state: getAnswerZoneImageState(answer.image.id),
         },
         text: {
           plugin: EditorPluginType.Text,
-          state: getAnswerZoneText(answer.text.get()),
+          state: getAnswerZoneText(answer.text.id),
         },
       })),
     }
@@ -90,7 +90,7 @@ export function useAnswerZones(
   useHotkeys('backspace, del', (event) => {
     if (!currentAnswerZone) return
     const index = answerZones.findIndex(
-      ({ id }) => id.get() === currentAnswerZone.id.get()
+      ({ id }) => id.value === currentAnswerZone.id.value
     )
     index !== -1 && answerZones.remove(index)
     event.preventDefault()
@@ -103,7 +103,7 @@ export function useAnswerZones(
 
   useHotkeys(['ctrl+v, meta+v'], (event) => {
     if (!answerZoneClipboardItem) return
-    const idToDuplicate = answerZoneClipboardItem.id.get()
+    const idToDuplicate = answerZoneClipboardItem.id.value
     duplicateAnswerZone(idToDuplicate)
     event.preventDefault()
   })
