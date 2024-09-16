@@ -5,6 +5,7 @@ import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
+import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
 import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
@@ -134,11 +135,11 @@ export function createPlugins({
   ]
 
   const allPlugins = [
-    // TODO: Add icon
     {
       type: EditorPluginType.Media,
       plugin: createMediaPlugin(),
       visibleInSuggestions: true,
+      icon: <IconFallback />,
     },
     {
       type: EditorPluginType.MediaImage,
@@ -147,6 +148,7 @@ export function createPlugins({
         allowedEmbedding: [Embed.HTMLImage],
       }),
       visibleInSuggestions: true,
+      icon: <IconImage />,
     },
     {
       type: EditorPluginType.MediaVideo,
@@ -155,6 +157,7 @@ export function createPlugins({
         allowedEmbedding: [Embed.HTMLVideo],
       }),
       visibleInSuggestions: true,
+      icon: <IconVideo />,
     },
     {
       type: EditorPluginType.Text,
