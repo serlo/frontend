@@ -19,7 +19,7 @@ import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
 import { sharedUserFragments } from '@/fetcher/user/query-by-username'
 import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from '@/mutations/helper/use-mutation-fetch'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 const ContentPage: NextPage = () => {
@@ -48,7 +48,7 @@ const titles = [
 ]
 
 const BotHunt = () => {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const [removedIds, setRemovedIds] = useState<number[]>([])
   const manualInputRef = useRef<HTMLInputElement>(null)
   editorRenderers.init(createRenderers())

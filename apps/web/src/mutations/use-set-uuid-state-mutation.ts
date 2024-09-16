@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { csrReload } from '../helper/csr-reload'
 import { UuidSetStateInput } from '@/fetcher/graphql-types/operations'
@@ -16,7 +16,7 @@ const mutation = gql`
 `
 
 export function useSetUuidStateMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const successHandler = useSuccessHandler()
 
   return async function (input: UuidSetStateInput) {
