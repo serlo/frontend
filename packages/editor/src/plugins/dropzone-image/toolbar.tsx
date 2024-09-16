@@ -3,7 +3,6 @@ import {
   PreviewButton,
   ToolbarSelect,
 } from '@editor/editor-ui/plugin-toolbar'
-import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import type { ImageProps } from '@editor/plugins/image'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
@@ -14,6 +13,7 @@ import { useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
+import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 import { cn } from '@/helper/cn'
 
 interface DropzoneImageToolbarProps {
@@ -43,7 +43,6 @@ export function DropzoneImageToolbar({
   const dropzoneStrings = editorStrings.plugins.dropzoneImage
   const imageStrings = editorStrings.plugins.image
 
-  const pluginControls = <PluginDefaultTools pluginId={id} />
   const visibilityOptions = Object.entries(dropzoneStrings.visibilityOptions)
 
   if (dropzoneVisibility === undefined) return null
@@ -80,7 +79,7 @@ export function DropzoneImageToolbar({
           />
         </>
       }
-      pluginControls={pluginControls}
+      pluginControls={<InteractiveToolbarTools id={id} />}
     />
   )
 
