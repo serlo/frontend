@@ -1,15 +1,16 @@
-import { PreviewButton, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { ImageProps } from '@editor/plugins/image'
 import {
+  runChangeDocumentSaga,
   selectDocument,
   selectStaticDocument,
+  useAppDispatch,
   useAppSelector,
 } from '@editor/store'
 import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
@@ -28,7 +29,6 @@ import {
   DropzoneVisibility,
   ModalType,
 } from './types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function DropzoneImageEditor(props: DropzoneImageProps) {
   const { state, id, focused } = props
@@ -39,9 +39,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     extraDraggableAnswers,
   } = state
 
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
-
-  const visibilityOptions = Object.entries(pluginStrings.visibilityOptions)
+  const dispatch = useAppDispatch()
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
@@ -55,7 +53,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   const backgroundImagePluginState = useAppSelector((state) =>
     selectDocument(
       state,
-      isBackgroundImagePluginDefined ? backgroundImage.get() : null
+      isBackgroundImagePluginDefined ? backgroundImage.id : null
     )
   ) as EditorImageDocument
   const backgroundImageUrlFromPlugin =
@@ -71,13 +69,24 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     duplicateAnswerZone,
   } = useAnswerZones(answerZones)
 
-  const backgroundType = state.backgroundType.get()
+  const handleChangeImageButtonClick = useCallback(() => {
+    if (!backgroundImage.defined) return
+
+    dispatch(
+      runChangeDocumentSaga({
+        id: backgroundImage.id,
+        state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
+      })
+    )
+  }, [backgroundImage, dispatch])
+
+  const backgroundType = state.backgroundType.value
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
   const isBackgroundTypeImage = backgroundType === BackgroundType.Image
 
   if (backgroundType === '') return <BackgroundTypeSelect {...props} />
 
-  const canvasShape = state.canvasShape.get() as BackgroundShape
+  const canvasShape = state.canvasShape.value as BackgroundShape
 
   if (!canvasShape && isBackgroundTypeBlank) {
     return <BackgroundShapeSelect {...props} />
@@ -87,6 +96,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   const isBackgroundSelected =
     isBackgroundTypeBlank || (isBackgroundTypeImage && hasBackgroundImageUrl)
 
+  // show image selection screen
   if (!isBackgroundSelected && isBackgroundImagePluginDefined) {
     return backgroundImage.render()
   }
@@ -101,35 +111,25 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         currentAnswerType,
         selectAnswerZone,
         selectCurrentAnswer,
-        dropzoneVisibility: dropzoneVisibility.get() as DropzoneVisibility,
+        dropzoneVisibility: dropzoneVisibility.value as DropzoneVisibility,
         extraDraggableAnswers,
       }}
     >
       {focused && (
         <DropzoneImageToolbar
           id={id}
+          onChangeImageButtonClick={handleChangeImageButtonClick}
           showSettingsButton={isBackgroundTypeImage}
           backgroundImageState={{
-            id: isBackgroundImagePluginDefined ? backgroundImage.get() : null,
+            id: isBackgroundImagePluginDefined ? backgroundImage.id : null,
             state: backgroundImagePluginState?.state as unknown as
               | ImageProps['state']
               | undefined,
           }}
-        >
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
-          <ToolbarSelect
-            tooltipText={pluginStrings.dropzoneVisibility}
-            value={dropzoneVisibility.value}
-            changeValue={(value) => dropzoneVisibility.set(value)}
-            options={visibilityOptions.map(([key, val]) => ({
-              text: val.charAt(0).toUpperCase() + val.slice(1),
-              value: key,
-            }))}
-          />
-        </DropzoneImageToolbar>
+          dropzoneVisibility={dropzoneVisibility}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
       )}
       {previewActive ? (
         <DropzoneImageStaticRenderer {...staticDocument} />

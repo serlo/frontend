@@ -169,6 +169,7 @@ export const instanceData = {
         theorem: "Satz",
         proof: "Beweis"
       },
+      imageGalleryLightboxSrTitle: "Modale Anzeige eines großen Bildes mit Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren",
       loadingVideoFailed: "Etwas ist schiefgelaufen",
       loadingAudioFailed: "Etwas ist schiefgelaufen"
     },
@@ -251,9 +252,6 @@ export const instanceData = {
       reviewers: "Reviewer*innen",
       reviewersUrl: "/community/202923/rollen-der-serlo-community",
       help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
-      help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: "https://community.serlo.org/direct/Alexandra-Wolfram",
       help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
       guideline: "Anleitung",
       guidelineUrl: "/140473",
@@ -737,7 +735,6 @@ export const loggedInData = {
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
           placeholderFailed: "Hochladen fehlgeschlagen",
-          tooManyImagesError: "Du kannst maximal acht Bilder hochladen.",
           retry: "Erneut versuchen",
           failedUpload: "Hochladen fehlgeschlagen",
           captionPlaceholder: "Bildunterschrift (optional)",
@@ -762,7 +759,9 @@ export const loggedInData = {
           title: "Bilder Galerie",
           description: "Füge eine Bildergalerie hinzu, um zusammenhängende Bilder organisiert darzustellen.",
           modalScreenReaderTitle: "Popup, das ein einzelnes Bild anzeigt mit Einstellungen und optionaler Bildunterschrift.",
-          addImages: "Bilder hinzufügen"
+          addImages: "Bilder hinzufügen",
+          tooManyImagesMessage: "Du kannst maximal %max_images% Bilder in der Galerie hochladen. Bitte wähle weniger Bilder aus und versuche es erneut.",
+          alreadyMaxImagesMessage: "Maximal %max_images% Bilder erlaubt. Bitte entferne ein oder mehrere Bilder, um neue hochzuladen."
         },
         injection: {
           title: "serlo.org Inhalt",
@@ -934,8 +933,8 @@ export const loggedInData = {
           description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
-          title: "Lückentext",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die korrekten Antworten eingetippt werden.",
+          title: "Lückentext (Eintippen)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden.",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -950,6 +949,10 @@ export const loggedInData = {
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
+        },
+        blanksExerciseDragAndDrop: {
+          title: "Lückentext (Drag&Drop)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
         }
       },
       templatePlugins: {
@@ -1002,6 +1005,7 @@ export const loggedInData = {
           textAreaExercise: "Freitext",
           dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
+          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",

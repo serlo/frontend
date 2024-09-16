@@ -19,6 +19,7 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.H5p,
   EditorPluginType.TextAreaExercise,
   EditorPluginType.BlanksExercise,
+  EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.DropzoneImage,
 ] as const
 

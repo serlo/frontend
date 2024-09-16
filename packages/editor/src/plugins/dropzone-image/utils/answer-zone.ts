@@ -37,9 +37,9 @@ export const getAnswerZoneText = (answerZoneTextId: string) => {
 }
 
 export const convertAnswer = (answer: AnswerData) => {
-  const id = answer.image.get()
+  const id = answer.image.id
   const imageUrl = getAnswerZoneImageSrc(id)
-  const zoneTextId = answer.text.get()
+  const zoneTextId = answer.text.id
   const text = getAnswerZoneText(zoneTextId)
   return { id, imageUrl, text }
 }

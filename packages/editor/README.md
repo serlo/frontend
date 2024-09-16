@@ -32,7 +32,7 @@ function MyCustomSerloEditor({ initialState }: { initialState: InitialState }) {
         console.log(`New state: `, newState)
       }}
     >
-      {({ editor }) => (
+      {(editor) => (
         {/* Optionally configure plugins or i18n strings via the editor object */}
         <div>
           {/* Renders the actual editor content */}
@@ -106,6 +106,28 @@ See below for the current API specification.
 - **`_testingSecret` (optional)**: Required to use Image plugin in testing. A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
+
+### `plugins` constant and `Plugin` enum
+
+Exports a record with following structure which you can use to create your own plugin menu. This is useful when you for example want to integrate the Serlo Editor as a block / part of another editor.
+
+```TypeScript
+[key: Plugin]: {
+  de: {
+    name: string
+    description: string
+  }
+  en: {
+    name: string
+    description: string
+  }
+  icon: string
+  type: Plugin
+  initialState: PluginState
+}
+```
+
+You can iterate over this structure by using `Object.values(plugins)` to get them as an array, which you can use to sort, filter and modify to your liking. Alternatively you can access an entry as for example `plugins[Plugin.SingleChoiceExercise]`.
 
 ## Releasing a new version to npm
 

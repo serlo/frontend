@@ -4,15 +4,17 @@ import { GridImage } from '../../types'
 
 interface StaticCarouselProps {
   images: GridImage[]
+  onImageClick: (index: number) => void
 }
 
-export function StaticCarousel({ images }: StaticCarouselProps) {
+export function StaticCarousel({ images, onImageClick }: StaticCarouselProps) {
   return (
     <div className="flex snap-x snap-mandatory items-center gap-x-4 overflow-x-auto px-[10%]">
       {images.map((image, index) => (
-        <div
+        <button
           key={index}
           className="w-full flex-shrink-0 snap-center snap-always text-center"
+          onClick={() => onImageClick(index)}
         >
           <img
             src={image.src}
@@ -27,7 +29,7 @@ export function StaticCarousel({ images }: StaticCarouselProps) {
             ) : null}
             <div className="text-sm text-gray-400">{`${index + 1}/${images.length}`}</div>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   )

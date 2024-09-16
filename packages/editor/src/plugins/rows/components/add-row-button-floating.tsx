@@ -16,36 +16,24 @@ export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
   const rowsStrings = useEditorStrings().plugins.rows
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const baseStyles = `
-    opacity-0 transition-opacity duration-300
-    relative mb-6 flex items-center px-8 w-full
-    bg-gradient-to-b from-transparent via-white to-transparent
-  `
-
-  const stateStyles = `
-    text-editor-primary-200
-    hover:opacity-100 hover:z-50
-    focus:opacity-100 focus:z-50
-    ${focused ? 'opacity-40' : ''}
-    focus-visible:text-editor-primary-200 
-  `
-
-  const interactionStyles = 'cursor-pointer'
-
   return (
     <button
       ref={buttonRef}
-      className={cn(baseStyles, stateStyles, interactionStyles)}
+      className={cn(
+        `
+        relative -top-4 mb-6 flex w-full cursor-pointer items-center bg-gradient-to-b
+        from-transparent via-white to-transparent px-8 text-editor-primary-200 opacity-0
+        transition-opacity duration-300 hover:z-50 hover:opacity-100 focus:z-50 focus:opacity-100
+        `,
+        focused && 'opacity-40'
+      )}
       onClick={onClick}
     >
-      {/* Divider line */}
       <span className="flex-grow border-t-2 border-gray-300" />
       <span className="serlo-tooltip-trigger px-6 text-2xl">
-        {/* Add button */}
         <FaIcon icon={faCirclePlus} />
         <EditorTooltip text={rowsStrings.addAnElement} />
       </span>
-      {/* Divider line */}
       <span className="flex-grow border-t-2 border-gray-300" />
     </button>
   )

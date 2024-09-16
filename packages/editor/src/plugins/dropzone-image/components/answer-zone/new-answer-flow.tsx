@@ -32,7 +32,7 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
-    : (answerZones?.find(({ id }) => id.get() === zoneId)
+    : (answerZones?.find(({ id }) => id.value === zoneId)
         ?.answers as typeof extraDraggableAnswers)
 
   const goToStepOne = (newStepOneType: AnswerType) => {

@@ -216,7 +216,7 @@ function removeGlobalStylesPlugin(): Plugin {
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/editor-web-component.tsx'),
+      entry: resolve(__dirname, 'src/index.tsx'),
       name: 'EditorWebComponent',
       fileName: 'serlo-editor-web-component',
       formats: ['es'],

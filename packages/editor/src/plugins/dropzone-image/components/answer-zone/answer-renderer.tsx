@@ -28,13 +28,13 @@ export function AnswerRenderer({
 
   useEffect(() => {
     if (isAnswerTypeText) {
-      dispatch(focus(answer.text.get()))
+      dispatch(focus(answer.text.id))
     }
   })
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
-    : answerZones?.find(({ id }) => id.get() === zoneId)?.answers
+    : answerZones?.find(({ id }) => id.value === zoneId)?.answers
 
   if (!answersList || answerIndex >= answersList.length) return <></>
 

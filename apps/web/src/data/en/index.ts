@@ -179,6 +179,8 @@ export const instanceData = {
         theorem: 'Theorem',
         proof: 'Proof',
       },
+      imageGalleryLightboxSrTitle:
+        'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
       loadingVideoFailed: 'Something went wrong',
       loadingAudioFailed: 'Something went wrong',
     },
@@ -832,8 +834,6 @@ export const loggedInData = {
             'Add an image gallery to display related images in an organized way.',
           modalScreenReaderTitle:
             'Modal displaying single image options for caption and settings.',
-          lightboxScreenReaderTitle:
-            'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
           addImages: 'Add Images',
           tooManyImagesMessage:
             'You can only upload %max_images% images in this element. Please select fewer images and try again.',
@@ -1022,9 +1022,9 @@ export const loggedInData = {
           description: 'Import an interactive task from H5P via URL.',
         },
         blanksExercise: {
-          title: 'Fill In The Blanks',
+          title: 'Fill In The Blanks (Typing)',
           description:
-            'Create a fill-in-the-gap text or table where the correct answers are typed in.',
+            'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -1039,6 +1039,11 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description:
+            'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',
         },
       },
       templatePlugins: {
@@ -1093,6 +1098,7 @@ export const loggedInData = {
           textAreaExercise: 'Text Box Exercise',
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
+          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',

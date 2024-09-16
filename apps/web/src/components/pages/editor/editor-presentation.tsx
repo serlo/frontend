@@ -2,6 +2,7 @@ import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import dynamic from 'next/dynamic'
 
+import { EditorPresentationDe } from './de/editor-presentation-de'
 import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
@@ -11,6 +12,8 @@ import { Lazy } from '@/components/content/lazy'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
+import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
@@ -24,6 +27,12 @@ const h2Class =
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 
 export function EditorPresentation() {
+  const { lang } = useInstanceData()
+
+  if (lang === Instance.De) {
+    return <EditorPresentationDe />
+  }
+
   editorRenderers.init(createRenderers())
 
   const title = 'Serlo Editor: Seamless Creation of Digital Learning Resources'
