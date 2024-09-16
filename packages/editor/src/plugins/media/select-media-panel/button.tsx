@@ -1,4 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+
 import { FaIcon } from '@/components/fa-icon'
 
 interface SelectMediaPanelButtonProps {
