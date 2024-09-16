@@ -239,7 +239,7 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: "Cambios",
-      author: "Autor/Autora",
+      author: "Autor",
       date: "Fecha",
       edit: "Editar",
       editLabel: "Crear una nueva revisión a partir de esta revisión específica",
@@ -301,7 +301,7 @@ export const instanceData = {
       directMessage: "Mensaje directo",
       goToChat: "Ir al chat",
       registerChat: "Registrate para el chat",
-      inviteToChat: "Invitar a Chat",
+      inviteToChat: "Invita al chat",
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
         part2: "Puedes invitar a %username% al chat para enviarle mensajes directos.",
@@ -391,7 +391,7 @@ export const instanceData = {
         code1040001: "Registrarse",
         code1040002: "Inscríbete a través de  „Mein Bildungsraum“ (programa de Alemania)",
         code1040003: "Continuar",
-        code1050001: "Tus cambios han sido guardados! 🎉",
+        code1050001: "¡Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
         code1060002: "Se ha enviado un correo con un enlace de recuperación a la dirección de correo electrónico que proporcionaste. %break% Comprueba tu buzón y haz clic en el enlace que contiene.",
         code1070003: "Guardar",
@@ -418,7 +418,7 @@ export const instanceData = {
       passwordTooSimilar: "Lo sentimos, esta contraseña es demasiado parecida a tu correo electrónico o nombre de usuario.",
       emailInvalid: "Lo sentimos, esta dirección de correo electrónico no es válida. Comprueba si hay errores de escritura.",
       registrationCheckboxAgreement: "Estoy de acuerdo con los %privacypolicy% y %terms%. Puedo recibir notificaciones por correo electrónico de Serlo.org y puedo cancelarlas en cualquier momento.",
-      consentNeededBeforeProceeding: "Necesitamos su consentimiento antes de proceder.",
+      consentNeededBeforeProceeding: "Necesitamos tu consentimiento antes de proceder.",
       terms: "Términos",
       signUp: "Registrarse",
       verificationProblem: "En caso de que no lo hayas recibido",
@@ -428,7 +428,7 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: "retorno"
+      return: "volver"
     },
     eventLog: {
       currentEvents: "Eventos recientes",
@@ -493,7 +493,7 @@ export const instanceLandingData = {
 };
 export const serverSideStrings = {
   title: "¡Aprende con Serlo!",
-  topicTitleAffix: "Básicos y ejercicios"
+  topicTitleAffix: "Fundamentos y ejercicios"
 };
 export const loggedInData = {
   authMenu: [{
@@ -668,7 +668,7 @@ export const loggedInData = {
             //'Quadradtisch',
             landscape: "Orientación Horizontal",
             //'Querformat',
-            portrait: "Vertical" // 'Hochformat'
+            portrait: "Orientación Vertical" // 'Hochformat'
 
           },
           or: "ó",
@@ -713,10 +713,10 @@ export const loggedInData = {
           description: "Escriba código y resalte según el lenguaje de programación.",
           clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
           enterHere: "Introduce tu código fuente aquí",
-          language: "Idioma",
+          language: "Lenguaje de programación",
           languageTooltip: "Elegir idioma para resaltado de sintaxis",
           showLineNumbers: "Números de línea",
-          lineNumbersTooltip: "¿Deben ver los usuarios los números de línea?"
+          lineNumbersTooltip: "¿Deberían los visitantes visualizar los números de línea?"
         },
         image: {
           title: "Imagen",
@@ -933,14 +933,14 @@ export const loggedInData = {
           description: "Importar una tarea interactiva desde H5P vía URL."
         },
         blanksExercise: {
-          title: "Ejercicio de rellenar los espacios en blanco",
+          title: "Completar Los Espacios En Blanco (escribiendo)",
           description: "Crear un ejercicio en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo.",
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
           modes: {
             typing: "Tecleando/escribir",
-            'drag-and-drop': "Arrastrar y colocar"
+            'drag-and-drop': "Arrastrar y soltar"
           },
           dummyAnswers: "Respuestas incorrectas adicionales",
           addDummyAnswer: "Añadir una respuesta incorrecta",
@@ -1017,7 +1017,7 @@ export const loggedInData = {
           chooseType: "Elige el tipo de ejercicio",
           unit: "Unidad",
           addAnswer: "Añadir respuesta",
-          enterTheValue: "Introduzca el valor",
+          enterTheValue: " Introduce el valor",
           feedbackPlaceholder: "Añade un mensaje de retroalimentación para esta respuesta",
           yourSolution: "Tu solución",
           types: {
@@ -1143,12 +1143,12 @@ export const loggedInData = {
         copyButtonText: "Copiar a %type%",
         moveSuccess: "Movido exitosamente",
         copySuccess: "Copiado exitosamente",
-        exerciseFolderNotice: "En este momento no es posible copiar o mover el tipo %exerciseFolder%. %break% Por favor, crea una nueva carpeta y mueve el contenido en lo posible."
+        exerciseFolderNotice: "Copiar o mover el tipo %exerciseFolder% no está soportado en este momento. %break% Por favor, crea una nueva carpeta y mueve el contenido allí."
       },
       deleteAdd: {
-        confirmDelete: "¿Está seguro de que deseas borrar esta tarea?",
+        confirmDelete: "¿Está seguro de que deseas borrar esta tarea/ejercicio?",
         addSuccess: "Asignado con éxito, recargando  …",
-        addNewTitle: "Añadir nueva tarea",
+        addNewTitle: "Añadir nuevo ejercicio",
         addButtonText: "Asignar"
       },
       sort: {
