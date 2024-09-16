@@ -52,16 +52,20 @@ export function DropzoneImageToolbar({
       pluginType={EditorPluginType.DropzoneImage}
       pluginSettings={
         <>
-          <button
-            onClick={() => setShowSettingsModal(true)}
-            className={cn(`
-            mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
-            hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
-          `)}
-          >
-            {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
-          </button>
-          {renderSettingsModal()}
+          {showSettingsButton ? (
+            <>
+              <button
+                onClick={() => setShowSettingsModal(true)}
+                className={cn(`
+                mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
+                hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
+                `)}
+              >
+                {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+              </button>
+              {renderSettingsModal()}
+            </>
+          ) : null}
           {previewActive !== undefined && setPreviewActive !== undefined ? (
             <PreviewButton
               previewActive={previewActive}
@@ -84,7 +88,7 @@ export function DropzoneImageToolbar({
   )
 
   function renderSettingsModal() {
-    if (!showSettingsButton || !backgroundImageState) return null
+    if (!backgroundImageState) return null
 
     return (
       <ModalWithCloseButton
