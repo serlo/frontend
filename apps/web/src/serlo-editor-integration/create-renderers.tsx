@@ -235,7 +235,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.BlanksExerciseDragAndDrop,
-        renderer: BlanksSerloStaticRenderer,
+        renderer: BlanksExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,
