@@ -2,7 +2,6 @@ import {
   faArrowUpFromBracket,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons'
-import React from 'react'
 
 import { SelectMediaPanelButton } from './button'
 import { SelectMediaByUrl } from './select-by-url'
