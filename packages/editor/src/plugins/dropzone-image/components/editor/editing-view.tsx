@@ -35,7 +35,7 @@ export function EditingView({
   return (
     <div className="mx-side">
       <EditorCanvasModal
-        answerZones={answerZones}
+        state={state}
         currentAnswer={{
           zone: currentAnswerZone,
           index: currentAnswerIndex,

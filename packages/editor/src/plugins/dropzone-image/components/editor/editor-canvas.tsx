@@ -5,7 +5,12 @@ import { useDrop } from 'react-dnd'
 
 import { defaultLargeCanvasDimension } from './background-shape-select'
 import type { DropzoneImageProps } from '../..'
-import { type AnswerType, AnswerZoneState, ModalType } from '../../types'
+import {
+  type AnswerType,
+  AnswerZoneState,
+  ModalType,
+  type DropzoneVisibility,
+} from '../../types'
 import { getPercentageRounded } from '../../utils/percentage'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { cn } from '@/helper/cn'
@@ -126,6 +131,9 @@ export function EditorCanvas({
             key={index}
             answerZone={answerZone}
             canvasSize={[canvasWidth, canvasHeight]}
+            dropzoneVisibility={
+              state.dropzoneVisibility.value as DropzoneVisibility
+            }
             onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
               selectAnswerZone(id)

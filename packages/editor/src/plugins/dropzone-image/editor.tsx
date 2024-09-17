@@ -9,21 +9,15 @@ import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
 import { BackgroundTypeSelect } from './components/editor/background-type-select'
 import { EditingView } from './components/editor/editing-view'
-import { AnswerZonesContext } from './context/context'
 import { DropzoneImageToolbar } from './toolbar'
-import { BackgroundType, DropzoneVisibility } from './types'
+import { BackgroundType } from './types'
 
 export function DropzoneImageEditor({
   state,
   id,
   focused,
 }: DropzoneImageProps) {
-  const {
-    answerZones,
-    backgroundImage,
-    dropzoneVisibility,
-    extraDraggableAnswers,
-  } = state
+  const { backgroundImage, dropzoneVisibility } = state
 
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
@@ -53,13 +47,7 @@ export function DropzoneImageEditor({
   const showShapeSelect = !state.canvasShape.value && isBackgroundTypeBlank
 
   return (
-    <AnswerZonesContext.Provider
-      value={{
-        answerZones,
-        dropzoneVisibility: dropzoneVisibility.value as DropzoneVisibility,
-        extraDraggableAnswers,
-      }}
-    >
+    <>
       {focused ? (
         <DropzoneImageToolbar
           id={id}
@@ -83,6 +71,6 @@ export function DropzoneImageEditor({
           staticDocument={staticDocument}
         />
       )}
-    </AnswerZonesContext.Provider>
+    </>
   )
 }

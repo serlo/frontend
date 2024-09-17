@@ -8,7 +8,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface EditorCanvasModalProps {
-  answerZones: DropzoneImageProps['state']['answerZones']
+  state: DropzoneImageProps['state']
   modalType: ModalType
   currentAnswer: {
     zone: AnswerZoneState
@@ -19,12 +19,13 @@ interface EditorCanvasModalProps {
 }
 
 export function EditorCanvasModal({
-  answerZones,
+  state,
   modalType,
   setModalType,
   currentAnswer,
 }: EditorCanvasModalProps) {
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
+  const { answerZones, extraDraggableAnswers } = state
 
   return (
     <ModalWithCloseButton
@@ -77,6 +78,8 @@ export function EditorCanvasModal({
       case ModalType.CreateDropZone:
         return (
           <NewAnswerFlow
+            answerZones={answerZones}
+            extraDraggableAnswers={extraDraggableAnswers}
             zoneId={currentAnswer.zone.id.value}
             onSave={() => setModalType(ModalType.Unset)}
           />
@@ -88,6 +91,8 @@ export function EditorCanvasModal({
             answerType={currentAnswer.type}
             answerIndex={currentAnswer.index}
             onSave={() => setModalType(ModalType.Unset)}
+            answerZones={answerZones}
+            extraDraggableAnswers={extraDraggableAnswers}
           />
         )
       case ModalType.CreateWrongAnswer:
@@ -95,6 +100,8 @@ export function EditorCanvasModal({
           <NewAnswerFlow
             isWrongAnswer
             onSave={() => setModalType(ModalType.Unset)}
+            answerZones={answerZones}
+            extraDraggableAnswers={extraDraggableAnswers}
           />
         )
       default:
