@@ -1000,13 +1000,6 @@ export const loggedInData = {
           confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
-          scMcExercise: 'Choice Exercise',
-          inputExercise: 'Input Exercise',
-          textAreaExercise: 'Text Box Exercise',
-          dropzoneImage: 'Image Dropzones Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
-          h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
