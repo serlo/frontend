@@ -27,6 +27,8 @@ export function EditorCanvasModal({
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
   const { answerZones, extraDraggableAnswers } = state
 
+  const title = modalType ? pluginStrings.modal[modalType] : ''
+
   return (
     <ModalWithCloseButton
       isOpen={modalType !== ModalType.Unset}
@@ -35,77 +37,67 @@ export function EditorCanvasModal({
         if (isModalClosing) setModalType(ModalType.Unset)
       }}
       className="top-[10%] max-h-[80%] translate-y-0 overflow-auto pb-40"
-      title={getTitle()}
+      title={title}
       extraTitleClassName="serlo-h3 mb-16 px-3"
     >
       {renderForm()}
     </ModalWithCloseButton>
   )
 
-  function getTitle() {
-    switch (modalType) {
-      case ModalType.Settings:
-        return pluginStrings.modal.settings
-      case ModalType.CreateDropZone:
-        return pluginStrings.modal.new
-      case ModalType.Edit:
-        return pluginStrings.modal.edit
-      case ModalType.CreateWrongAnswer:
-        return pluginStrings.modal.wrong
-      default:
-        return ''
-    }
-  }
-
   function renderForm() {
-    switch (modalType) {
-      case ModalType.Settings:
-        return (
-          <AnswerZoneSettingsForm
-            answerZone={currentAnswer.zone}
-            onDuplicate={() => {
-              duplicateAnswerZone(answerZones, currentAnswer.zone.id.value)
-            }}
-            onDelete={() => {
-              setModalType(ModalType.Unset)
-              const index = answerZones.findIndex(
-                (a) => a.id.value === currentAnswer.zone.id.value
-              )
-              answerZones.remove(index)
-            }}
-          />
-        )
-      case ModalType.CreateDropZone:
-        return (
-          <NewAnswerFlow
-            answerZones={answerZones}
-            extraDraggableAnswers={extraDraggableAnswers}
-            zoneId={currentAnswer.zone.id.value}
-            onSave={() => setModalType(ModalType.Unset)}
-          />
-        )
-      case ModalType.Edit:
-        return (
-          <AnswerRenderer
-            zoneId={currentAnswer.zone.id.value}
-            answerType={currentAnswer.type}
-            answerIndex={currentAnswer.index}
-            onSave={() => setModalType(ModalType.Unset)}
-            answerZones={answerZones}
-            extraDraggableAnswers={extraDraggableAnswers}
-          />
-        )
-      case ModalType.CreateWrongAnswer:
-        return (
-          <NewAnswerFlow
-            isWrongAnswer
-            onSave={() => setModalType(ModalType.Unset)}
-            answerZones={answerZones}
-            extraDraggableAnswers={extraDraggableAnswers}
-          />
-        )
-      default:
-        return null
+    if (modalType === ModalType.Unset) return null
+
+    if (modalType === ModalType.Settings) {
+      return (
+        <AnswerZoneSettingsForm
+          answerZone={currentAnswer.zone}
+          onDuplicate={() => {
+            duplicateAnswerZone(answerZones, currentAnswer.zone.id.value)
+          }}
+          onDelete={() => {
+            setModalType(ModalType.Unset)
+            const index = answerZones.findIndex(
+              (a) => a.id.value === currentAnswer.zone.id.value
+            )
+            answerZones.remove(index)
+          }}
+        />
+      )
+    }
+
+    if (modalType === ModalType.CreateDropZone) {
+      return (
+        <NewAnswerFlow
+          answerZones={answerZones}
+          extraDraggableAnswers={extraDraggableAnswers}
+          zoneId={currentAnswer.zone.id.value}
+          onSave={() => setModalType(ModalType.Unset)}
+        />
+      )
+    }
+
+    if (modalType === ModalType.Edit) {
+      return (
+        <AnswerRenderer
+          zoneId={currentAnswer.zone.id.value}
+          answerType={currentAnswer.type}
+          answerIndex={currentAnswer.index}
+          onSave={() => setModalType(ModalType.Unset)}
+          answerZones={answerZones}
+          extraDraggableAnswers={extraDraggableAnswers}
+        />
+      )
+    }
+
+    if (modalType === ModalType.CreateWrongAnswer) {
+      return (
+        <NewAnswerFlow
+          isWrongAnswer
+          onSave={() => setModalType(ModalType.Unset)}
+          answerZones={answerZones}
+          extraDraggableAnswers={extraDraggableAnswers}
+        />
+      )
     }
   }
 }
