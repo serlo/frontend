@@ -19,32 +19,31 @@ export function DropzoneImageEditor({
 }: DropzoneImageProps) {
   const { backgroundImage, dropzoneVisibility } = state
 
-  const isBackgroundImagePluginDefined = backgroundImage.defined
-
   const [previewActive, setPreviewActive] = useState(false)
 
   const staticDocument = useAppSelector(
     (storeState) =>
       selectStaticDocument(storeState, id) as EditorDropzoneImageDocument
   )
+  const staticImage = staticDocument.state
+    .backgroundImage as EditorImageDocument
+  const hasBackgroundImageUrl = !!staticImage?.state.src
 
-  const backgroundType = state.backgroundType.value
-  const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
-  const isBackgroundTypeImage = backgroundType === BackgroundType.Image
+  const { backgroundType, canvasShape } = state
 
-  const hasBackgroundImageUrl = String(
-    (staticDocument.state.backgroundImage as EditorImageDocument)?.state.src
-  )
+  const isBackgroundTypeBlank = backgroundType.value === BackgroundType.Blank
+  const isBackgroundTypeImage = backgroundType.value === BackgroundType.Image
+
   const isBackgroundSelected =
     isBackgroundTypeBlank || (isBackgroundTypeImage && hasBackgroundImageUrl)
 
   // show image selection screen
-  if (!isBackgroundSelected && isBackgroundImagePluginDefined) {
+  if (!isBackgroundSelected && backgroundImage.defined) {
     return backgroundImage.render()
   }
 
-  const showTypeSelect = backgroundType === ''
-  const showShapeSelect = !state.canvasShape.value && isBackgroundTypeBlank
+  const showTypeSelect = backgroundType.value === ''
+  const showShapeSelect = !canvasShape.value && isBackgroundTypeBlank
 
   return (
     <>
