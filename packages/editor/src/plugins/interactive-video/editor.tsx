@@ -6,6 +6,7 @@ import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import type { InteractiveVideoProps } from '.'
+import { PlayerTools } from './editor/player-tools'
 import { InteractiveVideoRenderer } from './renderer'
 import { InteractiveVideoStaticRenderer } from './static'
 import { InteractiveVideoToolbar } from './toolbar'
@@ -25,17 +26,23 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
       selectStaticDocument(storeState, id) as EditorInteractiveVideoDocument
   )
 
-  function addOverlayContent() {
+  function addOverlayContent(startTime: number) {
     state.marks.insert(undefined, {
       title: '',
       child: { plugin: EditorPluginType.Exercise },
-      startTime: 0,
+      startTime,
       endTime: 0,
       autoOpen: true,
       mandatory: false,
       timeAfterFail: undefined,
     })
   }
+
+  const cues = state.marks.map((mark) => ({
+    startTime: mark.startTime.value,
+    endTime: mark.endTime.value,
+    text: mark.title.value,
+  }))
 
   return (
     <>
@@ -51,18 +58,12 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
         <InteractiveVideoStaticRenderer {...staticDocument} />
       ) : (
         <>
-          <InteractiveVideoRenderer />
+          <InteractiveVideoRenderer
+            chapterContent={{ cues }}
+            tools={<PlayerTools addOverlayContent={addOverlayContent} />}
+          />
 
           <div className="mx-side">
-            <p className="mb-12 mt-5">
-              <button
-                className="serlo-button-editor-primary"
-                onClick={addOverlayContent}
-              >
-                + Aufgabe an aktueller Stelle hinzufügen
-              </button>
-            </p>
-
             <ul>
               {state.marks.map((mark, index) => {
                 const title = mark.title.value.length
