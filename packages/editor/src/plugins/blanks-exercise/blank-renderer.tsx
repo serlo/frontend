@@ -36,12 +36,7 @@ export function BlankRenderer(props: BlankRendererProps) {
     return element.acceptMathEquivalents
   }, [element.acceptMathEquivalents])
 
-  // Autofocus when adding and removing a blank
   const inputRef = useRef<HTMLInputElement | null>(null)
-  useEffect(() => {
-    // Focus input when the blank is added
-    setTimeout(() => inputRef.current?.focus())
-  }, [inputRef])
 
   // Focus input when the blank is selected using arrow keys
   // + set cursor at the start if entering using right arrow key
