@@ -102,17 +102,15 @@ Scenario('focus plugins with arrow keys', ({ I }) => {
   I.say('add first text plugin, type in it, check that it has focus')
   I.click('Füge ein Element hinzu')
   I.type('Text')
-  I.pressKey('Tab')
   I.pressKey('Enter')
   I.type('First text plugin')
   I.see('First text plugin', 'div[data-slate-editor="true"]:focus')
 
   I.say('add second text plugin, type in it, check that it has focus')
-  I.pressKey('Tab')
+  I.pressKey('Tab') // Afterwards on button 'Füge ein Element hinzu'
   I.pressKey('Enter')
 
   I.type('Text')
-  I.pressKey('Tab')
   I.pressKey('Enter')
   I.type('Second text plugin')
   I.see('First text plugin', 'div[data-slate-editor="true"]')

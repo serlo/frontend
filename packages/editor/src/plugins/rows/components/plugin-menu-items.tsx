@@ -72,11 +72,6 @@ export function PluginMenuItems({
             onClick={() => onInsertPlugin(pluginType)}
             onFocus={() => setFocusedItemIndex(currentIndex)}
             onBlur={() => setFocusedItemIndex(null)}
-            onMouseEnter={() => setFocusedItemIndex(currentIndex)}
-            onMouseLeave={() => {
-              setFocusedItemIndex(null)
-              itemRefs.current[currentIndex]?.blur()
-            }}
             className={cn(
               'serlo-tooltip-trigger w-full rounded-md p-2 hover:shadow-xl',
               selected && 'shadow-xl'
