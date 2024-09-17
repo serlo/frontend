@@ -45,29 +45,40 @@ export function DropzoneImageToolbar({
 
   const visibilityOptions = Object.entries(dropzoneStrings.visibilityOptions)
 
-  if (dropzoneVisibility === undefined) return null
-
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
-      pluginSettings={
-        <>
-          <button
-            onClick={() => setShowSettingsModal(true)}
-            className={cn(`
-            mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
-            hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
-          `)}
-          >
-            {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
-          </button>
-          {renderSettingsModal()}
-          {previewActive !== undefined && setPreviewActive !== undefined ? (
-            <PreviewButton
-              previewActive={previewActive}
-              setPreviewActive={setPreviewActive}
-            />
-          ) : null}
+      pluginSettings={renderSettingsButtons()}
+      pluginControls={<InteractiveToolbarTools id={id} />}
+    />
+  )
+
+  function renderSettingsButtons() {
+    if (!dropzoneVisibility && !showSettingsButton) return undefined
+
+    return (
+      <>
+        {showSettingsButton ? (
+          <>
+            <button
+              onClick={() => setShowSettingsModal(true)}
+              className={cn(`
+                mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
+                hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
+                `)}
+            >
+              {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+            </button>
+            {renderSettingsModal()}
+          </>
+        ) : null}
+        {previewActive !== undefined && setPreviewActive !== undefined ? (
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
+        ) : null}
+        {dropzoneVisibility ? (
           <ToolbarSelect
             tooltipText={dropzoneStrings.dropzoneVisibility}
             value={dropzoneVisibility.value}
@@ -77,14 +88,13 @@ export function DropzoneImageToolbar({
               value: key,
             }))}
           />
-        </>
-      }
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
-  )
+        ) : null}
+      </>
+    )
+  }
 
   function renderSettingsModal() {
-    if (!showSettingsButton || !backgroundImageState) return null
+    if (!backgroundImageState) return null
 
     return (
       <ModalWithCloseButton
