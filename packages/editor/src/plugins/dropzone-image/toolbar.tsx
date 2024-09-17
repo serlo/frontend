@@ -111,13 +111,10 @@ export function DropzoneImageToolbar({
           const isModalClosing = !open
           if (isModalClosing) setShowSettingsModal(false)
         }}
+        title={`${editorStrings.edtrIo.settings}: ${editorStrings.plugins.dropzoneImage.title}`}
+        extraTitleClassName="serlo-h3 mt-4"
         className="top-8 max-w-xl translate-y-0 sm:top-1/3"
       >
-        <h3 className="serlo-h3 mt-4">
-          {editorStrings.edtrIo.settings}:{' '}
-          {editorStrings.plugins.dropzoneImage.title}
-        </h3>
-
         <div className="mx-side my-3">
           <button
             onClick={handleChangeImageButtonClick}

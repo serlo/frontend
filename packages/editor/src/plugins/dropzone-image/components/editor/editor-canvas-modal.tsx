@@ -34,24 +34,25 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
         if (isModalClosing) setModalType(ModalType.Unset)
       }}
       className="top-[10%] max-h-[80%] translate-y-0 overflow-auto pb-40"
+      title={getTitle()}
+      extraTitleClassName="serlo-h3 mb-16 px-3"
     >
-      <h3 className="serlo-h3 mb-16 px-3">{renderTitle()}</h3>
       {renderForm()}
     </ModalWithCloseButton>
   )
 
-  function renderTitle() {
+  function getTitle() {
     switch (modalType) {
       case ModalType.Settings:
-        return <>{pluginStrings.modal.settings}</>
+        return pluginStrings.modal.settings
       case ModalType.CreateDropZone:
-        return <>{pluginStrings.modal.new}</>
+        return pluginStrings.modal.new
       case ModalType.Edit:
-        return <>{pluginStrings.modal.edit}</>
+        return pluginStrings.modal.edit
       case ModalType.CreateWrongAnswer:
-        return <>{pluginStrings.modal.wrong}</>
+        return pluginStrings.modal.wrong
       default:
-        return null
+        return ''
     }
   }
 
