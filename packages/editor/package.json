@@ -181,7 +181,7 @@
     "typescript": "^5.4.5",
     "use-query-params": "^2.2.1",
     "uuid": "^9.0.1",
-    "vite": "^5.2.10",
+    "vite": "^5.2.14",
     "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "3.8.3",
     "vite-plugin-svgr": "^4.2.0"
