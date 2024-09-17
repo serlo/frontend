@@ -60,7 +60,7 @@ export function PluginMenuItems({
       const tooltipPosition = getTooltipPosition(index)
       const tooltipClassName = tooltipPosition
         ? tooltipPosition === 'left'
-          ? '-right-0 [&>span]:!min-w-80'
+          ? 'right-0 [&>span]:!min-w-80'
           : ''
         : '-left-24'
 

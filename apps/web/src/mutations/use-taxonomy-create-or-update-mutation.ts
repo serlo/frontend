@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
@@ -33,7 +33,7 @@ const taxonomyCreateMutation = gql`
 
 export function useTaxonomyCreateOrUpdateMutation() {
   const loggedInData = useLoggedInData()
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const successHandler = useSuccessHandler()
   const router = useRouter()
 

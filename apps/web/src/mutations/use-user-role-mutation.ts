@@ -3,7 +3,7 @@ import { useSWRConfig, Cache } from 'swr'
 // eslint-disable-next-line import/no-internal-modules
 import { ScopedMutator } from 'swr/_internal'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { UserRoleInput } from '@/fetcher/graphql-types/operations'
 
@@ -28,7 +28,7 @@ const removeMutation = gql`
 `
 
 export function useUserAddOrRemoveRoleMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const { mutate, cache } = useSWRConfig()
   const successHandler = useSuccessHandler()
 

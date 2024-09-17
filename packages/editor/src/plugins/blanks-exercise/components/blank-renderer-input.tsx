@@ -55,7 +55,7 @@ export const BlankRendererInput = forwardRef<
     context.textUserTypedIntoBlanks.set(newTextUserTypedIntoBlankList)
 
     // Reset feedback state (hide): I think a better UX here would be to keep
-    // calling the onEvaluate() as the user updates without having to click on
+    // calling evaluation as the user updates without having to click on
     // "Stimmt's?" again. Right now the feedback is hidden entirely on blur.
     context.isFeedbackVisible.set(false)
     context.feedbackForBlanks.set(

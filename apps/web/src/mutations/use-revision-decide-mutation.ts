@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 
 import { getAliasById, revalidatePath } from './helper/revalidate-path'
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { RejectRevisionInput } from '@/fetcher/graphql-types/operations'
 
@@ -28,7 +28,7 @@ const checkoutEntityMutation = gql`
 `
 
 export function useRevisionDecideMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const successHandler = useSuccessHandler()
 
   return async function (

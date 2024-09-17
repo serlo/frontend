@@ -5786,7 +5786,6 @@ __metadata:
     react-notify-toast: Entkenntnis/tmp-react-notify-toast
     react-redux: ^8.1.3
     react-resizable: ^3.0.5
-    react-simple-star-rating: ^5.1.7
     react-syntax-highlighter: ^15.5.0
     react-textarea-autosize: ^8.5.3
     redux: ^4.2.1
@@ -5947,7 +5946,6 @@ __metadata:
     react-lazyload: ^3.2.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
     react-redux: ^8.1.3
-    react-simple-star-rating: ^5.1.7
     react-syntax-highlighter: ^15.5.0
     react-textarea-autosize: ^8.5.3
     redux: ^4.2.1
@@ -17317,16 +17315,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   peerDependencies:
     react: ">= 16.3"
   checksum: 616a10205acfaf8cc3aa0824b60f6d037eef87143d8f338cf826deb74a353db9b9baad67a65dc8535fe90840bfc3e1b8a901f9c247033ffeec2f30405ac7528e
-  languageName: node
-  linkType: hard
-
-"react-simple-star-rating@npm:^5.1.7":
-  version: 5.1.7
-  resolution: "react-simple-star-rating@npm:5.1.7"
-  peerDependencies:
-    react: ">=18.0.0"
-    react-dom: ">=18.0.0"
-  checksum: e7b3f75dc2c86d46ba684ba1fe3364e005bdaf7e438b6c857613c9920d3a60a547751dc80a9223caec8098d9996de36b042f9c91cc045e25f5200122576f6c06
   languageName: node
   linkType: hard
 

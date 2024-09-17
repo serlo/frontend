@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import {
   TaxonomyEntityLinksInput,
   TaxonomyTermSortInput,
@@ -17,7 +17,7 @@ const createEntityLinkMutation = gql`
 `
 
 export function useCreateEntityLinkMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
 
   return async function (input: TaxonomyEntityLinksInput) {
     return await mutationFetch(createEntityLinkMutation, input)
@@ -35,7 +35,7 @@ const deleteEntityLink = gql`
 `
 
 export function useDeleteEntityLinkMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
 
   return async function (input: TaxonomyEntityLinksInput) {
     const success = await mutationFetch(deleteEntityLink, input)
@@ -54,7 +54,7 @@ const sortMutation = gql`
 `
 
 export function useTaxonomyTermSortMutation() {
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
 
   return async function (input: TaxonomyTermSortInput) {
     const success = await mutationFetch(sortMutation, input)

@@ -1,58 +1,21 @@
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
-import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
-import { useAB } from '@/contexts/ab'
-import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
-  const { revisionId } = useEntityData()
-  const { exerciseTrackingId } = useContext(ExerciseContext)
   const exStrings = useInstanceData().strings.content.exercises
-  const { asPath } = useRouter()
-  const ab = useAB()
   const isRevisionView = useContext(RevisionViewContext)
-
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
 
   return (
     <>
-      <InputExerciseStaticRenderer {...props} onEvaluate={onEvaluate} />
+      <InputExerciseStaticRenderer {...props} />
       {isRevisionView ? renderRevisionExtra() : null}
     </>
   )
-
-  function onEvaluate(correct: boolean, val: string) {
-    exerciseSubmission(
-      {
-        path: asPath,
-        entityId: exerciseTrackingId,
-        revisionId,
-        result: correct ? 'correct' : 'wrong',
-        type: 'input',
-      },
-      ab,
-      trackExperiment
-    )
-    exerciseSubmission(
-      {
-        path: asPath,
-        entityId: exerciseTrackingId,
-        revisionId,
-        result: val.substring(0, 200),
-        type: 'ival',
-      },
-      ab,
-      trackExperiment
-    )
-  }
 
   function renderRevisionExtra() {
     return props.state.answers.map((answer) => (

@@ -8,6 +8,7 @@ import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
+import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -61,22 +62,15 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/input-serlo-static-renderer'
   ).then((mod) => mod.InputSerloStaticRenderer)
 )
-const BlanksSerloStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
-  import(
-    '@/serlo-editor-integration/serlo-plugin-wrappers/blanks-exercise-static-renderer'
-  ).then((mod) => mod.BlanksExerciseSerloStaticRenderer)
+const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
+  import('@editor/plugins/blanks-exercise/static').then(
+    (mod) => mod.BlanksExerciseStaticRenderer
+  )
 )
 const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import(
     '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
   ).then((mod) => mod.InjectionSerloStaticRenderer)
-)
-const SpoilerSerloStaticRenderer = dynamic<
-  EditorSpoilerDocument & { openOverwrite?: boolean; onOpen?: () => void }
->(() =>
-  import('./serlo-plugin-wrappers/spoiler-serlo-static-renderer').then(
-    (mod) => mod.SpoilerSerloStaticRenderer
-  )
 )
 
 const DropzoneImageStaticRenderer = dynamic<
@@ -156,7 +150,7 @@ export function createRenderers(): InitRenderersArgs {
         type: EditorPluginType.Spoiler,
         renderer: (state: EditorSpoilerDocument) => {
           return (
-            <SpoilerSerloStaticRenderer
+            <SpoilerStaticRenderer
               {...state}
               openOverwrite={isPrintMode ? true : undefined}
             />
@@ -237,11 +231,11 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.BlanksExercise,
-        renderer: BlanksSerloStaticRenderer,
+        renderer: BlanksExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.BlanksExerciseDragAndDrop,
-        renderer: BlanksSerloStaticRenderer,
+        renderer: BlanksExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,
