@@ -3,19 +3,17 @@ import IconImageBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/im
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { DropzoneImageProps } from '../..'
-import { DropzoneImageToolbar } from '../../toolbar'
 import { BackgroundShape, BackgroundType } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function BackgroundTypeSelect(props: DropzoneImageProps) {
-  const { state, id, focused } = props
+  const { state } = props
   const { backgroundType, backgroundImage, canvasShape } = state
   const backgroundTypeStrings =
     useEditorStrings().plugins.dropzoneImage.backgroundType
 
   return (
     <>
-      {focused && <DropzoneImageToolbar id={id} />}
       <div className="m-6 flex items-center justify-center p-6 py-8 text-gray-500">
         {backgroundTypeStrings.description}
       </div>

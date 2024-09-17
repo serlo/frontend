@@ -56,7 +56,6 @@ export function BackgroundShapeSelect(props: DropzoneImageProps) {
 
   return (
     <>
-      {focused && <DropzoneImageToolbar id={id} />}
       <h2 className="mt-6 flex flex-row items-center justify-center pt-10 font-bold text-almost-black">
         {shapeStrings.description}
       </h2>

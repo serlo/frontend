@@ -44,13 +44,7 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
   const isBackgroundTypeImage = backgroundType === BackgroundType.Image
 
-  if (backgroundType === '') return <BackgroundTypeSelect {...props} />
-
   const canvasShape = state.canvasShape.value as BackgroundShape
-
-  if (!canvasShape && isBackgroundTypeBlank) {
-    return <BackgroundShapeSelect {...props} />
-  }
 
   const hasBackgroundImageUrl = String(
     (staticDocument.state.backgroundImage as EditorImageDocument)?.state.src
@@ -62,6 +56,9 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   if (!isBackgroundSelected && isBackgroundImagePluginDefined) {
     return backgroundImage.render()
   }
+
+  const showTypeSelect = backgroundType === ''
+  const showShapeSelect = !canvasShape && isBackgroundTypeBlank
 
   return (
     <AnswerZonesContext.Provider
@@ -77,21 +74,29 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
         extraDraggableAnswers,
       }}
     >
-      {focused && (
+      {focused ? (
         <DropzoneImageToolbar
           id={id}
+          showSettings={!showTypeSelect && !showShapeSelect}
           showSettingsButton={isBackgroundTypeImage}
           backgroundImage={backgroundImage}
           dropzoneVisibility={dropzoneVisibility}
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}
         />
+      ) : null}
+
+      {showTypeSelect ? (
+        <BackgroundTypeSelect {...props} />
+      ) : showShapeSelect ? (
+        <BackgroundShapeSelect {...props} />
+      ) : (
+        <EditingView
+          {...props}
+          previewActive={previewActive}
+          staticDocument={staticDocument}
+        />
       )}
-      <EditingView
-        {...props}
-        previewActive={previewActive}
-        staticDocument={staticDocument}
-      />
     </AnswerZonesContext.Provider>
   )
 }

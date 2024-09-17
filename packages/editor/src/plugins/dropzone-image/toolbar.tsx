@@ -19,6 +19,7 @@ import { cn } from '@/helper/cn'
 interface DropzoneImageToolbarProps {
   id: string
   backgroundImage?: DropzoneImageProps['state']['backgroundImage']
+  showSettings: boolean
   showSettingsButton?: boolean
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
   previewActive?: boolean
@@ -28,6 +29,7 @@ interface DropzoneImageToolbarProps {
 export function DropzoneImageToolbar({
   id,
   backgroundImage,
+  showSettings,
   showSettingsButton = false,
   dropzoneVisibility,
   previewActive,
@@ -56,7 +58,7 @@ export function DropzoneImageToolbar({
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
-      pluginSettings={renderSettingsButtons()}
+      pluginSettings={showSettings ? renderSettingsButtons() : undefined}
       pluginControls={<InteractiveToolbarTools id={id} />}
     />
   )
