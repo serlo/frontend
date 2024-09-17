@@ -134,25 +134,21 @@ export function ExercisePreviewPage({
 
   const numberOfExercises = editorData?.exercises?.length ?? 0
 
-  const isLoading = status === ExecutePromptStatus.Loading
-
   return (
     <ModalWithCloseButton
       isOpen
       setIsOpen={(open) => {
-        if (!open) closePage()
+        const isModalClosing = !open
+        if (isModalClosing) {
+          closePage()
+        }
       }}
       confirmCloseDescription={exGenerationStrings.confirmCloseDescription}
       className="fixed left-1/2 top-0 flex h-full max-h-none w-full max-w-none translate-y-0 flex-col items-center justify-center rounded-none bg-gray-100"
       extraCloseButtonClassName={cn('z-30 bg-brand-200')}
-      title={
-        isLoading
-          ? exGenerationStrings.preview.loadingHeading
-          : exerciseData?.heading ?? ''
-      }
     >
       <div className="relative mt-8 flex flex-col overflow-y-auto sm:h-full sm:w-full md:h-4/5 md:w-4/5 lg:h-2/3 lg:w-2/5">
-        {isLoading ? (
+        {status === ExecutePromptStatus.Loading ? (
           <div className="mb-6 flex flex-col items-center justify-center text-center">
             <h1 className="font-semibold text-black">
               {exGenerationStrings.preview.loadingHeading}
@@ -175,7 +171,7 @@ export function ExercisePreviewPage({
         ) : null}
 
         <div className="relative overflow-y-auto rounded-xl bg-white p-8">
-          {isLoading && <Skeleton />}
+          {status === ExecutePromptStatus.Loading && <Skeleton />}
           {status === ExecutePromptStatus.Success && (
             <div>
               <ErrorBoundary

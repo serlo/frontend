@@ -86,9 +86,8 @@ export function ArticleAddModal({
       isOpen={open}
       setIsOpen={setModalOpen}
       className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll"
-      title={articleStrings.addModal.title}
-      extraTitleClassName="serlo-h3 mb-4 mt-5"
     >
+      <h3 className="serlo-h3 mb-4 mt-5">{articleStrings.addModal.title}</h3>
       <div className="mx-side">
         <p>
           {replacePlaceholders(articleStrings.addModal.introText, {

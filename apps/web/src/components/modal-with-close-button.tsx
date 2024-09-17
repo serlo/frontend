@@ -11,7 +11,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
 export interface ModalWithCloseButtonProps {
-  title: string
+  title?: string
   isOpen: boolean
   setIsOpen: (open: boolean) => void
   children: ReactNode

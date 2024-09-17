@@ -62,7 +62,9 @@ export function CheckoutRejectButtons({
       <ModalWithCloseButton
         isOpen={modalMode !== null}
         setIsOpen={(open) => (open ? void null : onCloseClick())}
-        title={modalMode ? strings.revisions[modalMode].title : ''}
+        title={
+          modalMode !== null ? strings.revisions[modalMode].title : undefined
+        }
       >
         {renderModalContent()}
       </ModalWithCloseButton>
@@ -79,35 +81,49 @@ export function CheckoutRejectButtons({
         icon={isCheckout ? faCheck : faXmark}
       />
     )
+    // return (
+    //   <button className="buttonStyle" onClick={() => setModalMode(mode)}>
+    //     &nbsp;
+    //     <FaIcon
+    //       icon={isCheckout ? faCheck : faXmark}
+    //       className="lg:mr-0.5"
+    //     />{' '}
+    //     {strings.revisions[mode].action}
+    //   </button>
+    // )
   }
 
   function renderModalContent() {
     if (!modalMode) return null
     return (
-      <p className="mx-side mb-1">
-        {strings.revisions[modalMode].explanation}
-        {renderTextArea()}
-        <button className="serlo-button-light" onClick={onConfirm}>
-          {strings.revisions.confirm}
-        </button>
-      </p>
+      <>
+        <p className="mx-side mb-1">
+          {strings.revisions[modalMode].explanation}
+          {renderTextArea()}
+          <button className="serlo-button-light" onClick={onConfirm}>
+            {strings.revisions.confirm}
+          </button>
+        </p>
+      </>
     )
   }
 
   function renderTextArea() {
     return (
-      <textarea
-        value={reason}
-        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          setReason(event.target.value)
-        }}
-        onKeyDown={onKeyDown}
-        className={cn(`
+      <>
+        <textarea
+          value={reason}
+          onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+            setReason(event.target.value)
+          }}
+          onKeyDown={onKeyDown}
+          className={cn(`
             bold my-5 box-border min-h-[80px] w-full
             rounded-xl border-0 bg-brand-50 py-2 pl-4 pr-14
             outline-none focus-visible:bg-brand-200
           `)}
-      />
+        />
+      </>
     )
   }
 }

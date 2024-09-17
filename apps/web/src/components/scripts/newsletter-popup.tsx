@@ -85,8 +85,6 @@ export function NewsletterPopup() {
         isOpen={isOpen}
         setIsOpen={() => setIsOpen(!isOpen)}
         className="top-8 max-h-[90vh] translate-y-0 overflow-y-auto p-0"
-        title="Serlo Newsletter"
-        extraTitleClassName="sr-only"
       >
         <Image
           src={imageSrc}

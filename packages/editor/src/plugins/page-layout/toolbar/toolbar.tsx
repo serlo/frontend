@@ -40,8 +40,6 @@ export const PageLayoutToolbar = ({
             isOpen={showSettingsModal}
             setIsOpen={setShowSettingsModal}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
-            title={pageLayoutStrings.chooseRatio}
-            extraTitleClassName="serlo-h4 mb-4 ml-0 mt-6 block"
           >
             <LayoutChooser {...state} />
           </ModalWithCloseButton>
