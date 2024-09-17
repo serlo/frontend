@@ -10,11 +10,13 @@ export const MathHelpModal = ({
 }) => {
   const mathStrings = useEditorStrings().plugins.text.math
   return (
-    <ModalWithCloseButton isOpen={isHelpOpen} setIsOpen={setIsHelpOpen}>
-      <>
-        {mathStrings.shortcuts}:
-        <br />
-        <br />
+    <ModalWithCloseButton
+      isOpen={isHelpOpen}
+      setIsOpen={setIsHelpOpen}
+      title={mathStrings.shortcuts}
+      extraTitleClassName="serlo-h3 mt-4"
+    >
+      <div className="mx-side">
         <p>
           {mathStrings.fraction}: {renderKey('/')}
         </p>
@@ -44,7 +46,7 @@ export const MathHelpModal = ({
           {mathStrings.functions}: {renderKey('sin')}, {renderKey('cos')},{' '}
           {renderKey('ln')}, …
         </p>
-      </>
+      </div>
     </ModalWithCloseButton>
   )
 

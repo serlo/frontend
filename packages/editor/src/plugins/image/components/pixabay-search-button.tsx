@@ -89,12 +89,14 @@ export const PixabaySearchButton = ({
       const data = (await response.json()) as PixabayResponse
       setImages(data.hits)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching images from Pixabay:', error)
     } finally {
       setIsSearching(false)
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((searchQuery: string) => {
       void handleSearch(searchQuery)
@@ -147,6 +149,8 @@ export const PixabaySearchButton = ({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         className="max-h-[700px] w-[900px] max-w-[90vw] pt-0"
+        title={imageStrings.licenceFree}
+        extraTitleClassName="text-lg ml-10 mt-1.5 border-none"
       >
         <div
           className={cn(
@@ -154,9 +158,6 @@ export const PixabaySearchButton = ({
             isGermanLocale ? 'min-h-[20vw]' : 'min-h-[5vw]'
           )}
         >
-          <h2 className="mb-6 ml-10 mt-10 font-bold">
-            {imageStrings.licenceFree}
-          </h2>
           {/* Search input */}
           <div className="relative ml-10 w-[90%]">
             <input

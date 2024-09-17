@@ -55,14 +55,12 @@ export const InjectionToolbar = ({
           <ModalWithCloseButton
             isOpen={showSettingsModal}
             setIsOpen={(open) => {
-              if (!open) {
-                validateBeforeClose()
-              }
+              if (!open) validateBeforeClose()
             }}
             className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+            title={injectionStrings.title}
+            extraTitleClassName="serlo-h3 mt-4"
           >
-            <h3 className="serlo-h3 mt-4">{injectionStrings.title}</h3>
-
             <div className="mx-side mb-3">
               <EditorInput
                 autoFocus

@@ -1,4 +1,3 @@
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 
 import type { PageLayoutPluginProps } from '..'
@@ -8,17 +7,10 @@ const firstColumsSizes = [50, 66, 33]
 export const LayoutChooser = ({
   widthPercent,
 }: PageLayoutPluginProps['state']) => {
-  const pageLayoutStrings = useEditorStrings().plugins.pageLayout
-
   return (
-    <>
-      <b className="serlo-h4 mb-4 ml-0 mt-6 block">
-        {pageLayoutStrings.chooseRatio}:
-      </b>
-      <ul className="unstyled-list flex pb-8">
-        {firstColumsSizes.map(renderLi)}
-      </ul>
-    </>
+    <ul className="unstyled-list flex pb-8">
+      {firstColumsSizes.map(renderLi)}
+    </ul>
   )
 
   function renderLi(percent: number) {
