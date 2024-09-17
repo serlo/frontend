@@ -1,5 +1,4 @@
 import { AddButton } from '@editor/editor-ui'
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -9,10 +8,8 @@ import { cn } from '@serlo/frontend/src/helper/cn'
 import { useContext } from 'react'
 
 import { type ExerciseProps } from '.'
-import {
-  type InteractivePluginType,
-  interactivePluginTypes,
-} from './interactive-plugin-types'
+import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
+import { interactivePluginTypes } from './interactive-plugin-types'
 import { ExerciseToolbar } from './toolbar/toolbar'
 import { createOption } from '../rows/utils/plugin-menu'
 import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
@@ -29,14 +26,12 @@ export function ExerciseEditor(props: ExerciseProps) {
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const editorStrings = useEditorStrings()
+  const exTemplateStrings = editorStrings.templatePlugins.exercise
+  const exPluginStrings = editorStrings.plugins.exercise
 
   const interactivePluginOptions = interactivePluginTypes
     .filter((type) => editorPlugins.isSupported(type))
     .map((type) => createOption(type, editorStrings.plugins))
-
-  const templateStrings = useEditorStrings().templatePlugins
-  const exTemplateStrings = templateStrings.exercise
-  const exPluginStrings = useEditorStrings().plugins.exercise
 
   return (
     <div
@@ -86,42 +81,10 @@ export function ExerciseEditor(props: ExerciseProps) {
             ) : null}
           </>
         ) : (
-          <>
-            <p className="mb-2 text-gray-400">
-              {exTemplateStrings.addOptionalInteractiveEx}
-            </p>
-            <div className="flex items-start">
-              {interactivePluginOptions.map(
-                ({ pluginType, title, icon, description }, index, arr) => {
-                  const tooltipClassName =
-                    index === 0
-                      ? 'left-0'
-                      : index + 1 < arr.length
-                        ? '-left-24'
-                        : 'right-0'
-                  return (
-                    <button
-                      key={title}
-                      data-qa={`add-exercise-${pluginType}`}
-                      onClick={() =>
-                        interactive.create({
-                          plugin: pluginType as InteractivePluginType,
-                        })
-                      }
-                      className="serlo-tooltip-trigger w-full rounded-md p-1 hover:shadow-xl focus:shadow-xl"
-                    >
-                      <EditorTooltip
-                        className={tooltipClassName}
-                        text={description}
-                      />
-                      {icon || <IconFallback />}
-                      <b className="mt-2 block text-sm">{title}</b>
-                    </button>
-                  )
-                }
-              )}
-            </div>
-          </>
+          <InteractiveExercisesSelection
+            interactivePluginOptions={interactivePluginOptions}
+            interactive={interactive}
+          />
         )}
         {solution.defined ? (
           <div className="-ml-side mt-block">
