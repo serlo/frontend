@@ -3,13 +3,13 @@ import {
   PreviewButton,
   ToolbarSelect,
 } from '@editor/editor-ui/plugin-toolbar'
-import type { ImageProps } from '@editor/plugins/image'
+import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
@@ -18,12 +18,8 @@ import { cn } from '@/helper/cn'
 
 interface DropzoneImageToolbarProps {
   id: string
-  backgroundImageState?: {
-    id: string | null
-    state?: ImageProps['state']
-  }
+  backgroundImage?: DropzoneImageProps['state']['backgroundImage']
   showSettingsButton?: boolean
-  onChangeImageButtonClick?: () => void
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
   previewActive?: boolean
   setPreviewActive?: (active: boolean) => void
@@ -31,9 +27,8 @@ interface DropzoneImageToolbarProps {
 
 export function DropzoneImageToolbar({
   id,
-  backgroundImageState,
+  backgroundImage,
   showSettingsButton = false,
-  onChangeImageButtonClick,
   dropzoneVisibility,
   previewActive,
   setPreviewActive,
@@ -44,6 +39,19 @@ export function DropzoneImageToolbar({
   const imageStrings = editorStrings.plugins.image
 
   const visibilityOptions = Object.entries(dropzoneStrings.visibilityOptions)
+
+  const dispatch = useAppDispatch()
+
+  const handleChangeImageButtonClick = useCallback(() => {
+    if (!backgroundImage?.defined) return
+
+    dispatch(
+      runChangeDocumentSaga({
+        id: backgroundImage.id,
+        state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
+      })
+    )
+  }, [backgroundImage, dispatch])
 
   return (
     <PluginToolbar
@@ -94,7 +102,7 @@ export function DropzoneImageToolbar({
   }
 
   function renderSettingsModal() {
-    if (!backgroundImageState) return null
+    if (!backgroundImage?.defined) return null
 
     return (
       <ModalWithCloseButton
@@ -112,7 +120,7 @@ export function DropzoneImageToolbar({
 
         <div className="mx-side my-3">
           <button
-            onClick={onChangeImageButtonClick}
+            onClick={handleChangeImageButtonClick}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
           >
             {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
@@ -120,7 +128,7 @@ export function DropzoneImageToolbar({
         </div>
 
         <div className="mx-side mb-3">
-          <BackgroundImageSettings {...backgroundImageState} />
+          <BackgroundImageSettings id={backgroundImage.id} />
         </div>
       </ModalWithCloseButton>
     )

@@ -1,16 +1,9 @@
-import { ImageProps } from '@editor/plugins/image'
-import {
-  runChangeDocumentSaga,
-  selectDocument,
-  selectStaticDocument,
-  useAppDispatch,
-  useAppSelector,
-} from '@editor/store'
+import { selectStaticDocument, useAppSelector } from '@editor/store'
 import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
@@ -39,8 +32,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     extraDraggableAnswers,
   } = state
 
-  const dispatch = useAppDispatch()
-
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const [previewActive, setPreviewActive] = useState(false)
@@ -50,14 +41,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     (storeState) =>
       selectStaticDocument(storeState, id) as EditorDropzoneImageDocument
   )
-  const backgroundImagePluginState = useAppSelector((state) =>
-    selectDocument(
-      state,
-      isBackgroundImagePluginDefined ? backgroundImage.id : null
-    )
-  ) as EditorImageDocument
-  const backgroundImageUrlFromPlugin =
-    backgroundImagePluginState?.state?.src || ''
 
   const {
     currentAnswerZone,
@@ -68,17 +51,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     insertAnswerZone,
     duplicateAnswerZone,
   } = useAnswerZones(answerZones)
-
-  const handleChangeImageButtonClick = useCallback(() => {
-    if (!backgroundImage.defined) return
-
-    dispatch(
-      runChangeDocumentSaga({
-        id: backgroundImage.id,
-        state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
-      })
-    )
-  }, [backgroundImage, dispatch])
 
   const backgroundType = state.backgroundType.value
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
@@ -92,7 +64,9 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     return <BackgroundShapeSelect {...props} />
   }
 
-  const hasBackgroundImageUrl = !!backgroundImageUrlFromPlugin
+  const hasBackgroundImageUrl = String(
+    (staticDocument.state.backgroundImage as EditorImageDocument)?.state.src
+  )
   const isBackgroundSelected =
     isBackgroundTypeBlank || (isBackgroundTypeImage && hasBackgroundImageUrl)
 
@@ -118,14 +92,8 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
       {focused && (
         <DropzoneImageToolbar
           id={id}
-          onChangeImageButtonClick={handleChangeImageButtonClick}
           showSettingsButton={isBackgroundTypeImage}
-          backgroundImageState={{
-            id: isBackgroundImagePluginDefined ? backgroundImage.id : null,
-            state: backgroundImagePluginState?.state as unknown as
-              | ImageProps['state']
-              | undefined,
-          }}
+          backgroundImage={backgroundImage}
           dropzoneVisibility={dropzoneVisibility}
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}

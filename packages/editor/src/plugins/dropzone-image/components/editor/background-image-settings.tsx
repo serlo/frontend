@@ -1,8 +1,13 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
-import type { ImageProps } from '@editor/plugins/image'
+import { type ImageProps } from '@editor/plugins/image'
 import { LicenseDropdown } from '@editor/plugins/image/components/licence-dropdown'
-import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
+import {
+  runChangeDocumentSaga,
+  selectDocument,
+  useAppDispatch,
+  useAppSelector,
+} from '@editor/store'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
@@ -10,21 +15,18 @@ import { useState } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 
-interface BackgroundImageSettingsProps {
-  id: string | null
-  state?: ImageProps['state']
-}
-
-export function BackgroundImageSettings(props: BackgroundImageSettingsProps) {
-  const { id, state } = props
+export function BackgroundImageSettings({ id }: { id: string }) {
   const imageStrings = useEditorStrings().plugins.image
-
-  const [formState, setFormState] = useState<Partial<ImageProps['state']>>(
-    state ? { ...state } : {}
-  )
-  const { alt, src, imageSource, licence } = formState
-
   const dispatch = useAppDispatch()
+
+  const document = useAppSelector((state) => selectDocument(state, id))
+  const state = document?.state as ImageProps['state']
+
+  const [formState, setFormState] = useState(state)
+
+  if (!state) return null
+
+  const { alt, src, imageSource, licence } = formState
 
   function handleChange(
     prop: 'src' | 'alt' | 'imageSource' | 'licence',
