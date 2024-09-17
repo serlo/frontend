@@ -6,6 +6,7 @@ import { EditorCanvasModal } from './editor-canvas-modal'
 import { ExtraIncorrectAnswers } from './extra-incorrect-answers'
 import { PossibleAnswers } from './possible-answers'
 import type { DropzoneImageProps } from '../..'
+import { useAnswerZones } from '../../hooks/use-answer-zones'
 import { DropzoneImageStaticRenderer } from '../../static'
 import { ModalType } from '../../types'
 
@@ -19,19 +20,36 @@ export function EditingView({
   staticDocument: EditorDropzoneImageDocument
 }) {
   const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
+  const { answerZones, extraDraggableAnswers } = state
+
+  const {
+    currentAnswerZone,
+    currentAnswerIndex,
+    currentAnswerType,
+    selectAnswerZone,
+    selectCurrentAnswer,
+  } = useAnswerZones(answerZones)
 
   if (previewActive) return <DropzoneImageStaticRenderer {...staticDocument} />
-
-  const { answerZones, extraDraggableAnswers } = state
 
   return (
     <div className="mx-side">
       <EditorCanvasModal
         answerZones={answerZones}
+        currentAnswer={{
+          zone: currentAnswerZone,
+          index: currentAnswerIndex,
+          type: currentAnswerType,
+        }}
         modalType={modalType}
         setModalType={setModalType}
       />
-      <EditorCanvas state={state} setModalType={setModalType} />
+      <EditorCanvas
+        state={state}
+        setModalType={setModalType}
+        selectCurrentAnswer={selectCurrentAnswer}
+        selectAnswerZone={selectAnswerZone}
+      />
       <PossibleAnswers answerZones={answerZones} />
       <ExtraIncorrectAnswers
         extraDraggableAnswers={extraDraggableAnswers}

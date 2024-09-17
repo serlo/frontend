@@ -1,8 +1,5 @@
-import { useContext } from 'react'
-
 import type { DropzoneImageProps } from '../..'
-import { AnswerZonesContext } from '../../context/context'
-import { ModalType } from '../../types'
+import { type AnswerType, type AnswerZoneState, ModalType } from '../../types'
 import { duplicateAnswerZone } from '../../utils/answer-zone'
 import { AnswerRenderer } from '../answer-zone/answer-renderer'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
@@ -13,18 +10,21 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 interface EditorCanvasModalProps {
   answerZones: DropzoneImageProps['state']['answerZones']
   modalType: ModalType
+  currentAnswer: {
+    zone: AnswerZoneState
+    index: number
+    type: AnswerType
+  }
   setModalType: (modalType: ModalType) => void
 }
 
-export function EditorCanvasModal(props: EditorCanvasModalProps) {
-  const { answerZones, modalType, setModalType } = props
-
+export function EditorCanvasModal({
+  answerZones,
+  modalType,
+  setModalType,
+  currentAnswer,
+}: EditorCanvasModalProps) {
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
-
-  const context = useContext(AnswerZonesContext)
-  if (!context) return null
-
-  const { currentAnswerZone, currentAnswerIndex, currentAnswerType } = context
 
   return (
     <ModalWithCloseButton
@@ -61,14 +61,14 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
       case ModalType.Settings:
         return (
           <AnswerZoneSettingsForm
-            answerZone={currentAnswerZone}
+            answerZone={currentAnswer.zone}
             onDuplicate={() => {
-              duplicateAnswerZone(answerZones, currentAnswerZone.id.value)
+              duplicateAnswerZone(answerZones, currentAnswer.zone.id.value)
             }}
             onDelete={() => {
               setModalType(ModalType.Unset)
               const index = answerZones.findIndex(
-                (a) => a.id.value === currentAnswerZone.id.value
+                (a) => a.id.value === currentAnswer.zone.id.value
               )
               answerZones.remove(index)
             }}
@@ -77,16 +77,16 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
       case ModalType.CreateDropZone:
         return (
           <NewAnswerFlow
-            zoneId={currentAnswerZone.id.value}
+            zoneId={currentAnswer.zone.id.value}
             onSave={() => setModalType(ModalType.Unset)}
           />
         )
       case ModalType.Edit:
         return (
           <AnswerRenderer
-            zoneId={currentAnswerZone.id.value}
-            answerType={currentAnswerType}
-            answerIndex={currentAnswerIndex}
+            zoneId={currentAnswer.zone.id.value}
+            answerType={currentAnswer.type}
+            answerIndex={currentAnswer.index}
             onSave={() => setModalType(ModalType.Unset)}
           />
         )

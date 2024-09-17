@@ -10,9 +10,8 @@ import { BackgroundShapeSelect } from './components/editor/background-shape-sele
 import { BackgroundTypeSelect } from './components/editor/background-type-select'
 import { EditingView } from './components/editor/editing-view'
 import { AnswerZonesContext } from './context/context'
-import { useAnswerZones } from './hooks/use-answer-zones'
 import { DropzoneImageToolbar } from './toolbar'
-import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
+import { BackgroundType, DropzoneVisibility } from './types'
 
 export function DropzoneImageEditor({
   state,
@@ -35,19 +34,9 @@ export function DropzoneImageEditor({
       selectStaticDocument(storeState, id) as EditorDropzoneImageDocument
   )
 
-  const {
-    currentAnswerZone,
-    currentAnswerIndex,
-    currentAnswerType,
-    selectAnswerZone,
-    selectCurrentAnswer,
-  } = useAnswerZones(answerZones)
-
   const backgroundType = state.backgroundType.value
   const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
   const isBackgroundTypeImage = backgroundType === BackgroundType.Image
-
-  const canvasShape = state.canvasShape.value as BackgroundShape
 
   const hasBackgroundImageUrl = String(
     (staticDocument.state.backgroundImage as EditorImageDocument)?.state.src
@@ -61,18 +50,12 @@ export function DropzoneImageEditor({
   }
 
   const showTypeSelect = backgroundType === ''
-  const showShapeSelect = !canvasShape && isBackgroundTypeBlank
+  const showShapeSelect = !state.canvasShape.value && isBackgroundTypeBlank
 
   return (
     <AnswerZonesContext.Provider
       value={{
         answerZones,
-        canvasShape,
-        currentAnswerZone,
-        currentAnswerIndex,
-        currentAnswerType,
-        selectAnswerZone,
-        selectCurrentAnswer,
         dropzoneVisibility: dropzoneVisibility.value as DropzoneVisibility,
         extraDraggableAnswers,
       }}
