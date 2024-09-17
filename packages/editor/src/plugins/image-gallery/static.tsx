@@ -1,13 +1,15 @@
 import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorImageGalleryDocument } from '@editor/types/editor-plugins'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
-import { Descendant } from 'slate'
 
 import { ImageGrid } from './components/image-grid'
 import { StaticCarousel } from './components/static/static-carousel'
 import { StaticLightbox } from './components/static/static-lightbox'
 import { StaticLightboxMobile } from './components/static/static-lightbox-mobile'
+import { getAltOrFallback } from '../image/utils/get-alt-or-fallback'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function ImageGalleryStaticRenderer({
   state,
@@ -17,18 +19,25 @@ export function ImageGalleryStaticRenderer({
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
     null
   )
+  const instanceData = useInstanceData()
 
-  const imageDocuments = state.images.map((item) => item.imagePlugin)
-  const filteredImageDocuments = imageDocuments.filter(isImageDocument)
-  const images = filteredImageDocuments.map(
-    ({ state: { src, caption } }, index) => ({
-      src: src as string,
-      dimensions: state.images[index].dimensions,
-      caption: isEmptyTextDocument(caption)
-        ? undefined
-        : // @ts-expect-error - Get caption text
-          (caption?.state?.[0] as Descendant),
-    })
+  const imageDocuments = state.images
+    .map((item) => item.imagePlugin)
+    .filter(isImageDocument)
+
+  const images = imageDocuments.map(
+    ({ state: { src, caption, alt } }, index) => {
+      const hasVisibleCaption = caption && !isEmptyTextDocument(caption)
+
+      return {
+        src: String(src),
+        alt: getAltOrFallback(instanceData, caption, alt),
+        dimensions: state.images[index].dimensions,
+        caption: hasVisibleCaption ? (
+          <StaticRenderer document={caption} />
+        ) : null,
+      }
+    }
   )
 
   function handleGridImageClick(index: number) {
