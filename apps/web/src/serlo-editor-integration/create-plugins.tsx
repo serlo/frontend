@@ -164,12 +164,6 @@ export function createPlugins({
       icon: <IconMultimedia />,
     },
     {
-      type: EditorPluginType.DropzoneImage,
-      plugin: createDropzoneImagePlugin(),
-      visibleInSuggestions: false,
-      icon: <IconDropzones />,
-    },
-    {
       type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(plugins),
       visibleInSuggestions: true,
@@ -271,17 +265,16 @@ export function createPlugins({
       plugin: solutionPlugin,
       icon: <IconPencil />,
     },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin, icon: <IconH5p /> },
-    {
-      type: EditorPluginType.InputExercise,
-      plugin: createInputExercisePlugin(),
-      icon: <IconTextArea />,
-    },
     {
       type: EditorPluginType.ScMcExercise,
       plugin: createScMcExercisePlugin(),
       icon: <IconScMcExercise />,
       visibleInSuggestions: true,
+    },
+    {
+      type: EditorPluginType.InputExercise,
+      plugin: createInputExercisePlugin(),
+      icon: <IconTextArea />,
     },
     {
       type: EditorPluginType.BlanksExercise,
@@ -293,6 +286,13 @@ export function createPlugins({
       plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
       icon: <IconBlanksDragAndDrop />,
     },
+    {
+      type: EditorPluginType.DropzoneImage,
+      plugin: createDropzoneImagePlugin(),
+      visibleInSuggestions: false,
+      icon: <IconDropzones />,
+    },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin, icon: <IconH5p /> },
 
     // Special plugins, never visible in suggestions
     // ===================================================
