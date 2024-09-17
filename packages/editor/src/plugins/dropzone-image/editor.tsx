@@ -8,20 +8,11 @@ import { useState } from 'react'
 import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
 import { BackgroundTypeSelect } from './components/editor/background-type-select'
-import { EditorCanvas } from './components/editor/editor-canvas'
-import { EditorCanvasModal } from './components/editor/editor-canvas-modal'
-import { ExtraIncorrectAnswers } from './components/editor/extra-incorrect-answers'
-import { PossibleAnswers } from './components/editor/possible-answers'
+import { EditingView } from './components/editor/editing-view'
 import { AnswerZonesContext } from './context/context'
 import { useAnswerZones } from './hooks/use-answer-zones'
-import { DropzoneImageStaticRenderer } from './static'
 import { DropzoneImageToolbar } from './toolbar'
-import {
-  BackgroundType,
-  BackgroundShape,
-  DropzoneVisibility,
-  ModalType,
-} from './types'
+import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
 
 export function DropzoneImageEditor(props: DropzoneImageProps) {
   const { state, id, focused } = props
@@ -35,7 +26,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
   const isBackgroundImagePluginDefined = backgroundImage.defined
 
   const [previewActive, setPreviewActive] = useState(false)
-  const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
 
   const staticDocument = useAppSelector(
     (storeState) =>
@@ -48,8 +38,6 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
     currentAnswerType,
     selectAnswerZone,
     selectCurrentAnswer,
-    insertAnswerZone,
-    duplicateAnswerZone,
   } = useAnswerZones(answerZones)
 
   const backgroundType = state.backgroundType.value
@@ -99,27 +87,11 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
           setPreviewActive={setPreviewActive}
         />
       )}
-      {previewActive ? (
-        <DropzoneImageStaticRenderer {...staticDocument} />
-      ) : (
-        <div className="mx-side">
-          <EditorCanvasModal
-            answerZones={answerZones}
-            modalType={modalType}
-            duplicateAnswerZone={duplicateAnswerZone}
-            setModalType={setModalType}
-          />
-          <EditorCanvas state={state} setModalType={setModalType} />
-          <PossibleAnswers
-            answerZones={answerZones}
-            onClickAddAnswerZone={insertAnswerZone}
-          />
-          <ExtraIncorrectAnswers
-            extraDraggableAnswers={extraDraggableAnswers}
-            setModalType={setModalType}
-          />
-        </div>
-      )}
+      <EditingView
+        {...props}
+        previewActive={previewActive}
+        staticDocument={staticDocument}
+      />
     </AnswerZonesContext.Provider>
   )
 }

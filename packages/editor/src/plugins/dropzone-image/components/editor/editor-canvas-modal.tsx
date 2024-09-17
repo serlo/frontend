@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import type { DropzoneImageProps } from '../..'
 import { AnswerZonesContext } from '../../context/context'
 import { ModalType } from '../../types'
+import { duplicateAnswerZone } from '../../utils/answer-zone'
 import { AnswerRenderer } from '../answer-zone/answer-renderer'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
@@ -12,12 +13,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 interface EditorCanvasModalProps {
   answerZones: DropzoneImageProps['state']['answerZones']
   modalType: ModalType
-  duplicateAnswerZone: (idToDuplicate: string) => void
   setModalType: (modalType: ModalType) => void
 }
 
 export function EditorCanvasModal(props: EditorCanvasModalProps) {
-  const { answerZones, modalType, duplicateAnswerZone, setModalType } = props
+  const { answerZones, modalType, setModalType } = props
 
   const pluginStrings = useEditorStrings().plugins.dropzoneImage
 
@@ -63,7 +63,7 @@ export function EditorCanvasModal(props: EditorCanvasModalProps) {
           <AnswerZoneSettingsForm
             answerZone={currentAnswerZone}
             onDuplicate={() => {
-              duplicateAnswerZone(currentAnswerZone.id.value)
+              duplicateAnswerZone(answerZones, currentAnswerZone.id.value)
             }}
             onDelete={() => {
               setModalType(ModalType.Unset)
