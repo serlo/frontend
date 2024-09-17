@@ -1000,13 +1000,6 @@ export const loggedInData = {
           confirmDelete: "¿Estás seguro de que quieres eliminar este contenido?"
         },
         exercise: {
-          scMcExercise: "Ejercicio de elección",
-          inputExercise: "Ejercicio de respuesta escrita",
-          textAreaExercise: "Ejercicio de cajas de texto",
-          dropzoneImage: "Ejercicio de áreas de arrastre y soltado de imágenes",
-          blanksExercise: "Ejercicio de rellenar los espacios en blanco",
-          blanksExerciseDragAndDrop: "Ejercicio de Llenar Los Espacios En Blanco (Arrastrar y soltar)",
-          h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo",
