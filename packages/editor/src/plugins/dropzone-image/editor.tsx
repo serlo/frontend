@@ -14,8 +14,11 @@ import { useAnswerZones } from './hooks/use-answer-zones'
 import { DropzoneImageToolbar } from './toolbar'
 import { BackgroundType, BackgroundShape, DropzoneVisibility } from './types'
 
-export function DropzoneImageEditor(props: DropzoneImageProps) {
-  const { state, id, focused } = props
+export function DropzoneImageEditor({
+  state,
+  id,
+  focused,
+}: DropzoneImageProps) {
   const {
     answerZones,
     backgroundImage,
@@ -87,12 +90,12 @@ export function DropzoneImageEditor(props: DropzoneImageProps) {
       ) : null}
 
       {showTypeSelect ? (
-        <BackgroundTypeSelect {...props} />
+        <BackgroundTypeSelect {...state} />
       ) : showShapeSelect ? (
-        <BackgroundShapeSelect {...props} />
+        <BackgroundShapeSelect {...state} />
       ) : (
         <EditingView
-          {...props}
+          state={state}
           previewActive={previewActive}
           staticDocument={staticDocument}
         />

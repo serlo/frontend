@@ -6,9 +6,11 @@ import type { DropzoneImageProps } from '../..'
 import { BackgroundShape, BackgroundType } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-export function BackgroundTypeSelect(props: DropzoneImageProps) {
-  const { state } = props
-  const { backgroundType, backgroundImage, canvasShape } = state
+export function BackgroundTypeSelect({
+  backgroundType,
+  backgroundImage,
+  canvasShape,
+}: DropzoneImageProps['state']) {
   const backgroundTypeStrings =
     useEditorStrings().plugins.dropzoneImage.backgroundType
 

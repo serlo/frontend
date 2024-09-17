@@ -13,7 +13,8 @@ export function EditingView({
   state,
   previewActive,
   staticDocument,
-}: DropzoneImageProps & {
+}: {
+  state: DropzoneImageProps['state']
   previewActive: boolean
   staticDocument: EditorDropzoneImageDocument
 }) {
