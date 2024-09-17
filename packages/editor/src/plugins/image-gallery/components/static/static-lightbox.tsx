@@ -60,7 +60,7 @@ export function StaticLightbox({
         setIsOpen={closeModal}
       >
         {images.length < 2 ? (
-          <StaticLightboxImage {...images[currentImageIndex]} />
+          <StaticLightboxImage image={images[currentImageIndex]} />
         ) : (
           <div
             className={cn(
@@ -74,7 +74,7 @@ export function StaticLightbox({
               onPrevious={goToPreviousImage}
               onNext={goToNextImage}
             >
-              <StaticLightboxImage {...images[currentImageIndex]} />
+              <StaticLightboxImage image={images[currentImageIndex]} />
             </StaticLightboxSlider>
 
             <div className="col-start-2 flex justify-center gap-2">

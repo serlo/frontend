@@ -3,7 +3,7 @@ import { EditorImageDocument } from '@editor/types/editor-plugins'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 import { ImageRenderer } from './renderer'
-import { getAltOrFallback } from './utils/get-alt-or-fallback'
+import { extractStringFromTextDocument } from '../text/utils/static-extract-text'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function ImageStaticRenderer({
@@ -11,20 +11,25 @@ export function ImageStaticRenderer({
   pathNameBase,
 }: EditorImageDocument & { pathNameBase?: string }) {
   const { caption, src: fileSrc, link, alt, maxWidth: maxWidthNumber } = state
-
-  const altOrFallback = getAltOrFallback(useInstanceData(), caption, alt)
+  const altFallback = useInstanceData().strings.content.imageAltFallback
 
   const src = String(fileSrc)
   if (!src) return null
 
   const hasVisibleCaption = caption && !isEmptyTextDocument(caption)
 
+  const altOrFallbacks = alt
+    ? alt
+    : hasVisibleCaption
+      ? extractStringFromTextDocument(caption)
+      : altFallback
+
   return (
     <ImageRenderer
       image={{
         src: getSemanticSource(),
         href: link?.href,
-        alt: altOrFallback,
+        alt: altOrFallbacks,
         maxWidth: maxWidthNumber,
       }}
       caption={hasVisibleCaption ? <StaticRenderer document={caption} /> : null}
