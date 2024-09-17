@@ -34,6 +34,7 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import {
   createArticleIntroduction,
   createMultimediaPlugin,
@@ -113,6 +114,7 @@ export function createPlugins({
     EditorPluginType.InputExercise,
     EditorPluginType.BlanksExercise,
     EditorPluginType.BlanksExerciseDragAndDrop,
+    EditorPluginType.InteractiveVideo,
     EditorPluginType.Solution,
 
     EditorPluginType.Unsupported,
@@ -293,7 +295,16 @@ export function createPlugins({
       plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
       icon: <IconBlanksDragAndDrop />,
     },
-
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.InteractiveVideo,
+            plugin: interactiveVideoPlugin,
+            visibleInSuggestions: true,
+            icon: <IconVideo />,
+          },
+        ]),
     // Special plugins, never visible in suggestions
     // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },

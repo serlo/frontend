@@ -8,7 +8,7 @@ export type GeogebraProps = EditorPluginProps<GeogebraPluginState>
 
 export const geoGebraPlugin: EditorPlugin<GeogebraPluginState> = {
   Component: GeogebraEditor,
-  state: string(),
+  state: geogebraState,
   config: {},
   onText(value) {
     if (/geogebra\.org\/m\/(.+)/.test(value)) {

@@ -39,6 +39,7 @@ import type { VideoPluginState } from '@editor/plugins/video'
 
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
+import { InteractiveVideoPluginState } from '@editor/plugins/interactive-video'
 
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
@@ -162,6 +163,11 @@ export interface EditorBlanksExerciseDocument {
 export interface EditorDropzoneImageDocument {
   plugin: EditorPluginType.DropzoneImage
   state: PrettyStaticState<DropzoneImagePluginState>
+  id?: string
+}
+export interface EditorInteractiveVideoDocument {
+  plugin: EditorPluginType.InteractiveVideo
+  state: PrettyStaticState<InteractiveVideoPluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {

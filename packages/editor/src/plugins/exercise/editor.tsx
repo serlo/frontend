@@ -21,6 +21,7 @@ const allInteractiveExerciseTypes = [
   EditorPluginType.BlanksExercise,
   EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.DropzoneImage,
+  EditorPluginType.InteractiveVideo,
 ] as const
 
 export type InteractiveExerciseType =

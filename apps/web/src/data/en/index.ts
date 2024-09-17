@@ -1045,6 +1045,11 @@ export const loggedInData = {
           description:
             'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',
         },
+        interactiveVideo: {
+          title: 'Interactive Video',
+          description:
+            'Create an interactive video with questions and feedback.',
+        },
       },
       templatePlugins: {
         entity: {
@@ -1099,6 +1104,7 @@ export const loggedInData = {
           dropzoneImage: 'Image Dropzones Exercise',
           blanksExercise: 'Fill In The Blanks Exercise',
           blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
+          interactiveVideo: 'Interactive Video',
           h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',

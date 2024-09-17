@@ -28,6 +28,7 @@ import type {
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
   EditorDropzoneImageDocument,
+  EditorInteractiveVideoDocument,
 } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
@@ -65,6 +66,11 @@ const InputSerloStaticRenderer = dynamic<EditorInputExerciseDocument>(() =>
 const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
   import('@editor/plugins/blanks-exercise/static').then(
     (mod) => mod.BlanksExerciseStaticRenderer
+  )
+)
+const InteractiveVideoRenderer = dynamic<EditorInteractiveVideoDocument>(() =>
+  import('@editor/plugins/interactive-video/static').then(
+    (mod) => mod.InteractiveVideoStaticRenderer
   )
 )
 const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
@@ -236,6 +242,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.BlanksExerciseDragAndDrop,
         renderer: BlanksExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.InteractiveVideo,
+        renderer: InteractiveVideoRenderer,
       },
       {
         type: EditorPluginType.Solution,
