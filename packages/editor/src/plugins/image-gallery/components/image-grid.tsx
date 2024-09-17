@@ -1,5 +1,3 @@
-import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
-
 import { GridImage } from '../types'
 import { cn } from '@/helper/cn'
 
@@ -38,8 +36,7 @@ export function ImageGrid({
               <button onClick={() => onImageClick(index)}>
                 <img
                   src={leftImage.src}
-                  // TODO: get actual alt text or fallback
-                  alt={`Image ${leftImage.src}`}
+                  alt={leftImage.alt}
                   className={cn(isLastImage && 'max-h-96')}
                 />
               </button>
@@ -73,7 +70,7 @@ export function ImageGrid({
       >
         {caption ? (
           <div className="pointer-events-auto text-center [&_a]:text-brand-400">
-            <StaticSlate element={caption} />
+            {caption}
           </div>
         ) : null}
         {renderRemoveImageButton?.(index)}
