@@ -1,4 +1,3 @@
-import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
 import { UIEvent, useEffect, useRef } from 'react'
 
 import { GridImage } from '../../types'
@@ -33,20 +32,16 @@ export function StaticLightboxCarousel({
       className="flex snap-x snap-mandatory items-center overflow-x-auto"
       onScroll={onScroll}
     >
-      {images.map((image, index) => (
+      {images.map(({ src, alt, caption }, index) => (
         <div
           key={index}
           className="w-full flex-shrink-0 snap-center snap-always text-center"
         >
-          <img
-            src={image.src}
-            // TODO: get actual alt text or fallback
-            alt={`Image ${image.src}`}
-          />
+          <img src={src} alt={alt} />
           <div className="mt-3">
-            {image.caption ? (
+            {caption ? (
               <div className="italic text-gray-100 [&_a]:text-brand-400">
-                <StaticSlate element={image.caption} />
+                {caption}
               </div>
             ) : null}
             <div className="text-sm text-gray-400">{`${index + 1}/${images.length}`}</div>

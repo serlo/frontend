@@ -1,8 +1,8 @@
 import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
+import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
-import { Descendant } from 'slate'
 
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
 import { ImageGrid } from './image-grid'
@@ -24,22 +24,26 @@ export function EditorImageGrid({
   onRemoveImageButtonClick,
 }: EditorImageGridProps) {
   const imageIds = state.images.map(({ imagePlugin }) => imagePlugin.id)
-  const imageDocuments = useAppSelector((state) =>
+  const staticImageDocuments = useAppSelector((state) =>
     selectStaticDocuments(state, imageIds)
-  )
-  const filteredImageDocuments = imageDocuments.filter(isImageDocument)
-  const images = filteredImageDocuments.map(
-    ({ state: { src, caption } }, index) => ({
-      src: src as string,
-      dimensions: {
-        width: state.images[index].dimensions.width.value,
-        height: state.images[index].dimensions.height.value,
-      },
-      caption: isEmptyTextDocument(caption)
-        ? undefined
-        : // @ts-expect-error - Get caption text
-          (caption?.state?.[0] as Descendant),
-    })
+  ).filter(isImageDocument)
+
+  const images = staticImageDocuments.map(
+    ({ state: { src, caption, alt } }, index) => {
+      const hasVisibleCaption = caption && !isEmptyTextDocument(caption)
+
+      return {
+        src: String(src),
+        alt: alt ?? '',
+        dimensions: {
+          width: state.images[index].dimensions.width.value,
+          height: state.images[index].dimensions.height.value,
+        },
+        caption: hasVisibleCaption ? (
+          <StaticRenderer document={caption} />
+        ) : null,
+      }
+    }
   )
 
   const [isLoading, setIsLoading] = useState(true)
@@ -55,8 +59,9 @@ export function EditorImageGrid({
       if (!image.src || image.dimensions.width !== 0) return
       void setDimensions(image.src, index)
     })
+    // this is stupid, but it should only run when a src changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(images)])
+  }, [JSON.stringify(images.map(({ src }) => src))])
 
   useEffect(() => {
     if (images.some((image) => image.dimensions.width === 0)) return
