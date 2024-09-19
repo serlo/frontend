@@ -34,7 +34,6 @@ export function BackgroundTypeSelect({
           <IconImageBg />
           {backgroundTypeStrings.image}
         </button>
-        <span>oder</span>
         <button
           data-qa="plugin-dropzone-image-background-type-select-blank"
           className="qm-[20px] flex flex-col items-center justify-center gap-4 rounded-[5px] bg-orange-100 p-[10px] py-4 font-bold text-almost-black hover:bg-orange-200"

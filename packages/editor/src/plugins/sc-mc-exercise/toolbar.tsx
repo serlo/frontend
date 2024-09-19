@@ -1,11 +1,6 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import type { Dispatch, SetStateAction } from 'react'
 
 import type { ScMcExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'

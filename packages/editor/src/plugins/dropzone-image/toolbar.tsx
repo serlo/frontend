@@ -1,8 +1,4 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
