@@ -53,7 +53,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       pluginMenuState.parentPluginId
     )
 
-    return typesOfAncestors
+    return typesOfAncestors?.length
       ? allowedByContext.filter((plugin) =>
           checkIsAllowedNesting(plugin, typesOfAncestors)
         )
