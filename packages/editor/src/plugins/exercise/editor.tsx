@@ -6,10 +6,11 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
+import { PreviewProvider } from './context/preview-context'
 import { interactivePluginTypes } from './interactive-plugin-types'
 import { ExerciseToolbar } from './toolbar/toolbar'
 import { createOption } from '../rows/utils/plugin-menu'
@@ -30,6 +31,8 @@ export function ExerciseEditor(props: ExerciseProps) {
   const exTemplateStrings = editorStrings.templatePlugins.exercise
   const exPluginStrings = editorStrings.plugins.exercise
 
+  const [previewActive, setPreviewActive] = useState(false)
+
   const interactivePluginOptions = interactivePluginTypes
     .filter((type) => editorPlugins.isSupported(type))
     .map((type) => createOption(type, editorStrings.plugins))
@@ -41,79 +44,83 @@ export function ExerciseEditor(props: ExerciseProps) {
   const isFocused = focused || isFocusedInside
 
   return (
-    <div
-      data-qa="plugin-exercise"
-      className={cn(
-        'group/exercise rounded-b-xl border-3 border-transparent pb-6',
-        'focus-within:rounded-tl-xl focus-within:!border-gray-100 focus-within:border-gray-100',
-        isFocused && '!rounded-tl-xl !border-gray-100'
-      )}
-    >
-      {isSerlo ? (
-        <SerloLicenseChooser
-          licenseId={licenseId}
-          className="!right-[84px] !top-[-30px]"
-        />
-      ) : null}
+    <PreviewProvider value={previewActive}>
       <div
+        data-qa="plugin-exercise"
         className={cn(
-          'group-focus-within/exercise:block',
-          isFocused ? 'block' : 'hidden'
+          'group/exercise rounded-b-xl border-3 border-transparent pb-6',
+          'focus-within:rounded-tl-xl focus-within:!border-gray-100 focus-within:border-gray-100',
+          isFocused && '!rounded-tl-xl !border-gray-100'
         )}
       >
-        <ExerciseToolbar
-          {...props}
-          interactivePluginOptions={interactivePluginOptions}
-        />
-      </div>
-      <div className="h-10"></div>
-      {content.render({
-        config: {
-          textPluginPlaceholder: exPluginStrings.placeholder,
-        },
-      })}
-      <div className="mx-side">
-        {interactive.defined ? (
-          <>
-            {interactive.render()}
-            {hideInteractiveInitially.defined ? (
-              <small className="bg-editor-primary-200 p-1">
-                [{exPluginStrings.hideInteractiveInitially.info}]
-              </small>
-            ) : null}
-          </>
-        ) : (
-          <InteractiveExercisesSelection
-            interactivePluginOptions={interactivePluginOptions}
-            interactive={interactive}
+        {isSerlo ? (
+          <SerloLicenseChooser
+            licenseId={licenseId}
+            className="!right-[84px] !top-[-30px]"
           />
-        )}
-        {solution.defined ? (
-          <div className="-ml-side mt-block">
-            <nav className="flex justify-end">
-              <button
-                className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
-                onClick={() => solution.remove()}
-              >
-                <EditorTooltip text={exTemplateStrings.removeSolution} />
-                <FaIcon icon={faTrashAlt} />
-              </button>
-            </nav>
-            {solution.render()}
-          </div>
-        ) : (
-          <div
-            className={cn(
-              'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
-              isFocused ? 'block' : 'hidden'
-            )}
-          >
-            <AddButton onClick={() => solution.create()}>
-              {exTemplateStrings.createSolution}
-            </AddButton>
-          </div>
-        )}
+        ) : null}
+        <div
+          className={cn(
+            'group-focus-within/exercise:block',
+            isFocused ? 'block' : 'hidden'
+          )}
+        >
+          <ExerciseToolbar
+            {...props}
+            interactivePluginOptions={interactivePluginOptions}
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
+        </div>
+        <div className="h-10"></div>
+        {content.render({
+          config: {
+            textPluginPlaceholder: exPluginStrings.placeholder,
+          },
+        })}
+        <div className="mx-side">
+          {interactive.defined ? (
+            <>
+              {interactive.render()}
+              {hideInteractiveInitially.defined ? (
+                <small className="bg-editor-primary-200 p-1">
+                  [{exPluginStrings.hideInteractiveInitially.info}]
+                </small>
+              ) : null}
+            </>
+          ) : (
+            <InteractiveExercisesSelection
+              interactivePluginOptions={interactivePluginOptions}
+              interactive={interactive}
+            />
+          )}
+          {solution.defined ? (
+            <div className="-ml-side mt-block">
+              <nav className="flex justify-end">
+                <button
+                  className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
+                  onClick={() => solution.remove()}
+                >
+                  <EditorTooltip text={exTemplateStrings.removeSolution} />
+                  <FaIcon icon={faTrashAlt} />
+                </button>
+              </nav>
+              {solution.render()}
+            </div>
+          ) : (
+            <div
+              className={cn(
+                'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
+                isFocused ? 'block' : 'hidden'
+              )}
+            >
+              <AddButton onClick={() => solution.create()}>
+                {exTemplateStrings.createSolution}
+              </AddButton>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </PreviewProvider>
   )
 }

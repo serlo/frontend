@@ -7,21 +7,12 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { Dispatch, SetStateAction } from 'react'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseType } from './input-exercise-type'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 
-export const InputExerciseToolbar = ({
-  state,
-  previewActive,
-  setPreviewActive,
-  id,
-}: InputExerciseProps & {
-  previewActive: boolean
-  setPreviewActive: Dispatch<SetStateAction<boolean>>
-}) => {
+export const InputExerciseToolbar = ({ state, id }: InputExerciseProps) => {
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   return (
@@ -29,10 +20,6 @@ export const InputExerciseToolbar = ({
       pluginType={EditorPluginType.InputExercise}
       pluginSettings={
         <>
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
           <ToolbarSelect
             tooltipText={inputExStrings.chooseType}
             value={state.type.value}
