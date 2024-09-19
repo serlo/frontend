@@ -18,48 +18,34 @@ export type BlankId = string
 
 export type DraggableId = string
 
-export function createBlanksExercisePlugin(
-  config: BlanksExerciseConfig
-): EditorPlugin<BlanksExerciseState> {
+const blanksState = object({
+  // text can also be a table plugin
+  text: child({
+    plugin: EditorPluginType.Text,
+    config: {
+      formattingOptions: [
+        TextEditorFormattingOption.code,
+        TextEditorFormattingOption.colors,
+        TextEditorFormattingOption.lists,
+        TextEditorFormattingOption.richTextBold,
+        TextEditorFormattingOption.richTextItalic,
+        TextEditorFormattingOption.textBlank,
+        TextEditorFormattingOption.math,
+      ],
+      isInlineChildEditor: true,
+    },
+  }),
+  mode: string('typing'),
+  extraDraggableAnswers: optional(list(object({ answer: string() }))),
+})
+
+export function createBlanksExercisePlugin(): EditorPlugin<BlanksExerciseState> {
   return {
     Component: BlanksExerciseEditor,
-    config,
-    state: createState(config),
+    state: blanksState,
+    config: {},
   }
 }
 
-function createState(config: BlanksExerciseConfig) {
-  const defaultMode: BlanksExerciseMode = config.defaultMode || 'typing'
-
-  return object({
-    // text can also be a table plugin
-    text: child({
-      plugin: EditorPluginType.Text,
-      config: {
-        formattingOptions: [
-          TextEditorFormattingOption.code,
-          TextEditorFormattingOption.colors,
-          TextEditorFormattingOption.lists,
-          TextEditorFormattingOption.richTextBold,
-          TextEditorFormattingOption.richTextItalic,
-          TextEditorFormattingOption.textBlank,
-          TextEditorFormattingOption.math,
-        ],
-        isInlineChildEditor: true,
-      },
-    }),
-    mode: string(defaultMode),
-    extraDraggableAnswers: optional(list(object({ answer: string() }))),
-  })
-}
-
-export type BlanksExerciseConfig = BlanksExercisePluginConfig
-export type BlanksExerciseState = ReturnType<typeof createState>
-export type BlanksExerciseProps = EditorPluginProps<
-  BlanksExerciseState,
-  BlanksExerciseConfig
->
-
-export interface BlanksExercisePluginConfig {
-  defaultMode?: BlanksExerciseMode
-}
+export type BlanksExerciseState = typeof blanksState
+export type BlanksExerciseProps = EditorPluginProps<BlanksExerciseState>

@@ -112,11 +112,7 @@ export function createBasicPlugins(
     },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: createBlanksExercisePlugin({ defaultMode: 'typing' }),
-    },
-    {
-      type: EditorPluginType.BlanksExerciseDragAndDrop,
-      plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
+      plugin: createBlanksExercisePlugin(),
     },
     {
       type: EditorPluginType.DropzoneImage,
