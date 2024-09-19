@@ -6,6 +6,7 @@ import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
@@ -46,6 +47,10 @@ export function createBasicPlugins(
           {
             type: EditorPluginType.Image,
             plugin: createTestingImagePlugin(testingSecret),
+          },
+          {
+            type: EditorPluginType.ImageGallery,
+            plugin: createImageGalleryPlugin(),
           },
         ]
       : []),

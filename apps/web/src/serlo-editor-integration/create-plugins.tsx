@@ -120,15 +120,11 @@ export function createPlugins({
       plugin: imagePlugin,
       visibleInSuggestions: true,
     },
-    ...(isProduction
-      ? []
-      : [
-          {
-            type: EditorPluginType.ImageGallery,
-            plugin: createImageGalleryPlugin(),
-            visibleInSuggestions: true,
-          },
-        ]),
+    {
+      type: EditorPluginType.ImageGallery,
+      plugin: createImageGalleryPlugin(),
+      visibleInSuggestions: true,
+    },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin([
