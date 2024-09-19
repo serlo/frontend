@@ -35,6 +35,7 @@ export type PluginMenuActions =
 
 export interface PluginMenuState {
   allowedChildPlugins: string[] | undefined
+  parentPluginId: string
   showPluginMenu: boolean
   insertIndex: number | undefined
   insertCallback: ((plugin: AnyEditorDocument) => void) | undefined

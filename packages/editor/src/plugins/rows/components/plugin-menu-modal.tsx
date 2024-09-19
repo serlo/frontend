@@ -5,6 +5,7 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '@editor/plugins/rows/contexts/plugin-menu'
+import { selectAncestorPluginTypes, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -13,6 +14,7 @@ import { Key } from 'ts-key-enum'
 import { PluginMenuItems } from './plugin-menu-items'
 import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
+import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import { filterOptions } from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -48,9 +50,21 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     const allPlugins = Array.from(new Set(allPluginsWithDuplicates))
     const allowedByContext = pluginMenuState.allowedChildPlugins ?? allPlugins
 
-    // TODO: Use checkIsAllowedNesting helper to restrict plugin nesting
-    return allowedByContext
-  }, [menuItems, pluginMenuState.allowedChildPlugins])
+    const typesOfAncestors = selectAncestorPluginTypes(
+      store.getState(),
+      pluginMenuState.parentPluginId
+    )
+
+    return typesOfAncestors
+      ? allowedByContext.filter((plugin) =>
+          checkIsAllowedNesting(plugin, typesOfAncestors)
+        )
+      : allowedByContext
+  }, [
+    menuItems,
+    pluginMenuState.allowedChildPlugins,
+    pluginMenuState.parentPluginId,
+  ])
 
   const allowedMenuItems = useMemo(() => {
     return menuItems
