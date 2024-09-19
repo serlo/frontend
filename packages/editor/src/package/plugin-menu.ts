@@ -25,16 +25,9 @@ import { mergeDeepRight } from 'ramda'
 import { loggedInData as loggedInDataDe } from '@/data/de'
 import { loggedInData as loggedInDataEn } from '@/data/en'
 
-/**
- * An element of the Serlo editor which can be integrated as a block / plugin
- * in another editor (for example editor.js).
- *
- * Note: This is not the same as the list of plugins in the Serlo Editor. For
- * example the elements single choice question and multiple choice question
- * are both represented by the same plugin in the Serlo Editor (they only differ
- * by a configuration). In this list they are represented as two separate elements.
- */
-export enum PluginMenuItem {
+const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
+
+export enum PluginMenuType {
   Text = InternalEditorPluginType.Text,
   Image = InternalEditorPluginType.Image,
   ImageGallery = InternalEditorPluginType.ImageGallery,
@@ -68,78 +61,65 @@ const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
 
 /*
- * A list of all items that can be in the plugin menu.
- * If a plugin in not loaded in this editor instance, it will be filtered out.
+ * All items that can be in the plugin menu.
+ * So this includes some plugins that are specific to a certain integration.
+ * If a plugin in not loaded in the current editor instance, it will be filtered out.
  */
-export const pluginMenu: PluginMenu = {
-  [PluginMenuItem.Text]: getInfo(PluginMenuItem.Text, IconText),
-  [PluginMenuItem.Multimedia]: getInfo(
-    PluginMenuItem.Multimedia,
-    IconMultimedia
-  ),
-  [PluginMenuItem.Video]: getInfo(PluginMenuItem.Video, IconVideo),
-  [PluginMenuItem.Box]: getInfo(PluginMenuItem.Box, IconBox),
-  [PluginMenuItem.Equations]: getInfo(PluginMenuItem.Equations, IconEquation),
-  [PluginMenuItem.Geogebra]: getInfo(PluginMenuItem.Geogebra, IconGeogebra),
-  [PluginMenuItem.Highlight]: getInfo(PluginMenuItem.Highlight, IconHighlight),
-  [PluginMenuItem.Image]: getInfo(PluginMenuItem.Image, IconImage),
-  [PluginMenuItem.ImageGallery]: getInfo(
-    PluginMenuItem.ImageGallery,
-    IconImageGallery
-  ),
-  [PluginMenuItem.Injection]: getInfo(PluginMenuItem.Injection, IconInjection),
-  [PluginMenuItem.SerloTable]: getInfo(PluginMenuItem.SerloTable, IconTable),
-  [PluginMenuItem.Spoiler]: getInfo(PluginMenuItem.Spoiler, IconSpoiler),
-  [PluginMenuItem.DropzoneImage]: getInfo(
-    PluginMenuItem.DropzoneImage,
-    IconDropzones
-  ),
-  [PluginMenuItem.SingleChoiceExercise]: getInfo(
-    PluginMenuItem.SingleChoiceExercise,
-    IconScMcExercise
-  ),
-  [PluginMenuItem.MultipleChoiceExercise]: getInfo(
-    PluginMenuItem.MultipleChoiceExercise,
-    IconScMcExercise
-  ),
-  [PluginMenuItem.InputExercise]: getInfo(
-    PluginMenuItem.InputExercise,
-    IconTextArea
-  ),
-  [PluginMenuItem.TextAreaExercise]: getInfo(
-    PluginMenuItem.TextAreaExercise,
-    IconTextArea
-  ),
-  [PluginMenuItem.BlanksExercise]: getInfo(
-    PluginMenuItem.BlanksExercise,
-    IconBlanksTyping
-  ),
-  [PluginMenuItem.BlanksExerciseDragAndDrop]: getInfo(
-    PluginMenuItem.BlanksExerciseDragAndDrop,
-    IconBlanksDragAndDrop
-  ),
-  [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
-  [PluginMenuItem.ExerciseGroup]: getInfo(
-    PluginMenuItem.ExerciseGroup,
-    IconFallback
-  ),
+export const allPluginMenuItems: PluginMenuItem[] = [
+  getItem(PluginMenuType.Text, IconText),
+  getItem(PluginMenuType.Multimedia, IconMultimedia),
+  getItem(PluginMenuType.Video, IconVideo),
+  getItem(PluginMenuType.Box, IconBox),
+  getItem(PluginMenuType.Equations, IconEquation),
+  getItem(PluginMenuType.Geogebra, IconGeogebra),
+  getItem(PluginMenuType.Highlight, IconHighlight),
+  getItem(PluginMenuType.Image, IconImage),
+  getItem(PluginMenuType.ImageGallery, IconImageGallery),
+  getItem(PluginMenuType.Injection, IconInjection),
+  getItem(PluginMenuType.SerloTable, IconTable),
+  getItem(PluginMenuType.Spoiler, IconSpoiler),
+  getItem(PluginMenuType.DropzoneImage, IconDropzones),
+  getItem(PluginMenuType.SingleChoiceExercise, IconScMcExercise),
+  getItem(PluginMenuType.MultipleChoiceExercise, IconScMcExercise),
+  getItem(PluginMenuType.InputExercise, IconTextArea),
+  getItem(PluginMenuType.TextAreaExercise, IconTextArea),
+  getItem(PluginMenuType.BlanksExercise, IconBlanksTyping),
+  getItem(PluginMenuType.BlanksExerciseDragAndDrop, IconBlanksDragAndDrop),
+  getItem(PluginMenuType.H5p, IconH5p),
+  getItem(PluginMenuType.ExerciseGroup, IconFallback, isSerloProduction),
 
   // serlo specific plugins
-  [PluginMenuItem.Audio]: getInfo(PluginMenuItem.Audio, IconAudio),
-  [PluginMenuItem.PageLayout]: getInfo(PluginMenuItem.PageLayout, IconFallback),
-  [PluginMenuItem.PageTeam]: getInfo(PluginMenuItem.PageTeam, IconFallback),
-  [PluginMenuItem.PagePartners]: getInfo(
-    PluginMenuItem.PagePartners,
-    IconFallback
-  ),
-}
+  getItem(PluginMenuType.Audio, IconAudio), // only loads on serlo.org staging
+  getItem(PluginMenuType.PageLayout, IconFallback),
+  getItem(PluginMenuType.PageTeam, IconFallback),
+  getItem(PluginMenuType.PagePartners, IconFallback),
+]
 
-type PluginMenu = {
-  [E in PluginMenuItem]: PluginMenuItemInfo<E>
-}
+export const pluginMenuItems = allPluginMenuItems.filter((item) => !item.hidden)
 
-interface PluginMenuItemInfo<E extends PluginMenuItem> {
-  type: E
+// exports for package
+
+/**
+ * An element of the Serlo editor which can be integrated as a block / plugin
+ * in another editor (for example editor.js).
+ *
+ * Note: This is not the same as the list of plugins in the Serlo Editor. For
+ * example the elements single choice question and multiple choice question
+ * are both represented by the same plugin in the Serlo Editor (they only differ
+ * by a configuration). In this list they are represented as two separate elements.
+ */
+export const PluginMenuItem = pluginMenuItems.map((item) => item.type)
+
+/**
+ * Object of PluginMenuItems and the info needed to render a menu.
+ */
+export const pluginMenu = pluginMenuItems.reduce(
+  (previous, current) => ({ ...previous, [current.type]: current }),
+  {}
+)
+
+interface PluginMenuItem {
+  type: PluginMenuType
   de: {
     name: string
     description: string
@@ -150,41 +130,44 @@ interface PluginMenuItemInfo<E extends PluginMenuItem> {
   }
   icon: string
   initialState: EditorProps['initialState']
+  hidden?: boolean
 }
 
-function getInfo<E extends PluginMenuItem>(
-  type: E,
-  icon: string
-): PluginMenuItemInfo<E> {
+function getItem(
+  type: PluginMenuType,
+  icon: string,
+  hidden?: boolean
+): PluginMenuItem {
   return {
     ...getInternationalizedStrings(type),
     icon,
     type,
     initialState: getInitialState(type),
+    hidden,
   }
 }
 
-function getInitialState(type: PluginMenuItem): EditorProps['initialState'] {
+function getInitialState(type: PluginMenuType): EditorProps['initialState'] {
   switch (type) {
-    case PluginMenuItem.BlanksExerciseDragAndDrop:
-    case PluginMenuItem.BlanksExercise:
+    case PluginMenuType.BlanksExerciseDragAndDrop:
+    case PluginMenuType.BlanksExercise:
       return getEditorState({
         plugin: InternalEditorPluginType.BlanksExercise,
         state: {
           text: { plugin: InternalEditorPluginType.Text },
           mode:
-            type === PluginMenuItem.BlanksExerciseDragAndDrop
+            type === PluginMenuType.BlanksExerciseDragAndDrop
               ? 'drag-and-drop'
               : 'typing',
         },
       })
 
-    case PluginMenuItem.SingleChoiceExercise:
-    case PluginMenuItem.MultipleChoiceExercise:
+    case PluginMenuType.SingleChoiceExercise:
+    case PluginMenuType.MultipleChoiceExercise:
       return getEditorState({
         plugin: InternalEditorPluginType.ScMcExercise,
         state: {
-          isSingleChoice: type === PluginMenuItem.SingleChoiceExercise,
+          isSingleChoice: type === PluginMenuType.SingleChoiceExercise,
           answers: [
             {
               content: { plugin: InternalEditorPluginType.Text },
@@ -200,10 +183,10 @@ function getInitialState(type: PluginMenuItem): EditorProps['initialState'] {
         },
       })
 
-    case PluginMenuItem.InputExercise:
-    case PluginMenuItem.TextAreaExercise:
-    case PluginMenuItem.DropzoneImage:
-    case PluginMenuItem.H5p:
+    case PluginMenuType.InputExercise:
+    case PluginMenuType.TextAreaExercise:
+    case PluginMenuType.DropzoneImage:
+    case PluginMenuType.H5p:
       return getEditorState({ plugin: type })
 
     default:
@@ -225,9 +208,9 @@ function getEditorState(interactive: unknown) {
 }
 
 // TODO: move to i18n file
-function getInternationalizedStrings(type: PluginMenuItem) {
+function getInternationalizedStrings(type: PluginMenuType) {
   switch (type) {
-    case PluginMenuItem.SingleChoiceExercise:
+    case PluginMenuType.SingleChoiceExercise:
       return {
         de: {
           name: 'Single-Choice-Aufgabe',
@@ -238,7 +221,7 @@ function getInternationalizedStrings(type: PluginMenuItem) {
           description: 'A question with a selection of answer options.',
         },
       }
-    case PluginMenuItem.MultipleChoiceExercise:
+    case PluginMenuType.MultipleChoiceExercise:
       return {
         de: {
           name: 'Multiple-Choice-Aufgabe',

@@ -1,4 +1,4 @@
-import { pluginMenu } from '@editor/package/plugin-menu'
+import { pluginMenuItems } from '@editor/package/plugin-menu'
 import {
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,
@@ -37,9 +37,13 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   }
 
   function handleInsertPlugin(pluginMenuItem: PluginMenuItemType) {
+    const menuItem = pluginMenuItems.find(
+      ({ type }) => type === pluginMenuItem.type
+    )
+    if (!menuItem) return
     const pluginToInsert = {
       plugin: pluginMenuItem.pluginType,
-      state: pluginMenu[pluginMenuItem.type].initialState.state,
+      state: menuItem.initialState.state,
     }
 
     if (pluginMenuState.insertCallback) {

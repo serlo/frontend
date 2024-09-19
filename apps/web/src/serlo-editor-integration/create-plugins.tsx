@@ -135,11 +135,7 @@ export function createPlugins({
     // Exercises etc.
     // ===================================================
 
-    {
-      type: EditorPluginType.ExerciseGroup,
-      plugin: exerciseGroupPlugin,
-      visibleInSuggestions: !isProduction, // TODO
-    },
+    { type: EditorPluginType.ExerciseGroup, plugin: exerciseGroupPlugin },
     { type: EditorPluginType.Exercise, plugin: exercisePlugin },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },
     { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
@@ -157,8 +153,6 @@ export function createPlugins({
     },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
 
-    // Special plugins, never visible in suggestions
-    // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     { type: EditorPluginType.Article, plugin: articlePlugin },

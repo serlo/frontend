@@ -1,6 +1,6 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { pluginMenu } from '@editor/package/plugin-menu'
+import { pluginMenuItems } from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -35,7 +35,7 @@ export function ExerciseEditor(props: ExerciseProps) {
   const language = lang === Instance.De ? 'de' : 'en'
 
   const exerciseMenuItems = useMemo(() => {
-    const exerciseItems = Object.values(pluginMenu).filter((menuItem) => {
+    const exerciseItems = pluginMenuItems.filter((menuItem) => {
       const pluginType = menuItem.initialState.plugin
       return pluginType === 'exercise' && editorPlugins.isSupported(pluginType)
     })

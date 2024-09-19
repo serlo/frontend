@@ -1,4 +1,4 @@
-import { PluginMenuItem } from '@editor/package/plugin-menu'
+import { PluginMenuType } from '@editor/package/plugin-menu'
 import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 
@@ -42,7 +42,7 @@ export interface PluginMenuState {
 }
 
 export interface PluginMenuItemType {
-  type: PluginMenuItem
+  type: PluginMenuType
   pluginType: EditorPluginType
   title: string
   description?: string

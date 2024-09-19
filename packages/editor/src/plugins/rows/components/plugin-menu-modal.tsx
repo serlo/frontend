@@ -1,6 +1,6 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
-import { pluginMenu } from '@editor/package/plugin-menu'
+import { pluginMenuItems } from '@editor/package/plugin-menu'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
@@ -37,12 +37,10 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
-  // TODO: Add new property to check if it's allowed in the current context
-  // e.g. (staging / production / integration)
-
   const language = lang === Instance.De ? 'de' : 'en'
 
-  const menuItems = Object.values(pluginMenu)
+  const menuItems = pluginMenuItems
+
   const allowedPlugins = useMemo(() => {
     const allPluginsWithDuplicates = menuItems.map(
       (menuItem) => menuItem.initialState.plugin
