@@ -30,18 +30,27 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
     state.marks.insert(undefined, {
       title: '',
       child: { plugin: EditorPluginType.Exercise },
-      startTime,
-      endTime: 0,
+      startTime: startTime,
+      endTime: startTime + 5,
       autoOpen: true,
       mandatory: false,
       timeAfterFail: undefined,
     })
+    setTimeout(() => setShowOverlayContentIndex(state.marks.length))
+  }
+
+  function openOverlayByStartTime(startTime: number) {
+    const index = state.marks.findIndex(
+      (mark) => mark.startTime.value === startTime
+    )
+    if (index === -1) return
+    setShowOverlayContentIndex(index)
   }
 
   const cues = state.marks.map((mark) => ({
     startTime: mark.startTime.value,
     endTime: mark.endTime.value,
-    text: mark.title.value,
+    text: mark.title.value || 'Inhalt',
   }))
 
   return (
@@ -60,7 +69,12 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
         <>
           <InteractiveVideoRenderer
             chapterContent={{ cues }}
-            tools={<PlayerTools addOverlayContent={addOverlayContent} />}
+            tools={
+              <PlayerTools
+                addOverlayContent={addOverlayContent}
+                openOverlayByStartTime={openOverlayByStartTime}
+              />
+            }
           />
 
           <div className="mx-side">

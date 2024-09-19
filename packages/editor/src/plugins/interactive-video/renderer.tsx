@@ -45,9 +45,12 @@ export function InteractiveVideoRenderer({
 }) {
   return (
     <MediaPlayer
-      title="Sprite Fight"
-      src="youtube/_cMxraX_5RE"
+      title="Pine Tree Timelapse"
+      src="https://www.youtube.com/watch?v=a4kr4SxMNnA"
       playsInline
+      muted
+      hideControlsOnMouseLeave={false}
+      controlsDelay={60000}
       // load="play"
       aspectRatio="16:9"
     >
@@ -63,7 +66,7 @@ export function InteractiveVideoRenderer({
       <DefaultVideoLayout
         icons={defaultLayoutIcons}
         slots={{
-          afterSettingsMenu: tools,
+          beforeSettingsMenu: tools,
         }}
       />
       {/* <Poster
