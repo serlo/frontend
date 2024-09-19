@@ -1,4 +1,5 @@
 import type { EditorProps } from '@editor/core'
+import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
 import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg?raw'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
@@ -19,6 +20,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 import { EditorPluginType as InternalEditorPluginType } from '@editor/types/editor-plugin-type'
+import { mergeDeepRight } from 'ramda'
 
 import { loggedInData as loggedInDataDe } from '@/data/de'
 import { loggedInData as loggedInDataEn } from '@/data/en'
@@ -33,12 +35,6 @@ import { loggedInData as loggedInDataEn } from '@/data/en'
  * by a configuration). In this list they are represented as two separate elements.
  */
 export enum PluginMenuItem {
-  SingleChoiceExercise = 'singleChoiceExercise',
-  MultipleChoiceExercise = 'multipleChoiceExercise',
-  InputExercise = InternalEditorPluginType.InputExercise,
-  TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
-  BlanksExercise = InternalEditorPluginType.BlanksExercise,
-  BlanksExerciseDragAndDrop = InternalEditorPluginType.BlanksExerciseDragAndDrop,
   Text = InternalEditorPluginType.Text,
   Image = InternalEditorPluginType.Image,
   ImageGallery = InternalEditorPluginType.ImageGallery,
@@ -50,19 +46,31 @@ export enum PluginMenuItem {
   Equations = InternalEditorPluginType.Equations,
   Geogebra = InternalEditorPluginType.Geogebra,
   Injection = InternalEditorPluginType.Injection,
-  H5p = InternalEditorPluginType.H5p,
   Multimedia = InternalEditorPluginType.Multimedia,
-  DropzoneImage = InternalEditorPluginType.DropzoneImage,
+
+  Audio = InternalEditorPluginType.Audio,
   PageLayout = InternalEditorPluginType.PageLayout,
   PageTeam = InternalEditorPluginType.PageTeam,
   PagePartners = InternalEditorPluginType.PagePartners,
+
+  SingleChoiceExercise = 'singleChoiceExercise',
+  MultipleChoiceExercise = 'multipleChoiceExercise',
+  InputExercise = InternalEditorPluginType.InputExercise,
+  TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
+  BlanksExercise = InternalEditorPluginType.BlanksExercise,
+  BlanksExerciseDragAndDrop = InternalEditorPluginType.BlanksExerciseDragAndDrop,
+  DropzoneImage = InternalEditorPluginType.DropzoneImage,
+  H5p = InternalEditorPluginType.H5p,
+  ExerciseGroup = InternalEditorPluginType.ExerciseGroup,
 }
 
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
-// TODO: Consider adding Spanish strings as well (used in serlo.org)
-// unterlying question: What languages should the editor support?
 
+/*
+ * A list of all items that can be in the plugin menu.
+ * If a plugin in not loaded in this editor instance, it will be filtered out.
+ */
 export const pluginMenu: PluginMenu = {
   [PluginMenuItem.Text]: getInfo(PluginMenuItem.Text, IconText),
   [PluginMenuItem.Multimedia]: getInfo(
@@ -111,8 +119,13 @@ export const pluginMenu: PluginMenu = {
     IconBlanksDragAndDrop
   ),
   [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
+  [PluginMenuItem.ExerciseGroup]: getInfo(
+    PluginMenuItem.ExerciseGroup,
+    IconFallback
+  ),
 
   // serlo specific plugins
+  [PluginMenuItem.Audio]: getInfo(PluginMenuItem.Audio, IconAudio),
   [PluginMenuItem.PageLayout]: getInfo(PluginMenuItem.PageLayout, IconFallback),
   [PluginMenuItem.PageTeam]: getInfo(PluginMenuItem.PageTeam, IconFallback),
   [PluginMenuItem.PagePartners]: getInfo(
@@ -211,6 +224,7 @@ function getEditorState(interactive: unknown) {
   }
 }
 
+// TODO: move to i18n file
 function getInternationalizedStrings(type: PluginMenuItem) {
   switch (type) {
     case PluginMenuItem.SingleChoiceExercise:
@@ -243,27 +257,16 @@ function getInternationalizedStrings(type: PluginMenuItem) {
   }
 }
 
-type PluginsWithNameAndDescription = {
-  [P in keyof typeof germanPluginStrings]: (typeof germanPluginStrings)[P] extends {
-    title: string
-    description: string
-  }
-    ? P
-    : never
-}[keyof typeof germanPluginStrings]
-
 function getNameAndDescription(
   locale: 'de' | 'en',
-  pluginType: PluginsWithNameAndDescription
+  pluginType: keyof typeof englishPluginStrings
 ) {
-  const name =
+  const strings =
     locale === 'de'
-      ? germanPluginStrings[pluginType].title
-      : englishPluginStrings[pluginType].title
-  const description =
-    locale === 'de'
-      ? germanPluginStrings[pluginType].description
-      : englishPluginStrings[pluginType].description
+      ? mergeDeepRight(englishPluginStrings, germanPluginStrings)
+      : englishPluginStrings
+
+  const { title: name, description } = strings[pluginType]
 
   return { name, description }
 }

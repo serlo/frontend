@@ -21,7 +21,6 @@ import {
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@editor/plugins/page-partners'
 import { pageTeamPlugin } from '@editor/plugins/page-team'
-import { pasteHackPlugin } from '@editor/plugins/paste-hack'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
@@ -43,7 +42,6 @@ import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { H5pPlugin } from '@/serlo-editor-integration/h5p'
@@ -106,21 +104,9 @@ export function createPlugins({
   ]
 
   const allPlugins = [
-    {
-      type: EditorPluginType.Text,
-      plugin: createTextPlugin({}),
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Image,
-      plugin: imagePlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.ImageGallery,
-      plugin: createImageGalleryPlugin(),
-      visibleInSuggestions: true,
-    },
+    { type: EditorPluginType.Text, plugin: createTextPlugin({}) },
+    { type: EditorPluginType.Image, plugin: imagePlugin },
+    { type: EditorPluginType.ImageGallery, plugin: createImageGalleryPlugin() },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin([
@@ -129,82 +115,22 @@ export function createPlugins({
         ...(isProduction ? [] : [EditorPluginType.Audio]),
         EditorPluginType.Geogebra,
       ]),
-      visibleInSuggestions: true,
     },
-    {
-      type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(plugins),
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Box,
-      plugin: createBoxPlugin(plugins),
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(),
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Injection,
-      plugin: injectionPlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Equations,
-      plugin: equationsPlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Geogebra,
-      plugin: geoGebraPlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Highlight,
-      plugin: createHighlightPlugin(),
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Video,
-      plugin: videoPlugin,
-      visibleInSuggestions: true,
-    },
+    { type: EditorPluginType.Spoiler, plugin: createSpoilerPlugin(plugins) },
+    { type: EditorPluginType.Box, plugin: createBoxPlugin(plugins) },
+    { type: EditorPluginType.SerloTable, plugin: createSerloTablePlugin() },
+    { type: EditorPluginType.Injection, plugin: injectionPlugin },
+    { type: EditorPluginType.Equations, plugin: equationsPlugin },
+    { type: EditorPluginType.Geogebra, plugin: geoGebraPlugin },
+    { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
+    { type: EditorPluginType.Video, plugin: videoPlugin },
     ...(isProduction
       ? []
-      : [
-          {
-            type: EditorPluginType.Audio,
-            plugin: audioPlugin,
-            visibleInSuggestions: true,
-          },
-        ]),
-    {
-      type: EditorPluginType.Anchor,
-      plugin: anchorPlugin,
-      visibleInSuggestions: false,
-    },
-    {
-      type: EditorPluginType.PasteHack,
-      plugin: pasteHackPlugin,
-      visibleInSuggestions: false,
-    },
-    {
-      type: EditorPluginType.PageLayout,
-      plugin: pageLayoutPlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.PageTeam,
-      plugin: pageTeamPlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.PagePartners,
-      plugin: pagePartnersPlugin,
-      visibleInSuggestions: true,
-    },
+      : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
+    { type: EditorPluginType.Anchor, plugin: anchorPlugin },
+    { type: EditorPluginType.PageLayout, plugin: pageLayoutPlugin },
+    { type: EditorPluginType.PageTeam, plugin: pageTeamPlugin },
+    { type: EditorPluginType.PagePartners, plugin: pagePartnersPlugin },
 
     // Exercises etc.
     // ===================================================
@@ -212,23 +138,11 @@ export function createPlugins({
     {
       type: EditorPluginType.ExerciseGroup,
       plugin: exerciseGroupPlugin,
-      visibleInSuggestions: !isProduction,
+      visibleInSuggestions: !isProduction, // TODO
     },
-    {
-      type: EditorPluginType.Exercise,
-      plugin: exercisePlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-    },
-    {
-      type: EditorPluginType.ScMcExercise,
-      plugin: createScMcExercisePlugin(),
-
-      visibleInSuggestions: true,
-    },
+    { type: EditorPluginType.Exercise, plugin: exercisePlugin },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
+    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
@@ -240,7 +154,6 @@ export function createPlugins({
     {
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
-      visibleInSuggestions: false,
     },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
 

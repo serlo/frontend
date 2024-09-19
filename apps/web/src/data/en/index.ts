@@ -748,6 +748,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: 'Unsupported',
+          description: 'Plugin not supported by this version of the editor.',
           notSupported: 'Sorry, this plugin is not supported:',
           explanation:
             'It will not be displayed to users. You can either remove it or asks developers for support.',
@@ -881,6 +882,7 @@ export const loggedInData = {
         },
         rows: {
           title: 'Rows',
+          description: 'Rows plugin holds other plugins',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
           copyAnchorLink: 'Copy link to this element',
@@ -1002,6 +1004,10 @@ export const loggedInData = {
             deactivate: 'Load Interactive Element visible',
             activate: 'Load Interactive Element collapsed',
           },
+        },
+        exerciseGroup: {
+          title: 'Exercise Group',
+          description: 'Group multiple exercises together',
         },
         inputExercise: {
           title: 'Input Exercise',
