@@ -674,9 +674,9 @@ export const loggedInData = {
           or: "oder",
           modal: {
             settings: "Einstellungen",
-            new: "Neue Ablagezone",
+            createDropZone: 'New Drop Zone',
             edit: "Antwort bearbeiten",
-            wrong: "Falsche Antwort hinzufügen"
+            createWrongAnswer: 'Create Wrong Answer'
           }
         },
         unsupported: {
