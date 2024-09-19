@@ -1,7 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { selectIsFocused, useAppSelector } from '@editor/store'
+import { selectHasFocusedChild, useAppSelector } from '@editor/store'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
@@ -17,7 +17,7 @@ import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
 import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
 export function ExerciseEditor(props: ExerciseProps) {
-  const { state, focused } = props
+  const { state, focused, id } = props
   const {
     content,
     interactive,
@@ -35,10 +35,7 @@ export function ExerciseEditor(props: ExerciseProps) {
     .map((type) => createOption(type, editorStrings.plugins))
 
   const isFocusedInside = useAppSelector((state) => {
-    const interactiveId = interactive.defined ? interactive.id : null
-    if (interactiveId && selectIsFocused(state, interactiveId)) return true
-    const solutionId = solution.defined ? solution.id : null
-    if (solutionId && selectIsFocused(state, solutionId)) return true
+    return selectHasFocusedChild(state, id)
   })
 
   const isFocused = focused || isFocusedInside
@@ -60,8 +57,8 @@ export function ExerciseEditor(props: ExerciseProps) {
       ) : null}
       <div
         className={cn(
-          'hidden group-focus-within/exercise:block',
-          isFocused && '!block'
+          'group-focus-within/exercise:block',
+          isFocused ? 'block' : 'hidden'
         )}
       >
         <ExerciseToolbar
@@ -108,7 +105,7 @@ export function ExerciseEditor(props: ExerciseProps) {
           <div
             className={cn(
               'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
-              isFocused && '!block'
+              isFocused ? 'block' : 'hidden'
             )}
           >
             <AddButton onClick={() => solution.create()}>
