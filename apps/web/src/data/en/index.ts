@@ -1105,9 +1105,6 @@ export const loggedInData = {
           removeInteractive: 'Remove interactive element',
           createSolution: 'Create solution',
           removeSolution: 'Remove solution',
-          previewMode: 'Preview',
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit',
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',
@@ -1129,6 +1126,9 @@ export const loggedInData = {
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
           addAnswer: 'Add answer',
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit',
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',

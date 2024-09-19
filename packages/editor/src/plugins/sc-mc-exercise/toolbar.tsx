@@ -10,7 +10,15 @@ import type { Dispatch, SetStateAction } from 'react'
 import type { ScMcExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
 
-export const ScMcExerciseToolbar = ({ state, id }: ScMcExerciseProps) => {
+export const ScMcExerciseToolbar = ({
+  state,
+  previewActive,
+  setPreviewActive,
+  id,
+}: ScMcExerciseProps & {
+  previewActive: boolean
+  setPreviewActive: Dispatch<SetStateAction<boolean>>
+}) => {
   const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
 
   const handleChange = (value: string) => {
@@ -23,15 +31,21 @@ export const ScMcExerciseToolbar = ({ state, id }: ScMcExerciseProps) => {
     <PluginToolbar
       pluginType={EditorPluginType.ScMcExercise}
       pluginSettings={
-        <ToolbarSelect
-          tooltipText={scMcStrings.chooseType}
-          value={state.isSingleChoice.value ? 'sc' : 'mc'}
-          changeValue={handleChange}
-          options={[
-            { value: 'mc', text: scMcStrings.multipleChoice },
-            { value: 'sc', text: scMcStrings.singleChoice },
-          ]}
-        />
+        <>
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
+          <ToolbarSelect
+            tooltipText={scMcStrings.chooseType}
+            value={state.isSingleChoice.value ? 'sc' : 'mc'}
+            changeValue={handleChange}
+            options={[
+              { value: 'mc', text: scMcStrings.multipleChoice },
+              { value: 'sc', text: scMcStrings.singleChoice },
+            ]}
+          />
+        </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}
     />

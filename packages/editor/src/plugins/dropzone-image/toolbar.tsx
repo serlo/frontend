@@ -22,6 +22,8 @@ interface DropzoneImageToolbarProps {
   showSettings: boolean
   showSettingsButton?: boolean
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
+  previewActive?: boolean
+  setPreviewActive?: (active: boolean) => void
 }
 
 export function DropzoneImageToolbar({
@@ -30,6 +32,8 @@ export function DropzoneImageToolbar({
   showSettings,
   showSettingsButton = false,
   dropzoneVisibility,
+  previewActive,
+  setPreviewActive,
 }: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
@@ -77,6 +81,12 @@ export function DropzoneImageToolbar({
             </button>
             {renderSettingsModal()}
           </>
+        ) : null}
+        {previewActive !== undefined && setPreviewActive !== undefined ? (
+          <PreviewButton
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
         ) : null}
         {dropzoneVisibility ? (
           <ToolbarSelect
