@@ -45,6 +45,7 @@ export interface PluginMenuItemType {
   pluginType: EditorPluginType
   title: string
   description?: string
-  // TODO: Should be only one
-  icon?: string | (() => JSX.Element)
+  // until we use the editor package in the frontend (only having vite for building)
+  // I'd like to keep this approach
+  icon: string | (() => JSX.Element)
 }

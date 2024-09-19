@@ -64,8 +64,7 @@ export function PluginMenuItems({
           : ''
         : '-left-24'
 
-      const iconElement =
-        icon && typeof icon !== 'string' ? icon() : <IconFallback />
+      const iconElement = typeof icon !== 'string' ? icon() : <IconFallback />
 
       return (
         <li key={title}>

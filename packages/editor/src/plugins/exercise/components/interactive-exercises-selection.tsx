@@ -34,7 +34,7 @@ export function InteractiveExercisesSelection({
       <p className="mb-2 text-gray-400">
         {exTemplateStrings.addOptionalInteractiveEx}
       </p>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 gap-2 pb-10">
         {interactivePluginOptions.map(
           ({ pluginType, title, icon, description }, index) => (
             <button
@@ -47,7 +47,7 @@ export function InteractiveExercisesSelection({
                 className={getTooltipClass(index)}
                 text={description}
               />
-              {icon && typeof icon !== 'string' ? icon() : <IconFallback />}
+              {typeof icon !== 'string' ? icon() : <IconFallback />}
               <b className="mt-2 block text-sm">{title}</b>
             </button>
           )
