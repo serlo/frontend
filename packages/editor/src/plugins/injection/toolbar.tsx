@@ -1,5 +1,6 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -10,7 +11,6 @@ import { Dispatch, SetStateAction, type ClipboardEvent } from 'react'
 import type { InjectionProps } from '.'
 import { EditorInput } from '../../editor-ui'
 import { getCleanUrl } from '../text/utils/link'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 export const InjectionToolbar = ({
   id,

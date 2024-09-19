@@ -1,5 +1,6 @@
 import { useShadowRoot } from '@editor/core/helpers/use-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import type { StateTypeReturnType } from '@editor/plugin'
 import {
   redo,
@@ -14,7 +15,6 @@ import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
 import { useRef, useState } from 'react'
 
