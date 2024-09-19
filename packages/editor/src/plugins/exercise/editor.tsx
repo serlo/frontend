@@ -1,6 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { selectIsFocused, useAppSelector } from '@editor/store'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
@@ -33,12 +34,22 @@ export function ExerciseEditor(props: ExerciseProps) {
     .filter((type) => editorPlugins.isSupported(type))
     .map((type) => createOption(type, editorStrings.plugins))
 
+  const isFocusedInside = useAppSelector((state) => {
+    const interactiveId = interactive.defined ? interactive.id : null
+    if (interactiveId && selectIsFocused(state, interactiveId)) return true
+    const solutionId = solution.defined ? solution.id : null
+    if (solutionId && selectIsFocused(state, solutionId)) return true
+  })
+
+  const isFocused = focused || isFocusedInside
+
   return (
     <div
       data-qa="plugin-exercise"
       className={cn(
-        'group/exercise rounded-b-xl border-3 border-transparent pb-6 focus-within:rounded-tl-xl focus-within:border-gray-100',
-        focused && '!border-gray-100'
+        'group/exercise rounded-b-xl border-3 border-transparent pb-6',
+        'focus-within:rounded-tl-xl focus-within:!border-gray-100 focus-within:border-gray-100',
+        isFocused && '!rounded-tl-xl !border-gray-100'
       )}
     >
       {isSerlo ? (
@@ -47,23 +58,17 @@ export function ExerciseEditor(props: ExerciseProps) {
           className="!right-[84px] !top-[-30px]"
         />
       ) : null}
-      {focused ? (
+      <div
+        className={cn(
+          'hidden group-focus-within/exercise:block',
+          isFocused && '!block'
+        )}
+      >
         <ExerciseToolbar
           {...props}
           interactivePluginOptions={interactivePluginOptions}
         />
-      ) : (
-        <button
-          className={cn(`
-            absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
-            px-2 pt-0.5 text-sm font-bold
-            hover:bg-editor-primary-100 group-focus-within/exercise:block
-          `)}
-          data-qa="plugin-exercise-parent-button"
-        >
-          {exPluginStrings.title}
-        </button>
-      )}
+      </div>
       <div className="h-10"></div>
       {content.render({
         config: {
@@ -100,7 +105,12 @@ export function ExerciseEditor(props: ExerciseProps) {
             {solution.render()}
           </div>
         ) : (
-          <div className={cn('mt-12 max-w-[50%]', focused && '!block')}>
+          <div
+            className={cn(
+              'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
+              isFocused && '!block'
+            )}
+          >
             <AddButton onClick={() => solution.create()}>
               {exTemplateStrings.createSolution}
             </AddButton>
