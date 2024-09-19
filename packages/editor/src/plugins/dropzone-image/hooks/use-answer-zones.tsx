@@ -1,24 +1,9 @@
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { v4 as uuidv4 } from 'uuid'
 
 import type { DropzoneImageProps } from '..'
 import { AnswerType, type AnswerZoneState } from '../types'
-import {
-  getAnswerZoneImageState,
-  getAnswerZoneText,
-} from '../utils/answer-zone'
-
-export const defaultAnswerZonePosition = {
-  left: 0.05,
-  top: 0.05,
-}
-
-export const defaultAnswerZoneLayout = {
-  width: 0.2,
-  height: 0.1,
-}
+import { duplicateAnswerZone } from '../utils/answer-zone'
 
 export function useAnswerZones(
   answerZones: DropzoneImageProps['state']['answerZones']
@@ -32,7 +17,7 @@ export function useAnswerZones(
   )
 
   const selectAnswerZone = (id: string) => {
-    const answerZone = answerZones.find((zone) => zone.id.get() === id)
+    const answerZone = answerZones.find((zone) => zone.id.value === id)
     if (answerZone) {
       setCurrentAnswerZone(answerZone)
     }
@@ -43,54 +28,13 @@ export function useAnswerZones(
     setCurrentAnswerType(type)
   }
 
-  const insertAnswerZone = () => {
-    const currentLength = answerZones.length
-    answerZones.insert(currentLength, {
-      id: `answerZone-${currentLength}`,
-      name: '',
-      position: defaultAnswerZonePosition,
-      layout: defaultAnswerZoneLayout,
-      answers: [],
-    })
-  }
-
-  const duplicateAnswerZone = (idToDuplicate: string) => {
-    const toCopy = answerZones.find((zone) => zone.id.get() === idToDuplicate)
-    if (!toCopy) return
-    const currentLength = answerZones.length
-    const newZone = {
-      id: `answerZone-${currentLength}`,
-      name: toCopy.name.get(),
-      position: {
-        left: toCopy.position.left.get() + defaultAnswerZonePosition.left,
-        top: toCopy.position.top.get() + defaultAnswerZonePosition.top,
-      },
-      layout: {
-        width: toCopy.layout.width.get(),
-        height: toCopy.layout.height.get(),
-      },
-      answers: toCopy.answers.map((answer) => ({
-        id: uuidv4(),
-        image: {
-          plugin: EditorPluginType.Image,
-          state: getAnswerZoneImageState(answer.image.get()),
-        },
-        text: {
-          plugin: EditorPluginType.Text,
-          state: getAnswerZoneText(answer.text.get()),
-        },
-      })),
-    }
-    answerZones.insert(currentLength, newZone)
-  }
-
   const [answerZoneClipboardItem, setAnswerZoneClipboardItem] =
     useState<AnswerZoneState | null>(null)
 
   useHotkeys('backspace, del', (event) => {
     if (!currentAnswerZone) return
     const index = answerZones.findIndex(
-      ({ id }) => id.get() === currentAnswerZone.id.get()
+      ({ id }) => id.value === currentAnswerZone.id.value
     )
     index !== -1 && answerZones.remove(index)
     event.preventDefault()
@@ -103,8 +47,8 @@ export function useAnswerZones(
 
   useHotkeys(['ctrl+v, meta+v'], (event) => {
     if (!answerZoneClipboardItem) return
-    const idToDuplicate = answerZoneClipboardItem.id.get()
-    duplicateAnswerZone(idToDuplicate)
+    const idToDuplicate = answerZoneClipboardItem.id.value
+    duplicateAnswerZone(answerZones, idToDuplicate)
     event.preventDefault()
   })
 
@@ -114,7 +58,5 @@ export function useAnswerZones(
     currentAnswerType,
     selectAnswerZone,
     selectCurrentAnswer,
-    insertAnswerZone,
-    duplicateAnswerZone,
   }
 }

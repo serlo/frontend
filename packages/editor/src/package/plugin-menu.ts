@@ -40,6 +40,7 @@ export enum PluginMenuItem {
   BlanksExerciseDragAndDrop = InternalEditorPluginType.BlanksExerciseDragAndDrop,
   Text = InternalEditorPluginType.Text,
   Image = InternalEditorPluginType.Image,
+  ImageGallery = InternalEditorPluginType.ImageGallery,
   Video = InternalEditorPluginType.Video,
   Highlight = InternalEditorPluginType.Highlight,
   Spoiler = InternalEditorPluginType.Spoiler,
@@ -51,7 +52,6 @@ export enum PluginMenuItem {
   H5p = InternalEditorPluginType.H5p,
   Multimedia = InternalEditorPluginType.Multimedia,
   DropzoneImage = InternalEditorPluginType.DropzoneImage,
-  ImageGallery = InternalEditorPluginType.ImageGallery,
 }
 
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins

@@ -9,13 +9,10 @@ import type { CommentAreaEntityProps } from '@/components/comments/comment-area-
 import { Lazy } from '@/components/content/lazy'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
-import { useAB } from '@/contexts/ab'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { useEntityData } from '@/contexts/uuids-context'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { useCreateExerciseSubmissionMutation } from '@/mutations/use-experiment-create-exercise-submission-mutation'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
@@ -25,17 +22,12 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
 
 // Special version for serlo.org with author tools and comments
 export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
-  const { asPath } = useRouter()
-  const ab = useAB()
   const commentStrings = useInstanceData().strings.comments
   const isRevisionView = useContext(RevisionViewContext)
   const currentPath = useRouter().asPath
 
-  const { entityId, revisionId } = useEntityData()
-  const { exerciseTrackingId, isInExerciseGroup, isEntity } =
-    useContext(ExerciseContext)
-
-  const trackExperiment = useCreateExerciseSubmissionMutation(asPath)
+  const { entityId } = useEntityData()
+  const { isInExerciseGroup, isEntity } = useContext(ExerciseContext)
 
   if (isPrintMode && !printModeSolutionVisible) return null
 
@@ -47,27 +39,12 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
         ? false
         : !isInExerciseGroup && window.location.href.includes('#comment-')
 
-  function onSolutionOpen() {
-    exerciseSubmission(
-      {
-        path: asPath,
-        entityId: exerciseTrackingId,
-        type: 'text',
-        result: 'open',
-        revisionId,
-      },
-      ab,
-      trackExperiment
-    )
-  }
-
   return (
     <div className="relative">
       <StaticSolutionRenderer
         {...props}
         solutionVisibleOnInit={solutionVisibleOnInit}
         afterSlot={renderCommentSection()}
-        onSolutionOpen={onSolutionOpen}
       />
     </div>
   )

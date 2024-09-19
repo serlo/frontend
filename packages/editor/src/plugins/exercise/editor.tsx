@@ -1,30 +1,19 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { useContext } from 'react'
 
-import type { ExerciseProps } from '.'
+import { type ExerciseProps } from '.'
+import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
+import { interactivePluginTypes } from './interactive-plugin-types'
 import { ExerciseToolbar } from './toolbar/toolbar'
+import { createOption } from '../rows/utils/plugin-menu'
 import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
 import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
-
-const allInteractiveExerciseTypes = [
-  EditorPluginType.ScMcExercise,
-  EditorPluginType.InputExercise,
-  EditorPluginType.H5p,
-  EditorPluginType.TextAreaExercise,
-  EditorPluginType.BlanksExercise,
-  EditorPluginType.BlanksExerciseDragAndDrop,
-  EditorPluginType.DropzoneImage,
-] as const
-
-export type InteractiveExerciseType =
-  (typeof allInteractiveExerciseTypes)[number]
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused } = props
@@ -36,14 +25,13 @@ export function ExerciseEditor(props: ExerciseProps) {
     hideInteractiveInitially,
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
+  const editorStrings = useEditorStrings()
+  const exTemplateStrings = editorStrings.templatePlugins.exercise
+  const exPluginStrings = editorStrings.plugins.exercise
 
-  const interactiveExerciseTypes = allInteractiveExerciseTypes.filter((type) =>
-    editorPlugins.getAllWithData().some((plugin) => plugin.type === type)
-  )
-
-  const templateStrings = useEditorStrings().templatePlugins
-  const exTemplateStrings = templateStrings.exercise
-  const exPluginStrings = useEditorStrings().plugins.exercise
+  const interactivePluginOptions = interactivePluginTypes
+    .filter((type) => editorPlugins.isSupported(type))
+    .map((type) => createOption(type, editorStrings.plugins))
 
   return (
     <div
@@ -62,7 +50,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       {focused ? (
         <ExerciseToolbar
           {...props}
-          interactiveExerciseTypes={interactiveExerciseTypes}
+          interactivePluginOptions={interactivePluginOptions}
         />
       ) : (
         <button
@@ -93,25 +81,10 @@ export function ExerciseEditor(props: ExerciseProps) {
             ) : null}
           </>
         ) : (
-          <>
-            <p className="mb-2 text-gray-400">
-              {exTemplateStrings.addOptionalInteractiveEx}
-            </p>
-            <div className="-ml-1.5 flex">
-              {interactiveExerciseTypes.map((type) => {
-                return (
-                  <AddButton
-                    key={type}
-                    onClick={() => interactive.create({ plugin: type })}
-                    secondary
-                    dataQa={`add-exercise-${type}`}
-                  >
-                    {exTemplateStrings[type]}
-                  </AddButton>
-                )
-              })}
-            </div>
-          </>
+          <InteractiveExercisesSelection
+            interactivePluginOptions={interactivePluginOptions}
+            interactive={interactive}
+          />
         )}
         {solution.defined ? (
           <div className="-ml-side mt-block">

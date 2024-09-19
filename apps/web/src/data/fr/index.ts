@@ -674,9 +674,9 @@ export const loggedInData = {
           or: "ou",
           modal: {
             settings: "Réglages",
-            new: 'New Drop Zone',
+            createDropZone: 'New Drop Zone',
             edit: 'Edit Answer',
-            wrong: 'Create Wrong Answer'
+            createWrongAnswer: 'Create Wrong Answer'
           }
         },
         unsupported: {

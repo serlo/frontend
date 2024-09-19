@@ -1,11 +1,16 @@
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
+import { defaultLargeCanvasDimension } from './background-shape-select'
 import type { DropzoneImageProps } from '../..'
-import { AnswerZonesContext } from '../../context/context'
-import { AnswerZoneState, ModalType } from '../../types'
+import {
+  type AnswerType,
+  AnswerZoneState,
+  ModalType,
+  type DropzoneVisibility,
+} from '../../types'
 import { getPercentageRounded } from '../../utils/percentage'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { cn } from '@/helper/cn'
@@ -13,22 +18,24 @@ import { cn } from '@/helper/cn'
 interface EditorCanvasProps {
   state: DropzoneImageProps['state']
   setModalType: (type: ModalType) => void
+  selectAnswerZone: (id: string) => void
+  selectCurrentAnswer: (index: number, type: AnswerType) => void
 }
 
-export function EditorCanvas(props: EditorCanvasProps) {
-  const { state, setModalType } = props
+export function EditorCanvas({
+  state,
+  setModalType,
+  selectAnswerZone,
+  selectCurrentAnswer,
+}: EditorCanvasProps) {
   const { answerZones, backgroundImage, canvasDimensions } = state
-  const canvasWidth = canvasDimensions.width.get()
-  const canvasHeight = canvasDimensions.height.get()
-
-  const context = useContext(AnswerZonesContext)
-
-  const { selectAnswerZone, selectCurrentAnswer } = context || {}
+  const canvasWidth = canvasDimensions.width.value
+  const canvasHeight = canvasDimensions.height.value
 
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
         store.getState(),
-        backgroundImage.get()
+        backgroundImage.id
       ) as EditorImageDocument)
     : null
   const backgroundImageUrl = (backgroundImageDocument?.state?.src ||
@@ -44,20 +51,17 @@ export function EditorCanvas(props: EditorCanvasProps) {
     img.src = backgroundImageUrl
     img.onload = () => {
       const imgAspectRatio = img.width / img.height
-      let newCanvasWidth = canvasWidth
-      let newCanvasHeight = canvasHeight
+      const defaultDimension = defaultLargeCanvasDimension
+      let newCanvasWidth = defaultDimension
+      let newCanvasHeight = defaultDimension
 
-      if (canvasWidth / canvasHeight > imgAspectRatio) {
-        newCanvasHeight = canvasWidth / imgAspectRatio
-        if (newCanvasHeight > canvasHeight) {
-          newCanvasHeight = canvasHeight
-          newCanvasWidth = newCanvasHeight * imgAspectRatio
+      if (imgAspectRatio < 1) {
+        if (defaultDimension / imgAspectRatio > defaultDimension) {
+          newCanvasWidth = defaultDimension * imgAspectRatio
         }
       } else {
-        newCanvasWidth = canvasHeight * imgAspectRatio
-        if (newCanvasWidth > canvasWidth) {
-          newCanvasWidth = canvasWidth
-          newCanvasHeight = newCanvasWidth / imgAspectRatio
+        if (defaultDimension * imgAspectRatio > defaultDimension) {
+          newCanvasHeight = defaultDimension / imgAspectRatio
         }
       }
       canvasDimensions.width.set(newCanvasWidth)
@@ -66,6 +70,11 @@ export function EditorCanvas(props: EditorCanvasProps) {
     }
   })
 
+  // reset canvas size when background image changes
+  useEffect(() => {
+    setDidAdjustCanvasDimensions(false)
+  }, [backgroundImageUrl])
+
   const [, drop] = useDrop(
     () => ({
       accept: answerZoneDragType,
@@ -73,8 +82,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
         const change = monitor.getDifferenceFromInitialOffset()
         if (!change) return
 
-        const width = answerZone.layout.width.get()
-        const currentAbsoluteLeft = canvasWidth * answerZone.position.left.get()
+        const width = answerZone.layout.width.value
+        const currentAbsoluteLeft = canvasWidth * answerZone.position.left.value
         const newAbsoluteLeft = currentAbsoluteLeft + change.x
         const left = getPercentageRounded(canvasWidth, newAbsoluteLeft)
         const right = left + width
@@ -85,8 +94,8 @@ export function EditorCanvas(props: EditorCanvasProps) {
         // Otherwise, position horizontally exactly as dropped
         else answerZone.position.left.set(left)
 
-        const height = answerZone.layout.height.get()
-        const currentAbsoluteTop = canvasHeight * answerZone.position.top.get()
+        const height = answerZone.layout.height.value
+        const currentAbsoluteTop = canvasHeight * answerZone.position.top.value
         const newAbsoluteTop = currentAbsoluteTop + change.y
         const top = getPercentageRounded(canvasHeight, newAbsoluteTop)
         const bottom = top + height
@@ -116,12 +125,15 @@ export function EditorCanvas(props: EditorCanvasProps) {
       data-qa="plugin-dropzone-image-editor-canvas"
     >
       {answerZones?.map((answerZone, index) => {
-        const id = answerZone.id.get()
+        const id = answerZone.id.value
         return (
           <AnswerZone
             key={index}
             answerZone={answerZone}
             canvasSize={[canvasWidth, canvasHeight]}
+            dropzoneVisibility={
+              state.dropzoneVisibility.value as DropzoneVisibility
+            }
             onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
               selectAnswerZone(id)

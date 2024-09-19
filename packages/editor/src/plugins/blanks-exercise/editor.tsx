@@ -40,7 +40,9 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { text: childPlugin, mode, extraDraggableAnswers } = state
   const [previewActive, setPreviewActive] = useState(false)
 
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const pluginStrings = useEditorStrings().plugins
+  const blanksExerciseStrings = pluginStrings.blanksExercise
+  const dragAndDropTitle = pluginStrings.blanksExerciseDragAndDrop.title
 
   const isChildPluginFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, childPlugin.id)
@@ -90,7 +92,9 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
           `)}
           data-qa="plugin-blanks-exercise-parent-button"
         >
-          {blanksExerciseStrings.title}
+          {mode.value === 'typing'
+            ? blanksExerciseStrings.title
+            : dragAndDropTitle}
         </button>
       )}
 

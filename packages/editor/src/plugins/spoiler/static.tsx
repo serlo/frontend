@@ -1,13 +1,16 @@
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorSpoilerDocument } from '@editor/types/editor-plugins'
+import { useState } from 'react'
 
 import { SpoilerRenderer } from './renderer'
 
 export function SpoilerStaticRenderer({
   state,
   openOverwrite,
-  onOpen,
-}: EditorSpoilerDocument & { openOverwrite?: boolean; onOpen?: () => void }) {
+}: EditorSpoilerDocument & { openOverwrite?: boolean }) {
+  const [eventAlreadySent, setEventAlreadySent] = useState(false)
+
   const { title, richTitle, content } = state
 
   const renderedTitle = richTitle ? (
@@ -15,6 +18,16 @@ export function SpoilerStaticRenderer({
   ) : (
     <>{title}</>
   )
+
+  function onOpen() {
+    if (openOverwrite || eventAlreadySent) return
+    editorLearnerEvent.trigger?.({
+      verb: 'opened',
+      contentType: 'spoiler',
+      value: 'open',
+    })
+    setEventAlreadySent(true)
+  }
 
   return (
     <SpoilerRenderer

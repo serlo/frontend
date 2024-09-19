@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
 
@@ -8,7 +7,6 @@ import 'react-resizable/css/styles.css'
 import { AnswerZoneAnswer } from './answer-zone-answer'
 import { AnswerZoneEmpty } from './answer-zone-empty'
 import { AnswerZoneSidebar } from './answer-zone-sidebar'
-import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZoneResize } from '../../hooks/use-answer-zone-resize'
 import {
   type AnswerType,
@@ -22,6 +20,7 @@ export const answerZoneDragType = 'answerZone'
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
   canvasSize: [number, number]
+  dropzoneVisibility: DropzoneVisibility
   onClick: () => void
   onClickSettingsButton: () => void
   onClickPlusButton: () => void
@@ -32,15 +31,13 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const {
     answerZone,
     canvasSize,
+    dropzoneVisibility,
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
     onClickEditAnswerButton,
   } = props
-  const name = answerZone.name.get()
-
-  const context = useContext(AnswerZonesContext)
-  const { dropzoneVisibility } = context || {}
+  const name = answerZone.name.value
 
   const { positionState, resizableBoxProps } = useAnswerZoneResize({
     answerZone,
@@ -67,7 +64,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       style={positionState}
       onClick={onClick}
-      data-qa={`answer-zone-${answerZone.id.get()}`}
+      data-qa={`answer-zone-${answerZone.id.value}`}
     >
       <div className="relative z-20">
         <ResizableBox {...resizableBoxProps}>
@@ -87,7 +84,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
             {answerZone.answers.length === 0 ? (
               <AnswerZoneEmpty
-                answerZoneId={answerZone.id.get()}
+                answerZoneId={answerZone.id.value}
                 onClickSettingsButton={onClickSettingsButton}
                 onClickPlusButton={onClickPlusButton}
               />
@@ -109,7 +106,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
             {answerZone.answers.length > 0 ? (
               <AnswerZoneSidebar
-                answerZoneId={answerZone.id.get()}
+                answerZoneId={answerZone.id.value}
                 onClickSettingsButton={onClickSettingsButton}
                 onClickPlusButton={onClickPlusButton}
               />

@@ -15,12 +15,10 @@ export function ScMcExerciseStaticRenderer({
   state,
   id,
   isPrintMode,
-  onEvaluate,
   renderExtraAnswerContent,
   noShuffle,
 }: EditorScMcExerciseDocument & {
   isPrintMode?: boolean
-  onEvaluate?: ScMcExerciseRendererProps['onEvaluate']
   renderExtraAnswerContent?: ScMcExerciseRendererProps['renderExtraAnswerContent']
   noShuffle?: true
 }) {
@@ -60,7 +58,6 @@ export function ScMcExerciseStaticRenderer({
         isSingleChoice={!!state.isSingleChoice}
         answers={answers}
         isPrintMode={isPrintMode}
-        onEvaluate={onEvaluate}
         renderExtraAnswerContent={renderExtraAnswerContent}
       />
     </Fragment>

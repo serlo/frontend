@@ -1,20 +1,21 @@
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { PluginMenuItemType } from '@editor/plugins/rows/contexts/plugin-menu/types'
 import { selectDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ExerciseProps } from '..'
-import type { InteractiveExerciseType } from '../editor'
+import { InteractivePluginType } from '../interactive-plugin-types'
 
 export const ExerciseToolbar = ({
   id,
   state,
-  interactiveExerciseTypes,
+  interactivePluginOptions,
 }: ExerciseProps & {
-  interactiveExerciseTypes: InteractiveExerciseType[]
+  interactivePluginOptions: PluginMenuItemType[]
 }) => {
   const { interactive } = state
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
@@ -30,11 +31,11 @@ export const ExerciseToolbar = ({
       value={currentlySelected ?? ''}
       changeValue={(value) => {
         if (interactive.defined)
-          interactive.replace(value as InteractiveExerciseType)
+          interactive.replace(value as InteractivePluginType)
       }}
-      options={interactiveExerciseTypes.map((type) => ({
-        value: type,
-        text: exTemplateStrings[type],
+      options={interactivePluginOptions.map(({ pluginType, title }) => ({
+        value: pluginType,
+        text: title,
       }))}
     />
   ) : undefined

@@ -15,6 +15,7 @@ import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
+import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -23,6 +24,7 @@ import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
@@ -67,6 +69,12 @@ export function createBasicPlugins(
             plugin: createTestingImagePlugin(testingSecret),
             visibleInSuggestions: true,
             icon: <IconImage />,
+          },
+          {
+            type: EditorPluginType.ImageGallery,
+            plugin: createImageGalleryPlugin(),
+            visibleInSuggestions: true,
+            icon: <IconImageGallery />,
           },
         ]
       : []),
@@ -134,11 +142,6 @@ export function createBasicPlugins(
       visibleInSuggestions: true,
     },
     {
-      type: EditorPluginType.TextAreaExercise,
-      plugin: textAreaExercisePlugin,
-      icon: <IconFallback />,
-    },
-    {
       type: EditorPluginType.Solution,
       plugin: solutionPlugin,
       icon: <IconPencil />,
@@ -168,6 +171,11 @@ export function createBasicPlugins(
       plugin: createDropzoneImagePlugin(),
       visibleInSuggestions: false,
       icon: <IconDropzones />,
+    },
+    {
+      type: EditorPluginType.TextAreaExercise,
+      plugin: textAreaExercisePlugin,
+      icon: <IconFallback />,
     },
 
     // Special plugins, never visible in suggestions

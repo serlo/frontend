@@ -1,41 +1,51 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
-import type { ImageProps } from '@editor/plugins/image'
-import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
+import { type ImageProps } from '@editor/plugins/image'
+import { LicenseDropdown } from '@editor/plugins/image/components/licence-dropdown'
+import {
+  runChangeDocumentSaga,
+  selectDocument,
+  useAppDispatch,
+  useAppSelector,
+} from '@editor/store'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useState } from 'react'
 
-interface BackgroundImageSettingsProps {
-  id: string | null
-  state?: ImageProps['state']
-}
+import { FaIcon } from '@/components/fa-icon'
 
-export function BackgroundImageSettings(props: BackgroundImageSettingsProps) {
-  const { id, state } = props
+export function BackgroundImageSettings({ id }: { id: string }) {
   const imageStrings = useEditorStrings().plugins.image
-
-  const [formState, setFormState] = useState<Partial<ImageProps['state']>>(
-    state ? { ...state } : {}
-  )
-  const { alt, src, maxWidth } = formState
-
   const dispatch = useAppDispatch()
 
+  const document = useAppSelector((state) => selectDocument(state, id))
+  if (!document) return null
+  const state = document.state as ImageProps['state']
+
+  const { alt, src, imageSource, licence } = state
+
   function handleChange(
-    prop: 'src' | 'alt' | 'maxWidth',
-    value: string | { value: string }
+    prop: 'src' | 'alt' | 'imageSource' | 'licence',
+    value: string
   ) {
-    const newState = {
-      ...formState,
-      [prop]: typeof value === 'string' ? value : { ...value, defined: true },
-    }
-
-    setFormState(newState)
-
     if (!id) return
+    const isOptional = Object.hasOwn(state[prop], 'defined')
 
-    dispatch(runChangeDocumentSaga({ id, state: { initial: () => newState } }))
+    const newValue = isOptional
+      ? value.length
+        ? { defined: true, value }
+        : { defined: false, value: null }
+      : value
+
+    dispatch(
+      runChangeDocumentSaga({
+        id,
+        state: { initial: () => ({ ...state, [prop]: newValue }) },
+      })
+    )
   }
+
+  const srcValue = src ? String(src) : ''
 
   return (
     <>
@@ -43,17 +53,32 @@ export function BackgroundImageSettings(props: BackgroundImageSettingsProps) {
         label={imageStrings.imageUrl}
         autoFocus
         placeholder={imageStrings.placeholderEmpty}
-        value={src?.toString()}
-        onChange={(event) => handleChange('src', event.target.value)}
+        value={srcValue}
+        onChange={(e) => handleChange('src', e.target.value)}
+      />
+      <OverlayInput
+        label={imageStrings.imageSource}
+        placeholder={imageStrings.placeholderSource}
+        value={imageSource.defined ? imageSource.value : ''}
+        onChange={(e) => handleChange('imageSource', e.target.value)}
+        tooltip={
+          <span className="serlo-tooltip-trigger w-1/4">
+            <FaIcon className="ml-2" icon={faQuestionCircle} />
+            <EditorTooltip text={imageStrings.imageSourceHelpText} />
+          </span>
+        }
+      />
+      <LicenseDropdown
+        currentLicence={licence?.defined ? licence?.value : undefined}
+        onLicenseChange={(license: string) => handleChange('licence', license)}
+        src={srcValue}
       />
       <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
         <span className="w-[20%]">{imageStrings.alt}</span>
         <textarea
           placeholder={imageStrings.altPlaceholder}
-          value={alt?.defined ? alt.value : ''}
-          onChange={(event) =>
-            handleChange('alt', { value: event.target.value })
-          }
+          value={alt.defined ? alt.value : ''}
+          onChange={(e) => handleChange('alt', e.target.value)}
           className={cn(`
             serlo-input-font-reset
             mt-1.5 min-h-[100px] w-3/4 resize-none rounded-md
@@ -62,15 +87,6 @@ export function BackgroundImageSettings(props: BackgroundImageSettingsProps) {
           `)}
         />
       </label>
-      <OverlayInput
-        label={imageStrings.maxWidth}
-        placeholder={imageStrings.maxWidthPlaceholder}
-        type="number"
-        value={maxWidth?.defined ? maxWidth.value : ''}
-        onChange={(event) =>
-          handleChange('maxWidth', { value: event.target.value })
-        }
-      />
     </>
   )
 }

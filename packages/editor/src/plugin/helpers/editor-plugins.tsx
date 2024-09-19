@@ -37,5 +37,11 @@ export const editorPlugins = (function () {
     return (contextPlugin?.plugin as EditorPlugin) ?? null
   }
 
-  return { init, getAllWithData, getByType }
+  function isSupported(pluginType: string) {
+    const plugins = getAllWithData()
+
+    return !!plugins.find((plugin) => plugin.type === pluginType)
+  }
+
+  return { init, getAllWithData, getByType, isSupported }
 })()

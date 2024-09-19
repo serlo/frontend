@@ -1,3 +1,4 @@
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
 import {
   QuickbarData,
@@ -6,7 +7,6 @@ import {
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { useEffect, useState, KeyboardEvent } from 'react'
 
 import { EditModeInput } from './edit-mode-input'

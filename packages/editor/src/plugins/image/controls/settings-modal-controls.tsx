@@ -60,7 +60,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
         currentLicence={licence.defined ? licence?.value : undefined}
         onLicenseChange={updateOrCreateLicence}
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        src={src.get().toString()}
+        src={src.value.toString()}
       />
       <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
         <span className="w-[20%]">{imageStrings.alt}</span>

@@ -24,7 +24,7 @@ export function BoxEditor(props: BoxProps) {
 
   const editorStrings = useEditorStrings()
 
-  const contentId = content.get()
+  const contentId = content.id
   const isEmptyContent = useAppSelector((state) =>
     selectIsEmptyRows(state, contentId)
   )

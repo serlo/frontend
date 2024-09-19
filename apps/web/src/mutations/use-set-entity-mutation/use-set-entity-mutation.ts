@@ -5,7 +5,7 @@ import { setAbstractEntityMutation } from './set-abstract-entity-mutation'
 import { SetEntityMutationData, SetEntityMutationRunnerData } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { getAliasById, revalidatePath } from '../helper/revalidate-path'
-import { useMutationFetch } from '../helper/use-mutation-fetch'
+import { useMutationFetchAuthed } from '../helper/use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import { SetAbstractEntityInput } from '@/fetcher/graphql-types/operations'
@@ -14,7 +14,7 @@ import { successHash } from '@/helper/use-leave-confirm'
 
 export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
-  const mutationFetch = useMutationFetch()
+  const mutationFetch = useMutationFetchAuthed()
   const router = useRouter()
 
   if (!loggedInData) return false
