@@ -13,7 +13,7 @@ import { Key } from 'ts-key-enum'
 import { PluginMenuItems } from './plugin-menu-items'
 import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
-import { filterOptions, isInteractivePluginType } from '../utils/plugin-menu'
+import { filterOptions } from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PluginMenuModalProps {
@@ -65,11 +65,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
 
       const basicOptions = filteredBySearchString.filter(
-        (option) => !isInteractivePluginType(option.pluginType)
+        (option) => option.pluginType !== EditorPluginType.Exercise
       )
 
-      const interactiveOptions = filteredBySearchString.filter((option) =>
-        isInteractivePluginType(option.pluginType)
+      const interactiveOptions = filteredBySearchString.filter(
+        (option) => option.pluginType === EditorPluginType.Exercise
       )
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)

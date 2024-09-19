@@ -1,8 +1,4 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import {
-  type InteractivePluginType,
-  interactivePluginTypes,
-} from '@editor/plugins/exercise/interactive-plugin-types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
@@ -56,8 +52,4 @@ export function filterOptions(option: PluginMenuItemType[], text: string) {
       entry.title.toLowerCase().includes(search) ||
       entry.pluginType.toLowerCase().includes(search)
   )
-}
-
-export function isInteractivePluginType(pluginType: EditorPluginType) {
-  return interactivePluginTypes.includes(pluginType as InteractivePluginType)
 }

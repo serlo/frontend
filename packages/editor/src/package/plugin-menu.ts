@@ -182,6 +182,7 @@ function getInitialState(type: PluginMenuItem): PluginState {
     case PluginMenuItem.InputExercise:
     case PluginMenuItem.TextAreaExercise:
     case PluginMenuItem.DropzoneImage:
+    case PluginMenuItem.H5p:
       return getEditorState({ plugin: type })
 
     default:
