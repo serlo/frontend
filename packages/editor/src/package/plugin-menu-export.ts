@@ -1,4 +1,5 @@
 import { pluginMenuItems } from './plugin-menu-data'
+import { getIconString } from './utils/get-icon-string'
 
 // exports for package
 
@@ -16,7 +17,6 @@ export const PluginMenuItem = pluginMenuItems.map((item) => item.type)
 /**
  * Object of PluginMenuItems and the info needed to render a menu.
  */
-export const pluginMenu = pluginMenuItems.reduce(
-  (previous, current) => ({ ...previous, [current.type]: current }),
-  {}
-)
+export const pluginMenu = pluginMenuItems
+  .map((item) => ({ ...item, icon: getIconString(item.type) }))
+  .reduce((previous, current) => ({ ...previous, [current.type]: current }), {})
