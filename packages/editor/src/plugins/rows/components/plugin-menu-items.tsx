@@ -1,6 +1,5 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -23,7 +22,7 @@ export function PluginMenuItems({
   focusedItemIndex: number | null
   setFocusedItemIndex: (index: number | null) => void
   itemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>
-  onInsertPlugin: (pluginType: EditorPluginType) => void
+  onInsertPlugin: (pluginType: PluginMenuItemType) => void
 }) {
   const editorStrings = useEditorStrings()
 
@@ -54,7 +53,8 @@ export function PluginMenuItems({
   )
 
   function renderListItems(options: PluginMenuItemType[], offset: number) {
-    return options.map(({ pluginType, title, icon, description }, index) => {
+    return options.map((pluginMenuItem, index) => {
+      const { pluginType, title, icon, description } = pluginMenuItem
       const currentIndex = index + offset
       const selected = currentIndex === focusedItemIndex
       const tooltipPosition = getTooltipPosition(index)
@@ -69,7 +69,7 @@ export function PluginMenuItems({
           <button
             data-qa={`plugin-suggestion-${pluginType}`}
             ref={(el) => (itemRefs.current[currentIndex] = el)}
-            onClick={() => onInsertPlugin(pluginType)}
+            onClick={() => onInsertPlugin(pluginMenuItem)}
             onFocus={() => setFocusedItemIndex(currentIndex)}
             onBlur={() => setFocusedItemIndex(null)}
             className={cn(

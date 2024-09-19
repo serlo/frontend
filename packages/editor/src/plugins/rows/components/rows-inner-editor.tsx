@@ -1,3 +1,4 @@
+import { pluginMenu } from '@editor/package/plugin-menu'
 import {
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,
@@ -14,7 +15,7 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '../contexts/plugin-menu'
-import { isInteractivePluginType } from '../utils/plugin-menu'
+import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
@@ -35,10 +36,13 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     })
   }
 
-  function handleInsertPlugin(pluginType: EditorPluginType) {
-    const pluginToInsert = isInteractivePluginType(pluginType)
-      ? wrapExercisePlugin(pluginType)
-      : { plugin: pluginType }
+  function handleInsertPlugin(pluginMenuItem: PluginMenuItemType) {
+    // TODO: This check will be deprecated once type is required
+    if (!pluginMenuItem.type) return
+    const pluginToInsert = {
+      plugin: pluginMenuItem.pluginType,
+      state: pluginMenu[pluginMenuItem.type].initialState,
+    }
 
     if (pluginMenuState.insertCallback) {
       pluginMenuState.insertCallback(pluginToInsert)
@@ -86,16 +90,4 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       <PluginMenuModal onInsertPlugin={handleInsertPlugin} />
     </>
   )
-}
-
-function wrapExercisePlugin(pluginType: EditorPluginType) {
-  return {
-    plugin: EditorPluginType.Exercise,
-    state: {
-      content: { plugin: EditorPluginType.Rows },
-      interactive: {
-        plugin: pluginType,
-      },
-    },
-  }
 }

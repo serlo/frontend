@@ -1,29 +1,23 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { pluginMenu } from '@editor/package/plugin-menu'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '@editor/plugins/rows/contexts/plugin-menu'
-import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
-import { selectAncestorPluginTypes, store } from '@editor/store'
-import { ROOT } from '@editor/store/root/constants'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItems } from './plugin-menu-items'
+import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
-import {
-  createOption,
-  filterOptions,
-  isInteractivePluginType,
-} from '../utils/plugin-menu'
+import { filterOptions, isInteractivePluginType } from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PluginMenuModalProps {
-  onInsertPlugin: (pluginType: EditorPluginType) => void
+  onInsertPlugin: (pluginType: PluginMenuItemType) => void
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
@@ -38,39 +32,41 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
-  const allWithData = editorPlugins.getAllWithData()
-  const allowedPlugins = useMemo(() => {
-    const allVisible = allWithData
-      .filter(
-        ({ type, visibleInSuggestions }) =>
-          visibleInSuggestions ||
-          isInteractivePluginType(type as EditorPluginType)
-      )
-      .map(({ type }) => type)
+  // TODO: Use property to check if it's allowed
+  const menuItems = pluginMenu
+  const allowedPlugins2 = useMemo(() => {
+    const allPluginsWithDuplicates = Object.values(menuItems).map(
+      (menuItem) => menuItem.initialState.plugin
+    )
+    const allPlugins = Array.from(new Set(allPluginsWithDuplicates))
+    const allowedByContext = pluginMenuState.allowedChildPlugins ?? allPlugins
 
-    const allowedByContext = pluginMenuState.allowedChildPlugins ?? allVisible
-    // Filter out plugins which can't be nested inside of the current plugin or ancestor plugins
-    const typesOfAncestors = selectAncestorPluginTypes(store.getState(), ROOT)
-
-    return typesOfAncestors
-      ? allowedByContext.filter((plugin) =>
-          checkIsAllowedNesting(plugin, typesOfAncestors)
-        )
-      : allowedByContext
-  }, [allWithData, pluginMenuState.allowedChildPlugins])
-
+    // TODO: Use checkIsAllowedNesting helper to restrict plugin nesting
+    return allowedByContext
+  }, [menuItems, pluginMenuState.allowedChildPlugins])
+  const allowedMenuItems = useMemo(() => {
+    return Object.values(menuItems)
+      .map((menuItem) => ({
+        type: menuItem.type,
+        pluginType: menuItem.initialState.plugin as EditorPluginType,
+        title: menuItem.de.name,
+        description: menuItem.de.description,
+        icon: menuItem.icon,
+      }))
+      .filter(({ pluginType }) => allowedPlugins2.includes(pluginType))
+  }, [allowedPlugins2, menuItems])
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
     useMemo(() => {
-      const allOptions = allowedPlugins.map((type) => {
-        return createOption(type as EditorPluginType, pluginsStrings)
-      })
-      const allowed = filterOptions(allOptions, searchString)
+      const filteredBySearchString = filterOptions(
+        allowedMenuItems,
+        searchString
+      )
 
-      const basicOptions = allowed.filter(
+      const basicOptions = filteredBySearchString.filter(
         (option) => !isInteractivePluginType(option.pluginType)
       )
 
-      const interactiveOptions = allowed.filter((option) =>
+      const interactiveOptions = filteredBySearchString.filter((option) =>
         isInteractivePluginType(option.pluginType)
       )
 
@@ -82,7 +78,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         firstOption,
         isEmpty: firstOption === undefined,
       }
-    }, [allowedPlugins, pluginsStrings, searchString])
+    }, [allowedMenuItems, searchString])
 
   const handleModalClose = (isOpen: boolean) => {
     if (isOpen === false) {
@@ -118,7 +114,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     }
     if (e.key === Key.Enter) {
       if (!firstOption) return
-      onInsertPlugin(firstOption.pluginType)
+      onInsertPlugin(firstOption)
       e.preventDefault()
     }
   }

@@ -56,6 +56,7 @@ export enum PluginMenuItem {
 
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
 const englishPluginStrings = loggedInDataEn.strings.editor.plugins
+// TODO: Add Spanish strings as well (used in serlo.org)
 
 export const pluginMenu: PluginMenu = {
   [PluginMenuItem.Text]: getInfo(PluginMenuItem.Text, IconText),
@@ -180,6 +181,7 @@ function getInitialState(type: PluginMenuItem): PluginState {
 
     case PluginMenuItem.InputExercise:
     case PluginMenuItem.TextAreaExercise:
+    case PluginMenuItem.DropzoneImage:
       return getEditorState({ plugin: type })
 
     default:

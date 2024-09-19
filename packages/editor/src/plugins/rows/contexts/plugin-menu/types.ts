@@ -1,3 +1,4 @@
+import { PluginMenuItem } from '@editor/package/plugin-menu'
 import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 
@@ -40,8 +41,11 @@ export interface PluginMenuState {
 }
 
 export interface PluginMenuItemType {
+  // TODO: Should be required
+  type?: PluginMenuItem
   pluginType: EditorPluginType
   title: string
   description?: string
-  icon?: JSX.Element
+  // TODO: Should be only one
+  icon?: string | JSX.Element
 }
