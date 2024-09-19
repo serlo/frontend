@@ -674,9 +674,9 @@ export const loggedInData = {
           or: "oder",
           modal: {
             settings: "Einstellungen",
-            new: "Neue Ablagezone",
+            createDropZone: "Neue Ablagezone",
             edit: "Antwort bearbeiten",
-            wrong: "Falsche Antwort hinzufügen"
+            createWrongAnswer: "Falsche Antwort hinzufügen"
           }
         },
         unsupported: {
@@ -1000,6 +1000,13 @@ export const loggedInData = {
           confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
         },
         exercise: {
+          scMcExercise: "Auswahlaufgabe",
+          inputExercise: "Eingabefeld",
+          textAreaExercise: "Freitext",
+          dropzoneImage: "Interaktives Bild",
+          blanksExercise: "Lückentext Aufgabe",
+          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
+          h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen",
