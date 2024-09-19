@@ -115,19 +115,18 @@ export function DropzoneImageToolbar({
         }}
         title={`${editorStrings.edtrIo.settings}: ${editorStrings.plugins.dropzoneImage.title}`}
         extraTitleClassName="serlo-h3 mt-4"
-        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+        className="top-8 max-w-xl translate-y-0 sm:top-20"
       >
+        <div className="mx-side my-3">
+          <BackgroundImageSettings id={backgroundImage.id} />
+        </div>
         <div className="mx-side my-3">
           <button
             onClick={handleChangeImageButtonClick}
-            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            className="serlo-button-editor-primary mr-2 mt-6"
           >
             {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
           </button>
-        </div>
-
-        <div className="mx-side mb-3">
-          <BackgroundImageSettings id={backgroundImage.id} />
         </div>
       </ModalWithCloseButton>
     )
