@@ -37,8 +37,6 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   }
 
   function handleInsertPlugin(pluginMenuItem: PluginMenuItemType) {
-    // TODO: This check will be deprecated once type is required
-    if (!pluginMenuItem.type) return
     const pluginToInsert = {
       plugin: pluginMenuItem.pluginType,
       state: pluginMenu[pluginMenuItem.type].initialState.state,

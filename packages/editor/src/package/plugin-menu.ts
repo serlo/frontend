@@ -1,4 +1,4 @@
-// import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
+import type { EditorProps } from '@editor/core'
 import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg?raw'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
@@ -124,12 +124,7 @@ interface PluginMenuItemInfo<E extends PluginMenuItem> {
     description: string
   }
   icon: string
-  initialState: PluginState
-}
-
-interface PluginState {
-  plugin: string
-  state?: unknown
+  initialState: EditorProps['initialState']
 }
 
 function getInfo<E extends PluginMenuItem>(
@@ -144,7 +139,7 @@ function getInfo<E extends PluginMenuItem>(
   }
 }
 
-function getInitialState(type: PluginMenuItem): PluginState {
+function getInitialState(type: PluginMenuItem): EditorProps['initialState'] {
   switch (type) {
     case PluginMenuItem.BlanksExerciseDragAndDrop:
     case PluginMenuItem.BlanksExercise:
