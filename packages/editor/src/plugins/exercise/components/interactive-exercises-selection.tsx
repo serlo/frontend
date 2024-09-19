@@ -18,8 +18,9 @@ export function InteractiveExercisesSelection({
   const exTemplateStrings = templateStrings.exercise
 
   function getTooltipClass(index: number) {
-    const isLast = index === interactivePluginOptions.length - 1
-    return index === 0 ? 'left-0' : isLast ? '-left-24' : 'right-0'
+    const isLastInLine = index % 4 === 3
+    const isFirstInLine = index % 4 === 0
+    return isFirstInLine ? 'left-0' : isLastInLine ? 'right-0' : '-left-24'
   }
 
   function handleOnClick(pluginType: EditorPluginType) {
@@ -33,14 +34,14 @@ export function InteractiveExercisesSelection({
       <p className="mb-2 text-gray-400">
         {exTemplateStrings.addOptionalInteractiveEx}
       </p>
-      <div className="flex items-start">
+      <div className="grid grid-cols-4 gap-2">
         {interactivePluginOptions.map(
           ({ pluginType, title, icon, description }, index) => (
             <button
               key={title}
               data-qa={`add-exercise-${pluginType}`}
               onClick={() => handleOnClick(pluginType)}
-              className="serlo-tooltip-trigger w-full rounded-md p-1 hover:shadow-xl focus:shadow-xl"
+              className="serlo-tooltip-trigger w-32 rounded-md p-1 hover:shadow-xl focus:shadow-xl"
             >
               <EditorTooltip
                 className={getTooltipClass(index)}
