@@ -674,9 +674,9 @@ export const loggedInData = {
           or: 'or',
           modal: {
             settings: "सेटिंग्स",
-            new: 'New Drop Zone',
+            createDropZone: 'New Drop Zone',
             edit: 'Edit Answer',
-            wrong: 'Create Wrong Answer'
+            createWrongAnswer: 'Create Wrong Answer'
           }
         },
         unsupported: {
