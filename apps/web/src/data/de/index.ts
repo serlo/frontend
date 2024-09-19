@@ -674,9 +674,9 @@ export const loggedInData = {
           or: "oder",
           modal: {
             settings: "Einstellungen",
-            createDropZone: 'New Drop Zone',
+            createDropZone: "Neue Ablagezone",
             edit: "Antwort bearbeiten",
-            createWrongAnswer: 'Create Wrong Answer'
+            createWrongAnswer: "Falsche Antwort hinzufügen"
           }
         },
         unsupported: {
@@ -1003,9 +1003,9 @@ export const loggedInData = {
           scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
           textAreaExercise: "Freitext",
-          dropzoneImage: 'Image Dropzones Exercise',
+          dropzoneImage: "Interaktives Bild",
           blanksExercise: "Lückentext Aufgabe",
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
+          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
           h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
