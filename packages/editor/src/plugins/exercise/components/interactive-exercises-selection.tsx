@@ -46,7 +46,7 @@ export function InteractiveExercisesSelection({
                 className={getTooltipClass(index)}
                 text={description}
               />
-              {icon || <IconFallback />}
+              {icon && typeof icon !== 'string' ? icon() : <IconFallback />}
               <b className="mt-2 block text-sm">{title}</b>
             </button>
           )

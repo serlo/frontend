@@ -64,6 +64,9 @@ export function PluginMenuItems({
           : ''
         : '-left-24'
 
+      const iconElement =
+        icon && typeof icon !== 'string' ? icon() : <IconFallback />
+
       return (
         <li key={title}>
           <button
@@ -78,7 +81,7 @@ export function PluginMenuItems({
             )}
           >
             <EditorTooltip className={tooltipClassName} text={description} />
-            {icon || <IconFallback />}
+            {iconElement}
             <b className="mt-2 block text-sm">{title}</b>
           </button>
         </li>

@@ -1,18 +1,20 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { pluginMenu } from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
-import { interactivePluginTypes } from './interactive-plugin-types'
 import { ExerciseToolbar } from './toolbar/toolbar'
-import { createOption } from '../rows/utils/plugin-menu'
 import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
+import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
 export function ExerciseEditor(props: ExerciseProps) {
@@ -26,12 +28,27 @@ export function ExerciseEditor(props: ExerciseProps) {
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const editorStrings = useEditorStrings()
+  const { lang } = useInstanceData()
   const exTemplateStrings = editorStrings.templatePlugins.exercise
   const exPluginStrings = editorStrings.plugins.exercise
 
-  const interactivePluginOptions = interactivePluginTypes
-    .filter((type) => editorPlugins.isSupported(type))
-    .map((type) => createOption(type, editorStrings.plugins))
+  const language = lang === Instance.De ? 'de' : 'en'
+
+  const exerciseMenuItems = useMemo(() => {
+    const exerciseItems = Object.values(pluginMenu).filter((menuItem) => {
+      const pluginType = menuItem.initialState.plugin
+      return pluginType === 'exercise' && editorPlugins.isSupported(pluginType)
+    })
+    return exerciseItems.map((menuItem) => {
+      return {
+        type: menuItem.type,
+        pluginType: menuItem.initialState.plugin as EditorPluginType,
+        title: menuItem[language].name,
+        description: menuItem[language].description,
+        icon: menuItem.icon,
+      }
+    })
+  }, [language])
 
   return (
     <div
@@ -50,7 +67,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       {focused ? (
         <ExerciseToolbar
           {...props}
-          interactivePluginOptions={interactivePluginOptions}
+          interactivePluginOptions={exerciseMenuItems}
         />
       ) : (
         <button
@@ -82,7 +99,7 @@ export function ExerciseEditor(props: ExerciseProps) {
           </>
         ) : (
           <InteractiveExercisesSelection
-            interactivePluginOptions={interactivePluginOptions}
+            interactivePluginOptions={exerciseMenuItems}
             interactive={interactive}
           />
         )}

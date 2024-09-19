@@ -40,9 +40,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const language = lang === Instance.De ? 'de' : 'en'
 
-  const menuItems = pluginMenu
+  const menuItems = Object.values(pluginMenu)
   const allowedPlugins = useMemo(() => {
-    const allPluginsWithDuplicates = Object.values(menuItems).map(
+    const allPluginsWithDuplicates = menuItems.map(
       (menuItem) => menuItem.initialState.plugin
     )
     const allPlugins = Array.from(new Set(allPluginsWithDuplicates))
@@ -53,7 +53,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }, [menuItems, pluginMenuState.allowedChildPlugins])
 
   const allowedMenuItems = useMemo(() => {
-    return Object.values(menuItems)
+    return menuItems
       .map((menuItem) => ({
         type: menuItem.type,
         pluginType: menuItem.initialState.plugin as EditorPluginType,
@@ -80,13 +80,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)
+      const isEmpty = firstOption === undefined
 
-      return {
-        basicOptions,
-        interactiveOptions,
-        firstOption,
-        isEmpty: firstOption === undefined,
-      }
+      return { basicOptions, interactiveOptions, firstOption, isEmpty }
     }, [allowedMenuItems, searchString])
 
   const handleModalClose = (isOpen: boolean) => {

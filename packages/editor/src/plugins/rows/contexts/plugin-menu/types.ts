@@ -41,11 +41,10 @@ export interface PluginMenuState {
 }
 
 export interface PluginMenuItemType {
-  // TODO: Should be required
-  type?: PluginMenuItem
+  type: PluginMenuItem
   pluginType: EditorPluginType
   title: string
   description?: string
   // TODO: Should be only one
-  icon?: string | JSX.Element
+  icon?: string | (() => JSX.Element)
 }
