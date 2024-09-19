@@ -1,5 +1,5 @@
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { getIconElement } from '@editor/package/utils/get-icon-element'
 import type { PluginMenuItemType } from '@editor/plugins/rows/contexts/plugin-menu/types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -36,7 +36,7 @@ export function InteractiveExercisesSelection({
       </p>
       <div className="grid grid-cols-4 gap-2 pb-10">
         {interactivePluginOptions.map(
-          ({ pluginType, title, icon, description }, index) => (
+          ({ type, pluginType, title, description }, index) => (
             <button
               key={title}
               data-qa={`add-exercise-${pluginType}`}
@@ -47,7 +47,7 @@ export function InteractiveExercisesSelection({
                 className={getTooltipClass(index)}
                 text={description}
               />
-              {typeof icon !== 'string' ? icon() : <IconFallback />}
+              {getIconElement(type)}
               <b className="mt-2 block text-sm">{title}</b>
             </button>
           )

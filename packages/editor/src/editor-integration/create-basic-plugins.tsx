@@ -12,7 +12,6 @@ import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
-import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { solutionPlugin } from '@editor/plugins/solution'
@@ -38,10 +37,7 @@ export function createBasicPlugins(
   }
 
   const allPlugins = [
-    {
-      type: EditorPluginType.Text,
-      plugin: createTextPlugin({}),
-    },
+    { type: EditorPluginType.Text, plugin: createTextPlugin({}) },
     ...(testingSecret
       ? [
           {
@@ -58,30 +54,12 @@ export function createBasicPlugins(
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),
     },
-    {
-      type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(plugins),
-    },
-    {
-      type: EditorPluginType.Equations,
-      plugin: equationsPlugin,
-    },
-    {
-      type: EditorPluginType.Box,
-      plugin: createBoxPlugin(plugins),
-    },
-    {
-      type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(),
-    },
-    {
-      type: EditorPluginType.Geogebra,
-      plugin: geoGebraPlugin,
-    },
-    {
-      type: EditorPluginType.Highlight,
-      plugin: createHighlightPlugin(),
-    },
+    { type: EditorPluginType.Spoiler, plugin: createSpoilerPlugin(plugins) },
+    { type: EditorPluginType.Equations, plugin: equationsPlugin },
+    { type: EditorPluginType.Box, plugin: createBoxPlugin(plugins) },
+    { type: EditorPluginType.SerloTable, plugin: createSerloTablePlugin() },
+    { type: EditorPluginType.Geogebra, plugin: geoGebraPlugin },
+    { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
     {
       type: EditorPluginType.EdusharingAsset,
       plugin: createEdusharingAssetPlugin(),
@@ -89,27 +67,17 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.SerloInjection,
       plugin: createSerloInjectionPlugin(),
-      renderer: SerloInjectionStaticRenderer,
     },
 
     // Exercises etc.
     // ===================================================
-    {
-      type: EditorPluginType.Exercise,
-      plugin: exercisePlugin,
-    },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-    },
+    { type: EditorPluginType.Exercise, plugin: exercisePlugin },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
     },
-    {
-      type: EditorPluginType.ScMcExercise,
-      plugin: createScMcExercisePlugin(),
-    },
+    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
     {
       type: EditorPluginType.BlanksExercise,
       plugin: createBlanksExercisePlugin(),
@@ -118,10 +86,7 @@ export function createBasicPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
-    {
-      type: EditorPluginType.TextAreaExercise,
-      plugin: textAreaExercisePlugin,
-    },
+    { type: EditorPluginType.TextAreaExercise, plugin: textAreaExercisePlugin },
 
     // Special plugins, never visible in suggestions
     // ===================================================

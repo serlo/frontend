@@ -1,6 +1,6 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
-import { pluginMenuItems } from '@editor/package/plugin-menu'
+import { pluginMenuItems } from '@editor/package/plugin-menu-data'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
@@ -71,7 +71,6 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         pluginType: menuItem.initialState.plugin as EditorPluginType,
         title: menuItem[language].name,
         description: menuItem[language].description,
-        icon: menuItem.icon,
       }))
       .filter(({ pluginType }) => allowedPlugins.includes(pluginType))
   }, [allowedPlugins, menuItems, language])

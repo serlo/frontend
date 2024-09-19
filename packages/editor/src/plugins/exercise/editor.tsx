@@ -1,6 +1,6 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { pluginMenuItems } from '@editor/package/plugin-menu'
+import { pluginMenuItems } from '@editor/package/plugin-menu-data'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -45,7 +45,6 @@ export function ExerciseEditor(props: ExerciseProps) {
         pluginType: menuItem.initialState.plugin as EditorPluginType,
         title: menuItem[language].name,
         description: menuItem[language].description,
-        icon: menuItem.icon,
       }
     })
   }, [language])

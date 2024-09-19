@@ -1,4 +1,4 @@
-import { PluginMenuType } from '@editor/package/plugin-menu'
+import type { PluginMenuType } from '@editor/package/plugin-menu-data'
 import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 
@@ -46,7 +46,4 @@ export interface PluginMenuItemType {
   pluginType: EditorPluginType
   title: string
   description?: string
-  // until we use the editor package in the frontend (only having vite for building)
-  // I'd like to keep this approach
-  icon: string | (() => JSX.Element)
 }

@@ -1,4 +1,4 @@
-import { pluginMenuItems } from '@editor/package/plugin-menu'
+import { pluginMenuItems } from '@editor/package/plugin-menu-data'
 import {
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,

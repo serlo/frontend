@@ -1,5 +1,5 @@
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { getIconElement } from '@editor/package/utils/get-icon-element'
 
 import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -54,7 +54,7 @@ export function PluginMenuItems({
 
   function renderListItems(options: PluginMenuItemType[], offset: number) {
     return options.map((pluginMenuItem, index) => {
-      const { pluginType, title, icon, description } = pluginMenuItem
+      const { type, pluginType, title, description } = pluginMenuItem
       const currentIndex = index + offset
       const selected = currentIndex === focusedItemIndex
       const tooltipPosition = getTooltipPosition(index)
@@ -63,8 +63,6 @@ export function PluginMenuItems({
           ? 'right-0 [&>span]:!min-w-80'
           : ''
         : '-left-24'
-
-      const iconElement = typeof icon !== 'string' ? icon() : <IconFallback />
 
       return (
         <li key={title}>
@@ -80,7 +78,7 @@ export function PluginMenuItems({
             )}
           >
             <EditorTooltip className={tooltipClassName} text={description} />
-            {iconElement}
+            {getIconElement(type)}
             <b className="mt-2 block text-sm">{title}</b>
           </button>
         </li>
