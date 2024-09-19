@@ -1,6 +1,6 @@
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import type { FileError } from '@serlo/frontend/src/serlo-editor-integration/image-with-serlo-config'
 
 import { ImageEditor } from './editor'

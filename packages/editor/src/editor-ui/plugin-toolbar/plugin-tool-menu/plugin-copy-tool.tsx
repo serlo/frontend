@@ -1,8 +1,8 @@
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { selectStaticDocumentWithoutIds, store } from '@editor/store'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { useCallback } from 'react'
 
 import { DropdownButton } from './dropdown-button'

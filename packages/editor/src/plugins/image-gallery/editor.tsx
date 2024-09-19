@@ -1,3 +1,4 @@
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   focus,
@@ -16,7 +17,6 @@ import { EditorImageGrid } from './components/editor-image-grid'
 import { ImageGalleryToolbar } from './toolbar'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 const MAX_IMAGES = 6
 
