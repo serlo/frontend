@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
 
@@ -8,7 +7,6 @@ import 'react-resizable/css/styles.css'
 import { AnswerZoneAnswer } from './answer-zone-answer'
 import { AnswerZoneEmpty } from './answer-zone-empty'
 import { AnswerZoneSidebar } from './answer-zone-sidebar'
-import { AnswerZonesContext } from '../../context/context'
 import { useAnswerZoneResize } from '../../hooks/use-answer-zone-resize'
 import {
   type AnswerType,
@@ -22,6 +20,7 @@ export const answerZoneDragType = 'answerZone'
 export interface AnswerZoneProps {
   answerZone: AnswerZoneState
   canvasSize: [number, number]
+  dropzoneVisibility: DropzoneVisibility
   onClick: () => void
   onClickSettingsButton: () => void
   onClickPlusButton: () => void
@@ -32,15 +31,13 @@ export const AnswerZone = (props: AnswerZoneProps) => {
   const {
     answerZone,
     canvasSize,
+    dropzoneVisibility,
     onClick,
     onClickSettingsButton,
     onClickPlusButton,
     onClickEditAnswerButton,
   } = props
   const name = answerZone.name.value
-
-  const context = useContext(AnswerZonesContext)
-  const { dropzoneVisibility } = context || {}
 
   const { positionState, resizableBoxProps } = useAnswerZoneResize({
     answerZone,

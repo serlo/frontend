@@ -1,18 +1,15 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 
 import type { DropzoneImageProps } from '../..'
-import { convertAnswer } from '../../utils/answer-zone'
+import { convertAnswer, insertAnswerZone } from '../../utils/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface PossibleAnswersProps {
   answerZones: DropzoneImageProps['state']['answerZones']
-  onClickAddAnswerZone: () => void
 }
 
-export function PossibleAnswers(props: PossibleAnswersProps) {
-  const { answerZones, onClickAddAnswerZone } = props
-
+export function PossibleAnswers({ answerZones }: PossibleAnswersProps) {
   const dropzoneImageStrings = useEditorStrings().plugins.dropzoneImage
 
   const correctAnswers = answerZones
@@ -23,7 +20,7 @@ export function PossibleAnswers(props: PossibleAnswersProps) {
     <div className="mt-4">
       <button
         className="serlo-button-editor-primary"
-        onClick={onClickAddAnswerZone}
+        onClick={() => insertAnswerZone(answerZones)}
         data-qa="plugin-dropzone-image-add-answer-zone-button"
       >
         {dropzoneImageStrings.addDropZone}
