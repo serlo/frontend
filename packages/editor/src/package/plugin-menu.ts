@@ -5,6 +5,7 @@ import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg?raw'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg?raw'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg?raw'
+import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg?raw'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg?raw'
 import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg?raw'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg?raw'
@@ -52,6 +53,9 @@ export enum PluginMenuItem {
   H5p = InternalEditorPluginType.H5p,
   Multimedia = InternalEditorPluginType.Multimedia,
   DropzoneImage = InternalEditorPluginType.DropzoneImage,
+  PageLayout = InternalEditorPluginType.PageLayout,
+  PageTeam = InternalEditorPluginType.PageTeam,
+  PagePartners = InternalEditorPluginType.PagePartners,
 }
 
 const germanPluginStrings = loggedInDataDe.strings.editor.plugins
@@ -107,6 +111,14 @@ export const pluginMenu: PluginMenu = {
     IconBlanksDragAndDrop
   ),
   [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
+
+  // serlo specific plugins
+  [PluginMenuItem.PageLayout]: getInfo(PluginMenuItem.PageLayout, IconFallback),
+  [PluginMenuItem.PageTeam]: getInfo(PluginMenuItem.PageTeam, IconFallback),
+  [PluginMenuItem.PagePartners]: getInfo(
+    PluginMenuItem.PagePartners,
+    IconFallback
+  ),
 }
 
 type PluginMenu = {

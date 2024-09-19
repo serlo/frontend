@@ -35,7 +35,6 @@ export function ProfileDescriptionEditor({
         <SerloEditor
           entityNeedsReview={false}
           onSave={onSave}
-          type="User"
           initialState={initialState}
         />
       </div>

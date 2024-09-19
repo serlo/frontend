@@ -44,20 +44,16 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { type LoggedInData, UuidType } from '@/data-types'
+import { type LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { H5pPlugin } from '@/serlo-editor-integration/h5p'
 import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
 export function createPlugins({
   editorStrings,
-  parentType,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  parentType?: string
 }): PluginsWithData {
-  const isPage = parentType === UuidType.Page
-
   const plugins = [
     EditorPluginType.Anchor,
     EditorPluginType.Article,
@@ -192,22 +188,22 @@ export function createPlugins({
     {
       type: EditorPluginType.PasteHack,
       plugin: pasteHackPlugin,
-      visibleInSuggestions: shouldUseFeature('edtrPasteHack'),
+      visibleInSuggestions: false,
     },
     {
       type: EditorPluginType.PageLayout,
       plugin: pageLayoutPlugin,
-      visibleInSuggestions: isPage,
+      visibleInSuggestions: true,
     },
     {
       type: EditorPluginType.PageTeam,
       plugin: pageTeamPlugin,
-      visibleInSuggestions: isPage,
+      visibleInSuggestions: true,
     },
     {
       type: EditorPluginType.PagePartners,
       plugin: pagePartnersPlugin,
-      visibleInSuggestions: isPage,
+      visibleInSuggestions: true,
     },
 
     // Exercises etc.
