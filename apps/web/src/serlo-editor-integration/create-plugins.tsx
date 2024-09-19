@@ -142,16 +142,12 @@ export function createPlugins({
       visibleInSuggestions: true,
       icon: <IconImage />,
     },
-    ...(isProduction
-      ? []
-      : [
-          {
-            type: EditorPluginType.ImageGallery,
-            plugin: createImageGalleryPlugin(),
-            visibleInSuggestions: true,
-            icon: <IconImageGallery />,
-          },
-        ]),
+    {
+      type: EditorPluginType.ImageGallery,
+      plugin: createImageGalleryPlugin(),
+      visibleInSuggestions: true,
+      icon: <IconImageGallery />,
+    },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin([
