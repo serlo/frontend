@@ -15,12 +15,15 @@ import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
 import { filterOptions } from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 interface PluginMenuModalProps {
   onInsertPlugin: (pluginType: PluginMenuItemType) => void
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
+  const { lang } = useInstanceData()
   const editorStrings = useEditorStrings()
   const pluginsStrings = editorStrings.plugins
 
@@ -35,6 +38,8 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   // TODO: Add new property to check if it's allowed in the current context
   // e.g. (staging / production / integration)
 
+  const language = lang === Instance.De ? 'de' : 'en'
+
   const menuItems = pluginMenu
   const allowedPlugins = useMemo(() => {
     const allPluginsWithDuplicates = Object.values(menuItems).map(
@@ -46,17 +51,19 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     // TODO: Use checkIsAllowedNesting helper to restrict plugin nesting
     return allowedByContext
   }, [menuItems, pluginMenuState.allowedChildPlugins])
+
   const allowedMenuItems = useMemo(() => {
     return Object.values(menuItems)
       .map((menuItem) => ({
         type: menuItem.type,
         pluginType: menuItem.initialState.plugin as EditorPluginType,
-        title: menuItem.de.name,
-        description: menuItem.de.description,
+        title: menuItem[language].name,
+        description: menuItem[language].description,
         icon: menuItem.icon,
       }))
       .filter(({ pluginType }) => allowedPlugins.includes(pluginType))
-  }, [allowedPlugins, menuItems])
+  }, [allowedPlugins, menuItems, language])
+
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
     useMemo(() => {
       const filteredBySearchString = filterOptions(
