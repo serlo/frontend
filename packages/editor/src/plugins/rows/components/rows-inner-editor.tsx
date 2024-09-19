@@ -41,7 +41,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     if (!pluginMenuItem.type) return
     const pluginToInsert = {
       plugin: pluginMenuItem.pluginType,
-      state: pluginMenu[pluginMenuItem.type].initialState,
+      state: pluginMenu[pluginMenuItem.type].initialState.state,
     }
 
     if (pluginMenuState.insertCallback) {

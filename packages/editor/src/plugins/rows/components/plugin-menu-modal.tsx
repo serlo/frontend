@@ -34,7 +34,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   // TODO: Use property to check if it's allowed
   const menuItems = pluginMenu
-  const allowedPlugins2 = useMemo(() => {
+  const allowedPlugins = useMemo(() => {
     const allPluginsWithDuplicates = Object.values(menuItems).map(
       (menuItem) => menuItem.initialState.plugin
     )
@@ -53,8 +53,8 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         description: menuItem.de.description,
         icon: menuItem.icon,
       }))
-      .filter(({ pluginType }) => allowedPlugins2.includes(pluginType))
-  }, [allowedPlugins2, menuItems])
+      .filter(({ pluginType }) => allowedPlugins.includes(pluginType))
+  }, [allowedPlugins, menuItems])
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
     useMemo(() => {
       const filteredBySearchString = filterOptions(
