@@ -2269,13 +2269,6 @@ export type UpdateLicenseMutationVariables = Exact<{
 
 export type UpdateLicenseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', updateLicense: { __typename?: 'DefaultResponse', success: boolean } } };
 
-export type CreateExerciseSubmissionMutationVariables = Exact<{
-  input: ExerciseSubmissionInput;
-}>;
-
-
-export type CreateExerciseSubmissionMutation = { __typename?: 'Mutation', experiment: { __typename?: 'ExperimentMutation', createExerciseSubmission: { __typename?: 'DefaultResponse', success: boolean } } };
-
 export type RejectRevisionMutationVariables = Exact<{
   input: RejectRevisionInput;
 }>;
