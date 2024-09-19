@@ -32,7 +32,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
-  // TODO: Use property to check if it's allowed
+  // TODO: Add new property to check if it's allowed in the current context
+  // e.g. (staging / production / integration)
+
   const menuItems = pluginMenu
   const allowedPlugins = useMemo(() => {
     const allPluginsWithDuplicates = Object.values(menuItems).map(

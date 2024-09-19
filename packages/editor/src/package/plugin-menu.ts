@@ -68,7 +68,6 @@ export const pluginMenu: PluginMenu = {
   [PluginMenuItem.Box]: getInfo(PluginMenuItem.Box, IconBox),
   [PluginMenuItem.Equations]: getInfo(PluginMenuItem.Equations, IconEquation),
   [PluginMenuItem.Geogebra]: getInfo(PluginMenuItem.Geogebra, IconGeogebra),
-  [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
   [PluginMenuItem.Highlight]: getInfo(PluginMenuItem.Highlight, IconHighlight),
   [PluginMenuItem.Image]: getInfo(PluginMenuItem.Image, IconImage),
   [PluginMenuItem.ImageGallery]: getInfo(
@@ -106,6 +105,7 @@ export const pluginMenu: PluginMenu = {
     PluginMenuItem.BlanksExerciseDragAndDrop,
     IconBlanksDragAndDrop
   ),
+  [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
 }
 
 type PluginMenu = {
