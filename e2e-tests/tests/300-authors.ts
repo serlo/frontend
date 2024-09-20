@@ -166,3 +166,10 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
 
   I.seeInField('$entity-title-input', 'Treibhausgase-Test')
 })
+
+Scenario('Add new taxonomy', async ({ I }) => {
+  I.amOnPage('/taxonomy/term/create/4/234582')
+
+  I.click('$entity-title-input')
+  I.see('Füge ein Element hinzu')
+})
