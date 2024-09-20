@@ -1000,13 +1000,6 @@ export const loggedInData = {
           confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
-          scMcExercise: 'Choice Exercise',
-          inputExercise: 'Input Exercise',
-          textAreaExercise: 'Text Box Exercise',
-          dropzoneImage: 'Image Dropzones Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
-          h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
@@ -1158,79 +1151,6 @@ export const loggedInData = {
     },
     roles: {
       addButton: 'Add as %role%'
-    },
-    ai: {
-      exerciseGeneration: {
-        buttonTitleSingular: 'Generate an exercise with AI',
-        buttonTitle: 'AI generate exercise group',
-        initialModalTitle: 'Create an exercise automatically with help of AI',
-        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
-        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
-        summary: 'Summary',
-        nextButton: "அடுத்து",
-        nextExerciseButton: 'Next exercise',
-        previousButton: 'Previous exercise',
-        generateExerciseButton: 'Generate exercise',
-        generateExercisesButton: 'Generate exercises',
-        somethingWentWrong: 'Something went wrong. Please try again.',
-        hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
-        topic: {
-          title: 'About which %topic% would you like to generate exercises?',
-          topic: "தலைப்பு",
-          defaultLabel: 'Topic',
-          otherTopicLabel: 'Other topic',
-          customTopicPlaceholder: 'Enter custom topic'
-        },
-        grade: {
-          title: 'Which %grade% are the students in?',
-          grade: 'grade',
-          label: 'Grade',
-          university: 'University'
-        },
-        exerciseType: {
-          title: 'What %exerciseType% are you interested in?',
-          exerciseType: 'exercise type',
-          label: 'Exercise type',
-          subtasksTitleSummary: 'Subtasks',
-          subtasksTitle: 'Should there be subtasks?',
-          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
-          noSubtasks: 'No',
-          yesSubtasks: 'Yes',
-          subtasksLabel: "பயிற்சிகள்",
-          numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: 'Choose an option',
-          multipleChoice: 'Multiple Choice',
-          singleChoice: 'Single Choice',
-          inputExercise: 'Input exercise',
-          blanksExercise: 'Fill In The Blanks Exercise'
-        },
-        difficulty: {
-          title: 'What is the %difficulty% level of the exercise and learning goal?',
-          difficulty: 'difficulty',
-          label: 'Difficulty',
-          learningGoalLabel: 'Learning goal',
-          learningGoalExample: 'Example: Students understand the basics of algebra.',
-          learningGoalPlaceholder: 'Enter learning goal',
-          chooseOption: 'Choose an option',
-          easy: 'Easy',
-          medium: 'Medium',
-          hard: 'Hard'
-        },
-        priorKnowledge: {
-          title: 'What is the %priorKnowledge% that the students should have?',
-          priorKnowledge: 'prior knowledge',
-          label: 'Prior Knowledge',
-          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
-          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
-        },
-        preview: {
-          loadingHeading: 'Exercise is being generated...',
-          patience: 'It can take up to two minutes',
-          publishExercise: 'Publish exercise',
-          openExerciseInEditor: 'Open in editor',
-          regenerate: 'Regenerate exercise'
-        }
-      }
     }
   }
 };

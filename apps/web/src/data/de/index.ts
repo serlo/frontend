@@ -1000,13 +1000,6 @@ export const loggedInData = {
           confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
         },
         exercise: {
-          scMcExercise: "Auswahlaufgabe",
-          inputExercise: "Eingabefeld",
-          textAreaExercise: "Freitext",
-          dropzoneImage: "Interaktives Bild",
-          blanksExercise: "Lückentext Aufgabe",
-          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
-          h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen",
@@ -1158,79 +1151,6 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Als %role% hinzufügen"
-    },
-    ai: {
-      exerciseGeneration: {
-        buttonTitleSingular: "Aufgabe mit KI erstellen",
-        buttonTitle: "Teilaufgaben mit KI erstellen",
-        initialModalTitle: "Aufgabe automatisch mit KI erstellen",
-        modalTitleWithTaxonomy: "Aufgabenerstellung mit KI:",
-        confirmCloseDescription: "Möchtest du die Aufgabenerstellung verlassen? Die Daten werden gelöscht.",
-        summary: "Zusammenfassung",
-        nextButton: "Weiter",
-        nextExerciseButton: "Nächste Aufgabe",
-        previousButton: "Vorherige Aufgabe",
-        generateExerciseButton: "Aufgabe generieren",
-        generateExercisesButton: "Aufgaben generieren",
-        somethingWentWrong: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
-        hallucinationWarning: "Die KI kann inkorrekte Lösungen erstellen. Bitte überprüfe die Inhalte.",
-        topic: {
-          title: "Über welches %topic% willst du eine Aufgabe erstellen?",
-          topic: "Thema",
-          defaultLabel: "Thema",
-          otherTopicLabel: "Anderes Thema",
-          customTopicPlaceholder: "Thema eingeben"
-        },
-        grade: {
-          title: "In welcher %grade% sind die Schüler*innen?",
-          grade: "Stufe",
-          label: "Stufe",
-          university: "Universität"
-        },
-        exerciseType: {
-          title: "An welchem %exerciseType% bist du interessiert? ",
-          exerciseType: "Aufgabentyp",
-          label: "Aufgabentyp",
-          subtasksTitleSummary: "Teilaufgaben",
-          subtasksTitle: "Soll die Aufgabe Teilaufgaben haben?",
-          subtasksTitleExerciseGroup: "Wieviele Teilaufgaben soll es geben?",
-          noSubtasks: "Nein",
-          yesSubtasks: "Ja",
-          subtasksLabel: "Aufgaben",
-          numberOfSubtasksPlaceholder: "Anzahl",
-          chooseOption: "Wähle eine Option",
-          multipleChoice: "Multiple-Choice",
-          singleChoice: "Single-Choice",
-          inputExercise: "Eingabefeld",
-          blanksExercise: "Lückentext Aufgabe"
-        },
-        difficulty: {
-          title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
-          difficulty: "Schwierigkeitsgrad",
-          label: "Schwierigkeitsgrad",
-          learningGoalLabel: "Lernziel",
-          learningGoalExample: "Beispiel: Schüler*innen verstehen die Grundlagen von Algebra.",
-          learningGoalPlaceholder: "Lernziel eingeben",
-          chooseOption: "Wähle eine Option",
-          easy: "Einfach",
-          medium: "Mittel",
-          hard: "Knifflig"
-        },
-        priorKnowledge: {
-          title: "Welches %priorKnowledge% sollten die Schüler*innen haben?",
-          priorKnowledge: "Vorwissen",
-          label: "Vorwissen",
-          example: "Beispiel: Die Schüler*innen haben schon einige Aufgaben zu dem Thema bearbeitet.",
-          placeholder: "z.B. Gutes Fundament in Algebra"
-        },
-        preview: {
-          loadingHeading: "Aufgabe wird erstellt...",
-          patience: "Es kann bis zu zwei Minuten dauern",
-          publishExercise: "Aufgabe veröffentlichen",
-          openExerciseInEditor: "Im Editor öffnen",
-          regenerate: "Aufgabe neu generieren"
-        }
-      }
     }
   }
 };

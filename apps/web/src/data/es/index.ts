@@ -1000,13 +1000,6 @@ export const loggedInData = {
           confirmDelete: "¿Estás seguro de que quieres eliminar este contenido?"
         },
         exercise: {
-          scMcExercise: 'Choice Exercise',
-          inputExercise: 'Input Exercise',
-          textAreaExercise: "Ejercicio de cajas de texto",
-          dropzoneImage: 'Image Dropzones Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
-          h5p: 'H5p Exercise',
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo",
@@ -1158,79 +1151,6 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Añadir como %role%"
-    },
-    ai: {
-      exerciseGeneration: {
-        buttonTitleSingular: "Generar un ejercicio con IA (Inteligencia Artificial)",
-        buttonTitle: "AI genera grupo de ejercicio",
-        initialModalTitle: "Crea un ejercicio automáticamente con ayuda de la IA",
-        modalTitleWithTaxonomy: "Generación de ejercicios con AI: ",
-        confirmCloseDescription: "¿Quieres cancelar la generación de ejercicios? Tus datos se perderán.",
-        summary: "Resumen",
-        nextButton: "Siguiente",
-        nextExerciseButton: "Próximo ejercicio",
-        previousButton: "Ejercicio anterior",
-        generateExerciseButton: "Generar ejercicio",
-        generateExercisesButton: "Generar ejercicio",
-        somethingWentWrong: "Algo salió mal. Inténtalo de nuevo.",
-        hallucinationWarning: "La IA puede generar ejercicios incorrectos. Por favor revisa cuidadosamente.",
-        topic: {
-          title: "¿Sobre qué %topic% desea generar ejercicios?",
-          topic: "tema",
-          defaultLabel: "Tema",
-          otherTopicLabel: "Otro tema",
-          customTopicPlaceholder: "Introduce un tema personalizado"
-        },
-        grade: {
-          title: "¿En qué %grade% están los alumnos?",
-          grade: "grado/curso",
-          label: "Grado/Curso",
-          university: "Universidad"
-        },
-        exerciseType: {
-          title: "¿Qué  %exerciseType% te interesa?",
-          exerciseType: "tipo de ejercicio",
-          label: "Tipo de ejercicio",
-          subtasksTitleSummary: "Subtareas",
-          subtasksTitle: "¿Debe haber subtareas?",
-          subtasksTitleExerciseGroup: "¿Cuántas subtareas debería haber?",
-          noSubtasks: 'No',
-          yesSubtasks: "Si",
-          subtasksLabel: "Ejercicios",
-          numberOfSubtasksPlaceholder: "Número de subtareas",
-          chooseOption: "Selecciona una opción",
-          multipleChoice: "Selección Múltiple",
-          singleChoice: "Elección Única",
-          inputExercise: "Ejercicio de respuesta escrita",
-          blanksExercise: "Ejercicio de rellenar los espacios en blanco"
-        },
-        difficulty: {
-          title: "¿Cuál es el nivel de %difficulty% del ejercicio y del objetivo de aprendizaje?",
-          difficulty: "dificultad",
-          label: "Dificultad",
-          learningGoalLabel: "Objetivos de aprendizaje",
-          learningGoalExample: "Ejemplo: Los estudiantes entienden los fundamentos de la algebra.",
-          learningGoalPlaceholder: "Ingresa el objetivo de aprendizaje",
-          chooseOption: "Selecciona una opción",
-          easy: "Fácil",
-          medium: "Medio",
-          hard: "Difícil"
-        },
-        priorKnowledge: {
-          title: "¿Cuál es el  %priorKnowledge% que deben tener los alumnos?",
-          priorKnowledge: "conocimientos previos",
-          label: "Conocimiento previo",
-          example: "Ejemplo: Los estudiantes saben cómo funciona el algoritmo básico y ya han resuelto algunos ejercicios sobre el tema.",
-          placeholder: "E.g., Aritmética básica, fundamentos del algoritmo"
-        },
-        preview: {
-          loadingHeading: "Se está generando el ejercicio...",
-          patience: "Puede tardar hasta dos minutos",
-          publishExercise: "Publicar ejercicio",
-          openExerciseInEditor: "Abrir en el editor",
-          regenerate: "Regenerar el ejercicio"
-        }
-      }
     }
   }
 };
