@@ -8,7 +8,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { cn } from '@serlo/frontend/src/helper/cn'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
-import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
@@ -39,9 +38,6 @@ function TextExerciseTypeEditor({
   id,
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content } = state
-
-  const router = useRouter()
-  const currentPath = router.asPath.toLowerCase()
 
   const staticDocument = selectStaticDocument(store.getState(), id)
     ?.state as PrettyStaticState<TextExerciseTypePluginState>
