@@ -1,11 +1,8 @@
-import { EditorProps } from '@editor/core'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
-import { LazyLoadExerciseGenerationWrapperOrNull } from '@/components/exercise-generation/lazy-load-exercise-generation-wrapper-or-null'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -36,7 +33,6 @@ interface EntityCreateProps {
   entityType: AllowedPluginType
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
   entityNeedsReview: boolean
-  subject: string
 }
 
 export default renderedPageNoHooks<EntityCreateProps>((props) => {
@@ -44,15 +40,13 @@ export default renderedPageNoHooks<EntityCreateProps>((props) => {
 })
 
 function Content({
-  props: { taxonomyTerm, entityType, entityNeedsReview, subject },
+  props: { taxonomyTerm, entityType, entityNeedsReview },
 }: {
   props: EntityCreateProps
 }) {
-  const [initialState, setInitialState] = useState<EditorProps['initialState']>(
-    {
-      plugin: AllowedPlugins[entityType],
-    }
-  )
+  const initialState = {
+    plugin: AllowedPlugins[entityType],
+  }
 
   const { id: taxonomyParentId } = taxonomyTerm
 
@@ -76,12 +70,6 @@ function Content({
           <main>
             <Guard needsAuth={isProduction ? true : undefined} data>
               <AddRevision {...addRevisionProps} />
-              <LazyLoadExerciseGenerationWrapperOrNull
-                subject={subject}
-                entityType={entityType}
-                taxonomyTitle={taxonomyTerm.title}
-                setEditorState={setInitialState}
-              />
             </Guard>
           </main>
         </MaxWidthDiv>{' '}
@@ -127,7 +115,6 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
       entityType: entityType as keyof typeof AllowedPlugins,
       taxonomyTerm: { ...result.uuid },
       entityNeedsReview: !isTestArea,
-      subject: breadcrumbsData?.[0]?.label || 'Unknown subject',
     },
     revalidate: 60 * 30, // 30 min
   }
