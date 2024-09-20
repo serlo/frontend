@@ -1,4 +1,8 @@
-import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import {
+  PluginToolbar,
+  PreviewButton,
+  ToolbarSelect,
+} from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { PluginMenuItemType } from '@editor/plugins/rows/contexts/plugin-menu/types'
@@ -14,30 +18,40 @@ export const ExerciseToolbar = ({
   id,
   state,
   interactivePluginOptions,
+  previewActive,
+  setPreviewActive,
 }: ExerciseProps & {
   interactivePluginOptions: PluginMenuItemType[]
+  previewActive: boolean
+  setPreviewActive: (active: boolean) => void
 }) => {
   const { interactive } = state
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
   const exPluginStrings = useEditorStrings().plugins.exercise
 
-  const currentlySelected = interactive.defined
+  const interactivePlugin = interactive.defined
     ? selectDocument(store.getState(), interactive.id)?.plugin
     : undefined
 
-  const pluginSettings = currentlySelected ? (
-    <ToolbarSelect
-      tooltipText={exTemplateStrings.changeInteractive}
-      value={currentlySelected ?? ''}
-      changeValue={(value) => {
-        if (interactive.defined)
-          interactive.replace(value as InteractivePluginType)
-      }}
-      options={interactivePluginOptions.map(({ pluginType, title }) => ({
-        value: pluginType,
-        text: title,
-      }))}
-    />
+  const pluginSettings = interactivePlugin ? (
+    <>
+      <PreviewButton
+        previewActive={previewActive}
+        setPreviewActive={setPreviewActive}
+      />
+      <ToolbarSelect
+        tooltipText={exTemplateStrings.changeInteractive}
+        value={interactivePlugin}
+        changeValue={(value) => {
+          if (interactive.defined)
+            interactive.replace(value as InteractivePluginType)
+        }}
+        options={interactivePluginOptions.map(({ pluginType, title }) => ({
+          value: pluginType,
+          text: title,
+        }))}
+      />
+    </>
   ) : undefined
 
   return (

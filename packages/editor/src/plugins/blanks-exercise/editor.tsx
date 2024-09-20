@@ -7,13 +7,14 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
 import { BlanksExerciseRenderer } from './renderer'
 import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -38,7 +39,7 @@ const cellTextFormattingOptions = [
 export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { focused, id, state } = props
   const { text: childPlugin, mode, extraDraggableAnswers } = state
-  const [previewActive, setPreviewActive] = useState(false)
+  const previewActive = useIsPreviewActive()
 
   const pluginStrings = useEditorStrings().plugins
   const blanksExerciseStrings = pluginStrings.blanksExercise
@@ -79,8 +80,6 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
       {focused ? (
         <BlanksExerciseToolbar
           {...props}
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
           childPluginType={childPluginState.plugin as EditorPluginType}
         />
       ) : (
