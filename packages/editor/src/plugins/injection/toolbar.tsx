@@ -57,7 +57,7 @@ export const InjectionToolbar = ({
             setIsOpen={(open) => {
               if (!open) validateBeforeClose()
             }}
-            className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+            className="top-8 max-w-xl translate-y-0 sm:top-24"
             title={injectionStrings.title}
             extraTitleClassName="serlo-h3 mt-4"
           >
