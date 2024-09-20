@@ -683,6 +683,28 @@ export const loggedInData = {
         noPluginsFoundDescription:
           'Please try different keywords or browse through all available elements.',
       },
+      pluginMenu: {
+        singleChoiceExercise: {
+          title: 'Single Choice Exercise',
+          description:
+            'A question with a selection of answer options and a single correct one.',
+        },
+        multipleChoiceExercise: {
+          title: 'Multiple Choice Exercise',
+          description:
+            'A question with a selection of answer options with potentially multiple correct answers.',
+        },
+        blanksExercise: {
+          title: 'Fill In The Blanks (Typing)',
+          description:
+            'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description:
+            'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',
+        },
+      },
       plugins: {
         anchor: {
           title: 'Anchor',
@@ -1020,17 +1042,13 @@ export const loggedInData = {
         },
         scMcExercise: {
           title: 'SC/MC Exercise',
-          description:
-            'Create single or multiple choice tasks and adapt them with individual feedback if necessary.',
         },
         h5p: {
           title: 'H5P',
           description: 'Import an interactive task from H5P via URL.',
         },
         blanksExercise: {
-          title: 'Fill In The Blanks (Typing)',
-          description:
-            'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
+          title: 'Fill In The Blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -1047,6 +1065,7 @@ export const loggedInData = {
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
         },
         blanksExerciseDragAndDrop: {
+          // remove after migration?
           title: 'Fill In The Blanks (Drag&Drop)',
           description:
             'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',

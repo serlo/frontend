@@ -1,6 +1,6 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { pluginMenuItems } from '@editor/package/plugin-menu'
+import { getPluginMenuItems } from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -13,8 +13,6 @@ import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
 import { ExerciseToolbar } from './toolbar/toolbar'
 import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
-import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
 export function ExerciseEditor(props: ExerciseProps) {
@@ -28,27 +26,28 @@ export function ExerciseEditor(props: ExerciseProps) {
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const editorStrings = useEditorStrings()
-  const { lang } = useInstanceData()
   const exTemplateStrings = editorStrings.templatePlugins.exercise
   const exPluginStrings = editorStrings.plugins.exercise
 
-  const language = lang === Instance.De ? 'de' : 'en'
-
   const exerciseMenuItems = useMemo(() => {
-    const exerciseItems = pluginMenuItems.filter((menuItem) => {
-      const pluginType = menuItem.initialState.plugin
-      return pluginType === 'exercise' && editorPlugins.isSupported(pluginType)
-    })
+    const exerciseItems = getPluginMenuItems(editorStrings).filter(
+      (menuItem) => {
+        const pluginType = menuItem.initialState.plugin
+        return (
+          pluginType === 'exercise' && editorPlugins.isSupported(pluginType)
+        )
+      }
+    )
     return exerciseItems.map((menuItem) => {
       return {
         type: menuItem.type,
         pluginType: menuItem.initialState.plugin as EditorPluginType,
-        title: menuItem[language].name,
-        description: menuItem[language].description,
+        title: menuItem.title,
+        description: menuItem.description,
         icon: menuItem.icon,
       }
     })
-  }, [language])
+  }, [editorStrings])
 
   return (
     <div

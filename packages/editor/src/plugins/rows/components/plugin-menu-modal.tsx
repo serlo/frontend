@@ -1,6 +1,6 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
-import { pluginMenuItems } from '@editor/package/plugin-menu'
+import { getPluginMenuItems } from '@editor/package/plugin-menu'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
@@ -17,15 +17,12 @@ import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-
 import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import { filterOptions } from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
 
 interface PluginMenuModalProps {
   onInsertPlugin: (pluginType: PluginMenuItemType) => void
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
-  const { lang } = useInstanceData()
   const editorStrings = useEditorStrings()
   const pluginsStrings = editorStrings.plugins
 
@@ -37,9 +34,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
-  const language = lang === Instance.De ? 'de' : 'en'
-
-  const menuItems = pluginMenuItems
+  const menuItems = getPluginMenuItems(editorStrings)
 
   const allowedPlugins = useMemo(() => {
     const allPluginsWithDuplicates = menuItems.map(
@@ -69,12 +64,12 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       .map((menuItem) => ({
         type: menuItem.type,
         pluginType: menuItem.initialState.plugin as EditorPluginType,
-        title: menuItem[language].name,
-        description: menuItem[language].description,
+        title: menuItem.title,
+        description: menuItem.description,
         icon: menuItem.icon,
       }))
       .filter(({ pluginType }) => allowedPlugins.includes(pluginType))
-  }, [allowedPlugins, menuItems, language])
+  }, [allowedPlugins, menuItems])
 
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
     useMemo(() => {

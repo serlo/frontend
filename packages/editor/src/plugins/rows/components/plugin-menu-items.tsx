@@ -54,7 +54,7 @@ export function PluginMenuItems({
 
   function renderListItems(options: PluginMenuItemType[], offset: number) {
     return options.map((pluginMenuItem, index) => {
-      const { pluginType, title, icon, description } = pluginMenuItem
+      const { type, pluginType, title, icon, description } = pluginMenuItem
       const currentIndex = index + offset
       const selected = currentIndex === focusedItemIndex
       const tooltipPosition = getTooltipPosition(index)
@@ -67,7 +67,7 @@ export function PluginMenuItems({
       const iconElement = typeof icon !== 'string' ? icon() : <IconFallback />
 
       return (
-        <li key={title}>
+        <li key={type}>
           <button
             data-qa={`plugin-suggestion-${pluginType}`}
             ref={(el) => (itemRefs.current[currentIndex] = el)}
