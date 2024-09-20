@@ -1,4 +1,4 @@
-import type { PluginMenuType } from '@editor/package/plugin-menu-data'
+import type { PluginMenuType } from '@editor/core/plugin-menu-data'
 import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 

@@ -1,6 +1,6 @@
+import { pluginMenuItems } from '@editor/core/plugin-menu-data'
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { pluginMenuItems } from '@editor/package/plugin-menu-data'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'

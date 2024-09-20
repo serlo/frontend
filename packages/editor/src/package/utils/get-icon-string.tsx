@@ -19,7 +19,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 
-import { PluginMenuType } from '../plugin-menu-data'
+import { PluginMenuType } from '../../core/plugin-menu-data'
 
 const iconLookup: Record<PluginMenuType, string> = {
   [PluginMenuType.Text]: IconText,

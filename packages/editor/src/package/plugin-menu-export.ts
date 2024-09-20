@@ -1,5 +1,5 @@
-import { pluginMenuItems } from './plugin-menu-data'
 import { getIconString } from './utils/get-icon-string'
+import { pluginMenuItems } from '../core/plugin-menu-data'
 
 // exports for package
 
