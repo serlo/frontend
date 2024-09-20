@@ -34,7 +34,7 @@ export function InteractiveExercisesSelection({
       <p className="mb-2 text-gray-400">
         {exTemplateStrings.addOptionalInteractiveEx}
       </p>
-      <div className="grid grid-cols-4 gap-2 pb-10">
+      <div className="grid grid-cols-4 items-start gap-2 pb-10">
         {interactivePluginOptions.map(
           ({ pluginType, title, icon, description }, index) => (
             <button

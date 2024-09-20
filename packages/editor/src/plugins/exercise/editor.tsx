@@ -2,7 +2,8 @@ import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { getPluginMenuItems } from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorExerciseDocument } from '@editor/types/editor-plugins'
+import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
@@ -32,21 +33,21 @@ export function ExerciseEditor(props: ExerciseProps) {
   const exerciseMenuItems = useMemo(() => {
     const exerciseItems = getPluginMenuItems(editorStrings).filter(
       (menuItem) => {
-        const pluginType = menuItem.initialState.plugin
-        return (
-          pluginType === 'exercise' && editorPlugins.isSupported(pluginType)
-        )
+        if (!isExerciseDocument(menuItem.initialState)) return false
+        const interactivePlugin =
+          menuItem.initialState.state.interactive?.plugin
+        return interactivePlugin && editorPlugins.isSupported(interactivePlugin)
       }
     )
-    return exerciseItems.map((menuItem) => {
-      return {
-        type: menuItem.type,
-        pluginType: menuItem.initialState.plugin as EditorPluginType,
-        title: menuItem.title,
-        description: menuItem.description,
-        icon: menuItem.icon,
-      }
-    })
+
+    return exerciseItems.map((menuItem) => ({
+      type: menuItem.type,
+      pluginType: (menuItem.initialState as EditorExerciseDocument).state
+        .interactive!.plugin,
+      title: menuItem.title,
+      description: menuItem.description,
+      icon: menuItem.icon,
+    }))
   }, [editorStrings])
 
   return (

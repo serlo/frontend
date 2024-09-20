@@ -65,8 +65,9 @@ export type PluginMenuType =
 
 // filter out special cases, e.g. plugins that are in development
 const visibleTypes = Object.values(pluginMenuType).filter((type) => {
-  if (type === pluginMenuType.Audio) {
-    return !!isSerloProduction
+  // for serlo.org exercise group plugin is loaded but only shows in staging/dev menus
+  if (type === pluginMenuType.ExerciseGroup) {
+    return isSerloProduction ? false : true
   }
   return true
 })
@@ -223,5 +224,5 @@ const iconLookup: Record<PluginMenuType, string> = {
 }
 
 export function getIconString(type: PluginMenuType) {
-  return iconLookup[type] ?? IconFallback
+  return iconLookup[type]
 }

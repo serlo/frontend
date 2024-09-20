@@ -45,8 +45,8 @@ export interface PluginMenuItemType {
   type: PluginMenuType
   pluginType: EditorPluginType
   title: string
-  description?: string
+  description: string
   // until we use the editor package in the frontend (only having vite for building)
-  // I'd like to keep this approach
+  // icons should be strings but are loaded as () => JSX.Element in the frontend (webpack)
   icon: string | (() => JSX.Element)
 }
