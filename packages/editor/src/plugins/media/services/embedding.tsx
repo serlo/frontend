@@ -1,13 +1,28 @@
+import { useEffect, useState } from 'react'
+
 import { GeogebraRenderer } from './geogebra'
 import { ImageRenderer } from './html-image'
 import { VideoRenderer } from './html-video'
 import { resolveEmbedding } from './resolve-embedding'
-import { Embed, Resource } from './types'
+import { Embed, Resource, EmbeddingProp } from './types'
 
 export function Embedding({ resource }: { resource: Resource }) {
-  const embedding = resolveEmbedding(resource)
+  const embeddingResult = resolveEmbedding(resource)
+  const embeddingResultIsPromise = embeddingResult instanceof Promise
 
-  if (embedding.type === Embed.HTMLImage) {
+  const [embedding, setEmbedding] = useState<EmbeddingProp | null>(
+    embeddingResultIsPromise ? null : embeddingResult
+  )
+
+  useEffect(() => {
+    if (embeddingResultIsPromise) {
+      void (async () => setEmbedding(await embeddingResult))()
+    }
+  }, [embeddingResult, embeddingResultIsPromise, setEmbedding])
+
+  if (embedding === null) {
+    return <div>Load embedding...</div>
+  } else if (embedding.type === Embed.HTMLImage) {
     return <ImageRenderer {...embedding} />
   } else if (embedding.type === Embed.HTMLVideo) {
     return <VideoRenderer {...embedding} />

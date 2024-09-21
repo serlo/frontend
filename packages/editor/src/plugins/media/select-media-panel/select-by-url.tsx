@@ -59,7 +59,7 @@ export function SelectMediaByUrl({
           const result = await resolver.resolve(url, controller.signal)
 
           if (result.type === 'resourceFound') {
-            const embedding = resolveEmbedding(result.resource)
+            const embedding = await resolveEmbedding(result.resource)
 
             if (
               allowEmbedding === undefined ||

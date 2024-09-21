@@ -66,7 +66,7 @@ interface EmbeddingAdditonalInformation {
  *   appletId: GeoGebraApplet
  * }
  */
-export type Embedding<Types extends Embed = Embed> = {
+export type EmbeddingProp<Types extends Embed = Embed> = {
   [T in Types]: EmbeddingAdditonalInformation[T] & {
     type: T
   }
@@ -82,10 +82,10 @@ export type Embedding<Types extends Embed = Embed> = {
 export type ResourceResolver<
   H extends Hosting = Hosting,
   E extends Embed = Embed,
-> = (resource: Resource<H>) => Embedding<E>
+> = (resource: Resource<H>) => SyncOrAsync<EmbeddingProp<E>>
 
 export type EmbeddingRenderer<E extends Embed> = (
-  props: Embedding<E>
+  props: EmbeddingProp<E>
 ) => ReactNode
 
 export interface URLResolver {
