@@ -95,6 +95,8 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
         state.insert(insertIndex, row)
         insertIndex++
       }
+
+      removeEmptyTextPluginChildren()
     },
     onError: (error, { insertIndex, prompt }) => {
       // FIXME: Copy & Pasted code from onSuccess...
