@@ -72,6 +72,7 @@ export function SerloEditor({
       <SaveContext.Provider
         value={{ onSave, userCanSkipReview, entityNeedsReview }}
       >
+        <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
         <Editor
           initialState={useStored ? getStateFromLocalStorage()! : initialState}
           onChange={({ changed, getDocument }) => {

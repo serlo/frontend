@@ -91,7 +91,7 @@ export default async function handler(
         content: `Fulfill the following prompt of the user: ${req.query.prompt}`,
       },
     ],
-    temperature: 0.0,
+    temperature: 0.25,
     response_format: {
       type: 'json_schema',
       json_schema: {
