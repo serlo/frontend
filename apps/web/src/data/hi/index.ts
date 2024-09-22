@@ -729,7 +729,7 @@ export const loggedInData = {
           imageSourceHelpText: 'Add the author or source of this image here',
           invalidImageUrl: 'Error: Invalid or Incomplete URL',
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
-          search: 'Suche',
+          search: "खोजें",
           searchOnline: 'Search online for licence-free images',
           placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
