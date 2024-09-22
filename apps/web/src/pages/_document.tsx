@@ -47,7 +47,7 @@ export default class MyDocument extends Document {
       ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale as Instance)
       : undefined
     return (
-      <Html className="bg-brand-100 print:serlo-print-style" id="serlo-root">
+      <Html className="print:serlo-print-style" id="serlo-root">
         {/* background on html for overscroll area */}
         <Head>
           <meta property="og:site_name" content="Serlo" />
