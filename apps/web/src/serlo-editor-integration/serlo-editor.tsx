@@ -18,7 +18,6 @@ import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
 import { useCanDo } from '@/auth/use-can-do'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidWithRevType } from '@/data-types'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
@@ -26,7 +25,6 @@ export interface SerloEditorProps {
   entityNeedsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
   initialState: EditorProps['initialState']
-  type: UuidWithRevType | 'User'
 }
 
 export interface LooseEdtrData {
@@ -42,7 +40,6 @@ export function SerloEditor({
   entityNeedsReview,
   initialState,
   children,
-  type,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
@@ -60,12 +57,7 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
-  editorPlugins.init(
-    createPlugins({
-      editorStrings,
-      parentType: type,
-    })
-  )
+  editorPlugins.init(createPlugins({ editorStrings }))
 
   // some plugins rely on static renderes
   editorRenderers.init(createRenderers())

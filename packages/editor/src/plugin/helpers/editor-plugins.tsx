@@ -3,8 +3,6 @@ import { EditorPlugin } from '../internal-plugin'
 export interface PluginWithData {
   type: string
   plugin: EditorPlugin | EditorPlugin<any, any>
-  visibleInSuggestions?: boolean
-  icon?: JSX.Element
 }
 
 export type PluginsWithData = PluginWithData[]

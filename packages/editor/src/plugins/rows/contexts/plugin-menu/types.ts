@@ -1,4 +1,3 @@
-import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 
 type ActionMap<M extends { [index: string]: any }> = {
@@ -34,14 +33,8 @@ export type PluginMenuActions =
 
 export interface PluginMenuState {
   allowedChildPlugins: string[] | undefined
+  parentPluginId: string
   showPluginMenu: boolean
   insertIndex: number | undefined
   insertCallback: ((plugin: AnyEditorDocument) => void) | undefined
-}
-
-export interface PluginMenuItemType {
-  pluginType: EditorPluginType
-  title: string
-  description?: string
-  icon?: JSX.Element
 }

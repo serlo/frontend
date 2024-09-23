@@ -114,7 +114,6 @@ export function AddRevision({
         <SerloEditor
           entityNeedsReview={entityNeedsReview}
           onSave={onSave}
-          type={type}
           initialState={initialState}
         />
       </div>

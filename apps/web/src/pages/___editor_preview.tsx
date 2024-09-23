@@ -92,12 +92,7 @@ function Content() {
   const editorStrings = loggedInData.strings.editor
 
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
-  editorPlugins.init(
-    createPlugins({
-      editorStrings,
-      parentType: 'Article',
-    })
-  )
+  editorPlugins.init(createPlugins({ editorStrings }))
 
   editorRenderers.init(createRenderers())
 
