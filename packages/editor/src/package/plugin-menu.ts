@@ -1,6 +1,5 @@
 import type { EditorProps } from '@editor/core'
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
-import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg?raw'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg?raw'
@@ -13,7 +12,9 @@ import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg?raw'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg?raw'
 import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg?raw'
+import IconMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-mc-exercise.svg?raw'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg?raw'
+import IconScExercise from '@editor/editor-ui/assets/plugin-icons/icon-sc-exercise.svg?raw'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg?raw'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg?raw'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
@@ -54,7 +55,7 @@ export const pluginMenuType = {
   InputExercise: EditorPluginType.InputExercise,
   TextAreaExercise: EditorPluginType.TextAreaExercise,
   BlanksExercise: EditorPluginType.BlanksExercise,
-  BlanksExerciseDragAndDrop: EditorPluginType.BlanksExerciseDragAndDrop,
+  BlanksExerciseDragAndDrop: 'blanksExerciseDragAndDrop',
   DropzoneImage: EditorPluginType.DropzoneImage,
   H5p: EditorPluginType.H5p,
   ExerciseGroup: EditorPluginType.ExerciseGroup,
@@ -211,8 +212,8 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.SerloTable]: IconTable,
   [pluginMenuType.Spoiler]: IconSpoiler,
   [pluginMenuType.DropzoneImage]: IconDropzones,
-  [pluginMenuType.SingleChoiceExercise]: IconScMcExercise,
-  [pluginMenuType.MultipleChoiceExercise]: IconScMcExercise,
+  [pluginMenuType.SingleChoiceExercise]: IconScExercise,
+  [pluginMenuType.MultipleChoiceExercise]: IconMcExercise,
   [pluginMenuType.InputExercise]: IconTextArea,
   [pluginMenuType.TextAreaExercise]: IconTextArea,
   [pluginMenuType.BlanksExercise]: IconBlanksTyping,
