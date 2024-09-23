@@ -39,7 +39,7 @@ export const ExerciseToolbar = ({
     <ToolbarSelect
       tooltipText={exTemplateStrings.changeInteractive}
       value={currentlySelected ?? ''}
-      changeValue={(value, index) => {
+      changeValue={(_value, index) => {
         if (interactive.defined) {
           const pluginInitialState =
             interactivePluginOptions[index].initialState

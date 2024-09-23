@@ -4,7 +4,6 @@ export const interactivePluginTypes = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.InputExercise,
   EditorPluginType.BlanksExercise,
-  EditorPluginType.BlanksExerciseDragAndDrop,
   EditorPluginType.DropzoneImage,
   EditorPluginType.TextAreaExercise,
   EditorPluginType.H5p,

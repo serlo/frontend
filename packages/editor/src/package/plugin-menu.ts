@@ -54,7 +54,7 @@ export const pluginMenuType = {
   InputExercise: EditorPluginType.InputExercise,
   TextAreaExercise: EditorPluginType.TextAreaExercise,
   BlanksExercise: EditorPluginType.BlanksExercise,
-  BlanksExerciseDragAndDrop: EditorPluginType.BlanksExerciseDragAndDrop,
+  BlanksExerciseDragAndDrop: 'blanksExerciseDragAndDrop',
   DropzoneImage: EditorPluginType.DropzoneImage,
   H5p: EditorPluginType.H5p,
   ExerciseGroup: EditorPluginType.ExerciseGroup,

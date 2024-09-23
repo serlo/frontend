@@ -86,7 +86,6 @@ export function createPlugins({
     EditorPluginType.ScMcExercise,
     EditorPluginType.InputExercise,
     EditorPluginType.BlanksExercise,
-    EditorPluginType.BlanksExerciseDragAndDrop,
     EditorPluginType.Solution,
 
     EditorPluginType.Unsupported,
