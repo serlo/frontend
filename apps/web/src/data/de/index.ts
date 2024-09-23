@@ -612,6 +612,24 @@ export const loggedInData = {
         noPluginsFoundTitle: "Leider gibt es keine Elemente, die zu deiner Suche passen.",
         noPluginsFoundDescription: "Versuche es mit anderen Suchbegriffen oder stöbere durch alle verfügbaren Elemente."
       },
+      pluginMenu: {
+        singleChoiceExercise: {
+          title: 'Single Choice Exercise',
+          description: 'A question with a selection of answer options and a single correct one.'
+        },
+        multipleChoiceExercise: {
+          title: 'Multiple Choice Exercise',
+          description: 'A question with a selection of answer options with potentially multiple correct answers.'
+        },
+        blanksExercise: {
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.'
+        },
+        blanksExerciseDragAndDrop: {
+          title: "Lückentext (Drag&Drop)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
+        }
+      },
       plugins: {
         anchor: {
           title: "Sprungmarke",
@@ -681,6 +699,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: "Nicht unterstützt",
+          description: 'Plugin not supported by this version of the editor.',
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
           explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
@@ -801,6 +820,7 @@ export const loggedInData = {
         },
         rows: {
           title: "Zeilen",
+          description: 'Rows plugin holds other plugins',
           searchForTools: "Suche hier nach Tools…",
           duplicate: "Duplizieren",
           copyAnchorLink: "Link zu diesem Element kopieren",
@@ -916,6 +936,10 @@ export const loggedInData = {
             activate: "Interaktives Element versteckt laden"
           }
         },
+        exerciseGroup: {
+          title: "Aufgabe mit Teilaufgaben",
+          description: 'Group multiple exercises together'
+        },
         inputExercise: {
           title: "Eingabefeld",
           description: "Erstelle eine Aufgabe, bei der eine exakte Eingabe oder ein Wert eingegeben und validiert werden kann."
@@ -925,16 +949,14 @@ export const loggedInData = {
           description: "Ein großes Eingabefeld"
         },
         scMcExercise: {
-          title: "SC/MC Aufgabe",
-          description: "Erstelle Single- oder Multiple-Choice Aufgaben und passe sie bei Bedarf mit individuellem Feedback an. "
+          title: "SC/MC Aufgabe"
         },
         h5p: {
           title: 'H5P',
           description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
-          title: "Lückentext (Eintippen)",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden.",
+          title: "Lückentext",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -951,6 +973,7 @@ export const loggedInData = {
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
         },
         blanksExerciseDragAndDrop: {
+          // remove after migration?
           title: "Lückentext (Drag&Drop)",
           description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
         }
