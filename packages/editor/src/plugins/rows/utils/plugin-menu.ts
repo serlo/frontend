@@ -1,4 +1,4 @@
-import { PluginMenuItem } from '@editor/package/plugin-menu'
+import type { PluginMenuItem } from '@editor/package/plugin-menu'
 
 export function filterOptions(option: PluginMenuItem[], text: string) {
   if (!text.length) return option

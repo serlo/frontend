@@ -1,6 +1,9 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { PluginMenuItem, getPluginMenuItems } from '@editor/package/plugin-menu'
+import {
+  type PluginMenuItem,
+  getPluginMenuItems,
+} from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'

@@ -2,7 +2,7 @@ import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
-  PluginMenuItem,
+  type PluginMenuItem,
   pluginMenuType,
   PluginMenuType,
 } from '@editor/package/plugin-menu'

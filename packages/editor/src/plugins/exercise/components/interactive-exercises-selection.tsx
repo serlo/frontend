@@ -1,6 +1,6 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { PluginMenuItem } from '@editor/package/plugin-menu'
+import type { PluginMenuItem } from '@editor/package/plugin-menu'
 
 import { type ExerciseProps } from '..'
 import { type InteractivePluginType } from '../interactive-plugin-types'
