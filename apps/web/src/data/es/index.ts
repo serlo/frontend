@@ -729,7 +729,7 @@ export const loggedInData = {
           imageSourceHelpText: "Añadir el autor o la fuente de esta imagen aquí",
           invalidImageUrl: "Error: URL inválida o incompleta",
           invalidImageUrlMessage: "La URL que ingresaste es inválida o está incompleta. Por favor, asegúrate de haber copiado y pegado la URL completa correctamente. La URL debe comenzar con \"http://\"  o \"https://\".",
-          search: "Búsqueda",
+          search: "Buscar",
           searchOnline: "Buscar en línea imágenes sin licencia",
           placeholderSource: "Fuente (opcional)",
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
