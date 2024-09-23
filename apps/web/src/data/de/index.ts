@@ -614,16 +614,16 @@ export const loggedInData = {
       },
       pluginMenu: {
         singleChoiceExercise: {
-          title: 'Single Choice Exercise',
-          description: 'A question with a selection of answer options and a single correct one.'
+          title: "Single-Choice-Aufgabe",
+          description: "Eine Aufgabe mit einer Auswahl an Antwortoptionen (Es ist immer nur eine Antwort richtig)."
         },
         multipleChoiceExercise: {
-          title: 'Multiple Choice Exercise',
-          description: 'A question with a selection of answer options with potentially multiple correct answers.'
+          title: "Multiple-Choice-Aufgabe",
+          description: "Eine Aufgabe mit einer Auswahl an Antwortoptionen (eine oder mehrere richtige Antworten)."
         },
         blanksExercise: {
-          title: 'Fill In The Blanks (Typing)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.'
+          title: "Lückentext (Eintippen)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden."
         },
         blanksExerciseDragAndDrop: {
           title: "Lückentext (Drag&Drop)",
@@ -699,7 +699,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: "Nicht unterstützt",
-          description: 'Plugin not supported by this version of the editor.',
+          description: "Plugin wird von dieser Version des Editors nicht unterstützt.",
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
           explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
@@ -938,7 +938,7 @@ export const loggedInData = {
         },
         exerciseGroup: {
           title: "Aufgabe mit Teilaufgaben",
-          description: 'Group multiple exercises together'
+          description: "Liste von Aufgaben mit Teilaufgaben"
         },
         inputExercise: {
           title: "Eingabefeld",
