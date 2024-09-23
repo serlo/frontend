@@ -612,6 +612,24 @@ export const loggedInData = {
         noPluginsFoundTitle: "Lo sentimos, no hay elementos que coincidan con tu búsqueda.",
         noPluginsFoundDescription: "Prueba con otras palabras clave o explora todos los elementos disponibles."
       },
+      pluginMenu: {
+        singleChoiceExercise: {
+          title: 'Single Choice Exercise',
+          description: 'A question with a selection of answer options and a single correct one.'
+        },
+        multipleChoiceExercise: {
+          title: 'Multiple Choice Exercise',
+          description: 'A question with a selection of answer options with potentially multiple correct answers.'
+        },
+        blanksExercise: {
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.'
+        },
+        blanksExerciseDragAndDrop: {
+          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
+          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
+        }
+      },
       plugins: {
         anchor: {
           title: "Ancla",
@@ -681,6 +699,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: "Sin soporte",
+          description: 'Plugin not supported by this version of the editor.',
           notSupported: "Lo sentimos, este plugin no es compatible:",
           explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
@@ -801,6 +820,7 @@ export const loggedInData = {
         },
         rows: {
           title: "Filas",
+          description: 'Rows plugin holds other plugins',
           searchForTools: "Buscar herramientas…",
           duplicate: "Duplicar",
           copyAnchorLink: "Copiar enlace a este elemento",
@@ -916,6 +936,10 @@ export const loggedInData = {
             activate: "Cargar elemento interactivo visible"
           }
         },
+        exerciseGroup: {
+          title: "Grupo de ejercicios",
+          description: 'Group multiple exercises together'
+        },
         inputExercise: {
           title: "Ejercicio de respuesta escrita",
           description: "Crear un ejercicio donde se pueda introducir y validar una entrada o valor exactos."
@@ -925,16 +949,14 @@ export const loggedInData = {
           description: "Una caja de texto grande para respuestas largas. Sin retroalimentación."
         },
         scMcExercise: {
-          title: "Ejercicio SC/MC",
-          description: "Crear ejercicios de opción única o múltiple y adaptarlos con retroalimentación personalizada si es necesario."
+          title: "Ejercicio SC/MC"
         },
         h5p: {
           title: 'H5P',
           description: "Importar una tarea interactiva desde H5P vía URL."
         },
         blanksExercise: {
-          title: "Completar Los Espacios En Blanco (escribiendo)",
-          description: "Crear un ejercicio en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo.",
+          title: 'Fill In The Blanks',
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
@@ -951,6 +973,7 @@ export const loggedInData = {
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
         },
         blanksExerciseDragAndDrop: {
+          // remove after migration?
           title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
           description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
         }
