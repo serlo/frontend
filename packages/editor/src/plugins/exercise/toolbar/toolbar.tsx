@@ -1,9 +1,19 @@
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import {
+  getInitialState,
+  pluginMenuType,
+  PluginMenuType,
+} from '@editor/package/plugin-menu'
 import { PluginMenuItemType } from '@editor/plugins/rows/contexts/plugin-menu/types'
-import { selectDocument, store } from '@editor/store'
+import { type DocumentState, selectDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import type {
+  EditorBlanksExerciseDocument,
+  EditorExerciseDocument,
+  EditorScMcExerciseDocument,
+} from '@editor/types/editor-plugins'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
@@ -21,20 +31,28 @@ export const ExerciseToolbar = ({
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
   const exPluginStrings = useEditorStrings().plugins.exercise
 
-  const currentlySelected = interactive.defined
-    ? selectDocument(store.getState(), interactive.id)?.plugin
-    : undefined
+  const currentPlugin = interactive.defined
+    ? selectDocument(store.getState(), interactive.id)
+    : null
+
+  const currentlySelected = getPluginMenuType(currentPlugin)
 
   const pluginSettings = currentlySelected ? (
     <ToolbarSelect
       tooltipText={exTemplateStrings.changeInteractive}
       value={currentlySelected ?? ''}
-      changeValue={(value) => {
-        if (interactive.defined)
-          interactive.replace(value as InteractivePluginType)
+      changeValue={(value, index) => {
+        if (interactive.defined) {
+          const pluginType = interactivePluginOptions[index]
+            .pluginType as InteractivePluginType
+          const exerciseState = getInitialState(value as PluginMenuType)[0]
+            .state as EditorExerciseDocument['state']
+          const pluginState = exerciseState.interactive?.state
+          interactive.replace(pluginType, pluginState)
+        }
       }}
-      options={interactivePluginOptions.map(({ pluginType, title }) => ({
-        value: pluginType,
+      options={interactivePluginOptions.map(({ type, title }) => ({
+        value: type,
         text: title,
       }))}
     />
@@ -75,4 +93,28 @@ export const ExerciseToolbar = ({
       className="mt-2.5"
     />
   )
+}
+
+function getPluginMenuType(
+  plugin: DocumentState | null
+): PluginMenuType | undefined {
+  if (!plugin) return undefined
+
+  const pluginType = plugin.plugin
+
+  if (pluginType === EditorPluginType.BlanksExercise) {
+    const isDragAndDrop =
+      (plugin as EditorBlanksExerciseDocument).state.mode === 'drag-and-drop'
+    return isDragAndDrop
+      ? pluginMenuType.BlanksExerciseDragAndDrop
+      : pluginMenuType.BlanksExercise
+  }
+
+  if (pluginType === EditorPluginType.ScMcExercise) {
+    return (plugin as EditorScMcExerciseDocument).state.isSingleChoice
+      ? pluginMenuType.SingleChoiceExercise
+      : pluginMenuType.MultipleChoiceExercise
+  }
+
+  return pluginType as PluginMenuType
 }
