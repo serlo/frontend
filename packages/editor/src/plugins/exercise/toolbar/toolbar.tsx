@@ -2,16 +2,14 @@ import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
-  getInitialState,
+  type PluginMenuItem,
   pluginMenuType,
   PluginMenuType,
 } from '@editor/package/plugin-menu'
-import { PluginMenuItemType } from '@editor/plugins/rows/contexts/plugin-menu/types'
 import { type DocumentState, selectDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorBlanksExerciseDocument,
-  EditorExerciseDocument,
   EditorScMcExerciseDocument,
 } from '@editor/types/editor-plugins'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
@@ -25,7 +23,7 @@ export const ExerciseToolbar = ({
   state,
   interactivePluginOptions,
 }: ExerciseProps & {
-  interactivePluginOptions: PluginMenuItemType[]
+  interactivePluginOptions: PluginMenuItem[]
 }) => {
   const { interactive } = state
   const exTemplateStrings = useEditorStrings().templatePlugins.exercise
@@ -43,12 +41,10 @@ export const ExerciseToolbar = ({
       value={currentlySelected ?? ''}
       changeValue={(value, index) => {
         if (interactive.defined) {
-          const pluginType = interactivePluginOptions[index]
-            .pluginType as InteractivePluginType
-          const exerciseState = getInitialState(value as PluginMenuType)[0]
-            .state as EditorExerciseDocument['state']
-          const pluginState = exerciseState.interactive?.state
-          interactive.replace(pluginType, pluginState)
+          const pluginInitialState =
+            interactivePluginOptions[index].initialState
+          const pluginType = pluginInitialState.plugin as InteractivePluginType
+          interactive.replace(pluginType, pluginInitialState.state)
         }
       }}
       options={interactivePluginOptions.map(({ type, title }) => ({
