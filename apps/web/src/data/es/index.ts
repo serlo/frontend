@@ -971,11 +971,6 @@ export const loggedInData = {
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
-        },
-        blanksExerciseDragAndDrop: {
-          // remove after migration?
-          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
-          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
         }
       },
       templatePlugins: {
