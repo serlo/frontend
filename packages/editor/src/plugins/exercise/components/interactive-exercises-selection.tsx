@@ -1,9 +1,6 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { getInitialState, PluginMenuType } from '@editor/package/plugin-menu'
-import type { PluginMenuItemType } from '@editor/plugins/rows/contexts/plugin-menu/types'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { EditorExerciseDocument } from '@editor/types/editor-plugins'
+import { PluginMenuItem } from '@editor/package/plugin-menu'
 
 import { type ExerciseProps } from '..'
 import { type InteractivePluginType } from '../interactive-plugin-types'
@@ -13,7 +10,7 @@ export function InteractiveExercisesSelection({
   interactivePluginOptions,
   interactive,
 }: {
-  interactivePluginOptions: PluginMenuItemType[]
+  interactivePluginOptions: PluginMenuItem[]
   interactive: ExerciseProps['state']['interactive']
 }) {
   const templateStrings = useEditorStrings().templatePlugins
@@ -25,16 +22,13 @@ export function InteractiveExercisesSelection({
     return isFirstInLine ? 'left-0' : isLastInLine ? 'right-0' : '-left-24'
   }
 
-  function handleOnClick(
-    pluginType: EditorPluginType,
-    pluginMenuType: PluginMenuType
-  ) {
+  function handleOnClick(initialState: PluginMenuItem['initialState']) {
     if (interactive.defined) return
-    const plugin = pluginType as InteractivePluginType
-    const [exerciseState] = getInitialState(pluginMenuType)
-    const pluginState = exerciseState.state as EditorExerciseDocument['state']
-    if (!pluginState.interactive) return
-    interactive.create({ plugin, state: pluginState.interactive.state })
+
+    interactive.create({
+      plugin: initialState.plugin as InteractivePluginType,
+      state: initialState.state,
+    })
   }
 
   return (
@@ -44,11 +38,11 @@ export function InteractiveExercisesSelection({
       </p>
       <div className="grid grid-cols-4 items-start gap-2 pb-10">
         {interactivePluginOptions.map(
-          ({ type, pluginType, title, icon, description }, index) => (
+          ({ type, title, icon, description, initialState }, index) => (
             <button
-              key={title}
-              data-qa={`add-exercise-${pluginType}`}
-              onClick={() => handleOnClick(pluginType, type)}
+              key={type}
+              data-qa={`add-exercise-${initialState.plugin}`}
+              onClick={() => handleOnClick(initialState)}
               className="serlo-tooltip-trigger w-32 rounded-md p-1 hover:shadow-xl focus:shadow-xl"
             >
               <EditorTooltip

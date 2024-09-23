@@ -1,8 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { getPluginMenuItems } from '@editor/package/plugin-menu'
+import { PluginMenuItem, getPluginMenuItems } from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { EditorExerciseDocument } from '@editor/types/editor-plugins'
 import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
@@ -30,24 +29,24 @@ export function ExerciseEditor(props: ExerciseProps) {
   const exTemplateStrings = editorStrings.templatePlugins.exercise
   const exPluginStrings = editorStrings.plugins.exercise
 
-  const exerciseMenuItems = useMemo(() => {
-    const exerciseItems = getPluginMenuItems(editorStrings).filter(
-      (menuItem) => {
+  // Initial state of interacgtive plugin menu items are wrapped with an exercise plugin
+  // but for this component we need the interactive plugin directly
+  // so we just unwrap them here:
+  const unwrappedMenuItems = useMemo<PluginMenuItem[]>(() => {
+    return getPluginMenuItems(editorStrings)
+      .map((menuItem) => {
         if (!isExerciseDocument(menuItem.initialState)) return false
-        const interactivePlugin =
-          menuItem.initialState.state.interactive?.plugin
-        return interactivePlugin && editorPlugins.isSupported(interactivePlugin)
-      }
-    )
-
-    return exerciseItems.map((menuItem) => ({
-      type: menuItem.type,
-      pluginType: (menuItem.initialState as EditorExerciseDocument).state
-        .interactive!.plugin,
-      title: menuItem.title,
-      description: menuItem.description,
-      icon: menuItem.icon,
-    }))
+        const interactive = menuItem.initialState.state.interactive
+        if (!interactive || !editorPlugins.isSupported(interactive.plugin)) {
+          return false
+        }
+        const pluginMenuItem = {
+          ...menuItem,
+          initialState: interactive,
+        }
+        return pluginMenuItem
+      })
+      .filter(Boolean) as unknown as PluginMenuItem[]
   }, [editorStrings])
 
   return (
@@ -67,7 +66,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       {focused ? (
         <ExerciseToolbar
           {...props}
-          interactivePluginOptions={exerciseMenuItems}
+          interactivePluginOptions={unwrappedMenuItems}
         />
       ) : (
         <button
@@ -99,7 +98,7 @@ export function ExerciseEditor(props: ExerciseProps) {
           </>
         ) : (
           <InteractiveExercisesSelection
-            interactivePluginOptions={exerciseMenuItems}
+            interactivePluginOptions={unwrappedMenuItems}
             interactive={interactive}
           />
         )}

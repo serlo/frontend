@@ -1,6 +1,6 @@
-import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
+import { PluginMenuItem } from '@editor/package/plugin-menu'
 
-export function filterOptions(option: PluginMenuItemType[], text: string) {
+export function filterOptions(option: PluginMenuItem[], text: string) {
   if (!text.length) return option
 
   const search = text.toLowerCase()
@@ -9,6 +9,7 @@ export function filterOptions(option: PluginMenuItemType[], text: string) {
   return option.filter(
     (entry) =>
       entry.title.toLowerCase().includes(search) ||
-      entry.pluginType.toLowerCase().includes(search)
+      entry.type.toLowerCase().includes(search) ||
+      entry.initialState.plugin.toLowerCase().includes(search)
   )
 }

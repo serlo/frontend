@@ -1,5 +1,3 @@
-import { PluginMenuType } from '@editor/package/plugin-menu'
-import type { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 
 type ActionMap<M extends { [index: string]: any }> = {
@@ -39,14 +37,4 @@ export interface PluginMenuState {
   showPluginMenu: boolean
   insertIndex: number | undefined
   insertCallback: ((plugin: AnyEditorDocument) => void) | undefined
-}
-
-export interface PluginMenuItemType {
-  type: PluginMenuType
-  pluginType: EditorPluginType
-  title: string
-  description: string
-  // until we use the editor package in the frontend (only having vite for building)
-  // icons should be strings but are loaded as () => JSX.Element in the frontend (webpack)
-  icon: string | (() => JSX.Element)
 }

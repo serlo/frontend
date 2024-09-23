@@ -84,12 +84,14 @@ export function getPluginMenuItems(
   })
 }
 
-interface PluginMenuItem {
+export interface PluginMenuItem {
   type: PluginMenuType
   title: string
   description: string
-  icon: string
   initialState: EditorProps['initialState']
+  // until we use the editor package in the frontend (only having vite for building)
+  // icons should be strings but are loaded as () => JSX.Element in the frontend (webpack)
+  icon: string | (() => JSX.Element)
 }
 
 const mysteryStrings = {
@@ -127,7 +129,7 @@ function getTitleAndDescription(
   return { title, description }
 }
 
-export function getInitialState(
+function getInitialState(
   type: PluginMenuType
 ): [EditorProps['initialState'], EditorPluginType] {
   switch (type) {
@@ -223,6 +225,6 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.PagePartners]: IconFallback,
 }
 
-export function getIconString(type: PluginMenuType) {
+function getIconString(type: PluginMenuType) {
   return iconLookup[type]
 }

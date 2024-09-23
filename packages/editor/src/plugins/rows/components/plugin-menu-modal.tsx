@@ -1,6 +1,6 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
-import { getPluginMenuItems } from '@editor/package/plugin-menu'
+import { PluginMenuItem, getPluginMenuItems } from '@editor/package/plugin-menu'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
@@ -12,14 +12,13 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
 import { PluginMenuItems } from './plugin-menu-items'
-import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
 import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import { filterOptions } from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PluginMenuModalProps {
-  onInsertPlugin: (pluginType: PluginMenuItemType) => void
+  onInsertPlugin: (pluginMenuItem: PluginMenuItem) => void
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
@@ -60,15 +59,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   ])
 
   const allowedMenuItems = useMemo(() => {
-    return menuItems
-      .map((menuItem) => ({
-        type: menuItem.type,
-        pluginType: menuItem.initialState.plugin as EditorPluginType,
-        title: menuItem.title,
-        description: menuItem.description,
-        icon: menuItem.icon,
-      }))
-      .filter(({ pluginType }) => allowedPlugins.includes(pluginType))
+    return menuItems.filter(({ initialState }) =>
+      allowedPlugins.includes(initialState.plugin)
+    )
   }, [allowedPlugins, menuItems])
 
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
@@ -79,11 +72,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
 
       const basicOptions = filteredBySearchString.filter(
-        (option) => option.pluginType !== EditorPluginType.Exercise
+        ({ initialState }) => initialState.plugin !== EditorPluginType.Exercise
       )
 
       const interactiveOptions = filteredBySearchString.filter(
-        (option) => option.pluginType === EditorPluginType.Exercise
+        ({ initialState }) => initialState.plugin === EditorPluginType.Exercise
       )
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)

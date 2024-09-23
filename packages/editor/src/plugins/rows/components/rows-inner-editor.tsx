@@ -1,4 +1,4 @@
-import { getInitialState } from '@editor/package/plugin-menu'
+import { PluginMenuItem } from '@editor/package/plugin-menu'
 import {
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,
@@ -15,7 +15,6 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '../contexts/plugin-menu'
-import { PluginMenuItemType } from '../contexts/plugin-menu/types'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   // since this is only used to check if the current plugin is the child of the
@@ -36,14 +35,11 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     })
   }
 
-  function handleInsertPlugin(pluginMenuItem: PluginMenuItemType) {
-    const [pluginToInsert] = getInitialState(pluginMenuItem.type)
-    if (!pluginToInsert) return
-
+  function handleInsertPlugin(pluginMenuItem: PluginMenuItem) {
     if (pluginMenuState.insertCallback) {
-      pluginMenuState.insertCallback(pluginToInsert)
+      pluginMenuState.insertCallback(pluginMenuItem.initialState)
     } else {
-      state.insert(pluginMenuState.insertIndex, pluginToInsert)
+      state.insert(pluginMenuState.insertIndex, pluginMenuItem.initialState)
       removeEmptyTextPluginChildren()
     }
 
