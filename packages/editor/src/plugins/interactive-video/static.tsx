@@ -5,5 +5,5 @@ import { InteractiveVideoRenderer } from './renderer'
 export function InteractiveVideoStaticRenderer({
   state,
 }: EditorInteractiveVideoDocument) {
-  return <InteractiveVideoRenderer />
+  return <InteractiveVideoRenderer chapterContent={{}} />
 }

@@ -124,9 +124,10 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
         isOpen
         setIsOpen={() => setShowOverlayContentIndex(null)}
         className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
+        title="Inhalt bearbeiten"
+        extraTitleClassName="text-2xl font-bold"
       >
         <div className="p-8">
-          <h2 className="text-2xl font-bold">Inhalt bearbeiten</h2>
           <p className="mt-4">
             <OverlayInput
               label="Titel"
