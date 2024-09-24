@@ -50,6 +50,7 @@ export const ExerciseToolbar = ({
                 }}
                 label={exStrings.changeInteractive}
                 icon={faArrowsRotate}
+                dataQa="change-interactive-button"
               />
               <DropdownButton
                 onClick={() => {
