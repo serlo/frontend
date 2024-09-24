@@ -107,7 +107,8 @@ export const ExerciseToolbar = ({
         </>
       }
       pluginSettings={pluginSettings}
-      className="mt-2.5"
+      // make sure exercise toolbar shows over child plugin toolbars
+      className="!z-[22] mt-2.5"
     />
   )
 }
