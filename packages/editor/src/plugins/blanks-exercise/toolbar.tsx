@@ -17,11 +17,13 @@ export const BlanksExerciseToolbar = ({
   setPreviewActive,
   childPluginType,
   pluginTitle,
+  showSelection,
 }: BlanksExerciseProps & {
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
   childPluginType: EditorPluginType
   pluginTitle: string
+  showSelection: boolean
 }) => {
   const pluginsStrings = useEditorStrings().plugins
   const blanksExerciseStrings = pluginsStrings.blanksExercise
@@ -33,11 +35,13 @@ export const BlanksExerciseToolbar = ({
       className="top-[-33px]"
       pluginSettings={
         <>
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-            dataQa="plugin-blanks-exercise-preview-button"
-          />
+          {showSelection ? null : (
+            <PreviewButton
+              previewActive={previewActive}
+              setPreviewActive={setPreviewActive}
+              dataQa="plugin-blanks-exercise-preview-button"
+            />
+          )}
           <ToolbarSelect
             tooltipText={blanksExerciseStrings.chooseType}
             value={state.mode.value}
@@ -51,22 +55,24 @@ export const BlanksExerciseToolbar = ({
               },
             ]}
           />
-          <ToolbarSelect
-            tooltipText={blanksExerciseStrings.chooseChildPluginType}
-            value={childPluginType}
-            dataQa="plugin-blanks-child-plugin-switch"
-            changeValue={(value) => state.text.replace(value)}
-            options={[
-              {
-                value: EditorPluginType.Text,
-                text: pluginsStrings.text.title,
-              },
-              {
-                value: EditorPluginType.SerloTable,
-                text: pluginsStrings.serloTable.title,
-              },
-            ]}
-          />
+          {showSelection ? null : (
+            <ToolbarSelect
+              tooltipText={blanksExerciseStrings.chooseChildPluginType}
+              value={childPluginType}
+              dataQa="plugin-blanks-child-plugin-switch"
+              changeValue={(value) => state.text.replace(value)}
+              options={[
+                {
+                  value: EditorPluginType.Text,
+                  text: pluginsStrings.text.title,
+                },
+                {
+                  value: EditorPluginType.SerloTable,
+                  text: pluginsStrings.serloTable.title,
+                },
+              ]}
+            />
+          )}
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}

@@ -1,5 +1,6 @@
 import IconBlankBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/blank-landscape.svg'
 import IconImageBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/image-background.svg'
+import { SelectionCard } from '@editor/editor-ui/selection-card'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { DropzoneImageProps } from '../..'
@@ -16,13 +17,11 @@ export function BackgroundTypeSelect({
 
   return (
     <>
-      <div className="m-6 flex items-center justify-center p-6 py-8 text-gray-500">
+      <div className="py-6 text-center text-gray-500">
         {backgroundTypeStrings.description}
       </div>
-      <div className="flex flex-row items-center justify-center gap-6">
-        <button
-          data-qa="plugin-dropzone-image-background-type-select-image"
-          className="m-q[20px] flex flex-col items-center justify-center gap-4 rounded-[5px] bg-orange-100 p-[10px] py-4 font-bold text-almost-black  hover:bg-orange-200"
+      <div className="flex justify-center gap-6">
+        <SelectionCard
           onClick={() => {
             backgroundType.set(BackgroundType.Image)
             if (!backgroundImage.defined)
@@ -30,22 +29,19 @@ export function BackgroundTypeSelect({
 
             canvasShape.set(BackgroundShape.Unset)
           }}
-        >
-          <IconImageBg />
-          {backgroundTypeStrings.image}
-        </button>
-        <span>oder</span>
-        <button
-          data-qa="plugin-dropzone-image-background-type-select-blank"
-          className="qm-[20px] flex flex-col items-center justify-center gap-4 rounded-[5px] bg-orange-100 p-[10px] py-4 font-bold text-almost-black hover:bg-orange-200"
+          icon={<IconImageBg />}
+          title={backgroundTypeStrings.image}
+          dataQa="plugin-dropzone-image-background-type-select-image"
+        />
+        <SelectionCard
           onClick={() => {
             backgroundType.set(BackgroundType.Blank)
             canvasShape.set(BackgroundShape.Unset)
           }}
-        >
-          <IconBlankBg />
-          {backgroundTypeStrings.blank}
-        </button>
+          icon={<IconBlankBg />}
+          title={backgroundTypeStrings.blank}
+          dataQa="plugin-dropzone-image-background-type-select-blank"
+        />
       </div>
     </>
   )

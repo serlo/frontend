@@ -10,10 +10,12 @@ import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
+import { ChildPluginSelection } from './components/child-plugin-selection'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
 import { BlanksExerciseRenderer } from './renderer'
 import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
+import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -61,6 +63,10 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
       selectStaticDocument(storeState, id) as EditorBlanksExerciseDocument
   )
 
+  const [showChildPluginSelection, setShowChildPluginSelection] = useState(
+    isEmptyTextDocument(staticDocument.state.text)
+  )
+
   const childPluginConfig = useMemo(() => {
     if (childPluginState.plugin === EditorPluginType.Text)
       return { placeholder: blanksExerciseStrings.placeholder }
@@ -86,6 +92,7 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}
           childPluginType={childPluginState.plugin as EditorPluginType}
+          showSelection={showChildPluginSelection}
         />
       ) : (
         <button
@@ -102,37 +109,52 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
 
       {previewActive ? (
         <BlanksExerciseStaticRenderer {...staticDocument} />
+      ) : showChildPluginSelection ? (
+        renderChildPluginSelection()
       ) : (
-        <div className="relative mt-12">
-          <BlanksExerciseRenderer
-            isEditing
-            childPlugin={
-              <>
-                {isChildPluginFocused ? (
-                  <PluginToolbar
-                    pluginType={EditorPluginType.Text}
-                    className="!-top-12 !left-0"
-                    noWhiteShadow
-                  />
-                ) : null}
-                {childPlugin.render({ config: childPluginConfig })}
-              </>
-            }
-            childPluginState={childPluginState}
-            extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
-            mode={mode.value as BlanksExerciseMode}
-            initialTextInBlank="correct-answer"
-          />
-
-          {mode.value === 'drag-and-drop' ? (
-            <ExtraIncorrectAnswers
-              extraDraggableAnswers={extraDraggableAnswers}
-            />
-          ) : null}
-        </div>
+        renderEditView()
       )}
-      {/* Only debug views from here on */}
-      <div className="hidden">{JSON.stringify(childPluginState)}</div>
     </div>
   )
+
+  function renderEditView() {
+    return (
+      <div className="relative mt-12">
+        <BlanksExerciseRenderer
+          isEditing
+          childPlugin={
+            <>
+              {isChildPluginFocused ? (
+                <PluginToolbar
+                  pluginType={EditorPluginType.Text}
+                  className="!-top-12 !left-0"
+                  noWhiteShadow
+                />
+              ) : null}
+              {childPlugin.render({ config: childPluginConfig })}
+            </>
+          }
+          childPluginState={childPluginState}
+          extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}
+          mode={mode.value as BlanksExerciseMode}
+          initialTextInBlank="correct-answer"
+        />
+
+        {mode.value === 'drag-and-drop' ? (
+          <ExtraIncorrectAnswers
+            extraDraggableAnswers={extraDraggableAnswers}
+          />
+        ) : null}
+      </div>
+    )
+  }
+
+  function renderChildPluginSelection() {
+    return (
+      <ChildPluginSelection
+        childPlugin={childPlugin}
+        setShowSelection={setShowChildPluginSelection}
+      />
+    )
+  }
 }
