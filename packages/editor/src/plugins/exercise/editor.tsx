@@ -1,11 +1,16 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { selectHasFocusedChild, useAppSelector } from '@editor/store'
+import {
+  selectHasFocusedChild,
+  focus,
+  useAppDispatch,
+  useAppSelector,
+} from '@editor/store'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
@@ -34,6 +39,16 @@ export function ExerciseEditor(props: ExerciseProps) {
   })
 
   const isFocused = focused || isFocusedInside
+
+  const dispatch = useAppDispatch()
+
+  // make sure interactive toolbar content rerenders when interactive changes
+  useEffect(() => {
+    if (!interactive.defined) return
+    dispatch(focus(interactive.id))
+    // only rerender once after interactive is created
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.interactive.defined])
 
   return (
     <PreviewProvider value={previewActive}>
