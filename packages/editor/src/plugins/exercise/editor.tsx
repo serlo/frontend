@@ -1,17 +1,11 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import {
-  getPluginMenuItems,
-  type PluginMenuItem,
-} from '@editor/package/plugin-menu'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { selectHasFocusedChild, useAppSelector } from '@editor/store'
-import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
@@ -34,26 +28,6 @@ export function ExerciseEditor(props: ExerciseProps) {
   const exStrings = editorStrings.plugins.exercise
 
   const [previewActive, setPreviewActive] = useState(false)
-
-  // Initial state of interactive plugin menu items are wrapped with an exercise plugin
-  // but for this component we need the interactive plugin directly
-  // so we just unwrap them here:
-  const unwrappedMenuItems = useMemo<PluginMenuItem[]>(() => {
-    return getPluginMenuItems(editorStrings)
-      .map((menuItem) => {
-        if (!isExerciseDocument(menuItem.initialState)) return false
-        const interactive = menuItem.initialState.state.interactive
-        if (!interactive || !editorPlugins.isSupported(interactive.plugin)) {
-          return false
-        }
-        const pluginMenuItem = {
-          ...menuItem,
-          initialState: interactive,
-        }
-        return pluginMenuItem
-      })
-      .filter(Boolean) as unknown as PluginMenuItem[]
-  }, [editorStrings])
 
   const isFocusedInside = useAppSelector((state) => {
     return selectHasFocusedChild(state, id)
@@ -106,10 +80,7 @@ export function ExerciseEditor(props: ExerciseProps) {
               ) : null}
             </>
           ) : (
-            <InteractiveExercisesSelection
-              interactivePluginOptions={unwrappedMenuItems}
-              interactive={interactive}
-            />
+            <InteractiveExercisesSelection interactive={interactive} />
           )}
           {solution.defined ? (
             <div className="-ml-side mt-block">
