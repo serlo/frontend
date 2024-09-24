@@ -167,7 +167,7 @@ Scenario(
 
     I.say('Change mode to preview and solve them incorrectly')
     I.click('$plugin-blanks-exercise-parent-button')
-    I.click('$plugin-blanks-exercise-preview-button')
+    I.click('$plugin-exercise-preview-button')
     I.seeNumberOfElements('$blank-input', 2)
     I.click(locate('$blank-input').first())
     // Adding the second gap solution to the first gap

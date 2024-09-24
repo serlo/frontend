@@ -1,8 +1,4 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
@@ -22,8 +18,6 @@ interface DropzoneImageToolbarProps {
   showSettings: boolean
   showSettingsButton?: boolean
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
-  previewActive?: boolean
-  setPreviewActive?: (active: boolean) => void
 }
 
 export function DropzoneImageToolbar({
@@ -32,8 +26,6 @@ export function DropzoneImageToolbar({
   showSettings,
   showSettingsButton = false,
   dropzoneVisibility,
-  previewActive,
-  setPreviewActive,
 }: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
@@ -81,12 +73,6 @@ export function DropzoneImageToolbar({
             </button>
             {renderSettingsModal()}
           </>
-        ) : null}
-        {previewActive !== undefined && setPreviewActive !== undefined ? (
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
         ) : null}
         {dropzoneVisibility ? (
           <ToolbarSelect
