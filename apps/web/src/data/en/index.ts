@@ -1072,12 +1072,8 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values',
-        },
-        blanksExerciseDragAndDrop: {
-          // remove after migration?
-          title: 'Fill In The Blanks (Drag&Drop)',
-          description:
-            'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.',
+          childPluginSelection:
+            'Would you like to add blanks to a text or a table?',
         },
       },
       templatePlugins: {
