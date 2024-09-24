@@ -88,7 +88,6 @@ export function ExerciseEditor(props: ExerciseProps) {
             {...props}
             previewActive={previewActive}
             setPreviewActive={setPreviewActive}
-            interactivePluginOptions={unwrappedMenuItems}
           />
         </div>
         <div className="h-10"></div>

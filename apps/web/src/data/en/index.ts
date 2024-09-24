@@ -1120,7 +1120,8 @@ export const loggedInData = {
         exercise: {
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element',
+          confirmRemoveInteractive:
+            'Your current changes will be replaced. Are you sure?',
           createSolution: 'Create solution',
           removeSolution: 'Remove solution',
           previewMode: 'Preview',
