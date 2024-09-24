@@ -673,21 +673,14 @@ export const loggedInData = {
           },
           backgroundType: {
             description: "Insertar una imagen de fondo o proceder con un fondo en blanco",
-            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
             image: "Imagen de fondo",
-            // 'Hintergrundbild hinzufügen'
-            blank: "Fondo en blanco" //  'Leerer Hintergrund'
-
+            blank: "Fondo en blanco"
           },
           backgroundShapes: {
             description: "Elegir el diseño del fondo",
-            // 'Lege die Ausrichtung des Hintergrundes fest'
             square: "Cuadrado",
-            //'Quadradtisch',
             landscape: "Orientación Horizontal",
-            //'Querformat',
-            portrait: "Orientación Vertical" // 'Hochformat'
-
+            portrait: "Orientación Vertical"
           },
           or: "ó",
           modal: {
@@ -971,6 +964,11 @@ export const loggedInData = {
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
+        },
+        blanksExerciseDragAndDrop: {
+          // remove after migration?
+          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
+          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
         }
       },
       templatePlugins: {
@@ -1022,7 +1020,10 @@ export const loggedInData = {
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo",
           createSolution: "Crear solución",
-          removeSolution: "Eliminar solución"
+          removeSolution: "Eliminar solución",
+          previewMode: "Vista Previa",
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         inputExercise: {
           chooseType: "Elige el tipo de ejercicio",
@@ -1041,10 +1042,7 @@ export const loggedInData = {
           singleChoice: "Elección única",
           multipleChoice: "Múltiple elección",
           chooseType: "Elige el tipo de ejercicio",
-          addAnswer: "Añadir respuesta",
-          previewMode: "Vista Previa",
-          previewIsActiveHint: "El modo de vista previa está activo",
-          previewIsDeactiveHint: "Aquí puedes editar"
+          addAnswer: "Añadir respuesta"
         },
         solution: {
           optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
