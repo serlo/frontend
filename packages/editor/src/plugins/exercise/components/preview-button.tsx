@@ -11,7 +11,7 @@ export function PreviewButton({
   previewActive: boolean
   setPreviewActive: (value: boolean) => void
 }) {
-  const exStrings = useEditorStrings().templatePlugins.exercise
+  const exStrings = useEditorStrings().plugins.exercise
 
   return (
     <button

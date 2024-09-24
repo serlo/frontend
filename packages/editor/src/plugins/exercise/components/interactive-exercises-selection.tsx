@@ -1,20 +1,44 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import type { PluginMenuItem } from '@editor/package/plugin-menu'
+import {
+  getPluginMenuItems,
+  type PluginMenuItem,
+} from '@editor/package/plugin-menu'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { isExerciseDocument } from '@editor/types/plugin-type-guards'
+import { useMemo } from 'react'
 
 import { type ExerciseProps } from '..'
 import { type InteractivePluginType } from '../interactive-plugin-types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InteractiveExercisesSelection({
-  interactivePluginOptions,
   interactive,
 }: {
-  interactivePluginOptions: PluginMenuItem[]
   interactive: ExerciseProps['state']['interactive']
 }) {
-  const templateStrings = useEditorStrings().templatePlugins
-  const exTemplateStrings = templateStrings.exercise
+  const editorStrings = useEditorStrings()
+  const exStrings = editorStrings.plugins.exercise
+
+  // Initial state of interactive plugin menu items are wrapped with an exercise plugin
+  // but for this component we need the interactive plugin directly
+  // so we just unwrap them here:
+  const unwrappedMenuItems = useMemo<PluginMenuItem[]>(() => {
+    return getPluginMenuItems(editorStrings)
+      .map((menuItem) => {
+        if (!isExerciseDocument(menuItem.initialState)) return false
+        const interactive = menuItem.initialState.state.interactive
+        if (!interactive || !editorPlugins.isSupported(interactive.plugin)) {
+          return false
+        }
+        const pluginMenuItem = {
+          ...menuItem,
+          initialState: interactive,
+        }
+        return pluginMenuItem
+      })
+      .filter(Boolean) as unknown as PluginMenuItem[]
+  }, [editorStrings])
 
   function getTooltipClass(index: number) {
     const isLastInLine = index % 4 === 3
@@ -33,11 +57,9 @@ export function InteractiveExercisesSelection({
 
   return (
     <>
-      <p className="mb-2 text-gray-400">
-        {exTemplateStrings.addOptionalInteractiveEx}
-      </p>
+      <p className="mb-2 text-gray-400">{exStrings.addOptionalInteractiveEx}</p>
       <div className="grid grid-cols-4 items-start gap-2 pb-10">
-        {interactivePluginOptions.map(
+        {unwrappedMenuItems.map(
           ({ type, title, icon, description, initialState }, index) => (
             <button
               key={type}

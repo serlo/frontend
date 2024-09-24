@@ -1,17 +1,16 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import {
-  getPluginMenuItems,
-  type PluginMenuItem,
-} from '@editor/package/plugin-menu'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { selectHasFocusedChild, useAppSelector } from '@editor/store'
-import { isExerciseDocument } from '@editor/types/plugin-type-guards'
+  selectHasFocusedChild,
+  focus,
+  useAppDispatch,
+  useAppSelector,
+} from '@editor/store'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
@@ -31,36 +30,25 @@ export function ExerciseEditor(props: ExerciseProps) {
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const editorStrings = useEditorStrings()
-  const exTemplateStrings = editorStrings.templatePlugins.exercise
-  const exPluginStrings = editorStrings.plugins.exercise
+  const exStrings = editorStrings.plugins.exercise
 
   const [previewActive, setPreviewActive] = useState(false)
-
-  // Initial state of interactive plugin menu items are wrapped with an exercise plugin
-  // but for this component we need the interactive plugin directly
-  // so we just unwrap them here:
-  const unwrappedMenuItems = useMemo<PluginMenuItem[]>(() => {
-    return getPluginMenuItems(editorStrings)
-      .map((menuItem) => {
-        if (!isExerciseDocument(menuItem.initialState)) return false
-        const interactive = menuItem.initialState.state.interactive
-        if (!interactive || !editorPlugins.isSupported(interactive.plugin)) {
-          return false
-        }
-        const pluginMenuItem = {
-          ...menuItem,
-          initialState: interactive,
-        }
-        return pluginMenuItem
-      })
-      .filter(Boolean) as unknown as PluginMenuItem[]
-  }, [editorStrings])
 
   const isFocusedInside = useAppSelector((state) => {
     return selectHasFocusedChild(state, id)
   })
 
   const isFocused = focused || isFocusedInside
+
+  const dispatch = useAppDispatch()
+
+  // make sure interactive toolbar content rerenders when interactive changes
+  useEffect(() => {
+    if (!interactive.defined) return
+    dispatch(focus(interactive.id))
+    // only rerender once after interactive is created
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.interactive.defined])
 
   return (
     <PreviewProvider value={previewActive}>
@@ -88,13 +76,12 @@ export function ExerciseEditor(props: ExerciseProps) {
             {...props}
             previewActive={previewActive}
             setPreviewActive={setPreviewActive}
-            interactivePluginOptions={unwrappedMenuItems}
           />
         </div>
         <div className="h-10"></div>
         {content.render({
           config: {
-            textPluginPlaceholder: exPluginStrings.placeholder,
+            textPluginPlaceholder: exStrings.placeholder,
           },
         })}
         <div className="mx-side">
@@ -103,15 +90,12 @@ export function ExerciseEditor(props: ExerciseProps) {
               {interactive.render()}
               {hideInteractiveInitially.defined ? (
                 <small className="bg-editor-primary-200 p-1">
-                  [{exPluginStrings.hideInteractiveInitially.info}]
+                  [{exStrings.hideInteractiveInitially.info}]
                 </small>
               ) : null}
             </>
           ) : (
-            <InteractiveExercisesSelection
-              interactivePluginOptions={unwrappedMenuItems}
-              interactive={interactive}
-            />
+            <InteractiveExercisesSelection interactive={interactive} />
           )}
           {solution.defined ? (
             <div className="-ml-side mt-block">
@@ -120,7 +104,7 @@ export function ExerciseEditor(props: ExerciseProps) {
                   className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
                   onClick={() => solution.remove()}
                 >
-                  <EditorTooltip text={exTemplateStrings.removeSolution} />
+                  <EditorTooltip text={exStrings.removeSolution} />
                   <FaIcon icon={faTrashAlt} />
                 </button>
               </nav>
@@ -134,7 +118,7 @@ export function ExerciseEditor(props: ExerciseProps) {
               )}
             >
               <AddButton onClick={() => solution.create()}>
-                {exTemplateStrings.createSolution}
+                {exStrings.createSolution}
               </AddButton>
             </div>
           )}
