@@ -673,21 +673,14 @@ export const loggedInData = {
           },
           backgroundType: {
             description: 'Insert a background image or proceed with a blank background',
-            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
             image: 'Background Image',
-            // 'Hintergrundbild hinzufügen'
-            blank: 'Blank background' //  'Leerer Hintergrund'
-
+            blank: 'Blank background'
           },
           backgroundShapes: {
             description: 'Choose the layout of the background',
-            // 'Lege die Ausrichtung des Hintergrundes fest'
             square: 'Square',
-            //'Quadradtisch',
             landscape: 'Landscape',
-            //'Querformat',
-            portrait: 'Portrait' // 'Hochformat'
-
+            portrait: 'Portrait'
           },
           or: 'or',
           modal: {
@@ -971,6 +964,11 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values'
+        },
+        blanksExerciseDragAndDrop: {
+          // remove after migration?
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1022,7 +1020,10 @@ export const loggedInData = {
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
           createSolution: 'Create solution',
-          removeSolution: 'Remove solution'
+          removeSolution: 'Remove solution',
+          previewMode: "पूर्वावलोकन",
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',
@@ -1041,10 +1042,7 @@ export const loggedInData = {
           singleChoice: 'Single-choice',
           multipleChoice: 'Multiple-choice',
           chooseType: 'Choose the exercise type',
-          addAnswer: 'Add answer',
-          previewMode: "पूर्वावलोकन",
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
+          addAnswer: 'Add answer'
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',

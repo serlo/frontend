@@ -673,21 +673,14 @@ export const loggedInData = {
           },
           backgroundType: {
             description: 'Insert a background image or proceed with a blank background',
-            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
             image: 'Background Image',
-            // 'Hintergrundbild hinzufügen'
-            blank: 'Blank background' //  'Leerer Hintergrund'
-
+            blank: 'Blank background'
           },
           backgroundShapes: {
             description: 'Choose the layout of the background',
-            // 'Lege die Ausrichtung des Hintergrundes fest'
             square: 'Square',
-            //'Quadradtisch',
             landscape: 'Landscape',
-            //'Querformat',
-            portrait: 'Portrait' // 'Hochformat'
-
+            portrait: 'Portrait'
           },
           or: "ou",
           modal: {
@@ -971,6 +964,11 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values'
+        },
+        blanksExerciseDragAndDrop: {
+          // remove after migration?
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1022,7 +1020,10 @@ export const loggedInData = {
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
           createSolution: "Créer une solution",
-          removeSolution: "Supprimer la solution"
+          removeSolution: "Supprimer la solution",
+          previewMode: "Aperçu",
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         inputExercise: {
           chooseType: "Choisissez le type d'exercice",
@@ -1041,10 +1042,7 @@ export const loggedInData = {
           singleChoice: "Choix unique",
           multipleChoice: "Choix multiple",
           chooseType: "Choisissez le type d'exercice",
-          addAnswer: "Ajouter une réponse",
-          previewMode: "Aperçu",
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
+          addAnswer: "Ajouter une réponse"
         },
         solution: {
           optionalExplanation: "Explication de la stratégie de solution (facultatif)",
