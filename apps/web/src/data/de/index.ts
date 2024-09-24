@@ -963,12 +963,8 @@ export const loggedInData = {
           addAlternativeAnswer: "Alternative Antwort hinzufügen",
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
-          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
-        },
-        blanksExerciseDragAndDrop: {
-          // remove after migration?
-          title: "Lückentext (Drag&Drop)",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
+          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort",
+          childPluginSelection: 'Would you like to add blanks to a text or a table?'
         }
       },
       templatePlugins: {
