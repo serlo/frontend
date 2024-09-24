@@ -1,11 +1,6 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { Dispatch, SetStateAction } from 'react'
 
 import { type BlanksExerciseProps } from '.'
 import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
@@ -13,14 +8,10 @@ import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar
 export const BlanksExerciseToolbar = ({
   id,
   state,
-  previewActive,
-  setPreviewActive,
   childPluginType,
   pluginTitle,
   showSelection,
 }: BlanksExerciseProps & {
-  previewActive: boolean
-  setPreviewActive: Dispatch<SetStateAction<boolean>>
   childPluginType: EditorPluginType
   pluginTitle: string
   showSelection: boolean
@@ -35,13 +26,6 @@ export const BlanksExerciseToolbar = ({
       className="top-[-33px]"
       pluginSettings={
         <>
-          {showSelection ? null : (
-            <PreviewButton
-              previewActive={previewActive}
-              setPreviewActive={setPreviewActive}
-              dataQa="plugin-blanks-exercise-preview-button"
-            />
-          )}
           <ToolbarSelect
             tooltipText={blanksExerciseStrings.chooseType}
             value={state.mode.value}

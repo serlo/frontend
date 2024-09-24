@@ -15,6 +15,7 @@ import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
 import { BlanksExerciseRenderer } from './renderer'
 import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
@@ -40,7 +41,7 @@ const cellTextFormattingOptions = [
 export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { focused, id, state } = props
   const { text: childPlugin, mode, extraDraggableAnswers } = state
-  const [previewActive, setPreviewActive] = useState(false)
+  const previewActive = useIsPreviewActive()
 
   const editorStrings = useEditorStrings()
   const blanksExerciseStrings = editorStrings.plugins.blanksExercise
@@ -89,8 +90,6 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
         <BlanksExerciseToolbar
           {...props}
           pluginTitle={pluginTitle}
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
           childPluginType={childPluginState.plugin as EditorPluginType}
           showSelection={showChildPluginSelection}
         />

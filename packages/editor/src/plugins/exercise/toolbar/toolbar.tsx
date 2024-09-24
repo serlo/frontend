@@ -1,4 +1,8 @@
-import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import {
+  PluginToolbar,
+  PreviewButton,
+  ToolbarSelect,
+} from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
@@ -6,7 +10,7 @@ import {
   pluginMenuType,
   PluginMenuType,
 } from '@editor/package/plugin-menu'
-import { type DocumentState, selectDocument, store } from '@editor/store'
+import { selectDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorBlanksExerciseDocument,
@@ -22,36 +26,44 @@ export const ExerciseToolbar = ({
   id,
   state,
   interactivePluginOptions,
+  previewActive,
+  setPreviewActive,
 }: ExerciseProps & {
+  previewActive: boolean
+  setPreviewActive: (active: boolean) => void
   interactivePluginOptions: PluginMenuItem[]
 }) => {
-  const { interactive } = state
-  const exTemplateStrings = useEditorStrings().templatePlugins.exercise
-  const exPluginStrings = useEditorStrings().plugins.exercise
+  const { interactive, hideInteractiveInitially } = state
+  const editorStrings = useEditorStrings()
+  const exTemplateStrings = editorStrings.templatePlugins.exercise
+  const exPluginStrings = editorStrings.plugins.exercise
 
-  const currentPlugin = interactive.defined
-    ? selectDocument(store.getState(), interactive.id)
-    : null
-
-  const currentlySelected = getPluginMenuType(currentPlugin)
+  const currentlySelected = getPluginMenuType(interactive)
 
   const pluginSettings = currentlySelected ? (
-    <ToolbarSelect
-      tooltipText={exTemplateStrings.changeInteractive}
-      value={currentlySelected ?? ''}
-      changeValue={(_value, index) => {
-        if (interactive.defined) {
-          const pluginInitialState =
-            interactivePluginOptions[index].initialState
-          const pluginType = pluginInitialState.plugin as InteractivePluginType
-          interactive.replace(pluginType, pluginInitialState.state)
-        }
-      }}
-      options={interactivePluginOptions.map(({ type, title }) => ({
-        value: type,
-        text: title,
-      }))}
-    />
+    <>
+      <PreviewButton
+        previewActive={previewActive}
+        setPreviewActive={setPreviewActive}
+      />
+      <ToolbarSelect
+        tooltipText={exTemplateStrings.changeInteractive}
+        value={currentlySelected ?? ''}
+        changeValue={(_value, index) => {
+          if (interactive.defined) {
+            const pluginInitialState =
+              interactivePluginOptions[index].initialState
+            const pluginType =
+              pluginInitialState.plugin as InteractivePluginType
+            interactive.replace(pluginType, pluginInitialState.state)
+          }
+        }}
+        options={interactivePluginOptions.map(({ type, title }) => ({
+          value: type,
+          text: title,
+        }))}
+      />
+    </>
   ) : undefined
 
   return (
@@ -60,25 +72,21 @@ export const ExerciseToolbar = ({
       pluginControls={
         <>
           <PluginDefaultTools pluginId={id} />
-          {state.interactive.defined ? (
+          {interactive.defined ? (
             <>
               <div className="m-2 h-0.25 bg-gray-500"></div>
               <DropdownButton
                 onClick={() => {
-                  if (state.hideInteractiveInitially.defined) {
-                    state.hideInteractiveInitially.remove()
-                  } else state.hideInteractiveInitially.create(true)
+                  if (hideInteractiveInitially.defined) {
+                    hideInteractiveInitially.remove()
+                  } else hideInteractiveInitially.create(true)
                 }}
                 label={
                   exPluginStrings.hideInteractiveInitially[
-                    state.hideInteractiveInitially.defined
-                      ? 'deactivate'
-                      : 'activate'
+                    hideInteractiveInitially.defined ? 'deactivate' : 'activate'
                   ]
                 }
-                icon={
-                  state.hideInteractiveInitially.defined ? faEye : faEyeSlash
-                }
+                icon={hideInteractiveInitially.defined ? faEye : faEyeSlash}
                 dataQa="toggle-interactive-default-visibility"
               />
             </>
@@ -92,8 +100,12 @@ export const ExerciseToolbar = ({
 }
 
 function getPluginMenuType(
-  plugin: DocumentState | null
+  interactive: ExerciseProps['state']['interactive']
 ): PluginMenuType | undefined {
+  const plugin = interactive.defined
+    ? selectDocument(store.getState(), interactive.id)
+    : null
+
   if (!plugin) return undefined
 
   const pluginType = plugin.plugin
