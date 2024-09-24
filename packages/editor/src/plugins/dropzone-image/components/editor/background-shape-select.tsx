@@ -1,6 +1,7 @@
 import IconLandscape from '@editor/editor-ui/assets/plugin-icons/dropzone-image/blank-landscape.svg'
 import IconPortrait from '@editor/editor-ui/assets/plugin-icons/dropzone-image/portrait.svg'
 import IconSquare from '@editor/editor-ui/assets/plugin-icons/dropzone-image/square.svg'
+import { SelectionCard } from '@editor/editor-ui/selection-card'
 
 import type { DropzoneImageProps } from '../..'
 import { BackgroundShape } from '../../types'
@@ -56,24 +57,18 @@ export function BackgroundShapeSelect({
 
   return (
     <>
-      <h2 className="mt-6 flex flex-row items-center justify-center pt-10 font-bold text-almost-black">
+      <h2 className="py-6 text-center text-gray-500">
         {shapeStrings.description}
       </h2>
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex justify-center gap-6">
         {shapeOptions.map((shape) => (
-          <button
-            data-qa={`plugin-dropzone-image-background-shape-select-${shape}`}
+          <SelectionCard
             key={shape}
-            className="m-[20px] flex h-32 w-32 flex-col items-center justify-between rounded-[5px] bg-orange-100 p-[10px] hover:bg-orange-200"
             onClick={() => onSelectShape(shape)}
-          >
-            <div className="flex flex-grow items-center justify-center">
-              {iconMap[shape]}
-            </div>
-            <div className="mb-2 font-bold text-almost-black">
-              {shapeStrings[shape]}
-            </div>
-          </button>
+            icon={iconMap[shape]}
+            title={shapeStrings[shape]}
+            dataQa={`plugin-dropzone-image-background-shape-select-${shape}`}
+          />
         ))}
       </div>
     </>

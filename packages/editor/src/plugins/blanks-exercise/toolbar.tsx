@@ -10,9 +10,11 @@ export const BlanksExerciseToolbar = ({
   state,
   childPluginType,
   pluginTitle,
+  showSelection,
 }: BlanksExerciseProps & {
   childPluginType: EditorPluginType
   pluginTitle: string
+  showSelection: boolean
 }) => {
   const pluginsStrings = useEditorStrings().plugins
   const blanksExerciseStrings = pluginsStrings.blanksExercise
@@ -37,22 +39,24 @@ export const BlanksExerciseToolbar = ({
               },
             ]}
           />
-          <ToolbarSelect
-            tooltipText={blanksExerciseStrings.chooseChildPluginType}
-            value={childPluginType}
-            dataQa="plugin-blanks-child-plugin-switch"
-            changeValue={(value) => state.text.replace(value)}
-            options={[
-              {
-                value: EditorPluginType.Text,
-                text: pluginsStrings.text.title,
-              },
-              {
-                value: EditorPluginType.SerloTable,
-                text: pluginsStrings.serloTable.title,
-              },
-            ]}
-          />
+          {showSelection ? null : (
+            <ToolbarSelect
+              tooltipText={blanksExerciseStrings.chooseChildPluginType}
+              value={childPluginType}
+              dataQa="plugin-blanks-child-plugin-switch"
+              changeValue={(value) => state.text.replace(value)}
+              options={[
+                {
+                  value: EditorPluginType.Text,
+                  text: pluginsStrings.text.title,
+                },
+                {
+                  value: EditorPluginType.SerloTable,
+                  text: pluginsStrings.serloTable.title,
+                },
+              ]}
+            />
+          )}
         </>
       }
       pluginControls={<InteractiveToolbarTools id={id} />}
