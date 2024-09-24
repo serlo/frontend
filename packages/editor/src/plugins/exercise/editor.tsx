@@ -78,25 +78,19 @@ export function ExerciseEditor(props: ExerciseProps) {
             className="!right-[84px] !top-[-30px]"
           />
         ) : null}
-        {focused ? (
+        <div
+          className={cn(
+            'group-focus-within/exercise:block',
+            isFocused ? 'block' : 'hidden'
+          )}
+        >
           <ExerciseToolbar
             {...props}
             previewActive={previewActive}
             setPreviewActive={setPreviewActive}
             interactivePluginOptions={unwrappedMenuItems}
           />
-        ) : (
-          <button
-            className={cn(`
-            absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
-            px-2 pt-0.5 text-sm font-bold
-            hover:bg-editor-primary-100 group-focus-within/exercise:block
-          `)}
-            data-qa="plugin-exercise-parent-button"
-          >
-            {exPluginStrings.title}
-          </button>
-        )}
+        </div>
         <div className="h-10"></div>
         {content.render({
           config: {
