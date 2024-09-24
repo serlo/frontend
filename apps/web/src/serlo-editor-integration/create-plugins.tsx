@@ -1,23 +1,3 @@
-import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg'
-import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
-import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg'
-import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg'
-import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
-import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
-import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
-import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
-import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg'
-import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
-import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
-import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
-import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
-import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
-import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
-import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
-import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
-import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
-import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg'
-import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg'
 import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
@@ -41,7 +21,6 @@ import {
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@editor/plugins/page-partners'
 import { pageTeamPlugin } from '@editor/plugins/page-team'
-import { pasteHackPlugin } from '@editor/plugins/paste-hack'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
@@ -63,21 +42,16 @@ import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { type LoggedInData, UuidType } from '@/data-types'
+import { type LoggedInData } from '@/data-types'
 import { isProduction } from '@/helper/is-production'
 import { H5pPlugin } from '@/serlo-editor-integration/h5p'
 import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
 export function createPlugins({
   editorStrings,
-  parentType,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  parentType?: string
 }): PluginsWithData {
-  const isPage = parentType === UuidType.Page
-
   const plugins = [
     EditorPluginType.Anchor,
     EditorPluginType.Article,
@@ -112,7 +86,6 @@ export function createPlugins({
     EditorPluginType.ScMcExercise,
     EditorPluginType.InputExercise,
     EditorPluginType.BlanksExercise,
-    EditorPluginType.BlanksExerciseDragAndDrop,
     EditorPluginType.Solution,
 
     EditorPluginType.Unsupported,
@@ -130,24 +103,9 @@ export function createPlugins({
   ]
 
   const allPlugins = [
-    {
-      type: EditorPluginType.Text,
-      plugin: createTextPlugin({}),
-      visibleInSuggestions: true,
-      icon: <IconText />,
-    },
-    {
-      type: EditorPluginType.Image,
-      plugin: imagePlugin,
-      visibleInSuggestions: true,
-      icon: <IconImage />,
-    },
-    {
-      type: EditorPluginType.ImageGallery,
-      plugin: createImageGalleryPlugin(),
-      visibleInSuggestions: true,
-      icon: <IconImageGallery />,
-    },
+    { type: EditorPluginType.Text, plugin: createTextPlugin({}) },
+    { type: EditorPluginType.Image, plugin: imagePlugin },
+    { type: EditorPluginType.ImageGallery, plugin: createImageGalleryPlugin() },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin([
@@ -156,142 +114,44 @@ export function createPlugins({
         ...(isProduction ? [] : [EditorPluginType.Audio]),
         EditorPluginType.Geogebra,
       ]),
-      visibleInSuggestions: true,
-      icon: <IconMultimedia />,
     },
-    {
-      type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(plugins),
-      visibleInSuggestions: true,
-      icon: <IconSpoiler />,
-    },
-    {
-      type: EditorPluginType.Box,
-      plugin: createBoxPlugin(plugins),
-      visibleInSuggestions: true,
-      icon: <IconBox />,
-    },
-    {
-      type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(),
-      visibleInSuggestions: true,
-      icon: <IconTable />,
-    },
-    {
-      type: EditorPluginType.Injection,
-      plugin: injectionPlugin,
-      visibleInSuggestions: true,
-      icon: <IconInjection />,
-    },
-    {
-      type: EditorPluginType.Equations,
-      plugin: equationsPlugin,
-      visibleInSuggestions: true,
-      icon: <IconEquation />,
-    },
-    {
-      type: EditorPluginType.Geogebra,
-      plugin: geoGebraPlugin,
-      visibleInSuggestions: true,
-      icon: <IconGeogebra />,
-    },
-    {
-      type: EditorPluginType.Highlight,
-      plugin: createHighlightPlugin(),
-      visibleInSuggestions: true,
-      icon: <IconHighlight />,
-    },
-    {
-      type: EditorPluginType.Video,
-      plugin: videoPlugin,
-      visibleInSuggestions: true,
-      icon: <IconVideo />,
-    },
+    { type: EditorPluginType.Spoiler, plugin: createSpoilerPlugin(plugins) },
+    { type: EditorPluginType.Box, plugin: createBoxPlugin(plugins) },
+    { type: EditorPluginType.SerloTable, plugin: createSerloTablePlugin() },
+    { type: EditorPluginType.Injection, plugin: injectionPlugin },
+    { type: EditorPluginType.Equations, plugin: equationsPlugin },
+    { type: EditorPluginType.Geogebra, plugin: geoGebraPlugin },
+    { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
+    { type: EditorPluginType.Video, plugin: videoPlugin },
     ...(isProduction
       ? []
-      : [
-          {
-            type: EditorPluginType.Audio,
-            plugin: audioPlugin,
-            visibleInSuggestions: true,
-            icon: <IconAudio />,
-          },
-        ]),
-    {
-      type: EditorPluginType.Anchor,
-      plugin: anchorPlugin,
-      visibleInSuggestions: false,
-    },
-    {
-      type: EditorPluginType.PasteHack,
-      plugin: pasteHackPlugin,
-      visibleInSuggestions: shouldUseFeature('edtrPasteHack'),
-    },
-    {
-      type: EditorPluginType.PageLayout,
-      plugin: pageLayoutPlugin,
-      visibleInSuggestions: isPage,
-    },
-    {
-      type: EditorPluginType.PageTeam,
-      plugin: pageTeamPlugin,
-      visibleInSuggestions: isPage,
-    },
-    {
-      type: EditorPluginType.PagePartners,
-      plugin: pagePartnersPlugin,
-      visibleInSuggestions: isPage,
-    },
+      : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
+    { type: EditorPluginType.Anchor, plugin: anchorPlugin },
+    { type: EditorPluginType.PageLayout, plugin: pageLayoutPlugin },
+    { type: EditorPluginType.PageTeam, plugin: pageTeamPlugin },
+    { type: EditorPluginType.PagePartners, plugin: pagePartnersPlugin },
 
     // Exercises etc.
     // ===================================================
 
-    {
-      type: EditorPluginType.ExerciseGroup,
-      plugin: exerciseGroupPlugin,
-      visibleInSuggestions: !isProduction,
-    },
-    {
-      type: EditorPluginType.Exercise,
-      plugin: exercisePlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.Solution,
-      plugin: solutionPlugin,
-      icon: <IconPencil />,
-    },
-    {
-      type: EditorPluginType.ScMcExercise,
-      plugin: createScMcExercisePlugin(),
-      icon: <IconScMcExercise />,
-      visibleInSuggestions: true,
-    },
+    { type: EditorPluginType.ExerciseGroup, plugin: exerciseGroupPlugin },
+    { type: EditorPluginType.Exercise, plugin: exercisePlugin },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
+    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
-      icon: <IconTextArea />,
     },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: createBlanksExercisePlugin({ defaultMode: 'typing' }),
-      icon: <IconBlanksTyping />,
-    },
-    {
-      type: EditorPluginType.BlanksExerciseDragAndDrop,
-      plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
-      icon: <IconBlanksDragAndDrop />,
+      plugin: createBlanksExercisePlugin(),
     },
     {
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
-      visibleInSuggestions: false,
-      icon: <IconDropzones />,
     },
-    { type: EditorPluginType.H5p, plugin: H5pPlugin, icon: <IconH5p /> },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin },
 
-    // Special plugins, never visible in suggestions
-    // ===================================================
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     { type: EditorPluginType.Article, plugin: articlePlugin },

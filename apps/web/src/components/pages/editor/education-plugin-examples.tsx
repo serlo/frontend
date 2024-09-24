@@ -118,12 +118,7 @@ function ExampleWithEditSwitch({
     40
   )
 
-  editorPlugins.init(
-    createPlugins({
-      editorStrings,
-      parentType: 'Article',
-    })
-  )
+  editorPlugins.init(createPlugins({ editorStrings }))
   return (
     <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
       <div className="ml-4 flex">

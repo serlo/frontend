@@ -612,6 +612,24 @@ export const loggedInData = {
         noPluginsFoundTitle: "Leider gibt es keine Elemente, die zu deiner Suche passen.",
         noPluginsFoundDescription: "Versuche es mit anderen Suchbegriffen oder stöbere durch alle verfügbaren Elemente."
       },
+      pluginMenu: {
+        singleChoiceExercise: {
+          title: "Single-Choice-Aufgabe",
+          description: "Eine Aufgabe mit einer Auswahl an Antwortoptionen (Es ist immer nur eine Antwort richtig)."
+        },
+        multipleChoiceExercise: {
+          title: "Multiple-Choice-Aufgabe",
+          description: "Eine Aufgabe mit einer Auswahl an Antwortoptionen (eine oder mehrere richtige Antworten)."
+        },
+        blanksExercise: {
+          title: "Lückentext (Eintippen)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden."
+        },
+        blanksExerciseDragAndDrop: {
+          title: "Lückentext (Drag&Drop)",
+          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
+        }
+      },
       plugins: {
         anchor: {
           title: "Sprungmarke",
@@ -681,6 +699,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: "Nicht unterstützt",
+          description: "Plugin wird von dieser Version des Editors nicht unterstützt.",
           notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
           explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
@@ -729,7 +748,7 @@ export const loggedInData = {
           imageSourceHelpText: "Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.",
           invalidImageUrl: "Fehler: Ungültige oder unvollständige URL",
           invalidImageUrlMessage: "Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit \"http://\" oder \"https://\" beginnen.",
-          search: 'Suche',
+          search: "Suche",
           searchOnline: "Online nach lizenzfreien Bildern suchen",
           placeholderSource: "Quelle (optional)",
           placeholderEmpty: 'https://example.com/image.png',
@@ -801,6 +820,7 @@ export const loggedInData = {
         },
         rows: {
           title: "Zeilen",
+          description: 'Rows plugin holds other plugins',
           searchForTools: "Suche hier nach Tools…",
           duplicate: "Duplizieren",
           copyAnchorLink: "Link zu diesem Element kopieren",
@@ -916,6 +936,10 @@ export const loggedInData = {
             activate: "Interaktives Element versteckt laden"
           }
         },
+        exerciseGroup: {
+          title: "Aufgabe mit Teilaufgaben",
+          description: "Liste von Aufgaben mit Teilaufgaben"
+        },
         inputExercise: {
           title: "Eingabefeld",
           description: "Erstelle eine Aufgabe, bei der eine exakte Eingabe oder ein Wert eingegeben und validiert werden kann."
@@ -925,16 +949,14 @@ export const loggedInData = {
           description: "Ein großes Eingabefeld"
         },
         scMcExercise: {
-          title: "SC/MC Aufgabe",
-          description: "Erstelle Single- oder Multiple-Choice Aufgaben und passe sie bei Bedarf mit individuellem Feedback an. "
+          title: "SC/MC Aufgabe"
         },
         h5p: {
           title: 'H5P',
           description: "Importiere eine interaktive Aufgabe von H5P via URL."
         },
         blanksExercise: {
-          title: "Lückentext (Eintippen)",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten durch Eintippen eingefügt werden.",
+          title: "Lückentext",
           placeholder: "Schreibe einen Text und füge Lücken ein",
           chooseType: "Wähle den Aufgabentyp",
           chooseChildPluginType: "Wähle den Eingabetyp",
@@ -949,10 +971,6 @@ export const loggedInData = {
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
-        },
-        blanksExerciseDragAndDrop: {
-          title: "Lückentext (Drag&Drop)",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
         }
       },
       templatePlugins: {
@@ -1000,13 +1018,6 @@ export const loggedInData = {
           confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
         },
         exercise: {
-          scMcExercise: "Auswahlaufgabe",
-          inputExercise: "Eingabefeld",
-          textAreaExercise: "Freitext",
-          dropzoneImage: "Interaktives Bild",
-          blanksExercise: "Lückentext Aufgabe",
-          blanksExerciseDragAndDrop: "Lückentext Aufgabe (Drag&Drop)",
-          h5p: "H5P Aufgabe",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen",
@@ -1158,79 +1169,6 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Als %role% hinzufügen"
-    },
-    ai: {
-      exerciseGeneration: {
-        buttonTitleSingular: "Aufgabe mit KI erstellen",
-        buttonTitle: "Teilaufgaben mit KI erstellen",
-        initialModalTitle: "Aufgabe automatisch mit KI erstellen",
-        modalTitleWithTaxonomy: "Aufgabenerstellung mit KI:",
-        confirmCloseDescription: "Möchtest du die Aufgabenerstellung verlassen? Die Daten werden gelöscht.",
-        summary: "Zusammenfassung",
-        nextButton: "Weiter",
-        nextExerciseButton: "Nächste Aufgabe",
-        previousButton: "Vorherige Aufgabe",
-        generateExerciseButton: "Aufgabe generieren",
-        generateExercisesButton: "Aufgaben generieren",
-        somethingWentWrong: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
-        hallucinationWarning: "Die KI kann inkorrekte Lösungen erstellen. Bitte überprüfe die Inhalte.",
-        topic: {
-          title: "Über welches %topic% willst du eine Aufgabe erstellen?",
-          topic: "Thema",
-          defaultLabel: "Thema",
-          otherTopicLabel: "Anderes Thema",
-          customTopicPlaceholder: "Thema eingeben"
-        },
-        grade: {
-          title: "In welcher %grade% sind die Schüler*innen?",
-          grade: "Stufe",
-          label: "Stufe",
-          university: "Universität"
-        },
-        exerciseType: {
-          title: "An welchem %exerciseType% bist du interessiert? ",
-          exerciseType: "Aufgabentyp",
-          label: "Aufgabentyp",
-          subtasksTitleSummary: "Teilaufgaben",
-          subtasksTitle: "Soll die Aufgabe Teilaufgaben haben?",
-          subtasksTitleExerciseGroup: "Wieviele Teilaufgaben soll es geben?",
-          noSubtasks: "Nein",
-          yesSubtasks: "Ja",
-          subtasksLabel: "Aufgaben",
-          numberOfSubtasksPlaceholder: "Anzahl",
-          chooseOption: "Wähle eine Option",
-          multipleChoice: "Multiple-Choice",
-          singleChoice: "Single-Choice",
-          inputExercise: "Eingabefeld",
-          blanksExercise: "Lückentext Aufgabe"
-        },
-        difficulty: {
-          title: "Was ist der %difficulty% der Aufgabe und das Lernziel?",
-          difficulty: "Schwierigkeitsgrad",
-          label: "Schwierigkeitsgrad",
-          learningGoalLabel: "Lernziel",
-          learningGoalExample: "Beispiel: Schüler*innen verstehen die Grundlagen von Algebra.",
-          learningGoalPlaceholder: "Lernziel eingeben",
-          chooseOption: "Wähle eine Option",
-          easy: "Einfach",
-          medium: "Mittel",
-          hard: "Knifflig"
-        },
-        priorKnowledge: {
-          title: "Welches %priorKnowledge% sollten die Schüler*innen haben?",
-          priorKnowledge: "Vorwissen",
-          label: "Vorwissen",
-          example: "Beispiel: Die Schüler*innen haben schon einige Aufgaben zu dem Thema bearbeitet.",
-          placeholder: "z.B. Gutes Fundament in Algebra"
-        },
-        preview: {
-          loadingHeading: "Aufgabe wird erstellt...",
-          patience: "Es kann bis zu zwei Minuten dauern",
-          publishExercise: "Aufgabe veröffentlichen",
-          openExerciseInEditor: "Im Editor öffnen",
-          regenerate: "Aufgabe neu generieren"
-        }
-      }
     }
   }
 };

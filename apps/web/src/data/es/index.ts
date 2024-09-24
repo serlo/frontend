@@ -612,6 +612,24 @@ export const loggedInData = {
         noPluginsFoundTitle: "Lo sentimos, no hay elementos que coincidan con tu búsqueda.",
         noPluginsFoundDescription: "Prueba con otras palabras clave o explora todos los elementos disponibles."
       },
+      pluginMenu: {
+        singleChoiceExercise: {
+          title: 'Single Choice Exercise',
+          description: 'A question with a selection of answer options and a single correct one.'
+        },
+        multipleChoiceExercise: {
+          title: 'Multiple Choice Exercise',
+          description: 'A question with a selection of answer options with potentially multiple correct answers.'
+        },
+        blanksExercise: {
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.'
+        },
+        blanksExerciseDragAndDrop: {
+          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
+          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
+        }
+      },
       plugins: {
         anchor: {
           title: "Ancla",
@@ -681,6 +699,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: "Sin soporte",
+          description: 'Plugin not supported by this version of the editor.',
           notSupported: "Lo sentimos, este plugin no es compatible:",
           explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
@@ -729,7 +748,7 @@ export const loggedInData = {
           imageSourceHelpText: "Añadir el autor o la fuente de esta imagen aquí",
           invalidImageUrl: "Error: URL inválida o incompleta",
           invalidImageUrlMessage: "La URL que ingresaste es inválida o está incompleta. Por favor, asegúrate de haber copiado y pegado la URL completa correctamente. La URL debe comenzar con \"http://\"  o \"https://\".",
-          search: "Búsqueda",
+          search: "Buscar",
           searchOnline: "Buscar en línea imágenes sin licencia",
           placeholderSource: "Fuente (opcional)",
           placeholderEmpty: "https://www.ejemplo.com/imagen.png",
@@ -801,6 +820,7 @@ export const loggedInData = {
         },
         rows: {
           title: "Filas",
+          description: 'Rows plugin holds other plugins',
           searchForTools: "Buscar herramientas…",
           duplicate: "Duplicar",
           copyAnchorLink: "Copiar enlace a este elemento",
@@ -916,6 +936,10 @@ export const loggedInData = {
             activate: "Cargar elemento interactivo visible"
           }
         },
+        exerciseGroup: {
+          title: "Grupo de ejercicios",
+          description: 'Group multiple exercises together'
+        },
         inputExercise: {
           title: "Ejercicio de respuesta escrita",
           description: "Crear un ejercicio donde se pueda introducir y validar una entrada o valor exactos."
@@ -925,16 +949,14 @@ export const loggedInData = {
           description: "Una caja de texto grande para respuestas largas. Sin retroalimentación."
         },
         scMcExercise: {
-          title: "Ejercicio SC/MC",
-          description: "Crear ejercicios de opción única o múltiple y adaptarlos con retroalimentación personalizada si es necesario."
+          title: "Ejercicio SC/MC"
         },
         h5p: {
           title: 'H5P',
           description: "Importar una tarea interactiva desde H5P vía URL."
         },
         blanksExercise: {
-          title: "Completar Los Espacios En Blanco (escribiendo)",
-          description: "Crear un ejercicio en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo.",
+          title: 'Fill In The Blanks',
           placeholder: "Escribe un texto y añade espacios en blanco",
           chooseType: "Elige el tipo de ejercicio",
           chooseChildPluginType: "Elije el tipo de respuesta",
@@ -949,10 +971,6 @@ export const loggedInData = {
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
           acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
-        },
-        blanksExerciseDragAndDrop: {
-          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
-          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
         }
       },
       templatePlugins: {
@@ -1000,13 +1018,6 @@ export const loggedInData = {
           confirmDelete: "¿Estás seguro de que quieres eliminar este contenido?"
         },
         exercise: {
-          scMcExercise: 'Choice Exercise',
-          inputExercise: 'Input Exercise',
-          textAreaExercise: "Ejercicio de cajas de texto",
-          dropzoneImage: 'Image Dropzones Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
-          h5p: 'H5p Exercise',
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo",
@@ -1158,79 +1169,6 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Añadir como %role%"
-    },
-    ai: {
-      exerciseGeneration: {
-        buttonTitleSingular: "Generar un ejercicio con IA (Inteligencia Artificial)",
-        buttonTitle: "AI genera grupo de ejercicio",
-        initialModalTitle: "Crea un ejercicio automáticamente con ayuda de la IA",
-        modalTitleWithTaxonomy: "Generación de ejercicios con AI: ",
-        confirmCloseDescription: "¿Quieres cancelar la generación de ejercicios? Tus datos se perderán.",
-        summary: "Resumen",
-        nextButton: "Siguiente",
-        nextExerciseButton: "Próximo ejercicio",
-        previousButton: "Ejercicio anterior",
-        generateExerciseButton: "Generar ejercicio",
-        generateExercisesButton: "Generar ejercicio",
-        somethingWentWrong: "Algo salió mal. Inténtalo de nuevo.",
-        hallucinationWarning: "La IA puede generar ejercicios incorrectos. Por favor revisa cuidadosamente.",
-        topic: {
-          title: "¿Sobre qué %topic% desea generar ejercicios?",
-          topic: "tema",
-          defaultLabel: "Tema",
-          otherTopicLabel: "Otro tema",
-          customTopicPlaceholder: "Introduce un tema personalizado"
-        },
-        grade: {
-          title: "¿En qué %grade% están los alumnos?",
-          grade: "grado/curso",
-          label: "Grado/Curso",
-          university: "Universidad"
-        },
-        exerciseType: {
-          title: "¿Qué  %exerciseType% te interesa?",
-          exerciseType: "tipo de ejercicio",
-          label: "Tipo de ejercicio",
-          subtasksTitleSummary: "Subtareas",
-          subtasksTitle: "¿Debe haber subtareas?",
-          subtasksTitleExerciseGroup: "¿Cuántas subtareas debería haber?",
-          noSubtasks: 'No',
-          yesSubtasks: "Si",
-          subtasksLabel: "Ejercicios",
-          numberOfSubtasksPlaceholder: "Número de subtareas",
-          chooseOption: "Selecciona una opción",
-          multipleChoice: "Selección Múltiple",
-          singleChoice: "Elección Única",
-          inputExercise: "Ejercicio de respuesta escrita",
-          blanksExercise: "Ejercicio de rellenar los espacios en blanco"
-        },
-        difficulty: {
-          title: "¿Cuál es el nivel de %difficulty% del ejercicio y del objetivo de aprendizaje?",
-          difficulty: "dificultad",
-          label: "Dificultad",
-          learningGoalLabel: "Objetivos de aprendizaje",
-          learningGoalExample: "Ejemplo: Los estudiantes entienden los fundamentos de la algebra.",
-          learningGoalPlaceholder: "Ingresa el objetivo de aprendizaje",
-          chooseOption: "Selecciona una opción",
-          easy: "Fácil",
-          medium: "Medio",
-          hard: "Difícil"
-        },
-        priorKnowledge: {
-          title: "¿Cuál es el  %priorKnowledge% que deben tener los alumnos?",
-          priorKnowledge: "conocimientos previos",
-          label: "Conocimiento previo",
-          example: "Ejemplo: Los estudiantes saben cómo funciona el algoritmo básico y ya han resuelto algunos ejercicios sobre el tema.",
-          placeholder: "E.g., Aritmética básica, fundamentos del algoritmo"
-        },
-        preview: {
-          loadingHeading: "Se está generando el ejercicio...",
-          patience: "Puede tardar hasta dos minutos",
-          publishExercise: "Publicar ejercicio",
-          openExerciseInEditor: "Abrir en el editor",
-          regenerate: "Regenerar el ejercicio"
-        }
-      }
     }
   }
 };

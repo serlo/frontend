@@ -1,258 +1,231 @@
-// import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
-import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg?raw'
+import type { EditorProps } from '@editor/core'
+import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg?raw'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg?raw'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg?raw'
+import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg?raw'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg?raw'
 import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg?raw'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg?raw'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg?raw'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg?raw'
 import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg?raw'
+import IconMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-mc-exercise.svg?raw'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg?raw'
+import IconScExercise from '@editor/editor-ui/assets/plugin-icons/icon-sc-exercise.svg?raw'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg?raw'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg?raw'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
-import { EditorPluginType as InternalEditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { loggedInData as loggedInDataDe } from '@/data/de'
-import { loggedInData as loggedInDataEn } from '@/data/en'
+import type { EditorStrings } from '@/contexts/logged-in-data-context'
 
-/**
- * An element of the Serlo editor which can be integrated as a block / plugin
- * in another editor (for example editor.js).
- *
- * Note: This is not the same as the list of plugins in the Serlo Editor. For
- * example the elements single choice question and multiple choice question
- * are both represented by the same plugin in the Serlo Editor (they only differ
- * by a configuration). In this list they are represented as two separate elements.
+const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
+
+/*
+ * All plugin menu items that can be in the plugin menu.
+ * So this includes some plugins that are specific to a certain integration.
+ * If a plugin in not loaded in the current editor instance, it will be filtered out.
  */
-export enum PluginMenuItem {
-  SingleChoiceExercise = 'singleChoiceExercise',
-  MultipleChoiceExercise = 'multipleChoiceExercise',
-  InputExercise = InternalEditorPluginType.InputExercise,
-  TextAreaExercise = InternalEditorPluginType.TextAreaExercise,
-  BlanksExercise = InternalEditorPluginType.BlanksExercise,
-  BlanksExerciseDragAndDrop = InternalEditorPluginType.BlanksExerciseDragAndDrop,
-  Text = InternalEditorPluginType.Text,
-  Image = InternalEditorPluginType.Image,
-  ImageGallery = InternalEditorPluginType.ImageGallery,
-  Video = InternalEditorPluginType.Video,
-  Highlight = InternalEditorPluginType.Highlight,
-  Spoiler = InternalEditorPluginType.Spoiler,
-  Box = InternalEditorPluginType.Box,
-  SerloTable = InternalEditorPluginType.SerloTable,
-  Equations = InternalEditorPluginType.Equations,
-  Geogebra = InternalEditorPluginType.Geogebra,
-  Injection = InternalEditorPluginType.Injection,
-  H5p = InternalEditorPluginType.H5p,
-  Multimedia = InternalEditorPluginType.Multimedia,
-  DropzoneImage = InternalEditorPluginType.DropzoneImage,
-}
+export const pluginMenuType = {
+  Text: EditorPluginType.Text,
+  Image: EditorPluginType.Image,
+  ImageGallery: EditorPluginType.ImageGallery,
+  Video: EditorPluginType.Video,
+  Highlight: EditorPluginType.Highlight,
+  Spoiler: EditorPluginType.Spoiler,
+  Box: EditorPluginType.Box,
+  SerloTable: EditorPluginType.SerloTable,
+  Equations: EditorPluginType.Equations,
+  Geogebra: EditorPluginType.Geogebra,
+  Injection: EditorPluginType.Injection,
+  Multimedia: EditorPluginType.Multimedia,
 
-const germanPluginStrings = loggedInDataDe.strings.editor.plugins
-const englishPluginStrings = loggedInDataEn.strings.editor.plugins
+  Audio: EditorPluginType.Audio,
+  PageLayout: EditorPluginType.PageLayout,
+  PageTeam: EditorPluginType.PageTeam,
+  PagePartners: EditorPluginType.PagePartners,
 
-export const pluginMenu: PluginMenu = {
-  [PluginMenuItem.Text]: getInfo(PluginMenuItem.Text, IconText),
-  [PluginMenuItem.Multimedia]: getInfo(
-    PluginMenuItem.Multimedia,
-    IconMultimedia
-  ),
-  [PluginMenuItem.Video]: getInfo(PluginMenuItem.Video, IconVideo),
-  [PluginMenuItem.Box]: getInfo(PluginMenuItem.Box, IconBox),
-  [PluginMenuItem.Equations]: getInfo(PluginMenuItem.Equations, IconEquation),
-  [PluginMenuItem.Geogebra]: getInfo(PluginMenuItem.Geogebra, IconGeogebra),
-  [PluginMenuItem.H5p]: getInfo(PluginMenuItem.H5p, IconH5p),
-  [PluginMenuItem.Highlight]: getInfo(PluginMenuItem.Highlight, IconHighlight),
-  [PluginMenuItem.Image]: getInfo(PluginMenuItem.Image, IconImage),
-  [PluginMenuItem.ImageGallery]: getInfo(
-    PluginMenuItem.ImageGallery,
-    IconImageGallery
-  ),
-  [PluginMenuItem.Injection]: getInfo(PluginMenuItem.Injection, IconInjection),
-  [PluginMenuItem.SerloTable]: getInfo(PluginMenuItem.SerloTable, IconTable),
-  [PluginMenuItem.Spoiler]: getInfo(PluginMenuItem.Spoiler, IconSpoiler),
-  [PluginMenuItem.DropzoneImage]: getInfo(
-    PluginMenuItem.DropzoneImage,
-    IconDropzones
-  ),
-  [PluginMenuItem.SingleChoiceExercise]: getInfo(
-    PluginMenuItem.SingleChoiceExercise,
-    IconScMcExercise
-  ),
-  [PluginMenuItem.MultipleChoiceExercise]: getInfo(
-    PluginMenuItem.MultipleChoiceExercise,
-    IconScMcExercise
-  ),
-  [PluginMenuItem.InputExercise]: getInfo(
-    PluginMenuItem.InputExercise,
-    IconTextArea
-  ),
-  [PluginMenuItem.TextAreaExercise]: getInfo(
-    PluginMenuItem.TextAreaExercise,
-    IconTextArea
-  ),
-  [PluginMenuItem.BlanksExercise]: getInfo(
-    PluginMenuItem.BlanksExercise,
-    IconBlanksTyping
-  ),
-  [PluginMenuItem.BlanksExerciseDragAndDrop]: getInfo(
-    PluginMenuItem.BlanksExerciseDragAndDrop,
-    IconBlanksDragAndDrop
-  ),
-}
+  SingleChoiceExercise: 'singleChoiceExercise',
+  MultipleChoiceExercise: 'multipleChoiceExercise',
+  InputExercise: EditorPluginType.InputExercise,
+  TextAreaExercise: EditorPluginType.TextAreaExercise,
+  BlanksExercise: EditorPluginType.BlanksExercise,
+  BlanksExerciseDragAndDrop: 'blanksExerciseDragAndDrop',
+  DropzoneImage: EditorPluginType.DropzoneImage,
+  H5p: EditorPluginType.H5p,
+  ExerciseGroup: EditorPluginType.ExerciseGroup,
+} as const
 
-type PluginMenu = {
-  [E in PluginMenuItem]: PluginMenuItemInfo<E>
-}
+export type PluginMenuType =
+  (typeof pluginMenuType)[keyof typeof pluginMenuType]
 
-interface PluginMenuItemInfo<E extends PluginMenuItem> {
-  type: E
-  de: {
-    name: string
-    description: string
+// filter out special cases, e.g. plugins that are in development
+const visibleTypes = Object.values(pluginMenuType).filter((type) => {
+  // for serlo.org exercise group plugin is loaded but only shows in staging/dev menus
+  if (type === pluginMenuType.ExerciseGroup) {
+    return isSerloProduction ? false : true
   }
-  en: {
-    name: string
-    description: string
+  return true
+})
+
+export function getPluginMenuItems(
+  editorStrings: EditorStrings
+): PluginMenuItem[] {
+  return visibleTypes.map((type) => {
+    const [initialState, unwrappedPlugin] = getInitialState(type)
+    const strings = getTitleAndDescription(type, unwrappedPlugin, editorStrings)
+    const icon = getIconString(type)
+
+    return { type, icon, initialState, ...strings }
+  })
+}
+
+export interface PluginMenuItem {
+  type: PluginMenuType
+  title: string
+  description: string
+  initialState: EditorProps['initialState']
+  // until we use the editor package in the frontend (only having vite for building)
+  // icons should be strings but are loaded as () => JSX.Element in the frontend (webpack)
+  icon: string | (() => JSX.Element)
+}
+
+const mysteryStrings = {
+  title: 'Mystery Plugin 😶‍🌫️',
+  description:
+    'This is probably a new plugin, make sure you provide a title and description',
+}
+
+function getTitleAndDescription(
+  type: PluginMenuType,
+  pluginType: EditorPluginType,
+  editorStrings: EditorStrings
+) {
+  // use extra plugin menu items strings if available
+  if (Object.hasOwn(editorStrings.pluginMenu, type)) {
+    const { title, description } =
+      editorStrings.pluginMenu[type as keyof typeof editorStrings.pluginMenu]
+    return { title, description }
   }
-  icon: string
-  initialState: PluginState
+
+  if (!Object.hasOwn(editorStrings.plugins, pluginType)) return mysteryStrings
+
+  const pluginStrings =
+    editorStrings.plugins[pluginType as keyof EditorStrings['plugins']]
+
+  // use plugin strings (normal case)
+
+  const title = pluginStrings.title
+  if (!title) return mysteryStrings
+
+  const description = Object.hasOwn(pluginStrings, 'description')
+    ? pluginStrings.description
+    : ''
+
+  return { title, description }
 }
 
-interface PluginState {
-  plugin: string
-  state?: any
-}
-
-function getInfo<E extends PluginMenuItem>(
-  type: E,
-  icon: string
-): PluginMenuItemInfo<E> {
-  return {
-    ...getInternationalizedStrings(type),
-    icon,
-    type,
-    initialState: getInitialState(type),
-  }
-}
-
-function getInitialState(type: PluginMenuItem): PluginState {
+function getInitialState(
+  type: PluginMenuType
+): [EditorProps['initialState'], EditorPluginType] {
   switch (type) {
-    case PluginMenuItem.BlanksExerciseDragAndDrop:
-    case PluginMenuItem.BlanksExercise:
-      return getEditorState({
-        plugin: InternalEditorPluginType.BlanksExercise,
-        state: {
-          text: { plugin: InternalEditorPluginType.Text },
-          mode:
-            type === PluginMenuItem.BlanksExerciseDragAndDrop
-              ? 'drag-and-drop'
-              : 'typing',
-        },
-      })
+    case pluginMenuType.BlanksExerciseDragAndDrop:
+    case pluginMenuType.BlanksExercise:
+      return [
+        wrapInExercise({
+          plugin: EditorPluginType.BlanksExercise,
+          state: {
+            text: { plugin: EditorPluginType.Text },
+            mode:
+              type === pluginMenuType.BlanksExerciseDragAndDrop
+                ? 'drag-and-drop'
+                : 'typing',
+          },
+        }),
+        EditorPluginType.BlanksExercise,
+      ]
 
-    case PluginMenuItem.SingleChoiceExercise:
-    case PluginMenuItem.MultipleChoiceExercise:
-      return getEditorState({
-        plugin: InternalEditorPluginType.ScMcExercise,
-        state: {
-          isSingleChoice: type === PluginMenuItem.SingleChoiceExercise,
-          answers: [
-            {
-              content: { plugin: InternalEditorPluginType.Text },
-              isCorrect: true,
-              feedback: { plugin: InternalEditorPluginType.Text },
-            },
-            {
-              content: { plugin: InternalEditorPluginType.Text },
-              isCorrect: false,
-              feedback: { plugin: InternalEditorPluginType.Text },
-            },
-          ],
-        },
-      })
+    case pluginMenuType.SingleChoiceExercise:
+    case pluginMenuType.MultipleChoiceExercise:
+      return [
+        wrapInExercise({
+          plugin: EditorPluginType.ScMcExercise,
+          state: {
+            isSingleChoice: type === pluginMenuType.SingleChoiceExercise,
+            answers: [
+              {
+                content: { plugin: EditorPluginType.Text },
+                isCorrect: true,
+                feedback: { plugin: EditorPluginType.Text },
+              },
+              {
+                content: { plugin: EditorPluginType.Text },
+                isCorrect: false,
+                feedback: { plugin: EditorPluginType.Text },
+              },
+            ],
+          },
+        }),
+        EditorPluginType.ScMcExercise,
+      ]
 
-    case PluginMenuItem.InputExercise:
-    case PluginMenuItem.TextAreaExercise:
-      return getEditorState({ plugin: type })
+    case pluginMenuType.InputExercise:
+    case pluginMenuType.TextAreaExercise:
+    case pluginMenuType.DropzoneImage:
+    case pluginMenuType.H5p:
+      return [wrapInExercise({ plugin: type }), type]
 
     default:
-      return { plugin: type }
+      return [{ plugin: type }, type]
   }
 }
 
-function getEditorState(interactive: unknown) {
+function wrapInExercise(interactive: unknown) {
   return {
-    plugin: InternalEditorPluginType.Exercise,
+    plugin: EditorPluginType.Exercise,
     state: {
       content: {
-        plugin: InternalEditorPluginType.Rows,
-        state: [{ plugin: InternalEditorPluginType.Text }],
+        plugin: EditorPluginType.Rows,
+        state: [{ plugin: EditorPluginType.Text }],
       },
       interactive,
     },
   }
 }
 
-function getInternationalizedStrings(type: PluginMenuItem) {
-  switch (type) {
-    case PluginMenuItem.SingleChoiceExercise:
-      return {
-        de: {
-          name: 'Single-Choice-Aufgabe',
-          description: 'Eine Frage mit einer Auswahl an Antwortmöglichkeiten.',
-        },
-        en: {
-          name: 'Single Choice Exercise',
-          description: 'A question with a selection of answer options.',
-        },
-      }
-    case PluginMenuItem.MultipleChoiceExercise:
-      return {
-        de: {
-          name: 'Multiple-Choice-Aufgabe',
-          description: 'Eine Frage mit einer Auswahl an Antwortmöglichkeiten.',
-        },
-        en: {
-          name: 'Multiple Choice Exercise',
-          description: 'A question with a selection of answer options.',
-        },
-      }
-    default:
-      return {
-        de: getNameAndDescription('de', type),
-        en: getNameAndDescription('en', type),
-      }
-  }
+const iconLookup: Record<PluginMenuType, string> = {
+  [pluginMenuType.Text]: IconText,
+  [pluginMenuType.Multimedia]: IconMultimedia,
+  [pluginMenuType.Video]: IconVideo,
+  [pluginMenuType.Box]: IconBox,
+  [pluginMenuType.Equations]: IconEquation,
+  [pluginMenuType.Geogebra]: IconGeogebra,
+  [pluginMenuType.Highlight]: IconHighlight,
+  [pluginMenuType.Image]: IconImage,
+  [pluginMenuType.ImageGallery]: IconImageGallery,
+  [pluginMenuType.Injection]: IconInjection,
+  [pluginMenuType.SerloTable]: IconTable,
+  [pluginMenuType.Spoiler]: IconSpoiler,
+  [pluginMenuType.DropzoneImage]: IconDropzones,
+  [pluginMenuType.SingleChoiceExercise]: IconScExercise,
+  [pluginMenuType.MultipleChoiceExercise]: IconMcExercise,
+  [pluginMenuType.InputExercise]: IconTextArea,
+  [pluginMenuType.TextAreaExercise]: IconTextArea,
+  [pluginMenuType.BlanksExercise]: IconBlanksTyping,
+  [pluginMenuType.BlanksExerciseDragAndDrop]: IconBlanksDragAndDrop,
+  [pluginMenuType.H5p]: IconH5p,
+  [pluginMenuType.ExerciseGroup]: IconFallback,
+  [pluginMenuType.Audio]: IconAudio,
+  [pluginMenuType.PageLayout]: IconFallback,
+  [pluginMenuType.PageTeam]: IconFallback,
+  [pluginMenuType.PagePartners]: IconFallback,
 }
 
-type PluginsWithNameAndDescription = {
-  [P in keyof typeof germanPluginStrings]: (typeof germanPluginStrings)[P] extends {
-    title: string
-    description: string
-  }
-    ? P
-    : never
-}[keyof typeof germanPluginStrings]
-
-function getNameAndDescription(
-  locale: 'de' | 'en',
-  pluginType: PluginsWithNameAndDescription
-) {
-  const name =
-    locale === 'de'
-      ? germanPluginStrings[pluginType].title
-      : englishPluginStrings[pluginType].title
-  const description =
-    locale === 'de'
-      ? germanPluginStrings[pluginType].description
-      : englishPluginStrings[pluginType].description
-
-  return { name, description }
+function getIconString(type: PluginMenuType) {
+  return iconLookup[type]
 }

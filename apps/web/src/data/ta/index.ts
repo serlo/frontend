@@ -612,6 +612,24 @@ export const loggedInData = {
         noPluginsFoundTitle: 'Sorry, no elements match your search.',
         noPluginsFoundDescription: 'Please try different keywords or browse through all available elements.'
       },
+      pluginMenu: {
+        singleChoiceExercise: {
+          title: 'Single Choice Exercise',
+          description: 'A question with a selection of answer options and a single correct one.'
+        },
+        multipleChoiceExercise: {
+          title: 'Multiple Choice Exercise',
+          description: 'A question with a selection of answer options with potentially multiple correct answers.'
+        },
+        blanksExercise: {
+          title: 'Fill In The Blanks (Typing)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.'
+        },
+        blanksExerciseDragAndDrop: {
+          title: 'Fill In The Blanks (Drag&Drop)',
+          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
+        }
+      },
       plugins: {
         anchor: {
           title: 'Anchor',
@@ -681,6 +699,7 @@ export const loggedInData = {
         },
         unsupported: {
           title: 'Unsupported',
+          description: 'Plugin not supported by this version of the editor.',
           notSupported: 'Sorry, this plugin is not supported:',
           explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
@@ -729,7 +748,7 @@ export const loggedInData = {
           imageSourceHelpText: 'Add the author or source of this image here',
           invalidImageUrl: 'Error: Invalid or Incomplete URL',
           invalidImageUrlMessage: 'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
-          search: 'Suche',
+          search: "தேடுக",
           searchOnline: 'Search online for licence-free images',
           placeholderSource: 'Source (optional)',
           placeholderEmpty: 'https://example.com/image.png',
@@ -801,6 +820,7 @@ export const loggedInData = {
         },
         rows: {
           title: 'Rows',
+          description: 'Rows plugin holds other plugins',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
           copyAnchorLink: 'Copy link to this element',
@@ -916,6 +936,10 @@ export const loggedInData = {
             activate: 'Load Interactive Element collapsed'
           }
         },
+        exerciseGroup: {
+          title: "பயிற்சி கோப்புறை",
+          description: 'Group multiple exercises together'
+        },
         inputExercise: {
           title: 'Input Exercise',
           description: 'Create a task where an exact input or value can be entered and validated.'
@@ -925,16 +949,14 @@ export const loggedInData = {
           description: 'A big text box for long answers. No feedback.'
         },
         scMcExercise: {
-          title: 'SC/MC Exercise',
-          description: 'Create single or multiple choice tasks and adapt them with individual feedback if necessary.'
+          title: 'SC/MC Exercise'
         },
         h5p: {
           title: 'H5P',
           description: 'Import an interactive task from H5P via URL.'
         },
         blanksExercise: {
-          title: 'Fill In The Blanks (Typing)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via typing.',
+          title: 'Fill In The Blanks',
           placeholder: 'Write a text and add blanks',
           chooseType: 'Choose the exercise type',
           chooseChildPluginType: 'Choose the answer type',
@@ -949,10 +971,6 @@ export const loggedInData = {
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
           acceptMathEquivalents: 'Accept all equivalent mathematical values'
-        },
-        blanksExerciseDragAndDrop: {
-          title: 'Fill In The Blanks (Drag&Drop)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
         }
       },
       templatePlugins: {
@@ -1000,13 +1018,6 @@ export const loggedInData = {
           confirmDelete: 'Are you sure you want to delete this course page?'
         },
         exercise: {
-          scMcExercise: 'Choice Exercise',
-          inputExercise: 'Input Exercise',
-          textAreaExercise: 'Text Box Exercise',
-          dropzoneImage: 'Image Dropzones Exercise',
-          blanksExercise: 'Fill In The Blanks Exercise',
-          blanksExerciseDragAndDrop: 'Fill In The Blanks Exercise (Drag&Drop)',
-          h5p: 'H5p Exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element',
@@ -1158,79 +1169,6 @@ export const loggedInData = {
     },
     roles: {
       addButton: 'Add as %role%'
-    },
-    ai: {
-      exerciseGeneration: {
-        buttonTitleSingular: 'Generate an exercise with AI',
-        buttonTitle: 'AI generate exercise group',
-        initialModalTitle: 'Create an exercise automatically with help of AI',
-        modalTitleWithTaxonomy: 'Exercise generation with AI: ',
-        confirmCloseDescription: 'Do you want to cancel the exercise generation? Your data will be lost.',
-        summary: 'Summary',
-        nextButton: "அடுத்து",
-        nextExerciseButton: 'Next exercise',
-        previousButton: 'Previous exercise',
-        generateExerciseButton: 'Generate exercise',
-        generateExercisesButton: 'Generate exercises',
-        somethingWentWrong: 'Something went wrong. Please try again.',
-        hallucinationWarning: 'The AI can generate incorrect exercises. Please review carefully.',
-        topic: {
-          title: 'About which %topic% would you like to generate exercises?',
-          topic: "தலைப்பு",
-          defaultLabel: 'Topic',
-          otherTopicLabel: 'Other topic',
-          customTopicPlaceholder: 'Enter custom topic'
-        },
-        grade: {
-          title: 'Which %grade% are the students in?',
-          grade: 'grade',
-          label: 'Grade',
-          university: 'University'
-        },
-        exerciseType: {
-          title: 'What %exerciseType% are you interested in?',
-          exerciseType: 'exercise type',
-          label: 'Exercise type',
-          subtasksTitleSummary: 'Subtasks',
-          subtasksTitle: 'Should there be subtasks?',
-          subtasksTitleExerciseGroup: 'How many subtasks should there be?',
-          noSubtasks: 'No',
-          yesSubtasks: 'Yes',
-          subtasksLabel: "பயிற்சிகள்",
-          numberOfSubtasksPlaceholder: 'Number of subtasks',
-          chooseOption: 'Choose an option',
-          multipleChoice: 'Multiple Choice',
-          singleChoice: 'Single Choice',
-          inputExercise: 'Input exercise',
-          blanksExercise: 'Fill In The Blanks Exercise'
-        },
-        difficulty: {
-          title: 'What is the %difficulty% level of the exercise and learning goal?',
-          difficulty: 'difficulty',
-          label: 'Difficulty',
-          learningGoalLabel: 'Learning goal',
-          learningGoalExample: 'Example: Students understand the basics of algebra.',
-          learningGoalPlaceholder: 'Enter learning goal',
-          chooseOption: 'Choose an option',
-          easy: 'Easy',
-          medium: 'Medium',
-          hard: 'Hard'
-        },
-        priorKnowledge: {
-          title: 'What is the %priorKnowledge% that the students should have?',
-          priorKnowledge: 'prior knowledge',
-          label: 'Prior Knowledge',
-          example: 'Example: The students know how basic algebra works and already solved some exercises on the topic.',
-          placeholder: 'E.g., Basic arithmetic, fundamentals of algebra'
-        },
-        preview: {
-          loadingHeading: 'Exercise is being generated...',
-          patience: 'It can take up to two minutes',
-          publishExercise: 'Publish exercise',
-          openExerciseInEditor: 'Open in editor',
-          regenerate: 'Regenerate exercise'
-        }
-      }
     }
   }
 };

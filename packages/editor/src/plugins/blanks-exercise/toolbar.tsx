@@ -9,19 +9,18 @@ export const BlanksExerciseToolbar = ({
   id,
   state,
   childPluginType,
+  pluginTitle,
 }: BlanksExerciseProps & {
   childPluginType: EditorPluginType
+  pluginTitle: string
 }) => {
   const pluginsStrings = useEditorStrings().plugins
   const blanksExerciseStrings = pluginsStrings.blanksExercise
-  const pluginType =
-    state.mode.value === 'typing'
-      ? EditorPluginType.BlanksExercise
-      : EditorPluginType.BlanksExerciseDragAndDrop
 
   return (
     <PluginToolbar
-      pluginType={pluginType}
+      pluginType={EditorPluginType.BlanksExercise}
+      pluginTitle={pluginTitle}
       className="top-[-33px]"
       pluginSettings={
         <>

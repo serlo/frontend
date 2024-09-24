@@ -18,7 +18,6 @@ import {
 } from './components/blank-draggable-answer'
 import { BlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
-import type { DraggableAnswerType } from '../dropzone-image/types'
 import { cn } from '@/helper/cn'
 
 const DndWrapper = lazy(() =>
@@ -128,9 +127,9 @@ export function BlanksExerciseRenderer({
   )
 
   const handleDraggableAreaDrop = useCallback(
-    (item: DraggableAnswerType) => {
+    (item: { draggableId: DraggableId }) => {
       const newMap = new Map<DraggableId, BlankId>(locationOfDraggables)
-      newMap.delete(item.id)
+      newMap.delete(item.draggableId)
       setLocationOfDraggables(newMap)
       setFeedbackForBlanks(
         new Map<BlankId, { isCorrect: boolean | undefined }>()
