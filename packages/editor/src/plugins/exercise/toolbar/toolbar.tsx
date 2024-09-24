@@ -16,7 +16,11 @@ import type {
   EditorBlanksExerciseDocument,
   EditorScMcExerciseDocument,
 } from '@editor/types/editor-plugins'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import {
+  faEye,
+  faEyeSlash,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ExerciseProps } from '..'
@@ -63,6 +67,9 @@ export const ExerciseToolbar = ({
           text: title,
         }))}
       />
+      {interactive.defined ? (
+        <div className="exercise-toolbar-interactive-target"></div>
+      ) : null}
     </>
   ) : undefined
 
@@ -74,7 +81,6 @@ export const ExerciseToolbar = ({
           <PluginDefaultTools pluginId={id} />
           {interactive.defined ? (
             <>
-              <div className="m-2 h-0.25 bg-gray-500"></div>
               <DropdownButton
                 onClick={() => {
                   if (hideInteractiveInitially.defined) {
@@ -87,7 +93,14 @@ export const ExerciseToolbar = ({
                   ]
                 }
                 icon={hideInteractiveInitially.defined ? faEye : faEyeSlash}
+                separatorTop
                 dataQa="toggle-interactive-default-visibility"
+              />
+              <DropdownButton
+                onClick={() => interactive.remove()}
+                label={exTemplateStrings.removeInteractive}
+                icon={faTrashAlt}
+                dataQa="remove-plugin-button"
               />
             </>
           ) : null}

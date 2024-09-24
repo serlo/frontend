@@ -1,5 +1,4 @@
 import { EditorInput } from '@editor/editor-ui'
-import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,7 +6,6 @@ import {
   string,
   PrettyStaticState,
 } from '@editor/plugin'
-import { InteractiveToolbarTools } from '@editor/plugins/exercise/toolbar/interactive-toolbar-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { type AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
@@ -33,7 +31,7 @@ const availableH5pExercises: Record<string, string> = {
   'H5P.MemoryGame': 'Memory',
   'H5P.Flashcards': 'Flashcards',
   'H5P.MarkTheWords': 'Mark The Words',
-}
+} as const
 
 export const H5pPlugin: EditorPlugin<H5pPluginState> = {
   Component: H5pEditor,
@@ -42,7 +40,7 @@ export const H5pPlugin: EditorPlugin<H5pPluginState> = {
 }
 
 // Note: This plugin will not be translated for now, as i18n work is deprioritized
-function H5pEditor({ state, id }: H5pProps) {
+function H5pEditor({ state }: H5pProps) {
   const hasState = !!state.value
 
   const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>(
@@ -108,11 +106,6 @@ function H5pEditor({ state, id }: H5pProps) {
   if (mode === 'edit' || mode === 'loading') {
     return (
       <div className="mb-12 mt-24 pt-4">
-        <PluginToolbar
-          pluginType={EditorPluginType.H5p}
-          pluginControls={<InteractiveToolbarTools id={id} />}
-        />
-
         <div className="rounded-xl bg-editor-primary-50 p-2">
           <h2 className="serlo-h2">Einfügen von H5P-Inhalt</h2>
           <div>

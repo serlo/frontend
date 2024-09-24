@@ -67,7 +67,7 @@ export function ExerciseEditor(props: ExerciseProps) {
       <div
         data-qa="plugin-exercise"
         className={cn(
-          'group/exercise rounded-b-xl border-3 border-transparent pb-6',
+          'plugin-exercise group/exercise rounded-b-xl border-3 border-transparent pb-6',
           'focus-within:rounded-tl-xl focus-within:!border-gray-100 focus-within:border-gray-100',
           isFocused && '!rounded-tl-xl !border-gray-100'
         )}

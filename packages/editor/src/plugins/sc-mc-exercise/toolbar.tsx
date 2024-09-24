@@ -1,11 +1,13 @@
-import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ScMcExerciseProps } from '.'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
 
-export const ScMcExerciseToolbar = ({ state, id }: ScMcExerciseProps) => {
+export const ScMcExerciseToolbar = ({
+  state,
+  containerRef,
+}: ScMcExerciseProps) => {
   const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
 
   const handleChange = (value: string) => {
@@ -15,20 +17,16 @@ export const ScMcExerciseToolbar = ({ state, id }: ScMcExerciseProps) => {
   }
 
   return (
-    <PluginToolbar
-      pluginType={EditorPluginType.ScMcExercise}
-      pluginSettings={
-        <ToolbarSelect
-          tooltipText={scMcStrings.chooseType}
-          value={state.isSingleChoice.value ? 'sc' : 'mc'}
-          changeValue={handleChange}
-          options={[
-            { value: 'mc', text: scMcStrings.multipleChoice },
-            { value: 'sc', text: scMcStrings.singleChoice },
-          ]}
-        />
-      }
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
+    <InteractiveToolbarPortal containerRef={containerRef}>
+      <ToolbarSelect
+        tooltipText={scMcStrings.chooseType}
+        value={state.isSingleChoice.value ? 'sc' : 'mc'}
+        changeValue={handleChange}
+        options={[
+          { value: 'mc', text: scMcStrings.multipleChoice },
+          { value: 'sc', text: scMcStrings.singleChoice },
+        ]}
+      />
+    </InteractiveToolbarPortal>
   )
 }

@@ -43,10 +43,6 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
 
   const editorStrings = useEditorStrings()
   const blanksExerciseStrings = editorStrings.plugins.blanksExercise
-  const pluginTitle =
-    mode.value === 'typing'
-      ? editorStrings.pluginMenu.blanksExercise.title
-      : editorStrings.pluginMenu.blanksExerciseDragAndDrop.title
 
   const isChildPluginFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, childPlugin.id)
@@ -80,24 +76,10 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
       )}
       data-qa="plugin-blanks-exercise"
     >
-      {focused ? (
-        <BlanksExerciseToolbar
-          {...props}
-          pluginTitle={pluginTitle}
-          childPluginType={childPluginState.plugin as EditorPluginType}
-        />
-      ) : (
-        <button
-          className={cn(`
-            absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
-            px-2 pt-0.5 text-sm font-bold
-            hover:bg-editor-primary-100 group-focus-within/blanks-exercise:block
-          `)}
-          data-qa="plugin-blanks-exercise-parent-button"
-        >
-          {pluginTitle}
-        </button>
-      )}
+      <BlanksExerciseToolbar
+        {...props}
+        childPluginType={childPluginState.plugin as EditorPluginType}
+      />
 
       {previewActive ? (
         <BlanksExerciseStaticRenderer {...staticDocument} />
