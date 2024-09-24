@@ -673,21 +673,14 @@ export const loggedInData = {
           },
           backgroundType: {
             description: "Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund",
-            // 'Füge ein Hintergrundbild hinzu oder starte mit leerem Hintergrund'
             image: "Hintergrundbild hinzufügen",
-            // 'Hintergrundbild hinzufügen'
-            blank: "Leerer Hintergrund" //  'Leerer Hintergrund'
-
+            blank: "Leerer Hintergrund"
           },
           backgroundShapes: {
             description: "Lege die Ausrichtung des Hintergrundes fest",
-            // 'Lege die Ausrichtung des Hintergrundes fest'
             square: "Quadratisch",
-            //'Quadradtisch',
             landscape: "Querformat",
-            //'Querformat',
-            portrait: "Hochformat" // 'Hochformat'
-
+            portrait: "Hochformat"
           },
           or: "oder",
           modal: {
@@ -1027,7 +1020,10 @@ export const loggedInData = {
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen",
           createSolution: "Lösung hinzufügen",
-          removeSolution: "Lösung entfernen"
+          removeSolution: "Lösung entfernen",
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Vorschaumodus ist aktiv",
+          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         inputExercise: {
           chooseType: "Wähle den Antworttyp",
@@ -1046,10 +1042,7 @@ export const loggedInData = {
           singleChoice: "Single Choice",
           multipleChoice: "Multiple Choice",
           chooseType: "Wähle den Antworttyp",
-          addAnswer: "Antwort hinzufügen",
-          previewMode: "Vorschau",
-          previewIsActiveHint: "Vorschaumodus ist aktiv",
-          previewIsDeactiveHint: "Hier kannst du bearbeiten"
+          addAnswer: "Antwort hinzufügen"
         },
         solution: {
           optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
