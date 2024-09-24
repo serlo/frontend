@@ -1026,6 +1026,15 @@ export const loggedInData = {
             deactivate: 'Load Interactive Element visible',
             activate: 'Load Interactive Element collapsed',
           },
+          addOptionalInteractiveEx: 'Add an optional interactive exercise:',
+          changeInteractive: 'Change interactive element',
+          confirmRemoveInteractive:
+            'Your current changes will be replaced. Are you sure?',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution',
+          previewMode: 'Preview',
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit',
         },
         exerciseGroup: {
           title: 'Exercise Group',
@@ -1116,17 +1125,6 @@ export const loggedInData = {
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page',
           confirmDelete: 'Are you sure you want to delete this course page?',
-        },
-        exercise: {
-          addOptionalInteractiveEx: 'Add an optional interactive exercise:',
-          changeInteractive: 'Change interactive element',
-          confirmRemoveInteractive:
-            'Your current changes will be replaced. Are you sure?',
-          createSolution: 'Create solution',
-          removeSolution: 'Remove solution',
-          previewMode: 'Preview',
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit',
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',

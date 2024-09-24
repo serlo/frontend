@@ -13,8 +13,7 @@ export function InteractiveExercisesSelection({
   interactivePluginOptions: PluginMenuItem[]
   interactive: ExerciseProps['state']['interactive']
 }) {
-  const templateStrings = useEditorStrings().templatePlugins
-  const exTemplateStrings = templateStrings.exercise
+  const exStrings = useEditorStrings().plugins.exercise
 
   function getTooltipClass(index: number) {
     const isLastInLine = index % 4 === 3
@@ -33,9 +32,7 @@ export function InteractiveExercisesSelection({
 
   return (
     <>
-      <p className="mb-2 text-gray-400">
-        {exTemplateStrings.addOptionalInteractiveEx}
-      </p>
+      <p className="mb-2 text-gray-400">{exStrings.addOptionalInteractiveEx}</p>
       <div className="grid grid-cols-4 items-start gap-2 pb-10">
         {interactivePluginOptions.map(
           ({ type, title, icon, description, initialState }, index) => (

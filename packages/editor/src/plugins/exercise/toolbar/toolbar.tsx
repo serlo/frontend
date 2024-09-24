@@ -21,9 +21,7 @@ export const ExerciseToolbar = ({
   setPreviewActive: (active: boolean) => void
 }) => {
   const { interactive, hideInteractiveInitially } = state
-  const editorStrings = useEditorStrings()
-  const exTemplateStrings = editorStrings.templatePlugins.exercise
-  const exPluginStrings = editorStrings.plugins.exercise
+  const exStrings = useEditorStrings().plugins.exercise
 
   const pluginSettings = interactive.defined ? (
     <>
@@ -46,13 +44,11 @@ export const ExerciseToolbar = ({
               <DropdownButton
                 separatorTop
                 onClick={() => {
-                  if (
-                    window.confirm(exTemplateStrings.confirmRemoveInteractive)
-                  ) {
+                  if (window.confirm(exStrings.confirmRemoveInteractive)) {
                     interactive.remove()
                   }
                 }}
-                label={exTemplateStrings.changeInteractive}
+                label={exStrings.changeInteractive}
                 icon={faArrowsRotate}
               />
               <DropdownButton
@@ -62,7 +58,7 @@ export const ExerciseToolbar = ({
                   } else hideInteractiveInitially.create(true)
                 }}
                 label={
-                  exPluginStrings.hideInteractiveInitially[
+                  exStrings.hideInteractiveInitially[
                     hideInteractiveInitially.defined ? 'deactivate' : 'activate'
                   ]
                 }

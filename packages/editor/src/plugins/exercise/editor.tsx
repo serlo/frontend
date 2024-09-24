@@ -31,8 +31,7 @@ export function ExerciseEditor(props: ExerciseProps) {
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const editorStrings = useEditorStrings()
-  const exTemplateStrings = editorStrings.templatePlugins.exercise
-  const exPluginStrings = editorStrings.plugins.exercise
+  const exStrings = editorStrings.plugins.exercise
 
   const [previewActive, setPreviewActive] = useState(false)
 
@@ -93,7 +92,7 @@ export function ExerciseEditor(props: ExerciseProps) {
         <div className="h-10"></div>
         {content.render({
           config: {
-            textPluginPlaceholder: exPluginStrings.placeholder,
+            textPluginPlaceholder: exStrings.placeholder,
           },
         })}
         <div className="mx-side">
@@ -102,7 +101,7 @@ export function ExerciseEditor(props: ExerciseProps) {
               {interactive.render()}
               {hideInteractiveInitially.defined ? (
                 <small className="bg-editor-primary-200 p-1">
-                  [{exPluginStrings.hideInteractiveInitially.info}]
+                  [{exStrings.hideInteractiveInitially.info}]
                 </small>
               ) : null}
             </>
@@ -119,7 +118,7 @@ export function ExerciseEditor(props: ExerciseProps) {
                   className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
                   onClick={() => solution.remove()}
                 >
-                  <EditorTooltip text={exTemplateStrings.removeSolution} />
+                  <EditorTooltip text={exStrings.removeSolution} />
                   <FaIcon icon={faTrashAlt} />
                 </button>
               </nav>
@@ -133,7 +132,7 @@ export function ExerciseEditor(props: ExerciseProps) {
               )}
             >
               <AddButton onClick={() => solution.create()}>
-                {exTemplateStrings.createSolution}
+                {exStrings.createSolution}
               </AddButton>
             </div>
           )}
