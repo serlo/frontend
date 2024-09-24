@@ -3,7 +3,6 @@ import IconPortrait from '@editor/editor-ui/assets/plugin-icons/dropzone-image/p
 import IconSquare from '@editor/editor-ui/assets/plugin-icons/dropzone-image/square.svg'
 
 import type { DropzoneImageProps } from '../..'
-import { DropzoneImageToolbar } from '../../toolbar'
 import { BackgroundShape } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -42,9 +41,10 @@ const canvasDimensionsMap = {
   },
 }
 
-export function BackgroundShapeSelect(props: DropzoneImageProps) {
-  const { state, id, focused } = props
-  const { canvasShape, canvasDimensions } = state
+export function BackgroundShapeSelect({
+  canvasShape,
+  canvasDimensions,
+}: DropzoneImageProps['state']) {
   const shapeStrings = useEditorStrings().plugins.dropzoneImage.backgroundShapes
 
   const onSelectShape = (shape: SelectableShapeOption) => {
@@ -56,7 +56,6 @@ export function BackgroundShapeSelect(props: DropzoneImageProps) {
 
   return (
     <>
-      {focused && <DropzoneImageToolbar id={id} />}
       <h2 className="mt-6 flex flex-row items-center justify-center pt-10 font-bold text-almost-black">
         {shapeStrings.description}
       </h2>

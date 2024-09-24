@@ -1,6 +1,5 @@
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseStaticRenderer } from './static'
@@ -16,6 +15,7 @@ import {
   selectStaticDocument,
   useAppSelector,
 } from '../../store'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const { state, id, focused } = props
@@ -41,7 +41,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const handleAddButtonClick = () => answers.insert()
   const removeAnswer = (index: number) => () => answers.remove(index)
 
-  const [previewActive, setPreviewActive] = useState(false)
+  const previewActive = useIsPreviewActive()
 
   const isAnyAnswerFocused = answers.some(({ content, feedback }) => {
     const focusedId = selectFocused(store.getState())
@@ -70,13 +70,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {showUi ? (
-        <ScMcExerciseToolbar
-          {...props}
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
-        />
-      ) : null}
+      {showUi ? <ScMcExerciseToolbar {...props} /> : null}
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {/* margin-hack */}
         <div className="[&_.ml-4.flex]:mb-block">

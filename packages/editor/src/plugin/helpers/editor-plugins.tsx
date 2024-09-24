@@ -3,8 +3,6 @@ import { EditorPlugin } from '../internal-plugin'
 export interface PluginWithData {
   type: string
   plugin: EditorPlugin | EditorPlugin<any, any>
-  visibleInSuggestions?: boolean
-  icon?: JSX.Element
 }
 
 export type PluginsWithData = PluginWithData[]
@@ -37,5 +35,11 @@ export const editorPlugins = (function () {
     return (contextPlugin?.plugin as EditorPlugin) ?? null
   }
 
-  return { init, getAllWithData, getByType }
+  function isSupported(pluginType: string) {
+    const plugins = getAllWithData()
+
+    return !!plugins.find((plugin) => plugin.type === pluginType)
+  }
+
+  return { init, getAllWithData, getByType, isSupported }
 })()

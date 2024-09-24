@@ -1,10 +1,10 @@
 import IconAnswerImage from '@editor/editor-ui/assets/plugin-icons/dropzone-image/answer-image.svg'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { AnswerRenderer } from './answer-renderer'
-import { AnswerZonesContext } from '../../context/context'
+import type { DropzoneImageProps } from '../..'
 import { AnswerType } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -12,6 +12,8 @@ interface NewAnswerFlowProps {
   isWrongAnswer?: boolean
   zoneId?: string
   onSave: () => void
+  answerZones: DropzoneImageProps['state']['answerZones']
+  extraDraggableAnswers: DropzoneImageProps['state']['extraDraggableAnswers']
 }
 
 /**
@@ -20,15 +22,17 @@ interface NewAnswerFlowProps {
  * It guides the user through selecting either text or image and configuring the answer.
  *
  */
-export function NewAnswerFlow(props: NewAnswerFlowProps) {
-  const { isWrongAnswer = false, zoneId, onSave } = props
+export function NewAnswerFlow({
+  isWrongAnswer = false,
+  zoneId,
+  onSave,
+  answerZones,
+  extraDraggableAnswers,
+}: NewAnswerFlowProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const [stepOneType, setStepOneType] = useState<AnswerType>(AnswerType.Image)
 
   const editorPluginsStrings = useEditorStrings().plugins
-
-  const { answerZones, extraDraggableAnswers } =
-    useContext(AnswerZonesContext) || {}
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers
@@ -79,6 +83,8 @@ export function NewAnswerFlow(props: NewAnswerFlowProps) {
       isWrongAnswer={isWrongAnswer}
       zoneId={zoneId}
       onSave={onSave}
+      answerZones={answerZones}
+      extraDraggableAnswers={extraDraggableAnswers}
     />
   )
 

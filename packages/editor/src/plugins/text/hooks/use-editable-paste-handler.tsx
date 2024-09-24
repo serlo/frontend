@@ -1,4 +1,5 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { captionPasteHandler } from '@editor/plugins/image/utils/caption-paste-handler'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
@@ -11,7 +12,6 @@ import {
 } from '@editor/store'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 

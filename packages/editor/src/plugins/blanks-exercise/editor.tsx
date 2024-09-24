@@ -7,13 +7,14 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
 import { ExtraIncorrectAnswers } from './components/extra-incorrect-answers'
 import { BlanksExerciseRenderer } from './renderer'
 import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
@@ -38,9 +39,14 @@ const cellTextFormattingOptions = [
 export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { focused, id, state } = props
   const { text: childPlugin, mode, extraDraggableAnswers } = state
-  const [previewActive, setPreviewActive] = useState(false)
+  const previewActive = useIsPreviewActive()
 
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const editorStrings = useEditorStrings()
+  const blanksExerciseStrings = editorStrings.plugins.blanksExercise
+  const pluginTitle =
+    mode.value === 'typing'
+      ? editorStrings.pluginMenu.blanksExercise.title
+      : editorStrings.pluginMenu.blanksExerciseDragAndDrop.title
 
   const isChildPluginFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, childPlugin.id)
@@ -77,8 +83,7 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
       {focused ? (
         <BlanksExerciseToolbar
           {...props}
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
+          pluginTitle={pluginTitle}
           childPluginType={childPluginState.plugin as EditorPluginType}
         />
       ) : (
@@ -90,7 +95,7 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
           `)}
           data-qa="plugin-blanks-exercise-parent-button"
         >
-          {blanksExerciseStrings.title}
+          {pluginTitle}
         </button>
       )}
 

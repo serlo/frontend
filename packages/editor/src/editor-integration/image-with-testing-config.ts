@@ -1,7 +1,6 @@
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import type { LoadedFile, UploadValidator } from '@editor/plugin'
 import { createImagePlugin } from '@editor/plugins/image'
-
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface MediaUploadQuery {
   __typename?: 'Query'

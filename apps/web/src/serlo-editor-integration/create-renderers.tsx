@@ -240,10 +240,6 @@ export function createRenderers(): InitRenderersArgs {
         renderer: BlanksExerciseStaticRenderer,
       },
       {
-        type: EditorPluginType.BlanksExerciseDragAndDrop,
-        renderer: BlanksExerciseStaticRenderer,
-      },
-      {
         type: EditorPluginType.InteractiveVideo,
         renderer: InteractiveVideoRenderer,
       },

@@ -57,10 +57,11 @@ Scenario('Create and remove gaps through toolbar', async ({ I }) => {
   I.seeElement('$plugin-toolbar-button-lücke-erstellen')
   I.dontSeeElement('$plugin-toolbar-button-lücke-entfernen')
   I.click('$plugin-toolbar-button-lücke-erstellen')
+  I.seeNumberOfElements('$blank-input', 1)
+  I.click('$blank-input')
   I.seeElement('$plugin-toolbar-button-lücke-entfernen')
   I.dontSeeElement('$plugin-toolbar-button-lücke-erstellen')
 
-  I.seeNumberOfElements('$blank-input', 1)
   I.click('$plugin-toolbar-button-lücke-entfernen')
   I.dontSeeElement('$plugin-toolbar-button-lücke-entfernen')
   I.dontSeeElement('$blank-input')
@@ -79,6 +80,7 @@ Scenario('Create a blank gap and type in it', async ({ I }) => {
   I.type('No gap here ')
   I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
+  I.click('$blank-input')
   const GapContent = 'gap content'
   I.type(GapContent)
   I.seeInField('$blank-input', GapContent)
@@ -97,12 +99,14 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
   I.say('Create a gap, then delete it with backspace')
   I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
+  I.click('$blank-input')
   I.pressKey('Backspace')
   I.dontSeeElement('$blank-input')
 
   I.say('Create a gap, then delete it with del')
   I.click('$plugin-toolbar-button-lücke-erstellen')
   I.seeNumberOfElements('$blank-input', 1)
+  I.click('$blank-input')
   I.pressKey('Delete')
   I.dontSeeElement('$blank-input')
 })
@@ -148,6 +152,7 @@ Scenario(
     I.say('Create two gaps')
     I.click('$plugin-toolbar-button-lücke-erstellen')
     I.seeNumberOfElements('$blank-input', 1)
+    I.click('$blank-input')
     I.type('first')
 
     // unfocus gap
@@ -156,12 +161,13 @@ Scenario(
     I.type(' and ')
 
     I.click('$plugin-toolbar-button-lücke-erstellen')
+    I.click(locate('$blank-input').at(2))
     I.type('second')
     I.seeNumberOfElements('$blank-input', 2)
 
     I.say('Change mode to preview and solve them incorrectly')
     I.click('$plugin-blanks-exercise-parent-button')
-    I.click('$plugin-blanks-exercise-preview-button')
+    I.click('$plugin-exercise-preview-button')
     I.seeNumberOfElements('$blank-input', 2)
     I.click(locate('$blank-input').first())
     // Adding the second gap solution to the first gap

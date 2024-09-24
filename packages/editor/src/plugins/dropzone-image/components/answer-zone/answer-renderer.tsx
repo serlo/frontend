@@ -1,7 +1,7 @@
 import { focus, useAppDispatch } from '@editor/store'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
-import { AnswerZonesContext } from '../../context/context'
+import type { DropzoneImageProps } from '../..'
 import { AnswerType } from '../../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -11,6 +11,8 @@ interface AnswerRendererProps {
   isWrongAnswer?: boolean
   zoneId?: string
   onSave: () => void
+  answerZones: DropzoneImageProps['state']['answerZones']
+  extraDraggableAnswers: DropzoneImageProps['state']['extraDraggableAnswers']
 }
 
 export function AnswerRenderer({
@@ -19,17 +21,16 @@ export function AnswerRenderer({
   isWrongAnswer = false,
   zoneId,
   onSave,
+  answerZones,
+  extraDraggableAnswers,
 }: AnswerRendererProps): JSX.Element {
   const editorStrings = useEditorStrings().edtrIo
 
   const dispatch = useAppDispatch()
-  const { answerZones, extraDraggableAnswers } =
-    useContext(AnswerZonesContext) || {}
 
   useEffect(() => {
-    if (isAnswerTypeText) {
-      dispatch(focus(answer.text.id))
-    }
+    if (!isAnswerTypeText) return
+    dispatch(focus(answer.text.id))
   })
 
   const answersList = isWrongAnswer

@@ -1,20 +1,3 @@
-import IconScMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-auswahlaufgaben.svg'
-import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg'
-import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg'
-import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg'
-import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg'
-import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg'
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
-import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg'
-import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg'
-import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg'
-import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg'
-import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg'
-import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg'
-import IconPencil from '@editor/editor-ui/assets/plugin-icons/icon-pencil.svg'
-import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg'
-import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
-import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -23,6 +6,7 @@ import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
@@ -57,73 +41,55 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
-      visibleInSuggestions: true,
-      icon: <IconText />,
     },
     ...(testingSecret
       ? [
           {
             type: EditorPluginType.Image,
             plugin: createTestingImagePlugin(testingSecret),
-            visibleInSuggestions: true,
-            icon: <IconImage />,
+          },
+          {
+            type: EditorPluginType.ImageGallery,
+            plugin: createImageGalleryPlugin(),
           },
         ]
       : []),
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),
-      visibleInSuggestions: true,
-      icon: <IconMultimedia />,
     },
     {
       type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(plugins),
-      visibleInSuggestions: true,
-      icon: <IconSpoiler />,
     },
     {
       type: EditorPluginType.Equations,
       plugin: equationsPlugin,
-      visibleInSuggestions: true,
-      icon: <IconEquation />,
     },
     {
       type: EditorPluginType.Box,
       plugin: createBoxPlugin(plugins),
-      visibleInSuggestions: true,
-      icon: <IconBox />,
     },
     {
       type: EditorPluginType.SerloTable,
       plugin: createSerloTablePlugin(),
-      visibleInSuggestions: true,
-      icon: <IconTable />,
     },
     {
       type: EditorPluginType.Geogebra,
       plugin: geoGebraPlugin,
-      visibleInSuggestions: true,
-      icon: <IconGeogebra />,
     },
     {
       type: EditorPluginType.Highlight,
       plugin: createHighlightPlugin(),
-      visibleInSuggestions: true,
-      icon: <IconHighlight />,
     },
     {
       type: EditorPluginType.EdusharingAsset,
       plugin: createEdusharingAssetPlugin(),
-      visibleInSuggestions: true,
-      icon: <IconImage />,
     },
     {
       type: EditorPluginType.SerloInjection,
       plugin: createSerloInjectionPlugin(),
       renderer: SerloInjectionStaticRenderer,
-      visibleInSuggestions: true,
-      icon: <IconInjection />,
     },
 
     // Exercises etc.
@@ -131,43 +97,30 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
-      visibleInSuggestions: true,
-    },
-    {
-      type: EditorPluginType.TextAreaExercise,
-      plugin: textAreaExercisePlugin,
-      icon: <IconFallback />,
     },
     {
       type: EditorPluginType.Solution,
       plugin: solutionPlugin,
-      icon: <IconPencil />,
     },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
-      icon: <IconTextArea />,
     },
     {
       type: EditorPluginType.ScMcExercise,
       plugin: createScMcExercisePlugin(),
-      icon: <IconScMcExercise />,
     },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: createBlanksExercisePlugin({ defaultMode: 'typing' }),
-      icon: <IconBlanksTyping />,
-    },
-    {
-      type: EditorPluginType.BlanksExerciseDragAndDrop,
-      plugin: createBlanksExercisePlugin({ defaultMode: 'drag-and-drop' }),
-      icon: <IconBlanksDragAndDrop />,
+      plugin: createBlanksExercisePlugin(),
     },
     {
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
-      visibleInSuggestions: false,
-      icon: <IconDropzones />,
+    },
+    {
+      type: EditorPluginType.TextAreaExercise,
+      plugin: textAreaExercisePlugin,
     },
 
     // Special plugins, never visible in suggestions

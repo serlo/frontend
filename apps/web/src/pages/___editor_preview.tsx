@@ -24,7 +24,7 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-trigger-learner-event'
+import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-handle-learner-event'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -92,12 +92,7 @@ function Content() {
   const editorStrings = loggedInData.strings.editor
 
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
-  editorPlugins.init(
-    createPlugins({
-      editorStrings,
-      parentType: 'Article',
-    })
-  )
+  editorPlugins.init(createPlugins({ editorStrings }))
 
   editorRenderers.init(createRenderers())
 

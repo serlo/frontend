@@ -12,14 +12,11 @@ export function StaticLightboxThumbnail({
   isSelected,
   onClick,
 }: StaticLightboxThumbnailProps) {
+  const { src, alt } = image
+
   return (
     <button className="group relative" onClick={onClick}>
-      <img
-        src={image.src}
-        // TODO: get actual alt text or fallback
-        alt={`Image ${image.src}`}
-        className="max-h-[120px] bg-white"
-      />
+      <img src={src} alt={alt} className="max-h-[120px] bg-white" />
       <div
         className={cn(
           'absolute inset-0 bg-black bg-opacity-70 group-hover:block',

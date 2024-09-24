@@ -1,15 +1,11 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
-import type { ImageProps } from '@editor/plugins/image'
+import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
@@ -18,25 +14,18 @@ import { cn } from '@/helper/cn'
 
 interface DropzoneImageToolbarProps {
   id: string
-  backgroundImageState?: {
-    id: string | null
-    state?: ImageProps['state']
-  }
+  backgroundImage?: DropzoneImageProps['state']['backgroundImage']
+  showSettings: boolean
   showSettingsButton?: boolean
-  onChangeImageButtonClick?: () => void
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
-  previewActive?: boolean
-  setPreviewActive?: (active: boolean) => void
 }
 
 export function DropzoneImageToolbar({
   id,
-  backgroundImageState,
+  backgroundImage,
+  showSettings,
   showSettingsButton = false,
-  onChangeImageButtonClick,
   dropzoneVisibility,
-  previewActive,
-  setPreviewActive,
 }: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
@@ -45,29 +34,47 @@ export function DropzoneImageToolbar({
 
   const visibilityOptions = Object.entries(dropzoneStrings.visibilityOptions)
 
-  if (dropzoneVisibility === undefined) return null
+  const dispatch = useAppDispatch()
+
+  const handleChangeImageButtonClick = useCallback(() => {
+    if (!backgroundImage?.defined) return
+
+    dispatch(
+      runChangeDocumentSaga({
+        id: backgroundImage.id,
+        state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
+      })
+    )
+  }, [backgroundImage, dispatch])
 
   return (
     <PluginToolbar
       pluginType={EditorPluginType.DropzoneImage}
-      pluginSettings={
-        <>
-          <button
-            onClick={() => setShowSettingsModal(true)}
-            className={cn(`
-            mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
-            hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
-          `)}
-          >
-            {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
-          </button>
-          {renderSettingsModal()}
-          {previewActive !== undefined && setPreviewActive !== undefined ? (
-            <PreviewButton
-              previewActive={previewActive}
-              setPreviewActive={setPreviewActive}
-            />
-          ) : null}
+      pluginSettings={showSettings ? renderSettingsButtons() : undefined}
+      pluginControls={<InteractiveToolbarTools id={id} />}
+    />
+  )
+
+  function renderSettingsButtons() {
+    if (!dropzoneVisibility && !showSettingsButton) return undefined
+
+    return (
+      <>
+        {showSettingsButton ? (
+          <>
+            <button
+              onClick={() => setShowSettingsModal(true)}
+              className={cn(`
+                mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all
+                hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200
+                `)}
+            >
+              {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
+            </button>
+            {renderSettingsModal()}
+          </>
+        ) : null}
+        {dropzoneVisibility ? (
           <ToolbarSelect
             tooltipText={dropzoneStrings.dropzoneVisibility}
             value={dropzoneVisibility.value}
@@ -77,14 +84,13 @@ export function DropzoneImageToolbar({
               value: key,
             }))}
           />
-        </>
-      }
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
-  )
+        ) : null}
+      </>
+    )
+  }
 
   function renderSettingsModal() {
-    if (!showSettingsButton || !backgroundImageState) return null
+    if (!backgroundImage?.defined) return null
 
     return (
       <ModalWithCloseButton
@@ -93,24 +99,20 @@ export function DropzoneImageToolbar({
           const isModalClosing = !open
           if (isModalClosing) setShowSettingsModal(false)
         }}
-        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+        title={`${editorStrings.edtrIo.settings}: ${editorStrings.plugins.dropzoneImage.title}`}
+        extraTitleClassName="serlo-h3 mt-4"
+        className="top-8 max-w-xl translate-y-0 sm:top-20"
       >
-        <h3 className="serlo-h3 mt-4">
-          {editorStrings.edtrIo.settings}:{' '}
-          {editorStrings.plugins.dropzoneImage.title}
-        </h3>
-
+        <div className="mx-side my-3">
+          <BackgroundImageSettings id={backgroundImage.id} />
+        </div>
         <div className="mx-side my-3">
           <button
-            onClick={onChangeImageButtonClick}
-            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            onClick={handleChangeImageButtonClick}
+            className="serlo-button-editor-primary mr-2 mt-6"
           >
             {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
           </button>
-        </div>
-
-        <div className="mx-side mb-3">
-          <BackgroundImageSettings {...backgroundImageState} />
         </div>
       </ModalWithCloseButton>
     )

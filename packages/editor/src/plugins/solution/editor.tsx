@@ -1,3 +1,4 @@
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { IsSerloContext } from '@serlo/frontend/src/serlo-editor-integration/context/is-serlo-context'
@@ -14,7 +15,6 @@ import {
 } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 const linkOverlayWrapperWidth = 460
 

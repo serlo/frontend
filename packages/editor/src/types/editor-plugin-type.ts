@@ -34,7 +34,6 @@ export enum EditorPluginType {
   InputExercise = 'inputExercise',
   TextAreaExercise = 'textAreaExercise',
   BlanksExercise = 'blanksExercise',
-  BlanksExerciseDragAndDrop = 'blanksExerciseDragAndDrop',
   Solution = 'solution',
 
   SerloInjection = 'serloInjection',

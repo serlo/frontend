@@ -1,157 +1,73 @@
-import { ImageProps } from '@editor/plugins/image'
-import {
-  runChangeDocumentSaga,
-  selectDocument,
-  selectStaticDocument,
-  useAppDispatch,
-  useAppSelector,
-} from '@editor/store'
+import { selectStaticDocument, useAppSelector } from '@editor/store'
 import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { useCallback, useState } from 'react'
 
 import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
 import { BackgroundTypeSelect } from './components/editor/background-type-select'
-import { EditorCanvas } from './components/editor/editor-canvas'
-import { EditorCanvasModal } from './components/editor/editor-canvas-modal'
-import { ExtraIncorrectAnswers } from './components/editor/extra-incorrect-answers'
-import { PossibleAnswers } from './components/editor/possible-answers'
-import { AnswerZonesContext } from './context/context'
-import { useAnswerZones } from './hooks/use-answer-zones'
-import { DropzoneImageStaticRenderer } from './static'
+import { EditingView } from './components/editor/editing-view'
 import { DropzoneImageToolbar } from './toolbar'
-import {
-  BackgroundType,
-  BackgroundShape,
-  DropzoneVisibility,
-  ModalType,
-} from './types'
+import { BackgroundType } from './types'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 
-export function DropzoneImageEditor(props: DropzoneImageProps) {
-  const { state, id, focused } = props
-  const {
-    answerZones,
-    backgroundImage,
-    dropzoneVisibility,
-    extraDraggableAnswers,
-  } = state
+export function DropzoneImageEditor({
+  state,
+  id,
+  focused,
+}: DropzoneImageProps) {
+  const { backgroundImage, dropzoneVisibility } = state
 
-  const dispatch = useAppDispatch()
-
-  const isBackgroundImagePluginDefined = backgroundImage.defined
-
-  const [previewActive, setPreviewActive] = useState(false)
-  const [modalType, setModalType] = useState<ModalType>(ModalType.Unset)
+  const previewActive = useIsPreviewActive()
 
   const staticDocument = useAppSelector(
     (storeState) =>
       selectStaticDocument(storeState, id) as EditorDropzoneImageDocument
   )
-  const backgroundImagePluginState = useAppSelector((state) =>
-    selectDocument(
-      state,
-      isBackgroundImagePluginDefined ? backgroundImage.id : null
-    )
-  ) as EditorImageDocument
-  const backgroundImageUrlFromPlugin =
-    backgroundImagePluginState?.state?.src || ''
+  const staticImage = staticDocument.state
+    .backgroundImage as EditorImageDocument
+  const hasBackgroundImageUrl = !!staticImage?.state.src
 
-  const {
-    currentAnswerZone,
-    currentAnswerIndex,
-    currentAnswerType,
-    selectAnswerZone,
-    selectCurrentAnswer,
-    insertAnswerZone,
-    duplicateAnswerZone,
-  } = useAnswerZones(answerZones)
+  const { backgroundType, canvasShape } = state
 
-  const handleChangeImageButtonClick = useCallback(() => {
-    if (!backgroundImage.defined) return
+  const isBackgroundTypeBlank = backgroundType.value === BackgroundType.Blank
+  const isBackgroundTypeImage = backgroundType.value === BackgroundType.Image
 
-    dispatch(
-      runChangeDocumentSaga({
-        id: backgroundImage.id,
-        state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
-      })
-    )
-  }, [backgroundImage, dispatch])
-
-  const backgroundType = state.backgroundType.value
-  const isBackgroundTypeBlank = backgroundType === BackgroundType.Blank
-  const isBackgroundTypeImage = backgroundType === BackgroundType.Image
-
-  if (backgroundType === '') return <BackgroundTypeSelect {...props} />
-
-  const canvasShape = state.canvasShape.value as BackgroundShape
-
-  if (!canvasShape && isBackgroundTypeBlank) {
-    return <BackgroundShapeSelect {...props} />
-  }
-
-  const hasBackgroundImageUrl = !!backgroundImageUrlFromPlugin
   const isBackgroundSelected =
     isBackgroundTypeBlank || (isBackgroundTypeImage && hasBackgroundImageUrl)
 
   // show image selection screen
-  if (!isBackgroundSelected && isBackgroundImagePluginDefined) {
+  if (!isBackgroundSelected && backgroundImage.defined) {
     return backgroundImage.render()
   }
 
+  const showTypeSelect = backgroundType.value === ''
+  const showShapeSelect = !canvasShape.value && isBackgroundTypeBlank
+
   return (
-    <AnswerZonesContext.Provider
-      value={{
-        answerZones,
-        canvasShape,
-        currentAnswerZone,
-        currentAnswerIndex,
-        currentAnswerType,
-        selectAnswerZone,
-        selectCurrentAnswer,
-        dropzoneVisibility: dropzoneVisibility.value as DropzoneVisibility,
-        extraDraggableAnswers,
-      }}
-    >
-      {focused && (
+    <>
+      {focused ? (
         <DropzoneImageToolbar
           id={id}
-          onChangeImageButtonClick={handleChangeImageButtonClick}
+          showSettings={!showTypeSelect && !showShapeSelect}
           showSettingsButton={isBackgroundTypeImage}
-          backgroundImageState={{
-            id: isBackgroundImagePluginDefined ? backgroundImage.id : null,
-            state: backgroundImagePluginState?.state as unknown as
-              | ImageProps['state']
-              | undefined,
-          }}
+          backgroundImage={backgroundImage}
           dropzoneVisibility={dropzoneVisibility}
+        />
+      ) : null}
+
+      {showTypeSelect ? (
+        <BackgroundTypeSelect {...state} />
+      ) : showShapeSelect ? (
+        <BackgroundShapeSelect {...state} />
+      ) : (
+        <EditingView
+          state={state}
           previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
+          staticDocument={staticDocument}
         />
       )}
-      {previewActive ? (
-        <DropzoneImageStaticRenderer {...staticDocument} />
-      ) : (
-        <div className="mx-side">
-          <EditorCanvasModal
-            answerZones={answerZones}
-            modalType={modalType}
-            duplicateAnswerZone={duplicateAnswerZone}
-            setModalType={setModalType}
-          />
-          <EditorCanvas state={state} setModalType={setModalType} />
-          <PossibleAnswers
-            answerZones={answerZones}
-            onClickAddAnswerZone={insertAnswerZone}
-          />
-          <ExtraIncorrectAnswers
-            extraDraggableAnswers={extraDraggableAnswers}
-            setModalType={setModalType}
-          />
-        </div>
-      )}
-    </AnswerZonesContext.Provider>
+    </>
   )
 }

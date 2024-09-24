@@ -1,12 +1,16 @@
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { defaultLargeCanvasDimension } from './background-shape-select'
 import type { DropzoneImageProps } from '../..'
-import { AnswerZonesContext } from '../../context/context'
-import { AnswerZoneState, ModalType } from '../../types'
+import {
+  type AnswerType,
+  AnswerZoneState,
+  ModalType,
+  type DropzoneVisibility,
+} from '../../types'
 import { getPercentageRounded } from '../../utils/percentage'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
 import { cn } from '@/helper/cn'
@@ -14,17 +18,19 @@ import { cn } from '@/helper/cn'
 interface EditorCanvasProps {
   state: DropzoneImageProps['state']
   setModalType: (type: ModalType) => void
+  selectAnswerZone: (id: string) => void
+  selectCurrentAnswer: (index: number, type: AnswerType) => void
 }
 
-export function EditorCanvas(props: EditorCanvasProps) {
-  const { state, setModalType } = props
+export function EditorCanvas({
+  state,
+  setModalType,
+  selectAnswerZone,
+  selectCurrentAnswer,
+}: EditorCanvasProps) {
   const { answerZones, backgroundImage, canvasDimensions } = state
   const canvasWidth = canvasDimensions.width.value
   const canvasHeight = canvasDimensions.height.value
-
-  const context = useContext(AnswerZonesContext)
-
-  const { selectAnswerZone, selectCurrentAnswer } = context || {}
 
   const backgroundImageDocument = backgroundImage.defined
     ? (selectStaticDocument(
@@ -125,6 +131,9 @@ export function EditorCanvas(props: EditorCanvasProps) {
             key={index}
             answerZone={answerZone}
             canvasSize={[canvasWidth, canvasHeight]}
+            dropzoneVisibility={
+              state.dropzoneVisibility.value as DropzoneVisibility
+            }
             onClick={() => selectAnswerZone(id)}
             onClickSettingsButton={() => {
               selectAnswerZone(id)

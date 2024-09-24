@@ -1,5 +1,6 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import {
   store,
   selectChildTreeOfParent,
@@ -10,7 +11,6 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@serlo/frontend/src/helper/cn'
-import { showToastNotice } from '@serlo/frontend/src/helper/show-toast-notice'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'

@@ -3,11 +3,11 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { defaultLargeCanvasDimension } from './components/editor/background-shape-select'
 import { DropzoneImageEditor } from './editor'
+import { BackgroundShape, DropzoneVisibility } from './types'
 import {
   defaultAnswerZoneLayout,
   defaultAnswerZonePosition,
-} from './hooks/use-answer-zones'
-import { BackgroundShape, DropzoneVisibility } from './types'
+} from './utils/answer-zone'
 import {
   type EditorPlugin,
   type EditorPluginProps,

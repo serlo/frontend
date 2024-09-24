@@ -44,10 +44,10 @@ export function SerloLicenseChooser({
       <ModalWithCloseButton
         isOpen={showLicenseModal}
         setIsOpen={setShowLicenseModal}
-        className="top-8 max-w-xl translate-y-0 sm:top-1/3"
+        className="top-8 max-w-xl translate-y-0 sm:top-24"
+        title={solutionStrings.changeLicense}
+        extraTitleClassName="serlo-h3 mt-4"
       >
-        <h3 className="serlo-h3 mt-4">{solutionStrings.changeLicense}:</h3>
-
         <div className="mx-side mb-3">
           <select
             className="serlo-button-light serlo-input-font-reset max-w-md"
