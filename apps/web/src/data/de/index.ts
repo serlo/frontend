@@ -964,7 +964,7 @@ export const loggedInData = {
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
           acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort",
-          childPluginSelection: 'Would you like to add blanks to a text or a table?'
+          childPluginSelection: "Möchtest du einen Lückentext oder eine Tabelle mit Lücken?"
         }
       },
       templatePlugins: {
