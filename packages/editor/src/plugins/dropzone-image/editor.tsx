@@ -15,7 +15,7 @@ import { useIsPreviewActive } from '../exercise/context/preview-context'
 export function DropzoneImageEditor({
   state,
   id,
-  focused,
+  containerRef,
 }: DropzoneImageProps) {
   const { backgroundImage, dropzoneVisibility } = state
 
@@ -47,15 +47,13 @@ export function DropzoneImageEditor({
 
   return (
     <>
-      {focused ? (
-        <DropzoneImageToolbar
-          id={id}
-          showSettings={!showTypeSelect && !showShapeSelect}
-          showSettingsButton={isBackgroundTypeImage}
-          backgroundImage={backgroundImage}
-          dropzoneVisibility={dropzoneVisibility}
-        />
-      ) : null}
+      <DropzoneImageToolbar
+        showSettings={!showTypeSelect && !showShapeSelect}
+        showSettingsButton={isBackgroundTypeImage}
+        backgroundImage={backgroundImage}
+        dropzoneVisibility={dropzoneVisibility}
+        containerRef={containerRef}
+      />
 
       {showTypeSelect ? (
         <BackgroundTypeSelect {...state} />

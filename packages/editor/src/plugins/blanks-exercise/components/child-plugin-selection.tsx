@@ -29,11 +29,13 @@ export function ChildPluginSelection({
           onClick={() => handleClick(EditorPluginType.Text)}
           icon={<IconText />}
           title={pluginStrings.text.title}
+          dataQa="plugin-blanks-child-text-button"
         />
         <SelectionCard
           onClick={() => handleClick(EditorPluginType.SerloTable)}
           icon={<IconTable />}
           title={pluginStrings.serloTable.title}
+          dataQa="plugin-blanks-child-table-button"
         />
       </div>
     </>

@@ -1,6 +1,5 @@
-import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
@@ -9,23 +8,23 @@ import { useCallback, useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
 import { cn } from '@/helper/cn'
 
 interface DropzoneImageToolbarProps {
-  id: string
   backgroundImage?: DropzoneImageProps['state']['backgroundImage']
   showSettings: boolean
   showSettingsButton?: boolean
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
+  containerRef?: React.RefObject<HTMLDivElement>
 }
 
 export function DropzoneImageToolbar({
-  id,
   backgroundImage,
   showSettings,
   showSettingsButton = false,
   dropzoneVisibility,
+  containerRef,
 }: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
@@ -47,13 +46,11 @@ export function DropzoneImageToolbar({
     )
   }, [backgroundImage, dispatch])
 
-  return (
-    <PluginToolbar
-      pluginType={EditorPluginType.DropzoneImage}
-      pluginSettings={showSettings ? renderSettingsButtons() : undefined}
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
-  )
+  return showSettings ? (
+    <InteractiveToolbarPortal containerRef={containerRef}>
+      {renderSettingsButtons()}
+    </InteractiveToolbarPortal>
+  ) : null
 
   function renderSettingsButtons() {
     if (!dropzoneVisibility && !showSettingsButton) return undefined
