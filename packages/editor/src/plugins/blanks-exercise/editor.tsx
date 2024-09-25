@@ -76,8 +76,8 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   return (
     <div
       className={cn(
-        'group/blanks-exercise mb-12 mt-10 pb-6 pt-4',
-        'rounded-b-xl border-3 border-transparent focus-within:rounded-tl-xl focus-within:border-gray-100',
+        'group/blanks-exercise mb-12 pb-6',
+        'border-3 border-transparent focus-within:rounded-xl focus-within:border-gray-100',
         focused && '!border-gray-100'
       )}
       data-qa="plugin-blanks-exercise"
