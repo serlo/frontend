@@ -927,7 +927,15 @@ export const loggedInData = {
             info: "Interaktives Element ist versteckt beim laden",
             deactivate: "Interaktives Element sichtbar laden",
             activate: "Interaktives Element versteckt laden"
-          }
+          },
+          addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
+          changeInteractive: "Interaktives Element ändern",
+          confirmRemoveInteractive: 'Your current changes will be replaced. Are you sure?',
+          createSolution: "Lösung hinzufügen",
+          removeSolution: "Lösung entfernen",
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Vorschaumodus ist aktiv",
+          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         exerciseGroup: {
           title: "Aufgabe mit Teilaufgaben",
@@ -1010,16 +1018,6 @@ export const loggedInData = {
           removeCoursePage: "Kursseite entfernen",
           addCoursePage: "Kursseite hinzufügen",
           confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
-        },
-        exercise: {
-          addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
-          changeInteractive: "Interaktives Element ändern",
-          removeInteractive: "Interaktives Element entfernen",
-          createSolution: "Lösung hinzufügen",
-          removeSolution: "Lösung entfernen",
-          previewMode: "Vorschau",
-          previewIsActiveHint: "Vorschaumodus ist aktiv",
-          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         inputExercise: {
           chooseType: "Wähle den Antworttyp",
