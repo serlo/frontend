@@ -927,7 +927,15 @@ export const loggedInData = {
             info: 'Interactive element collapsed on load',
             deactivate: 'Load Interactive Element visible',
             activate: 'Load Interactive Element collapsed'
-          }
+          },
+          addOptionalInteractiveEx: 'Add an optional interactive exercise:',
+          changeInteractive: 'Change interactive element',
+          confirmRemoveInteractive: 'Your current changes will be replaced. Are you sure?',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution',
+          previewMode: "पूर्वावलोकन",
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         exerciseGroup: {
           title: "व्यायाम समूह",
@@ -1010,16 +1018,6 @@ export const loggedInData = {
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page',
           confirmDelete: 'Are you sure you want to delete this course page?'
-        },
-        exercise: {
-          addOptionalInteractiveEx: 'Add an optional interactive exercise:',
-          changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element',
-          createSolution: 'Create solution',
-          removeSolution: 'Remove solution',
-          previewMode: "पूर्वावलोकन",
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',
