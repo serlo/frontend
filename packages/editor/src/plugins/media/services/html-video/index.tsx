@@ -19,8 +19,8 @@ export const videoUrlResolver: URLResolver = {
 
       video.oncanplay = () => {
         resolve({
-          type: 'resourceFound',
-          resource: {
+          type: 'success',
+          result: {
             hostingService: Hosting.CDN,
             embeddingType: Embed.HTMLVideo,
             contentUrl: url.href,
@@ -35,7 +35,7 @@ export const videoUrlResolver: URLResolver = {
             message: 'Video konnte nicht geladen werden.',
           })
         } else {
-          resolve({ type: 'cannotResolve' })
+          resolve({ type: 'useNextResolver' })
         }
       }
 

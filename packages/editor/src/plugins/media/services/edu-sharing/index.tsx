@@ -11,7 +11,10 @@ const possibleEmbeds = [Embed.HTMLImage, Embed.HTMLVideo] as const
 type PossibleEmbed = (typeof possibleEmbeds)[number]
 
 // A simulated list of resources on edusharing
-const resourcesOnEdusharing: Record<string, EmbeddingProp<PossibleEmbed>> = {
+const resourcesOnEdusharing: Record<
+  string,
+  EmbeddingProp<PossibleEmbed> | undefined
+> = {
   '1': {
     type: Embed.HTMLImage,
     contentUrl:
@@ -30,8 +33,14 @@ export const edusharingResourceResolver: ResourceResolver<Hosting.Edusharing> =
     resolvableEmbeds: possibleEmbeds,
     resolve(resource) {
       return new Promise((resolve) => {
+        const embed = resourcesOnEdusharing[resource.nodeId]
+
         setTimeout(() => {
-          resolve(resourcesOnEdusharing[resource.nodeId])
+          resolve(
+            embed !== undefined
+              ? { type: 'success', result: embed }
+              : { type: 'error', message: 'Resource not found' }
+          )
         }, 3000)
       })
     },
@@ -40,19 +49,19 @@ export const edusharingResourceResolver: ResourceResolver<Hosting.Edusharing> =
 export const edusharingUrlResolver: URLResolver = {
   resolvableHostings: [Hosting.Edusharing],
   resolve(url) {
-    if (url.hostname !== 'edu-sharing.org') {
-      return { type: 'cannotResolve' }
+    if (url.hostname !== 'edu-sharing.net') {
+      return { type: 'useNextResolver' }
     }
     if (!url.pathname.startsWith('/')) {
-      return { type: 'cannotResolve' }
+      return { type: 'useNextResolver' }
     }
 
     const nodeId = url.pathname.slice(1)
 
     if (nodeId in resourcesOnEdusharing) {
       return {
-        type: 'resourceFound',
-        resource: {
+        type: 'success',
+        result: {
           hostingService: Hosting.Edusharing,
           repositoryId: 'edusharing',
           nodeId,

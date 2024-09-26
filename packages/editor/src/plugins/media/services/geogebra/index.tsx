@@ -10,8 +10,11 @@ export const geogebraResourceResolver: ResourceResolver<Hosting.GeoGebra> = {
   resolvableEmbeds: [Embed.GeoGebraApplet] as const,
   resolve(resource) {
     return {
-      type: Embed.GeoGebraApplet,
-      appletId: resource.appletId,
+      type: 'success',
+      result: {
+        type: Embed.GeoGebraApplet,
+        appletId: resource.appletId,
+      },
     }
   },
 }
@@ -31,15 +34,15 @@ export const geogebraUrlResolver: URLResolver = {
   resolve(url) {
     if (url.hostname === 'www.geogebra.org' && url.pathname.startsWith('/m/')) {
       return {
-        type: 'resourceFound',
-        resource: {
+        type: 'success',
+        result: {
           hostingService: Hosting.GeoGebra,
           embeddingType: Embed.GeoGebraApplet,
           appletId: url.pathname.slice(3),
         },
       }
     } else {
-      return { type: 'cannotResolve' }
+      return { type: 'useNextResolver' }
     }
   },
 }

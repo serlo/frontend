@@ -56,16 +56,31 @@ export function SelectMediaByUrl({
 
           const result = await resolver.resolve(url, controller.signal)
 
-          if (result.type === 'resourceFound') {
-            const embedding = await resolveEmbedding(result.resource)
+          if (result.type === 'success') {
+            const { result: resource } = result
+            const embeddingResult = await resolveEmbedding(resource)
+
+            if (embeddingResult.type === 'error') {
+              return {
+                type: 'error',
+                message: `Couldn't load resource. Reason: ${embeddingResult.message}`,
+              }
+            }
+
+            const { result: embedding } = embeddingResult
 
             if (
               allowEmbedding === undefined ||
               allowEmbedding.includes(embedding.type)
             ) {
-              onSelect(result.resource)
+              onSelect(resource)
 
               return
+            } else {
+              return {
+                type: 'error',
+                message: `Type ${embedding.type} not allowed in this plugin`,
+              }
             }
           } else if (result.type === 'error') {
             updateErrorWhenNotSet(result.message)
@@ -74,7 +89,7 @@ export function SelectMediaByUrl({
           } else if (result.type === 'aborted') {
             // Check was aborted, so we do not need to continue checking
             return
-          } else if (result.type === 'cannotResolve') {
+          } else if (result.type === 'useNextResolver') {
             // Continue with the next resolver
             continue
           }

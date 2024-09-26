@@ -86,8 +86,12 @@ export interface ResourceResolver<
   E extends Embed = Embed,
 > {
   resolvableEmbeds: readonly E[]
-  resolve: (resource: Resource<H>) => SyncOrAsync<EmbeddingProp<E>>
+  resolve: (resource: Resource<H>) => SyncOrAsync<ResourceResolverResult<E>>
 }
+
+export type ResourceResolverResult<E extends Embed = Embed> =
+  | Success<EmbeddingProp<E>>
+  | Error
 
 export type EmbeddingRenderer<E extends Embed> = (
   props: EmbeddingProp<E>
@@ -99,25 +103,25 @@ export interface URLResolver<H extends Hosting = Hosting> {
 }
 
 type URLResolverResult<H extends Hosting> =
-  | ResourceFound<H>
+  | Success<Resource<H>>
   | Aborted
-  | CannotResolve
+  | UseNextResolver
   | Error
 
-interface ResourceFound<H extends Hosting> {
-  type: 'resourceFound'
-  resource: Resource<H>
+export interface Success<R> {
+  type: 'success'
+  result: R
 }
 
 interface Aborted {
   type: 'aborted'
 }
 
-interface CannotResolve {
-  type: 'cannotResolve'
+interface UseNextResolver {
+  type: 'useNextResolver'
 }
 
-interface Error {
+export interface Error {
   type: 'error'
   message: string
 }

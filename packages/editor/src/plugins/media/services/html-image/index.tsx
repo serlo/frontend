@@ -19,8 +19,8 @@ export const imageUrlResolver: URLResolver = {
 
       img.onload = () => {
         resolve({
-          type: 'resourceFound',
-          resource: {
+          type: 'success',
+          result: {
             hostingService: Hosting.CDN,
             embeddingType: Embed.HTMLImage,
             contentUrl: url.href,
@@ -35,7 +35,7 @@ export const imageUrlResolver: URLResolver = {
             message: 'Bild konnte nicht geladen werden.',
           })
         } else {
-          resolve({ type: 'cannotResolve' })
+          resolve({ type: 'useNextResolver' })
         }
       }
 

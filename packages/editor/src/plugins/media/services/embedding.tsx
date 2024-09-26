@@ -5,24 +5,25 @@ import { GeogebraRenderer } from './geogebra'
 import { ImageRenderer } from './html-image'
 import { VideoRenderer } from './html-video'
 import { resolveEmbedding } from './resolve-embedding'
-import { Embed, Resource, EmbeddingProp } from './types'
+import { Embed, Resource, ResourceResolverResult } from './types'
 import { FaIcon } from '@/components/fa-icon'
 
 export function Embedding({ resource }: { resource: Resource }) {
-  const embeddingResult = resolveEmbedding(resource)
-  const embeddingResultIsPromise = embeddingResult instanceof Promise
+  const embeddingComputation = resolveEmbedding(resource)
+  const embeddingComputationIsPromise = embeddingComputation instanceof Promise
 
-  const [embedding, setEmbedding] = useState<EmbeddingProp | null>(
-    embeddingResultIsPromise ? null : embeddingResult
-  )
+  const [embeddingResult, setEmbeddingResult] =
+    useState<ResourceResolverResult | null>(
+      embeddingComputationIsPromise ? null : embeddingComputation
+    )
 
   useEffect(() => {
-    if (embeddingResultIsPromise) {
-      void (async () => setEmbedding(await embeddingResult))()
+    if (embeddingComputationIsPromise) {
+      void (async () => setEmbeddingResult(await embeddingComputation))()
     }
-  }, [embeddingResult, embeddingResultIsPromise, setEmbedding])
+  }, [embeddingComputation, embeddingComputationIsPromise])
 
-  if (embedding === null) {
+  if (embeddingResult === null) {
     // TODO: Design spinner
     return (
       <div className="flex min-h-32 w-full items-center justify-center rounded-b bg-orange-100">
@@ -30,7 +31,20 @@ export function Embedding({ resource }: { resource: Resource }) {
         Loading...
       </div>
     )
-  } else if (embedding.type === Embed.HTMLImage) {
+  }
+
+  if (embeddingResult.type === 'error') {
+    // TODO: Proper design
+    return (
+      <div className="flex min-h-32 w-full items-center justify-center rounded-b bg-red-100">
+        Error while loading resource: {embeddingResult.message}
+      </div>
+    )
+  }
+
+  const embedding = embeddingResult.result
+
+  if (embedding.type === Embed.HTMLImage) {
     return <ImageRenderer {...embedding} />
   } else if (embedding.type === Embed.HTMLVideo) {
     return <VideoRenderer {...embedding} />

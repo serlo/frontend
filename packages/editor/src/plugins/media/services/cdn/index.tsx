@@ -4,8 +4,11 @@ export const cdnResourceResolver: ResourceResolver<Hosting.CDN> = {
   resolvableEmbeds: [Embed.HTMLImage, Embed.HTMLVideo] as const,
   resolve(resource) {
     return {
-      type: resource.embeddingType,
-      contentUrl: resource.contentUrl,
+      type: 'success',
+      result: {
+        type: resource.embeddingType,
+        contentUrl: resource.contentUrl,
+      },
     }
   },
 }
