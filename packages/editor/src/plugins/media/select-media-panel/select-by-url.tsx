@@ -1,7 +1,10 @@
 import { useCallback, useRef, useState } from 'react'
 
-import { resolveEmbedding } from '../services/resolve-embedding'
-import { Embed, Resource } from '../services/types'
+import {
+  getResolvableEmbeds,
+  resolveEmbedding,
+} from '../services/resolve-embedding'
+import { Embed, Hosting, Resource } from '../services/types'
 import { urlResolvers } from '../services/url-resolvers'
 import { cn } from '@/helper/cn'
 
@@ -47,12 +50,7 @@ export function SelectMediaByUrl({
         for (const resolver of urlResolvers) {
           if (controller.signal.aborted) return
 
-          if (
-            allowEmbedding !== undefined &&
-            !allowEmbedding.some((embedding) =>
-              resolver.resolvableEmbeddings.includes(embedding)
-            )
-          ) {
+          if (!canResolve(allowEmbedding, resolver.resolvableHostings)) {
             continue
           }
 
@@ -131,5 +129,17 @@ export function SelectMediaByUrl({
         {error ? error : '\u00A0'}
       </span>
     </div>
+  )
+}
+
+function canResolve(
+  allowEmbeds: Embed[] | undefined,
+  hostingServices: readonly Hosting[]
+) {
+  return (
+    allowEmbeds === undefined ||
+    allowEmbeds.some((embed) =>
+      hostingServices.flatMap(getResolvableEmbeds).includes(embed)
+    )
   )
 }

@@ -25,19 +25,20 @@ const resourcesOnEdusharing: Record<string, EmbeddingProp<PossibleEmbed>> = {
 }
 
 // Here we simulate that loading a resource from edusharing takes some time
-export const edusharingResourceResolver: ResourceResolver<
-  Hosting.Edusharing,
-  PossibleEmbed
-> = (resource) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(resourcesOnEdusharing[resource.nodeId])
-    }, 3000)
-  })
-}
+export const edusharingResourceResolver: ResourceResolver<Hosting.Edusharing> =
+  {
+    resolvableEmbeds: possibleEmbeds,
+    resolve(resource) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(resourcesOnEdusharing[resource.nodeId])
+        }, 3000)
+      })
+    },
+  }
 
 export const edusharingUrlResolver: URLResolver = {
-  resolvableEmbeddings: possibleEmbeds,
+  resolvableHostings: [Hosting.Edusharing],
   resolve(url) {
     if (url.hostname !== 'edu-sharing.org') {
       return { type: 'cannotResolve' }

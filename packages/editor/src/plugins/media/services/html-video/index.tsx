@@ -7,7 +7,7 @@ export const VideoRenderer: EmbeddingRenderer<Embed.HTMLVideo> = ({
 }) => <video src={contentUrl} controls />
 
 export const videoUrlResolver: URLResolver = {
-  resolvableEmbeddings: [Embed.HTMLVideo],
+  resolvableHostings: [Hosting.CDN],
   resolve: (url, signal) => {
     return new Promise((resolve) => {
       // Load the image to check whether the url belongs to an image

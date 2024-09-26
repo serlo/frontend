@@ -7,7 +7,7 @@ export const ImageRenderer: EmbeddingRenderer<Embed.HTMLImage> = ({
 }) => <img src={contentUrl} />
 
 export const imageUrlResolver: URLResolver = {
-  resolvableEmbeddings: [Embed.HTMLImage],
+  resolvableHostings: [Hosting.CDN],
   resolve: (url, signal) => {
     return new Promise((resolve) => {
       // Load the image to check whether the url belongs to an image

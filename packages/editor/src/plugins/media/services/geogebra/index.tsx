@@ -6,14 +6,14 @@ import {
   URLResolver,
 } from '../types'
 
-export const geogebraResourceResolver: ResourceResolver<
-  Hosting.GeoGebra,
-  Embed.GeoGebraApplet
-> = (resource) => {
-  return {
-    type: Embed.GeoGebraApplet,
-    appletId: resource.appletId,
-  }
+export const geogebraResourceResolver: ResourceResolver<Hosting.GeoGebra> = {
+  resolvableEmbeds: [Embed.GeoGebraApplet] as const,
+  resolve(resource) {
+    return {
+      type: Embed.GeoGebraApplet,
+      appletId: resource.appletId,
+    }
+  },
 }
 
 export const GeogebraRenderer: EmbeddingRenderer<Embed.GeoGebraApplet> = ({
@@ -27,7 +27,7 @@ export const GeogebraRenderer: EmbeddingRenderer<Embed.GeoGebraApplet> = ({
 }
 
 export const geogebraUrlResolver: URLResolver = {
-  resolvableEmbeddings: [Embed.GeoGebraApplet],
+  resolvableHostings: [Hosting.GeoGebra] as const,
   resolve(url) {
     if (url.hostname === 'www.geogebra.org' && url.pathname.startsWith('/m/')) {
       return {

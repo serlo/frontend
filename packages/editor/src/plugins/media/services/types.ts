@@ -81,25 +81,32 @@ export type EmbeddingProp<Types extends Embed = Embed> = {
  * is described. This allows us to resolve the embedding of a resource in the
  * editor.
  */
-export type ResourceResolver<
+export interface ResourceResolver<
   H extends Hosting = Hosting,
   E extends Embed = Embed,
-> = (resource: Resource<H>) => SyncOrAsync<EmbeddingProp<E>>
+> {
+  resolvableEmbeds: readonly E[]
+  resolve: (resource: Resource<H>) => SyncOrAsync<EmbeddingProp<E>>
+}
 
 export type EmbeddingRenderer<E extends Embed> = (
   props: EmbeddingProp<E>
 ) => ReactNode
 
-export interface URLResolver {
-  resolvableEmbeddings: readonly Embed[]
-  resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult>
+export interface URLResolver<H extends Hosting = Hosting> {
+  resolvableHostings: readonly H[]
+  resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult<H>>
 }
 
-type URLResolverResult = ResourceFound | Aborted | CannotResolve | Error
+type URLResolverResult<H extends Hosting> =
+  | ResourceFound<H>
+  | Aborted
+  | CannotResolve
+  | Error
 
-interface ResourceFound {
+interface ResourceFound<H extends Hosting> {
   type: 'resourceFound'
-  resource: Resource
+  resource: Resource<H>
 }
 
 interface Aborted {
