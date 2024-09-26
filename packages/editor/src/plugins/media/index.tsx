@@ -6,7 +6,7 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { SelectMediaPanel } from './select-media-panel'
-import { EmbeddingProp } from './services/embedding'
+import { Embedding } from './services/embedding'
 import { Embed, Resource } from './services/types'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
