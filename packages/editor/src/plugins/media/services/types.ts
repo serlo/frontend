@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 export enum Hosting {
   CDN = 'cdn',
   GeoGebra = 'geogebra',
+  Edusharing = 'edusharing',
 }
 
 /**
@@ -20,6 +21,7 @@ interface ResourceAdditonalInformation {
     contentUrl: string
   }
   [Hosting.GeoGebra]: { appletId: string }
+  [Hosting.Edusharing]: { repositoryId: string; nodeId: string }
 }
 
 /**
@@ -89,7 +91,7 @@ export type EmbeddingRenderer<E extends Embed> = (
 ) => ReactNode
 
 export interface URLResolver {
-  resolvableEmbeddings: Embed[]
+  resolvableEmbeddings: readonly Embed[]
   resolve: (url: URL, signal: AbortSignal) => SyncOrAsync<URLResolverResult>
 }
 
