@@ -67,8 +67,8 @@ interface EmbeddingAdditonalInformation {
  * union of its embedding types. For example Embedding<Embed.GeoGebraApplet> is
  * equivalent to:
  *
- * interface HTMLImageEmbedding {
- *   type: Embed.HTMLImage,
+ * interface GeoGebraAppletEmbedding {
+ *   type: Embed.GeoGebraApplet,
  *   appletId: GeoGebraApplet
  * }
  */
