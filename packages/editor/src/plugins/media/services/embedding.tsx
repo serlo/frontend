@@ -6,6 +6,7 @@ import { ImageRenderer } from './html-image'
 import { VideoRenderer } from './html-video'
 import { resolveEmbedding } from './resolve-embedding'
 import { Embed, Resource, ResourceResolverResult } from './types'
+import { YoutubeRenderer } from './youtube'
 import { FaIcon } from '@/components/fa-icon'
 
 export function Embedding({ resource }: { resource: Resource }) {
@@ -50,5 +51,7 @@ export function Embedding({ resource }: { resource: Resource }) {
     return <VideoRenderer {...embedding} />
   } else if (embedding.type === Embed.GeoGebraApplet) {
     return <GeogebraRenderer {...embedding} />
+  } else if (embedding.type === Embed.Youtube) {
+    return <YoutubeRenderer {...embedding} />
   }
 }

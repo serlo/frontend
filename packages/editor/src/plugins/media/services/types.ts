@@ -7,6 +7,7 @@ export enum Hosting {
   CDN = 'cdn',
   GeoGebra = 'geogebra',
   Edusharing = 'edusharing',
+  Youtube = "youtube"
 }
 
 /**
@@ -22,6 +23,7 @@ interface ResourceAdditonalInformation {
   }
   [Hosting.GeoGebra]: { appletId: string }
   [Hosting.Edusharing]: { repositoryId: string; nodeId: string }
+  [Hosting.Youtube]: { videoId: string }
 }
 
 /**
@@ -46,6 +48,7 @@ export enum Embed {
   HTMLImage = 'imageTag',
   HTMLVideo = 'videoTag',
   GeoGebraApplet = 'geogebraApplet',
+  Youtube = "youtube"
 }
 
 /**
@@ -56,6 +59,7 @@ interface EmbeddingAdditonalInformation {
   [Embed.HTMLImage]: { contentUrl: string }
   [Embed.HTMLVideo]: { contentUrl: string }
   [Embed.GeoGebraApplet]: { appletId: string }
+  [Embed.Youtube]: { videoId: string }
 }
 
 /**

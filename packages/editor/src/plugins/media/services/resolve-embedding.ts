@@ -2,6 +2,7 @@ import { cdnResourceResolver } from './cdn'
 import { edusharingResourceResolver } from './edu-sharing'
 import { geogebraResourceResolver } from './geogebra'
 import { Hosting, Resource } from './types'
+import { youtubeResourceResolver } from './youtube'
 
 export function resolveEmbedding(resource: Resource) {
   switch (resource.hostingService) {
@@ -11,6 +12,8 @@ export function resolveEmbedding(resource: Resource) {
       return geogebraResourceResolver.resolve(resource)
     case Hosting.Edusharing:
       return edusharingResourceResolver.resolve(resource)
+    case Hosting.Youtube:
+      return youtubeResourceResolver.resolve(resource)
   }
 }
 
@@ -22,5 +25,7 @@ export function getResolvableEmbeds(hostingService: Hosting) {
       return geogebraResourceResolver.resolvableEmbeds
     case Hosting.Edusharing:
       return edusharingResourceResolver.resolvableEmbeds
+    case Hosting.Youtube:
+      return youtubeResourceResolver.resolvableEmbeds
   }
 }

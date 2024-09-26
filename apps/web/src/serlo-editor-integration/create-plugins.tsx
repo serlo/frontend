@@ -154,7 +154,7 @@ export function createPlugins({
       type: EditorPluginType.MediaVideo,
       plugin: createMediaPlugin({
         name: EditorPluginType.MediaVideo,
-        allowedEmbedding: [Embed.HTMLVideo],
+        allowedEmbedding: [Embed.HTMLVideo, Embed.Youtube],
       }),
       visibleInSuggestions: true,
       icon: <IconVideo />,
