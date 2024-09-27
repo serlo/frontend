@@ -181,16 +181,23 @@ function removeGlobalStylesPlugin(): Plugin {
           const chunk = file
           let ast = parseCodeToAST(chunk.code)
 
-          ;({ ast, foundMatch: globalStyleMatch } = removePattern(
+          const globalEditorStyleResult = removePattern(
             ast,
             matchGlobalStyleInjection,
             getNoOpReplacement('GLOBAL_EDITOR_STYLES')
-          ))
-          ;({ ast, foundMatch: mathQuillStyleMatch } = removePattern(
+          )
+
+          globalStyleMatch =
+            globalStyleMatch || globalEditorStyleResult.foundMatch
+          ast = globalEditorStyleResult.ast
+          const mathQuillStyleResult = removePattern(
             ast,
             matchMathQuillStyleInjection,
             getNoOpFunctionBodyReplacement('MATH_QUILL')
-          ))
+          )
+          mathQuillStyleMatch =
+            mathQuillStyleMatch || mathQuillStyleResult.foundMatch
+          ast = mathQuillStyleResult.ast
 
           // Turn AST back into code and write it into the chunk.
           chunk.code = generateCodeFromAST(ast)

@@ -927,7 +927,15 @@ export const loggedInData = {
             info: 'Interactive element collapsed on load',
             deactivate: 'Load Interactive Element visible',
             activate: 'Load Interactive Element collapsed'
-          }
+          },
+          addOptionalInteractiveEx: 'Add an optional interactive exercise:',
+          changeInteractive: 'Change interactive element',
+          confirmRemoveInteractive: 'Your current changes will be replaced. Are you sure?',
+          createSolution: 'Create solution',
+          removeSolution: 'Remove solution',
+          previewMode: "पूर्वावलोकन",
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         exerciseGroup: {
           title: "व्यायाम समूह",
@@ -963,12 +971,8 @@ export const loggedInData = {
           addAlternativeAnswer: 'Add an alternative answer',
           removeAlternativeAnswer: 'Remove alternative answer',
           alternativeAnswers: 'Alternative answers',
-          acceptMathEquivalents: 'Accept all equivalent mathematical values'
-        },
-        blanksExerciseDragAndDrop: {
-          // remove after migration?
-          title: 'Fill In The Blanks (Drag&Drop)',
-          description: 'Create a fill in the blanks exercise (text or table) where learners add the answers via drag and drop.'
+          acceptMathEquivalents: 'Accept all equivalent mathematical values',
+          childPluginSelection: 'Would you like to add blanks to a text or a table?'
         }
       },
       templatePlugins: {
@@ -1014,16 +1018,6 @@ export const loggedInData = {
           removeCoursePage: 'Remove course page',
           addCoursePage: 'Add course page',
           confirmDelete: 'Are you sure you want to delete this course page?'
-        },
-        exercise: {
-          addOptionalInteractiveEx: 'Add an optional interactive exercise:',
-          changeInteractive: 'Change interactive element',
-          removeInteractive: 'Remove interactive element',
-          createSolution: 'Create solution',
-          removeSolution: 'Remove solution',
-          previewMode: "पूर्वावलोकन",
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
         },
         inputExercise: {
           chooseType: 'Choose the exercise type',

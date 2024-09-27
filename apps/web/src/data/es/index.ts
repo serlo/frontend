@@ -927,7 +927,15 @@ export const loggedInData = {
             info: "Elemento interactivo plegado al inicio.",
             deactivate: "Cargar elemento interactivo visible",
             activate: "Cargar elemento interactivo visible"
-          }
+          },
+          addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
+          changeInteractive: "Cambiar elemento interactivo",
+          confirmRemoveInteractive: 'Your current changes will be replaced. Are you sure?',
+          createSolution: "Crear solución",
+          removeSolution: "Eliminar solución",
+          previewMode: "Vista Previa",
+          previewIsActiveHint: 'Preview mode is active',
+          previewIsDeactiveHint: 'Here you can edit'
         },
         exerciseGroup: {
           title: "Grupo de ejercicios",
@@ -963,12 +971,8 @@ export const loggedInData = {
           addAlternativeAnswer: "Añade una respuesta alternativa",
           removeAlternativeAnswer: "Eliminar respuesta alternativa",
           alternativeAnswers: "Respuestas alternativas",
-          acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes"
-        },
-        blanksExerciseDragAndDrop: {
-          // remove after migration?
-          title: "Rellenar Los Espacios En Blanco (Arrastrar y soltar)",
-          description: "Crear un ejercicio de rellenar los espacios en blanco (texto o tabla) donde los estudiantes añadan las respuestas escribiendo."
+          acceptMathEquivalents: "Acepta todos los valores matemáticos equivalentes",
+          childPluginSelection: 'Would you like to add blanks to a text or a table?'
         }
       },
       templatePlugins: {
@@ -1014,16 +1018,6 @@ export const loggedInData = {
           removeCoursePage: "Eliminar página del curso",
           addCoursePage: "Añadir página del curso",
           confirmDelete: "¿Estás seguro de que quieres eliminar este contenido?"
-        },
-        exercise: {
-          addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
-          changeInteractive: "Cambiar elemento interactivo",
-          removeInteractive: "Eliminar elemento interactivo",
-          createSolution: "Crear solución",
-          removeSolution: "Eliminar solución",
-          previewMode: "Vista Previa",
-          previewIsActiveHint: 'Preview mode is active',
-          previewIsDeactiveHint: 'Here you can edit'
         },
         inputExercise: {
           chooseType: "Elige el tipo de ejercicio",

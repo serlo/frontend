@@ -69,8 +69,8 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   }
 
   return (
-    <div className="mb-12 mt-24 pt-4">
-      {showUi ? <ScMcExerciseToolbar {...props} /> : null}
+    <div className="mb-12">
+      <ScMcExerciseToolbar {...props} />
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {/* margin-hack */}
         <div className="[&_.ml-4.flex]:mb-block">

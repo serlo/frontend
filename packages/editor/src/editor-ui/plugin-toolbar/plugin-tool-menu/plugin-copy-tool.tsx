@@ -38,7 +38,7 @@ export function PluginCopyTool({ pluginId, noSeparator }: PluginCopyToolProps) {
       onClick={handleOnClick}
       label={editorStrings.edtrIo.pluginCopyButtonLabel}
       icon={faCopy}
-      className={noSeparator ? '' : 'mt-2.5 border-t pt-2.5'}
+      separatorTop={!noSeparator}
       dataQa="plugin-copy-tool-button"
     />
   )

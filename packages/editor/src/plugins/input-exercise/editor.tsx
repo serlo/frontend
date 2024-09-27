@@ -56,8 +56,8 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const showUi = focused || isAnyAnswerFocused
 
   return (
-    <div className="mb-12 mt-24 pt-4">
-      {showUi ? <InputExerciseToolbar {...props} /> : null}
+    <div className="mb-12">
+      <InputExerciseToolbar {...props} />
 
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         <InputExerciseStaticRenderer {...staticDocument} />

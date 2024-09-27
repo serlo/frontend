@@ -927,7 +927,15 @@ export const loggedInData = {
             info: "Interaktives Element ist versteckt beim laden",
             deactivate: "Interaktives Element sichtbar laden",
             activate: "Interaktives Element versteckt laden"
-          }
+          },
+          addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
+          changeInteractive: "Interaktives Element ändern",
+          confirmRemoveInteractive: 'Your current changes will be replaced. Are you sure?',
+          createSolution: "Lösung hinzufügen",
+          removeSolution: "Lösung entfernen",
+          previewMode: "Vorschau",
+          previewIsActiveHint: "Vorschaumodus ist aktiv",
+          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         exerciseGroup: {
           title: "Aufgabe mit Teilaufgaben",
@@ -963,12 +971,8 @@ export const loggedInData = {
           addAlternativeAnswer: "Alternative Antwort hinzufügen",
           removeAlternativeAnswer: "Alternative Antwort entfernen",
           alternativeAnswers: "Alternative Antworten",
-          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort"
-        },
-        blanksExerciseDragAndDrop: {
-          // remove after migration?
-          title: "Lückentext (Drag&Drop)",
-          description: "Erstelle einen Lückentext oder eine Tabelle, bei dem die Antworten via Drag und Drop eingefügt werden."
+          acceptMathEquivalents: "Mathematisch gleichwertige Ausdrücke als gültige Antwort",
+          childPluginSelection: "Möchtest du einen Lückentext oder eine Tabelle mit Lücken?"
         }
       },
       templatePlugins: {
@@ -1014,16 +1018,6 @@ export const loggedInData = {
           removeCoursePage: "Kursseite entfernen",
           addCoursePage: "Kursseite hinzufügen",
           confirmDelete: "Sicher, dass du diese Kursseite löschen willst?"
-        },
-        exercise: {
-          addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
-          changeInteractive: "Interaktives Element ändern",
-          removeInteractive: "Interaktives Element entfernen",
-          createSolution: "Lösung hinzufügen",
-          removeSolution: "Lösung entfernen",
-          previewMode: "Vorschau",
-          previewIsActiveHint: "Vorschaumodus ist aktiv",
-          previewIsDeactiveHint: "Hier kannst du bearbeiten"
         },
         inputExercise: {
           chooseType: "Wähle den Antworttyp",

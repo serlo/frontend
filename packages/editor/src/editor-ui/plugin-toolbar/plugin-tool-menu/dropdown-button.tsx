@@ -6,20 +6,23 @@ interface DropdownButtonProps {
   onClick: () => void
   label: string
   icon: IconDefinition
-  className?: string
   dataQa?: string
+  separatorTop?: boolean
 }
 
 export function DropdownButton({
   onClick,
   label,
   icon,
-  className,
   dataQa,
+  separatorTop,
 }: DropdownButtonProps) {
   return (
     <button
-      className={cn('group/button w-full px-3 text-left', className)}
+      className={cn(
+        'group/button w-full px-3 text-left',
+        separatorTop && 'mt-2.5 border-t pt-2.5'
+      )}
       onClick={onClick}
       data-qa={dataQa}
     >
