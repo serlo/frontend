@@ -1,18 +1,17 @@
 import { useAppSelector, selectStaticDocument } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
-import type { InteractiveVideoProps } from '.'
+import { type InteractiveVideoProps } from '.'
 import { MarksList } from './editor/marks-list'
 import { OverlayContentModal } from './editor/overlay-content-modal'
 import { PlayerTools } from './editor/player-tools'
+import { addOverlayContent } from './helpers/add-overlay-content'
+import { createCues } from './helpers/create-cues'
 import { InteractiveVideoRenderer } from './renderer'
 import { InteractiveVideoStaticRenderer } from './static'
 import { InteractiveVideoToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-
-const defaultMarkTime = 5
 
 export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   const { focused, state, id } = props
@@ -30,29 +29,16 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
       selectStaticDocument(storeState, id) as EditorInteractiveVideoDocument
   )
 
-  function addOverlayContent(startTime: number) {
-    marks.insert(undefined, {
-      title: '',
-      child: { plugin: EditorPluginType.Exercise },
-      startTime: startTime,
-      autoOpen: true,
-      mandatory: false,
-      forceRewatch: false,
-    })
-    setTimeout(() => setShowOverlayContentIndex(marks.length))
-  }
-
   function openOverlayByStartTime(startTime: number) {
     const index = marks.findIndex((mark) => mark.startTime.value === startTime)
     if (index === -1) return
     setShowOverlayContentIndex(index)
   }
 
-  const cues = marks.map((mark) => ({
-    startTime: mark.startTime.value,
-    endTime: mark.startTime.value + defaultMarkTime,
-    text: mark.title.value || pluginStrings.defaultTitle,
-  }))
+  const cues = createCues(
+    staticDocument.state.marks,
+    pluginStrings.defaultTitle
+  )
 
   return (
     <>
@@ -72,7 +58,9 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
             chapterContent={{ cues }}
             tools={
               <PlayerTools
-                addOverlayContent={addOverlayContent}
+                addOverlayContent={(time: number) =>
+                  addOverlayContent(time, marks, setShowOverlayContentIndex)
+                }
                 openOverlayByStartTime={openOverlayByStartTime}
               />
             }

@@ -1092,6 +1092,7 @@ export const loggedInData = {
             'If an exercise is answered incorrectly, the video jumps back to the last mark',
           editMark: 'Edit',
           removeMark: 'Remove',
+          addOverlayContent: 'Add exercise',
         },
       },
       templatePlugins: {

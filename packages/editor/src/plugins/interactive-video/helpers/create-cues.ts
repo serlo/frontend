@@ -1,5 +1,7 @@
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 
+import { markDuration } from '../const'
+
 export function createCues(
   marks: EditorInteractiveVideoDocument['state']['marks'],
   exerciseString: string
@@ -19,7 +21,7 @@ export function createCues(
     // before filler
     if (index > 0) {
       const beforeMark = sortedMarks[index - 1]
-      const beforeEndTime = beforeMark.startTime + 5
+      const beforeEndTime = beforeMark.startTime + markDuration
       if (beforeEndTime < mark.startTime) {
         cues.push({
           startTime: beforeEndTime,
@@ -31,7 +33,7 @@ export function createCues(
 
     cues.push({
       startTime: mark.startTime,
-      endTime: mark.startTime + 5,
+      endTime: mark.startTime + markDuration,
       text: mark.title || exerciseString,
     })
   })
@@ -39,7 +41,7 @@ export function createCues(
   // last filler
   const lastMark = sortedMarks[sortedMarks.length - 1]
   cues.push({
-    startTime: lastMark.startTime + 5,
+    startTime: lastMark.startTime + markDuration,
     endTime: 999999, // make sure it reaches the end of the video
     text: '',
   })

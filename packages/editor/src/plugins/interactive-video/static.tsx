@@ -2,6 +2,7 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
+import { markDuration } from './const'
 import { PlayerTools } from './editor/player-tools'
 import { createCues } from './helpers/create-cues'
 import { InteractiveVideoRenderer } from './renderer'
@@ -39,9 +40,11 @@ export function InteractiveVideoStaticRenderer({
         }
         onMediaSeekRequest={(time, nativeEvent) => {
           const isForbidden = marks.some((mark) => {
-            const forbidden = mark.mandatory && time > mark.startTime + 5
+            if (!mark.mandatory) return false
+            const isAfter = time > mark.startTime + markDuration
+            const isInside = !isAfter && time > mark.startTime
             // TODO: check if it was successfully solved or if it was tried enough times
-            return forbidden
+            return isAfter || isInside
           })
 
           if (isForbidden) {
@@ -49,7 +52,7 @@ export function InteractiveVideoStaticRenderer({
           }
 
           // const activeMark = marks.find((mark) => {
-          //   return time >= mark.startTime && time <= mark.startTime + 5
+          //   return time >= mark.startTime && time <= mark.startTime + defaultMarkTime
           // })
           // if (activeMark) {
           //   setShowOverlayContentIndex(index)

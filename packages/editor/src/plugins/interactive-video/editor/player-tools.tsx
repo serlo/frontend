@@ -7,7 +7,9 @@ import {
 } from '@vidstack/react'
 import { useEffect } from 'react'
 
+import { markDuration } from '../const'
 import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 // currently used by static renderer and editor, maybe split later
 export function PlayerTools({
@@ -19,35 +21,35 @@ export function PlayerTools({
   openOverlayByStartTime: (startTime: number) => void
   marks?: EditorInteractiveVideoDocument['state']['marks']
 }) {
+  const pluginStrings = useEditorStrings().plugins.interactiveVideo
   const isEditMode = addOverlayContent !== undefined
 
-  const activeCues = useActiveTextCues(useActiveTextTrack('chapters'))
+  const textTrack = useActiveTextTrack('chapters')
+  const activeCues = useActiveTextCues(textTrack)
 
   const activeCue = activeCues[0]
+  const activeCueLength = activeCue?.endTime - activeCue?.startTime
 
   const player = useMediaPlayer()
 
   useEffect(() => {
     if (isEditMode || !marks || !player || player.paused) return
     const mark = marks.find(
-      (mark) =>
-        mark.startTime === activeCue?.startTime ||
-        mark.startTime + 5 === activeCue?.startTime
+      (mark) => mark.startTime === activeCue?.startTime
+      // || mark.startTime + defaultMarkTime === activeCue?.startTime
     )
     const isFiller = !mark?.title
 
     if (!isFiller && activeCue) {
       openOverlayByStartTime(mark.startTime)
 
-      // edge case if player is about to leave mandatory mark
-      if (mark.startTime + 5 === activeCue?.startTime) {
-        player.currentTime = mark.startTime + 0.01
-      }
       void player.pause()
     }
   }, [activeCue, isEditMode, marks, openOverlayByStartTime, player])
 
   if (!player) return null
+
+  const isFillLongEnough = activeCueLength > markDuration
 
   return (
     <div className="absolute top-2 flex w-full sm:justify-center">
@@ -61,7 +63,7 @@ export function PlayerTools({
         >
           <FaIcon icon={faTasks} /> {activeCue.text}
         </button>
-      ) : addOverlayContent ? (
+      ) : addOverlayContent && isFillLongEnough ? (
         <button
           className="rounded-lg bg-gray-800 bg-opacity-20 px-2 py-1 transition-all hover:bg-opacity-100"
           onClick={() => {
@@ -72,7 +74,7 @@ export function PlayerTools({
             // player.currentTime = player.currentTime - 0.1
           }}
         >
-          + Inhalt einfügen
+          + {pluginStrings.addOverlayContent}
         </button>
       ) : null}
     </div>
