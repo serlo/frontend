@@ -29,7 +29,7 @@ const interactiveVideoState = object({
       //endTime: number(), // should we make this a setting or always use a default duration?
       autoOpen: boolean(true), // open modal without interaction
       mandatory: boolean(false), // has to be successfully completed to continue video
-      timeAfterFail: optional(number()), // video timestamp to jump to
+      forceRewatch: boolean(false), // after a failed exercise the learners jump back to the last mark
     })
   ),
 })
