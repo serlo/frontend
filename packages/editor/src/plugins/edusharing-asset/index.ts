@@ -22,8 +22,6 @@ export function createEdusharingAssetPlugin(): EditorPlugin<EdusharingAssetState
     Component: EdusharingAssetEditor,
     state,
     config: {},
-    defaultTitle: 'Edu-sharing Inhalt',
-    defaultDescription: 'Inhalte von edu-sharing einbinden',
   }
 }
 

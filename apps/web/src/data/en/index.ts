@@ -1075,6 +1075,10 @@ export const loggedInData = {
           childPluginSelection:
             'Would you like to add blanks to a text or a table?',
         },
+        edusharingAsset: {
+          title: 'Edu-sharing Content',
+          description: 'Embed content from edu-sharing',
+        },
       },
       templatePlugins: {
         entity: {
