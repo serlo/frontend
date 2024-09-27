@@ -13,6 +13,8 @@ import { InteractiveVideoToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
+const defaultMarkTime = 5
+
 export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   const { focused, state, id } = props
   const [previewActive, setPreviewActive] = useState(false)
@@ -31,7 +33,6 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
       title: '',
       child: { plugin: EditorPluginType.Exercise },
       startTime: startTime,
-      endTime: startTime + 5,
       autoOpen: true,
       mandatory: false,
       timeAfterFail: undefined,
@@ -49,7 +50,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
 
   const cues = state.marks.map((mark) => ({
     startTime: mark.startTime.value,
-    endTime: mark.endTime.value,
+    endTime: mark.startTime.value + defaultMarkTime,
     text: mark.title.value || 'Inhalt',
   }))
 

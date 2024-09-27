@@ -26,7 +26,7 @@ const interactiveVideoState = object({
         plugin: EditorPluginType.Exercise, // could be other content as well
       }),
       startTime: number(),
-      endTime: number(), // should we make this a setting or always use a default duration?
+      //endTime: number(), // should we make this a setting or always use a default duration?
       autoOpen: boolean(true), // open modal without interaction
       mandatory: boolean(false), // has to be successfully completed to continue video
       timeAfterFail: optional(number()), // video timestamp to jump to
