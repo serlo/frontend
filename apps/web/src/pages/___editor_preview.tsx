@@ -1,10 +1,4 @@
 import { Editor } from '@editor/core'
-import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
-import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
-import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
-import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
-import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
@@ -13,7 +7,6 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import NextAdapterPages from 'next-query-params/pages'
-import { mergeDeepRight } from 'ramda'
 import { useMemo } from 'react'
 import { debounce } from 'ts-debounce'
 import {
@@ -98,82 +91,62 @@ function Content() {
   editorLearnerEvent.init(handleLearnerEvent)
 
   return (
-    <StaticStringsProvider
-      value={
-        lang === 'de'
-          ? mergeDeepRight(staticStringsEn, staticStringsDe)
-          : staticStringsEn
-      }
-    >
-      <EditStringsProvider
-        value={
-          lang === 'de'
-            ? mergeDeepRight(editStringsEn, editStringsDe)
-            : editStringsEn
-        }
-      >
-        <main id="content" className="flex">
-          <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
-            <header className="mx-side flex justify-between align-middle font-bold">
-              <h2 className="mb-12 text-editor-primary">Edit</h2>
-              <div>
-                <input
-                  onPaste={({ clipboardData }) => {
-                    const pastedString = clipboardData
-                      .getData('text/plain')
-                      .trim()
-                    const cleanJsonString = pastedString
-                      .replace(/'/g, '')
-                      .replace(/\\"/g, '"')
+    <main id="content" className="flex">
+      <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
+        <header className="mx-side flex justify-between align-middle font-bold">
+          <h2 className="mb-12 text-editor-primary">Edit</h2>
+          <div>
+            <input
+              onPaste={({ clipboardData }) => {
+                const pastedString = clipboardData.getData('text/plain').trim()
+                const cleanJsonString = pastedString
+                  .replace(/'/g, '')
+                  .replace(/\\"/g, '"')
 
-                    try {
-                      const jsonObject = JSON.parse(
-                        cleanJsonString
-                      ) as AnyEditorDocument
-                      setPreviewState(JSON.stringify(jsonObject))
-                    } catch (error) {
-                      // eslint-disable-next-line no-console
-                      console.error('Error parsing JSON:', error)
-                      showToastNotice('sorry, invalid json', 'warning')
-                    }
-                  }}
-                  className="mt-0.5 w-20 bg-gray-100 text-sm"
-                  placeholder="paste json"
-                />
-                {' | '}
-                <button
-                  onClick={() => {
-                    void navigator.clipboard.writeText(previewState)
-                    showToastNotice('state copied to clipboard', 'success')
-                  }}
-                  className="mt-0.5 text-sm"
-                >
-                  copy
-                </button>{' '}
-                |{' '}
-                <button
-                  onClick={() => setPreviewState(emptyState)}
-                  className="mt-0.5 text-sm"
-                >
-                  reset
-                </button>
-              </div>
-            </header>
-            <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
-            <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
-              {editor}
-            </div>
-          </section>
-          <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
-            <h2 className="mx-side mb-12 font-bold text-editor-primary">
-              Preview
-            </h2>
-            <div className="serlo-content-with-spacing-fixes mt-[3rem]">
-              <StaticRenderer document={parseDocumentString(previewState)} />
-            </div>
-          </section>
-        </main>
-      </EditStringsProvider>
-    </StaticStringsProvider>
+                try {
+                  const jsonObject = JSON.parse(
+                    cleanJsonString
+                  ) as AnyEditorDocument
+                  setPreviewState(JSON.stringify(jsonObject))
+                } catch (error) {
+                  // eslint-disable-next-line no-console
+                  console.error('Error parsing JSON:', error)
+                  showToastNotice('sorry, invalid json', 'warning')
+                }
+              }}
+              className="mt-0.5 w-20 bg-gray-100 text-sm"
+              placeholder="paste json"
+            />
+            {' | '}
+            <button
+              onClick={() => {
+                void navigator.clipboard.writeText(previewState)
+                showToastNotice('state copied to clipboard', 'success')
+              }}
+              className="mt-0.5 text-sm"
+            >
+              copy
+            </button>{' '}
+            |{' '}
+            <button
+              onClick={() => setPreviewState(emptyState)}
+              className="mt-0.5 text-sm"
+            >
+              reset
+            </button>
+          </div>
+        </header>
+        <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
+        <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
+          {editor}
+        </div>
+      </section>
+      <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
+        <h2 className="mx-side mb-12 font-bold text-editor-primary">Preview</h2>
+        <div className="serlo-content-with-spacing-fixes mt-[3rem]">
+          <StaticRenderer document={parseDocumentString(previewState)} />
+        </div>
+      </section>
+    </main>
   )
 }

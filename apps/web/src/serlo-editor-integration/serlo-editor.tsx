@@ -1,16 +1,9 @@
 import { Editor, type EditorProps } from '@editor/core'
-import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
-import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
-import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
-import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
-import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { Entity } from '@serlo/authorization'
-import { mergeDeepRight } from 'ramda'
 import { type ReactNode, useState } from 'react'
 
 import {
@@ -63,42 +56,21 @@ export function SerloEditor({
   editorLearnerEvent.init(handleLearnerEvent)
 
   return (
-    <EditStringsProvider
-      value={
-        lang === 'de'
-          ? mergeDeepRight(editStringsEn, editStringsDe)
-          : editStringsEn
-      }
-    >
-      <StaticStringsProvider
-        value={
-          lang === 'de'
-            ? mergeDeepRight(staticStringsEn, staticStringsDe)
-            : staticStringsEn
-        }
+    <IsSerloContext.Provider value>
+      <SaveContext.Provider
+        value={{ onSave, userCanSkipReview, entityNeedsReview }}
       >
-        <IsSerloContext.Provider value>
-          <SaveContext.Provider
-            value={{ onSave, userCanSkipReview, entityNeedsReview }}
-          >
-            <LocalStorageNotice
-              useStored={useStored}
-              setUseStored={setUseStored}
-            />
-            <Editor
-              initialState={
-                useStored ? getStateFromLocalStorage()! : initialState
-              }
-              onChange={({ changed, getDocument }) => {
-                if (!changed) return
-                void debouncedStoreToLocalStorage(getDocument())
-              }}
-            >
-              {children}
-            </Editor>
-          </SaveContext.Provider>
-        </IsSerloContext.Provider>
-      </StaticStringsProvider>
-    </EditStringsProvider>
+        <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
+        <Editor
+          initialState={useStored ? getStateFromLocalStorage()! : initialState}
+          onChange={({ changed, getDocument }) => {
+            if (!changed) return
+            void debouncedStoreToLocalStorage(getDocument())
+          }}
+        >
+          {children}
+        </Editor>
+      </SaveContext.Provider>
+    </IsSerloContext.Provider>
   )
 }
