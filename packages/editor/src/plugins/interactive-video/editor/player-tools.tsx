@@ -7,7 +7,7 @@ import {
 } from '@vidstack/react'
 import { useEffect } from 'react'
 
-import { markDuration } from '../const'
+import { longerThanVideoDuration, markDuration } from '../const'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -28,7 +28,9 @@ export function PlayerTools({
   const activeCues = useActiveTextCues(textTrack)
 
   const activeCue = activeCues[0]
-  const activeCueLength = activeCue?.endTime - activeCue?.startTime
+  const activeCueLength = activeCue
+    ? activeCue.endTime - activeCue.startTime
+    : longerThanVideoDuration
 
   const player = useMediaPlayer()
 

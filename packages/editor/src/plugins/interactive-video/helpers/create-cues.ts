@@ -1,6 +1,6 @@
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 
-import { markDuration } from '../const'
+import { longerThanVideoDuration, markDuration } from '../const'
 
 export function createCues(
   marks: EditorInteractiveVideoDocument['state']['marks'],
@@ -42,7 +42,7 @@ export function createCues(
   const lastMark = sortedMarks[sortedMarks.length - 1]
   cues.push({
     startTime: lastMark.startTime + markDuration,
-    endTime: 999999, // make sure it reaches the end of the video
+    endTime: longerThanVideoDuration, // make sure it reaches the end of the video
     text: '',
   })
 
