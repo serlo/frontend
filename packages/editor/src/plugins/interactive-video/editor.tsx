@@ -11,12 +11,16 @@ import { InteractiveVideoRenderer } from './renderer'
 import { InteractiveVideoStaticRenderer } from './static'
 import { InteractiveVideoToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const defaultMarkTime = 5
 
 export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   const { focused, state, id } = props
+  const { marks } = state
   const [previewActive, setPreviewActive] = useState(false)
+
+  const pluginStrings = useEditorStrings().plugins.interactiveVideo
 
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
@@ -28,29 +32,27 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   )
 
   function addOverlayContent(startTime: number) {
-    state.marks.insert(undefined, {
+    marks.insert(undefined, {
       title: '',
       child: { plugin: EditorPluginType.Exercise },
       startTime: startTime,
       autoOpen: true,
       mandatory: false,
-      timeAfterFail: undefined,
+      forceRewatch: false,
     })
-    setTimeout(() => setShowOverlayContentIndex(state.marks.length))
+    setTimeout(() => setShowOverlayContentIndex(marks.length))
   }
 
   function openOverlayByStartTime(startTime: number) {
-    const index = state.marks.findIndex(
-      (mark) => mark.startTime.value === startTime
-    )
+    const index = marks.findIndex((mark) => mark.startTime.value === startTime)
     if (index === -1) return
     setShowOverlayContentIndex(index)
   }
 
-  const cues = state.marks.map((mark) => ({
+  const cues = marks.map((mark) => ({
     startTime: mark.startTime.value,
     endTime: mark.startTime.value + defaultMarkTime,
-    text: mark.title.value || 'Inhalt',
+    text: mark.title.value || pluginStrings.defaultTitle,
   }))
 
   return (
@@ -79,7 +81,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
 
           <div className="mx-side">
             <ul>
-              {state.marks.map((mark, index) => {
+              {marks.map((mark, index) => {
                 const title = mark.title.value.length
                   ? mark.title.value
                   : 'type'
@@ -98,7 +100,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
                     </button>
                     <button
                       className="serlo-button-editor-secondary"
-                      onClick={() => state.marks.remove(index)}
+                      onClick={() => marks.remove(index)}
                     >
                       <span className="sr-only">Trash</span>
                       <FaIcon icon={faTrash} />
@@ -110,7 +112,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
             {showOverlayContentIndex === null ? null : (
               <OverlayContentModal
                 onClose={() => setShowOverlayContentIndex(null)}
-                mark={state.marks[showOverlayContentIndex]}
+                mark={marks[showOverlayContentIndex]}
               />
             )}
           </div>
