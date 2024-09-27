@@ -1,4 +1,7 @@
 import { Editor } from '@editor/core'
+import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
+import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
@@ -7,6 +10,7 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import NextAdapterPages from 'next-query-params/pages'
+import { mergeDeepRight } from 'ramda'
 import { useMemo } from 'react'
 import { debounce } from 'ts-debounce'
 import {
@@ -17,8 +21,7 @@ import {
 } from 'use-query-params'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -55,6 +58,8 @@ const emptyState = JSON.stringify({
 })
 
 function Content() {
+  const { lang } = useInstanceData()
+
   const [previewState, setPreviewState] = useQueryParam(
     'state',
     withDefault(StringParam, emptyState)
@@ -70,29 +75,28 @@ function Content() {
   )
   const editor = useMemo(
     () => (
-      <Editor
-        initialState={parseDocumentString(previewState)}
-        onChange={({ changed, getDocument }) => {
-          if (!changed) return
-          void debouncedSetState(JSON.stringify(getDocument()))
-        }}
-      />
+      <EditStringsProvider
+        value={
+          lang === 'de'
+            ? mergeDeepRight(editStringsEn, editStringsDe)
+            : editStringsEn
+        }
+      >
+        <Editor
+          initialState={parseDocumentString(previewState)}
+          onChange={({ changed, getDocument }) => {
+            if (!changed) return
+            void debouncedSetState(JSON.stringify(getDocument()))
+          }}
+        />
+      </EditStringsProvider>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isNotEmpty]
   )
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData)
-    return (
-      <div className="text-center">
-        <LoadingSpinner />
-      </div>
-    )
-  const editorStrings = loggedInData.strings.editor
-
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
-  editorPlugins.init(createPlugins({ editorStrings }))
+  editorPlugins.init(createPlugins({ lang }))
 
   editorRenderers.init(createRenderers())
 

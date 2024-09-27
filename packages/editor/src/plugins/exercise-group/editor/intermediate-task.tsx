@@ -1,6 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   faArrowCircleDown,
   faArrowCircleUp,
@@ -20,7 +20,7 @@ export function IntermediateTask({
   exerciseIndex,
   lastExerciseIndex,
 }: IntermediateTaskProps) {
-  const templateStrings = useEditorStrings().templatePlugins
+  const templateStrings = useEditStrings().templatePlugins
   const exGroupStrings = templateStrings.textExerciseGroup
 
   if (!intermediateTasks.defined) return

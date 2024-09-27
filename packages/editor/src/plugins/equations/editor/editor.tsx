@@ -1,5 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   store,
   focus,
@@ -15,7 +16,6 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorEquationsDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faArrowCircleUp,
   faPlusCircle,
@@ -168,8 +168,8 @@ export function EquationsEditor(props: EquationsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
-  const entityStrings = useEditorStrings().templatePlugins.entity
-  const equationsStrings = useEditorStrings().plugins.equations
+  const entityStrings = useEditStrings().templatePlugins.entity
+  const equationsStrings = useEditStrings().plugins.equations
 
   if (!nestedFocus) {
     return (

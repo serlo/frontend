@@ -1,7 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EntityTitleInput } from '@editor/plugins/serlo-template-plugins/common/entity-title-input'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -12,7 +12,7 @@ export function CourseEditor(props: CourseProps) {
   const { state } = props
   const { pages } = state
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const courseStrings = editorStrings.templatePlugins.course
 
   const [courseNavOpen, setCourseNavOpen] = useState(true)

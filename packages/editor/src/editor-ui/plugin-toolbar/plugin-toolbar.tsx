@@ -1,7 +1,7 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { ReactElement } from 'react'
 
@@ -30,7 +30,7 @@ export function PluginToolbar({
   className,
   noWhiteShadow,
 }: PluginToolbarProps) {
-  const pluginStrings = useEditorStrings().plugins
+  const pluginStrings = useEditStrings().plugins
 
   return (
     <div

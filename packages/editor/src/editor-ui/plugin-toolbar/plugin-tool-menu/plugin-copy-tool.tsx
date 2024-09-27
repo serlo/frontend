@@ -1,6 +1,6 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { selectStaticDocumentWithoutIds, store } from '@editor/store'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
@@ -15,7 +15,7 @@ interface PluginCopyToolProps {
  * plugin to copy plugin's editor state to the clipboard
  */
 export function PluginCopyTool({ pluginId, noSeparator }: PluginCopyToolProps) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const { strings } = useInstanceData()
 
   const handleOnClick = useCallback(() => {

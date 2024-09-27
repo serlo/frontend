@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { gql } from 'graphql-request'
@@ -5,7 +6,6 @@ import { gql } from 'graphql-request'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import {
   FetchExerciseFolderQuery,
@@ -32,7 +32,7 @@ export function ArticleRelatedExercises({
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const articleStrings = useEditStrings().templatePlugins.article
 
   const errorReturn = <p>Sorry, something went wrong.</p>
 

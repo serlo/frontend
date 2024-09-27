@@ -6,7 +6,7 @@ import {
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState, useMemo } from 'react'
@@ -44,7 +44,7 @@ export function BlankControls(props: BlankControlsProps) {
 
   const inputsWrapper = useRef<HTMLInputElement>(null)
 
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const blanksExerciseStrings = useEditStrings().plugins.blanksExercise
 
   // Setting the element to serve as an anchor for overlay positioning
   useEffect(() => {

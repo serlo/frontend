@@ -2,8 +2,8 @@ import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { type Dispatch, type SetStateAction } from 'react'
 
@@ -20,7 +20,7 @@ export const PageLayoutToolbar = ({
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
-  const pageLayoutStrings = useEditorStrings().plugins.pageLayout
+  const pageLayoutStrings = useEditStrings().plugins.pageLayout
 
   if (!focused) return null
 

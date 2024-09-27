@@ -1,7 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useLang } from '@editor/utils/use-lang'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -37,7 +37,7 @@ export function LinkOverlayEditMode({
   const [query, setQuery] = useState(value)
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const lang = useLang()
-  const overlayStrings = useEditorStrings().plugins.text.linkOverlay
+  const overlayStrings = useEditStrings().plugins.text.linkOverlay
 
   useEffect(() => {
     setQuery(value)

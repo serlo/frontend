@@ -1,5 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   store,
@@ -11,7 +12,6 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { KeyboardEvent, useState } from 'react'
 
@@ -34,7 +34,7 @@ export function SerloTableEditor(props: SerloTableProps) {
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
-  const tableStrings = useEditorStrings().plugins.serloTable
+  const tableStrings = useEditStrings().plugins.serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =

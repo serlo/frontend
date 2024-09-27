@@ -53,16 +53,14 @@ export function createMultimediaPlugin(
   }
 }
 
-export function createArticleIntroduction(placeholderText: string) {
+export function createArticleIntroduction(placeholder: string) {
   return {
     Component: MultimediaEditor,
     config: {
       allowedPlugins: [EditorPluginType.Image],
       explanation: {
         plugin: EditorPluginType.Text,
-        config: {
-          placeholder: placeholderText,
-        },
+        config: { placeholder },
       },
     },
     state: object({

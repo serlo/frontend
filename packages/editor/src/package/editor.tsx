@@ -2,6 +2,7 @@ import { Editor, type EditorProps } from '@editor/core'
 import { type GetDocument } from '@editor/core/types'
 import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
+import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
@@ -10,7 +11,6 @@ import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { getCurrentDatetime } from '@editor/utils/get-current-datetime'
 import { InstanceDataProvider } from '@serlo/frontend/src/contexts/instance-context'
-import { LoggedInDataProvider } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
@@ -60,7 +60,7 @@ export function SerloEditor(props: SerloEditorProps) {
     onChange(migratedState)
   }
 
-  const { instanceData, loggedInData } = editorData[language]
+  const { instanceData, editStrings } = editorData[language]
 
   const allPlugins = createBasicPlugins(plugins, _testingSecret)
   editorPlugins.init(allPlugins)
@@ -70,7 +70,7 @@ export function SerloEditor(props: SerloEditorProps) {
 
   return (
     <InstanceDataProvider value={instanceData}>
-      <LoggedInDataProvider value={loggedInData}>
+      <EditStringsProvider value={editStrings}>
         <LtikContext.Provider value={_ltik}>
           <div className="serlo-editor-hacks">
             <Editor
@@ -81,7 +81,7 @@ export function SerloEditor(props: SerloEditorProps) {
             </Editor>
           </div>
         </LtikContext.Provider>
-      </LoggedInDataProvider>
+      </EditStringsProvider>
     </InstanceDataProvider>
   )
 

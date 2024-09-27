@@ -1,8 +1,8 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { TempFile, isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faArrowUpFromBracket,
   faRedoAlt,
@@ -24,7 +24,7 @@ export function UploadButton({
   onFocus,
   onBlur,
 }: UploadButtonProps) {
-  const imageStrings = useEditorStrings().plugins.image
+  const imageStrings = useEditStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)

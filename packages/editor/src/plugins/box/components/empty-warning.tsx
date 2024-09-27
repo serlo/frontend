@@ -1,7 +1,7 @@
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 export function EmptyWarning() {
-  const warningString = useEditorStrings().plugins.box.emptyContentWarning
+  const warningString = useEditStrings().plugins.box.emptyContentWarning
 
   return (
     <div

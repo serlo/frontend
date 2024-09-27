@@ -1,4 +1,7 @@
 import { Editor } from '@editor/core'
+import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
+import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import type { BoxType } from '@editor/plugins/box/renderer'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
@@ -12,11 +15,13 @@ import type {
 } from '@editor/types/editor-plugins'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { mergeDeepRight } from 'ramda'
 import { useEffect, useState } from 'react'
 import { debounce } from 'ts-debounce'
 
 import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
@@ -103,6 +108,7 @@ function ExampleWithEditSwitch({
     }, 20)
   }, [isEdit])
 
+  const { lang } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -110,7 +116,6 @@ function ExampleWithEditSwitch({
         <LoadingSpinner />
       </div>
     )
-  const editorStrings = loggedInData.strings.editor
 
   const debouncedSetState = debounce(
     (state?: AnyEditorDocument | null) =>
@@ -118,45 +123,53 @@ function ExampleWithEditSwitch({
     40
   )
 
-  editorPlugins.init(createPlugins({ editorStrings }))
+  editorPlugins.init(createPlugins({ lang }))
   return (
-    <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
-      <div className="ml-4 flex">
-        {title ? (
-          <h1 className="ml-4 mr-2 text-xl font-bold">{title}</h1>
-        ) : null}
+    <EditStringsProvider
+      value={
+        lang === 'de'
+          ? mergeDeepRight(editStringsEn, editStringsDe)
+          : editStringsEn
+      }
+    >
+      <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
+        <div className="ml-4 flex">
+          {title ? (
+            <h1 className="ml-4 mr-2 text-xl font-bold">{title}</h1>
+          ) : null}
 
-        <button
-          onClick={() => setIsEdit(!isEdit)}
-          className="serlo-button-light !px-4 text-base"
-        >
-          {isEdit ? (
-            <>
-              <FaIcon icon={faEye} /> Show Student-View
-            </>
-          ) : (
-            <>
-              <FaIcon icon={faPencilAlt} /> Show Edit-View
-            </>
-          )}
-        </button>
+          <button
+            onClick={() => setIsEdit(!isEdit)}
+            className="serlo-button-light !px-4 text-base"
+          >
+            {isEdit ? (
+              <>
+                <FaIcon icon={faEye} /> Show Student-View
+              </>
+            ) : (
+              <>
+                <FaIcon icon={faPencilAlt} /> Show Edit-View
+              </>
+            )}
+          </button>
+        </div>
+        {isEdit ? (
+          <div className={cn('serlo-editor-hacks mt-12', className)}>
+            <Editor
+              initialState={exampleState}
+              onChange={({ changed, getDocument }) => {
+                if (!changed) return
+                void debouncedSetState(getDocument())
+              }}
+            />
+          </div>
+        ) : (
+          <div className="pt-4">
+            <StaticRenderer document={exampleState} />
+          </div>
+        )}
       </div>
-      {isEdit ? (
-        <div className={cn('serlo-editor-hacks mt-12', className)}>
-          <Editor
-            initialState={exampleState}
-            onChange={({ changed, getDocument }) => {
-              if (!changed) return
-              void debouncedSetState(getDocument())
-            }}
-          />
-        </div>
-      ) : (
-        <div className="pt-4">
-          <StaticRenderer document={exampleState} />
-        </div>
-      )}
-    </div>
+    </EditStringsProvider>
   )
 }
 

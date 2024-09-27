@@ -1,15 +1,15 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContentStrings } from '@editor/utils/use-content-strings'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { BoxProps } from '.'
 import { types } from './renderer'
 
 export const BoxToolbar = ({ id, state }: BoxProps) => {
-  const boxStrings = useEditorStrings().plugins.box
+  const boxStrings = useEditStrings().plugins.box
   const contentStrings = useContentStrings()
 
   return (

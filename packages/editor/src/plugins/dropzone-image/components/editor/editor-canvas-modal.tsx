@@ -1,5 +1,5 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 import type { DropzoneImageProps } from '../..'
 import { type AnswerType, type AnswerZoneState, ModalType } from '../../types'
@@ -25,7 +25,7 @@ export function EditorCanvasModal({
   setModalType,
   currentAnswer,
 }: EditorCanvasModalProps) {
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+  const pluginStrings = useEditStrings().plugins.dropzoneImage
   const { answerZones, extraDraggableAnswers } = state
 
   const title = modalType ? pluginStrings.modal[modalType] : ''

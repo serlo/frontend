@@ -1,8 +1,8 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { useState } from 'react'
@@ -18,7 +18,7 @@ export function SerloLicenseChooser({
   licenseId,
   className,
 }: SerloLicenseChooserProps) {
-  const solutionStrings = useEditorStrings().templatePlugins.solution
+  const solutionStrings = useEditStrings().templatePlugins.solution
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const { licenses } = useInstanceData()

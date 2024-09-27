@@ -1,5 +1,5 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { StateTypeReturnType } from '@editor/plugin'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import { TransformationTarget } from './editor-renderer'
 import type { GridFocus } from './grid-focus'
@@ -18,7 +18,7 @@ export interface StepEditorProps {
 }
 
 export function StepEditor(props: StepEditorProps) {
-  const equationsStrings = useEditorStrings().plugins.equations
+  const equationsStrings = useEditStrings().plugins.equations
   const { gridFocus, resetFocus, row, state, transformationTarget } = props
 
   return (

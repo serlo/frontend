@@ -1,8 +1,8 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { PluginMenuItem } from '@editor/package/plugin-menu'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 function getTooltipPosition(index: number) {
   return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
@@ -23,7 +23,7 @@ export function PluginMenuItems({
   itemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>
   onInsertPlugin: (pluginType: PluginMenuItem) => void
 }) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   return (
     <>

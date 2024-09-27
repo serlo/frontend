@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import React, { type RefObject } from 'react'
 
 import { PixabaySearchButton } from './pixabay-search-button'
@@ -22,7 +22,7 @@ export function ImageSelectionScreen({
   urlInputRef,
   setIsAButtonFocused,
 }: ImageSelectionScreenProps) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const { src, licence } = state
 
   const imageStrings = editorStrings.plugins.image

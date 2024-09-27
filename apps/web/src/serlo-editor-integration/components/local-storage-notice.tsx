@@ -1,9 +1,9 @@
 import type { EditorProps } from '@editor/core'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
 
 import type { LooseEdtrData } from '../serlo-editor'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export interface LocalStorageNoticeProps {
   useStored: boolean
@@ -14,7 +14,7 @@ export function LocalStorageNotice({
   useStored,
   setUseStored,
 }: LocalStorageNoticeProps) {
-  const storageStrings = useEditorStrings().edtrIo.localStorage
+  const storageStrings = useEditStrings().edtrIo.localStorage
 
   const stored = getStateFromLocalStorage()
 

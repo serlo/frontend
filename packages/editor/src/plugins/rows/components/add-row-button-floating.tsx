@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { useRef } from 'react'
 
@@ -12,7 +12,7 @@ interface AddRowButtonFloatingProps {
 
 export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
   const { focused, onClick } = props
-  const rowsStrings = useEditorStrings().plugins.rows
+  const rowsStrings = useEditStrings().plugins.rows
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   return (

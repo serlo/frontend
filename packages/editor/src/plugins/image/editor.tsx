@@ -1,10 +1,10 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile, usePendingFileUploader } from '@editor/plugin'
 import { selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 
@@ -23,7 +23,7 @@ const captionFormattingOptions = [
 
 export function ImageEditor(props: ImageProps) {
   const { id, focused, state, config } = props
-  const imageStrings = useEditorStrings().plugins.image
+  const imageStrings = useEditStrings().plugins.image
 
   const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)
 

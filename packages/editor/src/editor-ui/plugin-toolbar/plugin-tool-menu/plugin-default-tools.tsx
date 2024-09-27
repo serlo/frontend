@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   insertPluginChildAfter,
   removePluginChild,
@@ -8,7 +9,6 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { UuidsContext } from '@serlo/frontend/src/contexts/uuids-context'
 import { useCallback, useContext, useMemo } from 'react'
@@ -24,7 +24,7 @@ interface PluginDefaultToolsProps {
 // tools for most plugins (duplicate / remove)
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
-  const pluginStrings = useEditorStrings().plugins
+  const pluginStrings = useEditStrings().plugins
 
   // using useContext directly so result can also be null for edusharing
   const serloEntityId = useContext(UuidsContext)?.entityId

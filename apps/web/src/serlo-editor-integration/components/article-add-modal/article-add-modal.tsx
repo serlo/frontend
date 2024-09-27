@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useState } from 'react'
 
@@ -7,7 +8,6 @@ import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import type { ArticleProps } from '../../../../../../packages/editor/src/plugins/article'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -28,7 +28,7 @@ export function ArticleAddModal({
   )
 
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const articleStrings = useEditStrings().templatePlugins.article
 
   const { exercises, exerciseFolder, relatedContent } = data
 

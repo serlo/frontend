@@ -1,6 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { useContentStrings } from '@editor/utils/use-content-strings'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { BoxProps } from '..'
 import { boxTypeIcons, types } from '../renderer'
@@ -11,7 +11,7 @@ interface TypeChooserProps {
 
 export function TypeChooserBox({ typeState }: TypeChooserProps) {
   const contentStrings = useContentStrings()
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   function handleTypeSelection(
     type: string,

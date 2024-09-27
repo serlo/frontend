@@ -1,8 +1,7 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useCallback, useEffect } from 'react'
-
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 // we use this hash to make sure we don't block redirects after an successful save
 export const successHash = '#success'
@@ -10,13 +9,13 @@ export const successHash = '#success'
 // needed because of https://github.com/vercel/next.js/issues/2476
 export function useLeaveConfirm(protect: boolean) {
   const Router = useRouter()
-  const loggedInData = useLoggedInData()
+  const editStrings = useEditStrings()
 
   const onRouteChangeStart = useCallback(
     (targetUrl?: string) => {
       if (targetUrl && targetUrl.includes(successHash)) return
       if (protect) {
-        if (window.confirm(loggedInData?.strings.editor.confirmRouteChange)) {
+        if (window.confirm(editStrings.confirmRouteChange)) {
           return true
         }
         nProgress.done()
@@ -26,7 +25,7 @@ export function useLeaveConfirm(protect: boolean) {
         throw "Abort route change by user's confirmation."
       }
     },
-    [protect, loggedInData?.strings.editor.confirmRouteChange, Router.asPath]
+    [protect, editStrings.confirmRouteChange, Router.asPath]
   )
 
   useEffect(() => {

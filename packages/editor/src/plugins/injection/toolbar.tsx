@@ -3,8 +3,8 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction, type ClipboardEvent } from 'react'
 
@@ -21,7 +21,7 @@ export const InjectionToolbar = ({
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
-  const injectionStrings = useEditorStrings().plugins.injection
+  const injectionStrings = useEditStrings().plugins.injection
 
   function validateBeforeClose() {
     const [id, hash] = state.value.split('#')

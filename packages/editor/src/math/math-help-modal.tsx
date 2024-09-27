@@ -1,5 +1,5 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 export const MathHelpModal = ({
   isHelpOpen,
@@ -8,7 +8,7 @@ export const MathHelpModal = ({
   isHelpOpen: boolean
   setIsHelpOpen: (isOpen: boolean) => void
 }) => {
-  const mathStrings = useEditorStrings().plugins.text.math
+  const mathStrings = useEditStrings().plugins.text.math
   return (
     <EditorModal
       isOpen={isHelpOpen}

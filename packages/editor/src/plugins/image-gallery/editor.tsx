@@ -1,5 +1,6 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   focus,
@@ -10,7 +11,6 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useState } from 'react'
 
 import type { ImageGalleryProps } from '.'
@@ -32,7 +32,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const imageGalleryStrings = useEditorStrings().plugins.imageGallery
+  const imageGalleryStrings = useEditStrings().plugins.imageGallery
 
   const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
 

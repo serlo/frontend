@@ -1,9 +1,9 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useState } from 'react'
 
@@ -27,7 +27,7 @@ export function DropzoneImageToolbar({
   containerRef,
 }: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const dropzoneStrings = editorStrings.plugins.dropzoneImage
   const imageStrings = editorStrings.plugins.image
 

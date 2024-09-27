@@ -1,6 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { type ImageProps } from '@editor/plugins/image'
 import { LicenseDropdown } from '@editor/plugins/image/components/licence-dropdown'
 import {
@@ -10,11 +11,10 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 export function BackgroundImageSettings({ id }: { id: string }) {
-  const imageStrings = useEditorStrings().plugins.image
+  const imageStrings = useEditStrings().plugins.image
   const dispatch = useAppDispatch()
 
   const document = useAppSelector((state) => selectDocument(state, id))

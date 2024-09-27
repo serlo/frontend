@@ -1,11 +1,8 @@
-import { loggedInData as loggedInDataDe } from '@serlo/frontend/src/data/de'
-import { loggedInData as loggedInDataEn } from '@serlo/frontend/src/data/en'
+import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { mergeDeepRight } from 'ramda'
 
 import { getPluginMenuItems } from './plugin-menu'
-
-const editorStringsDe = loggedInDataDe.strings.editor
-const editorStringsEn = loggedInDataEn.strings.editor
 
 /*
 An element of the Serlo editor which can be integrated as a block / plugin
@@ -18,10 +15,10 @@ by a configuration). In this list they are represented as two separate elements.
 */
 
 export const pluginMenuDe = getPluginMenuItems(
-  mergeDeepRight(editorStringsEn, editorStringsDe)
+  mergeDeepRight(editStringsEn, editStringsDe)
 ).reduce((previous, current) => ({ ...previous, [current.type]: current }), {})
 
-export const pluginMenuEn = getPluginMenuItems(editorStringsEn).reduce(
+export const pluginMenuEn = getPluginMenuItems(editStringsEn).reduce(
   (previous, current) => ({ ...previous, [current.type]: current }),
   {}
 )

@@ -21,7 +21,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { EditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { EditStrings } from '@editor/types/language-data'
 
 const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
 
@@ -73,7 +73,7 @@ const visibleTypes = Object.values(pluginMenuType).filter((type) => {
 })
 
 export function getPluginMenuItems(
-  editorStrings: EditorStrings
+  editorStrings: EditStrings
 ): PluginMenuItem[] {
   return visibleTypes.map((type) => {
     const [initialState, unwrappedPlugin] = getInitialState(type)
@@ -103,19 +103,19 @@ const mysteryStrings = {
 function getTitleAndDescription(
   type: PluginMenuType,
   pluginType: EditorPluginType,
-  editorStrings: EditorStrings
+  editStrings: EditStrings
 ) {
   // use extra plugin menu items strings if available
-  if (Object.hasOwn(editorStrings.pluginMenu, type)) {
+  if (Object.hasOwn(editStrings.pluginMenu, type)) {
     const { title, description } =
-      editorStrings.pluginMenu[type as keyof typeof editorStrings.pluginMenu]
+      editStrings.pluginMenu[type as keyof typeof editStrings.pluginMenu]
     return { title, description }
   }
 
-  if (!Object.hasOwn(editorStrings.plugins, pluginType)) return mysteryStrings
+  if (!Object.hasOwn(editStrings.plugins, pluginType)) return mysteryStrings
 
   const pluginStrings =
-    editorStrings.plugins[pluginType as keyof EditorStrings['plugins']]
+    editStrings.plugins[pluginType as keyof EditStrings['plugins']]
 
   // use plugin strings (normal case)
 

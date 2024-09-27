@@ -1,14 +1,14 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { store, selectStaticDocument } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
 
-  const edtrIoStrings = useEditorStrings().edtrIo
+  const edtrIoStrings = useEditStrings().edtrIo
   useEffect(() => {
     //reset when modal opens
     if (open) setSavedToLocalstorage(false)

@@ -1,6 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   selectHasFocusedChild,
   focus,
@@ -9,7 +10,6 @@ import {
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState } from 'react'
 
@@ -29,7 +29,7 @@ export function ExerciseEditor(props: ExerciseProps) {
     hideInteractiveInitially,
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const exStrings = editorStrings.plugins.exercise
 
   const [previewActive, setPreviewActive] = useState(false)

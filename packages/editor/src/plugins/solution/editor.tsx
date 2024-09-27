@@ -1,7 +1,7 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useLang } from '@editor/utils/use-lang'
 import {
   QuickbarData,
@@ -19,7 +19,7 @@ const linkOverlayWrapperWidth = 460
 
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
-  const solutionStrings = useEditorStrings().templatePlugins.solution
+  const solutionStrings = useEditStrings().templatePlugins.solution
   const instance = useLang()
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)

@@ -6,6 +6,7 @@ import {
   editorText,
 } from '@editor/editor-ui'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   withLinks,
   withLists,
@@ -13,7 +14,6 @@ import {
   withBlanks,
 } from '@editor/plugins/text/plugins'
 import { isMac } from '@editor/utils/client-detection'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useInstanceData } from '@editor/utils/use-instance-data'
 import {
   faCode,
@@ -131,7 +131,7 @@ export const useFormattingOptions = (
   formattingOptions: TextEditorFormattingOption[]
 ) => {
   const { strings } = useInstanceData()
-  const textStrings = useEditorStrings().plugins.text
+  const textStrings = useEditStrings().plugins.text
 
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
@@ -227,7 +227,7 @@ export const useFormattingOptions = (
 function createToolbarControls(
   formattingOptions: TextEditorFormattingOption[],
   // textStrings: LoggedInData['strings']['editor']['plugins']['text'],
-  textStrings: ReturnType<typeof useEditorStrings>['plugins']['text'],
+  textStrings: ReturnType<typeof useEditStrings>['plugins']['text'],
   ctrlKey: string
 ): ControlButton[] {
   const allFormattingOptions = [

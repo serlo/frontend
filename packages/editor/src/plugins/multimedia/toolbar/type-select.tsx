@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,
@@ -6,7 +7,6 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { MultimediaProps } from '..'
@@ -24,7 +24,7 @@ export const MultimediaTypeSelect = ({
   stateCache,
   setStateCache,
 }: MultimediaTypeSelectProps) => {
-  const pluginStrings = useEditorStrings().plugins
+  const pluginStrings = useEditStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
   )?.plugin

@@ -1,9 +1,9 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 
 import type { ImageProps } from '..'
@@ -11,7 +11,7 @@ import { LicenseDropdown } from '../components/licence-dropdown'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
   const { alt, src, imageSource, licence } = state
-  const imageStrings = useEditorStrings().plugins.image
+  const imageStrings = useEditStrings().plugins.image
 
   const isTemp = isTempFile(src.value)
   const isFailed = isTempFile(src.value) && src.value.failed

@@ -1,7 +1,7 @@
 import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
 
@@ -15,7 +15,7 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
   const { extraDraggableAnswers } = props
 
   const areaWrapper = useRef<HTMLDivElement>(null)
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const blanksExerciseStrings = useEditStrings().plugins.blanksExercise
 
   const incorrectAnswers = extraDraggableAnswers.defined
     ? extraDraggableAnswers.map(({ answer }) => answer.value)

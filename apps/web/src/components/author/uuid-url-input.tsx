@@ -1,10 +1,10 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import {
   TaxonomyTermType,
@@ -38,7 +38,7 @@ export function UuidUrlInput({
   const { data, error } = useSimpleUuidFetch(maybeUuid)
 
   const { strings } = useInstanceData()
-  const modalStrings = useEditorStrings().templatePlugins.article.addModal
+  const modalStrings = useEditStrings().templatePlugins.article.addModal
 
   return (
     <div className="my-4 border-t-2 pt-5">

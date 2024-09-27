@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import type { ConnectDragSource } from 'react-dnd'
 
@@ -10,7 +10,7 @@ interface RowDragButtonProps {
 }
 
 export function RowDragButton({ drag }: RowDragButtonProps) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   return (
     <div
