@@ -1,8 +1,7 @@
 import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
+import { cn } from '@editor/utils/cn'
 import React from 'react'
 import { Descendant } from 'slate'
-
-import { cn } from '@/helper/cn'
 
 interface AnswerContentProps {
   url?: string

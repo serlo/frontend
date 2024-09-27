@@ -1,9 +1,9 @@
 import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
+import { cn } from '@editor/utils/cn'
 import { type ComponentProps, forwardRef } from 'react'
 
 import { BlankId } from '..'
 import { BlanksContextType } from '../context/blank-context'
-import { cn } from '@/helper/cn'
 
 interface BlankRendererInputProps {
   blankId: string

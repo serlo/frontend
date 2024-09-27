@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   store,
@@ -9,10 +10,9 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { KeyboardEvent, useState } from 'react'
 
 import type { SerloTableProps } from '.'

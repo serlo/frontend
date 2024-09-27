@@ -1,11 +1,11 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { Dispatch, SetStateAction, type ClipboardEvent } from 'react'
 
 import type { InjectionProps } from '.'
@@ -52,7 +52,7 @@ export const InjectionToolbar = ({
           >
             {injectionStrings.serloId} <FaIcon icon={faPencilAlt} />
           </button>
-          <ModalWithCloseButton
+          <EditorModal
             isOpen={showSettingsModal}
             setIsOpen={(open) => {
               if (!open) validateBeforeClose()
@@ -79,7 +79,7 @@ export const InjectionToolbar = ({
                 className="block"
               />
             </div>
-          </ModalWithCloseButton>
+          </EditorModal>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

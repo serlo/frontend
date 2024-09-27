@@ -1,7 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
 import { EntityTitleInput } from '@editor/plugins/serlo-template-plugins/common/entity-title-input'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 

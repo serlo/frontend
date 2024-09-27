@@ -1,8 +1,9 @@
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
-import { serloDomain } from '@serlo/frontend/src/helper/urls/serlo-domain'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { serloDomain } from '@editor/utils/serlo-domain'
+import { useContentStrings } from '@editor/utils/use-content-strings'
+import { useInstanceData } from '@editor/utils/use-instance-data'
+import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { VideoType } from '../plugins/video/renderer'
@@ -31,6 +32,7 @@ export function EmbedWrapper({
     setShowContent(false)
   }, [embedUrl])
 
+  const contentStrings = useContentStrings()
   const { strings } = useInstanceData()
 
   const confirmLoad = () => {
@@ -69,7 +71,7 @@ export function EmbedWrapper({
           <img
             className="w-full object-contain opacity-50"
             src={previewImageUrl}
-            alt={`${strings.content.previewImage}`}
+            alt={`${contentStrings.previewImage}`}
           />
         </div>
         <div
@@ -80,7 +82,10 @@ export function EmbedWrapper({
             className="serlo-button-editor-primary group-hover:bg-editor-primary"
             onKeyDown={onKeyDown}
           >
-            <FaIcon className="py-0.5" icon={entityIconMapping[type]} />{' '}
+            <FaIcon
+              className="py-0.5"
+              icon={type === 'video' ? faPlayCircle : faCubes}
+            />{' '}
             {strings.embed.general}
           </button>
         </div>

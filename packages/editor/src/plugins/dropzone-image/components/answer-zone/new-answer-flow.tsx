@@ -1,12 +1,12 @@
 import IconAnswerImage from '@editor/editor-ui/assets/plugin-icons/dropzone-image/answer-image.svg'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { AnswerRenderer } from './answer-renderer'
 import type { DropzoneImageProps } from '../..'
 import { AnswerType } from '../../types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface NewAnswerFlowProps {
   isWrongAnswer?: boolean

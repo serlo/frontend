@@ -1,6 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 interface AddRowButtonLargeProps {
   onClick: () => void

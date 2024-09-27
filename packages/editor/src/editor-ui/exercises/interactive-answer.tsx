@@ -1,11 +1,11 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import {
   faCheckCircle,
   faCheckSquare,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 interface InteractiveAnswerProps {
   isRadio?: boolean
@@ -26,8 +26,7 @@ export function InteractiveAnswer({
   remove,
   handleChange,
 }: InteractiveAnswerProps) {
-  const { strings } = useInstanceData()
-
+  const contentStrings = useContentStrings()
   const icon = isRadio
     ? isActive
       ? faCheckCircle
@@ -39,7 +38,7 @@ export function InteractiveAnswer({
   return (
     <div className="relative mb-2.5 flex items-center border-t-2 border-editor-primary">
       <div className="mr-2.5 w-[10%] text-center font-bold">
-        {strings.content.exercises.correct}?
+        {contentStrings.exercises.correct}?
         <button className="p-2" onClick={handleChange}>
           <FaIcon icon={icon} className="mt-0.5 text-xl text-brand" />
         </button>
@@ -47,7 +46,7 @@ export function InteractiveAnswer({
       <div className="ml-2.5 w-full rounded-sm">
         <div className="pl-5 pt-2.5">
           <label className="ml-side block text-sm font-bold">
-            {strings.content.exercises.answer}
+            {contentStrings.exercises.answer}
           </label>
           <>{answer}</>
         </div>
@@ -59,7 +58,7 @@ export function InteractiveAnswer({
         </button>
         <div className="mt-1.5 py-2.5 pl-5">
           <label className="ml-side block text-sm font-bold">
-            {strings.content.exercises.feedback}
+            {contentStrings.exercises.feedback}
           </label>
           <div className="ml-0.5">{feedback}</div>
         </div>

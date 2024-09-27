@@ -6,11 +6,11 @@ import {
 } from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { isExerciseDocument } from '@editor/types/plugin-type-guards'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useMemo } from 'react'
 
 import { type ExerciseProps } from '..'
 import { type InteractivePluginType } from '../interactive-plugin-types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InteractiveExercisesSelection({
   interactive,

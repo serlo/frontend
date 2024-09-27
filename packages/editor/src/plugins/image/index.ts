@@ -1,7 +1,7 @@
+import type { FileError } from '@editor/editor-integration/image-with-testing-config'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { FileError } from '@serlo/frontend/src/serlo-editor-integration/image-with-serlo-config'
 
 import { ImageEditor } from './editor'
 import { isImageUrl } from './utils/check-image-url'

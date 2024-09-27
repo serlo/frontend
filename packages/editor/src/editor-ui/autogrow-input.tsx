@@ -1,3 +1,4 @@
+import { cn } from '@editor/utils/cn'
 import {
   forwardRef,
   useRef,
@@ -5,8 +6,6 @@ import {
   useEffect,
   type ComponentProps,
 } from 'react'
-
-import { cn } from '@/helper/cn'
 
 export const AutogrowInput = forwardRef<
   HTMLInputElement,

@@ -1,9 +1,8 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 export interface AnswerZoneSidebarProps {
   answerZoneId: string

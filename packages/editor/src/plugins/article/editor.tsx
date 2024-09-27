@@ -1,6 +1,8 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useState } from 'react'
 
 import type { ArticleProps } from '.'
@@ -10,8 +12,6 @@ import { ArticleRelatedContentSection } from './editor-renderer/article-related-
 import { ArticleSources } from './editor-renderer/article-sources'
 import { ArticleRenderer } from './renderer'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
-import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 import { ArticleAddModal } from '@/serlo-editor-integration/components/article-add-modal/article-add-modal'
 
 export function ArticleEditor({ state }: ArticleProps) {

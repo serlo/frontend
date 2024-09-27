@@ -1,8 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function PreviewButton({
   previewActive,

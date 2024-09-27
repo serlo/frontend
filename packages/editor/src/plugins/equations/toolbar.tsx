@@ -1,7 +1,7 @@
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { EquationsProps } from '.'
 import { TransformationTarget } from './editor/editor-renderer'

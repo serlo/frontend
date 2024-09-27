@@ -1,5 +1,4 @@
-import { Link } from '@serlo/frontend/src/components/content/link'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 
 interface ImageProps {
   image: {
@@ -19,7 +18,7 @@ export function ImageRenderer({
   placeholder,
   forceNewTab,
 }: ImageProps) {
-  const altFallback = useInstanceData().strings.content.imageAltFallback
+  const altFallback = useContentStrings().imageAltFallback
   const { src, href, alt, maxWidth: maxWidthNumber } = image
   const maxWidth = maxWidthNumber ? `${maxWidthNumber}px` : undefined
 
@@ -46,23 +45,18 @@ export function ImageRenderer({
     </figure>
   )
 
+  // only for old content, new image can't have hrefs
   function wrapWithLink(children: JSX.Element) {
     if (!href) return children
-    if (forceNewTab)
-      return (
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          data-qa="plugin-image-link"
-        >
-          {children}
-        </a>
-      )
     return (
-      <Link className="block w-full" href={href} noExternalIcon>
+      <a
+        href={href}
+        target={forceNewTab ? '_blank' : undefined}
+        rel={forceNewTab ? 'noreferrer' : undefined}
+        data-qa="plugin-image-link"
+      >
         {children}
-      </Link>
+      </a>
     )
   }
 }

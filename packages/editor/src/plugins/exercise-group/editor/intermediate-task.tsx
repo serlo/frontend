@@ -1,4 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faArrowCircleDown,
   faArrowCircleUp,
@@ -6,8 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import { type ExerciseGroupProps } from '..'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface IntermediateTaskProps {
   intermediateTasks: ExerciseGroupProps['state']['intermediateTasks']

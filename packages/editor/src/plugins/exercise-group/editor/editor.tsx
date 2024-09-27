@@ -1,13 +1,13 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import { IntermediateTask } from './intermediate-task'
 import { type ExerciseGroupProps } from '..'
 import { ExerciseGroupRenderer } from '../renderer'
-import { FaIcon } from '@/components/fa-icon'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {

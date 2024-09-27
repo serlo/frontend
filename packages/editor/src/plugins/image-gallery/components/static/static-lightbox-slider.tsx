@@ -1,8 +1,8 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEffect, useRef } from 'react'
 
 interface StaticLightboxSliderProps {

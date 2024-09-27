@@ -1,9 +1,9 @@
 import { focus, useAppDispatch } from '@editor/store'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect } from 'react'
 
 import type { DropzoneImageProps } from '../..'
 import { AnswerType } from '../../types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AnswerRendererProps {
   answerType: AnswerType

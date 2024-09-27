@@ -2,6 +2,7 @@ import { Editor, type EditorProps } from '@editor/core'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { Entity } from '@serlo/authorization'
 import { type ReactNode, useState } from 'react'
 
@@ -10,7 +11,6 @@ import {
   getStateFromLocalStorage,
   LocalStorageNotice,
 } from './components/local-storage-notice'
-import { IsSerloContext } from './context/is-serlo-context'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'

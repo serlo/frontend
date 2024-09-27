@@ -1,5 +1,5 @@
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseStaticRenderer } from './static'

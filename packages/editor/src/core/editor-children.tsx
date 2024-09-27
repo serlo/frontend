@@ -1,3 +1,4 @@
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import { useCallback } from 'react'
 
 import { SubDocument } from './sub-document'
@@ -16,7 +17,6 @@ import {
   selectStaticDocument,
 } from '../store'
 import { ROOT } from '../store/root/constants'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function EditorChildren({ children }: { children: EditorRenderProps }) {

@@ -1,10 +1,10 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useState } from 'react'
 
 import type { ImageProps } from '.'
@@ -45,7 +45,7 @@ export function ImageToolbar({
       >
         {editorStrings.edtrIo.settings} <FaIcon className="ml-1" icon={faCog} />
       </button>
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={showSettingsModal}
         setIsOpen={setShowSettingsModal}
         className="top-8 max-w-xl translate-y-0 sm:top-24"
@@ -55,7 +55,7 @@ export function ImageToolbar({
         <div className="mx-side mb-3">
           <SettingsModalControls state={state} />
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     </>
   ) : undefined
 

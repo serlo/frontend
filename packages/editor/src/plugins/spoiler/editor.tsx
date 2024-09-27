@@ -3,8 +3,8 @@ import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useMemo } from 'react'
 
 import type { SpoilerProps } from '.'

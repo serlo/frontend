@@ -1,6 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 export function CourseHeader({ title }: { title: JSX.Element }) {
   const { strings } = useInstanceData()

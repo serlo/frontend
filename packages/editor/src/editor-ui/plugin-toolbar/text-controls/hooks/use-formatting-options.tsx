@@ -5,12 +5,16 @@ import {
   editorLink,
   editorText,
 } from '@editor/editor-ui'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import {
   withLinks,
   withLists,
   withMath,
   withBlanks,
 } from '@editor/plugins/text/plugins'
+import { isMac } from '@editor/utils/client-detection'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import {
   faCode,
   faListOl,
@@ -18,11 +22,6 @@ import {
   faSquareRootVariable,
 } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import type { LoggedInData } from '@serlo/frontend/src/data-types'
-import { isMac } from '@serlo/frontend/src/helper/client-detection'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
@@ -227,7 +226,8 @@ export const useFormattingOptions = (
 
 function createToolbarControls(
   formattingOptions: TextEditorFormattingOption[],
-  textStrings: LoggedInData['strings']['editor']['plugins']['text'],
+  // textStrings: LoggedInData['strings']['editor']['plugins']['text'],
+  textStrings: ReturnType<typeof useEditorStrings>['plugins']['text'],
   ctrlKey: string
 ): ControlButton[] {
   const allFormattingOptions = [

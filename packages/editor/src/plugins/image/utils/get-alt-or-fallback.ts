@@ -2,15 +2,11 @@ import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static
 import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
 import { EditorImageDocument } from '@editor/types/editor-plugins'
 
-import type { InstanceData } from '@/data-types'
-
 export function getAltOrFallback(
-  instanceData: InstanceData,
+  altFallback: string,
   caption: EditorImageDocument['state']['caption'],
   alt: EditorImageDocument['state']['alt']
 ) {
-  const altFallback = instanceData.strings.content.imageAltFallback
-
   const hasVisibleCaption = caption && !isEmptyTextDocument(caption)
 
   return alt

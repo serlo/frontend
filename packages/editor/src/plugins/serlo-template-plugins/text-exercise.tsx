@@ -5,8 +5,8 @@ import {
 } from '@editor/plugin'
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
 import { UuidType } from '@serlo/frontend/src/data-types'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'

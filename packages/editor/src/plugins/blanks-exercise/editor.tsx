@@ -7,6 +7,8 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useMemo, useState } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
@@ -17,8 +19,6 @@ import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
 import { useIsPreviewActive } from '../exercise/context/preview-context'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 const headerTextFormattingOptions = [
   TextEditorFormattingOption.code,

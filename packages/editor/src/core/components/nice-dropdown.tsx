@@ -1,11 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import * as Select from '@radix-ui/react-select'
 import { useEffect, useRef, useState } from 'react'
-
-import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
 
 interface NiceDropdownProps {
   label: string

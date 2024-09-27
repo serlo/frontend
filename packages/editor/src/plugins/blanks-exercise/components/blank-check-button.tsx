@@ -1,5 +1,5 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 
 interface BlankCheckButtonProps {
   isVisible: boolean

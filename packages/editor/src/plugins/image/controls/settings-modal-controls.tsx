@@ -1,13 +1,13 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
 import { isTempFile } from '@editor/plugin'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 import type { ImageProps } from '..'
 import { LicenseDropdown } from '../components/licence-dropdown'
-import { FaIcon } from '@/components/fa-icon'
 
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
   const { alt, src, imageSource, licence } = state

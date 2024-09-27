@@ -1,9 +1,9 @@
 import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
+import { cn } from '@editor/utils/cn'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'
 
 import type { DraggableId } from '..'
-import { cn } from '@/helper/cn'
 
 export const blankDraggableAnswerDragType = 'blank-solution'
 

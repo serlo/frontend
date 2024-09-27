@@ -1,13 +1,13 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useState } from 'react'
 
 import type { SolutionProps } from '.'
-import { cn } from '@/helper/cn'
 
 interface SerloLicenseChooserProps {
   licenseId: SolutionProps['state']['licenseId']
@@ -41,7 +41,7 @@ export function SerloLicenseChooser({
         <EditorTooltip text={solutionStrings.changeLicense} />
         <FaIcon icon={faCreativeCommons} />
       </button>
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={showLicenseModal}
         setIsOpen={setShowLicenseModal}
         className="top-8 max-w-xl translate-y-0 sm:top-24"
@@ -66,7 +66,7 @@ export function SerloLicenseChooser({
             })}
           </select>
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     </>
   )
 }

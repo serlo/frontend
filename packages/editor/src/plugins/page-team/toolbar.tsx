@@ -1,14 +1,14 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
+import { useLang } from '@editor/utils/use-lang'
 import {
   faFileImport,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 
@@ -29,7 +29,7 @@ const optional = t.partial({
 const TeamDataDecoder = t.array(t.intersection([required, optional]))
 
 export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
-  const { lang } = useInstanceData()
+  const lang = useLang()
 
   if (!focused) return null
 

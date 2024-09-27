@@ -1,10 +1,12 @@
 import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import {
   getBlankElement,
   isBlankActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/blank'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState, useMemo } from 'react'
@@ -12,8 +14,6 @@ import { Range } from 'slate'
 import { useSlate } from 'slate-react'
 
 import type { BlankInterface as Blank } from '../types'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const wrapperWidth = 320
 

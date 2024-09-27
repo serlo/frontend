@@ -1,15 +1,15 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { TempFile, isTempFile } from '@editor/plugin'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faArrowUpFromBracket,
   faRedoAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useState } from 'react'
 
 import type { ImageProps } from '..'
-import { cn } from '@/helper/cn'
 
 interface UploadButtonProps {
   config: ImageProps['config']

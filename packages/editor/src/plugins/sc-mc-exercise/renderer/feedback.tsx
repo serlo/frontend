@@ -1,4 +1,4 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import type { ReactNode } from 'react'
 
 export interface FeedbackProps {

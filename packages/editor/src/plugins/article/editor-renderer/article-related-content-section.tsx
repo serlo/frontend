@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ArticleProps } from '..'
 import { buttonClass } from '../const/button-class'

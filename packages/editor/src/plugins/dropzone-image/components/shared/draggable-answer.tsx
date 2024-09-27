@@ -1,8 +1,8 @@
+import { cn } from '@editor/utils/cn'
 import { useDrag } from 'react-dnd'
 
 import type { PossibleAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
-import { cn } from '@/helper/cn'
 
 interface DraggableAnswerProps {
   answer: PossibleAnswerType

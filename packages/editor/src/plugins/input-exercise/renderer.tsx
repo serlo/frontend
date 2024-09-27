@@ -1,6 +1,6 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import { useEffect, useState } from 'react'
 
 import { getMatchingAnswer } from './helper/get-matching-answer'

@@ -1,5 +1,5 @@
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useRef, useState } from 'react'
 
 import type { HighlightProps } from '.'

@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
 import { type ImageProps } from '@editor/plugins/image'
 import { LicenseDropdown } from '@editor/plugins/image/components/licence-dropdown'
@@ -8,11 +9,9 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@editor/store'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-
-import { FaIcon } from '@/components/fa-icon'
 
 export function BackgroundImageSettings({ id }: { id: string }) {
   const imageStrings = useEditorStrings().plugins.image

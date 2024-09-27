@@ -1,6 +1,7 @@
 import { DndWrapper } from '@editor/core/components/dnd-wrapper'
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
+import { shuffleArray } from '@editor/utils/shuffle-array'
 import { useEffect, useMemo, useState } from 'react'
 
 import { DraggableAnswer } from './components/shared/draggable-answer'
@@ -12,7 +13,6 @@ import {
   type DraggableAnswerType,
 } from './types'
 import { convertStaticAnswers } from './utils/answer-zone'
-import { shuffleArray } from '@/helper/shuffle-array'
 
 export function DropzoneImageStaticRenderer(
   props: EditorDropzoneImageDocument

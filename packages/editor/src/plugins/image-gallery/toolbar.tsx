@@ -1,9 +1,8 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 interface ImageGalleryToolbarProps {
   id: string

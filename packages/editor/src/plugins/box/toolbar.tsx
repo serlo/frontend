@@ -2,15 +2,15 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useContentStrings } from '@editor/utils/use-content-strings'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { BoxProps } from '.'
 import { types } from './renderer'
 
 export const BoxToolbar = ({ id, state }: BoxProps) => {
   const boxStrings = useEditorStrings().plugins.box
-  const { strings } = useInstanceData()
+  const contentStrings = useContentStrings()
 
   return (
     <PluginToolbar
@@ -29,7 +29,7 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
               dataQa="plugin-box-type-chooser"
               options={types.map((type) => ({
                 value: type,
-                text: strings.content.boxTypes[type],
+                text: contentStrings.boxTypes[type],
                 dataQa: `plugin-box-type-chooser-option-${type}`,
               }))}
             />

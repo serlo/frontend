@@ -1,3 +1,5 @@
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
+
 import type { DropzoneImageProps } from '../..'
 import { type AnswerType, type AnswerZoneState, ModalType } from '../../types'
 import { duplicateAnswerZone } from '../../utils/answer-zone'
@@ -5,7 +7,6 @@ import { AnswerRenderer } from '../answer-zone/answer-renderer'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface EditorCanvasModalProps {
   state: DropzoneImageProps['state']

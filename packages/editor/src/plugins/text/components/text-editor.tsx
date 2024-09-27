@@ -1,6 +1,6 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import type { EditorPluginProps } from '@editor/plugin'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import React, { useMemo, useEffect } from 'react'
 import { createEditor, Node, Transforms } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'

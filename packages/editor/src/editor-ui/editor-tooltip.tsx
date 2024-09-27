@@ -1,6 +1,6 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { isMac } from '@serlo/frontend/src/helper/client-detection'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { isMac } from '@editor/utils/client-detection'
+import { cn } from '@editor/utils/cn'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 
 export function EditorTooltip({
   text,

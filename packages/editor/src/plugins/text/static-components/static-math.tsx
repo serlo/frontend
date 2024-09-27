@@ -1,5 +1,5 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import KaTeX from 'katex'
 // eslint-disable-next-line import/no-unassigned-import
 import 'katex/contrib/mhchem'

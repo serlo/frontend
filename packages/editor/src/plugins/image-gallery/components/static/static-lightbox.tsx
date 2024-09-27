@@ -1,15 +1,15 @@
+import { cn } from '@editor/utils/cn'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 import { lazy, Suspense, useCallback } from 'react'
 
 import { StaticLightboxImage } from './static-lightbox-image'
 import { StaticLightboxSlider } from './static-lightbox-slider'
 import { StaticLightboxThumbnail } from './static-lightbox-thumbnail'
 import { GridImage } from '../../types'
-import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
-const ModalWithCloseButton = lazy(() =>
-  import('@/components/modal-with-close-button').then((module) => ({
-    default: module.ModalWithCloseButton,
+const EditorModal = lazy(() =>
+  import('@editor/editor-ui/editor-modal').then((module) => ({
+    default: module.EditorModal,
   }))
 )
 
@@ -28,7 +28,7 @@ export function StaticLightbox({
   setIsOpen,
   setCurrentImageIndex,
 }: StaticLightboxProps) {
-  const title = useInstanceData().strings.content.imageGalleryLightboxSrTitle
+  const title = useContentStrings().imageGalleryLightboxSrTitle
 
   function closeModal(isOpen: boolean) {
     if (isOpen) return
@@ -50,7 +50,7 @@ export function StaticLightbox({
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ModalWithCloseButton
+      <EditorModal
         className="top-1/2 w-auto max-w-[95%] rounded-lg bg-gray-700 px-4 pb-14 pt-16"
         extraCloseButtonClassName="text-gray-400 hover:bg-gray-600 hover:text-gray-200"
         extraOverlayClassName="bg-gray-700 bg-opacity-80"
@@ -89,7 +89,7 @@ export function StaticLightbox({
             </div>
           </div>
         )}
-      </ModalWithCloseButton>
+      </EditorModal>
     </Suspense>
   )
 }

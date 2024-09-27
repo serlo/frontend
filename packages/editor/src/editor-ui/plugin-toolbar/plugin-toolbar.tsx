@@ -1,13 +1,13 @@
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { ReactElement } from 'react'
 
 import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 import { EditorTooltip } from '../editor-tooltip'
-import { FaIcon } from '@/components/fa-icon'
+import { FaIcon } from '../fa-icon'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string

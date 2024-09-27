@@ -2,10 +2,10 @@ import IconLandscape from '@editor/editor-ui/assets/plugin-icons/dropzone-image/
 import IconPortrait from '@editor/editor-ui/assets/plugin-icons/dropzone-image/portrait.svg'
 import IconSquare from '@editor/editor-ui/assets/plugin-icons/dropzone-image/square.svg'
 import { SelectionCard } from '@editor/editor-ui/selection-card'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { DropzoneImageProps } from '../..'
 import { BackgroundShape } from '../../types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const defaultLargeCanvasDimension = 600
 export const defaultSmallCanvasDimension = 400

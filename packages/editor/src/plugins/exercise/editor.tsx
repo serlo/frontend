@@ -1,15 +1,16 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import {
   selectHasFocusedChild,
   focus,
   useAppDispatch,
   useAppSelector,
 } from '@editor/store'
+import { cn } from '@editor/utils/cn'
+import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
@@ -17,7 +18,6 @@ import { InteractiveExercisesSelection } from './components/interactive-exercise
 import { PreviewProvider } from './context/preview-context'
 import { ExerciseToolbar } from './toolbar/toolbar'
 import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
-import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused, id } = props

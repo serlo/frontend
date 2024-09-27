@@ -1,7 +1,7 @@
+import { cn } from '@editor/utils/cn'
 import { Link } from '@serlo/frontend/src/components/content/link'
 import type { TeamDataEntry } from '@serlo/frontend/src/components/pages/editor/editor-team'
 import { getAvatarUrl } from '@serlo/frontend/src/components/user/user-link'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import Image from 'next/image'
 
 export interface PageTeamRendererProps {

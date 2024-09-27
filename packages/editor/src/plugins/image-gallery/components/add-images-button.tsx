@@ -1,6 +1,5 @@
 import IconChoose from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-layered-images.svg'
-
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 interface AddImagesButtonProps {
   onClick: () => void

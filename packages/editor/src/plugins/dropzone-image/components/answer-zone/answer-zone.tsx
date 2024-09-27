@@ -1,3 +1,4 @@
+import { cn } from '@editor/utils/cn'
 import { useDrag } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
 
@@ -13,7 +14,6 @@ import {
   type AnswerZoneState,
   DropzoneVisibility,
 } from '../../types'
-import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
 

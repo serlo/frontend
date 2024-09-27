@@ -1,11 +1,11 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { DropzoneImageProps } from '../..'
 import { ModalType } from '../../types'
 import { convertAnswer } from '../../utils/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ExtraIncorrectAnswersProps {
   extraDraggableAnswers: DropzoneImageProps['state']['extraDraggableAnswers']

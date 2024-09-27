@@ -3,13 +3,12 @@ import {
   isLinkActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
+import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { useLang } from '@editor/utils/use-lang'
 import {
   QuickbarData,
   fetchQuickbarData,
 } from '@serlo/frontend/src/components/navigation/quickbar'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { Instance } from '@serlo/frontend/src/fetcher/graphql-types/operations'
-import { IsSerloContext } from '@serlo/frontend/src/serlo-editor-integration/context/is-serlo-context'
 import { useContext, useEffect, useState } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
@@ -25,12 +24,12 @@ export function LinkControls() {
   const [value, setValue] = useState('')
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
-  const { lang: instance } = useInstanceData()
+  const instance = useLang()
   const editor = useSlate()
   const { selection } = editor
 
   const isSerloLinkSearchActive =
-    useContext(IsSerloContext) && instance === Instance.De
+    useContext(IsSerloContext) && instance === 'de'
 
   useEffect(() => {
     if (!selection) return

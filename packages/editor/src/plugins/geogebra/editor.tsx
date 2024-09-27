@@ -1,12 +1,12 @@
 import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { faCubes } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import type { GeogebraProps } from '.'
 import { GeogebraRenderer, parseId } from './renderer'
 import { GeogebraToolbar } from './toolbar'
-import { cn } from '@/helper/cn'
 
 export function GeogebraEditor(props: GeogebraProps) {
   const { focused, state } = props
@@ -39,10 +39,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           data-qa="plugin-geogebra-placeholder"
           onClick={() => setShowSettingsModal(true)}
         >
-          <FaIcon
-            icon={entityIconMapping['applet']}
-            className="text-7xl text-editor-primary-200"
-          />
+          <FaIcon icon={faCubes} className="text-7xl text-editor-primary-200" />
         </div>
       )}
     </>

@@ -1,9 +1,8 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import React from 'react'
 
 import type { AnswerZoneState } from '../../types'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AnswerZoneSettingsFormProps {
   answerZone: AnswerZoneState

@@ -1,15 +1,15 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useCallback, useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
 import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
-import { cn } from '@/helper/cn'
 
 interface DropzoneImageToolbarProps {
   backgroundImage?: DropzoneImageProps['state']['backgroundImage']
@@ -90,7 +90,7 @@ export function DropzoneImageToolbar({
     if (!backgroundImage?.defined) return null
 
     return (
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={showSettingsModal}
         setIsOpen={(open) => {
           const isModalClosing = !open
@@ -111,7 +111,7 @@ export function DropzoneImageToolbar({
             {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
           </button>
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     )
   }
 }

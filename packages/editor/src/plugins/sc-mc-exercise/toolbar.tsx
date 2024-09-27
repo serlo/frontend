@@ -1,5 +1,5 @@
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { ScMcExerciseProps } from '.'
 import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'

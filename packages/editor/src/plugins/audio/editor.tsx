@@ -1,4 +1,4 @@
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useState } from 'react'
 
 import type { AudioProps } from '.'

@@ -1,19 +1,19 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorExerciseDocument } from '@editor/types/editor-plugins'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
   const { content, interactive, solution, hideInteractiveInitially } = state
   const [interactiveHidden, setInteractiveHidden] = useState(
     hideInteractiveInitially
   )
-  const { strings } = useInstanceData()
+  const contentStrings = useContentStrings()
   if (!content) return null
 
   const isEmptyContent =
@@ -35,7 +35,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
           onClick={() => setInteractiveHidden(false)}
         >
           <FaIcon icon={faCircleCheck} />{' '}
-          {strings.content.exercises.showHiddenInteractive}
+          {contentStrings.exercises.showHiddenInteractive}
         </button>
       ) : (
         <StaticRenderer document={interactive} />

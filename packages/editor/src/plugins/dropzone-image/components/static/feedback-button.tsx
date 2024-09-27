@@ -1,7 +1,7 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 
 import { FeedbackData } from '../../types'
-import { useInstanceData } from '@/contexts/instance-context'
 
 interface FeedbackButtonProps {
   feedback: FeedbackData
@@ -12,7 +12,7 @@ interface FeedbackButtonProps {
 export function FeedbackButton(props: FeedbackButtonProps) {
   const { feedback, isButtonVisible, onClick } = props
 
-  const exercisesStrings = useInstanceData().strings.content.exercises
+  const exercisesStrings = useContentStrings().exercises
 
   return (
     <div className="flex">

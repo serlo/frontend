@@ -1,12 +1,13 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
-import { LoadingSpinner } from '@serlo/frontend/src/components/loading/loading-spinner'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useLang } from '@editor/utils/use-lang'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import {
   QuickbarData,
   findResults,
 } from '@serlo/frontend/src/components/navigation/quickbar'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { useEffect, useState, KeyboardEvent } from 'react'
 
 import { EditModeInput } from './edit-mode-input'
@@ -35,8 +36,7 @@ export function LinkOverlayEditMode({
 }: LinkOverlayEditModeProps) {
   const [query, setQuery] = useState(value)
   const [selectedIndex, setSelectedIndex] = useState(-1)
-
-  const { lang } = useInstanceData()
+  const lang = useLang()
   const overlayStrings = useEditorStrings().plugins.text.linkOverlay
 
   useEffect(() => {
@@ -110,7 +110,14 @@ export function LinkOverlayEditMode({
       </div>
       {query ? (
         <div className="group mt-4" role="listbox">
-          {isLoading ? <LoadingSpinner /> : null}
+          {isLoading ? (
+            <div className={cn('mt-12 text-brand')}>
+              <p className="serlo-p">
+                <FaIcon icon={faSpinner} className="animate-spin-slow" />
+                {' …'}
+              </p>
+            </div>
+          ) : null}
           {results.map(({ entry }, index) => (
             <EditModeResultEntry
               key={entry.id}

@@ -1,3 +1,8 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useLang } from '@editor/utils/use-lang'
 import {
   faMagnifyingGlass,
   faXmarkCircle,
@@ -11,12 +16,7 @@ import React, {
 } from 'react'
 import { debounce } from 'ts-debounce'
 
-import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 interface PixabayResponse {
   total: number
@@ -68,9 +68,8 @@ export const PixabaySearchButton = ({
   const [isSearching, setIsSearching] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const { lang } = useInstanceData()
-  const editorStrings = useEditorStrings()
-  const imageStrings = editorStrings.plugins.image
+  const lang = useLang()
+  const imageStrings = useEditorStrings().plugins.image
   // Pixabay API key connected to an unpaid account -> No need to keep it secret.
   const apiKey = '44761287-06b5809c17d0a9132219f5173'
   const inputRef = useRef<HTMLInputElement>(null)
@@ -145,7 +144,7 @@ export const PixabaySearchButton = ({
         </span>
         {imageStrings.searchOnline}
       </button>
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         className="max-h-[700px] w-[900px] max-w-[90vw] pt-0"
@@ -251,7 +250,7 @@ export const PixabaySearchButton = ({
               : imageStrings.pixabayLoadedText}
           </div>
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     </>
   )
 }

@@ -2,10 +2,10 @@ import IconBlankBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/bl
 import IconImageBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/image-background.svg'
 import { SelectionCard } from '@editor/editor-ui/selection-card'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { DropzoneImageProps } from '../..'
 import { BackgroundShape, BackgroundType } from '../../types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function BackgroundTypeSelect({
   backgroundType,

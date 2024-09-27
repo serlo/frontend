@@ -1,10 +1,10 @@
 import { EditorPluginProps } from '@editor/plugin'
 import { useAppDispatch, focus } from '@editor/store'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useRef } from 'react'
 
 import { type AppletTypePluginState } from '../applet'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 export function EntityTitleInput({
   title,

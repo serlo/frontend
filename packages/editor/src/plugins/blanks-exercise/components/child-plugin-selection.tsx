@@ -2,9 +2,9 @@ import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import { SelectionCard } from '@editor/editor-ui/selection-card'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { BlanksExerciseProps } from '..'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ChildPluginSelection({
   childPlugin,

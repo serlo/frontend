@@ -1,4 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { AnswerContent } from './answer-content'
@@ -7,9 +10,6 @@ import {
   getAnswerZoneImageSrc,
   getAnswerZoneText,
 } from '../../utils/answer-zone'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
 

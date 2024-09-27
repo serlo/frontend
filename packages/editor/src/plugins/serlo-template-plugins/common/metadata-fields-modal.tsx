@@ -1,11 +1,11 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { EntityStateProps } from './common'
 import { SettingsTextarea } from './settings-textarea'
-import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function MetadataFieldsModal({
   metaTitle,
@@ -26,7 +26,7 @@ export function MetadataFieldsModal({
         Metadata <FaIcon icon={faPencilAlt} />
       </button>
 
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={showSettingsModal}
         setIsOpen={setShowSettingsModal}
         className="top-8 max-w-xl translate-y-0 sm:top-24"
@@ -37,7 +37,7 @@ export function MetadataFieldsModal({
           {renderField(entityStrings.seoTitle, metaTitle)}
           {renderField(entityStrings.seoDesc, metaDescription)}
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     </>
   )
 

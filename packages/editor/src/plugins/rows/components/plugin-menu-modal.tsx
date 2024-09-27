@@ -1,5 +1,6 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import {
   type PluginMenuItem,
   getPluginMenuItems,
@@ -10,7 +11,7 @@ import {
 } from '@editor/plugins/rows/contexts/plugin-menu'
 import { selectAncestorPluginTypes, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
@@ -18,7 +19,6 @@ import { PluginMenuItems } from './plugin-menu-items'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
 import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import { filterOptions } from '../utils/plugin-menu'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PluginMenuModalProps {
   onInsertPlugin: (pluginMenuItem: PluginMenuItem) => void
@@ -132,7 +132,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   }, [pluginMenuState.showPluginMenu])
 
   return (
-    <ModalWithCloseButton
+    <EditorModal
       className="top-8 max-h-[90vh] w-auto min-w-[700px] translate-y-0 overflow-y-scroll pt-0"
       extraTitleClassName="sr-only"
       title={pluginsStrings.rows.addAnElement}
@@ -186,6 +186,6 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
           onInsertPlugin={onInsertPlugin}
         />
       )}
-    </ModalWithCloseButton>
+    </EditorModal>
   )
 }

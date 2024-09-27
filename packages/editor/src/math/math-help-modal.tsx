@@ -1,5 +1,5 @@
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 export const MathHelpModal = ({
   isHelpOpen,
@@ -10,7 +10,7 @@ export const MathHelpModal = ({
 }) => {
   const mathStrings = useEditorStrings().plugins.text.math
   return (
-    <ModalWithCloseButton
+    <EditorModal
       isOpen={isHelpOpen}
       setIsOpen={setIsHelpOpen}
       title={mathStrings.shortcuts}
@@ -47,7 +47,7 @@ export const MathHelpModal = ({
           {renderKey('ln')}, …
         </p>
       </div>
-    </ModalWithCloseButton>
+    </EditorModal>
   )
 
   function renderKey(text: string) {

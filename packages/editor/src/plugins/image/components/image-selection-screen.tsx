@@ -1,13 +1,13 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@editor/plugin'
+import { cn } from '@editor/utils/cn'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import React, { type RefObject } from 'react'
 
 import { PixabaySearchButton } from './pixabay-search-button'
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 interface ImageSelectionScreenProps {
   config: ImageProps['config']

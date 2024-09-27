@@ -1,18 +1,18 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { lazy, Suspense, UIEvent } from 'react'
 
 import { StaticLightboxCarousel } from './static-lightbox-carousel'
 import { GridImage } from '../../types'
-import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
-const ModalWithCloseButton = lazy(() =>
-  import('@/components/modal-with-close-button').then((module) => ({
-    default: module.ModalWithCloseButton,
+const EditorModal = lazy(() =>
+  import('@editor/editor-ui/editor-modal').then((module) => ({
+    default: module.EditorModal,
   }))
 )
 
@@ -31,7 +31,7 @@ export function StaticLightboxMobile({
   setIsOpen,
   setCurrentImageIndex,
 }: StaticLightboxMobileProps) {
-  const title = useInstanceData().strings.content.imageGalleryLightboxSrTitle
+  const title = useContentStrings().imageGalleryLightboxSrTitle
 
   function closeModal(isOpen: boolean) {
     if (isOpen) return
@@ -60,7 +60,7 @@ export function StaticLightboxMobile({
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ModalWithCloseButton
+      <EditorModal
         className="top-1/2 w-auto w-full max-w-full rounded-none bg-gray-700 px-2 pb-14 pt-16"
         extraCloseButtonClassName="text-gray-400 hover:bg-gray-600 hover:text-gray-200"
         extraOverlayClassName="bg-gray-700 bg-opacity-80"
@@ -96,7 +96,7 @@ export function StaticLightboxMobile({
             <FaIcon className="text-2xl" icon={faChevronRight} />
           </button>
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     </Suspense>
   )
 }

@@ -1,7 +1,8 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { IsSerloContext } from '@serlo/frontend/src/serlo-editor-integration/context/is-serlo-context'
+import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useLang } from '@editor/utils/use-lang'
 import { useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
@@ -13,22 +14,19 @@ import {
   QuickbarData,
   fetchQuickbarData,
 } from '@/components/navigation/quickbar'
-import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
 
 const linkOverlayWrapperWidth = 460
 
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
   const solutionStrings = useEditorStrings().templatePlugins.solution
-  const { lang: instance } = useInstanceData()
+  const instance = useLang()
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
   const [showPrerequisiteLinkTool, setShowPrerequisiteLinkTool] =
     useState<boolean>(false)
 
-  const isSerloLinkSearchActive =
-    useContext(IsSerloContext) && instance === Instance.De
+  const isSerloLinkSearchActive = isSerlo && instance === 'de'
 
   useEffect(() => {
     if (!isSerloLinkSearchActive) return

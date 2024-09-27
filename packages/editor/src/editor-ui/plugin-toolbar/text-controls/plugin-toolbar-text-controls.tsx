@@ -1,3 +1,4 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Fragment, useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
@@ -8,7 +9,6 @@ import {
   type ControlButton,
   TextEditorFormattingOption,
 } from './types'
-import { FaIcon } from '@/components/fa-icon'
 
 export interface PluginToolbarTextControlsProps {
   controls: ControlButton[]

@@ -1,7 +1,6 @@
+import { cn } from '@editor/utils/cn'
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-
-import { cn } from '@/helper/cn'
 
 const imageGalleryType = 'imageGallery'
 

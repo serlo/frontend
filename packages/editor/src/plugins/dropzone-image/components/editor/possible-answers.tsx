@@ -1,9 +1,9 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { DropzoneImageProps } from '../..'
 import { convertAnswer, insertAnswerZone } from '../../utils/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface PossibleAnswersProps {
   answerZones: DropzoneImageProps['state']['answerZones']

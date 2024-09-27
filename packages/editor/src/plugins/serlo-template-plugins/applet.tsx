@@ -4,7 +4,6 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import {
@@ -16,6 +15,7 @@ import {
 import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFieldsModal } from './common/metadata-fields-modal'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
+import { UuidType } from '@/data-types'
 
 export const appletTypeState = entityType(
   {

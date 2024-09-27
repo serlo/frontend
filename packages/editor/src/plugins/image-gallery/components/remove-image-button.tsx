@@ -1,7 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-
-import { cn } from '@/helper/cn'
 
 interface RemoveImageButtonProps {
   onClick: () => void

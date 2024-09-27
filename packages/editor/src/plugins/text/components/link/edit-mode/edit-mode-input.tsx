@@ -1,6 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useLang } from '@editor/utils/use-lang'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import { useEffect, useRef, KeyboardEvent, ClipboardEvent } from 'react'
 
 import { getCleanUrl } from '../../../utils/link'
@@ -21,7 +21,7 @@ export function EditModeInput({
   placeholder: string
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { lang } = useInstanceData()
+  const lang = useLang()
 
   useEffect(() => {
     if (!shouldFocus) return

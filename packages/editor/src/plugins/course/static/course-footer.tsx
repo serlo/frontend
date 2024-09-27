@@ -1,4 +1,7 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 import {
   faArrowCircleRight,
   faArrowCircleUp,
@@ -7,9 +10,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
 
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 import { scrollIfNeeded } from '@/helper/scroll'
 
 export function CourseFooter({

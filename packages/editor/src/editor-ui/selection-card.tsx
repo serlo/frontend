@@ -1,4 +1,4 @@
-import { cn } from '@/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 export function SelectionCard({
   onClick,

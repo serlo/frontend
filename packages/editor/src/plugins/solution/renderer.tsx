@@ -1,5 +1,5 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
+import { useContentStrings } from '@editor/utils/use-content-strings'
 import { useState } from 'react'
 
 interface SolutionRendererProps {
@@ -23,7 +23,7 @@ export function SolutionRenderer({
   elementAfterToggle,
   elementBeforePrerequisite,
 }: SolutionRendererProps) {
-  const { strings } = useInstanceData()
+  const contentStrings = useContentStrings()
 
   const [visible, setVisible] = useState<false | 'solution' | 'strategy'>(
     solutionVisibleOnInit ? 'solution' : false
@@ -57,7 +57,7 @@ export function SolutionRenderer({
         {elementBeforePrerequisite}
         {prerequisite ? (
           <p className="serlo-p">
-            {strings.content.exercises.prerequisite} {prerequisite}
+            {contentStrings.exercises.prerequisite} {prerequisite}
           </p>
         ) : null}
         {steps}
@@ -92,7 +92,7 @@ export function SolutionRenderer({
           </span>
           &nbsp;
         </span>
-        {strings.content.exercises[type]}
+        {contentStrings.exercises[type]}
       </button>
     )
   }

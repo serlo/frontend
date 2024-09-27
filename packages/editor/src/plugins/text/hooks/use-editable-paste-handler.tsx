@@ -11,7 +11,7 @@ import {
   selectAncestorPluginTypes,
 } from '@editor/store'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 

@@ -1,5 +1,5 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
+import { useInstanceData } from '@editor/utils/use-instance-data'
 
 export interface CourseNavigationProps {
   pages: { key: string; element: JSX.Element }[]

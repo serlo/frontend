@@ -1,5 +1,5 @@
 import { isTouchDevice } from '@editor/core/helpers/is-touch-device'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import * as MQ from 'react-mathquill'
 
 import type { MathEditorProps } from './editor'

@@ -1,6 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useRef } from 'react'
 
 import type { InputExerciseProps } from '.'

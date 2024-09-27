@@ -1,7 +1,7 @@
 import { PreviewOverlay } from '@editor/editor-ui'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useEffect, useState } from 'react'
 
 import type { InjectionProps } from '.'

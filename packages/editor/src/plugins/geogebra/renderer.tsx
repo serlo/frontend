@@ -1,7 +1,6 @@
+import { cn } from '@editor/utils/cn'
 import { memo, useEffect, useState } from 'react'
 import { v4 as uuid_v4 } from 'uuid'
-
-import { cn } from '@/helper/cn'
 
 export interface GeogebraRendererProps {
   geogebraId: string

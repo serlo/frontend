@@ -1,3 +1,4 @@
+import { cn } from '@editor/utils/cn'
 import { memo } from 'react'
 import { useDrop } from 'react-dnd'
 
@@ -8,7 +9,6 @@ import {
   type PossibleAnswerType,
 } from '../../types'
 import { DraggableAnswer } from '../shared/draggable-answer'
-import { cn } from '@/helper/cn'
 
 interface BlankDropZoneProps {
   dropZone: BlankDropZoneSpec

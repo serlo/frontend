@@ -1,3 +1,4 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import {
   Content,
@@ -6,7 +7,6 @@ import {
   Root,
   Trigger,
 } from '@radix-ui/react-navigation-menu'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { ReactElement } from 'react'
 
 import {
