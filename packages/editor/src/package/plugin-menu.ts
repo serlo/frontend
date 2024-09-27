@@ -21,8 +21,7 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-
-import type { EditorStrings } from '@/contexts/logged-in-data-context'
+import type { EditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
 

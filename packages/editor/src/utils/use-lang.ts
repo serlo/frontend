@@ -1,6 +1,5 @@
+import { InstanceDataContext } from '@serlo/frontend/src/contexts/instance-context'
 import { useContext } from 'react'
-
-import { InstanceDataContext } from '@/contexts/instance-context'
 
 export function useLang() {
   const data = useContext(InstanceDataContext)

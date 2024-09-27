@@ -2,11 +2,11 @@ import { PreviewOverlay } from '@editor/editor-ui'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons'
+import { InjectionSerloStaticRenderer } from '@serlo/frontend/src/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 import { useEffect, useState } from 'react'
 
 import type { InjectionProps } from '.'
 import { InjectionToolbar } from './toolbar'
-import { InjectionSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 
 export function InjectionEditor(props: InjectionProps) {
   const { focused, state } = props

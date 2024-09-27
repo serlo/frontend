@@ -3,12 +3,12 @@ import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { SupportedLanguage } from '@editor/types/language-data'
+import { InstanceDataProvider } from '@serlo/frontend/src/contexts/instance-context'
+import { LoggedInDataProvider } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
 import { migrate, EditorVariant } from './storage-format'
-import { InstanceDataProvider } from '@/contexts/instance-context'
-import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 export interface SerloRendererProps {
   language?: SupportedLanguage

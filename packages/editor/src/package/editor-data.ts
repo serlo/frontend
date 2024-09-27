@@ -4,15 +4,14 @@ import type {
   InstanceData,
   LoggedInData,
 } from '@editor/types/language-data'
-
 import {
   instanceData as instanceDataDe,
   loggedInData as loggedInDataDe,
-} from '@/data/de'
+} from '@serlo/frontend/src/data/de'
 import {
   instanceData as instanceDataEn,
   loggedInData as loggedInDataEn,
-} from '@/data/en'
+} from '@serlo/frontend/src/data/en'
 
 export const editorData: Record<SupportedLanguage, LanguageData> = {
   de: {

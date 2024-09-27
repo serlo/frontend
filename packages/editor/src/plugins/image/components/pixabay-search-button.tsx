@@ -1,5 +1,6 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { LoadingSpinner } from '@editor/editor-ui/loading-spinner'
 import { cn } from '@editor/utils/cn'
 import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useLang } from '@editor/utils/use-lang'
@@ -7,16 +8,8 @@ import {
   faMagnifyingGlass,
   faXmarkCircle,
 } from '@fortawesome/free-solid-svg-icons'
-import React, {
-  ChangeEvent,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react'
+import { ChangeEvent, useRef, useState, useEffect, useCallback } from 'react'
 import { debounce } from 'ts-debounce'
-
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
 
 interface PixabayResponse {
   total: number

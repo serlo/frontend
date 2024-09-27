@@ -1,6 +1,5 @@
+import { LoggedInDataContext } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useContext } from 'react'
-
-import { LoggedInDataContext } from '@/contexts/logged-in-data-context'
 
 export function useEditorStrings() {
   const data = useContext(LoggedInDataContext)

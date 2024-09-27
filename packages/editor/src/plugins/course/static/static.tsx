@@ -3,14 +3,14 @@ import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
 import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
+import { RevisionViewContext } from '@serlo/frontend/src/contexts/revision-view-context'
 import { useRouter } from 'next/router'
 import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
-import { InfoPanel } from '@/components/info-panel'
-import { RevisionViewContext } from '@/contexts/revision-view-context'
 
 export function CourseStaticRenderer({
   state,

@@ -7,12 +7,11 @@ import {
   Root,
   Trigger,
 } from '@radix-ui/react-navigation-menu'
-import { ReactElement } from 'react'
-
 import {
   preventHover,
   useNavMenuTriggerFix,
-} from '@/components/navigation/header/menu/use-nav-menu-trigger-fix'
+} from '@serlo/frontend/src/components/navigation/header/menu/use-nav-menu-trigger-fix'
+import { ReactElement } from 'react'
 
 interface PluginToolMenuProps {
   pluginControls: ReactElement

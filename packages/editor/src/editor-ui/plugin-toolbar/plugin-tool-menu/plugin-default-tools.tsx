@@ -10,12 +10,12 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { UuidsContext } from '@serlo/frontend/src/contexts/uuids-context'
 import { useCallback, useContext, useMemo } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { PluginCopyTool } from './plugin-copy-tool'
-import { UuidsContext } from '@/contexts/uuids-context'
 
 interface PluginDefaultToolsProps {
   pluginId: string

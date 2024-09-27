@@ -9,6 +9,8 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { getCurrentDatetime } from '@editor/utils/get-current-datetime'
+import { InstanceDataProvider } from '@serlo/frontend/src/contexts/instance-context'
+import { LoggedInDataProvider } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
@@ -19,8 +21,6 @@ import {
   migrate,
   type EditorVariant,
 } from './storage-format'
-import { InstanceDataProvider } from '@/contexts/instance-context'
-import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 
 import '@/assets-webkit/styles/serlo-tailwind.css'
 

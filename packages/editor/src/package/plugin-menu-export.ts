@@ -1,8 +1,8 @@
+import { loggedInData as loggedInDataDe } from '@serlo/frontend/src/data/de'
+import { loggedInData as loggedInDataEn } from '@serlo/frontend/src/data/en'
 import { mergeDeepRight } from 'ramda'
 
 import { getPluginMenuItems } from './plugin-menu'
-import { loggedInData as loggedInDataDe } from '@/data/de'
-import { loggedInData as loggedInDataEn } from '@/data/en'
 
 const editorStringsDe = loggedInDataDe.strings.editor
 const editorStringsEn = loggedInDataEn.strings.editor

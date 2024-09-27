@@ -4,11 +4,11 @@ import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { shouldUseFeature } from '@serlo/frontend/src/components/user/profile-experimental'
 
 import { IntermediateTask } from './intermediate-task'
 import { type ExerciseGroupProps } from '..'
 import { ExerciseGroupRenderer } from '../renderer'
-import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   const { content, exercises, intermediateTasks } = state

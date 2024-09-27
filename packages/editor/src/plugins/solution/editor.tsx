@@ -3,6 +3,10 @@ import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useLang } from '@editor/utils/use-lang'
+import {
+  QuickbarData,
+  fetchQuickbarData,
+} from '@serlo/frontend/src/components/navigation/quickbar'
 import { useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
@@ -10,10 +14,6 @@ import { SolutionRenderer } from './renderer'
 import { SerloLicenseChooser } from './serlo-license-chooser'
 import { LinkOverlayEditMode } from '../text/components/link/edit-mode/link-overlay-edit-mode'
 import { LinkOverlayWithHref } from '../text/components/link/link-overlay-with-href'
-import {
-  QuickbarData,
-  fetchQuickbarData,
-} from '@/components/navigation/quickbar'
 
 const linkOverlayWrapperWidth = 460
 

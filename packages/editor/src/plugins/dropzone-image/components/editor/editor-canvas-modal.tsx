@@ -1,3 +1,4 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { DropzoneImageProps } from '../..'
@@ -6,7 +7,6 @@ import { duplicateAnswerZone } from '../../utils/answer-zone'
 import { AnswerRenderer } from '../answer-zone/answer-renderer'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface EditorCanvasModalProps {
   state: DropzoneImageProps['state']
@@ -31,7 +31,7 @@ export function EditorCanvasModal({
   const title = modalType ? pluginStrings.modal[modalType] : ''
 
   return (
-    <ModalWithCloseButton
+    <EditorModal
       isOpen={modalType !== ModalType.Unset}
       setIsOpen={(open) => {
         const isModalClosing = !open
@@ -42,7 +42,7 @@ export function EditorCanvasModal({
       extraTitleClassName="serlo-h3 mb-16 px-3"
     >
       {renderForm()}
-    </ModalWithCloseButton>
+    </EditorModal>
   )
 
   function renderForm() {

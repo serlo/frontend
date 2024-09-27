@@ -1,4 +1,4 @@
-import { InstanceData, LoggedInData } from '@/data-types'
+import { InstanceData, LoggedInData } from '@serlo/frontend/src/data-types'
 
 export type SupportedLanguage = 'en' | 'de'
 
