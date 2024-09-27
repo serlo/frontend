@@ -16,6 +16,7 @@ import type { ImagePluginState } from '@editor/plugins/image'
 import type { ImageGalleryPluginState } from '@editor/plugins/image-gallery'
 import type { InjectionPluginState } from '@editor/plugins/injection'
 import type { InputExercisePluginState } from '@editor/plugins/input-exercise'
+import type { InteractiveVideoPluginState } from '@editor/plugins/interactive-video'
 import type { MultimediaPluginState } from '@editor/plugins/multimedia'
 import type { PageLayoutPluginState } from '@editor/plugins/page-layout'
 import type { PagePartnersPluginState } from '@editor/plugins/page-partners'
@@ -39,7 +40,6 @@ import type { VideoPluginState } from '@editor/plugins/video'
 
 import { EditorPluginType } from './editor-plugin-type'
 import { TemplatePluginType } from './template-plugin-type'
-import { InteractiveVideoPluginState } from '@editor/plugins/interactive-video'
 
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
