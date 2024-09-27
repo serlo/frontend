@@ -1090,6 +1090,8 @@ export const loggedInData = {
           forceRewatchLabel: 'Auto Rewatch',
           forceRewatchExplanation:
             'If an exercise is answered incorrectly, the video jumps back to the last mark',
+          editMark: 'Edit',
+          removeMark: 'Remove',
         },
       },
       templatePlugins: {

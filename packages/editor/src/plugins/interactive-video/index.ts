@@ -9,7 +9,6 @@ import {
   list,
   number,
   boolean,
-  optional,
   string,
 } from '../../plugin'
 
@@ -17,7 +16,6 @@ const interactiveVideoState = object({
   video: child({
     plugin: EditorPluginType.Video,
   }),
-  // chapters: list(object({ title: string(''), startTime: number(0), endTime: number(0) })),
   marks: list(
     object({
       title: string(),
