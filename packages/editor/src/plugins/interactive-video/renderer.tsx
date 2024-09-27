@@ -8,6 +8,8 @@ import {
   MediaProvider,
   Track,
   type VTTContent,
+  type MediaPlayEvent,
+  type MediaSeekRequestEvent,
 } from '@vidstack/react'
 import {
   defaultLayoutIcons,
@@ -39,10 +41,19 @@ import {
 export function InteractiveVideoRenderer({
   chapterContent,
   tools,
+  onMediaSeekRequest,
 }: {
   chapterContent: VTTContent
   tools?: JSX.Element
+  onMediaSeekRequest?: (
+    time: number,
+    nativeEvent: MediaSeekRequestEvent
+  ) => void
+  onPlay?: (nativeEvent: MediaPlayEvent) => void
 }) {
+  const content = {
+    cues: chapterContent.cues?.sort((a, b) => a.startTime - b.startTime),
+  }
   return (
     <MediaPlayer
       title="Pine Tree Timelapse"
@@ -53,11 +64,16 @@ export function InteractiveVideoRenderer({
       controlsDelay={60000}
       // load="play"
       aspectRatio="16:9"
+      onMediaSeekRequest={onMediaSeekRequest}
+      // onMediaSeekingRequest={onMediaSeekRequest}
+      // onSeeked
+      // onSeeking
+      // onPlay={}
     >
       <MediaProvider>
         <Track
           id="chapters"
-          content={chapterContent}
+          content={content}
           kind="chapters"
           language="de-DE"
           default
