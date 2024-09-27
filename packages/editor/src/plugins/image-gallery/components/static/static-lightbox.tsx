@@ -1,5 +1,5 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import { lazy, Suspense, useCallback } from 'react'
 
 import { StaticLightboxImage } from './static-lightbox-image'
@@ -28,7 +28,7 @@ export function StaticLightbox({
   setIsOpen,
   setCurrentImageIndex,
 }: StaticLightboxProps) {
-  const title = useContentStrings().imageGalleryLightboxSrTitle
+  const srTitle = useStaticStrings().plugins.imageGallery.lightboxSrTitle
 
   function closeModal(isOpen: boolean) {
     if (isOpen) return
@@ -55,7 +55,7 @@ export function StaticLightbox({
         extraCloseButtonClassName="text-gray-400 hover:bg-gray-600 hover:text-gray-200"
         extraOverlayClassName="bg-gray-700 bg-opacity-80"
         extraTitleClassName="sr-only"
-        title={title}
+        title={srTitle}
         isOpen={isOpen}
         setIsOpen={closeModal}
       >

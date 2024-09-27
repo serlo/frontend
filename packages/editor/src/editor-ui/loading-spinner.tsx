@@ -1,5 +1,5 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from './fa-icon'
@@ -10,7 +10,7 @@ export interface LoadingSpinnerProps {
 }
 
 export function LoadingSpinner({ text, noText }: LoadingSpinnerProps) {
-  const { strings } = useInstanceData() // $center={noText}
+  const strings = useStaticStrings()
   return (
     <div className={cn('mt-12 text-brand', noText && 'text-center')}>
       <p className="serlo-p">
@@ -18,7 +18,7 @@ export function LoadingSpinner({ text, noText }: LoadingSpinnerProps) {
           icon={faSpinner}
           className={cn('animate-spin-slow', noText && 'h-8')}
         />{' '}
-        {(!noText && text) ?? strings.loading.isLoading}
+        {(!noText && text) ?? strings.misc.loading}
       </p>
     </div>
   )

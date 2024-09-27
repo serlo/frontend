@@ -1,6 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import {
   faChevronLeft,
   faChevronRight,
@@ -31,7 +31,7 @@ export function StaticLightboxMobile({
   setIsOpen,
   setCurrentImageIndex,
 }: StaticLightboxMobileProps) {
-  const title = useContentStrings().imageGalleryLightboxSrTitle
+  const srTitle = useStaticStrings().plugins.imageGallery.lightboxSrTitle
 
   function closeModal(isOpen: boolean) {
     if (isOpen) return
@@ -65,7 +65,7 @@ export function StaticLightboxMobile({
         extraCloseButtonClassName="text-gray-400 hover:bg-gray-600 hover:text-gray-200"
         extraOverlayClassName="bg-gray-700 bg-opacity-80"
         extraTitleClassName="sr-only"
-        title={title}
+        title={srTitle}
         isOpen={isOpen}
         setIsOpen={closeModal}
       >

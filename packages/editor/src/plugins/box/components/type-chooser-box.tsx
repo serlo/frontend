@@ -1,6 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { useContentStrings } from '@editor/utils/use-content-strings'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 import type { BoxProps } from '..'
 import { boxTypeIcons, types } from '../renderer'
@@ -10,7 +10,7 @@ interface TypeChooserProps {
 }
 
 export function TypeChooserBox({ typeState }: TypeChooserProps) {
-  const contentStrings = useContentStrings()
+  const boxStaticStrings = useStaticStrings().plugins.box
   const editorStrings = useEditStrings()
 
   function handleTypeSelection(
@@ -45,7 +45,7 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
                 data-qa={`plugin-box-initial-type-chooser-option-${type}`}
               >
                 {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
-                {contentStrings.boxTypes[type]}
+                {boxStaticStrings.types[type]}
               </button>
             </li>
           )

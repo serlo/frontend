@@ -130,7 +130,7 @@ export function LicenseNotice({
 
   function translateTypeString(): string {
     if (type === 'task' || type === 'exercise-group')
-      return strings.content.exercises.task
+      return strings.content.task
     return strings.entities[type || 'content']
   }
 }

@@ -1,7 +1,7 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faHashtag } from '@fortawesome/free-solid-svg-icons'
+import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 import { DropdownButton } from './dropdown-button'
 

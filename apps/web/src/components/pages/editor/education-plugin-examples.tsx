@@ -1,7 +1,10 @@
 import { Editor } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
+import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
+import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import type { BoxType } from '@editor/plugins/box/renderer'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
@@ -125,51 +128,59 @@ function ExampleWithEditSwitch({
 
   editorPlugins.init(createPlugins({ lang }))
   return (
-    <EditStringsProvider
+    <StaticStringsProvider
       value={
         lang === 'de'
-          ? mergeDeepRight(editStringsEn, editStringsDe)
-          : editStringsEn
+          ? mergeDeepRight(staticStringsEn, staticStringsDe)
+          : staticStringsEn
       }
     >
-      <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
-        <div className="ml-4 flex">
-          {title ? (
-            <h1 className="ml-4 mr-2 text-xl font-bold">{title}</h1>
-          ) : null}
+      <EditStringsProvider
+        value={
+          lang === 'de'
+            ? mergeDeepRight(editStringsEn, editStringsDe)
+            : editStringsEn
+        }
+      >
+        <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
+          <div className="ml-4 flex">
+            {title ? (
+              <h1 className="ml-4 mr-2 text-xl font-bold">{title}</h1>
+            ) : null}
 
-          <button
-            onClick={() => setIsEdit(!isEdit)}
-            className="serlo-button-light !px-4 text-base"
-          >
-            {isEdit ? (
-              <>
-                <FaIcon icon={faEye} /> Show Student-View
-              </>
-            ) : (
-              <>
-                <FaIcon icon={faPencilAlt} /> Show Edit-View
-              </>
-            )}
-          </button>
+            <button
+              onClick={() => setIsEdit(!isEdit)}
+              className="serlo-button-light !px-4 text-base"
+            >
+              {isEdit ? (
+                <>
+                  <FaIcon icon={faEye} /> Show Student-View
+                </>
+              ) : (
+                <>
+                  <FaIcon icon={faPencilAlt} /> Show Edit-View
+                </>
+              )}
+            </button>
+          </div>
+          {isEdit ? (
+            <div className={cn('serlo-editor-hacks mt-12', className)}>
+              <Editor
+                initialState={exampleState}
+                onChange={({ changed, getDocument }) => {
+                  if (!changed) return
+                  void debouncedSetState(getDocument())
+                }}
+              />
+            </div>
+          ) : (
+            <div className="pt-4">
+              <StaticRenderer document={exampleState} />
+            </div>
+          )}
         </div>
-        {isEdit ? (
-          <div className={cn('serlo-editor-hacks mt-12', className)}>
-            <Editor
-              initialState={exampleState}
-              onChange={({ changed, getDocument }) => {
-                if (!changed) return
-                void debouncedSetState(getDocument())
-              }}
-            />
-          </div>
-        ) : (
-          <div className="pt-4">
-            <StaticRenderer document={exampleState} />
-          </div>
-        )}
-      </div>
-    </EditStringsProvider>
+      </EditStringsProvider>
+    </StaticStringsProvider>
   )
 }
 

@@ -25,7 +25,7 @@ export function ExerciseLicenseNotice({
   //  Both default, don't display
   if (exerciseLicense.isDefault && solutionLicense.isDefault) return null
 
-  const { task } = strings.content.exercises
+  const { task } = strings.content
   const { solution } = strings.entities
 
   // Task special, solution default: Display with "Aufgabenstellung"

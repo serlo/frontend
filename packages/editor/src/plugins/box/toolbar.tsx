@@ -2,15 +2,15 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 
 import type { BoxProps } from '.'
 import { types } from './renderer'
 
 export const BoxToolbar = ({ id, state }: BoxProps) => {
   const boxStrings = useEditStrings().plugins.box
-  const contentStrings = useContentStrings()
+  const boxStaticStrings = useStaticStrings().plugins.box
 
   return (
     <PluginToolbar
@@ -29,7 +29,7 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
               dataQa="plugin-box-type-chooser"
               options={types.map((type) => ({
                 value: type,
-                text: contentStrings.boxTypes[type],
+                text: boxStaticStrings.types[type],
                 dataQa: `plugin-box-type-chooser-option-${type}`,
               }))}
             />

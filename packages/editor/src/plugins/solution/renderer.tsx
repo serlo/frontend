@@ -1,5 +1,5 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import { useState } from 'react'
 
 interface SolutionRendererProps {
@@ -23,7 +23,7 @@ export function SolutionRenderer({
   elementAfterToggle,
   elementBeforePrerequisite,
 }: SolutionRendererProps) {
-  const contentStrings = useContentStrings()
+  const exerciseStrings = useStaticStrings().plugins.exercise
 
   const [visible, setVisible] = useState<false | 'solution' | 'strategy'>(
     solutionVisibleOnInit ? 'solution' : false
@@ -57,7 +57,7 @@ export function SolutionRenderer({
         {elementBeforePrerequisite}
         {prerequisite ? (
           <p className="serlo-p">
-            {contentStrings.exercises.prerequisite} {prerequisite}
+            {exerciseStrings.prerequisite} {prerequisite}
           </p>
         ) : null}
         {steps}
@@ -92,7 +92,7 @@ export function SolutionRenderer({
           </span>
           &nbsp;
         </span>
-        {contentStrings.exercises[type]}
+        {exerciseStrings[type]}
       </button>
     )
   }

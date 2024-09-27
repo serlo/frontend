@@ -3,6 +3,7 @@ import { type GetDocument } from '@editor/core/types'
 import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
+import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
@@ -10,7 +11,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { getCurrentDatetime } from '@editor/utils/get-current-datetime'
-import { InstanceDataProvider } from '@serlo/frontend/src/contexts/instance-context'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
@@ -60,7 +60,7 @@ export function SerloEditor(props: SerloEditorProps) {
     onChange(migratedState)
   }
 
-  const { instanceData, editStrings } = editorData[language]
+  const { staticStrings, editStrings } = editorData[language]
 
   const allPlugins = createBasicPlugins(plugins, _testingSecret)
   editorPlugins.init(allPlugins)
@@ -69,7 +69,7 @@ export function SerloEditor(props: SerloEditorProps) {
   editorRenderers.init(basicRenderers)
 
   return (
-    <InstanceDataProvider value={instanceData}>
+    <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
         <LtikContext.Provider value={_ltik}>
           <div className="serlo-editor-hacks">
@@ -82,7 +82,7 @@ export function SerloEditor(props: SerloEditorProps) {
           </div>
         </LtikContext.Provider>
       </EditStringsProvider>
-    </InstanceDataProvider>
+    </StaticStringsProvider>
   )
 
   // Parameter `changed` is ignored. Even if it is false, we still want to call onChange.

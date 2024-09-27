@@ -1,8 +1,8 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorImageGalleryDocument } from '@editor/types/editor-plugins'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import { useState } from 'react'
 
 import { ImageGrid } from './components/image-grid'
@@ -19,7 +19,7 @@ export function ImageGalleryStaticRenderer({
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
     null
   )
-  const altFallbackString = useContentStrings().imageAltFallback
+  const altFallbackString = useStaticStrings().plugins.image.altFallback
 
   const imageDocuments = state.images
     .map((item) => item.imagePlugin)

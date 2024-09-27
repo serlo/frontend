@@ -7,6 +7,7 @@ import {
 } from '@editor/editor-ui'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import {
   withLinks,
   withLists,
@@ -14,7 +15,6 @@ import {
   withBlanks,
 } from '@editor/plugins/text/plugins'
 import { isMac } from '@editor/utils/client-detection'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 import {
   faCode,
   faListOl,
@@ -130,7 +130,7 @@ const registeredMarkdownShortcuts = [
 export const useFormattingOptions = (
   formattingOptions: TextEditorFormattingOption[]
 ) => {
-  const { strings } = useInstanceData()
+  const ctrlString = useStaticStrings().misc.ctrl
   const textStrings = useEditStrings().plugins.text
 
   const createTextEditor = useCallback(
@@ -148,9 +148,8 @@ export const useFormattingOptions = (
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-    () =>
-      createToolbarControls(formattingOptions, textStrings, strings.keys.ctrl),
-    [formattingOptions, strings, textStrings]
+    () => createToolbarControls(formattingOptions, textStrings, ctrlString),
+    [formattingOptions, ctrlString, textStrings]
   )
 
   const handleHotkeys = useCallback(
@@ -226,7 +225,6 @@ export const useFormattingOptions = (
 
 function createToolbarControls(
   formattingOptions: TextEditorFormattingOption[],
-  // textStrings: LoggedInData['strings']['editor']['plugins']['text'],
   textStrings: ReturnType<typeof useEditStrings>['plugins']['text'],
   ctrlKey: string
 ): ControlButton[] {

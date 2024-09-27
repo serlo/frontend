@@ -1,20 +1,23 @@
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
+import {
+  StaticStrings,
+  staticStrings as staticStringsEn,
+} from '@editor/i18n/strings/en/static'
 import type {
+  EditStrings,
   LanguageData,
   SupportedLanguage,
-  InstanceData,
 } from '@editor/types/language-data'
-import { instanceData as instanceDataDe } from '@serlo/frontend/src/data/de'
-import { instanceData as instanceDataEn } from '@serlo/frontend/src/data/en'
 
 export const editorData: Record<SupportedLanguage, LanguageData> = {
   de: {
-    instanceData: instanceDataDe as unknown as InstanceData,
-    editStrings: editStringsDe,
+    staticStrings: staticStringsDe as unknown as StaticStrings,
+    editStrings: editStringsDe as unknown as EditStrings,
   },
   en: {
-    instanceData: instanceDataEn as InstanceData,
+    staticStrings: staticStringsEn,
     editStrings: editStringsEn,
   },
 }

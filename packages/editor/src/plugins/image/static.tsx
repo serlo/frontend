@@ -1,6 +1,6 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorImageDocument } from '@editor/types/editor-plugins'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 
 import { ImageRenderer } from './renderer'
 import { getAltOrFallback } from './utils/get-alt-or-fallback'
@@ -12,8 +12,8 @@ export function ImageStaticRenderer({
 }: EditorImageDocument & { pathNameBase?: string }) {
   const { caption, src: fileSrc, link, alt, maxWidth: maxWidthNumber } = state
 
-  const altFallback = useContentStrings().imageAltFallback
-  const altOrFallback = getAltOrFallback(altFallback, caption, alt)
+  const altFallbackString = useStaticStrings().plugins.image.altFallback
+  const altOrFallback = getAltOrFallback(altFallbackString, caption, alt)
 
   const src = String(fileSrc)
   if (!src) return null

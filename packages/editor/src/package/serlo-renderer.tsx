@@ -1,10 +1,10 @@
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
+import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { SupportedLanguage } from '@editor/types/language-data'
-import { InstanceDataProvider } from '@serlo/frontend/src/contexts/instance-context'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
@@ -28,20 +28,20 @@ export function SerloRenderer(props: SerloRendererProps) {
   const { migratedState } = migrate(state, editorVariant)
 
   // if we load the editStrings here as well, we might as well merge them
-  const { instanceData, editStrings } = editorData[language]
+  const { staticStrings, editStrings } = editorData[language]
 
   const basicRenderers = createRenderers()
   editorRenderers.init(basicRenderers)
 
   return (
-    <InstanceDataProvider value={instanceData}>
-      <EditStringsProvider value={editStrings}>
+    <EditStringsProvider value={editStrings}>
+      <StaticStringsProvider value={staticStrings}>
         <LtikContext.Provider value={_ltik}>
           <div className="serlo-editor-hacks">
             <StaticRenderer document={migratedState.document} />
           </div>
         </LtikContext.Provider>
-      </EditStringsProvider>
-    </InstanceDataProvider>
+      </StaticStringsProvider>
+    </EditStringsProvider>
   )
 }

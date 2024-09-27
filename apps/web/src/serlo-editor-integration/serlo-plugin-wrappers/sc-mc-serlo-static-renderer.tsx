@@ -4,12 +4,10 @@ import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
 import { useContext } from 'react'
 
 import { isPrintMode } from '@/components/print-mode'
-import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 
 export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
   const isRevisionView = useContext(RevisionViewContext)
-  const exStrings = useInstanceData().strings.content.exercises
 
   return (
     <ScMcExerciseStaticRenderer
@@ -27,9 +25,7 @@ export function ScMcSerloStaticRenderer(props: EditorScMcExerciseDocument) {
     return (
       <div className="serlo-revision-extra-info mb-4 rounded-xl bg-editor-primary-200 py-2">
         {answer.isCorrect && (
-          <span className="mx-side text-sm font-bold">
-            [{exStrings.correct}]
-          </span>
+          <span className="mx-side text-sm font-bold">[✅]</span>
         )}
         {answer.feedback}
       </div>

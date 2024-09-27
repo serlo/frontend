@@ -1,5 +1,5 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { useInstanceData } from '@editor/utils/use-instance-data'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { useCallback } from 'react'
 
 import { SubDocument } from './sub-document'
@@ -20,8 +20,8 @@ import {
 import { ROOT } from '../store/root/constants'
 
 export function EditorChildren({ children }: { children: EditorRenderProps }) {
-  const instanceData = useInstanceData()
   const editStrings = useEditStrings()
+  const staticStrings = useStaticStrings()
 
   const dispatch = useAppDispatch()
 
@@ -59,7 +59,7 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
   return children({
     element: editor,
     i18n: {
-      instanceData,
+      staticStrings,
       editStrings,
     },
     history: {
