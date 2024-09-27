@@ -30,6 +30,7 @@ import type {
   EditorTemplateExerciseGroupDocument,
   EditorExerciseGroupDocument,
   EditorCourseDocument,
+  EditorInteractiveVideoDocument,
 } from './editor-plugins'
 import { TemplatePluginType } from './template-plugin-type'
 
@@ -142,6 +143,11 @@ export function isVideoDocument(
   document: AnyEditorDocument
 ): document is EditorVideoDocument {
   return document.plugin === EditorPluginType.Video
+}
+export function isInteractiveVideoDocument(
+  document: AnyEditorDocument
+): document is EditorInteractiveVideoDocument {
+  return document.plugin === EditorPluginType.InteractiveVideo
 }
 export function isAudioDocument(
   document: AnyEditorDocument

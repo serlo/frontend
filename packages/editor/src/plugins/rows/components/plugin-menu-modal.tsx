@@ -75,11 +75,15 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
 
       const basicOptions = filteredBySearchString.filter(
-        ({ initialState }) => initialState.plugin !== EditorPluginType.Exercise
+        ({ initialState }) =>
+          initialState.plugin !== EditorPluginType.Exercise &&
+          initialState.plugin !== EditorPluginType.InteractiveVideo
       )
 
       const interactiveOptions = filteredBySearchString.filter(
-        ({ initialState }) => initialState.plugin === EditorPluginType.Exercise
+        ({ initialState }) =>
+          initialState.plugin === EditorPluginType.Exercise ||
+          initialState.plugin === EditorPluginType.InteractiveVideo
       )
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)

@@ -45,6 +45,7 @@ export const pluginMenuType = {
   Injection: EditorPluginType.Injection,
   Multimedia: EditorPluginType.Multimedia,
 
+  InteractiveVideo: EditorPluginType.InteractiveVideo,
   Audio: EditorPluginType.Audio,
   PageLayout: EditorPluginType.PageLayout,
   PageTeam: EditorPluginType.PageTeam,
@@ -220,6 +221,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.BlanksExerciseDragAndDrop]: IconBlanksDragAndDrop,
   [pluginMenuType.H5p]: IconH5p,
   [pluginMenuType.ExerciseGroup]: IconFallback,
+  [pluginMenuType.InteractiveVideo]: IconFallback,
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PageTeam]: IconFallback,
