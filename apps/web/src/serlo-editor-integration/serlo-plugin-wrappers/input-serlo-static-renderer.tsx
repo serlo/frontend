@@ -1,9 +1,9 @@
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import { useContext } from 'react'
 
 import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
   const isRevisionView = useContext(RevisionViewContext)
@@ -25,7 +25,7 @@ export function InputSerloStaticRenderer(props: EditorInputExerciseDocument) {
           {answer.isCorrect && `[✅]`}:
         </span>
         {answer.value}
-        <StaticRenderer document={answer.feedback} />
+        <EditorRenderer document={answer.feedback} />
       </div>
     ))
   }

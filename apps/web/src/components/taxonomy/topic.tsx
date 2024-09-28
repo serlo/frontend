@@ -1,5 +1,4 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -27,6 +26,7 @@ import {
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -63,7 +63,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/2">
         <div className="mt-6 sm:mb-5">
-          <StaticRenderer
+          <EditorRenderer
             document={data.description as unknown as EditorRowsDocument}
           />
         </div>
@@ -158,7 +158,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
                   }}
                 >
                   <ExerciseNumbering href={`/${entityId}`} index={i} />
-                  <StaticRenderer document={exerciseOrGroup} />
+                  <EditorRenderer document={exerciseOrGroup} />
                 </ExerciseContext.Provider>
               </UuidsProvider>
             </li>

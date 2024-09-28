@@ -1,6 +1,5 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { User } from '@serlo/authorization'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
@@ -21,6 +20,7 @@ import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetchAuthed } from '@/mutations/helper/use-mutation-fetch'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 const ContentPage: NextPage = () => {
   return (
@@ -276,7 +276,7 @@ const BotHunt = () => {
     if (!stringDescription || stringDescription === 'NULL') return null
     const desc = parseDocumentString(stringDescription)
 
-    return <StaticRenderer document={desc} />
+    return <EditorRenderer document={desc} />
   }
 
   function renderLoadMore() {

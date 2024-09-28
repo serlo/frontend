@@ -1,7 +1,6 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
@@ -26,6 +25,7 @@ import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export interface EntityProps {
   data: EntityData
@@ -117,10 +117,10 @@ export function Entity({ data }: EntityProps) {
           isInExerciseGroup: false,
         }}
       >
-        <StaticRenderer document={document} />
+        <EditorRenderer document={document} />
       </ExerciseContext.Provider>
     ) : (
-      <StaticRenderer document={document} />
+      <EditorRenderer document={document} />
     )
 
     if (data.schemaData?.setContentAsSection) {

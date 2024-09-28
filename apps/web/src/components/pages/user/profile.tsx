@@ -1,5 +1,4 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
 import { NextPage } from 'next'
@@ -24,6 +23,7 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export interface ProfileProps {
   userData: UserPage['userData']
@@ -152,7 +152,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {strings.profiles.lockedDescriptionText}
           </InfoPanel>
         ) : (
-          <StaticRenderer document={description} />
+          <EditorRenderer document={description} />
         )}
       </section>
     )

@@ -83,7 +83,8 @@ const migrations: Migration[] = [
 
     return {
       ...state,
-      domainOrigin: window.location.origin,
+      domainOrigin:
+        typeof window !== 'undefined' ? window.location.origin : 'server',
     }
   },
 

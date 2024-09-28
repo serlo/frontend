@@ -1,8 +1,7 @@
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
-
 import { TopicCategories } from './topic-categories'
 import { Link } from '@/components/content/link'
 import { TaxonomySubTerm } from '@/data-types'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export interface SubTopicProps {
   data: TaxonomySubTerm
@@ -24,7 +23,7 @@ export function SubTopic({ data, subid, hideTitle }: SubTopicProps) {
         <div className="flex-[1_1_40%]">
           {' '}
           <div className="mt-6 sm:mb-5">
-            <StaticRenderer document={data.description} />
+            <EditorRenderer document={data.description} />
           </div>
         </div>
 
