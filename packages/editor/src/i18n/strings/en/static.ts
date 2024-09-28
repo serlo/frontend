@@ -72,4 +72,4 @@ export const staticStrings = {
     return: 'return',
     loading: 'Loading',
   },
-} as const
+}

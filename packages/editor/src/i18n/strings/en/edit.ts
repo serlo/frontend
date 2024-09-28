@@ -532,4 +532,4 @@ export const editStrings = {
     pluginCopyInfo: 'You can now paste this plugin into text plugins',
     pluginCopyButtonLabel: 'Copy plugin to clipboard',
   },
-} as const
+}
