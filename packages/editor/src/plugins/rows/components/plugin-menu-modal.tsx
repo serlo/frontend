@@ -4,6 +4,7 @@ import {
   type PluginMenuItem,
   getPluginMenuItems,
 } from '@editor/package/plugin-menu'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,
@@ -44,6 +45,9 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     )
     const allPlugins = Array.from(new Set(allPluginsWithDuplicates))
     const allowedByContext = pluginMenuState.allowedChildPlugins ?? allPlugins
+    const allowedAndSupported = allowedByContext.filter((plugin) =>
+      editorPlugins.isSupported(plugin)
+    )
 
     const typesOfAncestors = selectAncestorPluginTypes(
       store.getState(),
@@ -51,10 +55,10 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     )
 
     return typesOfAncestors?.length
-      ? allowedByContext.filter((plugin) =>
+      ? allowedAndSupported.filter((plugin) =>
           checkIsAllowedNesting(plugin, typesOfAncestors)
         )
-      : allowedByContext
+      : allowedAndSupported
   }, [
     menuItems,
     pluginMenuState.allowedChildPlugins,
