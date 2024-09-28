@@ -10,7 +10,6 @@ import { Entity } from '@serlo/authorization'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
-import { debouncedStoreToLocalStorage } from '../../../../packages/editor/src/editor-ui/save/local-storage-notice'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
@@ -26,14 +25,6 @@ export interface SerloEditorProps {
   initialState: EditorProps['initialState']
 }
 
-export interface LooseEdtrData {
-  [key: string]: EditorProps['initialState'] | null | undefined
-}
-
-export interface LooseEdtrDataDefined {
-  [key: string]: EditorProps['initialState']
-}
-
 export function SerloEditor({
   onSave,
   entityNeedsReview,
@@ -42,10 +33,9 @@ export function SerloEditor({
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
+  const { lang } = useInstanceData()
 
   const handleLearnerEvent = useSerloHandleLearnerEvent()
-
-  const { lang } = useInstanceData()
 
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
   editorPlugins.init(createPlugins({ lang }))
@@ -55,14 +45,11 @@ export function SerloEditor({
 
   editorLearnerEvent.init(handleLearnerEvent)
 
+  const editString =
+    lang === 'de' ? mergeDeepRight(editStringsEn, editStringsDe) : editStringsEn
+
   return (
-    <EditStringsProvider
-      value={
-        lang === 'de'
-          ? mergeDeepRight(editStringsEn, editStringsDe)
-          : editStringsEn
-      }
-    >
+    <EditStringsProvider value={editString}>
       <IsSerloContext.Provider value>
         <SaveContext.Provider
           value={{ onSave, userCanSkipReview, entityNeedsReview }}

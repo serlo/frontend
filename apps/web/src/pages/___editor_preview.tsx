@@ -2,7 +2,6 @@ import { Editor } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
@@ -27,7 +26,6 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
-import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-handle-learner-event'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -65,8 +63,6 @@ function Content() {
     withDefault(StringParam, emptyState)
   )
 
-  const handleLearnerEvent = useSerloHandleLearnerEvent()
-
   const isNotEmpty = previewState !== emptyState
 
   const debouncedSetState = debounce(
@@ -91,8 +87,6 @@ function Content() {
   editorPlugins.init(createPlugins({ lang }))
 
   editorRenderers.init(createRenderers())
-
-  editorLearnerEvent.init(handleLearnerEvent)
 
   return (
     <EditStringsProvider

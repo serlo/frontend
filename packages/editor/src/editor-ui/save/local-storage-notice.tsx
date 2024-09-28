@@ -1,4 +1,4 @@
-import { EditorProps } from '@editor/core'
+import type { EditorProps } from '@editor/core'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
