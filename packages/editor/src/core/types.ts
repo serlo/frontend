@@ -19,6 +19,7 @@ export interface EditorProps {
     state?: unknown
   }
   onChange?: OnEditorChange
+  showDefaultMenu?: boolean // temporary prop
 }
 
 export type EditorRenderProps = ReactNode | ((editor: BaseEditor) => ReactNode)

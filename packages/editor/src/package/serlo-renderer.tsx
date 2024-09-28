@@ -37,7 +37,7 @@ export function SerloRenderer(props: SerloRendererProps) {
     <EditStringsProvider value={editStrings}>
       <StaticStringsProvider value={staticStrings}>
         <LtikContext.Provider value={_ltik}>
-          <div className="serlo-editor-hacks">
+          <div className="serlo-content-with-spacing-fixes">
             <StaticRenderer document={migratedState.document} />
           </div>
         </LtikContext.Provider>

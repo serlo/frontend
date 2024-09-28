@@ -30,8 +30,7 @@ export function ProfileDescriptionEditor({
 
   return (
     <>
-      <div className="controls-portal sticky top-0 z-[100] bg-white md:bg-transparent" />
-      <div className="serlo-editor-hacks [&>div.relative]:mt-12">
+      <div className="[&>div.relative]:mt-12">
         <SerloEditor
           entityNeedsReview={false}
           onSave={onSave}

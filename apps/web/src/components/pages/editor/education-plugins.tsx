@@ -320,9 +320,7 @@ export function EducationPlugins() {
                 <div className="mb-3 border-b-2 border-brand-100 font-bold">
                   {isDe ? 'Live-Beispiel' : 'Live Example'}
                 </div>
-                <div className="serlo-content-with-spacing-fixes -ml-side">
-                  {example}
-                </div>
+                <div className="-ml-side">{example}</div>
               </>
             ) : image ? (
               <>

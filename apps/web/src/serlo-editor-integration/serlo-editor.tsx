@@ -83,6 +83,7 @@ export function SerloEditor({
               if (!changed) return
               void debouncedStoreToLocalStorage(getDocument())
             }}
+            showDefaultMenu
           >
             {children}
           </Editor>

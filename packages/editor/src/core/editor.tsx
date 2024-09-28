@@ -14,7 +14,13 @@ export function Editor(props: EditorProps) {
     <Provider store={store}>
       <DndWrapper>
         <HotkeysProvider initiallyActiveScopes={['global']}>
-          <InnerDocument {...props} />
+          {props.showDefaultMenu ? (
+            <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
+          ) : null}
+
+          <div className="serlo-editor-hacks mb-24">
+            <InnerDocument {...props} />
+          </div>
         </HotkeysProvider>
       </DndWrapper>
     </Provider>

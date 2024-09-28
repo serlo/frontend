@@ -154,7 +154,7 @@ function ExampleWithEditSwitch({
           </button>
         </div>
         {isEdit ? (
-          <div className={cn('serlo-editor-hacks mt-12', className)}>
+          <div className={cn('mt-12', className)}>
             <Editor
               initialState={exampleState}
               onChange={({ changed, getDocument }) => {
