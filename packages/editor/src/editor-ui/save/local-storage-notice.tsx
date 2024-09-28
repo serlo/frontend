@@ -1,14 +1,19 @@
-import type { EditorProps } from '@editor/core'
+import { EditorProps } from '@editor/core'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
-
-import type { LooseEdtrData } from '../serlo-editor'
 
 export interface LocalStorageNoticeProps {
   useStored: boolean
   setUseStored: Dispatch<SetStateAction<boolean>>
 }
+
+type StateOrNull = EditorProps['initialState'] | null
+interface Stored {
+  [key: string]: StateOrNull
+}
+
+const storeKey = 'serlo-editor'
 
 export function LocalStorageNotice({
   useStored,
@@ -30,7 +35,7 @@ export function LocalStorageNotice({
           onClick={() => {
             if (useStored) {
               if (window.confirm(storageStrings.confirmRestore)) {
-                storeStateToLocalStorage(undefined)
+                storeStateToLocalStorage(null)
                 setUseStored(false)
               }
             } else setUseStored(true)
@@ -44,27 +49,25 @@ export function LocalStorageNotice({
 }
 
 export function getStateFromLocalStorage() {
-  const edtr = localStorage.getItem('edtr')
-  if (!edtr) return
+  const storedData = localStorage.getItem(storeKey)
+  if (!storedData) return null
 
-  const storedStates = JSON.parse(edtr) as LooseEdtrData
-  return storedStates[window.location.pathname]
+  const parsedData = JSON.parse(storedData) as Stored
+  return parsedData[window.location.pathname]
 }
 
-export function storeStateToLocalStorage(
-  state?: EditorProps['initialState'] | null
-) {
+export function storeStateToLocalStorage(state: StateOrNull) {
   // eslint-disable-next-line no-console
-  console.log('edtr: saving state in browser localstorage')
-  const currentValue = localStorage.getItem('edtr')
-  const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
+  console.log('editor: saving state in browser localstorage')
 
-  edtr[window.location.pathname] = state
-  localStorage.setItem('edtr', JSON.stringify(edtr))
+  const storedData = localStorage.getItem(storeKey)
+  const parsedData = storedData ? (JSON.parse(storedData) as Stored) : {}
+
+  parsedData[window.location.pathname] = state
+  localStorage.setItem(storeKey, JSON.stringify(parsedData))
 }
 
 export const debouncedStoreToLocalStorage = debounce(
-  (state?: EditorProps['initialState'] | null) =>
-    storeStateToLocalStorage(state),
+  (state: StateOrNull) => storeStateToLocalStorage(state),
   5000
 )

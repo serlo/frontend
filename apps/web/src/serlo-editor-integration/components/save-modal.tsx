@@ -4,7 +4,7 @@ import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState } from 'react'
 
-import { LocalStorageButton } from './local-storage-button'
+import { LocalStorageButton } from '../../../../../packages/editor/src/editor-ui/save/local-storage-button'
 import { SaveContext } from '../context/save-context'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'

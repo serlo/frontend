@@ -8,13 +8,9 @@ import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { Entity } from '@serlo/authorization'
 import { mergeDeepRight } from 'ramda'
-import { type ReactNode, useState } from 'react'
+import { type ReactNode } from 'react'
 
-import {
-  debouncedStoreToLocalStorage,
-  getStateFromLocalStorage,
-  LocalStorageNotice,
-} from './components/local-storage-notice'
+import { debouncedStoreToLocalStorage } from '../../../../packages/editor/src/editor-ui/save/local-storage-notice'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
@@ -46,7 +42,7 @@ export function SerloEditor({
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
-  const [useStored, setUseStored] = useState(false)
+
   const handleLearnerEvent = useSerloHandleLearnerEvent()
 
   const { lang } = useInstanceData()
@@ -71,22 +67,7 @@ export function SerloEditor({
         <SaveContext.Provider
           value={{ onSave, userCanSkipReview, entityNeedsReview }}
         >
-          <LocalStorageNotice
-            useStored={useStored}
-            setUseStored={setUseStored}
-          />
-          <Editor
-            initialState={
-              useStored ? getStateFromLocalStorage()! : initialState
-            }
-            onChange={({ changed, getDocument }) => {
-              if (!changed) return
-              void debouncedStoreToLocalStorage(getDocument())
-            }}
-            showDefaultMenu
-          >
-            {children}
-          </Editor>
+          <Editor initialState={initialState}>{children}</Editor>
         </SaveContext.Provider>
       </IsSerloContext.Provider>
     </EditStringsProvider>
