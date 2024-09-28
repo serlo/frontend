@@ -528,6 +528,7 @@ export const editStrings = {
     author: 'Author',
     createdAt: 'when?',
     ready: 'Ready to save?',
+    pluginCopySuccess: 'Plugin copied!',
     pluginCopyInfo: 'You can now paste this plugin into text plugins',
     pluginCopyButtonLabel: 'Copy plugin to clipboard',
   },
