@@ -2,9 +2,9 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
-import { useLang } from '@editor/utils/use-lang'
 import {
   faFileImport,
   faUpRightFromSquare,
@@ -29,7 +29,7 @@ const optional = t.partial({
 const TeamDataDecoder = t.array(t.intersection([required, optional]))
 
 export function PageTeamToolbar({ focused, id, state }: PageTeamPluginProps) {
-  const lang = useLang()
+  const lang = useEditStrings().lang
 
   if (!focused) return null
 

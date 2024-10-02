@@ -1,5 +1,5 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useLang } from '@editor/utils/use-lang'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, KeyboardEvent, ClipboardEvent } from 'react'
 
@@ -21,7 +21,7 @@ export function EditModeInput({
   placeholder: string
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const lang = useLang()
+  const { lang } = useEditStrings()
 
   useEffect(() => {
     if (!shouldFocus) return

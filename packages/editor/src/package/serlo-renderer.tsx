@@ -34,14 +34,14 @@ export function SerloRenderer(props: SerloRendererProps) {
   editorRenderers.init(basicRenderers)
 
   return (
-    <EditStringsProvider value={editStrings}>
-      <StaticStringsProvider value={staticStrings}>
+    <StaticStringsProvider value={staticStrings}>
+      <EditStringsProvider value={editStrings}>
         <LtikContext.Provider value={_ltik}>
           <div className="serlo-editor-hacks">
             <StaticRenderer document={migratedState.document} />
           </div>
         </LtikContext.Provider>
-      </StaticStringsProvider>
-    </EditStringsProvider>
+      </EditStringsProvider>
+    </StaticStringsProvider>
   )
 }

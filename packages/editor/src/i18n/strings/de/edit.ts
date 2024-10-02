@@ -1,6 +1,7 @@
 export type EditStrings = typeof editStrings
 
 export const editStrings = {
+  lang: 'de',
   confirmRouteChange:
     'Willst du wirklich die Seite verlassen ohne zu speichern?',
   noChangesWarning: 'Bisher hast du nichts geändert',
