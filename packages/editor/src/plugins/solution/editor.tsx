@@ -17,7 +17,7 @@ import { LinkOverlayWithHref } from '../text/components/link/link-overlay-with-h
 const linkOverlayWrapperWidth = 460
 
 const SerloLicenseChooser = lazy(() =>
-  import('../solution/serlo-license-chooser').then((module) => ({
+  import('./serlo-license-chooser').then((module) => ({
     default: module.SerloLicenseChooser,
   }))
 )
