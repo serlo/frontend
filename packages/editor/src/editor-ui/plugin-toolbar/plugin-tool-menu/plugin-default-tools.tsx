@@ -11,15 +11,20 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { UuidsContext } from '@serlo/frontend/src/contexts/uuids-context'
-import { useCallback, useContext, useMemo } from 'react'
+import { lazy, useCallback, useContext, useMemo } from 'react'
 
-import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { PluginCopyTool } from './plugin-copy-tool'
 
 interface PluginDefaultToolsProps {
   pluginId: string
 }
+
+const AnchorLinkCopyTool = lazy(() =>
+  import('./anchor-link-copy-tool').then((module) => ({
+    default: module.AnchorLinkCopyTool,
+  }))
+)
 
 // tools for most plugins (duplicate / remove)
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {

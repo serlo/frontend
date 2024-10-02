@@ -7,15 +7,20 @@ import {
   QuickbarData,
   fetchQuickbarData,
 } from '@serlo/frontend/src/components/navigation/quickbar'
-import { useContext, useEffect, useState } from 'react'
+import { lazy, useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
 import { SolutionRenderer } from './renderer'
-import { SerloLicenseChooser } from './serlo-license-chooser'
 import { LinkOverlayEditMode } from '../text/components/link/edit-mode/link-overlay-edit-mode'
 import { LinkOverlayWithHref } from '../text/components/link/link-overlay-with-href'
 
 const linkOverlayWrapperWidth = 460
+
+const SerloLicenseChooser = lazy(() =>
+  import('../solution/serlo-license-chooser').then((module) => ({
+    default: module.SerloLicenseChooser,
+  }))
+)
 
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
