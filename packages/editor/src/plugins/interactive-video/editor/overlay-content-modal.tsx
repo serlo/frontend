@@ -1,5 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
+import { useEffect, useRef } from 'react'
 
 import { type InteractiveVideoProps } from '..'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -15,6 +16,17 @@ export function OverlayContentModal({
 }) {
   const { title, autoOpen, mandatory, forceRewatch, child } = mark
   const pluginStrings = useEditorStrings().plugins.interactiveVideo
+
+  const titleRef = useRef<HTMLInputElement>(null)
+
+  // make sure empty title gets focus
+  useEffect(() => {
+    if (title.value.length) return
+    setTimeout(() => titleRef.current?.focus(), 200)
+    // only run once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <ModalWithCloseButton
       isOpen
@@ -25,6 +37,7 @@ export function OverlayContentModal({
     >
       <div>
         <input
+          ref={titleRef}
           value={title.value}
           onChange={(e) => title.set(e.target.value)}
           className={cn(
