@@ -54,20 +54,19 @@ export function MarkOverlay({
   useEffect(() => {
     if (!player || player.paused) return
     const mark = marks.find((mark) => mark.startTime === activeCue?.startTime)
-    const isFiller = !mark?.title
     if (!mark) return
 
     const { solved } = getMarkInteractions(mark, learnerInteractions)
 
-    if (!isFiller && activeCue && !solved) {
+    if (activeCue && !solved) {
+      void player.pause()
       setTimeout(() => {
         buttonRef.current?.classList.add('triggered')
       }, 150)
       setTimeout(() => {
         openOverlayByStartTime(mark.startTime)
-        void player.pause()
         buttonRef.current?.classList.add('triggered')
-      }, 1750)
+      }, 1650)
     }
   }, [activeCue, learnerInteractions, marks, openOverlayByStartTime, player])
 
@@ -115,9 +114,8 @@ export function MarkOverlay({
             <button
               className="serlo-button-editor-primary mt-1"
               onClick={() => {
-                if (!player) return
                 closeOverlay()
-                void player.play()
+                void player?.play()
               }}
             >
               <FaIcon icon={faPlay} /> Abspielen {/* TODO: i18n */}
