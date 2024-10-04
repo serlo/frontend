@@ -8,6 +8,7 @@ import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function StaticSolutionRenderer({
+  id,
   state,
   solutionVisibleOnInit,
   beforeSlot,
@@ -39,6 +40,7 @@ export function StaticSolutionRenderer({
 
   function onSolutionOpen() {
     editorLearnerEvent.trigger?.({
+      pluginId: id,
       verb: 'opened',
       contentType: 'solution',
       value: 'open',
