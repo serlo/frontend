@@ -1,7 +1,7 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import type { PluginMenuItem } from '@editor/package/plugin-menu'
+import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 import { cn } from '@editor/utils/cn'
 
 function getTooltipPosition(index: number) {
