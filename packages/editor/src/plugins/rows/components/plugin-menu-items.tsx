@@ -1,8 +1,8 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import type { PluginMenuItem } from '@editor/package/plugin-menu'
+import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 function getTooltipPosition(index: number) {
   return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
