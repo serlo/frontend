@@ -13,14 +13,10 @@ export function MarksList({
 }) {
   const pluginStrings = useEditorStrings().plugins.interactiveVideo
 
-  const sortedMarks = marks.sort(
-    (a, b) => a.startTime.value - b.startTime.value
-  )
-
   return (
     <div className="mx-side">
       <ul>
-        {sortedMarks.map((mark, index) => {
+        {marks.map((mark, index) => {
           const title = mark.title.value.length ? mark.title.value : 'type'
           return (
             <li key={index} className="mb-3 flex gap-1">

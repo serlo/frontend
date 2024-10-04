@@ -27,9 +27,8 @@ export function InteractiveVideoRenderer({
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
 }) {
-  const content = {
-    cues: chapterContent.cues?.sort((a, b) => a.startTime - b.startTime),
-  }
+  const content = { cues: chapterContent.cues }
+
   return (
     <MediaPlayer
       title="Pine Tree Timelapse"

@@ -10,7 +10,13 @@ export function addOverlayContent(
 ) {
   const startTime = findFreeStartTime(startTimeWish, marks)
 
-  marks.insert(undefined, {
+  const previousIndex = marks.findIndex(
+    (mark) => startTime > mark.startTime.value
+  )
+  // make sure marks are always sorted by startTime
+  const index = previousIndex > -1 ? previousIndex+1 : 0
+
+  marks.insert(index, {
     title: '',
     child: { plugin: EditorPluginType.Exercise },
     startTime,
@@ -18,7 +24,7 @@ export function addOverlayContent(
     mandatory: false,
     forceRewatch: false,
   })
-  setTimeout(() => setShowOverlayContentIndex(marks.length))
+  setTimeout(() => setShowOverlayContentIndex(index))
 }
 
 function findFreeStartTime(

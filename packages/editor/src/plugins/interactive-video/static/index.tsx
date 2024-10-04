@@ -1,11 +1,11 @@
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
-import { createCues } from './helpers/create-cues'
-import { useCheckSeekAndPlay } from './helpers/use-check-seek-and-play'
-import { useLearnerInteractions } from './helpers/use-learner-interactions'
-import { InteractiveVideoRenderer } from './renderer/renderer'
-import { MarkOverlay } from './static/mark-overlay'
+import { MarkOverlay } from './mark-overlay'
+import { createCues } from '../helpers/create-cues'
+import { useCheckSeekAndPlay } from '../helpers/use-check-seek-and-play'
+import { useLearnerInteractions } from '../helpers/use-learner-interactions'
+import { InteractiveVideoRenderer } from '../renderer/renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function InteractiveVideoStaticRenderer({
