@@ -64,7 +64,13 @@ export function MarkOverlay({
         buttonRef.current?.classList.add('triggered')
       }, 150)
       setTimeout(() => {
-        openOverlayByStartTime(mark.startTime)
+        // open if learner did not change the playback position
+        const isTimeStillInMark =
+          player.currentTime > mark.startTime &&
+          player.currentTime < mark.startTime + markDuration
+        if (isTimeStillInMark) {
+          openOverlayByStartTime(mark.startTime)
+        }
         buttonRef.current?.classList.add('triggered')
       }, 1100)
     }
