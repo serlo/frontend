@@ -2,24 +2,36 @@ import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { type MediaSeekRequestEvent, useMediaRemote } from '@vidstack/react'
 
+import {
+  getMarkInteractions,
+  type LearnerInteractions,
+} from './use-learner-interactions'
 import { markDuration } from '../const'
 
-export function usePreventSeeking(
+export function usePreventSeeking({
+  marks,
+  learnerInteractions,
+}: {
   marks: EditorInteractiveVideoDocument['state']['marks']
-) {
+  learnerInteractions: LearnerInteractions
+}) {
   const remote = useMediaRemote()
 
   return function (time: number, nativeEvent: MediaSeekRequestEvent) {
     let isInside = false
-    const mandatoryMark = marks.find((mark) => {
+    const blockingMark = marks.find((mark) => {
       if (!mark.mandatory) return false
       const isAfter = time > mark.startTime + markDuration
       isInside = !isAfter && time > mark.startTime
-      // TODO: check if it was successfully solved or if it was tried enough times
+
+      const { solved } = getMarkInteractions(mark, learnerInteractions)
+      if (solved) return false
+
       return isAfter || isInside
     })
+
     // skip ahead my friend
-    if (!mandatoryMark) return
+    if (!blockingMark) return
 
     nativeEvent.preventDefault()
 
@@ -28,7 +40,7 @@ export function usePreventSeeking(
 
     // jump directly to exercise
     if (isInside) {
-      player.currentTime = mandatoryMark.startTime - 0.001
+      player.currentTime = blockingMark.startTime - 0.001
       void player.play()
       return
     }

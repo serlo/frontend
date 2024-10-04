@@ -2,6 +2,8 @@ import {
   type LearnerEventData,
   editorLearnerEventName,
 } from '@editor/plugin/helpers/editor-learner-event'
+import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
+import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useState } from 'react'
 
 export type LearnerInteractions = Map<
@@ -41,4 +43,19 @@ export function useLearnerInteractions() {
   }, [])
 
   return interactions
+}
+
+export function getMarkInteractions(
+  mark: EditorInteractiveVideoDocument['state']['marks'][number] | null,
+  learnerInteractions: LearnerInteractions
+) {
+  const empty = { attempts: 0, solved: false }
+  if (!mark?.child || !isExerciseDocument(mark.child)) return empty
+  const interactiveId = mark.child.state.interactive?.id
+  if (!interactiveId) return empty
+
+  const activeMarkInteraction = learnerInteractions.get(interactiveId)
+  const attempts = activeMarkInteraction?.attempts ?? 0
+  const solved = activeMarkInteraction?.solved ?? false
+  return { attempts, solved }
 }

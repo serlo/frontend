@@ -1,11 +1,9 @@
-import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { faTasks } from '@fortawesome/free-solid-svg-icons'
 import {
   useActiveTextCues,
   useActiveTextTrack,
   useMediaPlayer,
 } from '@vidstack/react'
-import { useEffect } from 'react'
 
 import { longerThanVideoDuration, markDuration } from '../const'
 import { FaIcon } from '@/components/fa-icon'
@@ -15,14 +13,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 export function PlayerTools({
   addOverlayContent,
   openOverlayByStartTime,
-  marks,
 }: {
   addOverlayContent?: (startTime: number) => void
   openOverlayByStartTime: (startTime: number) => void
-  marks?: EditorInteractiveVideoDocument['state']['marks']
 }) {
   const pluginStrings = useEditorStrings().plugins.interactiveVideo
-  const isEditMode = addOverlayContent !== undefined
 
   const textTrack = useActiveTextTrack('chapters')
   const activeCues = useActiveTextCues(textTrack)
@@ -33,21 +28,6 @@ export function PlayerTools({
     : longerThanVideoDuration
 
   const player = useMediaPlayer()
-
-  useEffect(() => {
-    if (isEditMode || !marks || !player || player.paused) return
-    const mark = marks.find(
-      (mark) => mark.startTime === activeCue?.startTime
-      // || mark.startTime + defaultMarkTime === activeCue?.startTime
-    )
-    const isFiller = !mark?.title
-
-    if (!isFiller && activeCue) {
-      openOverlayByStartTime(mark.startTime)
-
-      void player.pause()
-    }
-  }, [activeCue, isEditMode, marks, openOverlayByStartTime, player])
 
   if (!player) return null
 
