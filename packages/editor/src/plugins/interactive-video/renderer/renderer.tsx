@@ -3,11 +3,11 @@ import '@vidstack/react/player/styles/default/theme.css'
 // eslint-disable-next-line import/no-unassigned-import
 import '@vidstack/react/player/styles/default/layouts/video.css'
 
+import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import {
   MediaPlayer,
   MediaProvider,
   Track,
-  type VTTContent,
   type MediaPlayEvent,
 } from '@vidstack/react'
 import {
@@ -16,18 +16,21 @@ import {
 } from '@vidstack/react/player/layouts/default'
 
 import { TimeSliderWithDots } from './timeslider-with-dots'
+import { createCues } from '../helpers/create-cues'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function InteractiveVideoRenderer({
-  chapterContent,
+  marks,
   tools,
   checkSeekAndPlay,
 }: {
-  chapterContent: VTTContent
+  marks: EditorInteractiveVideoDocument['state']['marks']
   tools?: JSX.Element
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
 }) {
-  const content = { cues: chapterContent.cues }
+  const exerciseString = useInstanceData().strings.entities.exercise
+  const cues = createCues(marks, exerciseString)
 
   return (
     <MediaPlayer
@@ -51,7 +54,7 @@ export function InteractiveVideoRenderer({
       <MediaProvider>
         <Track
           id="chapters"
-          content={content}
+          content={{ cues }}
           kind="chapters"
           language="de-DE"
           default
@@ -61,7 +64,7 @@ export function InteractiveVideoRenderer({
         icons={defaultLayoutIcons}
         slots={{
           beforeSettingsMenu: tools,
-          timeSlider: <TimeSliderWithDots />,
+          timeSlider: <TimeSliderWithDots marks={marks} />,
         }}
       />
       {/* <Poster

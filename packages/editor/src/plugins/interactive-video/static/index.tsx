@@ -2,18 +2,14 @@ import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
 import { MarkOverlay } from './mark-overlay'
-import { createCues } from '../helpers/create-cues'
 import { useCheckSeekAndPlay } from '../helpers/use-check-seek-and-play'
 import { useLearnerInteractions } from '../helpers/use-learner-interactions'
 import { InteractiveVideoRenderer } from '../renderer/renderer'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export function InteractiveVideoStaticRenderer({
   state,
 }: EditorInteractiveVideoDocument) {
   const { marks } = state
-
-  const exerciseString = useInstanceData().strings.entities.exercise
 
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
@@ -23,8 +19,6 @@ export function InteractiveVideoStaticRenderer({
 
   const checkSeekAndPlay = useCheckSeekAndPlay({ marks, learnerInteractions })
 
-  const cues = createCues(marks, exerciseString)
-
   function openOverlayByStartTime(startTime: number) {
     const index = marks.findIndex((mark) => mark.startTime === startTime)
     if (index === -1) return
@@ -33,7 +27,7 @@ export function InteractiveVideoStaticRenderer({
 
   return (
     <InteractiveVideoRenderer
-      chapterContent={{ cues }}
+      marks={marks}
       tools={
         <MarkOverlay
           showOverlayContentIndex={showOverlayContentIndex}

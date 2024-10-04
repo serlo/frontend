@@ -7,18 +7,14 @@ import { MarksList } from './editor/marks-list'
 import { OverlayContentModal } from './editor/overlay-content-modal'
 import { PlayerTools } from './editor/player-tools'
 import { addOverlayContent } from './helpers/add-overlay-content'
-import { createCues } from './helpers/create-cues'
 import { InteractiveVideoRenderer } from './renderer/renderer'
 import { InteractiveVideoStaticRenderer } from './static'
 import { InteractiveVideoToolbar } from './toolbar'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   const { focused, state, id } = props
   const { marks } = state
   const [previewActive, setPreviewActive] = useState(false)
-
-  const pluginStrings = useEditorStrings().plugins.interactiveVideo
 
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
@@ -35,11 +31,6 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
     setShowOverlayContentIndex(index)
   }
 
-  const cues = createCues(
-    staticDocument.state.marks,
-    pluginStrings.defaultTitle
-  )
-
   return (
     <>
       {focused && (
@@ -55,7 +46,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
       ) : (
         <>
           <InteractiveVideoRenderer
-            chapterContent={{ cues }}
+            marks={staticDocument.state.marks}
             tools={
               <PlayerTools
                 addOverlayContent={(time: number) =>
