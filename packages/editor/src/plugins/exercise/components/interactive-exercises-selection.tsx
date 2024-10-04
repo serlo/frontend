@@ -1,10 +1,10 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   getPluginMenuItems,
   type PluginMenuItem,
-} from '@editor/package/plugin-menu'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+} from '@editor/plugins/rows/utils/plugin-menu'
 import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { useMemo } from 'react'
 

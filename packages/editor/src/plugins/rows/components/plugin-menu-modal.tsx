@@ -1,9 +1,5 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
-import {
-  type PluginMenuItem,
-  getPluginMenuItems,
-} from '@editor/package/plugin-menu'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   PluginMenuActionTypes,
@@ -18,7 +14,11 @@ import { Key } from 'ts-key-enum'
 import { PluginMenuItems } from './plugin-menu-items'
 import { usePluginMenuKeyboardHandler } from '../hooks/use-plugin-menu-keyboard-handler'
 import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
-import { filterOptions } from '../utils/plugin-menu'
+import {
+  type PluginMenuItem,
+  getPluginMenuItems,
+  filterPluginMenuItemsBySearchString,
+} from '../utils/plugin-menu'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 interface PluginMenuModalProps {
@@ -73,7 +73,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
     useMemo(() => {
-      const filteredBySearchString = filterOptions(
+      const filteredBySearchString = filterPluginMenuItemsBySearchString(
         allowedMenuItems,
         searchString
       )

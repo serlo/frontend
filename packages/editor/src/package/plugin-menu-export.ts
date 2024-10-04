@@ -1,6 +1,6 @@
+import { getPluginMenuItems } from '@editor/plugins/rows/utils/plugin-menu'
 import { mergeDeepRight } from 'ramda'
 
-import { getPluginMenuItems } from './plugin-menu'
 import { loggedInData as loggedInDataDe } from '@/data/de'
 import { loggedInData as loggedInDataEn } from '@/data/en'
 
