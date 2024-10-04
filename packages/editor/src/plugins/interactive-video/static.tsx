@@ -2,9 +2,9 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
-import { markDuration } from './const'
 import { PlayerTools } from './editor/player-tools'
 import { createCues } from './helpers/create-cues'
+import { usePreventSeeking } from './helpers/use-prevent-seeking'
 import { InteractiveVideoRenderer } from './renderer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -17,8 +17,8 @@ export function InteractiveVideoStaticRenderer({
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
   >(null)
-
   const { marks } = state
+  const preventSeeking = usePreventSeeking(marks)
 
   const cues = createCues(marks, exerciseString)
 
@@ -38,26 +38,7 @@ export function InteractiveVideoStaticRenderer({
             marks={marks}
           />
         }
-        onMediaSeekRequest={(time, nativeEvent) => {
-          const isForbidden = marks.some((mark) => {
-            if (!mark.mandatory) return false
-            const isAfter = time > mark.startTime + markDuration
-            const isInside = !isAfter && time > mark.startTime
-            // TODO: check if it was successfully solved or if it was tried enough times
-            return isAfter || isInside
-          })
-
-          if (isForbidden) {
-            nativeEvent.preventDefault()
-          }
-
-          // const activeMark = marks.find((mark) => {
-          //   return time >= mark.startTime && time <= mark.startTime + defaultMarkTime
-          // })
-          // if (activeMark) {
-          //   setShowOverlayContentIndex(index)
-          // }
-        }}
+        onMediaSeekRequest={preventSeeking}
       />
       {showOverlayContentIndex === null ? null : (
         <ModalWithCloseButton
