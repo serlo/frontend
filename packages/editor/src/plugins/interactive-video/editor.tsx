@@ -63,7 +63,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
               mark={marks[showOverlayContentIndex]}
             />
           )}
-
+          <div className="h-6" />
           <MarksList marks={marks} onMarkClick={setShowOverlayContentIndex} />
         </>
       )}
