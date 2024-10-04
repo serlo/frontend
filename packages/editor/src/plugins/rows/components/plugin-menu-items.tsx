@@ -1,6 +1,6 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import type { PluginMenuItem } from '@editor/package/plugin-menu'
+import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'

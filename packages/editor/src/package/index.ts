@@ -12,7 +12,7 @@ export type { BaseEditor } from '@editor/core'
 // `singleChoiceExercise` and `multipleChoiceExercise`.
 // Thus we export our menu entries here as plugin.
 export { pluginMenuDe, pluginMenuEn } from './plugin-menu-export'
-export { type PluginMenuType as Plugin } from './plugin-menu'
+export { type PluginMenuType as Plugin } from '@editor/plugins/rows/utils/plugin-menu'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
