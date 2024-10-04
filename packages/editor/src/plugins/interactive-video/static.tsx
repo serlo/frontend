@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { PlayerTools } from './editor/player-tools'
 import { createCues } from './helpers/create-cues'
+import { useLearnerInteractions } from './helpers/use-learner-interactions'
 import { usePreventSeeking } from './helpers/use-prevent-seeking'
 import { InteractiveVideoRenderer } from './renderer'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -18,6 +19,9 @@ export function InteractiveVideoStaticRenderer({
     null | number
   >(null)
   const { marks } = state
+
+  const learnerInteractions = useLearnerInteractions()
+  console.log(learnerInteractions)
   const preventSeeking = usePreventSeeking(marks)
 
   const cues = createCues(marks, exerciseString)
