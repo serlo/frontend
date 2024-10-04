@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export interface AnswerZoneSidebarProps {
@@ -13,7 +13,7 @@ export interface AnswerZoneSidebarProps {
 export const AnswerZoneSidebar = (props: AnswerZoneSidebarProps) => {
   const { answerZoneId, onClickSettingsButton, onClickPlusButton } = props
 
-  const dropzoneImageStrings = useEditorStrings().plugins.dropzoneImage
+  const dropzoneImageStrings = useEditStrings().plugins.dropzoneImage
 
   return (
     <>

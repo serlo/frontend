@@ -1,5 +1,5 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseStaticRenderer } from './static'
@@ -26,7 +26,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       selectStaticDocument(storeState, id) as EditorScMcExerciseDocument
   )
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   const handleCheckboxChange = (index: number) => () => {
     answers[index].isCorrect.set((currentVal) => !currentVal)

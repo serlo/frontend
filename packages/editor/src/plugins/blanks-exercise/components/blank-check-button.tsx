@@ -1,5 +1,5 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
-import { useInstanceData } from '@editor/utils/use-instance-data'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 interface BlankCheckButtonProps {
   isVisible: boolean
@@ -11,7 +11,7 @@ interface BlankCheckButtonProps {
 export function BlankCheckButton(props: BlankCheckButtonProps) {
   const { isVisible, feedback, isFeedbackVisible, onClick } = props
 
-  const exercisesStrings = useInstanceData().strings.content.exercises
+  const exStrings = useStaticStrings().plugins.exercise
 
   if (!isVisible) return null
 
@@ -24,7 +24,7 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
         onClick={onClick}
         data-qa="plugin-exercise-check-answer-button"
       >
-        {exercisesStrings.check}
+        {exStrings.check}
       </button>
       {isFeedbackVisible ? <ExerciseFeedback correct={isCorrect} /> : null}
     </div>

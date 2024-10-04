@@ -1,5 +1,5 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 
 export interface CourseNavigationProps {
   pages: { key: string; element: JSX.Element }[]
@@ -12,7 +12,7 @@ export function CourseNavigationRenderer({
   open,
   onOverviewButtonClick,
 }: CourseNavigationProps) {
-  const { strings } = useInstanceData()
+  const courseStrings = useStaticStrings().plugins.course
 
   return (
     <nav
@@ -24,7 +24,7 @@ export function CourseNavigationRenderer({
           onClick={onOverviewButtonClick}
           className="serlo-button-light ml-2"
         >
-          {strings.course.pages}{' '}
+          {courseStrings.pages}{' '}
           <span
             className={cn('inline-block', open && 'translate-y-0.5 rotate-180')}
           >

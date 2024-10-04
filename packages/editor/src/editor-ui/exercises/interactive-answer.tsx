@@ -1,5 +1,5 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useContentStrings } from '@editor/utils/use-content-strings'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import {
   faCheckCircle,
@@ -26,7 +26,7 @@ export function InteractiveAnswer({
   remove,
   handleChange,
 }: InteractiveAnswerProps) {
-  const contentStrings = useContentStrings()
+  const exStrings = useStaticStrings().plugins.exercise
   const icon = isRadio
     ? isActive
       ? faCheckCircle
@@ -38,7 +38,7 @@ export function InteractiveAnswer({
   return (
     <div className="relative mb-2.5 flex items-center border-t-2 border-editor-primary">
       <div className="mr-2.5 w-[10%] text-center font-bold">
-        {contentStrings.exercises.correct}?
+        {exStrings.correct}?
         <button className="p-2" onClick={handleChange}>
           <FaIcon icon={icon} className="mt-0.5 text-xl text-brand" />
         </button>
@@ -46,7 +46,7 @@ export function InteractiveAnswer({
       <div className="ml-2.5 w-full rounded-sm">
         <div className="pl-5 pt-2.5">
           <label className="ml-side block text-sm font-bold">
-            {contentStrings.exercises.answer}
+            {exStrings.answer}
           </label>
           <>{answer}</>
         </div>
@@ -58,7 +58,7 @@ export function InteractiveAnswer({
         </button>
         <div className="mt-1.5 py-2.5 pl-5">
           <label className="ml-side block text-sm font-bold">
-            {contentStrings.exercises.feedback}
+            {exStrings.feedback}
           </label>
           <div className="ml-0.5">{feedback}</div>
         </div>

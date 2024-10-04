@@ -1,5 +1,5 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useContentStrings } from '@editor/utils/use-content-strings'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 import { PrivacyWrapper } from '@serlo/frontend/src/components/content/privacy-wrapper'
 import { ExternalProvider } from '@serlo/frontend/src/helper/use-consent'
@@ -14,14 +14,14 @@ interface AudioRendererProps {
 }
 
 export function AudioRenderer({ src, type }: AudioRendererProps) {
-  const contentStrings = useContentStrings()
+  const audioStrings = useStaticStrings().plugins.audio
 
   if (!type) {
     return (
       <div className="mx-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
         <p className="serlo-p text-almost-black">
-          {src ? `${contentStrings.loadingAudioFailed}: ${src}` : ''}
+          {src ? `${audioStrings.failed}: ${src}` : ''}
         </p>
       </div>
     )

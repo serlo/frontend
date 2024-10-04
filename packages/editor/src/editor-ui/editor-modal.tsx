@@ -3,10 +3,9 @@ import {
   useShadowRoot,
 } from '@editor/core/helpers/use-shadow-root'
 import { cn } from '@editor/utils/cn'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useState, type ReactNode, useCallback, useRef, useEffect } from 'react'
+import { type ReactNode, useCallback, useRef, useEffect } from 'react'
 
 import { FaIcon } from './fa-icon'
 
@@ -16,7 +15,6 @@ interface EditorModalProps {
   setIsOpen: (open: boolean) => void
   children: ReactNode
   className?: string
-  confirmCloseDescription?: string | undefined
   extraTitleClassName?: string
   extraCloseButtonClassName?: string
   extraOverlayClassName?: string
@@ -31,15 +29,11 @@ export function EditorModal({
   children,
   className,
   extraTitleClassName,
-  confirmCloseDescription,
   extraCloseButtonClassName,
   extraOverlayClassName,
   onEscapeKeyDown,
   onKeyDown,
 }: EditorModalProps) {
-  const { strings } = useInstanceData()
-
-  const [showConfirmation, setShowConfirmation] = useState(false)
   const shadowRootRef = useRef<HTMLDivElement>(null)
   const shadowRoot = useShadowRoot(shadowRootRef)
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
@@ -48,11 +42,6 @@ export function EditorModal({
 
   const onOpenChange = useCallback(
     (open: boolean) => {
-      if (!open && confirmCloseDescription) {
-        setShowConfirmation(true)
-        return
-      }
-
       if (open !== false) {
         setIsOpen(open)
         return
@@ -66,7 +55,7 @@ export function EditorModal({
         }, 1)
       }
     },
-    [confirmCloseDescription, setIsOpen]
+    [setIsOpen]
   )
 
   // Restores the focus to the previous element!
@@ -115,36 +104,14 @@ export function EditorModal({
               title={title}
               className={cn(
                 `absolute right-3.5 top-3.5 z-20 inline-flex h-9 w-9 cursor-pointer items-center
-              justify-center rounded-full border-none leading-tight
-              text-almost-black hover:bg-brand hover:text-white`,
+                 justify-center rounded-full border-none leading-tight
+               text-almost-black hover:bg-brand hover:text-white`,
                 extraCloseButtonClassName
               )}
               data-qa="modal-close-button"
             >
               <FaIcon icon={faXmark} className="h-5" />
             </Dialog.Close>
-
-            {showConfirmation && (
-              <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gray-500 bg-opacity-75 px-4">
-                <div className="rounded-xl bg-editor-primary-100 p-6 shadow-lg ">
-                  <p className="px-2">{confirmCloseDescription}</p>
-                  <div className="mt-4 flex space-x-4">
-                    <button
-                      className="serlo-button-blue-transparent mr-4"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {strings.modal.leaveNow}
-                    </button>
-                    <button
-                      className="serlo-button-blue"
-                      onClick={() => setShowConfirmation(false)}
-                    >
-                      {strings.modal.noStay}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

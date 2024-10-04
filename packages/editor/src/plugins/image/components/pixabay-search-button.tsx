@@ -1,9 +1,8 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { LoadingSpinner } from '@editor/editor-ui/loading-spinner'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
-import { useLang } from '@editor/utils/use-lang'
 import {
   faMagnifyingGlass,
   faXmarkCircle,
@@ -61,8 +60,9 @@ export const PixabaySearchButton = ({
   const [isSearching, setIsSearching] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
-  const lang = useLang()
-  const imageStrings = useEditorStrings().plugins.image
+  const editStrings = useEditStrings()
+  const lang = editStrings.lang
+  const imageStrings = editStrings.plugins.image
   // Pixabay API key connected to an unpaid account -> No need to keep it secret.
   const apiKey = '44761287-06b5809c17d0a9132219f5173'
   const inputRef = useRef<HTMLInputElement>(null)

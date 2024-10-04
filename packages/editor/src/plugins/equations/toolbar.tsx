@@ -1,13 +1,13 @@
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { EquationsProps } from '.'
 import { TransformationTarget } from './editor/editor-renderer'
 
 export const EquationsToolbar = ({ id, state }: EquationsProps) => {
-  const equationsStrings = useEditorStrings().plugins.equations
+  const equationsStrings = useEditStrings().plugins.equations
 
   return (
     <PluginToolbar

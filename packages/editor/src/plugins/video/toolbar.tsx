@@ -2,8 +2,8 @@ import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
@@ -20,7 +20,7 @@ export const VideoToolbar = ({
   showSettingsModal: SettingsModalState
   setShowSettingsModal: Dispatch<SetStateAction<SettingsModalState>>
 }) => {
-  const videoStrings = useEditorStrings().plugins.video
+  const videoStrings = useEditStrings().plugins.video
 
   return (
     <PluginToolbar

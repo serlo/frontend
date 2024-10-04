@@ -3,8 +3,8 @@ import {
   isLinkActive,
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { useLang } from '@editor/utils/use-lang'
 import {
   QuickbarData,
   fetchQuickbarData,
@@ -24,12 +24,11 @@ export function LinkControls() {
   const [value, setValue] = useState('')
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
-  const instance = useLang()
+  const { lang } = useEditStrings()
   const editor = useSlate()
   const { selection } = editor
 
-  const isSerloLinkSearchActive =
-    useContext(IsSerloContext) && instance === 'de'
+  const isSerloLinkSearchActive = useContext(IsSerloContext) && lang === 'de'
 
   useEffect(() => {
     if (!selection) return

@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { ArticleAddModal } from '@serlo/frontend/src/serlo-editor-integration/components/article-add-modal/article-add-modal'
 import { useState } from 'react'
@@ -25,7 +25,7 @@ export function ArticleEditor({ state }: ArticleProps) {
   } = state
   const [modalOpen, setModalOpen] = useState(false)
 
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const articleStrings = useEditStrings().templatePlugins.article
   const modalStrings = articleStrings.addModal
 
   return (

@@ -1,6 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 export enum VideoType {
@@ -15,14 +15,14 @@ interface VideoRendererProps {
 }
 
 export function VideoRenderer({ src, type }: VideoRendererProps) {
-  const contentStrings = useContentStrings()
+  const videoStrings = useStaticStrings().plugins.video
 
   if (!type) {
     return (
       <div className="mx-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
         <p className="serlo-p text-almost-black">
-          {src ? `${contentStrings.loadingVideoFailed}: ${src}` : ''}
+          {src ? `${videoStrings.failed}: ${src}` : ''}
         </p>
       </div>
     )

@@ -1,5 +1,5 @@
 import { NiceDropdown } from '@editor/core/components/nice-dropdown'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { useState, FC } from 'react'
 
 interface LicenseDropdownProps {
@@ -23,7 +23,7 @@ export const LicenseDropdown: FC<LicenseDropdownProps> = ({
   src,
   currentLicence,
 }) => {
-  const { licence, licenceHelpText } = useEditorStrings().plugins.image
+  const { licence, licenceHelpText } = useEditStrings().plugins.image
 
   const [isConfirmed, setIsConfirmed] = useState(!!src?.includes('pixabay'))
   const [selectedLicense, setSelectedLicense] = useState(

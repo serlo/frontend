@@ -1,10 +1,10 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useMemo } from 'react'
 
 import type { SpoilerProps } from '.'
@@ -20,7 +20,7 @@ const titleFormattingOptions = [
 export function SpoilerEditor(props: SpoilerProps) {
   const { state, id, focused } = props
   const { title, richTitle, content } = state
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const richTitleId = useMemo(() => {
     return richTitle.defined ? richTitle.id : ''
     // richTitle.id should never change

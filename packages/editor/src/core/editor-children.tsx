@@ -1,5 +1,5 @@
-import { useInstanceData } from '@editor/utils/use-instance-data'
-import { useLoggedInData } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { useCallback } from 'react'
 
 import { SubDocument } from './sub-document'
@@ -20,8 +20,8 @@ import {
 import { ROOT } from '../store/root/constants'
 
 export function EditorChildren({ children }: { children: EditorRenderProps }) {
-  const instanceData = useInstanceData()
-  const loggedInData = useLoggedInData()
+  const editStrings = useEditStrings()
+  const staticStrings = useStaticStrings()
 
   const dispatch = useAppDispatch()
 
@@ -47,12 +47,6 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
 
   const editor = <SubDocument id={ROOT} />
 
-  if (!loggedInData) {
-    // eslint-disable-next-line no-console
-    console.error('Logged in data not provided. This should not have happened.')
-    return null
-  }
-
   if (typeof children !== 'function') {
     return (
       <>
@@ -65,8 +59,8 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
   return children({
     element: editor,
     i18n: {
-      instanceData,
-      loggedInData,
+      staticStrings,
+      editStrings,
     },
     history: {
       hasUndoActions,

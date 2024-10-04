@@ -1,6 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import {
   faBrain,
   faExclamationTriangle,
@@ -44,7 +44,7 @@ export function BoxRenderer({
   children,
   className,
 }: BoxProps) {
-  const contentStrings = useContentStrings()
+  const boxStrings = useStaticStrings().plugins.box
   if (!children || !boxType) return null
 
   const isBlank = boxType === 'blank'
@@ -78,7 +78,7 @@ export function BoxRenderer({
               )}
             >
               {icon}
-              {contentStrings.boxTypes[boxType]}
+              {boxStrings.types[boxType]}
             </span>
           )}
           {title}

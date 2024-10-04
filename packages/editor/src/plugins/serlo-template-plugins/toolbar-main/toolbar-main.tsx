@@ -2,6 +2,7 @@ import { useShadowRoot } from '@editor/core/helpers/use-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { StateTypeReturnType } from '@editor/plugin'
 import {
   redo,
@@ -13,13 +14,12 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
 import { useRef, useState } from 'react'
 
 import { ClientOnlyPortal } from './client-only-portal'
-import { LeaveConfirmationRenderNull } from './leave-confirmation-render-null'
+import { LeaveConfirmation } from './leave-confirmation-render-null'
 import { entity } from '../common/common'
 
 interface ToolbarMainProps {
@@ -45,12 +45,12 @@ export function ToolbarMain({
   const containerRef = useRef<HTMLDivElement>(null)
   const shadowRoot = useShadowRoot(containerRef)
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   return (
     <div ref={containerRef}>
       {/* For the web component export, we don't want to call the useLeaveConfirm hook as the next router won't be available */}
-      {isNextApp() && <LeaveConfirmationRenderNull isChanged={isChanged} />}
+      {isNextApp() && <LeaveConfirmation isChanged={isChanged} />}
       <ClientOnlyPortal selector=".controls-portal" shadowRootRef={shadowRoot}>
         <nav className="flex h-14 w-full justify-between pl-5 pr-3 pt-6">
           <div className="pointer-events-auto md:-ml-28 lg:-ml-52">

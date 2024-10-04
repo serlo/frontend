@@ -1,8 +1,8 @@
 import IconBlankBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/blank-landscape.svg'
 import IconImageBg from '@editor/editor-ui/assets/plugin-icons/dropzone-image/image-background.svg'
 import { SelectionCard } from '@editor/editor-ui/selection-card'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { DropzoneImageProps } from '../..'
 import { BackgroundShape, BackgroundType } from '../../types'
@@ -13,7 +13,7 @@ export function BackgroundTypeSelect({
   canvasShape,
 }: DropzoneImageProps['state']) {
   const backgroundTypeStrings =
-    useEditorStrings().plugins.dropzoneImage.backgroundType
+    useEditStrings().plugins.dropzoneImage.backgroundType
 
   return (
     <>

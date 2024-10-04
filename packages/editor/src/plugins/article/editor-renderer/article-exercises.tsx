@@ -1,6 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 
@@ -11,8 +11,8 @@ interface ArticleExercisesProps {
 }
 
 export function ArticleExercises({ exercises }: ArticleExercisesProps) {
-  const entityStrings = useEditorStrings().templatePlugins.entity
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const entityStrings = useEditStrings().templatePlugins.entity
+  const articleStrings = useEditStrings().templatePlugins.article
 
   return (
     <>

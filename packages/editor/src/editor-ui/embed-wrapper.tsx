@@ -1,8 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { serloDomain } from '@editor/utils/serlo-domain'
-import { useContentStrings } from '@editor/utils/use-content-strings'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
@@ -32,8 +31,7 @@ export function EmbedWrapper({
     setShowContent(false)
   }, [embedUrl])
 
-  const contentStrings = useContentStrings()
-  const { strings } = useInstanceData()
+  const embedStrings = useStaticStrings().embed
 
   const confirmLoad = () => {
     if (!showContent) setShowContent(true)
@@ -50,9 +48,9 @@ export function EmbedWrapper({
     <div
       className={cn(
         `
-          group relative mx-side mb-block block
-          cursor-pointer bg-cover bg-center [contain:content]
-          `,
+        group relative mx-side mb-block block
+        cursor-pointer bg-cover bg-center [contain:content]
+        `,
         className
       )}
     >
@@ -71,7 +69,7 @@ export function EmbedWrapper({
           <img
             className="w-full object-contain opacity-50"
             src={previewImageUrl}
-            alt={`${contentStrings.previewImage}`}
+            alt={`${embedStrings.previewImage}`}
           />
         </div>
         <div
@@ -86,7 +84,7 @@ export function EmbedWrapper({
               className="py-0.5"
               icon={type === 'video' ? faPlayCircle : faCubes}
             />{' '}
-            {strings.embed.general}
+            {embedStrings.activateEmbed}
           </button>
         </div>
       </div>

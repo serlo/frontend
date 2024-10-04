@@ -1,4 +1,4 @@
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { useState } from 'react'
 
 import type { AudioProps } from '.'
@@ -11,7 +11,7 @@ export const AudioEditor = (props: AudioProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [src, type] = parseAudioUrl(state.src.value)
   const couldBeValid = type !== undefined
-  const audioStrings = useEditorStrings().plugins.audio
+  const audioStrings = useEditStrings().plugins.audio
 
   return (
     <>

@@ -1,8 +1,8 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { cn } from '@editor/utils/cn'
-import { useInstanceData } from '@editor/utils/use-instance-data'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
@@ -15,7 +15,7 @@ export function McRenderer({
 }: ScMcExerciseRendererProps) {
   const [showFeedback, setShowFeedback] = useState(false)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
-  const exStrings = useInstanceData().strings.content.exercises
+  const exStrings = useStaticStrings().plugins.exercise
 
   const correctCount = answers.filter((answer) => answer.isCorrect).length
   const selectedCount = selectedArray.filter(Boolean).length

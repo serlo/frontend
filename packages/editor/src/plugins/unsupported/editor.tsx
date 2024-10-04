@@ -1,9 +1,9 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 
 import type { UnsupportedPluginProps } from '.'
@@ -11,7 +11,7 @@ import type { UnsupportedPluginProps } from '.'
 export const UnsupportedEditor: React.FunctionComponent<
   UnsupportedPluginProps
 > = (props) => {
-  const unsupportedStrings = useEditorStrings().plugins.unsupported
+  const unsupportedStrings = useEditStrings().plugins.unsupported
 
   const unsupportedType = selectStaticDocument(
     store.getState(),

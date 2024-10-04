@@ -1,6 +1,6 @@
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import { type BlanksExerciseProps } from '.'
 import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
@@ -14,7 +14,7 @@ export const BlanksExerciseToolbar = ({
   childPluginType: EditorPluginType
   showSelection: boolean
 }) => {
-  const pluginsStrings = useEditorStrings().plugins
+  const pluginsStrings = useEditStrings().plugins
   const blanksExerciseStrings = pluginsStrings.blanksExercise
 
   return (

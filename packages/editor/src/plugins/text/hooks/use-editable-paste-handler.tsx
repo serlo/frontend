@@ -1,5 +1,6 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { captionPasteHandler } from '@editor/plugins/image/utils/caption-paste-handler'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
@@ -11,7 +12,6 @@ import {
   selectAncestorPluginTypes,
 } from '@editor/store'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
@@ -27,7 +27,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
   const { editor, id } = args
 
   const dispatch = useAppDispatch()
-  const textStrings = useEditorStrings().plugins.text
+  const textStrings = useEditStrings().plugins.text
 
   return useCallback(
     async (event: React.ClipboardEvent) => {

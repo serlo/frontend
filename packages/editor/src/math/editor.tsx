@@ -1,8 +1,8 @@
 import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
@@ -36,7 +36,7 @@ export function MathEditor(props: MathEditorProps) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const mathStrings = useEditorStrings().plugins.text.math
+  const mathStrings = useEditStrings().plugins.text.math
 
   const { visual, readOnly, state, disableBlock } = props
 

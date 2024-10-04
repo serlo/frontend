@@ -1,10 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { LinkOverlayEditMode } from '@editor/plugins/text/components/link/edit-mode/link-overlay-edit-mode'
 import { LinkOverlayWithHref } from '@editor/plugins/text/components/link/link-overlay-with-href'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useRef, useState } from 'react'
 
@@ -16,8 +16,8 @@ interface ArticleSourcesProps {
 }
 
 export function ArticleSources({ sources }: ArticleSourcesProps) {
-  const entityStrings = useEditorStrings().templatePlugins.entity
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const entityStrings = useEditStrings().templatePlugins.entity
+  const articleStrings = useEditStrings().templatePlugins.article
   const linkToolRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   const [selectedInput, setSelectedInput] = useState<number | undefined>(

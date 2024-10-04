@@ -1,5 +1,5 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { focus, useAppDispatch } from '@editor/store'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect } from 'react'
 
 import type { DropzoneImageProps } from '../..'
@@ -24,7 +24,7 @@ export function AnswerRenderer({
   answerZones,
   extraDraggableAnswers,
 }: AnswerRendererProps): JSX.Element {
-  const editorStrings = useEditorStrings().edtrIo
+  const editorStrings = useEditStrings().edtrIo
 
   const dispatch = useAppDispatch()
 

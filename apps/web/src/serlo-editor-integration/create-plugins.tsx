@@ -42,16 +42,12 @@ import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-import { type LoggedInData } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { H5pPlugin } from '@/serlo-editor-integration/h5p'
 import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
-export function createPlugins({
-  editorStrings,
-}: {
-  editorStrings: LoggedInData['strings']['editor']
-}): PluginsWithData {
+export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
   const plugins = [
     EditorPluginType.Anchor,
     EditorPluginType.Article,
@@ -158,7 +154,12 @@ export function createPlugins({
     {
       type: EditorPluginType.ArticleIntroduction,
       plugin: createArticleIntroduction(
-        editorStrings.templatePlugins.article.writeShortIntro
+        // this is the only editor string that is needed outside of the provider
+        lang === Instance.De
+          ? 'Fasse das Thema des Artikels kurz zusammen'
+          : lang === Instance.Es
+            ? 'Escribe una breve introducción'
+            : 'Write a short introduction'
       ),
     },
     { type: EditorPluginType.Course, plugin: coursePlugin },

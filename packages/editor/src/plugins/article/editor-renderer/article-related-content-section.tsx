@@ -1,6 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import type { ArticleProps } from '..'
@@ -16,7 +16,7 @@ interface ArticleRelatedContentSectionProps {
 export function ArticleRelatedContentSection({
   data,
 }: ArticleRelatedContentSectionProps) {
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const articleStrings = useEditStrings().templatePlugins.article
 
   if (!data.length) return null
 

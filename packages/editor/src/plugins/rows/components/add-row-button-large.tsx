@@ -1,5 +1,5 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
 interface AddRowButtonLargeProps {
@@ -7,7 +7,7 @@ interface AddRowButtonLargeProps {
 }
 
 export function AddRowButtonLarge({ onClick }: AddRowButtonLargeProps) {
-  const rowsStrings = useEditorStrings().plugins.rows
+  const rowsStrings = useEditStrings().plugins.rows
 
   return (
     <button

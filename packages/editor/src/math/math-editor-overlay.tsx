@@ -1,5 +1,5 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import type { MathEditorProps } from './editor'
@@ -10,7 +10,7 @@ export function MathEditorOverlay({
   isVisualMode,
   ...props
 }: { hasError: boolean; isVisualMode: boolean } & MathEditorProps) {
-  const mathStrings = useEditorStrings().plugins.text.math
+  const mathStrings = useEditStrings().plugins.text.math
 
   return (
     <div

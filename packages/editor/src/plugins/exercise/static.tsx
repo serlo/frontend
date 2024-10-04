@@ -1,8 +1,8 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorExerciseDocument } from '@editor/types/editor-plugins'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
-import { useContentStrings } from '@editor/utils/use-content-strings'
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 
@@ -13,7 +13,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
   const [interactiveHidden, setInteractiveHidden] = useState(
     hideInteractiveInitially
   )
-  const contentStrings = useContentStrings()
+  const exStrings = useStaticStrings().plugins.exercise
   if (!content) return null
 
   const isEmptyContent =
@@ -34,8 +34,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
           className="serlo-button-blue-transparent ml-side text-base hover:bg-brand-100 hover:text-brand-700"
           onClick={() => setInteractiveHidden(false)}
         >
-          <FaIcon icon={faCircleCheck} />{' '}
-          {contentStrings.exercises.showHiddenInteractive}
+          <FaIcon icon={faCircleCheck} /> {exStrings.showHiddenInteractive}
         </button>
       ) : (
         <StaticRenderer document={interactive} />

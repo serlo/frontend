@@ -1,6 +1,6 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { EditorPluginProps } from '@editor/plugin'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import React, { useMemo, useEffect } from 'react'
 import { createEditor, Node, Transforms } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
@@ -27,7 +27,7 @@ export type TextEditorProps = EditorPluginProps<
 export function TextEditor(props: TextEditorProps) {
   const { state, id, focused, containerRef } = props
 
-  const textStrings = useEditorStrings().plugins.text
+  const textStrings = useEditStrings().plugins.text
   const config = useTextConfig(props.config)
 
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)

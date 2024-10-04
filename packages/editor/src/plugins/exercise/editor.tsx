@@ -1,6 +1,7 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   selectHasFocusedChild,
   focus,
@@ -9,15 +10,19 @@ import {
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useEffect, useState } from 'react'
+import { lazy, useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
 import { PreviewProvider } from './context/preview-context'
 import { ExerciseToolbar } from './toolbar/toolbar'
-import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
+
+const SerloLicenseChooser = lazy(() =>
+  import('../solution/serlo-license-chooser').then((module) => ({
+    default: module.SerloLicenseChooser,
+  }))
+)
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused, id } = props
@@ -29,7 +34,7 @@ export function ExerciseEditor(props: ExerciseProps) {
     hideInteractiveInitially,
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const exStrings = editorStrings.plugins.exercise
 
   const [previewActive, setPreviewActive] = useState(false)

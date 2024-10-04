@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseType } from './input-exercise-type'
@@ -11,7 +11,7 @@ export const InputExerciseToolbar = ({
   state,
   containerRef,
 }: InputExerciseProps) => {
-  const inputExStrings = useEditorStrings().templatePlugins.inputExercise
+  const inputExStrings = useEditStrings().templatePlugins.inputExercise
 
   return (
     <InteractiveToolbarPortal containerRef={containerRef}>

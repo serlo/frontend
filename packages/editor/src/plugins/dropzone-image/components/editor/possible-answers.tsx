@@ -1,5 +1,5 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 import type { DropzoneImageProps } from '../..'
 import { convertAnswer, insertAnswerZone } from '../../utils/answer-zone'
@@ -10,7 +10,7 @@ interface PossibleAnswersProps {
 }
 
 export function PossibleAnswers({ answerZones }: PossibleAnswersProps) {
-  const dropzoneImageStrings = useEditorStrings().plugins.dropzoneImage
+  const dropzoneImageStrings = useEditStrings().plugins.dropzoneImage
 
   const correctAnswers = answerZones
     .map(({ answers }) => answers.map(convertAnswer))

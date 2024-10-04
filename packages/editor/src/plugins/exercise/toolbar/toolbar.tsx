@@ -1,8 +1,8 @@
 import { PluginToolbar, PreviewButton } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faArrowsRotate,
   faEye,
@@ -21,7 +21,7 @@ export const ExerciseToolbar = ({
   setPreviewActive: (active: boolean) => void
 }) => {
   const { interactive, hideInteractiveInitially } = state
-  const exStrings = useEditorStrings().plugins.exercise
+  const exStrings = useEditStrings().plugins.exercise
 
   const pluginSettings = interactive.defined ? (
     <>

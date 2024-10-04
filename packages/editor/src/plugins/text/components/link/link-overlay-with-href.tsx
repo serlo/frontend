@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faExternalLink,
   faNewspaper,
@@ -27,7 +27,7 @@ export function LinkOverlayWithHref({
       : undefined
   const entry = quickbarData?.find((entry) => entry.id === serloId)
   const isCustomLink = !serloId && !value.includes('serlo.org/')
-  const textStrings = useEditorStrings().plugins.text
+  const textStrings = useEditStrings().plugins.text
 
   return (
     <div className="flex content-between items-center px-side py-2">

@@ -1,4 +1,4 @@
-import { useContentStrings } from '@editor/utils/use-content-strings'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 interface ImageProps {
   image: {
@@ -18,7 +18,7 @@ export function ImageRenderer({
   placeholder,
   forceNewTab,
 }: ImageProps) {
-  const altFallback = useContentStrings().imageAltFallback
+  const altFallbackString = useStaticStrings().plugins.image.altFallback
   const { src, href, alt, maxWidth: maxWidthNumber } = image
   const maxWidth = maxWidthNumber ? `${maxWidthNumber}px` : undefined
 
@@ -34,7 +34,7 @@ export function ImageRenderer({
             <img
               className="serlo-img"
               src={src}
-              alt={alt ? alt : altFallback}
+              alt={alt ? alt : altFallbackString}
               itemProp="contentUrl"
               loading="lazy"
             />

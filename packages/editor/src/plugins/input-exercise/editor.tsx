@@ -1,6 +1,6 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useEffect, useRef } from 'react'
 
 import type { InputExerciseProps } from '.'
@@ -24,7 +24,7 @@ import { useIsPreviewActive } from '../exercise/context/preview-context'
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { state, id, focused } = props
   const { answers } = state
-  const inputExStrings = useEditorStrings().templatePlugins.inputExercise
+  const inputExStrings = useEditStrings().templatePlugins.inputExercise
 
   const dispatch = useAppDispatch()
 

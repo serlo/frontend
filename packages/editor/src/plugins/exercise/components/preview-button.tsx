@@ -1,6 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 
 export function PreviewButton({
@@ -10,7 +10,7 @@ export function PreviewButton({
   previewActive: boolean
   setPreviewActive: (value: boolean) => void
 }) {
-  const exStrings = useEditorStrings().plugins.exercise
+  const exStrings = useEditStrings().plugins.exercise
 
   return (
     <button

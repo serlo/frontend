@@ -2,8 +2,8 @@ import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { ReactNode, useState } from 'react'
 
@@ -14,7 +14,7 @@ interface MultimediaToolbarProps {
 
 export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   return (
     <PluginToolbar

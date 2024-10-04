@@ -1,6 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export interface AnswerZoneEmptyProps {
@@ -12,7 +12,7 @@ export interface AnswerZoneEmptyProps {
 export const AnswerZoneEmpty = (props: AnswerZoneEmptyProps) => {
   const { answerZoneId, onClickSettingsButton, onClickPlusButton } = props
 
-  const dropzoneImageStrings = useEditorStrings().plugins.dropzoneImage
+  const dropzoneImageStrings = useEditStrings().plugins.dropzoneImage
 
   return (
     <div className="absolute inset-0 flex items-center justify-center">

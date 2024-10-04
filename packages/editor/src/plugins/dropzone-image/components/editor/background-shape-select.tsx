@@ -2,7 +2,7 @@ import IconLandscape from '@editor/editor-ui/assets/plugin-icons/dropzone-image/
 import IconPortrait from '@editor/editor-ui/assets/plugin-icons/dropzone-image/portrait.svg'
 import IconSquare from '@editor/editor-ui/assets/plugin-icons/dropzone-image/square.svg'
 import { SelectionCard } from '@editor/editor-ui/selection-card'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 import type { DropzoneImageProps } from '../..'
 import { BackgroundShape } from '../../types'
@@ -46,7 +46,7 @@ export function BackgroundShapeSelect({
   canvasShape,
   canvasDimensions,
 }: DropzoneImageProps['state']) {
-  const shapeStrings = useEditorStrings().plugins.dropzoneImage.backgroundShapes
+  const shapeStrings = useEditStrings().plugins.dropzoneImage.backgroundShapes
 
   const onSelectShape = (shape: SelectableShapeOption) => {
     const dimensions = canvasDimensionsMap[shape]

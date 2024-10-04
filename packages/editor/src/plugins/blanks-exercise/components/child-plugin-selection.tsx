@@ -1,8 +1,8 @@
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg'
 import { SelectionCard } from '@editor/editor-ui/selection-card'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 
 import type { BlanksExerciseProps } from '..'
 
@@ -13,7 +13,7 @@ export function ChildPluginSelection({
   childPlugin: BlanksExerciseProps['state']['text']
   setShowSelection: (show: boolean) => void
 }) {
-  const pluginStrings = useEditorStrings().plugins
+  const pluginStrings = useEditStrings().plugins
   const description = pluginStrings.blanksExercise.childPluginSelection
 
   function handleClick(plugin: EditorPluginType) {

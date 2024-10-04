@@ -1,6 +1,6 @@
 import IconAnswerImage from '@editor/editor-ui/assets/plugin-icons/dropzone-image/answer-image.svg'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -32,7 +32,7 @@ export function NewAnswerFlow({
   const [currentStep, setCurrentStep] = useState(0)
   const [stepOneType, setStepOneType] = useState<AnswerType>(AnswerType.Image)
 
-  const editorPluginsStrings = useEditorStrings().plugins
+  const editorPluginsStrings = useEditStrings().plugins
 
   const answersList = isWrongAnswer
     ? extraDraggableAnswers

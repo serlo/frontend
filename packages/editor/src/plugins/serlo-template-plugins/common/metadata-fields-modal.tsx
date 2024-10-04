@@ -1,6 +1,6 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
@@ -14,7 +14,7 @@ export function MetadataFieldsModal({
   metaTitle?: EntityStateProps['state']['meta_title']
   metaDescription?: EntityStateProps['state']['meta_description']
 }) {
-  const entityStrings = useEditorStrings().templatePlugins.entity
+  const entityStrings = useEditStrings().templatePlugins.entity
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (

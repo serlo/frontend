@@ -1,32 +1,37 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
-import { useLang } from '@editor/utils/use-lang'
 import {
   QuickbarData,
   fetchQuickbarData,
 } from '@serlo/frontend/src/components/navigation/quickbar'
-import { useContext, useEffect, useState } from 'react'
+import { lazy, useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
 import { SolutionRenderer } from './renderer'
-import { SerloLicenseChooser } from './serlo-license-chooser'
 import { LinkOverlayEditMode } from '../text/components/link/edit-mode/link-overlay-edit-mode'
 import { LinkOverlayWithHref } from '../text/components/link/link-overlay-with-href'
 
 const linkOverlayWrapperWidth = 460
 
+const SerloLicenseChooser = lazy(() =>
+  import('./serlo-license-chooser').then((module) => ({
+    default: module.SerloLicenseChooser,
+  }))
+)
+
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
-  const solutionStrings = useEditorStrings().templatePlugins.solution
-  const instance = useLang()
+  const editStrings = useEditStrings()
+  const lang = editStrings.lang
+  const solutionStrings = editStrings.templatePlugins.solution
   const isSerlo = useContext(IsSerloContext) // only on serlo
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
   const [showPrerequisiteLinkTool, setShowPrerequisiteLinkTool] =
     useState<boolean>(false)
 
-  const isSerloLinkSearchActive = isSerlo && instance === 'de'
+  const isSerloLinkSearchActive = isSerlo && lang === 'de'
 
   useEffect(() => {
     if (!isSerloLinkSearchActive) return

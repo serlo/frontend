@@ -1,6 +1,7 @@
 import IconEmptyPluginsModal from '@editor/editor-ui/assets/plugin-icons/icon-question-mark.svg'
 import { EditorInput } from '@editor/editor-ui/editor-input'
 import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   PluginMenuActionTypes,
@@ -8,7 +9,6 @@ import {
 } from '@editor/plugins/rows/contexts/plugin-menu'
 import { selectAncestorPluginTypes, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
@@ -26,7 +26,7 @@ interface PluginMenuModalProps {
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const pluginsStrings = editorStrings.plugins
 
   const { pluginMenuState, pluginMenuDispatch } = useContext(PluginMenuContext)

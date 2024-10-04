@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEditorStrings } from '@editor/utils/use-editor-strings'
 import {
   faArrowCircleDown,
   faArrowCircleUp,
@@ -28,7 +28,7 @@ export function CourseNavigation({
   activePageIndex: number
   setActivePageIndex: (index: number) => void
 }) {
-  const templateStrings = useEditorStrings().templatePlugins
+  const templateStrings = useEditStrings().templatePlugins
 
   function onRemove() {
     if (window.confirm(templateStrings.course.confirmDelete)) {
