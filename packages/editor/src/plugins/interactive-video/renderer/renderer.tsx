@@ -9,34 +9,13 @@ import {
   Track,
   type VTTContent,
   type MediaPlayEvent,
-  // TimeSlider,
 } from '@vidstack/react'
 import {
   defaultLayoutIcons,
   DefaultVideoLayout,
 } from '@vidstack/react/player/layouts/default'
 
-/*
-
-.vds-time-slider {
-  --media-slider-chapter-hover-transform: none;
-  --media-slider-track-border-radius: 0;
-}
-
-.vds-slider-chapter {
-  margin-right: 0;
-}
-
-.vds-slider-chapter::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  width: 3px;
-  height: 5px;
-  background-color: red;
-  z-index: 10;
-}
-*/
+import { TimeSliderWithDots } from './timeslider-with-dots'
 
 export function InteractiveVideoRenderer({
   chapterContent,
@@ -63,11 +42,11 @@ export function InteractiveVideoRenderer({
       aspectRatio="16:9"
       onMediaPlayRequest={(nativeEvent) => {
         const allowed = checkSeekAndPlay?.(nativeEvent.target)
-        if (!allowed) nativeEvent.preventDefault()
+        if (checkSeekAndPlay && !allowed) nativeEvent.preventDefault()
       }}
       onMediaSeekRequest={(time, nativeEvent) => {
         const allowed = checkSeekAndPlay?.(nativeEvent.target, time)
-        if (!allowed) nativeEvent.preventDefault()
+        if (checkSeekAndPlay && !allowed) nativeEvent.preventDefault()
       }}
     >
       <MediaProvider>
@@ -83,39 +62,12 @@ export function InteractiveVideoRenderer({
         icons={defaultLayoutIcons}
         slots={{
           beforeSettingsMenu: tools,
-          // timeSlider: (
-          //   <TimeSlider.Root className="vds-time-slider vds-slider">
-          //     <TimeSlider.Chapters className="vds-slider-chapters">
-          //       {(cues, forwardRef) =>
-          //         cues.map((cue) => (
-          //           <div
-          //             className="vds-slider-chapter"
-          //             key={cue.startTime}
-          //             ref={forwardRef}
-          //           >
-          //             <TimeSlider.Track className="vds-slider-track">
-          //               <TimeSlider.TrackFill className="vds-slider-track-fill vds-slider-track" />
-          //               <TimeSlider.Progress className="vds-slider-progress vds-slider-track" />
-          //             </TimeSlider.Track>
-          //           </div>
-          //         ))
-          //       }
-          //     </TimeSlider.Chapters>
-
-          //     <TimeSlider.Preview className="vds-slider-preview">
-          //       <TimeSlider.ChapterTitle className="vds-slider-chapter-title" />
-          //       <TimeSlider.Value className="vds-slider-value" />
-          //     </TimeSlider.Preview>
-
-          //     <TimeSlider.Thumb className="vds-slider-thumb" />
-          //   </TimeSlider.Root>
-          // ),
+          timeSlider: <TimeSliderWithDots />,
         }}
       />
       {/* <Poster
         className="vds-poster"
         src="https://files.vidstack.io/sprite-fight/poster.webp"
-        alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!"
       /> */}
     </MediaPlayer>
   )

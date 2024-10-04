@@ -66,7 +66,7 @@ export function MarkOverlay({
       setTimeout(() => {
         openOverlayByStartTime(mark.startTime)
         buttonRef.current?.classList.add('triggered')
-      }, 1650)
+      }, 1100)
     }
   }, [activeCue, learnerInteractions, marks, openOverlayByStartTime, player])
 

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { createCues } from './helpers/create-cues'
 import { useCheckSeekAndPlay } from './helpers/use-check-seek-and-play'
 import { useLearnerInteractions } from './helpers/use-learner-interactions'
-import { InteractiveVideoRenderer } from './renderer'
+import { InteractiveVideoRenderer } from './renderer/renderer'
 import { MarkOverlay } from './static/mark-overlay'
 import { useInstanceData } from '@/contexts/instance-context'
 
