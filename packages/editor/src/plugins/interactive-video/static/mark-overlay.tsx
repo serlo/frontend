@@ -43,10 +43,10 @@ export function MarkOverlay({
   )
 
   function closeOverlay() {
+    if (!player) return
+    // TODO: try to stop player from starting immediately if player was clicked to close overlay
     close()
-    setTimeout(() => {
-      player?.$el?.focus()
-    })
+    setTimeout(() => player.$el?.focus())
   }
 
   // auto open overlay when mark is mandatory
@@ -72,6 +72,7 @@ export function MarkOverlay({
       className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
       title={activeMark?.title ?? ''}
       extraTitleClassName="serlo-h2"
+      appElementOverride={player?.$el ?? undefined}
     >
       {renderContent()}
     </ModalWithCloseButton>
