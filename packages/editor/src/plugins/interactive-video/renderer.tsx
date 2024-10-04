@@ -9,7 +9,6 @@ import {
   Track,
   type VTTContent,
   type MediaPlayEvent,
-  type MediaSeekRequestEvent,
   // TimeSlider,
 } from '@vidstack/react'
 import {
@@ -42,14 +41,11 @@ import {
 export function InteractiveVideoRenderer({
   chapterContent,
   tools,
-  onMediaSeekRequest,
+  checkSeekAndPlay,
 }: {
   chapterContent: VTTContent
   tools?: JSX.Element
-  onMediaSeekRequest?: (
-    time: number,
-    nativeEvent: MediaSeekRequestEvent
-  ) => void
+  checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
 }) {
   const content = {
@@ -65,11 +61,14 @@ export function InteractiveVideoRenderer({
       controlsDelay={60000}
       // load="play"
       aspectRatio="16:9"
-      onMediaSeekRequest={onMediaSeekRequest}
-      // onMediaSeekingRequest={onMediaSeekRequest}
-      // onSeeked
-      // onSeeking
-      // onPlay={}
+      onMediaPlayRequest={(nativeEvent) => {
+        const allowed = checkSeekAndPlay?.(nativeEvent.target)
+        if (!allowed) nativeEvent.preventDefault()
+      }}
+      onMediaSeekRequest={(time, nativeEvent) => {
+        const allowed = checkSeekAndPlay?.(nativeEvent.target, time)
+        if (!allowed) nativeEvent.preventDefault()
+      }}
     >
       <MediaProvider>
         <Track

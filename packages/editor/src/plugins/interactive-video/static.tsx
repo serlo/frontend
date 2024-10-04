@@ -3,8 +3,8 @@ import { useState } from 'react'
 
 import { PlayerTools } from './editor/player-tools'
 import { createCues } from './helpers/create-cues'
+import { useCheckSeekAndPlay } from './helpers/use-check-seek-and-play'
 import { useLearnerInteractions } from './helpers/use-learner-interactions'
-import { usePreventSeeking } from './helpers/use-prevent-seeking'
 import { InteractiveVideoRenderer } from './renderer'
 import { MarkOverlay } from './static/mark-overlay'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -22,7 +22,7 @@ export function InteractiveVideoStaticRenderer({
 
   const learnerInteractions = useLearnerInteractions()
 
-  const preventSeeking = usePreventSeeking({ marks, learnerInteractions })
+  const checkSeekAndPlay = useCheckSeekAndPlay({ marks, learnerInteractions })
 
   const cues = createCues(marks, exerciseString)
 
@@ -48,7 +48,7 @@ export function InteractiveVideoStaticRenderer({
             />
           </>
         }
-        onMediaSeekRequest={preventSeeking}
+        checkSeekAndPlay={checkSeekAndPlay}
       />
     </>
   )
