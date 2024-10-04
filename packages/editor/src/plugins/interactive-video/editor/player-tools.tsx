@@ -9,7 +9,7 @@ import { longerThanVideoDuration, markDuration } from '../const'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-// currently used by static renderer and editor, maybe split later
+// editor player tools (currently just the hovering button)
 export function PlayerTools({
   addOverlayContent,
   openOverlayByStartTime,

@@ -1,12 +1,12 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
-import { faBackward, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faBackward, faPlay, faTasks } from '@fortawesome/free-solid-svg-icons'
 import {
   useActiveTextCues,
   useActiveTextTrack,
   useMediaPlayer,
 } from '@vidstack/react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { markDuration } from '../const'
 import {
@@ -30,6 +30,7 @@ export function MarkOverlay({
   openOverlayByStartTime: (startTime: number) => void
 }) {
   const player = useMediaPlayer()
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const textTrack = useActiveTextTrack('chapters')
   const activeCue = useActiveTextCues(textTrack)[0]
@@ -59,23 +60,45 @@ export function MarkOverlay({
     const { solved } = getMarkInteractions(mark, learnerInteractions)
 
     if (!isFiller && activeCue && !solved) {
-      openOverlayByStartTime(mark.startTime)
-
-      void player.pause()
+      setTimeout(() => {
+        buttonRef.current?.classList.add('triggered')
+      }, 150)
+      setTimeout(() => {
+        openOverlayByStartTime(mark.startTime)
+        void player.pause()
+        buttonRef.current?.classList.add('triggered')
+      }, 1750)
     }
   }, [activeCue, learnerInteractions, marks, openOverlayByStartTime, player])
 
+  if (!player) return null
   return (
-    <ModalWithCloseButton
-      isOpen={!!activeMark}
-      setIsOpen={() => closeOverlay()}
-      className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
-      title={activeMark?.title ?? ''}
-      extraTitleClassName="serlo-h2"
-      appElementOverride={player?.$el ?? undefined}
-    >
-      {renderContent()}
-    </ModalWithCloseButton>
+    <>
+      <div className="absolute top-2 flex w-full sm:justify-center">
+        {activeCue?.text ? (
+          <button
+            ref={buttonRef}
+            className="serlo-button-blue animate-in slide-in-from-bottom-4 [&.triggered]:animate-bounce"
+            onClick={() => {
+              openOverlayByStartTime(activeCue.startTime)
+              void player.pause()
+            }}
+          >
+            <FaIcon icon={faTasks} /> {activeCue.text}
+          </button>
+        ) : null}
+      </div>
+      <ModalWithCloseButton
+        isOpen={!!activeMark}
+        setIsOpen={() => closeOverlay()}
+        className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
+        title={activeMark?.title ?? ''}
+        extraTitleClassName="serlo-h2"
+        appElementOverride={player?.$el ?? undefined}
+      >
+        {renderContent()}
+      </ModalWithCloseButton>
+    </>
   )
 
   function renderContent() {

@@ -1,7 +1,6 @@
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
 
-import { PlayerTools } from './editor/player-tools'
 import { createCues } from './helpers/create-cues'
 import { useCheckSeekAndPlay } from './helpers/use-check-seek-and-play'
 import { useLearnerInteractions } from './helpers/use-learner-interactions'
@@ -33,23 +32,18 @@ export function InteractiveVideoStaticRenderer({
   }
 
   return (
-    <>
-      <InteractiveVideoRenderer
-        chapterContent={{ cues }}
-        tools={
-          <>
-            <PlayerTools openOverlayByStartTime={openOverlayByStartTime} />
-            <MarkOverlay
-              showOverlayContentIndex={showOverlayContentIndex}
-              marks={marks}
-              learnerInteractions={learnerInteractions}
-              openOverlayByStartTime={openOverlayByStartTime}
-              close={() => setShowOverlayContentIndex(null)}
-            />
-          </>
-        }
-        checkSeekAndPlay={checkSeekAndPlay}
-      />
-    </>
+    <InteractiveVideoRenderer
+      chapterContent={{ cues }}
+      tools={
+        <MarkOverlay
+          showOverlayContentIndex={showOverlayContentIndex}
+          marks={marks}
+          learnerInteractions={learnerInteractions}
+          openOverlayByStartTime={openOverlayByStartTime}
+          close={() => setShowOverlayContentIndex(null)}
+        />
+      }
+      checkSeekAndPlay={checkSeekAndPlay}
+    />
   )
 }
