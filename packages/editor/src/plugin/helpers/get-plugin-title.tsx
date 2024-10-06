@@ -1,7 +1,7 @@
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 export function getPluginTitle(
-  pluginStrings: ReturnType<typeof useEditorStrings>['plugins'],
+  pluginStrings: ReturnType<typeof useEditStrings>['plugins'],
   pluginType: string
 ) {
   return Object.hasOwn(pluginStrings, pluginType)

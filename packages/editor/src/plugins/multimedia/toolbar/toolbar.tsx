@@ -1,10 +1,10 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { ReactNode, useState } from 'react'
 
 interface MultimediaToolbarProps {
@@ -14,7 +14,7 @@ interface MultimediaToolbarProps {
 
 export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   return (
     <PluginToolbar
@@ -28,7 +28,7 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
           >
             {editorStrings.edtrIo.settings} <FaIcon icon={faCog} />
           </button>
-          <ModalWithCloseButton
+          <EditorModal
             isOpen={showSettingsModal}
             setIsOpen={setShowSettingsModal}
             className="top-8 max-w-xl translate-y-0 sm:top-24"
@@ -36,7 +36,7 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
             extraTitleClassName="serlo-h3 mt-4"
           >
             <div className="mx-side mb-3">{children}</div>
-          </ModalWithCloseButton>
+          </EditorModal>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

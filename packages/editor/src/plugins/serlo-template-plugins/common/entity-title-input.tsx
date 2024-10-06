@@ -1,10 +1,10 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginProps } from '@editor/plugin'
 import { useAppDispatch, focus } from '@editor/store'
+import { cn } from '@editor/utils/cn'
 import { useEffect, useRef } from 'react'
 
 import { type AppletTypePluginState } from '../applet'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 export function EntityTitleInput({
   title,
@@ -17,7 +17,7 @@ export function EntityTitleInput({
   className?: string
   compact?: boolean
 }) {
-  const { titlePlaceholder } = useEditorStrings().templatePlugins.entity
+  const { titlePlaceholder } = useEditStrings().templatePlugins.entity
 
   const titleRef = useRef<HTMLInputElement>(null)
 

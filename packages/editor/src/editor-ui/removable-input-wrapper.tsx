@@ -1,9 +1,9 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { cn } from '@editor/utils/cn'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import type { MouseEventHandler, ReactNode } from 'react'
 
-import { FaIcon } from '@/components/fa-icon'
-import { cn } from '@/helper/cn'
+import { FaIcon } from './fa-icon'
 
 interface RemovableInputWrapperProps {
   tooltipText?: string

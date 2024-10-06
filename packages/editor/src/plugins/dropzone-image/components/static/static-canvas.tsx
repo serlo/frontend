@@ -2,6 +2,7 @@ import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
 
 import { BlankDropZone } from './blank-drop-zone'
 import type {
@@ -9,7 +10,6 @@ import type {
   DropzoneVisibility,
   PossibleAnswerType,
 } from '../../types'
-import { cn } from '@/helper/cn'
 
 interface StaticCanvasProps {
   state: EditorDropzoneImageDocument['state']

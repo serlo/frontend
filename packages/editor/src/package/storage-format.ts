@@ -1,6 +1,6 @@
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { getCurrentDatetime } from '@editor/util/get-current-datetime'
+import { getCurrentDatetime } from '@editor/utils/get-current-datetime'
 import * as t from 'io-ts'
 import { v4 as uuid_v4 } from 'uuid'
 
@@ -83,7 +83,8 @@ const migrations: Migration[] = [
 
     return {
       ...state,
-      domainOrigin: window.location.origin,
+      domainOrigin:
+        typeof window !== 'undefined' ? window.location.origin : 'server',
     }
   },
 

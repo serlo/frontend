@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { StateTypeReturnType } from '@editor/plugin'
 import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
@@ -69,15 +70,15 @@ export function SaveModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
+  const edtrIoStrings = useEditStrings().edtrIo
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor.edtrIo
 
   return (
     <ModalWithCloseButton
       isOpen={open}
       setIsOpen={setOpen}
-      title={editorStrings.save}
+      title={edtrIoStrings.save}
       className={cn(
         !isOnlyText &&
           'top-8 max-h-full w-[900px] -translate-x-1/2 translate-y-0 overflow-y-auto pb-20'
@@ -88,7 +89,7 @@ export function SaveModal({
         {renderLicense()}
         {renderSubscription()}
         {renderCheckout()}
-        {isOnlyText ? editorStrings.ready : null}
+        {isOnlyText ? edtrIoStrings.ready : null}
         <hr className="mb-8 mt-8" />
         {renderAlert()}
         {renderModalButtons()}
@@ -103,7 +104,7 @@ export function SaveModal({
           className="serlo-button-transparent"
           onClick={() => setOpen(false)}
         >
-          {editorStrings.cancel}
+          {edtrIoStrings.cancel}
         </button>
         <button
           onClick={() => {
@@ -126,10 +127,10 @@ export function SaveModal({
           title={getSaveHint()}
         >
           {pending
-            ? editorStrings.saving
+            ? edtrIoStrings.saving
             : (showSkipCheckout && skipReview) || !showSkipCheckout
-              ? editorStrings.save
-              : editorStrings.saveWithReview}
+              ? edtrIoStrings.save
+              : edtrIoStrings.saveWithReview}
         </button>
       </div>
     )
@@ -138,11 +139,11 @@ export function SaveModal({
   function getSaveHint() {
     if (maySave) return undefined
     if (licenseAccepted && !changesFilled) {
-      return editorStrings.missingChanges
+      return edtrIoStrings.missingChanges
     } else if (!licenseAccepted && changesFilled) {
-      return editorStrings.missingLicenseTerms
+      return edtrIoStrings.missingLicenseTerms
     } else {
-      return editorStrings.missingChangesAndLicenseTerms
+      return edtrIoStrings.missingChangesAndLicenseTerms
     }
   }
 
@@ -150,9 +151,9 @@ export function SaveModal({
     if (!hasError) return null
     return (
       <InfoPanel type="warning" icon={faExclamationCircle}>
-        {editorStrings.errorSaving}
+        {edtrIoStrings.errorSaving}
         <br />
-        {editorStrings.saveLocallyAndRefresh}
+        {edtrIoStrings.saveLocallyAndRefresh}
         <LocalStorageButton open={open} />
       </InfoPanel>
     )
@@ -167,7 +168,7 @@ export function SaveModal({
           highlightMissingFields && !changesFilled && 'bg-red-100'
         )}
       >
-        {editorStrings.changes}{' '}
+        {edtrIoStrings.changes}{' '}
         <span className="font-bold text-red-500">*</span>
         <textarea
           autoFocus
@@ -194,7 +195,7 @@ export function SaveModal({
           checked={skipReview}
           onChange={({ target }) => setSkipReview(target.checked)}
         />{' '}
-        {editorStrings.skipReview}
+        {edtrIoStrings.skipReview}
       </label>
     )
   }
@@ -245,7 +246,7 @@ export function SaveModal({
               setNotificationSubscription(checked)
             }}
           />{' '}
-          {editorStrings.enableNotifs}
+          {edtrIoStrings.enableNotifs}
         </label>
         <label className="block pb-2">
           <input
@@ -256,7 +257,7 @@ export function SaveModal({
               setEmailSubscription(checked)
             }}
           />{' '}
-          {editorStrings.enableNotifsMail}
+          {edtrIoStrings.enableNotifsMail}
         </label>
       </>
     )

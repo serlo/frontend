@@ -2,6 +2,7 @@ import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { selectStaticDocuments, useAppSelector } from '@editor/store'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
+import { cn } from '@editor/utils/cn'
 import { useEffect, useState } from 'react'
 
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
@@ -10,7 +11,6 @@ import { ImageGridSkeleton } from './image-grid-skeleton'
 import { RemoveImageButton } from './remove-image-button'
 import type { ImageGalleryProps } from '..'
 import { getDimensions } from '../utils/helpers'
-import { cn } from '@/helper/cn'
 
 interface EditorImageGridProps {
   state: ImageGalleryProps['state']

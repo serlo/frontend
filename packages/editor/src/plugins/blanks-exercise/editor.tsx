@@ -1,5 +1,6 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   selectIsFocused,
   selectStaticDocument,
@@ -7,6 +8,7 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
 import { useMemo, useState } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
@@ -17,8 +19,6 @@ import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
 import { useIsPreviewActive } from '../exercise/context/preview-context'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 const headerTextFormattingOptions = [
   TextEditorFormattingOption.code,
@@ -43,7 +43,7 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { text: childPlugin, mode, extraDraggableAnswers } = state
   const previewActive = useIsPreviewActive()
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const blanksExerciseStrings = editorStrings.plugins.blanksExercise
 
   const isChildPluginFocused = useAppSelector((storeState) =>
@@ -76,8 +76,8 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   return (
     <div
       className={cn(
-        'group/blanks-exercise mb-12 mt-10 pb-6 pt-4',
-        'rounded-b-xl border-3 border-transparent focus-within:rounded-tl-xl focus-within:border-gray-100',
+        'group/blanks-exercise mb-12 pb-6',
+        'border-3 border-transparent focus-within:rounded-xl focus-within:border-gray-100',
         focused && '!border-gray-100'
       )}
       data-qa="plugin-blanks-exercise"

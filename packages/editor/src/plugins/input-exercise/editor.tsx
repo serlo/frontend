@@ -1,6 +1,6 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useEffect, useRef } from 'react'
 
 import type { InputExerciseProps } from '.'
@@ -24,7 +24,7 @@ import { useIsPreviewActive } from '../exercise/context/preview-context'
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { state, id, focused } = props
   const { answers } = state
-  const inputExStrings = useEditorStrings().templatePlugins.inputExercise
+  const inputExStrings = useEditStrings().templatePlugins.inputExercise
 
   const dispatch = useAppDispatch()
 
@@ -56,7 +56,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const showUi = focused || isAnyAnswerFocused
 
   return (
-    <div className="mb-12 mt-24 pt-4">
+    <div className="mb-12">
       <InputExerciseToolbar {...props} />
 
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>

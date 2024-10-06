@@ -1,4 +1,5 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
+import { cn } from '@editor/utils/cn'
 import {
   lazy,
   Suspense,
@@ -18,7 +19,6 @@ import {
 } from './components/blank-draggable-answer'
 import { BlanksContext } from './context/blank-context'
 import { Blank, type BlankType } from './types'
-import { cn } from '@/helper/cn'
 
 const DndWrapper = lazy(() =>
   import('@editor/core/components/dnd-wrapper').then((module) => ({

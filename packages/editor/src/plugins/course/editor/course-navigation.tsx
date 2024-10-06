@@ -1,4 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import {
   faArrowCircleDown,
   faArrowCircleUp,
@@ -7,9 +10,6 @@ import {
 
 import { type CourseProps } from '..'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 const toolButtonClassnames = cn(
   'serlo-button-editor-secondary serlo-tooltip-trigger mr-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100'
@@ -28,7 +28,7 @@ export function CourseNavigation({
   activePageIndex: number
   setActivePageIndex: (index: number) => void
 }) {
-  const templateStrings = useEditorStrings().templatePlugins
+  const templateStrings = useEditStrings().templatePlugins
 
   function onRemove() {
     if (window.confirm(templateStrings.course.confirmDelete)) {

@@ -1,5 +1,4 @@
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   EditorImageDocument,
@@ -9,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { LightBoxProps } from '@/components/content/light-box'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
   import('@/components/content/light-box').then((mod) => mod.LightBox)
@@ -39,7 +39,7 @@ export function MultimediaSerloStaticRenderer(state: EditorMultimediaDocument) {
       <LightBox
         onClose={() => setOpen(false)}
         alt={imageState.alt}
-        label={<StaticRenderer document={imageState.caption} />}
+        label={<EditorRenderer document={imageState.caption} />}
         src={String(imageState.src)}
       />
     )

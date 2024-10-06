@@ -1,5 +1,6 @@
 import { selectStaticDocument, store } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
 import { useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
@@ -13,7 +14,6 @@ import {
 } from '../../types'
 import { getPercentageRounded } from '../../utils/percentage'
 import { AnswerZone, answerZoneDragType } from '../answer-zone/answer-zone'
-import { cn } from '@/helper/cn'
 
 interface EditorCanvasProps {
   state: DropzoneImageProps['state']

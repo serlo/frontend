@@ -1,5 +1,5 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseStaticRenderer } from './static'
@@ -26,7 +26,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       selectStaticDocument(storeState, id) as EditorScMcExerciseDocument
   )
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   const handleCheckboxChange = (index: number) => () => {
     answers[index].isCorrect.set((currentVal) => !currentVal)
@@ -69,7 +69,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   }
 
   return (
-    <div className="mb-12 mt-24 pt-4">
+    <div className="mb-12">
       <ScMcExerciseToolbar {...props} />
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {/* margin-hack */}

@@ -1,17 +1,17 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar, ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { HighlightProps } from '.'
 
 const languages = ['text', 'c', 'javascript', 'jsx', 'markup', 'java', 'python']
 
 export const HighlightToolbar = ({ id, state }: HighlightProps) => {
-  const highlightStrings = useEditorStrings().plugins.highlight
+  const highlightStrings = useEditStrings().plugins.highlight
 
   return (
     <PluginToolbar

@@ -1,6 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-
-import { cn } from '@/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 interface ToolbarSelectProps {
   value: string

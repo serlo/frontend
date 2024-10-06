@@ -105,7 +105,7 @@ function H5pEditor({ state }: H5pProps) {
 
   if (mode === 'edit' || mode === 'loading') {
     return (
-      <div className="mb-12 mt-24 pt-4">
+      <div className="mb-12">
         <div className="rounded-xl bg-editor-primary-50 p-2">
           <h2 className="serlo-h2">Einfügen von H5P-Inhalt</h2>
           <div>
