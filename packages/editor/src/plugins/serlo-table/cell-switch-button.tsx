@@ -1,10 +1,10 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { ChildStateType } from '@editor/plugin/child'
 import { selectDocument, selectIsFocused, useAppSelector } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { StateTypesReturnType } from '@editor/types/internal__plugin-state'
 import { faImages, faParagraph } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 interface CellSwitchButtonProps {
   cell: StateTypesReturnType<{
@@ -19,7 +19,7 @@ export function CellSwitchButton({
   isHead,
   isClear,
 }: CellSwitchButtonProps) {
-  const tableStrings = useEditorStrings().plugins.serloTable
+  const tableStrings = useEditStrings().plugins.serloTable
 
   const isFocused = useAppSelector((state) =>
     selectIsFocused(state, cell.content.id)

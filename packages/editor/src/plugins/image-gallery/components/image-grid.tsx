@@ -1,5 +1,6 @@
+import { cn } from '@editor/utils/cn'
+
 import { GridImage } from '../types'
-import { cn } from '@/helper/cn'
 
 interface ImageGridProps {
   images: GridImage[]

@@ -1,5 +1,4 @@
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   AnyEditorDocument,
@@ -15,6 +14,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export function InjectionSerloStaticRenderer({
   state: href,
@@ -163,7 +163,7 @@ export function InjectionSerloStaticRenderer({
 
   return (
     <div className="border-b-3 border-brand-200 py-4 text-gray-900">
-      <StaticRenderer document={content} />
+      <EditorRenderer document={content} />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 import { FeedbackData } from '../../types'
-import { useInstanceData } from '@/contexts/instance-context'
 
 interface FeedbackButtonProps {
   feedback: FeedbackData
@@ -12,7 +12,7 @@ interface FeedbackButtonProps {
 export function FeedbackButton(props: FeedbackButtonProps) {
   const { feedback, isButtonVisible, onClick } = props
 
-  const exercisesStrings = useInstanceData().strings.content.exercises
+  const exStrings = useStaticStrings().plugins.exercise
 
   return (
     <div className="flex">
@@ -22,7 +22,7 @@ export function FeedbackButton(props: FeedbackButtonProps) {
           onClick={onClick}
           data-qa="plugin-exercise-check-answer-button"
         >
-          {exercisesStrings.check}
+          {exStrings.check}
         </button>
       ) : null}
       {feedback !== FeedbackData.Unset ? (

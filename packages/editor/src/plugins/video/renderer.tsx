@@ -1,8 +1,7 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { Instance } from '@serlo/frontend/src/fetcher/graphql-types/operations'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export enum VideoType {
   YouTube = 'YouTube',
@@ -16,14 +15,14 @@ interface VideoRendererProps {
 }
 
 export function VideoRenderer({ src, type }: VideoRendererProps) {
-  const { strings } = useInstanceData()
+  const videoStrings = useStaticStrings().plugins.video
 
   if (!type) {
     return (
       <div className="mx-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
         <p className="serlo-p text-almost-black">
-          {src ? `${strings.content.loadingVideoFailed}: ${src}` : ''}
+          {src ? `${videoStrings.failed}: ${src}` : ''}
         </p>
       </div>
     )
@@ -50,7 +49,7 @@ const videoClassName = cn(`h-full w-full border-none bg-black/30`)
 
 export function parseVideoUrl(
   inputSrc: string,
-  lang?: Instance
+  lang?: string
 ): [string, VideoType | undefined] {
   const videoRegex = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/
   const vimeo = videoRegex.exec(inputSrc)

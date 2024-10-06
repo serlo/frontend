@@ -1,13 +1,13 @@
 import { PluginToolbar, PreviewButton } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   faArrowsRotate,
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ExerciseProps } from '..'
 
@@ -21,7 +21,7 @@ export const ExerciseToolbar = ({
   setPreviewActive: (active: boolean) => void
 }) => {
   const { interactive, hideInteractiveInitially } = state
-  const exStrings = useEditorStrings().plugins.exercise
+  const exStrings = useEditStrings().plugins.exercise
 
   const pluginSettings = interactive.defined ? (
     <>

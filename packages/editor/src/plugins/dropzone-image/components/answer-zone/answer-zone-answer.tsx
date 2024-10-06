@@ -1,4 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { AnswerContent } from './answer-content'
@@ -7,9 +10,6 @@ import {
   getAnswerZoneImageSrc,
   getAnswerZoneText,
 } from '../../utils/answer-zone'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
 
 export const answerZoneDragType = 'answerZone'
 
@@ -23,7 +23,7 @@ interface AnswerZoneAnswerProps {
 export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
   const { answer, isOnlyAnswer, onEditAnswer, onRemoveAnswer } = props
 
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+  const pluginStrings = useEditStrings().plugins.dropzoneImage
 
   const answerImageUrl = getAnswerZoneImageSrc(answer.image.id)
   const answerText = getAnswerZoneText(answer.text.id)

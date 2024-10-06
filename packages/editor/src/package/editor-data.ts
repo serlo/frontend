@@ -1,26 +1,19 @@
+import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
+import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
+import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
 import type {
   LanguageData,
   SupportedLanguage,
-  InstanceData,
-  LoggedInData,
 } from '@editor/types/language-data'
-
-import {
-  instanceData as instanceDataDe,
-  loggedInData as loggedInDataDe,
-} from '@/data/de'
-import {
-  instanceData as instanceDataEn,
-  loggedInData as loggedInDataEn,
-} from '@/data/en'
 
 export const editorData: Record<SupportedLanguage, LanguageData> = {
   de: {
-    instanceData: instanceDataDe as unknown as InstanceData,
-    loggedInData: loggedInDataDe as unknown as LoggedInData,
+    staticStrings: staticStringsDe,
+    editStrings: editStringsDe,
   },
   en: {
-    instanceData: instanceDataEn as InstanceData,
-    loggedInData: loggedInDataEn as LoggedInData,
+    staticStrings: staticStringsEn,
+    editStrings: editStringsEn,
   },
 }

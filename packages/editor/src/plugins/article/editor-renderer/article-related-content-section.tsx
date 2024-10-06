@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { ArticleProps } from '..'
 import { buttonClass } from '../const/button-class'
@@ -16,7 +16,7 @@ interface ArticleRelatedContentSectionProps {
 export function ArticleRelatedContentSection({
   data,
 }: ArticleRelatedContentSectionProps) {
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const articleStrings = useEditStrings().templatePlugins.article
 
   if (!data.length) return null
 

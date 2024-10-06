@@ -1,16 +1,16 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
+import { RevisionViewContext } from '@serlo/frontend/src/contexts/revision-view-context'
 import { useRouter } from 'next/router'
 import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
-import { InfoPanel } from '@/components/info-panel'
-import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { cn } from '@/helper/cn'
 
 export function CourseStaticRenderer({
   state,
@@ -25,7 +25,7 @@ export function CourseStaticRenderer({
   const [courseNavOpen, setCourseNavOpen] = useState(
     pages.length < 4 || (isRevisionView ?? false)
   )
-  const { strings } = useInstanceData()
+  const strings = useStaticStrings()
 
   const activePageIndex = queryPageId
     ? Math.max(
@@ -69,7 +69,7 @@ export function CourseStaticRenderer({
         </>
       ) : (
         <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.course.noPagesWarning}
+          {strings.plugins.course.noPagesWarning}
         </InfoPanel>
       )}
     </>

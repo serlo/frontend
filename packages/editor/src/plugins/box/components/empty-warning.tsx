@@ -1,7 +1,7 @@
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 export function EmptyWarning() {
-  const warningString = useEditorStrings().plugins.box.emptyContentWarning
+  const warningString = useEditStrings().plugins.box.emptyContentWarning
 
   return (
     <div

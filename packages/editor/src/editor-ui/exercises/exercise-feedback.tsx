@@ -1,16 +1,15 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import type { ReactNode } from 'react'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 export interface SolutionFeedbackProps {
   correct: boolean
-  children?: ReactNode
+  children?: React.ReactNode
   missedSome?: boolean
 }
 
 export function ExerciseFeedback(props: SolutionFeedbackProps) {
   const { children, correct, missedSome } = props
 
-  const exStrings = useInstanceData().strings.content.exercises
+  const exStrings = useStaticStrings().plugins.exercise
   const fallbackString =
     exStrings[correct ? 'correct' : missedSome ? 'missedSome' : 'wrong']
 

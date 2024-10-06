@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 
 import type { InputExerciseProps } from '.'
 import { InputExerciseType } from './input-exercise-type'
@@ -11,7 +11,7 @@ export const InputExerciseToolbar = ({
   state,
   containerRef,
 }: InputExerciseProps) => {
-  const inputExStrings = useEditorStrings().templatePlugins.inputExercise
+  const inputExStrings = useEditStrings().templatePlugins.inputExercise
 
   return (
     <InteractiveToolbarPortal containerRef={containerRef}>

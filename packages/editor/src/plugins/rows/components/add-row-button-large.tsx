@@ -1,13 +1,13 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 interface AddRowButtonLargeProps {
   onClick: () => void
 }
 
 export function AddRowButtonLarge({ onClick }: AddRowButtonLargeProps) {
-  const rowsStrings = useEditorStrings().plugins.rows
+  const rowsStrings = useEditStrings().plugins.rows
 
   return (
     <button

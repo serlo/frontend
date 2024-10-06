@@ -1,4 +1,3 @@
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   faCubes,
@@ -37,6 +36,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UuidsProvider } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
@@ -150,7 +150,7 @@ const pluginData = [
     descriptionDe:
       'Mit dem GeoGebra-Applet fügst Du bewegte oder interaktive Grafiken in den Lerninhalt ein.  Du kannst dein eigenes Applet erstellen oder aus der riesigen kostenlosen öffentlichen Applet-Sammlung auf geogebra.org wählen.',
     example: (
-      <StaticRenderer
+      <EditorRenderer
         document={{ plugin: EditorPluginType.Geogebra, state: 'd4eNMF5R' }}
       />
     ),

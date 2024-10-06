@@ -1,10 +1,10 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
+import { cn } from '@editor/utils/cn'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { useState } from 'react'
 
 import type { ScMcExerciseRendererProps } from './renderer'
@@ -16,7 +16,7 @@ export function ScRenderer({
 }: ScMcExerciseRendererProps) {
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)
-  const exStrings = useInstanceData().strings.content.exercises
+  const exStrings = useStaticStrings().plugins.exercise
 
   return (
     <div className="mx-side mb-block">

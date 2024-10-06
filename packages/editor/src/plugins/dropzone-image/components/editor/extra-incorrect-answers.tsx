@@ -1,11 +1,11 @@
 import { DraggableArea } from '@editor/editor-ui/exercises/draggable-area'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 import type { DropzoneImageProps } from '../..'
 import { ModalType } from '../../types'
 import { convertAnswer } from '../../utils/answer-zone'
 import { DraggableAnswer } from '../shared/draggable-answer'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ExtraIncorrectAnswersProps {
   extraDraggableAnswers: DropzoneImageProps['state']['extraDraggableAnswers']
@@ -15,7 +15,7 @@ interface ExtraIncorrectAnswersProps {
 export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
   const { extraDraggableAnswers, setModalType } = props
 
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const blanksExerciseStrings = useEditStrings().plugins.blanksExercise
 
   const answers = extraDraggableAnswers.map(convertAnswer)
 

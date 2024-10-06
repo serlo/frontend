@@ -1,7 +1,7 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 import dynamic from 'next/dynamic'
 
 import { IPlayerModel } from './lumi-api-types'
+import { useInstanceData } from '@/contexts/instance-context'
 
 const H5PPlayerUI = dynamic(
   () => import('@lumieducation/h5p-react').then((mod) => mod.H5PPlayerUI),

@@ -1,6 +1,6 @@
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { isMac } from '@serlo/frontend/src/helper/client-detection'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { isMac } from '@editor/utils/client-detection'
+import { cn } from '@editor/utils/cn'
 
 export function EditorTooltip({
   text,
@@ -11,12 +11,12 @@ export function EditorTooltip({
   hotkeys?: string
   className?: string
 }) {
-  const { strings } = useInstanceData()
+  const staticString = useStaticStrings()
   if (!text && !hotkeys) return null
 
   const hotkeysTranslated = hotkeys?.replace(
     '%ctrlOrCmd%',
-    isMac ? '⌘' : strings.keys.ctrl
+    isMac ? '⌘' : staticString.misc.ctrl
   )
 
   return (

@@ -1,10 +1,9 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { useRef } from 'react'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AddRowButtonFloatingProps {
   focused: boolean
@@ -13,7 +12,7 @@ interface AddRowButtonFloatingProps {
 
 export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
   const { focused, onClick } = props
-  const rowsStrings = useEditorStrings().plugins.rows
+  const rowsStrings = useEditStrings().plugins.rows
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   return (

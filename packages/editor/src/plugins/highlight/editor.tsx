@@ -1,5 +1,5 @@
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { useEffect, useRef, useState } from 'react'
 
 import type { HighlightProps } from '.'
@@ -12,7 +12,7 @@ export function HighlightEditor(props: HighlightProps) {
   const [throttledEdit, setEditThrottled] = useState(focused)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   useEffect(() => {
     if (focused) {
