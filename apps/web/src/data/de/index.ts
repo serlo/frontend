@@ -88,8 +88,8 @@ export const instanceData = {
       button: "Teilen",
       title: "Weitergeben!",
       copyLink: "Link kopieren",
-      copySuccess: 'Link copied!',
-      copyFailed: 'Error copying link!',
+      copySuccess: "Link kopiert!",
+      copyFailed: "Sorry, Link konnte nicht automatisch kopiert werden.",
       close: "Schließen",
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
