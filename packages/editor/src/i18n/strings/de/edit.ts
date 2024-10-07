@@ -209,21 +209,23 @@ export const editStrings = {
         "Bitte verwende eine gültige Serlo ID (nur Zahlen) – z.B. '/1555'",
     },
     interactiveVideo: {
-      title: 'Interaktives Video', // TODO: translate
+      title: 'Interaktives Video',
       description: 'Create an interactive video with questions and feedback.',
-      editOverlayTitle: 'Edit Exercise',
-      titlePlaceholder: 'Title',
-      defaultTitle: 'Exercise',
-      autoOpenLabel: 'Automatically open',
-      autoOpenExplanation: 'Content automatically opens when video is at mark',
-      mandatoryLabel: 'Mandatory Exercise',
-      mandatoryExplanation: 'Exercise has to be solved to continue video',
-      forceRewatchLabel: 'Auto Rewatch',
+      editOverlayTitle: 'Aufgabe bearbeiten',
+      titlePlaceholder: 'Titel',
+      defaultTitle: 'Aufgabe',
+      autoOpenLabel: 'Automatisch öffnen',
+      autoOpenExplanation:
+        'Der Inhalt öffnet wird automatisch angezeigt, wenn das Video dort ankommt',
+      mandatoryLabel: 'Verpflichtende Aufgabe',
+      mandatoryExplanation:
+        'Die Aufgabe muss richtig beantwortet werden, um das Video weiter abzuspielen',
+      forceRewatchLabel: 'Auto-Wiederholung',
       forceRewatchExplanation:
-        'If an exercise is answered incorrectly, the video jumps back to the last mark',
-      editMark: 'Edit',
-      removeMark: 'Remove',
-      addOverlayContent: 'Add exercise',
+        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lerner per Button den letzten Abschnitt noch mal anschauen',
+      editMark: 'Bearbeiten',
+      removeMark: 'Löschen',
+      addOverlayContent: 'Neue Aufgabe',
     },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
