@@ -10,11 +10,11 @@ export function addOverlayContent(
 ) {
   const startTime = findFreeStartTime(startTimeWish, marks)
 
-  const previousIndex = marks.findIndex(
+  // make sure marks are always sorted by startTime
+  const previousIndex = marks.findLastIndex(
     (mark) => startTime > mark.startTime.value
   )
-  // make sure marks are always sorted by startTime
-  const index = previousIndex > -1 ? previousIndex+1 : 0
+  const index = previousIndex > -1 ? previousIndex + 1 : 0
 
   marks.insert(index, {
     title: '',
