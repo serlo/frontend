@@ -10,6 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import type { ExerciseProps } from '..'
+import { selectStaticDocument, store } from '@editor/store'
+import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
+import { UuidType } from '@/data-types'
 
 export const ExerciseToolbar = ({
   id,
@@ -21,7 +24,17 @@ export const ExerciseToolbar = ({
   setPreviewActive: (active: boolean) => void
 }) => {
   const { interactive, hideInteractiveInitially } = state
-  const exStrings = useEditStrings().plugins.exercise
+  const pluginStrings = useEditStrings().plugins
+  const exStrings = pluginStrings.exercise
+
+  function getToolbarTitle() {
+    if (!interactive.defined) return undefined
+    const interactiveType = selectStaticDocument(
+      store.getState(),
+      interactive.id
+    ).plugin
+    return `${getPluginTitle(pluginStrings, UuidType.Exercise)}: ${getPluginTitle(pluginStrings, interactiveType)}`
+  }
 
   const pluginSettings = interactive.defined ? (
     <>
@@ -36,6 +49,7 @@ export const ExerciseToolbar = ({
   return (
     <PluginToolbar
       pluginType={EditorPluginType.Exercise}
+      pluginTitle={getToolbarTitle()}
       pluginControls={
         <>
           <PluginDefaultTools pluginId={id} />
