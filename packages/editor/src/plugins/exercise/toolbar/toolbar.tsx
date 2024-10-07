@@ -2,6 +2,8 @@ import { PluginToolbar, PreviewButton } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
+import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   faArrowsRotate,
@@ -10,8 +12,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import type { ExerciseProps } from '..'
-import { selectStaticDocument, store } from '@editor/store'
-import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import { UuidType } from '@/data-types'
 
 export const ExerciseToolbar = ({
