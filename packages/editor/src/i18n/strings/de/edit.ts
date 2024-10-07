@@ -54,7 +54,7 @@ export const editStrings = {
       emptyContentWarning: 'Boxen ohne Inhalt werden nicht angezeigt',
     },
     dropzoneImage: {
-      title: 'Bilder mit Ablagezonen',
+      title: 'Interaktives Bild (Ablagezonen)',
       description:
         'Erstelle eine Aufgabe, bei der vorgegebene Antworten in die richtigen Zonen eines Bilds oder einen leeren Hintergrund gezogen werden müssen.',
       backgroundImage: 'Hintergrundbild',

@@ -2,6 +2,8 @@ import { PluginToolbar, PreviewButton } from '@editor/editor-ui/plugin-toolbar'
 import { DropdownButton } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/dropdown-button'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
+import { selectStaticDocument, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
   faArrowsRotate,
@@ -10,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import type { ExerciseProps } from '..'
+import { UuidType } from '@/data-types'
 
 export const ExerciseToolbar = ({
   id,
@@ -21,7 +24,17 @@ export const ExerciseToolbar = ({
   setPreviewActive: (active: boolean) => void
 }) => {
   const { interactive, hideInteractiveInitially } = state
-  const exStrings = useEditStrings().plugins.exercise
+  const pluginStrings = useEditStrings().plugins
+  const exStrings = pluginStrings.exercise
+
+  function getToolbarTitle() {
+    if (!interactive.defined) return undefined
+    const interactiveType = selectStaticDocument(
+      store.getState(),
+      interactive.id
+    ).plugin
+    return `${getPluginTitle(pluginStrings, UuidType.Exercise)}: ${getPluginTitle(pluginStrings, interactiveType)}`
+  }
 
   const pluginSettings = interactive.defined ? (
     <>
@@ -36,6 +49,7 @@ export const ExerciseToolbar = ({
   return (
     <PluginToolbar
       pluginType={EditorPluginType.Exercise}
+      pluginTitle={getToolbarTitle()}
       pluginControls={
         <>
           <PluginDefaultTools pluginId={id} />

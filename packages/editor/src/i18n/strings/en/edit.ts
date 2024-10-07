@@ -52,7 +52,7 @@ export const editStrings = {
       emptyContentWarning: 'Boxes without content will not be displayed',
     },
     dropzoneImage: {
-      title: 'Image Dropzones',
+      title: 'Interactive Image (Dropzones)',
       description:
         'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
       backgroundImage: 'Background image',
