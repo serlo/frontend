@@ -1,4 +1,5 @@
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { formatTime } from '@vidstack/react'
 
 import { type InteractiveVideoProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
@@ -20,7 +21,7 @@ export function MarksList({
           const title = mark.title.value.length ? mark.title.value : 'type'
           return (
             <li key={index} className="mb-3 flex gap-1">
-              <span>{Math.round(mark.startTime.value)}</span>
+              <span>{formatTime(mark.startTime.value)}</span>
               <b className="grow">{title}</b>
               <button
                 className="serlo-button-editor-secondary"
