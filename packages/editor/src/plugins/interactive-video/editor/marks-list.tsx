@@ -1,9 +1,9 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { formatTime } from '@vidstack/react'
 
 import { type InteractiveVideoProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 export function MarksList({
   marks,
