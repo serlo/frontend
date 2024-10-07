@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
@@ -10,7 +11,6 @@ import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import type {
   MainUuidQuery,
@@ -35,7 +35,7 @@ export function ExternalRevisionLoader<T>({
   const [showRevisions, setShowRevisions] = useState(false)
 
   const { strings } = useInstanceData()
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   const exerciseTypes = [UuidType.Exercise]
   const supportedEntityTypes = exerciseTypes.includes(entityType)

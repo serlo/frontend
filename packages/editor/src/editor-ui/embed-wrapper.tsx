@@ -1,8 +1,8 @@
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
-import { serloDomain } from '@serlo/frontend/src/helper/urls/serlo-domain'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { cn } from '@editor/utils/cn'
+import { serloDomain } from '@editor/utils/serlo-domain'
+import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { VideoType } from '../plugins/video/renderer'
@@ -31,7 +31,7 @@ export function EmbedWrapper({
     setShowContent(false)
   }, [embedUrl])
 
-  const { strings } = useInstanceData()
+  const embedStrings = useStaticStrings().embed
 
   const confirmLoad = () => {
     if (!showContent) setShowContent(true)
@@ -48,9 +48,9 @@ export function EmbedWrapper({
     <div
       className={cn(
         `
-          group relative mx-side mb-block block
-          cursor-pointer bg-cover bg-center [contain:content]
-          `,
+        group relative mx-side mb-block block
+        cursor-pointer bg-cover bg-center [contain:content]
+        `,
         className
       )}
     >
@@ -69,7 +69,7 @@ export function EmbedWrapper({
           <img
             className="w-full object-contain opacity-50"
             src={previewImageUrl}
-            alt={`${strings.content.previewImage}`}
+            alt={`${embedStrings.previewImage}`}
           />
         </div>
         <div
@@ -80,8 +80,11 @@ export function EmbedWrapper({
             className="serlo-button-editor-primary group-hover:bg-editor-primary"
             onKeyDown={onKeyDown}
           >
-            <FaIcon className="py-0.5" icon={entityIconMapping[type]} />{' '}
-            {strings.embed.general}
+            <FaIcon
+              className="py-0.5"
+              icon={type === 'video' ? faPlayCircle : faCubes}
+            />{' '}
+            {embedStrings.activateEmbed}
           </button>
         </div>
       </div>

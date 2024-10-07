@@ -3,9 +3,8 @@ import {
   blankDraggableAnswerDragType,
   dragAnswerStyle,
 } from '@editor/plugins/blanks-exercise/components/blank-draggable-answer'
+import { cn } from '@editor/utils/cn'
 import { useDragLayer } from 'react-dnd'
-
-import { cn } from '@/helper/cn'
 
 interface DragItem extends BlankAnswerDragItem {
   type: string

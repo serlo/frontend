@@ -3,7 +3,7 @@ import { formatTime } from '@vidstack/react'
 
 import { type InteractiveVideoProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 export function MarksList({
   marks,
@@ -12,7 +12,7 @@ export function MarksList({
   marks: InteractiveVideoProps['state']['marks']
   onMarkClick: (index: number) => void
 }) {
-  const pluginStrings = useEditorStrings().plugins.interactiveVideo
+  const pluginStrings = useEditStrings().plugins.interactiveVideo
 
   return (
     <div className="mx-side">

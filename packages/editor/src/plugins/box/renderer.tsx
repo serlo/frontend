@@ -1,3 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { cn } from '@editor/utils/cn'
 import {
   faBrain,
   faExclamationTriangle,
@@ -9,9 +12,6 @@ import {
   faSplotch,
   faThumbtack,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export const boxTypeIcons = {
   blank: undefined,
@@ -44,7 +44,7 @@ export function BoxRenderer({
   children,
   className,
 }: BoxProps) {
-  const { strings } = useInstanceData()
+  const boxStrings = useStaticStrings().plugins.box
   if (!children || !boxType) return null
 
   const isBlank = boxType === 'blank'
@@ -78,7 +78,7 @@ export function BoxRenderer({
               )}
             >
               {icon}
-              {strings.content.boxTypes[boxType]}
+              {boxStrings.types[boxType]}
             </span>
           )}
           {title}

@@ -1,3 +1,4 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 export interface ArticleRendererProps {
@@ -25,6 +26,7 @@ export function ArticleRenderer({
   sources,
   title,
 }: ArticleRendererProps) {
+  const articleStrings = useStaticStrings().plugins.article
   const { strings } = useInstanceData()
 
   return (
@@ -36,7 +38,7 @@ export function ArticleRenderer({
       {exercises || exercisesFolder ? (
         <>
           <h2 className="serlo-h2 mb-16">
-            {strings.content.exercisesTitle}
+            {articleStrings.exercisesTitle}
             {title ? `: ${title}` : null}
           </h2>
 
@@ -44,7 +46,7 @@ export function ArticleRenderer({
 
           {exercisesFolder ? (
             <p className="serlo-p mt-8">
-              {strings.content.moreExercises}:<br />
+              {articleStrings.moreExercises}:<br />
               {exercisesFolder}
             </p>
           ) : null}
@@ -53,7 +55,7 @@ export function ArticleRenderer({
       {renderRelatedContent()}
       {sources ? (
         <>
-          <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>
+          <h2 className="serlo-h2">{articleStrings.sourcesTitle}</h2>
           <ul className="serlo-ul mb-4 mt-2 text-lg"></ul>
           {sources}
         </>
@@ -67,8 +69,8 @@ export function ArticleRenderer({
 
     return (
       <>
-        <h2 className="serlo-h2">{strings.content.relatedContentTitle}</h2>
-        <p className="serlo-p">{strings.content.relatedContentText}</p>
+        <h2 className="serlo-h2">{articleStrings.relatedContentTitle}</h2>
+        <p className="serlo-p">{articleStrings.relatedContentText}</p>
 
         {renderRelatedContentSubsection('articles')}
         {renderRelatedContentSubsection('courses')}

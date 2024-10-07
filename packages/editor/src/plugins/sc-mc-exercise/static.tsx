@@ -1,6 +1,6 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
-import { shuffleArray } from '@serlo/frontend/src/helper/shuffle-array'
+import { shuffleArray } from '@editor/utils/shuffle-array'
 import { Fragment, useEffect, useState } from 'react'
 import type { Element } from 'slate'
 

@@ -1,5 +1,5 @@
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 import type { ScMcExerciseProps } from '.'
 import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
@@ -8,7 +8,7 @@ export const ScMcExerciseToolbar = ({
   state,
   containerRef,
 }: ScMcExerciseProps) => {
-  const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
+  const scMcStrings = useEditStrings().templatePlugins.scMcExercise
 
   const handleChange = (value: string) => {
     state.isSingleChoice.set(value === 'sc')

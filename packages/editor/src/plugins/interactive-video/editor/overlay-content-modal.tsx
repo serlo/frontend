@@ -1,10 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { useEffect, useRef } from 'react'
 
 import { type InteractiveVideoProps } from '..'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 
 export function OverlayContentModal({
@@ -15,7 +15,7 @@ export function OverlayContentModal({
   onClose: () => void
 }) {
   const { title, autoOpen, mandatory, forceRewatch, child } = mark
-  const pluginStrings = useEditorStrings().plugins.interactiveVideo
+  const pluginStrings = useEditStrings().plugins.interactiveVideo
 
   const titleRef = useRef<HTMLInputElement>(null)
 

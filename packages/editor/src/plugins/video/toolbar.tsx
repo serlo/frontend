@@ -1,10 +1,10 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { VideoProps } from '.'
@@ -20,7 +20,7 @@ export const VideoToolbar = ({
   showSettingsModal: SettingsModalState
   setShowSettingsModal: Dispatch<SetStateAction<SettingsModalState>>
 }) => {
-  const videoStrings = useEditorStrings().plugins.video
+  const videoStrings = useEditStrings().plugins.video
 
   return (
     <PluginToolbar
@@ -39,7 +39,7 @@ export const VideoToolbar = ({
           >
             {videoStrings.videoDescription} <FaIcon icon={faPencilAlt} />
           </button>
-          <ModalWithCloseButton
+          <EditorModal
             isOpen={!!showSettingsModal}
             setIsOpen={(open) => {
               if (!open) setShowSettingsModal(false)
@@ -73,7 +73,7 @@ export const VideoToolbar = ({
                 className="block"
               />
             </div>
-          </ModalWithCloseButton>
+          </EditorModal>
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

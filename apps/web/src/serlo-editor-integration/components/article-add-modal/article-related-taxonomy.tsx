@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
@@ -5,7 +6,6 @@ import { gql } from 'graphql-request'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { useEntityData } from '@/contexts/uuids-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -28,7 +28,7 @@ export function ArticleRelatedTaxonomy({
   const { data, error } = useFetchParentTaxonomy(entityId ?? 0)
 
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().templatePlugins.article
+  const articleStrings = useEditStrings().templatePlugins.article
 
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
   if (!dataAndTerm || !entityId) {

@@ -1,6 +1,6 @@
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 import type { BoxProps } from '..'
 import { boxTypeIcons, types } from '../renderer'
@@ -10,8 +10,8 @@ interface TypeChooserProps {
 }
 
 export function TypeChooserBox({ typeState }: TypeChooserProps) {
-  const { strings } = useInstanceData()
-  const editorStrings = useEditorStrings()
+  const boxStaticStrings = useStaticStrings().plugins.box
+  const editorStrings = useEditStrings()
 
   function handleTypeSelection(
     type: string,
@@ -45,7 +45,7 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
                 data-qa={`plugin-box-initial-type-chooser-option-${type}`}
               >
                 {listIcon ? <FaIcon className="mr-1" icon={listIcon} /> : null}
-                {strings.content.boxTypes[type]}
+                {boxStaticStrings.types[type]}
               </button>
             </li>
           )

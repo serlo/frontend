@@ -10,7 +10,7 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'

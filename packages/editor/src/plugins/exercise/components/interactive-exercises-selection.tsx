@@ -1,23 +1,23 @@
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   getPluginMenuItems,
   type PluginMenuItem,
-} from '@editor/package/plugin-menu'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+} from '@editor/plugins/rows/utils/plugin-menu'
 import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import { useMemo } from 'react'
 
 import { type ExerciseProps } from '..'
 import { type InteractivePluginType } from '../interactive-plugin-types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InteractiveExercisesSelection({
   interactive,
 }: {
   interactive: ExerciseProps['state']['interactive']
 }) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const exStrings = editorStrings.plugins.exercise
 
   // Initial state of interactive plugin menu items are wrapped with an exercise plugin

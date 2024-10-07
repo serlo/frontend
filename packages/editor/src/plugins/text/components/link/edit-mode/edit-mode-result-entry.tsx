@@ -1,6 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { cn } from '@serlo/frontend/src/helper/cn'
 
 export function EditModeResultEntry({
   selectedIndex,

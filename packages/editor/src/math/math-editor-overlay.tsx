@@ -1,6 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 
 import type { MathEditorProps } from './editor'
 import { MathEditorTextarea } from './math-editor-textarea'
@@ -10,7 +10,7 @@ export function MathEditorOverlay({
   isVisualMode,
   ...props
 }: { hasError: boolean; isVisualMode: boolean } & MathEditorProps) {
-  const mathStrings = useEditorStrings().plugins.text.math
+  const mathStrings = useEditStrings().plugins.text.math
 
   return (
     <div

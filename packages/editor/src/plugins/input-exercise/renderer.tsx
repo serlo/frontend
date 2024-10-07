@@ -1,6 +1,6 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { useEffect, useState } from 'react'
 
 import { getMatchingAnswer } from './helper/get-matching-answer'
@@ -35,7 +35,7 @@ export function InputExerciseRenderer({
 }) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
-  const exStrings = useInstanceData().strings.content.exercises
+  const exStrings = useStaticStrings().plugins.exercise
 
   const [mathjs, setMathjs] = useState<MathjsImport | null>(null)
   useEffect(() => void import('mathjs').then((math) => setMathjs(math)), [])

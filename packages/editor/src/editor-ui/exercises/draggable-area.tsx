@@ -1,7 +1,6 @@
+import { cn } from '@editor/utils/cn'
 import { LegacyRef, ReactNode } from 'react'
 import { useDrop } from 'react-dnd'
-
-import { cn } from '@/helper/cn'
 
 interface DraggableAreaProps {
   children: ReactNode

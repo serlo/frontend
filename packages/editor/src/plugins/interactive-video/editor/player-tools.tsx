@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faTasks } from '@fortawesome/free-solid-svg-icons'
 import {
   useActiveTextCues,
@@ -7,7 +8,6 @@ import {
 
 import { longerThanVideoDuration, markDuration } from '../const'
 import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 // editor player tools (currently just the hovering button)
 export function PlayerTools({
@@ -17,7 +17,7 @@ export function PlayerTools({
   addOverlayContent?: (startTime: number) => void
   openOverlayByStartTime: (startTime: number) => void
 }) {
-  const pluginStrings = useEditorStrings().plugins.interactiveVideo
+  const pluginStrings = useEditStrings().plugins.interactiveVideo
 
   const textTrack = useActiveTextTrack('chapters')
   const activeCues = useActiveTextCues(textTrack)
