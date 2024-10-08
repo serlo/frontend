@@ -414,6 +414,10 @@ export const editStrings = {
       childPluginSelection:
         'Möchtest du einen Lückentext oder eine Tabelle mit Lücken?',
     },
+    edusharingAsset: {
+      title: 'Edu-sharing Inhalt',
+      description: 'Inhalte von edu-sharing einbinden',
+    },
   },
   templatePlugins: {
     entity: {

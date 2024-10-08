@@ -1,4 +1,5 @@
 import { EditorInput, PreviewOverlay } from '@editor/editor-ui'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
@@ -12,6 +13,7 @@ import { PluginToolbar } from '../../editor-ui/plugin-toolbar/plugin-toolbar'
 export const SerloInjectionEditor = (props: SerloInjectionProps) => {
   const { focused, id } = props
   const config = useSerloInjectionConfig(props.config)
+  const injectionStrings = useEditStrings().plugins.injection
   const [cache, setCache] = useState(props.state.value)
   const [preview, setPreview] = useState(false)
   const [userInput, setUserInput] = useState('')
@@ -103,7 +105,7 @@ export const SerloInjectionEditor = (props: SerloInjectionProps) => {
 
     return (
       <PluginToolbar
-        pluginType="serlo.org Inhalt"
+        pluginType={injectionStrings.title}
         pluginControls={<PluginDefaultTools pluginId={id} />}
       />
     )

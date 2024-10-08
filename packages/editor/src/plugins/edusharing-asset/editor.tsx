@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import * as t from 'io-ts'
 import { useContext, useEffect, useRef, useState } from 'react'
 import Modal from 'react-modal'
@@ -20,6 +21,7 @@ export function EdusharingAssetEditor({
 }: EdusharingAssetProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const pluginStrings = useEditStrings().plugins.edusharingAsset
   const { edusharingAsset, contentWidth } = state
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export function EdusharingAssetEditor({
 
     return (
       <PluginToolbar
-        pluginType="Edu-sharing Inhalt"
+        pluginType={pluginStrings.title}
         pluginControls={<PluginDefaultTools pluginId={id} />}
         pluginSettings={
           <>
