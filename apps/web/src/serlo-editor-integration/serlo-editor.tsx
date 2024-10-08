@@ -1,4 +1,4 @@
-import { Editor, type EditorProps } from '@editor/core'
+import { type EditorProps } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
@@ -7,6 +7,7 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { Entity } from '@serlo/authorization'
+import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
@@ -17,6 +18,10 @@ import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
+
+const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
+  ssr: false,
+})
 
 export interface SerloEditorProps {
   children?: ReactNode
