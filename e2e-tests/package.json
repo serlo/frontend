@@ -11,13 +11,13 @@
     "e2e-workers": "codeceptjs run-workers --suites 3"
   },
   "devDependencies": {
-    "@types/node": "^18.16.19",
-    "codeceptjs": "3.5.5",
+    "@types/node": "^18.19.54",
+    "codeceptjs": "3.6.7",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.3.1",
-    "playwright": "^1.40.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.4.3"
+    "dotenv": "^16.4.5",
+    "playwright": "^1.47.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
