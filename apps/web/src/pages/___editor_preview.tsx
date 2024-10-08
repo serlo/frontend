@@ -1,4 +1,3 @@
-import { Editor } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
@@ -7,6 +6,7 @@ import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import dynamic from 'next/dynamic'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
 import { useMemo } from 'react'
@@ -26,6 +26,10 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+
+const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
+  ssr: false,
+})
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
