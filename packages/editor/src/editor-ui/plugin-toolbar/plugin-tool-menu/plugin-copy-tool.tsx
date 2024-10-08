@@ -14,27 +14,23 @@ interface PluginCopyToolProps {
  * plugin to copy plugin's editor state to the clipboard
  */
 export function PluginCopyTool({ pluginId, noSeparator }: PluginCopyToolProps) {
-  const editorStrings = useEditStrings()
+  const rowsStrings = useEditStrings().plugins.rows
 
   const handleOnClick = useCallback(() => {
     const document = selectStaticDocumentWithoutIds(store.getState(), pluginId)
     const rowsDocument = { plugin: 'rows', state: [document] }
 
     void navigator.clipboard.writeText(JSON.stringify(rowsDocument))
-    showToastNotice(editorStrings.edtrIo.pluginCopySuccess, 'success', 2000)
-    showToastNotice(
-      '👉 ' + editorStrings.edtrIo.pluginCopyInfo,
-      undefined,
-      4000
-    )
-  }, [pluginId, editorStrings])
+    showToastNotice(rowsStrings.copySuccess, 'success', 2000)
+    showToastNotice('👉 ' + rowsStrings.pluginCopyInfo, undefined, 4000)
+  }, [pluginId, rowsStrings])
 
   if (!navigator.clipboard) return null
 
   return (
     <DropdownButton
       onClick={handleOnClick}
-      label={editorStrings.edtrIo.pluginCopyButtonLabel}
+      label={rowsStrings.pluginCopyButtonLabel}
       icon={faCopy}
       separatorTop={!noSeparator}
       dataQa="plugin-copy-tool-button"
