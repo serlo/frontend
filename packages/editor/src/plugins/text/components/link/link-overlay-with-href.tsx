@@ -8,7 +8,7 @@ import {
   faPencilAlt,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { QuickbarData } from '@serlo/frontend/src/components/navigation/quickbar'
+import type { QuickbarData } from '@serlo/frontend/src/components/navigation/quickbar'
 
 export function LinkOverlayWithHref({
   value,

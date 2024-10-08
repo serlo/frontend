@@ -1,6 +1,5 @@
 import IframeResizer from 'iframe-resizer-react'
 import * as t from 'io-ts'
-import Image from 'next/image'
 import { memo, useEffect, useState } from 'react'
 
 type RenderMethod = 'dangerously-set-inner-html' | 'iframe'
@@ -99,7 +98,7 @@ export function EdusharingAssetRenderer(props: {
           renderEmbed()
         ) : (
           <div className="flex justify-center">
-            <Image
+            <img
               className="block opacity-50"
               src="/edusharing.svg"
               alt="Edusharing Logo"
