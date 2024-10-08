@@ -1,5 +1,4 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 
 import { LicenseIcons } from '../content/license/license-icons'
 import { HSpace } from '@/components/content/h-space'
@@ -7,6 +6,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { LicenseDetailData } from '@/data-types'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export function LicenseDetail({ id, content }: LicenseDetailData) {
   const { strings, licenses } = useInstanceData()
@@ -23,7 +23,7 @@ export function LicenseDetail({ id, content }: LicenseDetailData) {
       <figure className="mx-side mb-10 text-center">
         <LicenseIcons title={title} isDefault={isDefault} />
       </figure>
-      <StaticRenderer document={content} />
+      <EditorRenderer document={content} />
     </>
   )
 }

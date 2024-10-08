@@ -1,4 +1,4 @@
-import { cn } from '@/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 const baseClasses =
   'flex items-center justify-center h-40 animate-pulse bg-gray-300'

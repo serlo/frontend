@@ -1,4 +1,3 @@
-import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { type ReactNode } from 'react'
 
@@ -11,6 +10,7 @@ import {
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData, UuidRevType } from '@/data-types'
 import { cn } from '@/helper/cn'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 import { GeogebraSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 
@@ -52,7 +52,7 @@ export function RevisionPreviewBoxes({
           diffMode={DiffViewerMode.content}
           changes={dataSet.content !== data.currentRevision.content}
         >
-          <StaticRenderer document={dataSet.content} />
+          <EditorRenderer document={dataSet.content} />
         </PreviewBox>
       )}
       {renderVideoOrAppletBox(dataSet)}

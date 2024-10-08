@@ -1,4 +1,6 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   focus,
@@ -15,8 +17,6 @@ import type { ImageGalleryProps } from '.'
 import { AddImagesButton } from './components/add-images-button'
 import { EditorImageGrid } from './components/editor-image-grid'
 import { ImageGalleryToolbar } from './toolbar'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const MAX_IMAGES = 6
 
@@ -32,7 +32,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const imageGalleryStrings = useEditorStrings().plugins.imageGallery
+  const imageGalleryStrings = useEditStrings().plugins.imageGallery
 
   const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
 
@@ -138,7 +138,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
         <AddImagesButton onClick={handleAddImagesButtonClick} />
       )}
 
-      <ModalWithCloseButton
+      <EditorModal
         className="my-6 p-0 [&_.plugin-image]:!-ml-[5px] [&_img]:max-h-[70vh]"
         extraTitleClassName="sr-only"
         extraCloseButtonClassName="sr-only"
@@ -158,7 +158,7 @@ export function ImageGalleryEditor(props: ImageGalleryProps) {
             })}
           </div>
         ))}
-      </ModalWithCloseButton>
+      </EditorModal>
     </div>
   )
 }

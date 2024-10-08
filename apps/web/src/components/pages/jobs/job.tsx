@@ -44,7 +44,7 @@ export function Job({ position }: { position: PersonioPosition }) {
                   {name}
                 </h2>
                 <div
-                  className="sane-text-defaults serlo-editor-hacks mx-side text-lg"
+                  className="sane-text-defaults mx-side text-lg"
                   dangerouslySetInnerHTML={{ __html: value }}
                 />
               </section>

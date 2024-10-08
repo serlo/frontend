@@ -1,3 +1,4 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { isEmptyTextDocument } from '@editor/plugins/text/utils/static-is-empty'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorImageGalleryDocument } from '@editor/types/editor-plugins'
@@ -9,7 +10,6 @@ import { StaticCarousel } from './components/static/static-carousel'
 import { StaticLightbox } from './components/static/static-lightbox'
 import { StaticLightboxMobile } from './components/static/static-lightbox-mobile'
 import { getAltOrFallback } from '../image/utils/get-alt-or-fallback'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export function ImageGalleryStaticRenderer({
   state,
@@ -19,7 +19,7 @@ export function ImageGalleryStaticRenderer({
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
     null
   )
-  const instanceData = useInstanceData()
+  const altFallbackString = useStaticStrings().plugins.image.altFallback
 
   const imageDocuments = state.images
     .map((item) => item.imagePlugin)
@@ -31,7 +31,7 @@ export function ImageGalleryStaticRenderer({
 
       return {
         src: String(src),
-        alt: getAltOrFallback(instanceData, caption, alt),
+        alt: getAltOrFallback(altFallbackString, caption, alt),
         dimensions: state.images[index].dimensions,
         caption: hasVisibleCaption ? (
           <StaticRenderer document={caption} />

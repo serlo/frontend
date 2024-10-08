@@ -1,14 +1,14 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import {
   faExternalLink,
   faNewspaper,
   faPencilAlt,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { QuickbarData } from '@serlo/frontend/src/components/navigation/quickbar'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import type { QuickbarData } from '@serlo/frontend/src/components/navigation/quickbar'
 
 export function LinkOverlayWithHref({
   value,
@@ -27,7 +27,7 @@ export function LinkOverlayWithHref({
       : undefined
   const entry = quickbarData?.find((entry) => entry.id === serloId)
   const isCustomLink = !serloId && !value.includes('serlo.org/')
-  const textStrings = useEditorStrings().plugins.text
+  const textStrings = useEditStrings().plugins.text
 
   return (
     <div className="flex content-between items-center px-side py-2">

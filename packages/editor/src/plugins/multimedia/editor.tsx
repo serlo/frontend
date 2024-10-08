@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   selectAncestorPluginTypes,
   selectIsFocused,
@@ -7,8 +8,7 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorImageDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import { useMemo, useState } from 'react'
 
 import type { MultimediaProps } from '.'
@@ -23,7 +23,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   const { config, state, focused } = props
   const { explanation, multimedia, width } = state
 
-  const multimediaStrings = useEditorStrings().plugins.multimedia
+  const multimediaStrings = useEditStrings().plugins.multimedia
 
   const isMediaChildFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, multimedia.id)

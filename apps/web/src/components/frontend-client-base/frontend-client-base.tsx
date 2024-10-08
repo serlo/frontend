@@ -1,7 +1,11 @@
+import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
+import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
+import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
 import type { AuthorizationPayload } from '@serlo/authorization'
 import Head from 'next/head'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
+import { mergeDeepRight } from 'ramda'
 import { useState, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 
@@ -121,29 +125,37 @@ export function FrontendClientBase({
         </Head>
       ) : null}
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-        <LoggedInDataProvider value={loggedInData}>
-          <UuidsProvider value={serloEntityData ?? null}>
-            <Toaster />
-            <ConditionalWrap
-              condition={!noHeaderFooter}
-              wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-            >
+        <StaticStringsProvider
+          value={
+            instanceData.lang === 'de'
+              ? mergeDeepRight(staticStringsEn, staticStringsDe)
+              : staticStringsEn
+          }
+        >
+          <LoggedInDataProvider value={loggedInData}>
+            <UuidsProvider value={serloEntityData ?? null}>
+              <Toaster />
               <ConditionalWrap
-                condition={!noContainers}
-                wrapper={(kids) => (
-                  <div className="relative">
-                    <MaxWidthDiv showNav={showNav}>
-                      <main id="content">{kids}</main>
-                    </MaxWidthDiv>
-                  </div>
-                )}
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
               >
-                {children}
+                <ConditionalWrap
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <div className="relative">
+                      <MaxWidthDiv showNav={showNav}>
+                        <main id="content">{kids}</main>
+                      </MaxWidthDiv>
+                    </div>
+                  )}
+                >
+                  {children}
+                </ConditionalWrap>
+                <MaintenanceBanner />
               </ConditionalWrap>
-              <MaintenanceBanner />
-            </ConditionalWrap>
-          </UuidsProvider>
-        </LoggedInDataProvider>
+            </UuidsProvider>
+          </LoggedInDataProvider>
+        </StaticStringsProvider>
       </AuthProvider>
     </InstanceDataProvider>
   )

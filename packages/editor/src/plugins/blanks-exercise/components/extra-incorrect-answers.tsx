@@ -1,11 +1,11 @@
 import { AutogrowInput } from '@editor/editor-ui/autogrow-input'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { RemovableInputWrapper } from '@editor/editor-ui/removable-input-wrapper'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
 import { useRef, useState } from 'react'
 
 import type { BlanksExerciseProps } from '..'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ExtraIncorrectAnswersProps {
   extraDraggableAnswers: BlanksExerciseProps['state']['extraDraggableAnswers']
@@ -15,7 +15,7 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
   const { extraDraggableAnswers } = props
 
   const areaWrapper = useRef<HTMLDivElement>(null)
-  const blanksExerciseStrings = useEditorStrings().plugins.blanksExercise
+  const blanksExerciseStrings = useEditStrings().plugins.blanksExercise
 
   const incorrectAnswers = extraDraggableAnswers.defined
     ? extraDraggableAnswers.map(({ answer }) => answer.value)

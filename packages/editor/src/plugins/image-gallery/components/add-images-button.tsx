@@ -1,6 +1,5 @@
 import IconChoose from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-layered-images.svg'
-
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 interface AddImagesButtonProps {
   onClick: () => void
@@ -8,7 +7,7 @@ interface AddImagesButtonProps {
 
 export function AddImagesButton(props: AddImagesButtonProps) {
   const { onClick } = props
-  const pluginStrings = useEditorStrings().plugins.imageGallery
+  const pluginStrings = useEditStrings().plugins.imageGallery
 
   return (
     <div className="flex rounded-md bg-yellow-50 p-8 shadow-md">

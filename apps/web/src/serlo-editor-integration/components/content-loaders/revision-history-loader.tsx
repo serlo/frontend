@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
@@ -9,7 +10,6 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import type {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
@@ -38,7 +38,7 @@ export function RevisionHistoryLoader<T>({
 
   const revisionsResponse = useRevisionsFetch(id)
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   if (!revisionsResponse) return null
 

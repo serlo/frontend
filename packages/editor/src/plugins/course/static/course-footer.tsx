@@ -1,4 +1,8 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
+import { scrollIfNeeded } from '@editor/utils/scroll'
 import {
   faArrowCircleRight,
   faArrowCircleUp,
@@ -6,11 +10,6 @@ import {
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
-
-import { FaIcon } from '@/components/fa-icon'
-import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
-import { scrollIfNeeded } from '@/helper/scroll'
 
 export function CourseFooter({
   activePageIndex: index,
@@ -35,7 +34,7 @@ export function CourseFooter({
   const previousHref = previousPage ? pageUrls?.[previousIndex] : undefined
   const nextHref = nextPage ? pageUrls?.[nextIndex] : undefined
 
-  const { strings } = useInstanceData()
+  const courseStrings = useStaticStrings().plugins.course
 
   function navigate(toPath: string, newIndex: number) {
     void router.push(toPath, undefined, { shallow: true })
@@ -64,7 +63,7 @@ export function CourseFooter({
             className="serlo-button-light mx-side h-fit hover:no-underline"
           >
             <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
-            {strings.course.back}
+            {courseStrings.back}
           </a>
         ) : null}
         {nextHref ? (
@@ -77,7 +76,7 @@ export function CourseFooter({
             className="ml-auto mr-side text-right hover:no-underline"
           >
             <div className="serlo-button-blue mb-2 hover:no-underline">
-              <FaIcon icon={faArrowCircleRight} /> {strings.course.next}
+              <FaIcon icon={faArrowCircleRight} /> {courseStrings.next}
             </div>
             <div className="flex text-lg">
               <b
@@ -96,7 +95,7 @@ export function CourseFooter({
             className="serlo-button-blue mx-side"
             onClick={onOverviewClick}
           >
-            <FaIcon icon={faArrowCircleUp} /> {strings.course.showPages}
+            <FaIcon icon={faArrowCircleUp} /> {courseStrings.showPages}
           </button>
         )}
       </nav>
