@@ -20,32 +20,47 @@ jobs:
       - name: Build editor package
         run: yarn editor:build
 
-      - name: Check if current version is already published
+      - name: Apply Changesets and Version Bump
+        run: yarn changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if the next version is already published
         id: check_published
         run: |
-          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
-          if npm view @serlo/editor@$CURRENT_VERSION > /dev/null 2>&1; then
+          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
+          if npm view @serlo/editor@$NEXT_VERSION > /dev/null 2>&1; then
             echo "already_published=true" >> $GITHUB_OUTPUT
           else
             echo "already_published=false" >> $GITHUB_OUTPUT
-          fi
+
+      - name: Check for uncommitted changes
+        id: check_changes
+        run: |
+          git add .
+          if git diff --quiet; then
+            echo "no_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "no_changes=false" >> $GITHUB_OUTPUT
 
       - name: Create a new branch for the version bump
-        if: steps.check_published.outputs.already_published == 'false'
+        if: steps.check_published.outputs.already_published == 'false' && steps.check_changes.outputs.no_changes == 'false'
         run: |
+          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
-          git checkout -b changeset-release-branch
+          git checkout -b "release/@serlo/editor-$NEXT_VERSION"
           git add .
-          git commit -m "chore(release): bump version after changeset"
-          git push origin changeset-release-branch
+          git commit -m "chore(release): bump @serlo/editor to version $NEXT_VERSION"
+          git push origin "release/@serlo/editor-$NEXT_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
-        if: steps.check_published.outputs.already_published == 'false'
+        if: steps.check_published.outputs.already_published == 'false' && steps.check_changes.outputs.no_changes == 'false'
         run: |
-          gh pr create --title "Release: Bump version after changeset" --body "Automated PR for version bump" --base staging --head changeset-release-branch
+          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
+          gh pr create --title "Release: Bump @serlo/editor to version $NEXT_VERSION" --body "Automated PR to bump @serlo/editor to $NEXT_VERSION" --base staging --head "release/@serlo/editor-$NEXT_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,11 +70,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release (after PR merge)
         if: steps.check_published.outputs.already_published == 'false'
         run: |
-          tag=$(git describe --abbrev=0 --tags)
+          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
           body=$(git log -1 --pretty=format:%B)
-          gh release create "$tag" --notes "$body"
+          gh release create "v$NEXT_VERSION" --notes "$body"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
