@@ -25,8 +25,6 @@ export interface MathElementProps {
   children: RenderElementProps['children']
 }
 
-const visualEditorPreferenceKey = 'text:math:visual-editor'
-
 export function MathElement({
   element,
   attributes,
@@ -36,7 +34,7 @@ export function MathElement({
   const editor = useSlate()
   const selected = useSelected()
   const preferences = useContext(PreferenceContext)
-  const isVisualMode = !!preferences.getKey(visualEditorPreferenceKey)
+  const isVisualMode = !!preferences.get('visualMath')
 
   const isInsideListElement = useMemo(() => {
     return isElementWithinList(element, editor)
@@ -86,9 +84,7 @@ export function MathElement({
           onDeleteOutLeft={() => {
             transformOutOfElement({ shouldDelete: true, reverse: true })
           }}
-          onEditorChange={(visual) =>
-            preferences.setKey(visualEditorPreferenceKey, visual)
-          }
+          onEditorChange={(visual) => preferences.set('visualMath', visual)}
         />
         {children}
       </VoidWrapper>

@@ -1,49 +1,57 @@
-// Scaffolding implementation of a preference context
-// Useful for settings across one editor instance
-// Basically a key-value store, no persistent yet
+// context (and localStorage) for user preferences & experiments
 
 import { createContext, ReactNode, useState } from 'react'
 
+const preferences = {
+  visualMath: {
+    storeageKey: 'serlo-editor::visual-math',
+    default: true,
+  },
+}
+
+type PreferenceName = keyof typeof preferences
+
 export interface Preference {
-  getKey: (key: string) => unknown
-  setKey: (key: string, val: unknown) => void
+  set: (key: PreferenceName, value: boolean) => void
+  get: (key: PreferenceName) => boolean
 }
 
 export const PreferenceContext = createContext<Preference>({
-  getKey: () => {},
-  setKey: () => {},
+  set: () => {},
+  get: () => {
+    return false
+  },
 })
-
-const store: { [key: string]: unknown } = {}
-
-/**
- * Sets a preference
- *
- * @param key - The preference
- * @param val - The value
- */
-export function setDefaultPreference(key: string, val: unknown) {
-  store[key] = val
-}
 
 export function PreferenceContextProvider({
   children,
 }: {
   children: ReactNode
 }) {
-  const [state, setState] = useState(1)
+  // just to make sure the context updates
+  const [iterator, setIterator] = useState(0)
 
-  function setKey(key: string, val: unknown) {
-    store[key] = val
-    setState(state + 1)
+  function set(name: PreferenceName, value: boolean) {
+    const isDefault = preferences[name].default === value
+
+    const { storeageKey } = preferences[name]
+    if (isDefault) {
+      localStorage.removeItem(storeageKey)
+    } else {
+      localStorage.setItem(storeageKey, JSON.stringify(value))
+    }
+    setIterator(iterator + 1)
   }
 
-  function getKey(key: string) {
-    return store[key]
+  function get(name: PreferenceName) {
+    const stored = localStorage.getItem(preferences[name].storeageKey)
+    return stored === null
+      ? preferences[name].default
+      : (JSON.parse(stored) as boolean)
   }
 
   return (
-    <PreferenceContext.Provider value={{ setKey, getKey }}>
+    <PreferenceContext.Provider value={{ set, get }}>
       {children}
     </PreferenceContext.Provider>
   )
