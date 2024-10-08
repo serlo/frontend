@@ -11,13 +11,18 @@ import {
 import { cn } from '@editor/utils/cn'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useEffect, useState } from 'react'
+import { lazy, useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
 import { PreviewProvider } from './context/preview-context'
 import { ExerciseToolbar } from './toolbar/toolbar'
-import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
+
+const SerloLicenseChooser = lazy(() =>
+  import('../solution/serlo-license-chooser').then((module) => ({
+    default: module.SerloLicenseChooser,
+  }))
+)
 
 export function ExerciseEditor(props: ExerciseProps) {
   const { state, focused, id } = props

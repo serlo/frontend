@@ -1,6 +1,7 @@
 export type EditStrings = typeof editStrings
 
 export const editStrings = {
+  lang: 'de',
   confirmRouteChange:
     'Willst du wirklich die Seite verlassen ohne zu speichern?',
   noChangesWarning: 'Bisher hast du nichts geändert',
@@ -53,7 +54,7 @@ export const editStrings = {
       emptyContentWarning: 'Boxen ohne Inhalt werden nicht angezeigt',
     },
     dropzoneImage: {
-      title: 'Bilder mit Ablagezonen',
+      title: 'Interaktives Bild (Ablagezonen)',
       description:
         'Erstelle eine Aufgabe, bei der vorgegebene Antworten in die richtigen Zonen eines Bilds oder einen leeren Hintergrund gezogen werden müssen.',
       backgroundImage: 'Hintergrundbild',
@@ -241,11 +242,14 @@ export const editStrings = {
       description: 'Rows plugin holds other plugins',
       searchForTools: 'Suche hier nach Tools…',
       duplicate: 'Duplizieren',
-      copyAnchorLink: 'Link zu diesem Element kopieren',
       remove: 'Löschen',
       close: 'Schließen',
       dragElement: 'Verschiebe das Element innerhalb des Dokuments',
       addAnElement: 'Füge ein Element hinzu',
+      copyAnchorLink: 'Link zu diesem Element kopieren',
+      copySuccess: 'Erfolgreich kopiert',
+      pluginCopyInfo: 'Du kannst das Plugin jetzt in Text-Plugins einfügen',
+      pluginCopyButtonLabel: 'Plugin in die Zwischenablage kopieren',
     },
     serloTable: {
       title: 'Tabelle',
@@ -541,8 +545,5 @@ export const editStrings = {
     author: 'Autor*in',
     createdAt: 'Zeitstempel',
     ready: 'Bereit zum Speichern?',
-    pluginCopySuccess: 'Plugin kopiert!',
-    pluginCopyInfo: 'Du kannst das Plugin jetzt in Text-Plugins einfügen',
-    pluginCopyButtonLabel: 'Plugin in die Zwischenablage kopieren',
   },
 }

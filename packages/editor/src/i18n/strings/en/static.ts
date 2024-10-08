@@ -1,6 +1,7 @@
 export type StaticStrings = typeof staticStrings
 
 export const staticStrings = {
+  lang: 'en',
   plugins: {
     article: {
       exercisesTitle: 'Exercises',

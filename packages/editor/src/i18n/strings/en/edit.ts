@@ -1,6 +1,7 @@
 export type EditStrings = typeof editStrings
 
 export const editStrings = {
+  lang: 'en',
   confirmRouteChange: 'Are you sure you want to leave without saving?',
   noChangesWarning: 'Nothing changed so there is no need to save yet',
   addPluginsModal: {
@@ -51,7 +52,7 @@ export const editStrings = {
       emptyContentWarning: 'Boxes without content will not be displayed',
     },
     dropzoneImage: {
-      title: 'Image Dropzones',
+      title: 'Interactive Image (Dropzones)',
       description:
         'Create an exercise where given answers must be dragged into the correct zones of a picture or a blank background.',
       backgroundImage: 'Background image',
@@ -234,11 +235,14 @@ export const editStrings = {
       description: 'Rows plugin holds other plugins',
       searchForTools: 'Search for tools…',
       duplicate: 'Duplicate',
-      copyAnchorLink: 'Copy link to this element',
       remove: 'Remove',
       close: 'Close',
       dragElement: 'Drag the element within the document',
       addAnElement: 'Add an element',
+      copyAnchorLink: 'Copy link to this element',
+      copySuccess: 'Successfully copied!',
+      pluginCopyInfo: 'You can now paste this plugin into text plugins',
+      pluginCopyButtonLabel: 'Copy plugin to clipboard',
     },
     serloTable: {
       title: 'Table',
@@ -528,8 +532,5 @@ export const editStrings = {
     author: 'Author',
     createdAt: 'when?',
     ready: 'Ready to save?',
-    pluginCopySuccess: 'Plugin copied!',
-    pluginCopyInfo: 'You can now paste this plugin into text plugins',
-    pluginCopyButtonLabel: 'Copy plugin to clipboard',
   },
 }
