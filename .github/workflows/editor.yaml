@@ -33,6 +33,7 @@ jobs:
             echo "already_published=true" >> $GITHUB_OUTPUT
           else
             echo "already_published=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Check for uncommitted changes
         id: check_changes
@@ -42,6 +43,7 @@ jobs:
             echo "no_changes=true" >> $GITHUB_OUTPUT
           else
             echo "no_changes=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create a new branch for the version bump
         if: steps.check_published.outputs.already_published == 'false' && steps.check_changes.outputs.no_changes == 'false'
