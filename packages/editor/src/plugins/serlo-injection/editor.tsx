@@ -1,4 +1,5 @@
 import { EditorInput, PreviewOverlay } from '@editor/editor-ui'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
@@ -8,12 +9,11 @@ import { SerloInjectionRenderer } from './renderer'
 import { FaIcon } from '../../../../../apps/web/src/components/fa-icon'
 import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { PluginToolbar } from '../../editor-ui/plugin-toolbar/plugin-toolbar'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const SerloInjectionEditor = (props: SerloInjectionProps) => {
   const { focused, id } = props
   const config = useSerloInjectionConfig(props.config)
-  const injectionStrings = useEditorStrings().plugins.injection
+  const injectionStrings = useEditStrings().plugins.injection
   const [cache, setCache] = useState(props.state.value)
   const [preview, setPreview] = useState(false)
   const [userInput, setUserInput] = useState('')

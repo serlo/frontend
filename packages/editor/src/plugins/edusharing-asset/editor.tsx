@@ -1,3 +1,4 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import * as t from 'io-ts'
 import { useContext, useEffect, useRef, useState } from 'react'
 import Modal from 'react-modal'
@@ -7,7 +8,6 @@ import { LtikContext } from './ltik-context'
 import { EdusharingAssetRenderer } from './renderer'
 import { PluginToolbar } from '../../editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const EdusharingAssetDecoder = t.type({
   nodeId: t.string,
@@ -21,7 +21,7 @@ export function EdusharingAssetEditor({
 }: EdusharingAssetProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const pluginStrings = useEditorStrings().plugins.edusharingAsset
+  const pluginStrings = useEditStrings().plugins.edusharingAsset
   const { edusharingAsset, contentWidth } = state
 
   useEffect(() => {
