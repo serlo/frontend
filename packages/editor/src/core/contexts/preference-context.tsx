@@ -4,12 +4,16 @@ import { createContext, ReactNode, useState } from 'react'
 
 const preferences = {
   visualMath: {
-    storeageKey: 'serlo-editor::visual-math',
-    default: true,
+    storageKey: 'serlo-editor::visual-math',
+    defaultValue: true,
+  },
+  intermediateTasksExperiment: {
+    storageKey: 'serlo-editor::intermediate-tasks',
+    defaultValue: false,
   },
 }
 
-type PreferenceName = keyof typeof preferences
+export type PreferenceName = keyof typeof preferences
 
 export interface Preference {
   set: (key: PreferenceName, value: boolean) => void
@@ -32,27 +36,31 @@ export function PreferenceContextProvider({
   const [iterator, setIterator] = useState(0)
 
   function set(name: PreferenceName, value: boolean) {
-    const isDefault = preferences[name].default === value
-
-    const { storeageKey } = preferences[name]
-    if (isDefault) {
-      localStorage.removeItem(storeageKey)
-    } else {
-      localStorage.setItem(storeageKey, JSON.stringify(value))
-    }
+    setWithoutContext(name, value)
     setIterator(iterator + 1)
   }
 
-  function get(name: PreferenceName) {
-    const stored = localStorage.getItem(preferences[name].storeageKey)
-    return stored === null
-      ? preferences[name].default
-      : (JSON.parse(stored) as boolean)
-  }
-
   return (
-    <PreferenceContext.Provider value={{ set, get }}>
+    <PreferenceContext.Provider value={{ set, get: getWithoutContext }}>
       {children}
     </PreferenceContext.Provider>
   )
+}
+
+export function setWithoutContext(name: PreferenceName, value: boolean) {
+  const { storageKey, defaultValue } = preferences[name]
+
+  const isDefault = defaultValue === value
+
+  if (isDefault) localStorage.removeItem(storageKey)
+  else localStorage.setItem(storageKey, value ? '1' : '0')
+}
+
+export function getWithoutContext(name: PreferenceName) {
+  const { storageKey, defaultValue } = preferences[name]
+
+  if (typeof window === 'undefined') return defaultValue
+  const stored = localStorage.getItem(storageKey)
+
+  return stored === null ? defaultValue : stored === '1'
 }
