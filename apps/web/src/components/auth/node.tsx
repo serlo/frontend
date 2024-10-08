@@ -7,12 +7,12 @@ import { FlowType } from './flow-type'
 import { LoginButtonBildungsraum } from './login-button-bildungsraum'
 import { LoginButtonVidis } from './login-button-vidis'
 import { FaIcon } from '../fa-icon'
-import { shouldUseFeature } from '../user/profile-experimental'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { isVidisActive } from '@/pages/auth/___activate_vidis'
 
 export interface NodeProps {
   node: UiNode
@@ -109,7 +109,7 @@ export function Node({
           )
         }
         if (
-          (!isProduction || shouldUseFeature('authVidis')) &&
+          (!isProduction || isVidisActive()) &&
           attributes.name === 'provider' &&
           attributes.value === 'vidis'
         ) {
