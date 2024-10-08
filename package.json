@@ -47,6 +47,7 @@
     "test": "yarn workspace @serlo/frontend test"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.9",
     "@serlo/eslint-config": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
     "cross-env": "^7.0.3",
