@@ -1,26 +1,20 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faHashtag } from '@fortawesome/free-solid-svg-icons'
-import { useContext } from 'react'
 
 import { DropdownButton } from './dropdown-button'
-import { UuidsContext } from '@/contexts/uuids-context'
 
+// currently only for serlo.org
 export function AnchorLinkCopyTool({ pluginId }: { pluginId: string }) {
   const rowsStrings = useEditStrings().plugins.rows
 
-  // using useContext directly so result can also be null for edusharing
-  const serloEntityId = useContext(UuidsContext)?.entityId
+  const matchSerloId = /\/entity\/repository\/add-revision\/(?<id>\d+)/
 
-  const isActive =
-    serloEntityId &&
-    // only on "/add-revision/…" is a simple way to only show the tool on serlo.org
-    // and when we have a uuid for the content
+  const serloEntityId =
     typeof window !== 'undefined' &&
-    window.location.href.includes('/entity/repository/add-revision/') &&
-    navigator.clipboard
+    window.location.href.match(matchSerloId)?.groups?.id
 
-  if (!isActive) return null
+  if (!serloEntityId || !navigator.clipboard) return null
 
   return (
     <DropdownButton
