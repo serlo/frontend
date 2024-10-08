@@ -68,12 +68,10 @@ export function StaticMath({ src, inline }: StaticMathProps) {
         })
       : ''
     return (
-      <>
-        <span
-          className="inline-block py-1 [page-break-inside:avoid]"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </>
+      <span
+        className="inline-block py-1 [page-break-inside:avoid]"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     )
   }
 }
