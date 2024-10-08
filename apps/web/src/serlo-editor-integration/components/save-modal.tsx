@@ -1,10 +1,10 @@
+import { LocalStorageButton } from '@editor/editor-ui/save/local-storage-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { StateTypeReturnType } from '@editor/plugin'
 import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState } from 'react'
 
-import { LocalStorageButton } from './local-storage-button'
 import { SaveContext } from '../context/save-context'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'

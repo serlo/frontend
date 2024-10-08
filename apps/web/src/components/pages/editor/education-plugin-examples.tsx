@@ -1,4 +1,3 @@
-import { Editor } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
@@ -14,6 +13,7 @@ import type {
 } from '@editor/types/editor-plugins'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { useEffect, useState } from 'react'
 import { debounce } from 'ts-debounce'
@@ -25,6 +25,10 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+
+const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
+  ssr: false,
+})
 
 function createBoxExample(title: string, content: string, type: BoxType) {
   return {
@@ -154,7 +158,7 @@ function ExampleWithEditSwitch({
           </button>
         </div>
         {isEdit ? (
-          <div className={cn('serlo-editor-hacks mt-12', className)}>
+          <div className={cn('mt-12', className)}>
             <Editor
               initialState={exampleState}
               onChange={({ changed, getDocument }) => {

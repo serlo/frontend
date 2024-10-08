@@ -72,14 +72,12 @@ export function SerloEditor(props: SerloEditorProps) {
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
         <LtikContext.Provider value={_ltik}>
-          <div className="serlo-editor-hacks">
-            <Editor
-              initialState={migratedState.document}
-              onChange={handleDocumentChange}
-            >
-              {children}
-            </Editor>
-          </div>
+          <Editor
+            initialState={migratedState.document}
+            onChange={handleDocumentChange}
+          >
+            {children}
+          </Editor>
         </LtikContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>

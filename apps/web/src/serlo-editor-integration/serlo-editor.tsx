@@ -1,4 +1,4 @@
-import { Editor, type EditorProps } from '@editor/core'
+import { type EditorProps } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
@@ -7,14 +7,10 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { Entity } from '@serlo/authorization'
+import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
-import { type ReactNode, useState } from 'react'
+import { type ReactNode } from 'react'
 
-import {
-  debouncedStoreToLocalStorage,
-  getStateFromLocalStorage,
-  LocalStorageNotice,
-} from './components/local-storage-notice'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
@@ -23,19 +19,15 @@ import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
+const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
+  ssr: false,
+})
+
 export interface SerloEditorProps {
   children?: ReactNode
   entityNeedsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
   initialState: EditorProps['initialState']
-}
-
-export interface LooseEdtrData {
-  [key: string]: EditorProps['initialState'] | null | undefined
-}
-
-export interface LooseEdtrDataDefined {
-  [key: string]: EditorProps['initialState']
 }
 
 export function SerloEditor({
@@ -46,10 +38,9 @@ export function SerloEditor({
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
-  const [useStored, setUseStored] = useState(false)
-  const handleLearnerEvent = useSerloHandleLearnerEvent()
-
   const { lang } = useInstanceData()
+
+  const handleLearnerEvent = useSerloHandleLearnerEvent()
 
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
   editorPlugins.init(createPlugins({ lang }))
@@ -59,33 +50,16 @@ export function SerloEditor({
 
   editorLearnerEvent.init(handleLearnerEvent)
 
+  const editString =
+    lang === 'de' ? mergeDeepRight(editStringsEn, editStringsDe) : editStringsEn
+
   return (
-    <EditStringsProvider
-      value={
-        lang === 'de'
-          ? mergeDeepRight(editStringsEn, editStringsDe)
-          : editStringsEn
-      }
-    >
+    <EditStringsProvider value={editString}>
       <IsSerloContext.Provider value>
         <SaveContext.Provider
           value={{ onSave, userCanSkipReview, entityNeedsReview }}
         >
-          <LocalStorageNotice
-            useStored={useStored}
-            setUseStored={setUseStored}
-          />
-          <Editor
-            initialState={
-              useStored ? getStateFromLocalStorage()! : initialState
-            }
-            onChange={({ changed, getDocument }) => {
-              if (!changed) return
-              void debouncedStoreToLocalStorage(getDocument())
-            }}
-          >
-            {children}
-          </Editor>
+          <Editor initialState={initialState}>{children}</Editor>
         </SaveContext.Provider>
       </IsSerloContext.Provider>
     </EditStringsProvider>
