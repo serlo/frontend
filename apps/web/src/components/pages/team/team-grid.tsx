@@ -1,20 +1,27 @@
 import { cn } from '@editor/utils/cn'
 import { Link } from '@serlo/frontend/src/components/content/link'
-import type { TeamDataEntry } from '@serlo/frontend/src/components/pages/editor/editor-team'
 import { getAvatarUrl } from '@serlo/frontend/src/components/user/user-link'
 import Image from 'next/image'
 
-export interface PageTeamRendererProps {
-  data: TeamDataEntry[]
-  extraCols?: boolean
-  compact?: boolean
+export interface TeamDataEntry {
+  firstName: string
+  lastName: string
+  user?: string
+  position: string
+  extraLinkUrl: string
+  extraLinkText: string
+  photo: string
 }
 
-export const PageTeamRenderer = ({
+export const TeamGrid = ({
   data,
   extraCols,
   compact,
-}: PageTeamRendererProps) => {
+}: {
+  data: TeamDataEntry[]
+  extraCols?: boolean
+  compact?: boolean
+}) => {
   if (!data || !data.length) return null
 
   return (

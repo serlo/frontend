@@ -228,10 +228,6 @@ export const editStrings = {
       title: '(experiment) Editor State einfügen',
       description: 'nur in staging',
     },
-    pageTeam: {
-      title: 'Teamübersicht',
-      description: 'Nur für Teamseiten',
-    },
     pagePartners: {
       title: 'Partner Liste',
       description:

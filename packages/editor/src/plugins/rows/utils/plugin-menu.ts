@@ -46,7 +46,6 @@ export const pluginMenuType = {
 
   Audio: EditorPluginType.Audio,
   PageLayout: EditorPluginType.PageLayout,
-  PageTeam: EditorPluginType.PageTeam,
   PagePartners: EditorPluginType.PagePartners,
 
   SingleChoiceExercise: 'singleChoiceExercise',
@@ -219,7 +218,6 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.ExerciseGroup]: IconFallback,
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
-  [pluginMenuType.PageTeam]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
 }
 

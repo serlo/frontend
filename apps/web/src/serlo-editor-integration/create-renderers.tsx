@@ -21,7 +21,6 @@ import type {
   EditorInputExerciseDocument,
   EditorPageLayoutDocument,
   EditorPagePartnersDocument,
-  EditorPageTeamDocument,
   EditorScMcExerciseDocument,
   EditorSerloTableDocument,
   EditorSolutionDocument,
@@ -84,11 +83,6 @@ const DropzoneImageStaticRenderer = dynamic<
 const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
   import('@editor/plugins/page-layout/static').then(
     (mod) => mod.PageLayoutStaticRenderer
-  )
-)
-const PageTeamStaticRenderer = dynamic<EditorPageTeamDocument>(() =>
-  import('@editor/plugins/page-team/static').then(
-    (mod) => mod.PageTeamStaticRenderer
   )
 )
 const PagePartnersStaticRenderer = dynamic<EditorPagePartnersDocument>(() =>
@@ -205,7 +199,6 @@ export function createRenderers(): InitRenderersArgs {
 
       // only for pages
       { type: EditorPluginType.PageLayout, renderer: PageLayoutStaticRenderer },
-      { type: EditorPluginType.PageTeam, renderer: PageTeamStaticRenderer },
       {
         type: EditorPluginType.PagePartners,
         renderer: PagePartnersStaticRenderer,

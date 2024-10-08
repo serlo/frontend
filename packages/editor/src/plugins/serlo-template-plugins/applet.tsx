@@ -47,6 +47,8 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     replaceOwnState,
   } = props.state
 
+  props.state.changes
+
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">

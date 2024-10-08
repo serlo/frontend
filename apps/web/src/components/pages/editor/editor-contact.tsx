@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { TeamDataEntry } from './editor-team'
+import { type TeamDataEntry } from '../team/team-grid'
 
 export function EditorContact({ contact }: { contact: TeamDataEntry }) {
   const { firstName, lastName, position, photo, extraLinkUrl, extraLinkText } =
