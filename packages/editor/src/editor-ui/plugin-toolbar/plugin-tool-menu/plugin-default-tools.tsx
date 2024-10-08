@@ -10,9 +10,9 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { UuidsContext } from '@serlo/frontend/src/contexts/uuids-context'
-import { lazy, useCallback, useContext, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
+import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { PluginCopyTool } from './plugin-copy-tool'
 
@@ -20,19 +20,10 @@ interface PluginDefaultToolsProps {
   pluginId: string
 }
 
-const AnchorLinkCopyTool = lazy(() =>
-  import('./anchor-link-copy-tool').then((module) => ({
-    default: module.AnchorLinkCopyTool,
-  }))
-)
-
 // tools for most plugins (duplicate / remove)
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditStrings().plugins
-
-  // using useContext directly so result can also be null for edusharing
-  const serloEntityId = useContext(UuidsContext)?.entityId
 
   const hasRowsParent = useMemo(
     () =>
@@ -102,14 +93,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
       ) : null}
 
       <PluginCopyTool pluginId={pluginId} noSeparator={!hasRowsParent} />
-      {serloEntityId && hasRowsParent ? (
-        <>
-          <AnchorLinkCopyTool
-            serloEntityId={serloEntityId}
-            pluginId={pluginId}
-          />
-        </>
-      ) : null}
+      {hasRowsParent ? <AnchorLinkCopyTool pluginId={pluginId} /> : null}
     </>
   )
 }

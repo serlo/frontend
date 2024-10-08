@@ -243,6 +243,7 @@ export const editStrings = {
       searchForTools: 'Suche hier nach Tools…',
       duplicate: 'Duplizieren',
       copyAnchorLink: 'Link zu diesem Element kopieren',
+      copySuccess: 'Erfolgreich kopiert',
       remove: 'Löschen',
       close: 'Schließen',
       dragElement: 'Verschiebe das Element innerhalb des Dokuments',
