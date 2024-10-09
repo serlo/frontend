@@ -234,9 +234,9 @@ Scenario('Consent', async ({ I }) => {
 Scenario('Special Pages', ({ I }) => {
   I.amOnPage('/')
   I.click('Kontakt')
-  I.see('Kontakt und Standorte', 'h1')
+  I.waitForText('Kontakt und Standorte', 5, 'h1')
   I.click('Jobs')
-  I.see('Digitale Bildung braucht dich', 'h1')
+  I.waitForText('Digitale Bildung braucht dich', 5, 'h1')
   I.see('Unsere offenen Stellen')
   I.see('Weiterbildung')
 
@@ -244,7 +244,7 @@ Scenario('Special Pages', ({ I }) => {
   I.click('Kontakt')
 
   // Wait for next page to load before clicking team
-  I.see('Kontakt und Standorte', 'h1')
+  I.waitForText('Kontakt und Standorte', 5, 'h1')
   I.click('Team')
 
   // Needs to do external fetching, so wait a bit longer
