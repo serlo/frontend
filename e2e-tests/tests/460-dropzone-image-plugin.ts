@@ -1,3 +1,4 @@
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Dropzone Image plugin')
@@ -5,8 +6,8 @@ Feature('Serlo Editor - Dropzone Image plugin')
 Before(popupWarningFix)
 
 Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
-
+  createNewEditorEntity(I, 'exercise')
+  I.waitForElement('[data-document=true]', 10)
   I.say('Add drag drop plugin')
 
   I.click('$add-exercise-dropzoneImage')
@@ -86,7 +87,8 @@ Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
 Scenario(
   'Create a drag drop exercise with two dropzones and wrong answers',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
+    I.waitForElement('[data-document=true]', 10)
 
     I.say('Add drag drop plugin')
 

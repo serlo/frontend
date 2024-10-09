@@ -1,12 +1,11 @@
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { selectors } from './helpers/selectors'
 
 Feature('Serlo Editor - Multimedia plugin')
 
 Before(popupWarningFix)
 
-const selectors = {
-  addNewPluginButton: '$add-new-plugin-row-button',
-}
 export async function addMultimediaPlugin(I: CodeceptJS.I) {
   // Ensure that only the Multimedia plugin from article introduction is present
   I.seeNumberOfElements('$plugin-multimedia-wrapper', 1)
@@ -20,7 +19,7 @@ export async function addMultimediaPlugin(I: CodeceptJS.I) {
 }
 
 Scenario('Multimedia plugin toolbar controls', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addMultimediaPlugin(I)
 
