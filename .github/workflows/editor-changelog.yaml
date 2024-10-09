@@ -105,26 +105,47 @@ jobs:
       - name: Get PR titles that touched editor folder
         if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_pr_titles
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_TITLES=""
           IFS=' ' read -r -a PR_ARRAY <<< "$PR_NUMBERS"
           echo "Processing ${#PR_ARRAY[@]} PRs"
           for pr in "${PR_ARRAY[@]}"; do
             echo "Checking PR #$pr"
-            FILES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files")
-            echo "Files changed in PR #$pr: $FILES"
+            PR_DATA=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/pulls/$pr")
+            if [ $? -ne 0 ]; then
+              echo "Error fetching PR data for #$pr"
+              continue
+            fi
+
+            MERGED=$(echo "$PR_DATA" | jq -r '.merged')
+            if [ "$MERGED" != "true" ]; then
+              echo "PR #$pr was not merged, skipping"
+              continue
+            fi
+
+            FILES=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files")
+            if [ $? -ne 0 ]; then
+              echo "Error fetching files for PR #$pr"
+              continue
+            fi
+
             if echo "$FILES" | jq -r '.[].filename' | grep -q "^packages/editor/"; then
-              PR_DATA=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr")
               PR_TITLE=$(echo "$PR_DATA" | jq -r '.title')
               echo "PR #$pr touches editor package. Title: $PR_TITLE"
-              PR_TITLES="${PR_TITLES}- $PR_TITLE\n"
+              PR_TITLES="${PR_TITLES}- ${PR_TITLE}\n"
             else
               echo "PR #$pr does not touch editor package"
             fi
           done
           echo "Final PR_TITLES: $PR_TITLES"
           if [ -n "$PR_TITLES" ]; then
-            echo "PR_TITLES=$(echo -e \"$PR_TITLES\")" >> $GITHUB_ENV
+            # Escape special characters and set PR_TITLES as an environment variable
+            escaped_titles=$(printf '%s\n' "$PR_TITLES" | sed -e 's/"/\\"/g' -e 's/!/\\!/g')
+            echo "PR_TITLES<<EOF" >> $GITHUB_ENV
+            echo "$escaped_titles" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
           else
             echo "PR_TITLES=No relevant PRs found" >> $GITHUB_ENV
           fi
