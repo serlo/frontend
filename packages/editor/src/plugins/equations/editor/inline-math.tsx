@@ -1,4 +1,4 @@
-import { PreferenceContext, setDefaultPreference } from '@editor/core/contexts'
+import { PreferenceContext } from '@editor/core/contexts'
 import { MathEditor } from '@editor/math/editor'
 import type { StateTypeReturnType, StringStateType } from '@editor/plugin'
 import { useContext } from 'react'
@@ -14,10 +14,6 @@ interface InlineMathProps {
   prefix?: string
   suffix?: string
 }
-
-const preferenceKey = 'katex:usevisualmath'
-
-setDefaultPreference(preferenceKey, true)
 
 export function InlineMath(props: InlineMathProps) {
   const {
@@ -39,9 +35,9 @@ export function InlineMath(props: InlineMathProps) {
       state={`${prefix}${state.value}${suffix}`}
       inline
       disableBlock
-      visual={preferences.getKey(preferenceKey) === true}
+      visual={preferences.get('visualMath')}
       onEditorChange={(visual) => {
-        preferences.setKey(preferenceKey, visual)
+        preferences.set('visualMath', visual)
       }}
       onInlineChange={() => {}}
       onChange={onChange}
