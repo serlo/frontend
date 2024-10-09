@@ -107,20 +107,22 @@ jobs:
         id: get_pr_titles
         run: |
           PR_TITLES=""
-          IFS=' ' read -r -a PR_ARRAY <<< "$PRS"
+          IFS=' ' read -r -a PR_ARRAY <<< "$PR_NUMBERS"
+          echo "Processing ${#PR_ARRAY[@]} PRs"
           for pr in "${PR_ARRAY[@]}"; do
-            # Fetch the files changed by the PR
-            FILES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files" | jq -r '.[].filename')
-
-            # Check if any of the files are in the editor package
-            if echo "$FILES" | grep -q "^packages/editor/"; then
-              # Get the PR title and append it to the PR_TITLES variable
-              PR_TITLE=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr" | jq -r '.title')
+            echo "Checking PR #$pr"
+            FILES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files")
+            echo "Files changed in PR #$pr: $FILES"
+            if echo "$FILES" | jq -r '.[].filename' | grep -q "^packages/editor/"; then
+              PR_DATA=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr")
+              PR_TITLE=$(echo "$PR_DATA" | jq -r '.title')
+              echo "PR #$pr touches editor package. Title: $PR_TITLE"
               PR_TITLES="${PR_TITLES}- $PR_TITLE\n"
+            else
+              echo "PR #$pr does not touch editor package"
             fi
           done
-
-          # Export PR_TITLES only if it's not empty
+          echo "Final PR_TITLES: $PR_TITLES"
           if [ -n "$PR_TITLES" ]; then
             echo "PR_TITLES=$(echo -e \"$PR_TITLES\")" >> $GITHUB_ENV
           else
