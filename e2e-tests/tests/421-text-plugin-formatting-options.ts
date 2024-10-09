@@ -38,7 +38,7 @@ Scenario(
     I.type('https://de.serlo.org/mathe/1541/hypotenuse')
     I.click('$link-suggestion-0')
     I.click('Some text')
-    I.see('Hypotenuse')
+    I.waitForText('Hypotenuse', 10)
     I.seeElement({ css: '.serlo-editor-hacks a' })
 
     I.say('Toggle link off')
@@ -55,7 +55,7 @@ Scenario(
     // just to make sure we are in the right mode
     I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
     I.seeElement('span.mq-editable-field')
-    I.type('x / 2')
+    I.type('x/2')
     I.pressKey('ArrowRight')
     I.pressKey('ArrowRight')
     I.wait(1)
@@ -162,7 +162,7 @@ Scenario(
     I.say('Refocus link')
     I.click('Some text')
     I.click('Some text')
-    I.see('Hypotenuse')
+    I.waitForText('Hypotenuse', 10)
 
     I.say('Toggle link off via plugin bar')
     I.click('Some text')
@@ -233,7 +233,7 @@ Scenario(
     I.click('$plugin-toolbar-button-matheformel')
     I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
     I.seeElement('span.mq-editable-field')
-    I.type('x / 2')
+    I.type('x/2')
     I.pressKey('ArrowRight')
     I.pressKey('ArrowRight')
     I.wait(1)
