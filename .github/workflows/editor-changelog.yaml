@@ -1,0 +1,84 @@
+name: Generate Editor Changelog
+
+on:
+  push:
+    branches:
+      - '**' # Runs on all branches
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Get current version of editor package
+        id: get_local_version
+        run: echo "CURRENT_VERSION=$(node -p \"require('./packages/editor/package.json').version\")" >> $GITHUB_ENV
+
+      - name: Get latest published version from npm
+        id: get_npm_version
+        run: |
+          NPM_VERSION=$(npm view @serlo/editor version)
+          echo "NPM_VERSION=$NPM_VERSION" >> $GITHUB_ENV
+
+      - name: Check if version has changed
+        id: check_version
+        run: |
+          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
+            echo "version_changed=true" >> $GITHUB_ENV
+          else
+            echo "version_changed=false" >> $GITHUB_ENV
+
+      - name: Stop if version has not changed
+        if: env.version_changed == 'false'
+        run: exit 0
+
+      - name: Get last tag for editor package
+        id: get_last_tag
+        run: |
+          git fetch --all --tags
+          LAST_TAG=$(git describe --tags --match "v*" --abbrev=0 -- packages/editor)
+          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+
+      - name: Get merged PRs affecting editor package
+        id: get_prs
+        run: |
+          PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "${{ github.repository }}") | .number')
+          echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
+
+      - name: Get PR titles that touched editor folder
+        id: get_pr_titles
+        run: |
+          for pr in $PRS; do
+            FILES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files" | jq -r '.[].filename')
+            if echo "$FILES" | grep -q "^packages/editor/"; then
+              PR_TITLE=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr" | jq -r '.title')
+              echo "$PR_TITLE" >> pr_titles.txt
+            fi
+          done
+        shell: bash
+
+      - name: Generate Changelog
+        run: |
+          echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
+          if [ -f pr_titles.txt ]; then
+            while IFS= read -r title; do
+              echo "- $title" >> packages/editor/CHANGELOG.md
+            done < pr_titles.txt
+          fi
+
+      - name: Commit and Push Changelog
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add packages/editor/CHANGELOG.md
+          git commit -m "chore: update changelog for version $CURRENT_VERSION"
+          git push origin ${{ github.ref_name }}
