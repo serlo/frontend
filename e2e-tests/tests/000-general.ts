@@ -86,8 +86,8 @@ Scenario('Quickbar', ({ I }) => {
   I.type('Vektor')
 
   // Check dropdown
+  I.waitForText('Kreuzprodukt', 10)
   I.seeElement('$quickbar-combobox-overlay')
-  I.see('Kreuzprodukt')
   I.see('Vektorbegriff')
   I.see('Auf Serlo nach')
 
