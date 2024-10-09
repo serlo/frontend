@@ -73,14 +73,14 @@ jobs:
         run: exit 0
 
       - name: Get merged PRs affecting editor package
-        if: env.version_changed == 'true' && env.editor_changes == 'true'
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_prs
         run: |
           PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "${{ github.repository }}") | .number')
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
 
       - name: Get PR titles that touched editor folder
-        if: env.version_changed == 'true' && env.editor_changes == 'true'
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_pr_titles
         run: |
           for pr in $PRS; do
@@ -93,7 +93,7 @@ jobs:
         shell: bash
 
       - name: Generate Changelog
-        if: env.version_changed == 'true' && env.editor_changes == 'true'
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         run: |
           echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
           if [ -f pr_titles.txt ]; then
@@ -103,7 +103,7 @@ jobs:
           fi
 
       - name: Commit and Push Changelog
-        if: env.version_changed == 'true' && env.editor_changes == 'true'
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action Bot"
