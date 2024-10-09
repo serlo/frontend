@@ -73,14 +73,16 @@ jobs:
         id: check_editor_changes
         run: |
           if [ -z "$LAST_TAG" ]; then
-            CHANGED_FILES=$(git diff --name-only HEAD -- packages/editor)
-          else
-            CHANGED_FILES=$(git diff --name-only $LAST_TAG HEAD -- packages/editor)
-          fi
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "no_editor_changes=true" >> $GITHUB_ENV
-          else
+            # No previous tag, assume all changes in editor are new
             echo "no_editor_changes=false" >> $GITHUB_ENV
+          else
+            # Compare changes since the last tag
+            CHANGED_FILES=$(git diff --name-only $LAST_TAG HEAD -- packages/editor)
+            if [ -z "$CHANGED_FILES" ]; then
+              echo "no_editor_changes=true" >> $GITHUB_ENV
+            else
+              echo "no_editor_changes=false" >> $GITHUB_ENV
+            fi
           fi
 
       - name: Stop if no changes in packages/editor
