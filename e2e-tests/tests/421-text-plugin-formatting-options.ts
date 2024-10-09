@@ -52,6 +52,8 @@ Scenario(
 
     I.say('Toggle math on')
     I.pressKey(['CommandOrControl', 'M'])
+    // just to make sure we are in the right mode
+    I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
     I.seeElement('span.mq-editable-field')
     I.type('x / 2')
     I.pressKey('ArrowRight')
@@ -229,6 +231,7 @@ Scenario(
     I.pressKey(['CommandOrControl', 'A'])
     I.pressKey('Backspace')
     I.click('$plugin-toolbar-button-matheformel')
+    I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
     I.seeElement('span.mq-editable-field')
     I.type('x / 2')
     I.pressKey('ArrowRight')

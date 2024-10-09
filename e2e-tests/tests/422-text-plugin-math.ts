@@ -13,6 +13,7 @@ Scenario('Add a math formula', async ({ I }) => {
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
 
   I.seeElement('$plugin-math-latex-editor')
   I.type('\\frac12')
@@ -24,6 +25,7 @@ Scenario('Close math formula using arrow keys', async ({ I }) => {
   addNewTextPlugin(I)
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
   I.type('\\frac12')
 
   I.say('Close math editor with cursor at the end and ArrowRight')
@@ -51,6 +53,7 @@ Scenario('Close math formula using Escape', async ({ I }) => {
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
   I.type('\\frac12')
 
   I.say('Close math editor with ESC key')
@@ -65,6 +68,7 @@ Scenario('Close math formula using close button', async ({ I }) => {
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
   I.type('\\frac12')
 
   I.say('Close math editor with close button')
