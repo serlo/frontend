@@ -61,7 +61,11 @@ jobs:
         if: env.version_changed == 'true'
         id: check_editor_changes
         run: |
-          CHANGED_FILES=$(git diff --name-only $LAST_TAG HEAD -- packages/editor)
+          if [ -z "$LAST_TAG" ]; then
+            CHANGED_FILES=$(git diff --name-only HEAD -- packages/editor)
+          else
+            CHANGED_FILES=$(git diff --name-only $LAST_TAG HEAD -- packages/editor)
+          fi
           if [ -z "$CHANGED_FILES" ]; then
             echo "no_editor_changes=true" >> $GITHUB_ENV
           else
@@ -72,11 +76,17 @@ jobs:
         if: env.no_editor_changes == 'true'
         run: exit 0
 
-      - name: Get merged PRs affecting editor package
+      - name: Get merged PRs affecting editor package (last 10 if no tag)
         if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_prs
         run: |
-          PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "${{ github.repository }}") | .number')
+          if [ -z "$LAST_TAG" ]; then
+            # No tag, get last 10 PRs
+            PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=10" | jq -r '.[] | .number')
+          else
+            # Fetch PRs since last tag
+            PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "${{ github.repository }}") | .number')
+          fi
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
 
       - name: Get PR titles that touched editor folder
