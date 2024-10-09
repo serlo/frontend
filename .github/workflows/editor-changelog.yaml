@@ -38,6 +38,7 @@ jobs:
             echo "version_changed=true" >> $GITHUB_ENV
           else
             echo "version_changed=false" >> $GITHUB_ENV
+          fi
 
       - name: Stop if version has not changed
         if: env.version_changed == 'false'
