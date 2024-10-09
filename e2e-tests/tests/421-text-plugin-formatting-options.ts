@@ -38,7 +38,7 @@ Scenario(
     I.type('https://de.serlo.org/mathe/1541/hypotenuse')
     I.click('$link-suggestion-0')
     I.click('Some text')
-    I.see('Hypotenuse')
+    I.waitForText('Hypotenuse', 10)
     I.seeElement({ css: '.serlo-editor-hacks a' })
 
     I.say('Toggle link off')
@@ -162,7 +162,7 @@ Scenario(
     I.say('Refocus link')
     I.click('Some text')
     I.click('Some text')
-    I.see('Hypotenuse')
+    I.waitForText('Hypotenuse', 10)
 
     I.say('Toggle link off via plugin bar')
     I.click('Some text')
