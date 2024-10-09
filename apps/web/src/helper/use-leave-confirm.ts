@@ -8,7 +8,7 @@ export const successHash = '#success'
 
 // needed because of https://github.com/vercel/next.js/issues/2476
 export function useLeaveConfirm(protect: boolean) {
-  const Router = useRouter()
+  const router = useRouter()
   const editStrings = useEditStrings()
 
   const onRouteChangeStart = useCallback(
@@ -19,24 +19,24 @@ export function useLeaveConfirm(protect: boolean) {
           return true
         }
         nProgress.done()
-        if (Router.asPath !== window.location.pathname) {
-          window.history.pushState('', '', Router.asPath)
+        if (router.asPath !== window.location.pathname) {
+          window.history.pushState('', '', router.asPath)
         }
         throw "Abort route change by user's confirmation."
       }
     },
-    [protect, editStrings.confirmRouteChange, Router.asPath]
+    [protect, editStrings.confirmRouteChange, router.asPath]
   )
 
   useEffect(() => {
-    Router.events.on('routeChangeStart', onRouteChangeStart)
+    router.events.on('routeChangeStart', onRouteChangeStart)
     window.onbeforeunload = protect ? () => true : null
 
     return () => {
-      Router.events.off('routeChangeStart', onRouteChangeStart)
+      router.events.off('routeChangeStart', onRouteChangeStart)
       window.onbeforeunload = null
     }
-  }, [onRouteChangeStart, Router.events, protect])
+  }, [onRouteChangeStart, router.events, protect])
 
   return
 }

@@ -221,10 +221,6 @@ export const editStrings = {
       title: 'Experimental State-Paste Plugin',
       description: 'only on staging',
     },
-    pageTeam: {
-      title: 'Team Overview',
-      description: 'Only for the teampages',
-    },
     pagePartners: {
       title: 'Partner List',
       description:
