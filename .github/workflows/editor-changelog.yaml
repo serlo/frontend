@@ -115,22 +115,20 @@ jobs:
             if echo "$FILES" | grep -q "^packages/editor/"; then
               # Get the PR title and append it to the PR_TITLES variable
               PR_TITLE=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr" | jq -r '.title')
-              PR_TITLES="$PR_TITLES- $PR_TITLE\n"
+              PR_TITLES="${PR_TITLES}- $PR_TITLE\n"
             fi
           done
-          echo "PR_TITLES=$PR_TITLES" >> $GITHUB_ENV
+          echo "PR_TITLES=$(echo -e \"$PR_TITLES\")" >> $GITHUB_ENV
         shell: bash
 
       - name: Generate Changelog
-        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != ''
         run: |
           echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
-          if [ -n "$PR_TITLES" ]; then
-            echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
-          fi
+          echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
 
       - name: Commit and Push Changelog
-        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != ''
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action Bot"
