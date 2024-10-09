@@ -44,20 +44,43 @@ jobs:
         if: env.version_changed == 'false'
         run: exit 0
 
-      - name: Get last tag for editor package
+      - name: Get last tag for editor package (handle no tag case)
+        if: env.version_changed == 'true'
         id: get_last_tag
         run: |
           git fetch --all --tags
-          LAST_TAG=$(git describe --tags --match "v*" --abbrev=0 -- packages/editor)
-          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+          LAST_TAG=$(git describe --tags --match "v*-editor" --abbrev=0 2>/dev/null || echo "none")
+          if [ "$LAST_TAG" == "none" ]; then
+            echo "No previous tag found, this is the first release"
+            echo "LAST_TAG=" >> $GITHUB_ENV
+          else
+            echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+          fi
+
+      - name: Check if there are changes in packages/editor since last tag
+        if: env.version_changed == 'true'
+        id: check_editor_changes
+        run: |
+          CHANGED_FILES=$(git diff --name-only $LAST_TAG HEAD -- packages/editor)
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "no_editor_changes=true" >> $GITHUB_ENV
+          else
+            echo "no_editor_changes=false" >> $GITHUB_ENV
+          fi
+
+      - name: Stop if no changes in packages/editor
+        if: env.no_editor_changes == 'true'
+        run: exit 0
 
       - name: Get merged PRs affecting editor package
+        if: env.version_changed == 'true' && env.editor_changes == 'true'
         id: get_prs
         run: |
           PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "${{ github.repository }}") | .number')
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
 
       - name: Get PR titles that touched editor folder
+        if: env.version_changed == 'true' && env.editor_changes == 'true'
         id: get_pr_titles
         run: |
           for pr in $PRS; do
@@ -70,6 +93,7 @@ jobs:
         shell: bash
 
       - name: Generate Changelog
+        if: env.version_changed == 'true' && env.editor_changes == 'true'
         run: |
           echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
           if [ -f pr_titles.txt ]; then
@@ -79,6 +103,7 @@ jobs:
           fi
 
       - name: Commit and Push Changelog
+        if: env.version_changed == 'true' && env.editor_changes == 'true'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action Bot"
