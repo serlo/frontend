@@ -1,5 +1,6 @@
 import assert from 'assert'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 
 Feature('Serlo Editor - Blank exercise')
 
@@ -10,7 +11,7 @@ const BlanksExerciseButton = '$add-exercise-blanksExercise'
 const initialTextPluginCount = 1
 
 Scenario('Create and remove fill in the blanks exercise', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
@@ -29,7 +30,7 @@ Scenario('Create and remove fill in the blanks exercise', async ({ I }) => {
 Scenario(
   'Create and remove fill in the gap exercise via undo',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
     I.click(BlanksExerciseButton)
@@ -43,7 +44,7 @@ Scenario(
 )
 
 Scenario('Create and remove gaps through toolbar', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
@@ -70,7 +71,7 @@ Scenario('Create and remove gaps through toolbar', async ({ I }) => {
 })
 
 Scenario('Create a blank gap and type in it', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
@@ -90,7 +91,7 @@ Scenario('Create a blank gap and type in it', async ({ I }) => {
 })
 
 Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
@@ -118,7 +119,7 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
 Scenario.todo(
   'Ensure an added gap before any text gets focused',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
     I.click(BlanksExerciseButton)
@@ -145,7 +146,7 @@ Scenario.todo(
 Scenario(
   'Create a few gaps, go to preview mode and solve them!',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
     I.click(BlanksExerciseButton)

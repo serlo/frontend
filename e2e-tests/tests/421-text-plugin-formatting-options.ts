@@ -1,4 +1,5 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - formatting options')
@@ -8,7 +9,7 @@ Before(popupWarningFix)
 Scenario(
   'Toggle text formatting options using keyboard shortcuts',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     addNewTextPlugin(I)
     I.type('Some text')
@@ -55,6 +56,7 @@ Scenario(
     I.type('x / 2')
     I.pressKey('ArrowRight')
     I.pressKey('ArrowRight')
+    I.wait(1)
     I.dontSeeElement('span.mq-editable-field')
     I.seeElement('span.katex')
 
@@ -116,7 +118,7 @@ Scenario(
 Scenario(
   'Toggle text formatting options using plugin toolbar',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     addNewTextPlugin(I)
 
@@ -231,6 +233,7 @@ Scenario(
     I.type('x / 2')
     I.pressKey('ArrowRight')
     I.pressKey('ArrowRight')
+    I.wait(1)
     I.dontSeeElement('span.mq-editable-field')
     I.seeElement('span.katex')
 
