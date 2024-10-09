@@ -143,14 +143,15 @@ Scenario('Geogebra', ({ I }) => {
   I.waitForElement('canvas[data-test="euclidianView"]', 10)
 })
 
-Scenario('Video + Injection', ({ I }) => {
-  I.amOnPage('/277232')
-  I.scrollTo('#f7f13990')
-  I.see('dass externe Inhalte von')
-  I.click('Video abspielen von YouTube')
-  I.switchTo('iframe')
-  I.seeElement('video')
-})
+// deactivated for a while until youtube does not block us any more 😅
+// Scenario('Video + Injection', ({ I }) => {
+//   I.amOnPage('/277232')
+//   I.scrollTo('#f7f13990')
+//   I.see('dass externe Inhalte von')
+//   I.click('Video abspielen von YouTube')
+//   I.switchTo('iframe')
+//   I.seeElement('video')
+// })
 
 Scenario('Toggle Solution', ({ I }) => {
   I.amOnPage('/37779')
@@ -178,11 +179,10 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('Klasse 7')
   I.see('Klasse 7')
   I.click('Grundwissenstest 7. Klasse')
-  I.see('Aufgaben')
+  I.waitForText('Aufgaben', 5)
   I.click('2021')
 
-  // Takes a long time to load
-  I.see('Berechne')
+  I.waitForText('Berechne', 5)
 
   I.amOnPage('/24370')
   I.see('Artikel')
