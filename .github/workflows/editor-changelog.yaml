@@ -95,10 +95,10 @@ jobs:
         run: |
           if [ -z "$LAST_TAG" ]; then
             # No tag, get last 10 PRs
-            PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=10" | jq -r '.[] | .number')
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=10" | jq -r '.[] | .number' | tr '\n' ' ')
           else
             # Fetch PRs since last tag
-            PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "${{ github.repository }}") | .number')
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | tr '\n' ' ')
           fi
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
 
