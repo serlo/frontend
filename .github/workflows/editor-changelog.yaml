@@ -107,7 +107,8 @@ jobs:
         id: get_pr_titles
         run: |
           PR_TITLES=""
-          for pr in $PRS; do
+          IFS=' ' read -r -a PR_ARRAY <<< "$PRS"
+          for pr in "${PR_ARRAY[@]}"; do
             # Fetch the files changed by the PR
             FILES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files" | jq -r '.[].filename')
 
@@ -118,17 +119,23 @@ jobs:
               PR_TITLES="${PR_TITLES}- $PR_TITLE\n"
             fi
           done
-          echo "PR_TITLES=$(echo -e \"$PR_TITLES\")" >> $GITHUB_ENV
+
+          # Export PR_TITLES only if it's not empty
+          if [ -n "$PR_TITLES" ]; then
+            echo "PR_TITLES=$(echo -e \"$PR_TITLES\")" >> $GITHUB_ENV
+          else
+            echo "PR_TITLES=No relevant PRs found" >> $GITHUB_ENV
+          fi
         shell: bash
 
       - name: Generate Changelog
-        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != ''
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
         run: |
           echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
           echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
 
       - name: Commit and Push Changelog
-        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != ''
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action Bot"
