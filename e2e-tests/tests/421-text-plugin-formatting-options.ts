@@ -51,10 +51,11 @@ Scenario(
 
     I.say('Toggle math on')
     I.pressKey(['CommandOrControl', 'M'])
-    I.seeElement('$plugin-math-latex-editor')
-    I.type('\\frac12 test42')
+    I.seeElement('span.mq-editable-field')
+    I.type('x / 2')
     I.pressKey('ArrowRight')
-    I.dontSee('LaTeX')
+    I.pressKey('ArrowRight')
+    I.dontSeeElement('span.mq-editable-field')
     I.seeElement('span.katex')
 
     I.say('Remove math element')
@@ -226,11 +227,11 @@ Scenario(
     I.pressKey(['CommandOrControl', 'A'])
     I.pressKey('Backspace')
     I.click('$plugin-toolbar-button-matheformel')
-    I.seeElement('$plugin-math-latex-editor')
-
-    I.type('\\frac12')
+    I.seeElement('span.mq-editable-field')
+    I.type('x / 2')
     I.pressKey('ArrowRight')
-    I.dontSee('LaTeX')
+    I.pressKey('ArrowRight')
+    I.dontSeeElement('span.mq-editable-field')
     I.seeElement('span.katex')
 
     I.say('Toggle math off')
