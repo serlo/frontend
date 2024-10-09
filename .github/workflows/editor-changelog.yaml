@@ -55,7 +55,7 @@ jobs:
         if: env.version_changed == 'false'
         run: exit 0
 
-      - name: Get last tag for editor package (handle no tag case)
+      - name: Get last tag for editor package (if available)
         if: env.version_changed == 'true'
         id: get_last_tag
         run: |
@@ -106,23 +106,27 @@ jobs:
         if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_pr_titles
         run: |
+          PR_TITLES=""
           for pr in $PRS; do
+            # Fetch the files changed by the PR
             FILES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files" | jq -r '.[].filename')
+
+            # Check if any of the files are in the editor package
             if echo "$FILES" | grep -q "^packages/editor/"; then
+              # Get the PR title and append it to the PR_TITLES variable
               PR_TITLE=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls/$pr" | jq -r '.title')
-              echo "$PR_TITLE" >> pr_titles.txt
+              PR_TITLES="$PR_TITLES- $PR_TITLE\n"
             fi
           done
+          echo "PR_TITLES=$PR_TITLES" >> $GITHUB_ENV
         shell: bash
 
       - name: Generate Changelog
         if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         run: |
           echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
-          if [ -f pr_titles.txt ]; then
-            while IFS= read -r title; do
-              echo "- $title" >> packages/editor/CHANGELOG.md
-            done < pr_titles.txt
+          if [ -n "$PR_TITLES" ]; then
+            echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
           fi
 
       - name: Commit and Push Changelog
