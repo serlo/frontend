@@ -113,7 +113,7 @@ export function MathEditor(props: MathEditorProps) {
             <ToolbarSelect
               tooltipText=""
               value={isVisualMode ? 'visual' : 'latex'}
-              data-qa="plugin-toolbar-math-type-switch"
+              dataQa="plugin-toolbar-math-type-switch"
               changeValue={(value) => {
                 if (hasError) setHasError(false)
                 props.onEditorChange(value === 'visual')
@@ -123,7 +123,7 @@ export function MathEditor(props: MathEditorProps) {
                 { value: 'latex', text: mathStrings.latex },
               ]}
             />
-
+            123
             {!disableBlock && (
               <button
                 className="mr-2 rounded-md border border-gray-500 px-1 py-0.25 text-sm text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
