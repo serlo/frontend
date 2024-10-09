@@ -55,7 +55,7 @@ Scenario(
     // just to make sure we are in the right mode
     I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
     I.seeElement('span.mq-editable-field')
-    I.type('x / 2')
+    I.type('x/2')
     I.pressKey('ArrowRight')
     I.pressKey('ArrowRight')
     I.wait(1)
@@ -233,7 +233,7 @@ Scenario(
     I.click('$plugin-toolbar-button-matheformel')
     I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
     I.seeElement('span.mq-editable-field')
-    I.type('x / 2')
+    I.type('x/2')
     I.pressKey('ArrowRight')
     I.pressKey('ArrowRight')
     I.wait(1)
