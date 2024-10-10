@@ -40,6 +40,7 @@ export const staticStrings = {
       noRevisionForPage: 'Ungegeprüfte Seite',
     },
     exercise: {
+      title: 'Aufgabe',
       prerequisite: 'Für diese Aufgabe benötigst Du folgendes Grundwissen:',
       task: 'Aufgabenstellung',
       correct: 'Richtig',

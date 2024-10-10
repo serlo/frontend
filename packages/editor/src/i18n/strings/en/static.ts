@@ -38,6 +38,7 @@ export const staticStrings = {
       noRevisionForPage: 'unreviewed page',
     },
     exercise: {
+      title: 'Exercise',
       prerequisite: 'For this task you need the following basic knowledge:',
       task: 'Task',
       correct: 'Correct',

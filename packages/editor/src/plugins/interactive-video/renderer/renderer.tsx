@@ -3,6 +3,7 @@ import '@vidstack/react/player/styles/default/theme.css'
 // eslint-disable-next-line import/no-unassigned-import
 import '@vidstack/react/player/styles/default/layouts/video.css'
 
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import {
   MediaPlayer,
@@ -17,7 +18,6 @@ import {
 
 import { TimeSliderWithDots } from './timeslider-with-dots'
 import { createCues } from '../helpers/create-cues'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export function InteractiveVideoRenderer({
   videoSrc,
@@ -31,8 +31,7 @@ export function InteractiveVideoRenderer({
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
 }) {
-  // TODO: use useStaticStrings here
-  const exerciseString = useInstanceData().strings.entities.exercise
+  const exerciseString = useStaticStrings().plugins.exercise.title
   const cues = createCues(marks, exerciseString)
 
   return (
