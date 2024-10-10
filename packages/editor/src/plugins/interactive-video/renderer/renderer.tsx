@@ -33,45 +33,47 @@ export function InteractiveVideoRenderer({
   const cues = createCues(marks, exerciseString)
 
   return (
-    <MediaPlayer
-      title="Pine Tree Timelapse"
-      src="https://www.youtube.com/watch?v=a4kr4SxMNnA"
-      playsInline
-      className="[&_.vds-chapter-title]:opacity-0"
-      muted
-      hideControlsOnMouseLeave={false}
-      controlsDelay={60000}
-      // load="play"
-      aspectRatio="16:9"
-      onMediaPlayRequest={(nativeEvent) => {
-        const allowed = checkSeekAndPlay?.(nativeEvent.target)
-        if (checkSeekAndPlay && !allowed) nativeEvent.preventDefault()
-      }}
-      onMediaSeekRequest={(time, nativeEvent) => {
-        const allowed = checkSeekAndPlay?.(nativeEvent.target, time)
-        if (checkSeekAndPlay && !allowed) nativeEvent.preventDefault()
-      }}
-    >
-      <MediaProvider>
-        <Track
-          id="chapters"
-          content={{ cues }}
-          kind="chapters"
-          language="de-DE"
-          default
-        />
-      </MediaProvider>
-      <DefaultVideoLayout
-        icons={defaultLayoutIcons}
-        slots={{
-          beforeSettingsMenu: tools,
-          timeSlider: <TimeSliderWithDots marks={marks} />,
+    <div className="mx-side">
+      <MediaPlayer
+        title="Pine Tree Timelapse"
+        src="https://www.youtube.com/watch?v=a4kr4SxMNnA"
+        playsInline
+        className="[&_.vds-chapter-title]:opacity-0"
+        muted
+        hideControlsOnMouseLeave={false}
+        controlsDelay={60000}
+        // load="play"
+        aspectRatio="16:9"
+        onMediaPlayRequest={(nativeEvent) => {
+          const allowed = checkSeekAndPlay?.(nativeEvent.target)
+          if (checkSeekAndPlay && !allowed) nativeEvent.preventDefault()
         }}
-      />
-      {/* <Poster
+        onMediaSeekRequest={(time, nativeEvent) => {
+          const allowed = checkSeekAndPlay?.(nativeEvent.target, time)
+          if (checkSeekAndPlay && !allowed) nativeEvent.preventDefault()
+        }}
+      >
+        <MediaProvider>
+          <Track
+            id="chapters"
+            content={{ cues }}
+            kind="chapters"
+            language="de-DE"
+            default
+          />
+        </MediaProvider>
+        <DefaultVideoLayout
+          icons={defaultLayoutIcons}
+          slots={{
+            beforeSettingsMenu: tools,
+            timeSlider: <TimeSliderWithDots marks={marks} />,
+          }}
+        />
+        {/* <Poster
         className="vds-poster"
         src="https://files.vidstack.io/sprite-fight/poster.webp"
       /> */}
-    </MediaPlayer>
+      </MediaPlayer>
+    </div>
   )
 }
