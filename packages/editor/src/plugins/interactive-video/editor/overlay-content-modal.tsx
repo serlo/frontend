@@ -19,14 +19,6 @@ export function OverlayContentModal({
 
   const titleRef = useRef<HTMLInputElement>(null)
 
-  // make sure empty title gets focus
-  useEffect(() => {
-    if (title.value.length) return
-    setTimeout(() => titleRef.current?.focus(), 200)
-    // only run once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <ModalWithCloseButton
       isOpen
