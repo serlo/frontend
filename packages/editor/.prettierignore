@@ -1,3 +1,4 @@
 # this also checks .gitignore
 
 dist
+CHANGELOG.md

@@ -155,6 +155,7 @@ jobs:
         if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
         run: |
           echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
+          echo "" >> packages/editor/CHANGELOG.md  # Adds a newline after the heading
           echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
 
       - name: Commit and Push Changelog
