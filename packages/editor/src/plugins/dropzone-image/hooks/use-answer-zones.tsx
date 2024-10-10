@@ -1,3 +1,4 @@
+import { useStore } from '@editor/store'
 import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -8,6 +9,7 @@ import { duplicateAnswerZone } from '../utils/answer-zone'
 export function useAnswerZones(
   answerZones: DropzoneImageProps['state']['answerZones']
 ) {
+  const store = useStore()
   const [currentAnswerZone, setCurrentAnswerZone] = useState<AnswerZoneState>(
     answerZones[0]
   )
@@ -48,7 +50,7 @@ export function useAnswerZones(
   useHotkeys(['ctrl+v, meta+v'], (event) => {
     if (!answerZoneClipboardItem) return
     const idToDuplicate = answerZoneClipboardItem.id.value
-    duplicateAnswerZone(answerZones, idToDuplicate)
+    duplicateAnswerZone(answerZones, idToDuplicate, () => store.getState())
     event.preventDefault()
   })
 

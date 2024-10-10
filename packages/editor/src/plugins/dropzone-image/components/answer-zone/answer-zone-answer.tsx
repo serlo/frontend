@@ -1,6 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStore } from '@editor/store'
 import { cn } from '@editor/utils/cn'
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,12 +22,15 @@ interface AnswerZoneAnswerProps {
 }
 
 export function AnswerZoneAnswer(props: AnswerZoneAnswerProps) {
+  const store = useStore()
   const { answer, isOnlyAnswer, onEditAnswer, onRemoveAnswer } = props
 
   const pluginStrings = useEditStrings().plugins.dropzoneImage
 
-  const answerImageUrl = getAnswerZoneImageSrc(answer.image.id)
-  const answerText = getAnswerZoneText(answer.text.id)
+  const answerImageUrl = getAnswerZoneImageSrc(answer.image.id, () =>
+    store.getState()
+  )
+  const answerText = getAnswerZoneText(answer.text.id, () => store.getState())
 
   return (
     <div

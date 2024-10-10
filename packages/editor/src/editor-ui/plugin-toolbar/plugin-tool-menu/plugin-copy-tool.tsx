@@ -1,6 +1,6 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { selectStaticDocumentWithoutIds, store } from '@editor/store'
+import { selectStaticDocumentWithoutIds, useStore } from '@editor/store'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
 
@@ -15,6 +15,7 @@ interface PluginCopyToolProps {
  */
 export function PluginCopyTool({ pluginId, noSeparator }: PluginCopyToolProps) {
   const rowsStrings = useEditStrings().plugins.rows
+  const store = useStore()
 
   const handleOnClick = useCallback(() => {
     const document = selectStaticDocumentWithoutIds(store.getState(), pluginId)

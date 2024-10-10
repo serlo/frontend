@@ -5,7 +5,6 @@ import { useCallback } from 'react'
 import { SubDocument } from './sub-document'
 import type { EditorRenderProps } from './types'
 import {
-  store,
   useAppDispatch,
   useAppSelector,
   persistHistory,
@@ -16,10 +15,12 @@ import {
   selectHasRedoActions,
   selectDocuments,
   selectStaticDocument,
+  useStore,
 } from '../store'
 import { ROOT } from '../store/root/constants'
 
 export function EditorChildren({ children }: { children: EditorRenderProps }) {
+  const store = useStore()
   const editStrings = useEditStrings()
   const staticStrings = useStaticStrings()
 
@@ -39,11 +40,11 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
   const dispatchPersistHistory = useCallback(() => {
     const documents = selectDocuments(store.getState())
     void dispatch(persistHistory(documents))
-  }, [dispatch])
+  }, [dispatch, store])
 
   const selectRootDocument = useCallback(() => {
     return selectStaticDocument(store.getState(), ROOT)
-  }, [])
+  }, [store])
 
   const editor = <SubDocument id={ROOT} />
 

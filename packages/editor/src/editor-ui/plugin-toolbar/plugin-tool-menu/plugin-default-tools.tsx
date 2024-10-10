@@ -5,7 +5,7 @@ import {
   selectChildTreeOfParent,
   selectParentPluginType,
   selectStaticDocumentWithoutIds,
-  store,
+  useStore,
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -22,6 +22,7 @@ interface PluginDefaultToolsProps {
 
 // tools for most plugins (duplicate / remove)
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
+  const store = useStore()
   const dispatch = useAppDispatch()
   const pluginStrings = useEditStrings().plugins
 

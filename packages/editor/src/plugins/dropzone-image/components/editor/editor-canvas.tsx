@@ -1,4 +1,4 @@
-import { selectStaticDocument, store } from '@editor/store'
+import { selectStaticDocument, useStore } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
 import { useEffect, useState } from 'react'
@@ -29,6 +29,7 @@ export function EditorCanvas({
   selectCurrentAnswer,
 }: EditorCanvasProps) {
   const { answerZones, backgroundImage, canvasDimensions } = state
+  const store = useStore()
   const canvasWidth = canvasDimensions.width.value
   const canvasHeight = canvasDimensions.height.value
 

@@ -13,7 +13,7 @@ import {
   selectDocument,
   selectDocumentPluginType,
   selectIsFocused,
-  store,
+  useStore,
   useAppDispatch,
   useAppSelector,
 } from '../../store'
@@ -31,6 +31,7 @@ export const focusState: {
 }
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
+  const store = useStore()
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
 
@@ -56,7 +57,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         }
       }
     },
-    [focused, id, dispatch, document]
+    [focused, id, dispatch, document, store]
   )
 
   // additional focus check to set focus when using tab navigation
