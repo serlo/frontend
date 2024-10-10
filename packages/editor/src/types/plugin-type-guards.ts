@@ -31,6 +31,7 @@ import type {
   EditorExerciseGroupDocument,
   EditorCourseDocument,
   EditorInteractiveVideoDocument,
+  EditorBlanksExerciseDocument,
 } from './editor-plugins'
 import { TemplatePluginType } from './template-plugin-type'
 
@@ -48,6 +49,11 @@ export function isArticleIntroductionDocument(
   document: AnyEditorDocument
 ): document is EditorArticleIntroductionDocument {
   return document.plugin === EditorPluginType.ArticleIntroduction
+}
+export function isBlanksExerciseDocument(
+  document: AnyEditorDocument
+): document is EditorBlanksExerciseDocument {
+  return document.plugin === EditorPluginType.BlanksExercise
 }
 export function isBoxDocument(
   document: AnyEditorDocument
