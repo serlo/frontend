@@ -1,7 +1,7 @@
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { PluginMenuIcon } from '@editor/plugins/rows/components/plugin-menu-icon'
 import {
   getPluginMenuItems,
   type PluginMenuItem,
@@ -71,7 +71,7 @@ export function InteractiveExercisesSelection({
                 className={getTooltipClass(index)}
                 text={description}
               />
-              {typeof icon !== 'string' ? icon() : <IconFallback />}
+              <PluginMenuIcon icon={icon} />
               <b className="mt-2 block text-sm">{title}</b>
             </button>
           )
