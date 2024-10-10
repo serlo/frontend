@@ -20,89 +20,18 @@ jobs:
       - name: Build editor package
         run: yarn editor:build
 
-      - name: Apply Changesets and Version Bump
-        run: yarn changeset version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Check if the next version is already published
+      - name: Check if current version is already published
         id: check_published
         run: |
-          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
-          if npm view @serlo/editor@$NEXT_VERSION > /dev/null 2>&1; then
+          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
+          if npm view @serlo/editor@$CURRENT_VERSION > /dev/null 2>&1; then
             echo "already_published=true" >> $GITHUB_OUTPUT
           else
             echo "already_published=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Create a new branch for the version bump
+      - name: Publish to npm
         if: steps.check_published.outputs.already_published == 'false'
-        run: |
-          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git checkout -b "release/@serlo/editor-$NEXT_VERSION"
-
-      - name: Check if changes occurred after version bump
-        id: check_changes
-        run: |
-          git add .
-          if git diff --exit-code --quiet; then
-            echo "no_changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "no_changes=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit changes to the new branch
-        if: steps.check_published.outputs.already_published == 'false' && steps.check_changes.outputs.no_changes == 'false'
-        run: |
-          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
-          git add .
-          git commit -m "chore(release): bump @serlo/editor to version $NEXT_VERSION"
-          git push origin "release/@serlo/editor-$NEXT_VERSION"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Pull Request
-        if: steps.check_published.outputs.already_published == 'false' && steps.check_changes.outputs.no_changes == 'false'
-        id: create_pr
-        run: |
-          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
-          PR_URL=$(gh pr create --title "Release: Bump @serlo/editor to version $NEXT_VERSION" --body "Automated PR to bump @serlo/editor to $NEXT_VERSION" --base staging --head "release/@serlo/editor-$NEXT_VERSION" --json url -q .url)
-          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Wait for PR to be merged
-        if: steps.create_pr.outputs.pr_url
-        run: |
-          PR_URL="${{ steps.create_pr.outputs.pr_url }}"
-          while true; do
-            PR_STATE=$(gh pr view $PR_URL --json state -q .state)
-            if [ "$PR_STATE" = "MERGED" ]; then
-              echo "PR has been merged"
-              break
-            elif [ "$PR_STATE" = "CLOSED" ]; then
-              echo "PR was closed without merging"
-              exit 1
-            fi
-            echo "Waiting for PR to be merged..."
-            sleep 60
-          done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to npm (after PR merge)
-        if: steps.check_published.outputs.already_published == 'false' && steps.create_pr.outputs.pr_url
         run: yarn editor:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create GitHub Release (after PR merge)
-        if: steps.check_published.outputs.already_published == 'false' && steps.create_pr.outputs.pr_url
-        run: |
-          NEXT_VERSION=$(node -p "require('./packages/editor/package.json').version")
-          body=$(git log -1 --pretty=format:%B)
-          gh release create "v$NEXT_VERSION" --notes "$body"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
