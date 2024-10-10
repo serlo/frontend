@@ -227,6 +227,7 @@ export const editStrings = {
       removeMark: 'Löschen',
       addOverlayContent: 'Neue Aufgabe',
       addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
+      changeVideo: 'Video austauschen',
     },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
