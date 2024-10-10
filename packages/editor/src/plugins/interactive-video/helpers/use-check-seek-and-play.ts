@@ -1,4 +1,5 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useMediaRemote } from '@vidstack/react'
 
@@ -19,6 +20,7 @@ export function useCheckSeekAndPlay({
   learnerInteractions: LearnerInteractions
 }) {
   const remote = useMediaRemote()
+  const staticPluginStrings = useStaticStrings().plugins.interactiveVideo
 
   return function (target?: EventTarget | null, seekTime?: number) {
     const player = remote.getPlayer(target)
@@ -53,8 +55,7 @@ export function useCheckSeekAndPlay({
       void player.play()
       return false
     }
-    // TODO: i18n
-    showToastNotice('Du musst erst die Aufgabe lösen.')
+    showToastNotice(staticPluginStrings.mandatoryWarning)
 
     // when seeking outside of blocked mark:
     // hack to solve refresh TimeSlider

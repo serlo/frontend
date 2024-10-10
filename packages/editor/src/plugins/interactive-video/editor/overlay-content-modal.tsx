@@ -1,7 +1,7 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 import { type InteractiveVideoProps } from '..'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'

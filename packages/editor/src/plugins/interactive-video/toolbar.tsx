@@ -29,7 +29,6 @@ export const InteractiveVideoToolbar = ({
         state: { initial: (curr) => ({ ...(curr as object), src: '' }) },
       })
     )
-    // TODO: Add a check somewhere to remove marks that end after the video ends
   }
 
   return (

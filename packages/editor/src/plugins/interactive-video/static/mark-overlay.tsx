@@ -1,3 +1,4 @@
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { faBackward, faPlay, faTasks } from '@fortawesome/free-solid-svg-icons'
@@ -31,6 +32,7 @@ export function MarkOverlay({
 }) {
   const player = useMediaPlayer()
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const staticStrings = useStaticStrings().plugins.interactiveVideo
 
   const textTrack = useActiveTextTrack('chapters')
   const activeCue = useActiveTextCues(textTrack)[0]
@@ -113,8 +115,7 @@ export function MarkOverlay({
         <StaticRenderer document={activeMark.child} />
         {attempts > 0 && solved ? (
           <p className="mx-side my-4">
-            {/* TODO: i18n */}
-            <i>Gut gemacht! Jetzt geht&apos;s weiter .</i>
+            <i>{staticStrings.exerciseSolved}</i>
             <br />
             <button
               className="serlo-button-editor-primary mt-1"
@@ -123,16 +124,13 @@ export function MarkOverlay({
                 void player?.play()
               }}
             >
-              <FaIcon icon={faPlay} /> Abspielen {/* TODO: i18n */}
+              <FaIcon icon={faPlay} /> {staticStrings.play}
             </button>
           </p>
         ) : null}
         {attempts > 0 && !solved ? (
           <p className="mx-side my-4">
-            <i>
-              {/* TODO: i18n */}
-              Schau dir doch noch mal den Teil des Videos vor der Aufgabe an:
-            </i>
+            <i>{staticStrings.repeatPromt}</i>
             <br />
             <button
               className="serlo-button-editor-primary mt-1"
@@ -150,8 +148,7 @@ export function MarkOverlay({
                 void player.play()
               }}
             >
-              {/* TODO: i18n */}
-              <FaIcon icon={faBackward} /> Zurückspulen
+              <FaIcon icon={faBackward} /> {staticStrings.rewind}
             </button>
           </p>
         ) : null}

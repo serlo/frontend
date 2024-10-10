@@ -64,6 +64,13 @@ export const staticStrings = {
     video: {
       failed: "Sorry, the video couldn't be loaded.",
     },
+    interactiveVideo: {
+      play: 'Play',
+      rewind: 'Rewind',
+      mandatoryWarning: 'You have to solve the task first.',
+      exerciseSolved: "Well done! Let's move on.",
+      repeatPromt: 'Take another look at the part of the video before the task',
+    },
   },
   embed: {
     activateEmbed: 'Activate',
