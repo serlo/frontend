@@ -117,7 +117,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : props.config.cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {editorPlugins.getByType(EditorPluginType.Image) ? (
+              {editorPlugins.isSupported(EditorPluginType.Image) ? (
                 <CellSwitchButton
                   cell={cell}
                   isHead={isHead}
