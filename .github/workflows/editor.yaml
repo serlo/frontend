@@ -23,17 +23,18 @@ jobs:
 
       - name: Get current version from package.json
         id: get_version
-        run: echo "CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")" >> $GITHUB_ENV
+        run: |
+          VERSION=$(node -p "require('./packages/editor/package.json').version")
+          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Check if current version is already published
         id: check_published
         run: |
-          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
           if npm view @serlo/editor@$CURRENT_VERSION > /dev/null 2>&1; then
             echo "already_published=true" >> $GITHUB_OUTPUT
           else
             echo "already_published=false" >> $GITHUB_OUTPUT
-
       - name: Publish to npm
         if: steps.check_published.outputs.already_published == 'false'
         run: yarn editor:publish
@@ -43,14 +44,12 @@ jobs:
       - name: Create and push Git tag
         if: steps.check_published.outputs.already_published == 'false'
         run: |
-          VERSION=$(node -p "require('./packages/editor/package.json').version")
-          git tag v$VERSION
-          git push origin v$VERSION
+          git tag v$CURRENT_VERSION
+          git push origin v$CURRENT_VERSION
 
       - name: Extract changelog for current version
         id: extract_changelog
         run: |
-          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
           CHANGELOG=$(awk "/## Changelog for version $CURRENT_VERSION/,/^##/" packages/editor/CHANGELOG.md | sed '$d')
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
@@ -62,8 +61,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: v${{ steps.get_version.outputs.CURRENT_VERSION }}
-          title: 'Serlo Editor - v${{ steps.get_version.outputs.CURRENT_VERSION }}'
+          tag: v${{ steps.get_version.outputs.version }}
+          title: 'Serlo Editor - v${{ steps.get_version.outputs.version }}'
           body: |
             ## Serlo Editor Release Notes
             ${{ env.RELEASE_NOTES }}
