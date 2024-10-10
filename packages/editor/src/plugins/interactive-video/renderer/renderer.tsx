@@ -37,6 +37,7 @@ export function InteractiveVideoRenderer({
       title="Pine Tree Timelapse"
       src="https://www.youtube.com/watch?v=a4kr4SxMNnA"
       playsInline
+      className="[&_.vds-chapter-title]:opacity-0"
       muted
       hideControlsOnMouseLeave={false}
       controlsDelay={60000}

@@ -79,11 +79,11 @@ export function MarkOverlay({
   if (!player) return null
   return (
     <>
-      <div className="absolute top-2 flex w-full sm:justify-center">
+      <div className="pointer-events-none absolute top-3 flex w-full sm:justify-center">
         {activeCue?.text ? (
           <button
             ref={buttonRef}
-            className="serlo-button-blue animate-in slide-in-from-bottom-4 [&.triggered]:animate-bounce"
+            className="serlo-button-blue pointer-events-auto animate-in slide-in-from-bottom-4 [&.triggered]:animate-bounce"
             onClick={() => {
               openOverlayByStartTime(activeCue.startTime)
               void player.pause()

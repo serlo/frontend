@@ -1,5 +1,5 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { faTasks } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faTasks } from '@fortawesome/free-solid-svg-icons'
 import {
   useActiveTextCues,
   useActiveTextTrack,
@@ -34,10 +34,10 @@ export function PlayerTools({
   const isFillLongEnough = activeCueLength > markDuration
 
   return (
-    <div className="absolute top-2 flex w-full sm:justify-center">
+    <div className="pointer-events-none absolute top-3 flex w-full sm:justify-center">
       {activeCue?.text ? (
         <button
-          className="serlo-button-blue"
+          className="serlo-button-blue pointer-events-auto"
           onClick={() => {
             openOverlayByStartTime(activeCue.startTime)
             void player.pause()
@@ -47,16 +47,13 @@ export function PlayerTools({
         </button>
       ) : addOverlayContent && isFillLongEnough ? (
         <button
-          className="rounded-lg bg-gray-800 bg-opacity-20 px-2 py-1 transition-all hover:bg-opacity-100"
+          className="serlo-button-editor-primary pointer-events-auto"
           onClick={() => {
             addOverlayContent(player.currentTime)
             void player.pause()
-            // update player ui
-            // player.currentTime = player.currentTime + 0.1
-            // player.currentTime = player.currentTime - 0.1
           }}
         >
-          + {pluginStrings.addOverlayContent}
+          <FaIcon icon={faPlusCircle} /> {pluginStrings.addOverlayContent}
         </button>
       ) : null}
     </div>
