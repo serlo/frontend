@@ -217,6 +217,7 @@ export const editStrings = {
       editMark: 'Edit',
       removeMark: 'Remove',
       addOverlayContent: 'Add exercise',
+      addVideo: 'Add a video url (e.g. YouTube) to get started',
     },
     multimedia: {
       title: 'Multimedia content associated with text',

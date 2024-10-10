@@ -20,10 +20,12 @@ import { createCues } from '../helpers/create-cues'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function InteractiveVideoRenderer({
+  videoSrc,
   marks,
   tools,
   checkSeekAndPlay,
 }: {
+  videoSrc: string
   marks: EditorInteractiveVideoDocument['state']['marks']
   tools?: JSX.Element
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
@@ -36,8 +38,8 @@ export function InteractiveVideoRenderer({
   return (
     <div className="mx-side">
       <MediaPlayer
-        title="Pine Tree Timelapse"
-        src="https://www.youtube.com/watch?v=a4kr4SxMNnA"
+        title="Interactive Video"
+        src={videoSrc}
         playsInline
         className="[&_.vds-chapter-title]:opacity-0"
         muted

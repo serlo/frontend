@@ -1,4 +1,5 @@
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
+import { isVideoDocument } from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
 
 import { MarkOverlay } from './mark-overlay'
@@ -9,7 +10,7 @@ import { InteractiveVideoRenderer } from '../renderer/renderer'
 export function InteractiveVideoStaticRenderer({
   state,
 }: EditorInteractiveVideoDocument) {
-  const { marks } = state
+  const { marks, video } = state
 
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
@@ -25,8 +26,11 @@ export function InteractiveVideoStaticRenderer({
     setShowOverlayContentIndex(index)
   }
 
+  const videoSrc = isVideoDocument(video) ? video.state.src : ''
+
   return (
     <InteractiveVideoRenderer
+      videoSrc={videoSrc}
       marks={marks}
       tools={
         <MarkOverlay
