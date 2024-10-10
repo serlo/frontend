@@ -40,13 +40,8 @@ function createStoreInstance() {
   return store
 }
 
-// one store: Record<editorId, { state }>
-// multiple stores: one store per editor instance / per editor id
-
-// Export singleton instance of store
-// export const store = createStoreInstance()
-
-// Ability to create new store instances
+// Creates a new store instance. One per editor instance, otherwise they'll
+// share state.
 export function createStore() {
   return createStoreInstance()
 }
