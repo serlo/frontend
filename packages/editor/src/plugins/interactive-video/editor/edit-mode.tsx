@@ -9,10 +9,12 @@ import { addOverlayContent } from '../helpers/add-overlay-content'
 import { InteractiveVideoRenderer } from '../renderer/renderer'
 
 export function EditMode({
+  focused,
   state,
   staticMarks,
   videoSrc,
 }: {
+  focused: boolean
   state: InteractiveVideoProps['state']
   staticMarks: EditorInteractiveVideoDocument['state']['marks']
   videoSrc: string
@@ -43,7 +45,6 @@ export function EditMode({
           />
         }
       />
-
       {showOverlayContentIndex === null ? null : (
         <OverlayContentModal
           onClose={() => setShowOverlayContentIndex(null)}
@@ -51,11 +52,13 @@ export function EditMode({
         />
       )}
       <div className="h-6" />
-      <MarksList
-        marks={marks}
-        staticMarks={staticMarks}
-        onMarkClick={setShowOverlayContentIndex}
-      />
+      {focused ? (
+        <MarksList
+          marks={marks}
+          staticMarks={staticMarks}
+          onMarkClick={setShowOverlayContentIndex}
+        />
+      ) : null}
     </>
   )
 }

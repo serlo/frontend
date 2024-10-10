@@ -35,7 +35,12 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
       {previewActive && videoSrc.length ? (
         <InteractiveVideoStaticRenderer {...staticDocument} />
       ) : videoSrc ? (
-        <EditMode videoSrc={videoSrc} state={state} staticMarks={staticMarks} />
+        <EditMode
+          focused={focused}
+          videoSrc={videoSrc}
+          state={state}
+          staticMarks={staticMarks}
+        />
       ) : (
         <SelectVideoMode videoId={state.video.id} staticVideoSrc={videoSrc} />
       )}
