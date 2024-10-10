@@ -52,7 +52,7 @@ export function EdusharingAssetRenderer(props: {
       if (nodeId === undefined || repositoryId === undefined) return
 
       const embedHtmlUrl = new URL(window.location.origin)
-      embedHtmlUrl.pathname = '/lti/get-embed-html'
+      embedHtmlUrl.pathname = '/edusharing-embed/get'
       embedHtmlUrl.searchParams.append('nodeId', nodeId)
       embedHtmlUrl.searchParams.append('repositoryId', repositoryId)
 
