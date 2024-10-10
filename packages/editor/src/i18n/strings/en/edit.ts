@@ -205,7 +205,7 @@ export const editStrings = {
       title: 'Interactive Video',
       description: 'Create an interactive video with questions and feedback.',
       editOverlayTitle: 'Edit Exercise',
-      titlePlaceholder: 'Title',
+      titlePlaceholder: 'Exercise Title',
       defaultTitle: 'Exercise',
       autoOpenLabel: 'Automatically open',
       autoOpenExplanation: 'Content automatically opens when video is at mark',
