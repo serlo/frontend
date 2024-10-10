@@ -1,5 +1,5 @@
 import {
-  store,
+  useStore,
   selectAncestorDocumentIds,
   selectAncestorPluginTypes,
   selectDocument,
@@ -15,6 +15,7 @@ export function useCanDrop(
   draggingAbove: boolean,
   allowedPlugins: (EditorPluginType | string)[] | undefined
 ) {
+  const store = useStore()
   return function (dragId?: string) {
     return (
       dragId &&
