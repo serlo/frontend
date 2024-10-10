@@ -24,9 +24,9 @@ export function TimeSliderWithDots({
                 {mark ? (
                   <div
                     className={cn(
-                      'z-30 h-5 w-5 rounded-full border-3',
-                      mark.mandatory ? 'bg-orange-400' : 'bg-brand',
-                      mark.autoOpen ? 'opacity-95' : 'opacity-70'
+                      'z-30 h-[17px] w-[17px] rounded-full border-2',
+                      mark.mandatory ? 'bg-orange-400' : 'bg-gray-500'
+                      // mark.autoOpen ? 'opacity-95' : 'opacity-70'
                     )}
                   />
                 ) : null}
