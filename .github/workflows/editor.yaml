@@ -21,6 +21,10 @@ jobs:
       - name: Build editor package
         run: yarn editor:build
 
+      - name: Get current version from package.json
+        id: get_version
+        run: echo "CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")" >> $GITHUB_ENV
+
       - name: Check if current version is already published
         id: check_published
         run: |
@@ -43,13 +47,23 @@ jobs:
           git tag v$VERSION
           git push origin v$VERSION
 
+      - name: Extract changelog for current version
+        id: extract_changelog
+        run: |
+          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
+          CHANGELOG=$(awk "/## Changelog for version $CURRENT_VERSION/,/^##/" packages/editor/CHANGELOG.md | sed '$d')
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         if: steps.check_published.outputs.already_published == 'false'
-        uses: actions/create-release@v1
-        with:
-          tag_name: v${{ steps.check_published.outputs.CURRENT_VERSION }}
-          release_name: v${{ steps.check_published.outputs.CURRENT_VERSION }}
-          draft: false
-          prerelease: false
+        uses: elgohr/Github-Release-Action@v5
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: v${{ steps.get_version.outputs.CURRENT_VERSION }}
+          title: 'Serlo Editor - v${{ steps.get_version.outputs.CURRENT_VERSION }}'
+          body: |
+            ## Serlo Editor Release Notes
+            ${{ env.RELEASE_NOTES }}
