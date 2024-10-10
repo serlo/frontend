@@ -1,4 +1,5 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - math formula')
@@ -6,23 +7,25 @@ Feature('Serlo Editor - Text plugin - math formula')
 Before(popupWarningFix)
 
 Scenario('Add a math formula', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
 
   I.seeElement('$plugin-math-latex-editor')
   I.type('\\frac12')
 })
 
 Scenario('Close math formula using arrow keys', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
   I.type('\\frac12')
 
   I.say('Close math editor with cursor at the end and ArrowRight')
@@ -44,12 +47,13 @@ Scenario('Close math formula using arrow keys', async ({ I }) => {
 })
 
 Scenario('Close math formula using Escape', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
   I.type('\\frac12')
 
   I.say('Close math editor with ESC key')
@@ -59,11 +63,12 @@ Scenario('Close math formula using Escape', async ({ I }) => {
 })
 
 Scenario('Close math formula using close button', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   addNewTextPlugin(I)
 
   I.type('Some text ')
   I.pressKey(['CommandOrControl', 'M'])
+  I.selectOption('$plugin-toolbar-math-type-switch', 'LaTeX')
   I.type('\\frac12')
 
   I.say('Close math editor with close button')

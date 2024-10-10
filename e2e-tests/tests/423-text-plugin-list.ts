@@ -1,4 +1,5 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - list')
@@ -6,7 +7,7 @@ Feature('Serlo Editor - Text plugin - list')
 Before(popupWarningFix)
 
 Scenario('Unordered list shortcuts', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.say('Add a new text plugin and delete the backslash')
   addNewTextPlugin(I)
@@ -50,7 +51,7 @@ Scenario('Unordered list shortcuts', ({ I }) => {
 })
 
 Scenario('Ordered list shortcuts', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.say('Add a new text plugin and delete the backslash')
   addNewTextPlugin(I)
@@ -95,7 +96,7 @@ Scenario('Ordered list shortcuts', ({ I }) => {
 })
 
 Scenario("Don't show suggestions when '/' is inside of a list", ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.say('Add a new text plugin, check for suggestions, delete the backslash')
   addNewTextPlugin(I)
@@ -111,7 +112,7 @@ Scenario("Don't show suggestions when '/' is inside of a list", ({ I }) => {
 })
 
 Scenario('Inserting a plugin right after a list using suggestions', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.say('Add a new text plugin and delete the backslash')
   addNewTextPlugin(I)

@@ -16,7 +16,6 @@ import type {
   EditorMultimediaDocument,
   EditorPageLayoutDocument,
   EditorPagePartnersDocument,
-  EditorPageTeamDocument,
   EditorRowsDocument,
   EditorScMcExerciseDocument,
   EditorSerloInjectionDocument,
@@ -152,11 +151,6 @@ export function isPageLayoutDocument(
   document: AnyEditorDocument
 ): document is EditorPageLayoutDocument {
   return document.plugin === EditorPluginType.PageLayout
-}
-export function isPageTeamDocument(
-  document: AnyEditorDocument
-): document is EditorPageTeamDocument {
-  return document.plugin === EditorPluginType.PageTeam
 }
 export function isPagePartnersDocument(
   document: AnyEditorDocument

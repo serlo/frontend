@@ -109,7 +109,7 @@ export async function requestPage(
             : 'topic',
       },
       breadcrumbsData,
-      secondaryMenuData: secondaryMenuData,
+      secondaryMenuData,
       authorization,
     }
   }

@@ -1,4 +1,5 @@
 import { addMultimediaPlugin } from './430-multimedia-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 
 Feature('Serlo Editor - Multimedia plugin - image multimedia type')
 
@@ -16,7 +17,7 @@ Scenario.todo('Multimedia plugin unauthorized image upload')
 Scenario.todo('Multimedia plugin too big image upload')
 
 Scenario('Multimedia plugin successful image upload', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addMultimediaPlugin(I)
 
@@ -63,7 +64,7 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
 })
 
 Scenario('Multimedia plugin invalid image URL', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addMultimediaPlugin(I)
 
@@ -77,7 +78,7 @@ Scenario('Multimedia plugin invalid image URL', ({ I }) => {
 })
 
 Scenario('Multimedia plugin valid image URL', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addMultimediaPlugin(I)
 
@@ -121,7 +122,7 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
 })
 
 Scenario('Multimedia plugin fill in image caption', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addMultimediaPlugin(I)
 

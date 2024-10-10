@@ -1,4 +1,5 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - link')
@@ -6,7 +7,7 @@ Feature('Serlo Editor - Text plugin - link')
 Before(popupWarningFix)
 
 Scenario('Add a link using link suggestion menu', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
   I.say('Create text of link and select it')
@@ -57,7 +58,7 @@ Scenario('Add a link using link suggestion menu', async ({ I }) => {
 })
 
 Scenario('Edit existing link', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
 
@@ -87,7 +88,7 @@ Scenario('Edit existing link', async ({ I }) => {
 })
 
 Scenario('Remove existing link', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
 

@@ -21,11 +21,9 @@ export function checkIsAllowedNesting(
   // page specific plugins should only be allowed inside a page
   // only for serlo.org
   if (
-    [
-      EditorPluginType.PageLayout,
-      EditorPluginType.PageTeam,
-      EditorPluginType.PagePartners,
-    ].includes(pluginType as EditorPluginType)
+    [EditorPluginType.PageLayout, EditorPluginType.PagePartners].includes(
+      pluginType as EditorPluginType
+    )
   ) {
     if (rootPluginType !== TemplatePluginType.Page) {
       return false

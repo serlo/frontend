@@ -143,14 +143,15 @@ Scenario('Geogebra', ({ I }) => {
   I.waitForElement('canvas[data-test="euclidianView"]', 10)
 })
 
-Scenario('Video + Injection', ({ I }) => {
-  I.amOnPage('/277232')
-  I.scrollTo('#f7f13990')
-  I.see('dass externe Inhalte von')
-  I.click('Video abspielen von YouTube')
-  I.switchTo('iframe')
-  I.seeElement('video')
-})
+// deactivated for a while until youtube does not block us any more 😅
+// Scenario('Video + Injection', ({ I }) => {
+//   I.amOnPage('/277232')
+//   I.scrollTo('#f7f13990')
+//   I.see('dass externe Inhalte von')
+//   I.click('Video abspielen von YouTube')
+//   I.switchTo('iframe')
+//   I.seeElement('video')
+// })
 
 Scenario('Toggle Solution', ({ I }) => {
   I.amOnPage('/37779')
@@ -173,16 +174,15 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('Realschule')
 
   // Running around a bit more
-  I.see('Klasse 5')
+  I.waitForText('Klasse 5', 5)
   I.see('Klasse 6')
   I.click('Klasse 7')
-  I.see('Klasse 7')
+  I.waitForText('Klasse 7', 5)
   I.click('Grundwissenstest 7. Klasse')
-  I.see('Aufgaben')
+  I.waitForText('Aufgaben', 5)
   I.click('2021')
 
-  // Takes a long time to load
-  I.see('Berechne')
+  I.waitForText('Berechne', 5)
 
   I.amOnPage('/24370')
   I.see('Artikel')
@@ -255,18 +255,18 @@ Scenario('Course', ({ I }) => {
   I.amOnPage('/1327')
   I.see('Kurse')
   I.click('Einführung lineare Funktionen')
-  I.see('1', 'span.rounded-full')
+  I.waitForText('1', 5, 'span.rounded-full')
   I.see('Kursübersicht', 'h1')
   I.see('Einführung lineare Funktionen')
   I.click('Weiter')
-  I.see('2', 'span.rounded-full')
+  I.waitForText('2', 5, 'span.rounded-full')
   I.see('Aufstieg zur Zugspitze', 'h1')
   I.click('Zurück')
-  I.see('Kursübersicht', 'h1')
+  I.waitForText('Kursübersicht', 5, 'h1')
   I.click('Kursübersicht')
-  I.see('Zusammenfassung')
+  I.waitForText('Zusammenfassung', 5)
   I.click('Weiterführende Übungen')
-  I.see('Lösungsvorschlag')
+  I.waitForText('Lösungsvorschlag', 5)
 })
 
 Scenario('Comments', ({ I }) => {

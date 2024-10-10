@@ -1,3 +1,4 @@
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Image Gallery plugin')
@@ -13,7 +14,7 @@ async function addImageGalleryPlugin(I: CodeceptJS.I) {
 }
 
 Scenario('Create Image Gallery Plugin, see initial screen', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addImageGalleryPlugin(I)
 
