@@ -1,12 +1,18 @@
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { TimeSlider } from '@vidstack/react'
 
+import {
+  getMarkInteractions,
+  type LearnerInteractions,
+} from '../helpers/use-learner-interactions'
 import { cn } from '@/helper/cn'
 
 export function TimeSliderWithDots({
   marks,
+  learnerInteractions,
 }: {
   marks: EditorInteractiveVideoDocument['state']['marks']
+  learnerInteractions?: LearnerInteractions
 }) {
   return (
     <TimeSlider.Root className="vds-time-slider vds-slider">
@@ -14,6 +20,10 @@ export function TimeSliderWithDots({
         {(cues, forwardRef) =>
           cues.map((cue) => {
             const mark = marks.find((mark) => cue.startTime === mark.startTime)
+
+            const solved = learnerInteractions
+              ? getMarkInteractions(mark ?? null, learnerInteractions).solved
+              : false
 
             return (
               <div
@@ -25,8 +35,8 @@ export function TimeSliderWithDots({
                   <div
                     className={cn(
                       'z-30 h-[17px] w-[17px] rounded-full border-2',
-                      mark.mandatory ? 'bg-orange-400' : 'bg-gray-500'
-                      // mark.autoOpen ? 'opacity-95' : 'opacity-70'
+                      mark.mandatory ? 'bg-orange-400' : 'bg-gray-500',
+                      solved && '!bg-brandgreen-500'
                     )}
                   />
                 ) : null}

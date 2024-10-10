@@ -32,6 +32,7 @@ export function InteractiveVideoStaticRenderer({
     <InteractiveVideoRenderer
       videoSrc={videoSrc}
       marks={marks}
+      learnerInteractions={learnerInteractions}
       tools={
         <MarkOverlay
           showOverlayContentIndex={showOverlayContentIndex}

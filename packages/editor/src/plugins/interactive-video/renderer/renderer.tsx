@@ -18,18 +18,21 @@ import {
 
 import { TimeSliderWithDots } from './timeslider-with-dots'
 import { createCues } from '../helpers/create-cues'
+import { type LearnerInteractions } from '../helpers/use-learner-interactions'
 
 export function InteractiveVideoRenderer({
   videoSrc,
   marks,
   tools,
   checkSeekAndPlay,
+  learnerInteractions,
 }: {
   videoSrc: string
   marks: EditorInteractiveVideoDocument['state']['marks']
   tools?: JSX.Element
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
+  learnerInteractions?: LearnerInteractions
 }) {
   const exerciseString = useStaticStrings().plugins.exercise.title
   const cues = createCues(marks, exerciseString)
@@ -68,7 +71,12 @@ export function InteractiveVideoRenderer({
           icons={defaultLayoutIcons}
           slots={{
             beforeSettingsMenu: tools,
-            timeSlider: <TimeSliderWithDots marks={marks} />,
+            timeSlider: (
+              <TimeSliderWithDots
+                marks={marks}
+                learnerInteractions={learnerInteractions}
+              />
+            ),
           }}
         />
         {/* <Poster
