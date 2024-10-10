@@ -64,7 +64,11 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
             />
           )}
           <div className="h-6" />
-          <MarksList marks={marks} onMarkClick={setShowOverlayContentIndex} />
+          <MarksList
+            marks={marks}
+            staticMarks={staticDocument.state.marks}
+            onMarkClick={setShowOverlayContentIndex}
+          />
         </>
       )}
     </>

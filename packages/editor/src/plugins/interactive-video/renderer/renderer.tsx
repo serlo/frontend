@@ -29,6 +29,7 @@ export function InteractiveVideoRenderer({
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
 }) {
+  // TODO: use useStaticStrings here
   const exerciseString = useInstanceData().strings.entities.exercise
   const cues = createCues(marks, exerciseString)
 

@@ -45,7 +45,6 @@ export function MarkOverlay({
 
   function closeOverlay() {
     if (!player) return
-    // TODO: try to stop player from starting immediately if player was clicked to close overlay
     close()
     setTimeout(() => player.$el?.focus())
   }
