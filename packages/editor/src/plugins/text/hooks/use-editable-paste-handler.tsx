@@ -8,7 +8,7 @@ import {
   selectDocument,
   selectMayManipulateSiblings,
   useAppDispatch,
-  store,
+  useStore,
   selectAncestorPluginTypes,
 } from '@editor/store'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
@@ -24,6 +24,7 @@ export interface UseEditablePasteHandlerArgs {
 }
 
 export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
+  const store = useStore()
   const { editor, id } = args
 
   const dispatch = useAppDispatch()
@@ -43,7 +44,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       if (!document) return
 
       // special case: pasting in image caption
-      void captionPasteHandler({ event, files, text, id, dispatch })
+      void captionPasteHandler({
+        event,
+        files,
+        text,
+        id,
+        dispatch,
+        getStoreState: () => storeState,
+      })
 
       // temporary hack to handle async onText
       if (text.startsWith('![](https://cdn.mathpix.com')) {
@@ -101,8 +109,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       }
 
       // Insert the plugin with appropriate type and state
-      insertPlugin({ editor, id, dispatch, ...media })
+      insertPlugin({
+        editor,
+        id,
+        dispatch,
+        getStoreState: () => store.getState(),
+        ...media,
+      })
     },
-    [dispatch, editor, id, textStrings]
+    [dispatch, editor, id, textStrings, store]
   )
 }

@@ -1,5 +1,5 @@
 import { storeStateToLocalStorage } from '@editor/editor-ui/save/local-storage-notice'
-import { store, selectStaticDocument } from '@editor/store'
+import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
@@ -11,6 +11,7 @@ export function useHandleSave(
   visible: boolean,
   showSubscriptionOptions?: boolean
 ) {
+  const store = useStore()
   const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)

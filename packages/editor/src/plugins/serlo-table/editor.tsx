@@ -3,7 +3,7 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
-  store,
+  useStore,
   selectFocused,
   selectIsDocumentEmpty,
   focus,
@@ -26,6 +26,7 @@ import { instanceStateStore } from '../text/utils/instance-state-store'
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
+  const store = useStore()
   const { rows } = props.state
 
   const [, setUpdateHack] = useState(0)

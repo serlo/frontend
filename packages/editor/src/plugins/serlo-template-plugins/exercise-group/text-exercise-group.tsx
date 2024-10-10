@@ -3,7 +3,7 @@ import {
   type EditorPluginProps,
   PrettyStaticState,
 } from '@editor/plugin'
-import { selectStaticDocument, store } from '@editor/store'
+import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
@@ -34,6 +34,7 @@ function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<TextExerciseGroupTypePluginState>
 ) {
   const { content, id, revision, replaceOwnState } = props.state
+  const store = useStore()
 
   const staticState = selectStaticDocument(store.getState(), props.id)
     ?.state as PrettyStaticState<TextExerciseGroupTypePluginState>

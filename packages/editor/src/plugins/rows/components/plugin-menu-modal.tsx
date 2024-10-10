@@ -7,7 +7,7 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '@editor/plugins/rows/contexts/plugin-menu'
-import { selectAncestorPluginTypes, store } from '@editor/store'
+import { selectAncestorPluginTypes, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
@@ -26,6 +26,7 @@ interface PluginMenuModalProps {
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
+  const store = useStore()
   const editorStrings = useEditStrings()
   const pluginsStrings = editorStrings.plugins
 
@@ -63,6 +64,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     menuItems,
     pluginMenuState.allowedChildPlugins,
     pluginMenuState.parentPluginId,
+    store,
   ])
 
   const allowedMenuItems = useMemo(() => {

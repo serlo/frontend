@@ -7,8 +7,8 @@ import {
   selectMayManipulateSiblings,
   removePluginChild,
   selectChildTree,
-  store,
 } from '@editor/store'
+import type { AppDispatch, RootState } from '@editor/store/store'
 import {
   BaseSelection,
   Descendant,
@@ -60,30 +60,33 @@ export function sliceNodesAfterSelection(editor: SlateEditor) {
 export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
-  id: string
+  id: string,
+  getStoreState: () => RootState,
+  dispatch: AppDispatch
 ) {
-  const mayManipulateSiblings = selectMayManipulateSiblings(
-    store.getState(),
-    id
-  )
-  const parent = selectChildTreeOfParent(store.getState(), id)
+  const mayManipulateSiblings = selectMayManipulateSiblings(getStoreState(), id)
+  const parent = selectChildTreeOfParent(getStoreState(), id)
   if (!mayManipulateSiblings || !parent) return
 
-  const adjacentSibling = getAdjacentSiblingByDirection(id, direction)
-  const adjacentDocument = selectDocument(store.getState(), adjacentSibling?.id)
+  const adjacentSibling = getAdjacentSiblingByDirection(
+    id,
+    direction,
+    getStoreState
+  )
+  const adjacentDocument = selectDocument(getStoreState(), adjacentSibling?.id)
   if (!adjacentSibling || !adjacentDocument) return
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
   if (Node.string(editor) === '' && editor.children.length <= 1) {
-    const focusTree = selectChildTree(store.getState())
+    const focusTree = selectChildTree(getStoreState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
-    store.dispatch(focusAction(focusTree))
-    store.dispatch(removePluginChild({ parent: parent.id, child: id }))
+    dispatch(focusAction(focusTree))
+    dispatch(removePluginChild({ parent: parent.id, child: id }))
     return
   }
 
-  const currentDocument = selectDocument(store.getState(), id)
+  const currentDocument = selectDocument(getStoreState(), id)
   if (!currentDocument) return
 
   const allChildrenOfParent = parent.children || []
@@ -110,7 +113,7 @@ export function mergePlugins(
       editor.children = newValue
 
       // Remove the merged plugin
-      store.dispatch(
+      dispatch(
         removePluginChild({
           parent: parent.id,
           child: adjacentSibling.id,
@@ -152,7 +155,7 @@ export function mergePlugins(
       editor.children = newValue
 
       // Remove the merged plugin
-      store.dispatch(
+      dispatch(
         removePluginChild({ parent: parent.id, child: adjacentSibling.id })
       )
 
@@ -167,9 +170,10 @@ export function mergePlugins(
 
 function getAdjacentSiblingByDirection(
   id: string,
-  direction: 'previous' | 'next'
+  direction: 'previous' | 'next',
+  getStoreState: () => RootState
 ) {
-  const parent = selectChildTreeOfParent(store.getState(), id)
+  const parent = selectChildTreeOfParent(getStoreState(), id)
   const allChildrenOfParent = parent?.children || []
   const indexWithinParent = allChildrenOfParent.findIndex(
     (child) => child.id === id
