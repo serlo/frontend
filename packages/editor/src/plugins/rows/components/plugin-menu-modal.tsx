@@ -83,7 +83,18 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
 
       const interactiveOptions = filteredBySearchString.filter(
-        ({ initialState }) => initialState.plugin === EditorPluginType.Exercise
+        ({ initialState, type }) => {
+          // HACK: Don't show exercises in menu when they are not supported
+          const isSupported =
+            type === 'singleChoiceExercise' || type === 'multipleChoiceExercise'
+              ? editorPlugins.isSupported(EditorPluginType.ScMcExercise)
+              : type === 'blanksExerciseDragAndDrop'
+                ? editorPlugins.isSupported(EditorPluginType.BlanksExercise)
+                : editorPlugins.isSupported(type)
+          return (
+            initialState.plugin === EditorPluginType.Exercise && isSupported
+          )
+        }
       )
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)
