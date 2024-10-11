@@ -5910,13 +5910,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/editor-web-component@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@serlo/editor-web-component@npm:0.9.0"
-  checksum: 1a1c45de853f09a5577006ae90f807ac767ed2f8784510b4ee94e715dc639e907d688181b817c5e72789bcc9f9cad6dbba183f62d2c4cdf39c2345bdfccb4e68
-  languageName: node
-  linkType: hard
-
 "@serlo/editor-web-component@workspace:packages/editor-web-component":
   version: 0.0.0-use.local
   resolution: "@serlo/editor-web-component@workspace:packages/editor-web-component"
@@ -5995,7 +5988,6 @@ __metadata:
     "@reduxjs/toolkit": ^1.9.7
     "@rollup/plugin-replace": ^5.0.5
     "@serlo/authorization": ^0.60.0
-    "@serlo/editor-web-component": ^0.9.0
     "@serlo/frontend": "workspace:*"
     "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
