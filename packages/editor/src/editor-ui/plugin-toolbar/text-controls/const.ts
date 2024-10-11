@@ -1,6 +1,5 @@
-import { articleColors } from '@serlo/frontend/src/helper/colors'
-
-export const textColors = Object.entries(articleColors).map(([key, value]) => ({
-  value,
-  name: key.charAt(0).toUpperCase() + key.slice(1),
-}))
+export const textColors = [
+  { value: '#1794c1', name: 'Blue' },
+  { value: '#006400', name: 'Green' },
+  { value: '#ff6600', name: 'Orange' },
+]

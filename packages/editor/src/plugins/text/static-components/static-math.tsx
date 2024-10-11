@@ -1,5 +1,5 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import KaTeX from 'katex'
 // eslint-disable-next-line import/no-unassigned-import
 import 'katex/contrib/mhchem'
@@ -68,12 +68,10 @@ export function StaticMath({ src, inline }: StaticMathProps) {
         })
       : ''
     return (
-      <>
-        <span
-          className="inline-block py-1 [page-break-inside:avoid]"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </>
+      <span
+        className="inline-block py-1 [page-break-inside:avoid]"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     )
   }
 }

@@ -5,12 +5,16 @@ import {
   editorLink,
   editorText,
 } from '@editor/editor-ui'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import {
   withLinks,
   withLists,
   withMath,
   withBlanks,
 } from '@editor/plugins/text/plugins'
+import { isMac } from '@editor/utils/client-detection'
 import {
   faCode,
   faListOl,
@@ -18,11 +22,6 @@ import {
   faSquareRootVariable,
 } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import type { LoggedInData } from '@serlo/frontend/src/data-types'
-import { isMac } from '@serlo/frontend/src/helper/client-detection'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
@@ -131,8 +130,8 @@ const registeredMarkdownShortcuts = [
 export const useFormattingOptions = (
   formattingOptions: TextEditorFormattingOption[]
 ) => {
-  const { strings } = useInstanceData()
-  const textStrings = useEditorStrings().plugins.text
+  const ctrlString = useStaticStrings().misc.ctrl
+  const textStrings = useEditStrings().plugins.text
 
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
@@ -149,9 +148,8 @@ export const useFormattingOptions = (
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-    () =>
-      createToolbarControls(formattingOptions, textStrings, strings.keys.ctrl),
-    [formattingOptions, strings, textStrings]
+    () => createToolbarControls(formattingOptions, textStrings, ctrlString),
+    [formattingOptions, ctrlString, textStrings]
   )
 
   const handleHotkeys = useCallback(
@@ -227,7 +225,7 @@ export const useFormattingOptions = (
 
 function createToolbarControls(
   formattingOptions: TextEditorFormattingOption[],
-  textStrings: LoggedInData['strings']['editor']['plugins']['text'],
+  textStrings: ReturnType<typeof useEditStrings>['plugins']['text'],
   ctrlKey: string
 ): ControlButton[] {
   const allFormattingOptions = [

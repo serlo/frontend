@@ -1,10 +1,10 @@
 import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -36,7 +36,7 @@ export function MathEditor(props: MathEditorProps) {
   const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const mathStrings = useEditorStrings().plugins.text.math
+  const mathStrings = useEditStrings().plugins.text.math
 
   const { visual, readOnly, state, disableBlock } = props
 
@@ -113,7 +113,7 @@ export function MathEditor(props: MathEditorProps) {
             <ToolbarSelect
               tooltipText=""
               value={isVisualMode ? 'visual' : 'latex'}
-              data-qa="plugin-toolbar-math-type-switch"
+              dataQa="plugin-toolbar-math-type-switch"
               changeValue={(value) => {
                 if (hasError) setHasError(false)
                 props.onEditorChange(value === 'visual')
@@ -123,7 +123,6 @@ export function MathEditor(props: MathEditorProps) {
                 { value: 'latex', text: mathStrings.latex },
               ]}
             />
-
             {!disableBlock && (
               <button
                 className="mr-2 rounded-md border border-gray-500 px-1 py-0.25 text-sm text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"

@@ -1,57 +1,39 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { Dispatch, SetStateAction } from 'react'
 
 import { type BlanksExerciseProps } from '.'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
 
 export const BlanksExerciseToolbar = ({
-  id,
   state,
-  previewActive,
-  setPreviewActive,
   childPluginType,
+  containerRef,
+  showSelection,
 }: BlanksExerciseProps & {
-  previewActive: boolean
-  setPreviewActive: Dispatch<SetStateAction<boolean>>
   childPluginType: EditorPluginType
+  showSelection: boolean
 }) => {
-  const pluginsStrings = useEditorStrings().plugins
+  const pluginsStrings = useEditStrings().plugins
   const blanksExerciseStrings = pluginsStrings.blanksExercise
-  const pluginType =
-    state.mode.value === 'typing'
-      ? EditorPluginType.BlanksExercise
-      : EditorPluginType.BlanksExerciseDragAndDrop
 
   return (
-    <PluginToolbar
-      pluginType={pluginType}
-      className="top-[-33px]"
-      pluginSettings={
-        <>
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-            dataQa="plugin-blanks-exercise-preview-button"
-          />
-          <ToolbarSelect
-            tooltipText={blanksExerciseStrings.chooseType}
-            value={state.mode.value}
-            dataQa="plugin-blanks-mode-switch"
-            changeValue={(value) => state.mode.set(value)}
-            options={[
-              { value: 'typing', text: blanksExerciseStrings.modes.typing },
-              {
-                value: 'drag-and-drop',
-                text: blanksExerciseStrings.modes['drag-and-drop'],
-              },
-            ]}
-          />
+    <InteractiveToolbarPortal containerRef={containerRef}>
+      <>
+        <ToolbarSelect
+          tooltipText={blanksExerciseStrings.chooseType}
+          value={state.mode.value}
+          dataQa="plugin-blanks-mode-switch"
+          changeValue={(value) => state.mode.set(value)}
+          options={[
+            { value: 'typing', text: blanksExerciseStrings.modes.typing },
+            {
+              value: 'drag-and-drop',
+              text: blanksExerciseStrings.modes['drag-and-drop'],
+            },
+          ]}
+        />
+        {showSelection ? null : (
           <ToolbarSelect
             tooltipText={blanksExerciseStrings.chooseChildPluginType}
             value={childPluginType}
@@ -68,9 +50,8 @@ export const BlanksExerciseToolbar = ({
               },
             ]}
           />
-        </>
-      }
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
+        )}
+      </>
+    </InteractiveToolbarPortal>
   )
 }

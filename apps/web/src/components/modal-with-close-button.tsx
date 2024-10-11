@@ -1,7 +1,3 @@
-import {
-  getFirstElementOrUndefined,
-  useShadowRoot,
-} from '@editor/core/helpers/use-shadow-root'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useState, type ReactNode, useCallback, useRef, useEffect } from 'react'
@@ -40,11 +36,7 @@ export function ModalWithCloseButton({
   const { strings } = useInstanceData()
 
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const shadowRootRef = useRef<HTMLDivElement>(null)
-  const shadowRoot = useShadowRoot(shadowRootRef)
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
-
-  const appElement = getFirstElementOrUndefined(shadowRoot)
 
   const onOpenChange = useCallback(
     (open: boolean) => {
@@ -77,21 +69,13 @@ export function ModalWithCloseButton({
       }
       return
     }
-
-    if (shadowRoot) {
-      previouslyFocusedElementRef.current =
-        shadowRoot.activeElement as HTMLElement
-    } else {
-      previouslyFocusedElementRef.current =
-        document.activeElement as HTMLElement
-    }
-  }, [isOpen, shadowRoot])
+    previouslyFocusedElementRef.current = document.activeElement as HTMLElement
+  }, [isOpen])
 
   return (
     <>
-      <div ref={shadowRootRef}></div>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
-        <Dialog.Portal container={appElement}>
+        <Dialog.Portal>
           <Dialog.Overlay
             className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
           />

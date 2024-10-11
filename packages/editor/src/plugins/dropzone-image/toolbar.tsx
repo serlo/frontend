@@ -1,42 +1,33 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { runChangeDocumentSaga, useAppDispatch } from '@editor/store'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
 import { faCog, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { ModalWithCloseButton } from '@serlo/frontend/src/components/modal-with-close-button'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useCallback, useState } from 'react'
 
 import { type DropzoneImageProps } from '.'
 import { BackgroundImageSettings } from './components/editor/background-image-settings'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
-import { cn } from '@/helper/cn'
+import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
 
 interface DropzoneImageToolbarProps {
-  id: string
   backgroundImage?: DropzoneImageProps['state']['backgroundImage']
   showSettings: boolean
   showSettingsButton?: boolean
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
-  previewActive?: boolean
-  setPreviewActive?: (active: boolean) => void
+  containerRef?: React.RefObject<HTMLDivElement>
 }
 
 export function DropzoneImageToolbar({
-  id,
   backgroundImage,
   showSettings,
   showSettingsButton = false,
   dropzoneVisibility,
-  previewActive,
-  setPreviewActive,
+  containerRef,
 }: DropzoneImageToolbarProps) {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
   const dropzoneStrings = editorStrings.plugins.dropzoneImage
   const imageStrings = editorStrings.plugins.image
 
@@ -55,13 +46,11 @@ export function DropzoneImageToolbar({
     )
   }, [backgroundImage, dispatch])
 
-  return (
-    <PluginToolbar
-      pluginType={EditorPluginType.DropzoneImage}
-      pluginSettings={showSettings ? renderSettingsButtons() : undefined}
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
-  )
+  return showSettings ? (
+    <InteractiveToolbarPortal containerRef={containerRef}>
+      {renderSettingsButtons()}
+    </InteractiveToolbarPortal>
+  ) : null
 
   function renderSettingsButtons() {
     if (!dropzoneVisibility && !showSettingsButton) return undefined
@@ -82,12 +71,6 @@ export function DropzoneImageToolbar({
             {renderSettingsModal()}
           </>
         ) : null}
-        {previewActive !== undefined && setPreviewActive !== undefined ? (
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
-        ) : null}
         {dropzoneVisibility ? (
           <ToolbarSelect
             tooltipText={dropzoneStrings.dropzoneVisibility}
@@ -107,7 +90,7 @@ export function DropzoneImageToolbar({
     if (!backgroundImage?.defined) return null
 
     return (
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={showSettingsModal}
         setIsOpen={(open) => {
           const isModalClosing = !open
@@ -128,7 +111,7 @@ export function DropzoneImageToolbar({
             {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
           </button>
         </div>
-      </ModalWithCloseButton>
+      </EditorModal>
     )
   }
 }

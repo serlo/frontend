@@ -48,9 +48,9 @@ export function ArticleStaticRenderer({
       }
       exercisesFolder={
         hasMoreLink ? (
-          <Link className="font-bold" href={`/${exerciseFolder.id}`}>
+          <a className="serlo-link font-bold" href={`/${exerciseFolder.id}`}>
             {exerciseFolder.title}
-          </Link>
+          </a>
         ) : null
       }
       relatedContent={{
@@ -71,9 +71,11 @@ export function ArticleStaticRenderer({
 
     return (
       <>
-        {items.map((item) => (
-          <li key={item.id}>
-            <Link href={`/${item.id}`}>{item.title}</Link>
+        {items.map(({ id, title }) => (
+          <li key={id}>
+            <a className="serlo-link" href={`/${id}`}>
+              {title}
+            </a>
           </li>
         ))}
       </>

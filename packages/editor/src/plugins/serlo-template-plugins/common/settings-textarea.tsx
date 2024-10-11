@@ -1,5 +1,5 @@
 import { StateTypeReturnType, string } from '@editor/plugin'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 export function SettingsTextarea({
   label,

@@ -1,4 +1,5 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - plugin toolbar')
@@ -10,7 +11,7 @@ Before(popupWarningFix)
 const initialTextPluginCount = 2
 
 Scenario('Duplicate plugin', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 
@@ -25,7 +26,7 @@ Scenario('Duplicate plugin', async ({ I }) => {
 })
 
 Scenario('Delete plugin', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 

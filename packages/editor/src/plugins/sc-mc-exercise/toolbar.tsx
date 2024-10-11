@@ -1,25 +1,14 @@
-import {
-  PluginToolbar,
-  PreviewButton,
-  ToolbarSelect,
-} from '@editor/editor-ui/plugin-toolbar'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import type { Dispatch, SetStateAction } from 'react'
+import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 
 import type { ScMcExerciseProps } from '.'
-import { InteractiveToolbarTools } from '../exercise/toolbar/interactive-toolbar-tools'
+import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
 
 export const ScMcExerciseToolbar = ({
   state,
-  previewActive,
-  setPreviewActive,
-  id,
-}: ScMcExerciseProps & {
-  previewActive: boolean
-  setPreviewActive: Dispatch<SetStateAction<boolean>>
-}) => {
-  const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
+  containerRef,
+}: ScMcExerciseProps) => {
+  const scMcStrings = useEditStrings().templatePlugins.scMcExercise
 
   const handleChange = (value: string) => {
     state.isSingleChoice.set(value === 'sc')
@@ -28,26 +17,16 @@ export const ScMcExerciseToolbar = ({
   }
 
   return (
-    <PluginToolbar
-      pluginType={EditorPluginType.ScMcExercise}
-      pluginSettings={
-        <>
-          <PreviewButton
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
-          <ToolbarSelect
-            tooltipText={scMcStrings.chooseType}
-            value={state.isSingleChoice.value ? 'sc' : 'mc'}
-            changeValue={handleChange}
-            options={[
-              { value: 'mc', text: scMcStrings.multipleChoice },
-              { value: 'sc', text: scMcStrings.singleChoice },
-            ]}
-          />
-        </>
-      }
-      pluginControls={<InteractiveToolbarTools id={id} />}
-    />
+    <InteractiveToolbarPortal containerRef={containerRef}>
+      <ToolbarSelect
+        tooltipText={scMcStrings.chooseType}
+        value={state.isSingleChoice.value ? 'sc' : 'mc'}
+        changeValue={handleChange}
+        options={[
+          { value: 'mc', text: scMcStrings.multipleChoice },
+          { value: 'sc', text: scMcStrings.singleChoice },
+        ]}
+      />
+    </InteractiveToolbarPortal>
   )
 }

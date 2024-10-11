@@ -1,6 +1,6 @@
 import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { entityIconMapping } from '@serlo/frontend/src/helper/icon-by-entity-type'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import type { VideoProps } from '.'
@@ -41,7 +41,7 @@ export const VideoEditor = (props: VideoProps) => {
           onClick={() => setShowSettingsModal('url')}
         >
           <FaIcon
-            icon={entityIconMapping['video']}
+            icon={faPlayCircle}
             className="text-7xl text-editor-primary-200"
           />
         </div>

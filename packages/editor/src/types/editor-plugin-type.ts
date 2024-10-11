@@ -16,7 +16,6 @@ export enum EditorPluginType {
 
   PageLayout = 'pageLayout',
   PagePartners = 'pagePartners',
-  PageTeam = 'pageTeam',
   PasteHack = 'pasteHack',
 
   Rows = 'rows',
@@ -33,7 +32,6 @@ export enum EditorPluginType {
   InputExercise = 'inputExercise',
   TextAreaExercise = 'textAreaExercise',
   BlanksExercise = 'blanksExercise',
-  BlanksExerciseDragAndDrop = 'blanksExerciseDragAndDrop',
   Solution = 'solution',
 
   SerloInjection = 'serloInjection',

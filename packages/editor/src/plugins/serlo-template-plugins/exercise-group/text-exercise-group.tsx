@@ -3,13 +3,10 @@ import {
   type EditorPluginProps,
   PrettyStaticState,
 } from '@editor/plugin'
-import { selectStaticDocument, store } from '@editor/store'
+import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { AiExerciseGenerationButton } from '@serlo/frontend/src/components/exercise-generation/ai-exercise-generation-button'
-import { useAiFeatures } from '@serlo/frontend/src/components/exercise-generation/use-ai-features'
 import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
-import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from '../common/common'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
@@ -37,12 +34,7 @@ function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<TextExerciseGroupTypePluginState>
 ) {
   const { content, id, revision, replaceOwnState } = props.state
-  const { canUseAiFeatures } = useAiFeatures()
-  const router = useRouter()
-  const currentPath = router.asPath.toLowerCase()
-  const isCreatingNewExerciseGroup = currentPath.includes(
-    '/create/exercisegroup'
-  )
+  const store = useStore()
 
   const staticState = selectStaticDocument(store.getState(), props.id)
     ?.state as PrettyStaticState<TextExerciseGroupTypePluginState>
@@ -52,10 +44,6 @@ function TextExerciseGroupTypeEditor(
   return (
     <>
       <div className="absolute right-0 -mt-20 mr-side flex">
-        {canUseAiFeatures && isCreatingNewExerciseGroup ? (
-          <AiExerciseGenerationButton />
-        ) : null}
-        &nbsp;
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}

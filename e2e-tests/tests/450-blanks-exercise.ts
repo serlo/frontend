@@ -1,5 +1,6 @@
 import assert from 'assert'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 
 Feature('Serlo Editor - Blank exercise')
 
@@ -9,30 +10,31 @@ const BlanksExerciseButton = '$add-exercise-blanksExercise'
 
 const initialTextPluginCount = 1
 
-Scenario('Create and remove fill in the gap exercise', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+Scenario('Create and remove fill in the blanks exercise', async ({ I }) => {
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
+  I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
 
   I.type('This is a test')
 
-  I.click('$plugin-blanks-exercise-parent-button')
   I.click('$additional-toolbar-controls')
-  I.click('$remove-plugin-button')
+  I.click('$change-interactive-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
 })
 
 Scenario(
   'Create and remove fill in the gap exercise via undo',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
     I.click(BlanksExerciseButton)
+    I.click('$plugin-blanks-child-text-button')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.pressKey(['CommandOrControl', 'Z'])
@@ -42,10 +44,11 @@ Scenario(
 )
 
 Scenario('Create and remove gaps through toolbar', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
+  I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -68,10 +71,11 @@ Scenario('Create and remove gaps through toolbar', async ({ I }) => {
 })
 
 Scenario('Create a blank gap and type in it', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
+  I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -87,10 +91,11 @@ Scenario('Create a blank gap and type in it', async ({ I }) => {
 })
 
 Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
-  I.amOnPage('/entity/create/Exercise/23869')
+  createNewEditorEntity(I, 'exercise')
 
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
   I.click(BlanksExerciseButton)
+  I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
   I.click(locate('$plugin-text-editor').last())
@@ -114,10 +119,11 @@ Scenario('Create and delete gaps with backspace/del', async ({ I }) => {
 Scenario.todo(
   'Ensure an added gap before any text gets focused',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
     I.click(BlanksExerciseButton)
+    I.click('$plugin-blanks-child-text-button')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.click(locate('$plugin-text-editor').last())
@@ -140,10 +146,11 @@ Scenario.todo(
 Scenario(
   'Create a few gaps, go to preview mode and solve them!',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Exercise/23869')
+    createNewEditorEntity(I, 'exercise')
 
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
     I.click(BlanksExerciseButton)
+    I.click('$plugin-blanks-child-text-button')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
     I.click(locate('$plugin-text-editor').last())
@@ -166,8 +173,8 @@ Scenario(
     I.seeNumberOfElements('$blank-input', 2)
 
     I.say('Change mode to preview and solve them incorrectly')
-    I.click('$plugin-blanks-exercise-parent-button')
-    I.click('$plugin-blanks-exercise-preview-button')
+
+    I.click('$plugin-exercise-preview-button')
     I.seeNumberOfElements('$blank-input', 2)
     I.click(locate('$blank-input').first())
     // Adding the second gap solution to the first gap

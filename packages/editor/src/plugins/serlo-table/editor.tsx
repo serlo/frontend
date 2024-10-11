@@ -1,7 +1,9 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
-  store,
+  useStore,
   selectFocused,
   selectIsDocumentEmpty,
   focus,
@@ -9,10 +11,8 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { KeyboardEvent, useState } from 'react'
 
 import type { SerloTableProps } from '.'
@@ -26,6 +26,7 @@ import { instanceStateStore } from '../text/utils/instance-state-store'
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
+  const store = useStore()
   const { rows } = props.state
 
   const [, setUpdateHack] = useState(0)
@@ -34,7 +35,7 @@ export function SerloTableEditor(props: SerloTableProps) {
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
-  const tableStrings = useEditorStrings().plugins.serloTable
+  const tableStrings = useEditStrings().plugins.serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =
@@ -117,7 +118,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : props.config.cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {editorPlugins.getByType(EditorPluginType.Image) ? (
+              {editorPlugins.isSupported(EditorPluginType.Image) ? (
                 <CellSwitchButton
                   cell={cell}
                   isHead={isHead}

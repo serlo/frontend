@@ -1,7 +1,6 @@
 import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
 
 import { ProfileDescriptionEditor } from './profile-description-editor'
-import { ProfileExperimental } from './profile-experimental'
 import { getAvatarUrl } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -41,8 +40,6 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
         rawDescription={rawDescription}
         username={username}
       />
-
-      <ProfileExperimental />
 
       <h2 id="delete" className="serlo-h2">
         {loggedInStrings.delete.heading}

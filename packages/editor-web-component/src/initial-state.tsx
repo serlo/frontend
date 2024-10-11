@@ -1,4 +1,4 @@
-import { SerloEditorProps } from '@serlo/editor'
+import type { SerloEditorProps } from '@serlo/editor'
 
 export type InitialState = SerloEditorProps['initialState']
 

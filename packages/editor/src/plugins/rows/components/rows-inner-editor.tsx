@@ -1,7 +1,8 @@
+import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 import {
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,
-  store,
+  useStore,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContext } from 'react'
@@ -14,9 +15,9 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '../contexts/plugin-menu'
-import { isInteractivePluginType } from '../utils/plugin-menu'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
+  const store = useStore()
   // since this is only used to check if the current plugin is the child of the
   // root plugin (like a template plugin or article plugin)
   // this should not change – so we don't need to use useAppSelector here
@@ -35,15 +36,11 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
     })
   }
 
-  function handleInsertPlugin(pluginType: EditorPluginType) {
-    const pluginToInsert = isInteractivePluginType(pluginType)
-      ? wrapExercisePlugin(pluginType)
-      : { plugin: pluginType }
-
+  function handleInsertPlugin(pluginMenuItem: PluginMenuItem) {
     if (pluginMenuState.insertCallback) {
-      pluginMenuState.insertCallback(pluginToInsert)
+      pluginMenuState.insertCallback(pluginMenuItem.initialState)
     } else {
-      state.insert(pluginMenuState.insertIndex, pluginToInsert)
+      state.insert(pluginMenuState.insertIndex, pluginMenuItem.initialState)
       removeEmptyTextPluginChildren()
     }
 
@@ -86,16 +83,4 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       <PluginMenuModal onInsertPlugin={handleInsertPlugin} />
     </>
   )
-}
-
-function wrapExercisePlugin(pluginType: EditorPluginType) {
-  return {
-    plugin: EditorPluginType.Exercise,
-    state: {
-      content: { plugin: EditorPluginType.Rows },
-      interactive: {
-        plugin: pluginType,
-      },
-    },
-  }
 }

@@ -1,14 +1,14 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 export function CourseHeader({ title }: { title: JSX.Element }) {
-  const { strings } = useInstanceData()
+  const courseStrings = useStaticStrings().plugins.course
 
   return (
     <>
       <p className="serlo-p mb-0 mt-10 text-[1rem] font-bold">
-        <FaIcon icon={faGraduationCap} /> {strings.entities.course}
+        <FaIcon icon={faGraduationCap} /> {courseStrings.title}
       </p>
       <div className="mx-side my-0 text-2xl font-bold">{title}</div>
     </>

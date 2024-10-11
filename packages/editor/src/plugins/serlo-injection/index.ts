@@ -10,8 +10,6 @@ export function createSerloInjectionPlugin(
     Component: SerloInjectionEditor,
     config,
     state,
-    defaultTitle: 'serlo.org Inhalt',
-    defaultDescription: 'Inhalte von serlo.org einbinden',
   }
 }
 

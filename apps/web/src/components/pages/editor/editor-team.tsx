@@ -1,14 +1,4 @@
-import { PageTeamRenderer } from '@editor/plugins/page-team/renderer'
-
-export interface TeamDataEntry {
-  firstName: string
-  lastName: string
-  user?: string
-  position: string
-  extraLinkUrl: string
-  extraLinkText: string
-  photo: string
-}
+import { TeamDataEntry, TeamGrid } from '../team/team-grid'
 
 export const teamDataVicky: TeamDataEntry = {
   firstName: 'Vicky',
@@ -108,5 +98,5 @@ export const teamData: TeamDataEntry[] = [
 ]
 
 export function EditorTeam() {
-  return <PageTeamRenderer data={teamData} extraCols compact />
+  return <TeamGrid data={teamData} extraCols compact />
 }

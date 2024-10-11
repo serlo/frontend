@@ -1,8 +1,8 @@
 import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { selectIsEmptyRows } from '@editor/plugins/rows'
 import { selectIsFocused, useAppSelector } from '@editor/store'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 import type { BoxProps } from '.'
 import { EmptyWarning } from './components/empty-warning'
@@ -22,7 +22,7 @@ export function BoxEditor(props: BoxProps) {
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   const contentId = content.id
   const isEmptyContent = useAppSelector((state) =>

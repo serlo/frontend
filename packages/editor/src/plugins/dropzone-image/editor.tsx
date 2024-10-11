@@ -3,7 +3,6 @@ import type {
   EditorDropzoneImageDocument,
   EditorImageDocument,
 } from '@editor/types/editor-plugins'
-import { useState } from 'react'
 
 import type { DropzoneImageProps } from '.'
 import { BackgroundShapeSelect } from './components/editor/background-shape-select'
@@ -11,15 +10,16 @@ import { BackgroundTypeSelect } from './components/editor/background-type-select
 import { EditingView } from './components/editor/editing-view'
 import { DropzoneImageToolbar } from './toolbar'
 import { BackgroundType } from './types'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 
 export function DropzoneImageEditor({
   state,
   id,
-  focused,
+  containerRef,
 }: DropzoneImageProps) {
   const { backgroundImage, dropzoneVisibility } = state
 
-  const [previewActive, setPreviewActive] = useState(false)
+  const previewActive = useIsPreviewActive()
 
   const staticDocument = useAppSelector(
     (storeState) =>
@@ -47,17 +47,13 @@ export function DropzoneImageEditor({
 
   return (
     <>
-      {focused ? (
-        <DropzoneImageToolbar
-          id={id}
-          showSettings={!showTypeSelect && !showShapeSelect}
-          showSettingsButton={isBackgroundTypeImage}
-          backgroundImage={backgroundImage}
-          dropzoneVisibility={dropzoneVisibility}
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
-        />
-      ) : null}
+      <DropzoneImageToolbar
+        showSettings={!showTypeSelect && !showShapeSelect}
+        showSettingsButton={isBackgroundTypeImage}
+        backgroundImage={backgroundImage}
+        dropzoneVisibility={dropzoneVisibility}
+        containerRef={containerRef}
+      />
 
       {showTypeSelect ? (
         <BackgroundTypeSelect {...state} />

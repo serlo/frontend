@@ -3,10 +3,13 @@ import { RowsInnerEditor } from './components/rows-inner-editor'
 import { PluginMenuProvider } from './contexts/plugin-menu'
 
 export function RowsEditor(props: RowsProps) {
-  const { config } = props
+  const { config, id } = props
 
   return (
-    <PluginMenuProvider allowedChildPlugins={config.allowedPlugins}>
+    <PluginMenuProvider
+      allowedChildPlugins={config.allowedPlugins}
+      parentPluginId={id}
+    >
       <RowsInnerEditor {...props} />
     </PluginMenuProvider>
   )

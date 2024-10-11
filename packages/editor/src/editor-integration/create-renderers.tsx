@@ -98,10 +98,6 @@ export function createRenderers(): InitRenderersArgs {
         renderer: BlanksExerciseStaticRenderer,
       },
       {
-        type: EditorPluginType.BlanksExerciseDragAndDrop,
-        renderer: BlanksExerciseStaticRenderer,
-      },
-      {
         type: EditorPluginType.TextAreaExercise,
         renderer: TextAreaExerciseStaticRenderer,
       },

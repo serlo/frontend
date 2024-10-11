@@ -1,22 +1,31 @@
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import {
+  selectHasFocusedChild,
+  focus,
+  useAppDispatch,
+  useAppSelector,
+} from '@editor/store'
+import { cn } from '@editor/utils/cn'
+import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { FaIcon } from '@serlo/frontend/src/components/fa-icon'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
-import { useContext } from 'react'
+import { lazy, useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
-import { interactivePluginTypes } from './interactive-plugin-types'
+import { PreviewProvider } from './context/preview-context'
 import { ExerciseToolbar } from './toolbar/toolbar'
-import { createOption } from '../rows/utils/plugin-menu'
-import { SerloLicenseChooser } from '../solution/serlo-license-chooser'
-import { IsSerloContext } from '@/serlo-editor-integration/context/is-serlo-context'
+
+const SerloLicenseChooser = lazy(() =>
+  import('../solution/serlo-license-chooser').then((module) => ({
+    default: module.SerloLicenseChooser,
+  }))
+)
 
 export function ExerciseEditor(props: ExerciseProps) {
-  const { state, focused } = props
+  const { state, focused, id } = props
   const {
     content,
     interactive,
@@ -25,88 +34,101 @@ export function ExerciseEditor(props: ExerciseProps) {
     hideInteractiveInitially,
   } = state
   const isSerlo = useContext(IsSerloContext) // only on serlo
-  const editorStrings = useEditorStrings()
-  const exTemplateStrings = editorStrings.templatePlugins.exercise
-  const exPluginStrings = editorStrings.plugins.exercise
+  const editorStrings = useEditStrings()
+  const exStrings = editorStrings.plugins.exercise
 
-  const interactivePluginOptions = interactivePluginTypes
-    .filter((type) => editorPlugins.isSupported(type))
-    .map((type) => createOption(type, editorStrings.plugins))
+  const [previewActive, setPreviewActive] = useState(false)
+
+  const isFocusedInside = useAppSelector((state) => {
+    return selectHasFocusedChild(state, id)
+  })
+
+  const isFocused = focused || isFocusedInside
+
+  const dispatch = useAppDispatch()
+
+  // make sure interactive toolbar content rerenders when interactive changes
+  useEffect(() => {
+    if (!interactive.defined) return
+    dispatch(focus(interactive.id))
+    // only rerender once after interactive is created
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.interactive.defined])
 
   return (
-    <div
-      data-qa="plugin-exercise"
-      className={cn(
-        'group/exercise rounded-b-xl border-3 border-transparent pb-6 focus-within:rounded-tl-xl focus-within:border-gray-100',
-        focused && '!border-gray-100'
-      )}
-    >
-      {isSerlo ? (
-        <SerloLicenseChooser
-          licenseId={licenseId}
-          className="!right-[84px] !top-[-30px]"
-        />
-      ) : null}
-      {focused ? (
-        <ExerciseToolbar
-          {...props}
-          interactivePluginOptions={interactivePluginOptions}
-        />
-      ) : (
-        <button
-          className={cn(`
-            absolute right-0 top-[-23px] z-[22] hidden h-6 rounded-t-md bg-gray-100
-            px-2 pt-0.5 text-sm font-bold
-            hover:bg-editor-primary-100 group-focus-within/exercise:block
-          `)}
-          data-qa="plugin-exercise-parent-button"
-        >
-          {exPluginStrings.title}
-        </button>
-      )}
-      <div className="h-10"></div>
-      {content.render({
-        config: {
-          textPluginPlaceholder: exPluginStrings.placeholder,
-        },
-      })}
-      <div className="mx-side">
-        {interactive.defined ? (
-          <>
-            {interactive.render()}
-            {hideInteractiveInitially.defined ? (
-              <small className="bg-editor-primary-200 p-1">
-                [{exPluginStrings.hideInteractiveInitially.info}]
-              </small>
-            ) : null}
-          </>
-        ) : (
-          <InteractiveExercisesSelection
-            interactivePluginOptions={interactivePluginOptions}
-            interactive={interactive}
+    <PreviewProvider value={previewActive}>
+      <div
+        data-qa="plugin-exercise"
+        className={cn(
+          'plugin-exercise group/exercise rounded-b-xl border-3 border-transparent pb-6',
+          'focus-within:rounded-tl-xl focus-within:!border-gray-100 focus-within:border-gray-100',
+          isFocused && '!rounded-tl-xl !border-gray-100'
+        )}
+      >
+        {isSerlo ? (
+          <SerloLicenseChooser
+            licenseId={licenseId}
+            className="!right-[84px] !top-[-30px]"
           />
-        )}
-        {solution.defined ? (
-          <div className="-ml-side mt-block">
-            <nav className="flex justify-end">
-              <button
-                className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
-                onClick={() => solution.remove()}
-              >
-                <EditorTooltip text={exTemplateStrings.removeSolution} />
-                <FaIcon icon={faTrashAlt} />
-              </button>
-            </nav>
-            {solution.render()}
-          </div>
-        ) : (
-          <div className={cn('mt-12 max-w-[50%]', focused && '!block')}>
-            <AddButton onClick={() => solution.create()}>
-              {exTemplateStrings.createSolution}
-            </AddButton>
-          </div>
-        )}
+        ) : null}
+        <div
+          className={cn(
+            'group-focus-within/exercise:block',
+            isFocused ? 'block' : 'hidden'
+          )}
+        >
+          <ExerciseToolbar
+            {...props}
+            previewActive={previewActive}
+            setPreviewActive={setPreviewActive}
+          />
+        </div>
+        <div className="h-10"></div>
+        {content.render({
+          config: {
+            textPluginPlaceholder: exStrings.placeholder,
+          },
+        })}
+        <div className="mx-side">
+          {interactive.defined ? (
+            <>
+              {interactive.render()}
+              {hideInteractiveInitially.defined ? (
+                <small className="bg-editor-primary-200 p-1">
+                  [{exStrings.hideInteractiveInitially.info}]
+                </small>
+              ) : null}
+            </>
+          ) : (
+            <InteractiveExercisesSelection interactive={interactive} />
+          )}
+          {solution.defined ? (
+            <div className="-ml-side mt-block">
+              <nav className="flex justify-end">
+                <button
+                  className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
+                  onClick={() => solution.remove()}
+                >
+                  <EditorTooltip text={exStrings.removeSolution} />
+                  <FaIcon icon={faTrashAlt} />
+                </button>
+              </nav>
+              {solution.render()}
+            </div>
+          ) : (
+            <div
+              className={cn(
+                'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
+                isFocused ? 'block' : 'hidden'
+              )}
+            >
+              <AddButton onClick={() => solution.create()}>
+                {exStrings.createSolution}
+              </AddButton>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </PreviewProvider>
   )
 }

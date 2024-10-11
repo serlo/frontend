@@ -1,5 +1,6 @@
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { captionPasteHandler } from '@editor/plugins/image/utils/caption-paste-handler'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
@@ -7,11 +8,10 @@ import {
   selectDocument,
   selectMayManipulateSiblings,
   useAppDispatch,
-  store,
+  useStore,
   selectAncestorPluginTypes,
 } from '@editor/store'
 import type { EditorRowsDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
@@ -24,10 +24,11 @@ export interface UseEditablePasteHandlerArgs {
 }
 
 export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
+  const store = useStore()
   const { editor, id } = args
 
   const dispatch = useAppDispatch()
-  const textStrings = useEditorStrings().plugins.text
+  const textStrings = useEditStrings().plugins.text
 
   return useCallback(
     async (event: React.ClipboardEvent) => {
@@ -43,7 +44,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       if (!document) return
 
       // special case: pasting in image caption
-      void captionPasteHandler({ event, files, text, id, dispatch })
+      void captionPasteHandler({
+        event,
+        files,
+        text,
+        id,
+        dispatch,
+        getStoreState: () => storeState,
+      })
 
       // temporary hack to handle async onText
       if (text.startsWith('![](https://cdn.mathpix.com')) {
@@ -101,8 +109,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       }
 
       // Insert the plugin with appropriate type and state
-      insertPlugin({ editor, id, dispatch, ...media })
+      insertPlugin({
+        editor,
+        id,
+        dispatch,
+        getStoreState: () => store.getState(),
+        ...media,
+      })
     },
-    [dispatch, editor, id, textStrings]
+    [dispatch, editor, id, textStrings, store]
   )
 }

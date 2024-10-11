@@ -1,11 +1,9 @@
-import config from './config'
+import { configInput } from './config'
+import { loginAsAdmin } from './tests/helpers/login-as-admin'
 
-const { isCI, browser, frontendUrl } = config
+const { isCI, browser, frontendUrl, adminUser, isChromium } = configInput
 
-const useLocalAPI = process.env.FRONTEND_API == 'local'
-export const adminUser = useLocalAPI ? 'admin' : 'Kulla'
-
-const isChromium = browser === 'chromium'
+export { adminUser }
 
 exports.config = {
   tests: 'tests/**.ts',
@@ -16,13 +14,12 @@ exports.config = {
       restart: 'keep',
       keepBrowserState: true,
       keepCookies: true,
-      show: isCI ? false : true,
+      show: !isCI,
       waitForTimeout: 30_000,
       ...(isCI && isChromium
         ? {
-            chromium: {
-              args: ['--no-sandbox'], // this is needed for github CI to work
-            },
+            // this is needed for github CI to work
+            chromium: { args: ['--no-sandbox'] },
           }
         : { browser }),
     },
@@ -41,18 +38,7 @@ exports.config = {
       inject: 'login',
       users: {
         admin: {
-          login: (I: CodeceptJS.I) => {
-            I.amOnPage('/')
-            I.see('Anmelden')
-            I.click('Anmelden')
-            I.waitForText('Benutzername oder E-Mailadresse', 10)
-            I.fillField('Benutzername oder E-Mailadresse', adminUser)
-            I.fillField('Passwort', '123456')
-            I.click('Anmelden', "button[value='password']")
-            I.waitForText(`Willkommen ${adminUser}!`, 30)
-            // Wait as a fix for: https://github.com/microsoft/playwright/issues/20749
-            I.wait(1)
-          },
+          login: loginAsAdmin,
           check: (I: CodeceptJS.I) => {
             I.amOnPage('/')
             I.waitForElement(`header nav img[alt='Avatar']`, 15)
@@ -64,14 +50,8 @@ exports.config = {
       },
     },
     ...(isCI ? {} : { pauseOnFail: {} }),
-    retryFailedStep: {
-      enabled: true,
-    },
-    tryTo: {
-      enabled: true,
-    },
-    screenshotOnFail: {
-      enabled: true,
-    },
+    retryFailedStep: { enabled: true },
+    tryTo: { enabled: true },
+    screenshotOnFail: { enabled: true },
   },
 }

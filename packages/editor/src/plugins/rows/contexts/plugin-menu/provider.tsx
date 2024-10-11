@@ -7,10 +7,11 @@ import { pluginMenuInitialState } from './state'
 interface PluginMenuProviderProps {
   children: ReactNode
   allowedChildPlugins: string[] | undefined
+  parentPluginId: string
 }
 
 export const PluginMenuProvider = (props: PluginMenuProviderProps) => {
-  const { children, allowedChildPlugins } = props
+  const { children, allowedChildPlugins, parentPluginId } = props
 
   const [initialState, pluginMenuDispatch] = useReducer(
     pluginMenuReducer,
@@ -19,6 +20,7 @@ export const PluginMenuProvider = (props: PluginMenuProviderProps) => {
 
   const pluginMenuState = {
     ...initialState,
+    parentPluginId,
     allowedChildPlugins,
   }
 

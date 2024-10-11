@@ -1,12 +1,12 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,
   selectStaticDocument,
-  store,
+  useStore,
   useAppSelector,
 } from '@editor/store'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { MultimediaProps } from '..'
@@ -24,7 +24,8 @@ export const MultimediaTypeSelect = ({
   stateCache,
   setStateCache,
 }: MultimediaTypeSelectProps) => {
-  const pluginStrings = useEditorStrings().plugins
+  const store = useStore()
+  const pluginStrings = useEditStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
   )?.plugin

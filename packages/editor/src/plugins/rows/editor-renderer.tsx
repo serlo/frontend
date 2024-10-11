@@ -4,10 +4,10 @@ import {
   DocumentState,
   selectDocumentPluginType,
   selectStaticDocument,
-  store,
+  useStore,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
@@ -51,6 +51,8 @@ export function EditorRowRenderer({
 }) {
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
+
+  const store = useStore()
 
   const allowedPlugins = useMemo(() => {
     return config.allowedPlugins ? config.allowedPlugins : undefined

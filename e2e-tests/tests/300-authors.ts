@@ -1,3 +1,5 @@
+import { editExistingEntity } from './helpers/edit-existing-entity'
+
 Feature('Authors')
 
 // expecting user to be logged out before start of tests
@@ -8,7 +10,7 @@ Before(({ login }) => {
 
 // Articles only for now
 Scenario('Saving without changes', ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/55437')
+  editExistingEntity(I, 55437)
   I.click('Speichern')
   I.waitForText('Bisher hast du nichts geändert')
   I.dontSee('Beschreibe deine Änderungen am Inhalt')
@@ -49,7 +51,7 @@ Scenario('Open Editor from article', async ({ I }) => {
 // In the future, try to break to behaviour into parts
 /*
 Scenario('Add Revision and reject', async ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/74888')
+  editExistingEntity(I, 74888)
   I.click("$entity-title-input")
   I.pressKey('-')
   I.pressKey('T')
@@ -148,7 +150,7 @@ Scenario('Sort exercise folder', async ({ I }) => {
 })*/
 
 Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/74888')
+  editExistingEntity(I, 74888)
   I.click('$entity-title-input')
   I.pressKey('-')
   I.pressKey('T')
@@ -165,4 +167,11 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
   I.wait(2)
 
   I.seeInField('$entity-title-input', 'Treibhausgase-Test')
+})
+
+Scenario('Add new taxonomy', async ({ I }) => {
+  I.amOnPage('/taxonomy/term/create/4/234582')
+
+  I.click('$entity-title-input')
+  I.see('Füge ein Element hinzu')
 })

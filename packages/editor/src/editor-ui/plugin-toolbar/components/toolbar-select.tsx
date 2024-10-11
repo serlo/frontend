@@ -1,11 +1,10 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-
-import { cn } from '@/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 interface ToolbarSelectProps {
   value: string
   dataQa?: string
-  changeValue: (value: string) => void
+  changeValue: (value: string, index: number) => void
   options: { value: string; text: string; dataQa?: string }[]
   tooltipText?: string
 }
@@ -22,7 +21,9 @@ export function ToolbarSelect({
       <EditorTooltip text={tooltipText} />
       <select
         value={value}
-        onChange={(event) => changeValue(event.target.value)}
+        onChange={(event) => {
+          changeValue(event.target.value, event.target.selectedIndex)
+        }}
         className={cn(`
             bg-editor-primary-10 mr-2 max-w-[13rem] cursor-pointer rounded-md !border
             border-gray-500 bg-transparent px-1 py-0.25 text-sm transition-all

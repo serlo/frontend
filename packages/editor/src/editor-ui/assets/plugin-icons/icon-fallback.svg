@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61 40" fill="none">
   <path fill="#FFF5E9" d="M.084 0h60v40h-60z" />
-  <path fill="#000" fillOpacity=".08" d="M8.584 3.712h42.928V6.35H8.584z" />
+  <path fill="#000" fill-opacity=".08" d="M8.584 3.712h42.928V6.35H8.584z" />
   <path fill="#FFDDB2" d="M8.584 9.35h43v21.3h-43z" />
   <path
     stroke="#57534F"
@@ -10,7 +10,7 @@
   />
   <path
     fill="#000"
-    fillOpacity=".08"
+    fill-opacity=".08"
     d="M8.584 33.65h42.928v2.638H8.584z"
   />
 </svg>

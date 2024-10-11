@@ -1,6 +1,5 @@
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
-import { useState } from 'react'
 
 import type { ScMcExerciseProps } from '.'
 import { ScMcExerciseStaticRenderer } from './static'
@@ -11,22 +10,24 @@ import {
   PreviewOverlaySimple,
 } from '../../editor-ui'
 import {
-  store,
+  useStore,
   selectFocused,
   selectStaticDocument,
   useAppSelector,
 } from '../../store'
+import { useIsPreviewActive } from '../exercise/context/preview-context'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const { state, id, focused } = props
   const { answers, isSingleChoice } = state
+  const store = useStore()
 
   const staticDocument = useAppSelector(
     (storeState) =>
       selectStaticDocument(storeState, id) as EditorScMcExerciseDocument
   )
 
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   const handleCheckboxChange = (index: number) => () => {
     answers[index].isCorrect.set((currentVal) => !currentVal)
@@ -41,7 +42,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const handleAddButtonClick = () => answers.insert()
   const removeAnswer = (index: number) => () => answers.remove(index)
 
-  const [previewActive, setPreviewActive] = useState(false)
+  const previewActive = useIsPreviewActive()
 
   const isAnyAnswerFocused = answers.some(({ content, feedback }) => {
     const focusedId = selectFocused(store.getState())
@@ -69,14 +70,8 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   }
 
   return (
-    <div className="mb-12 mt-24 pt-4">
-      {showUi ? (
-        <ScMcExerciseToolbar
-          {...props}
-          previewActive={previewActive}
-          setPreviewActive={setPreviewActive}
-        />
-      ) : null}
+    <div className="mb-12">
+      <ScMcExerciseToolbar {...props} />
       <PreviewOverlaySimple previewActive={previewActive} fullOpacity={!showUi}>
         {/* margin-hack */}
         <div className="[&_.ml-4.flex]:mb-block">

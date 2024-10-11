@@ -1,8 +1,4 @@
 import {
-  faWandSparkles,
-  faWandMagicSparkles,
-} from '@fortawesome/free-solid-svg-icons'
-import {
   Entity,
   Subscription,
   TaxonomyTerm,
@@ -14,7 +10,6 @@ import { Fragment } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
-import { useAiFeatures } from '@/components/exercise-generation/use-ai-features'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType, UuidWithRevType } from '@/data-types'
@@ -89,8 +84,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   const router = useRouter()
   const canDo = useCanDo()
-
-  const { canUseAiFeatures } = useAiFeatures()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -319,9 +312,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         )
       }
 
-      const showAiItem =
-        canUseAiFeatures && entityType === UuidType.ExerciseGroup
-
       return (
         <Fragment key={title}>
           <SubItem
@@ -329,24 +319,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             title={title}
             href={`/entity/create/${entityType}/${data.id}`}
           />
-          {showAiItem ? (
-            <Fragment key="ai-group">
-              <SubItem
-                key="ai-single-exercise"
-                title={
-                  loggedInStrings.ai.exerciseGeneration.buttonTitleSingular
-                }
-                href={`/entity/create/${UuidType.Exercise}/${data.id}?showAiWizard=&referrer=exercise-folder`}
-                icon={faWandSparkles}
-              />
-              <SubItem
-                key="ai-group-exercise"
-                title={loggedInStrings.ai.exerciseGeneration.buttonTitle}
-                href={`/entity/create/${entityType}/${data.id}?showAiWizard=&referrer=exercise-folder`}
-                icon={faWandMagicSparkles}
-              />
-            </Fragment>
-          ) : null}
         </Fragment>
       )
     })

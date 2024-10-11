@@ -1,4 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   faArrowCircleDown,
   faArrowCircleUp,
@@ -6,8 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import { type ExerciseGroupProps } from '..'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface IntermediateTaskProps {
   intermediateTasks: ExerciseGroupProps['state']['intermediateTasks']
@@ -20,7 +20,7 @@ export function IntermediateTask({
   exerciseIndex,
   lastExerciseIndex,
 }: IntermediateTaskProps) {
-  const templateStrings = useEditorStrings().templatePlugins
+  const templateStrings = useEditStrings().templatePlugins
   const exGroupStrings = templateStrings.textExerciseGroup
 
   if (!intermediateTasks.defined) return

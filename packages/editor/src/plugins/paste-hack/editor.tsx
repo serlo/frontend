@@ -2,7 +2,7 @@ import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import {
-  store,
+  useStore,
   selectChildTreeOfParent,
   insertPluginChildBefore,
   selectStaticDocument,
@@ -10,7 +10,7 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
@@ -46,6 +46,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
+  const store = useStore()
   const { focused, id } = props
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)

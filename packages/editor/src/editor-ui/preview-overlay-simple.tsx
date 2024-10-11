@@ -1,4 +1,4 @@
-import { cn } from '@serlo/frontend/src/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 interface PreviewOverlaySimpleProps {
   previewActive: boolean

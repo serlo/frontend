@@ -1,22 +1,25 @@
+import { PreferenceContext } from '@editor/core/contexts'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useEditorStrings } from '@serlo/frontend/src/contexts/logged-in-data-context'
+import { useContext } from 'react'
 
 import { IntermediateTask } from './intermediate-task'
 import { type ExerciseGroupProps } from '..'
 import { ExerciseGroupRenderer } from '../renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { shouldUseFeature } from '@/components/user/profile-experimental'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   const { content, exercises, intermediateTasks } = state
 
-  const templateStrings = useEditorStrings().templatePlugins
+  const templateStrings = useEditStrings().templatePlugins
   const exGroupStrings = templateStrings.textExerciseGroup
 
   const lastExerciseIndex = exercises.length - 1
+
+  const preferences = useContext(PreferenceContext)
 
   return (
     <>
@@ -66,7 +69,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
 
   function renderButtons() {
     const showIntermediateTaskButton =
-      shouldUseFeature('editorIntermediateTasks') &&
+      preferences.get('intermediateTasksExperiment') &&
       lastExerciseIndex >= 0 &&
       (intermediateTasks.defined
         ? !intermediateTasks.find(

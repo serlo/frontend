@@ -1,10 +1,9 @@
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import type { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
+import { cn } from '@editor/utils/cn'
 
-import type { PluginMenuItemType } from '../contexts/plugin-menu/types'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { cn } from '@/helper/cn'
+import { PluginMenuIcon } from './plugin-menu-icon'
 
 function getTooltipPosition(index: number) {
   return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
@@ -18,14 +17,14 @@ export function PluginMenuItems({
   itemRefs,
   onInsertPlugin,
 }: {
-  basicOptions: PluginMenuItemType[]
-  interactiveOptions: PluginMenuItemType[]
+  basicOptions: PluginMenuItem[]
+  interactiveOptions: PluginMenuItem[]
   focusedItemIndex: number | null
   setFocusedItemIndex: (index: number | null) => void
   itemRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>
-  onInsertPlugin: (pluginType: EditorPluginType) => void
+  onInsertPlugin: (pluginType: PluginMenuItem) => void
 }) {
-  const editorStrings = useEditorStrings()
+  const editorStrings = useEditStrings()
 
   return (
     <>
@@ -53,8 +52,9 @@ export function PluginMenuItems({
     </>
   )
 
-  function renderListItems(options: PluginMenuItemType[], offset: number) {
-    return options.map(({ pluginType, title, icon, description }, index) => {
+  function renderListItems(options: PluginMenuItem[], offset: number) {
+    return options.map((pluginMenuItem, index) => {
+      const { type, initialState, title, icon, description } = pluginMenuItem
       const currentIndex = index + offset
       const selected = currentIndex === focusedItemIndex
       const tooltipPosition = getTooltipPosition(index)
@@ -65,11 +65,11 @@ export function PluginMenuItems({
         : '-left-24'
 
       return (
-        <li key={title}>
+        <li key={type}>
           <button
-            data-qa={`plugin-suggestion-${pluginType}`}
+            data-qa={`plugin-suggestion-${initialState.plugin}`}
             ref={(el) => (itemRefs.current[currentIndex] = el)}
-            onClick={() => onInsertPlugin(pluginType)}
+            onClick={() => onInsertPlugin(pluginMenuItem)}
             onFocus={() => setFocusedItemIndex(currentIndex)}
             onBlur={() => setFocusedItemIndex(null)}
             className={cn(
@@ -78,7 +78,7 @@ export function PluginMenuItems({
             )}
           >
             <EditorTooltip className={tooltipClassName} text={description} />
-            {icon || <IconFallback />}
+            <PluginMenuIcon icon={icon} />
             <b className="mt-2 block text-sm">{title}</b>
           </button>
         </li>

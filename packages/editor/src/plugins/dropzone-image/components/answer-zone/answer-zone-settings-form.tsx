@@ -1,9 +1,8 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
-import React from 'react'
 
 import type { AnswerZoneState } from '../../types'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface AnswerZoneSettingsFormProps {
   answerZone: AnswerZoneState
@@ -16,7 +15,7 @@ export function AnswerZoneSettingsForm({
   onDuplicate,
   onDelete,
 }: AnswerZoneSettingsFormProps): JSX.Element | null {
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+  const pluginStrings = useEditStrings().plugins.dropzoneImage
 
   const initialSettings = {
     name: answerZone.name.value,

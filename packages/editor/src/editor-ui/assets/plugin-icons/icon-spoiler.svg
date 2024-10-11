@@ -2,7 +2,7 @@
   <path fill="#FFF5E9" d="M.084 0h60v40h-60z" />
   <path
     fill="#000"
-    fillOpacity=".08"
+    fill-opacity=".08"
     d="M10.084 3.014h42.928v2.638H10.084z"
   />
   <path
@@ -27,7 +27,7 @@
   <path fill="#EBE1D6" d="M10.084 29.709h42.928v2.638H10.084z" />
   <path
     fill="#000"
-    fillOpacity=".08"
+    fill-opacity=".08"
     d="M10.084 34.347h42.928v2.638H10.084z"
   />
 </svg>

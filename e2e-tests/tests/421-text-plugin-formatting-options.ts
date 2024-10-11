@@ -1,4 +1,5 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Text plugin - formatting options')
@@ -8,7 +9,7 @@ Before(popupWarningFix)
 Scenario(
   'Toggle text formatting options using keyboard shortcuts',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     addNewTextPlugin(I)
     I.type('Some text')
@@ -37,7 +38,7 @@ Scenario(
     I.type('https://de.serlo.org/mathe/1541/hypotenuse')
     I.click('$link-suggestion-0')
     I.click('Some text')
-    I.see('Hypotenuse')
+    I.waitForText('Hypotenuse', 10)
     I.seeElement({ css: '.serlo-editor-hacks a' })
 
     I.say('Toggle link off')
@@ -51,10 +52,14 @@ Scenario(
 
     I.say('Toggle math on')
     I.pressKey(['CommandOrControl', 'M'])
-    I.seeElement('$plugin-math-latex-editor')
-    I.type('\\frac12 test42')
+    // just to make sure we are in the right mode
+    I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
+    I.seeElement('span.mq-editable-field')
+    I.type('x/2')
     I.pressKey('ArrowRight')
-    I.dontSee('LaTeX')
+    I.pressKey('ArrowRight')
+    I.wait(1)
+    I.dontSeeElement('span.mq-editable-field')
     I.seeElement('span.katex')
 
     I.say('Remove math element')
@@ -115,7 +120,7 @@ Scenario(
 Scenario(
   'Toggle text formatting options using plugin toolbar',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     addNewTextPlugin(I)
 
@@ -157,7 +162,7 @@ Scenario(
     I.say('Refocus link')
     I.click('Some text')
     I.click('Some text')
-    I.see('Hypotenuse')
+    I.waitForText('Hypotenuse', 10)
 
     I.say('Toggle link off via plugin bar')
     I.click('Some text')
@@ -226,11 +231,13 @@ Scenario(
     I.pressKey(['CommandOrControl', 'A'])
     I.pressKey('Backspace')
     I.click('$plugin-toolbar-button-matheformel')
-    I.seeElement('$plugin-math-latex-editor')
-
-    I.type('\\frac12')
+    I.selectOption('$plugin-toolbar-math-type-switch', 'visuell')
+    I.seeElement('span.mq-editable-field')
+    I.type('x/2')
     I.pressKey('ArrowRight')
-    I.dontSee('LaTeX')
+    I.pressKey('ArrowRight')
+    I.wait(1)
+    I.dontSeeElement('span.mq-editable-field')
     I.seeElement('span.katex')
 
     I.say('Toggle math off')

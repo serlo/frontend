@@ -3,14 +3,11 @@ import {
   type EditorPluginProps,
   type PrettyStaticState,
 } from '@editor/plugin'
-import { selectStaticDocument, store } from '@editor/store'
+import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { AiExerciseGenerationButton } from '@serlo/frontend/src/components/exercise-generation/ai-exercise-generation-button'
-import { useAiFeatures } from '@serlo/frontend/src/components/exercise-generation/use-ai-features'
+import { cn } from '@editor/utils/cn'
 import { UuidType } from '@serlo/frontend/src/data-types'
-import { cn } from '@serlo/frontend/src/helper/cn'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
-import { useRouter } from 'next/router'
 
 import { editorContent, entity, entityType } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
@@ -42,11 +39,7 @@ function TextExerciseTypeEditor({
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content } = state
 
-  const { canUseAiFeatures } = useAiFeatures()
-
-  const router = useRouter()
-  const currentPath = router.asPath.toLowerCase()
-  const isCreatingNewExercise = currentPath.includes('/create/exercise')
+  const store = useStore()
 
   const staticDocument = selectStaticDocument(store.getState(), id)
     ?.state as PrettyStaticState<TextExerciseTypePluginState>
@@ -56,9 +49,6 @@ function TextExerciseTypeEditor({
     <>
       {config.skipControls ? null : (
         <div className="absolute right-0 -mt-20 mr-side flex flex-row gap-4">
-          {canUseAiFeatures && isCreatingNewExercise ? (
-            <AiExerciseGenerationButton isSingularExercise />
-          ) : null}
           <ContentLoaders
             id={state.id.value}
             currentRevision={state.revision.value}

@@ -1,11 +1,13 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStore } from '@editor/store'
+
 import type { DropzoneImageProps } from '../..'
 import { type AnswerType, type AnswerZoneState, ModalType } from '../../types'
 import { duplicateAnswerZone } from '../../utils/answer-zone'
 import { AnswerRenderer } from '../answer-zone/answer-renderer'
 import { AnswerZoneSettingsForm } from '../answer-zone/answer-zone-settings-form'
 import { NewAnswerFlow } from '../answer-zone/new-answer-flow'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface EditorCanvasModalProps {
   state: DropzoneImageProps['state']
@@ -24,13 +26,14 @@ export function EditorCanvasModal({
   setModalType,
   currentAnswer,
 }: EditorCanvasModalProps) {
-  const pluginStrings = useEditorStrings().plugins.dropzoneImage
+  const pluginStrings = useEditStrings().plugins.dropzoneImage
+  const store = useStore()
   const { answerZones, extraDraggableAnswers } = state
 
   const title = modalType ? pluginStrings.modal[modalType] : ''
 
   return (
-    <ModalWithCloseButton
+    <EditorModal
       isOpen={modalType !== ModalType.Unset}
       setIsOpen={(open) => {
         const isModalClosing = !open
@@ -41,7 +44,7 @@ export function EditorCanvasModal({
       extraTitleClassName="serlo-h3 mb-16 px-3"
     >
       {renderForm()}
-    </ModalWithCloseButton>
+    </EditorModal>
   )
 
   function renderForm() {
@@ -52,7 +55,9 @@ export function EditorCanvasModal({
         <AnswerZoneSettingsForm
           answerZone={currentAnswer.zone}
           onDuplicate={() => {
-            duplicateAnswerZone(answerZones, currentAnswer.zone.id.value)
+            duplicateAnswerZone(answerZones, currentAnswer.zone.id.value, () =>
+              store.getState()
+            )
           }}
           onDelete={() => {
             setModalType(ModalType.Unset)

@@ -9,7 +9,7 @@ import {
   focusPrevious,
   selectChildTree,
   selectChildTreeOfParent,
-  store,
+  useStore,
   useAppDispatch,
 } from '@editor/store'
 import isHotkey from 'is-hotkey'
@@ -34,6 +34,8 @@ export const useEditableKeydownHandler = (
   args: UseEditableKeydownHandlerArgs
 ) => {
   const { config, editor, id, state } = args
+
+  const store = useStore()
 
   const dispatch = useAppDispatch()
   const textFormattingOptions = useFormattingOptions(config.formattingOptions)
@@ -78,6 +80,7 @@ export const useEditableKeydownHandler = (
                     id,
                     dispatch,
                     state: plugin.state,
+                    getStoreState: () => store.getState(),
                   })
                 },
               },
@@ -159,7 +162,13 @@ export const useEditableKeydownHandler = (
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newEditorState = mergePlugins(direction, editor, id)
+          const newEditorState = mergePlugins(
+            direction,
+            editor,
+            id,
+            () => store.getState(),
+            dispatch
+          )
 
           // Update Redux document state with the new value
           if (newEditorState) {
@@ -205,6 +214,7 @@ export const useEditableKeydownHandler = (
       id,
       state,
       dispatch,
+      store,
     ]
   )
 }
