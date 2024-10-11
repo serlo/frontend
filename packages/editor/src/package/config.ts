@@ -19,6 +19,8 @@ export const defaultPlugins = [
   EditorPluginType.DropzoneImage,
   EditorPluginType.Solution,
   EditorPluginType.Rows,
+  EditorPluginType.TextAreaExercise,
+  EditorPluginType.ImageGallery,
   EditorPluginType.Unsupported,
   TemplatePluginType.GenericContent,
 ]
