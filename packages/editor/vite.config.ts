@@ -51,7 +51,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'lit', '@serlo/editor-web-component'],
       output: {
         globals: {
           react: 'React',
