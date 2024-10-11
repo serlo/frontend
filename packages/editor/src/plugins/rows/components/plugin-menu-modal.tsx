@@ -9,6 +9,7 @@ import {
 } from '@editor/plugins/rows/contexts/plugin-menu'
 import { selectAncestorPluginTypes, store } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
@@ -66,9 +67,15 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   ])
 
   const allowedMenuItems = useMemo(() => {
-    return menuItems.filter(({ initialState }) =>
-      allowedPlugins.includes(initialState.plugin)
-    )
+    return menuItems.filter(({ initialState }) => {
+      const isPluginAllowed = allowedPlugins.includes(initialState.plugin)
+      if (!isExerciseDocument(initialState)) return isPluginAllowed
+      // extra check for wrapped interactive exercise plugins
+      const interactive = initialState.state.interactive?.plugin
+      return interactive
+        ? editorPlugins.isSupported(interactive)
+        : isPluginAllowed
+    })
   }, [allowedPlugins, menuItems])
 
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =
@@ -83,18 +90,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
       )
 
       const interactiveOptions = filteredBySearchString.filter(
-        ({ initialState, type }) => {
-          // HACK: Don't show exercises in menu when they are not supported
-          const isSupported =
-            type === 'singleChoiceExercise' || type === 'multipleChoiceExercise'
-              ? editorPlugins.isSupported(EditorPluginType.ScMcExercise)
-              : type === 'blanksExerciseDragAndDrop'
-                ? editorPlugins.isSupported(EditorPluginType.BlanksExercise)
-                : editorPlugins.isSupported(type)
-          return (
-            initialState.plugin === EditorPluginType.Exercise && isSupported
-          )
-        }
+        ({ initialState }) => initialState.plugin === EditorPluginType.Exercise
       )
 
       const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)
