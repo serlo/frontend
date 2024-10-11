@@ -31,8 +31,8 @@ const notProvidedKeys = [
 ]
 
 const envReplacements = {
-  // 'process.env.NODE_ENV': '"production"',
-  'process.env.NEXT_PUBLIC_ENV': '"production"',
+  'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
+  'process.env.NEXT_PUBLIC_ENV': `"${process.env.NODE_ENV}"`,
   ...Object.fromEntries(
     notProvidedKeys.map((key) => [
       `process.env.${key}`,
@@ -40,8 +40,6 @@ const envReplacements = {
     ])
   ),
 }
-
-// const isDev = process.env.NODE_ENV === 'development'
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig({
