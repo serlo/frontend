@@ -22,6 +22,7 @@ Scenario('About Serlo', ({ I }) => {
 
   // Navigating around
   I.click('Pädagogisches Konzept')
+  I.waitForText('Anleitung für die Lernplattform serlo.org', 5)
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
   // close newsletter modal in case it popped up
