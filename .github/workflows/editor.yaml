@@ -35,6 +35,8 @@ jobs:
             echo "already_published=true" >> $GITHUB_OUTPUT
           else
             echo "already_published=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish to npm
         if: steps.check_published.outputs.already_published == 'false'
         run: yarn editor:publish
