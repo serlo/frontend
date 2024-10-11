@@ -58,6 +58,7 @@ Scenario('Close math formula using Escape', async ({ I }) => {
 
   I.say('Close math editor with ESC key')
   I.pressKey('Escape')
+  I.wait(1)
   I.dontSee('LaTeX')
   I.seeElement('span.katex')
 })
