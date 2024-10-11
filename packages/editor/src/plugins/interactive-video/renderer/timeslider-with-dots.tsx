@@ -32,13 +32,15 @@ export function TimeSliderWithDots({
                 ref={forwardRef}
               >
                 {mark ? (
-                  <div
-                    className={cn(
-                      'z-30 h-[17px] w-[17px] rounded-full border-2',
-                      mark.mandatory ? 'bg-orange-400' : 'bg-gray-500',
-                      solved && '!bg-brandgreen-500'
-                    )}
-                  />
+                  <div className={cn('relative z-40')}>
+                    <div
+                      className={cn(
+                        'absolute -left-0.5 -top-[9px] z-30 h-[17px] w-[17px] rounded-full border-2',
+                        mark.mandatory ? 'bg-orange-400' : 'bg-gray-500',
+                        solved && '!bg-brandgreen-500'
+                      )}
+                    />
+                  </div>
                 ) : null}
                 <TimeSlider.Track className="vds-slider-track">
                   <TimeSlider.TrackFill className="vds-slider-track-fill vds-slider-track" />
