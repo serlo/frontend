@@ -30,6 +30,7 @@
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
+    "dev": "vite",
     "build": "vite build",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",
@@ -46,6 +47,7 @@
   },
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
+    "lit": "^3.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -182,7 +184,7 @@
     "typescript": "^5.4.5",
     "use-query-params": "^2.2.1",
     "uuid": "^9.0.1",
-    "vite": "^5.2.14",
+    "vite": "^5.4.8",
     "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "3.8.3",
     "vite-plugin-svgr": "^4.2.0"

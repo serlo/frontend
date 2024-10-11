@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editor Web Component</title>
+    <script type="module">
+      import { EditorWebComponent } from '../../../editor-web-component/src'
+
+      const initialState =
+        '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"h","level":1,"children":[{"text":"Hello Web Component 🎉"}]}]}]}'
+      customElements.define('serlo-editor', EditorWebComponent)
+
+      editorWebComponent.mode = 'write'
+      editorWebComponent.initialState = JSON.parse(initialState)
+      editorWebComponent.addEventListener('state-changed', (data) => {
+        console.log('change: ', data.detail)
+      })
+    </script>
+  </head>
+  <body>
+    <serlo-editor id="editorWebComponent"></serlo-editor>
+  </body>
+</html>
