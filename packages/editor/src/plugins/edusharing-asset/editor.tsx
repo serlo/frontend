@@ -153,7 +153,7 @@ export function EdusharingAssetEditor({
 
     const url = new URL(window.location.origin)
 
-    url.pathname = '/lti/start-edusharing-deeplink-flow'
+    url.pathname = '/edusharing-embed/start'
     url.searchParams.append('ltik', ltik)
 
     return (
