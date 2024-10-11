@@ -61,13 +61,16 @@ jobs:
         if: steps.check_published.outputs.already_published == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.version }}
         run: |
           curl -X POST \
             -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/releases \
-            -d '{
-              "tag_name": "v${{ steps.get_version.outputs.version }}",
-              "name": "Serlo Editor - v${{ steps.get_version.outputs.version }}",
-              "body": ${{ toJson(env.RELEASE_NOTES) }}
-            }'
+            -d @- << EOF
+          {
+            "tag_name": "v${RELEASE_VERSION}",
+            "name": "Serlo Editor - v${RELEASE_VERSION}",
+            "body": $(echo "$RELEASE_NOTES" | jq -Rs .)
+          }
+          EOF
