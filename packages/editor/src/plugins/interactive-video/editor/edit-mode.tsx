@@ -1,5 +1,7 @@
+import { focus } from '@editor/store'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { MarksList } from './marks-list'
 import { OverlayContentModal } from './overlay-content-modal'
@@ -9,17 +11,17 @@ import { addOverlayContent } from '../helpers/add-overlay-content'
 import { InteractiveVideoRenderer } from '../renderer/renderer'
 
 export function EditMode({
+  id,
   focused,
   state,
   staticMarks,
   videoSrc,
-}: {
-  focused: boolean
-  state: InteractiveVideoProps['state']
+}: InteractiveVideoProps & {
   staticMarks: EditorInteractiveVideoDocument['state']['marks']
   videoSrc: string
 }) {
   const { marks } = state
+  const dispatch = useDispatch()
 
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
@@ -47,7 +49,10 @@ export function EditMode({
       />
       {showOverlayContentIndex === null ? null : (
         <OverlayContentModal
-          onClose={() => setShowOverlayContentIndex(null)}
+          onClose={() => {
+            setShowOverlayContentIndex(null)
+            dispatch(focus(id))
+          }}
           mark={marks[showOverlayContentIndex]}
         />
       )}
