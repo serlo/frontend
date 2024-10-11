@@ -107,10 +107,6 @@ export function createBasicPlugins(
       plugin: solutionPlugin,
     },
     {
-      type: EditorPluginType.TextAreaExercise,
-      plugin: textAreaExercisePlugin,
-    },
-    {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin(),
     },
@@ -121,10 +117,6 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.BlanksExercise,
       plugin: createBlanksExercisePlugin(),
-    },
-    {
-      type: EditorPluginType.DropzoneImage,
-      plugin: createDropzoneImagePlugin(),
     },
     {
       type: EditorPluginType.TextAreaExercise,
