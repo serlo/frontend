@@ -2,7 +2,7 @@ import {
   EditorWebComponent,
   pluginMenuDe,
   pluginMenuEn,
-} from '@serlo/editor-web-component'
+} from '../../../editor-web-component/src'
 import { LitElement, html } from 'lit'
 
 console.log('plugins', { pluginMenuEn, pluginMenuDe })
