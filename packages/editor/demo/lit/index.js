@@ -17,7 +17,7 @@ const initialExampleState = {
         {
           type: 'h',
           level: 1,
-          children: [{ text: 'Hello Web Component 🎉' }],
+          children: [{ text: 'Hello Lit Component 🎉' }],
         },
       ],
     },
