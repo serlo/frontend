@@ -1,3 +1,4 @@
+import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
 import IframeResizer from 'iframe-resizer-react'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
@@ -98,13 +99,7 @@ export function EdusharingAssetRenderer(props: {
           renderEmbed()
         ) : (
           <div className="flex justify-center">
-            <img
-              className="block opacity-50"
-              src="/edusharing.svg"
-              alt="Edusharing Logo"
-              width="100"
-              height="100"
-            />
+            <EdusharingIcon />
           </div>
         )}
       </div>
