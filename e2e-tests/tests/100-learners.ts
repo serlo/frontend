@@ -228,13 +228,11 @@ Scenario('Small subject', ({ I }) => {
   I.waitForText('Alle Themen', 5)
   I.click('Alle Themen')
 
-  // Meta menu
-  I.waitForText('Alle Themen', 5, 'a.block')
-  I.see('Alle Themen', 'a.block')
-
   // Breadcrumbs
+  I.waitForText('Politik', 15, '$breadcrumbs')
+
   I.click('Politik')
-  I.waitForText('Politik', 5, 'h1')
+  I.waitForText('Politik Startseite', 5, 'h1')
   I.see('Politik Startseite', 'h1')
 })
 
