@@ -1,19 +1,9 @@
-import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
-
-import {
-  FileErrorCode,
-  errorCodeToMessage,
-  validateFile,
-  type FileError,
-} from './validate-file'
+import { handleError, validateFile } from './validate-file'
 
 export async function uploadFile(file: File) {
-  const validation = validateFile(file)
+  const validated = validateFile(file)
 
-  if (!validation.valid) {
-    if (validation.errors) onError(validation.errors)
-    return Promise.reject(validation.errors)
-  }
+  if (!validated) return Promise.reject()
 
   const data = await getSignedUrlAndSrc(file.type)
   if (!data) return Promise.reject('Could not get signed URL')
@@ -38,34 +28,26 @@ async function getSignedUrlAndSrc(mimeType: string) {
   return data
 }
 
-const uploadError = {
-  errorCode: FileErrorCode.UPLOAD_FAILED,
-  message: errorCodeToMessage(FileErrorCode.UPLOAD_FAILED),
-}
+const errorMessage = 'Error while uploading'
 
 async function uploadToBucket(file: File, signedUrl: string) {
   const response = await fetch(signedUrl, {
     method: 'PUT',
     body: file,
     headers: {
-      // 'Content-Type': file.type,
+      'Content-Type': file.type,
       'Access-Control-Allow-Origin': '*',
     },
   }).catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e)
-    onError([uploadError])
+    handleError(errorMessage)
     return
   })
 
   if (!response || response.status !== 200) {
-    onError([uploadError])
+    handleError(errorMessage)
     return
   }
   return true
-}
-
-// TODO: simplify error handling, maybe don't store errors in state!
-function onError(errors: FileError[]): void {
-  showToastNotice(errors.map((error) => error.message).join('\n'), 'warning')
 }

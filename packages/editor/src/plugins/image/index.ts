@@ -1,4 +1,3 @@
-import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -80,27 +79,19 @@ export function createImagePlugin(
       }
     },
     onFiles(files) {
-      if (files.length === 1) {
-        const file = files[0]
-        const validation = validateFile(file)
-        if (validation.valid) {
-          return {
-            state: {
-              src: { pending: files[0] },
-              link: undefined,
-              alt: undefined,
-              licence: undefined,
-              imageSource: undefined,
-              maxWidth: undefined,
-              caption: { plugin: EditorPluginType.Text },
-            },
-          }
-        } else {
-          if (validation.errors) {
-            for (const error of validation.errors)
-              showToastNotice(error.message)
-          }
-        }
+      if (files.length !== 1) return
+      const file = files[0]
+      if (!validateFile(file)) return
+      return {
+        state: {
+          src: { pending: file },
+          link: undefined,
+          alt: undefined,
+          licence: undefined,
+          imageSource: undefined,
+          maxWidth: undefined,
+          caption: { plugin: EditorPluginType.Text },
+        },
       }
     },
     isEmpty: (staticState) => {
