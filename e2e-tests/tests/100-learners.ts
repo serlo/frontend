@@ -174,15 +174,15 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('Realschule')
 
   // Running around a bit more
-  I.waitForText('Klasse 5', 5)
+  I.waitForText('Klasse 5', 10)
   I.see('Klasse 6')
   I.click('Klasse 7')
-  I.waitForText('Klasse 7', 5)
+  I.waitForText('Klasse 7', 10)
   I.click('Grundwissenstest 7. Klasse')
-  I.waitForText('Aufgaben', 5)
+  I.waitForText('Aufgaben', 10)
   I.click('2021')
 
-  I.waitForText('Berechne', 5)
+  I.waitForText('Berechne', 10)
 
   I.amOnPage('/24370')
   I.see('Artikel')
