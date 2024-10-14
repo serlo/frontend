@@ -281,5 +281,5 @@ Scenario('Comments', ({ I }) => {
   I.amOnPage('/37296')
   I.click('Lösung')
   I.scrollTo('#comment-area-begin-scrollpoint')
-  I.see('Ich weiß nicht, ob es vom Computer')
+  I.waitForText('Ich weiß nicht, ob es vom Computer', 5)
 })
