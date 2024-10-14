@@ -225,13 +225,16 @@ Scenario('Breadcrumbs', ({ I }) => {
 
 Scenario('Small subject', ({ I }) => {
   I.amOnPage('/politik')
+  I.waitForText('Alle Themen', 5)
   I.click('Alle Themen')
 
-  // Meta mneu
+  // Meta menu
+  I.waitForText('Alle Themen', 5, 'a.block')
   I.see('Alle Themen', 'a.block')
 
   // Breadcrumbs
   I.click('Politik')
+  I.waitForText('Politik', 5, 'h1')
   I.see('Politik Startseite', 'h1')
 })
 
