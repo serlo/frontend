@@ -1,15 +1,13 @@
-import type { FileError } from '@editor/editor-integration/image-with-testing-config'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { ImageEditor } from './editor'
 import { isImageUrl } from './utils/check-image-url'
+import { validateFile } from './utils/validate-file'
 import {
   type EditorPlugin,
   type EditorPluginProps,
-  type UploadHandler,
-  type UploadValidator,
   child,
   isTempFile,
   number,
@@ -84,7 +82,7 @@ export function createImagePlugin(
     onFiles(files) {
       if (files.length === 1) {
         const file = files[0]
-        const validation = config.validate(file)
+        const validation = validateFile(file)
         if (validation.valid) {
           return {
             state: {
@@ -98,7 +96,10 @@ export function createImagePlugin(
             },
           }
         } else {
-          for (const error of validation.errors) showToastNotice(error.message)
+          if (validation.errors) {
+            for (const error of validation.errors)
+              showToastNotice(error.message)
+          }
         }
       }
     },
@@ -119,6 +120,4 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 export interface ImagePluginConfig {
   onMultipleUpload?: (files: File[]) => void
   disableFileUpload?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
-  upload: UploadHandler<string>
-  validate: UploadValidator<FileError[]>
 }

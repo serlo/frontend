@@ -6,6 +6,7 @@ import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImagePlugin } from '@editor/plugins/image'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
@@ -23,37 +24,22 @@ import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
-import { createTestingImagePlugin } from './image-with-testing-config'
-
 export function createBasicPlugins(
-  plugins: (EditorPluginType | TemplatePluginType)[],
-  testingSecret?: string | null
+  plugins: (EditorPluginType | TemplatePluginType)[]
 ) {
-  if (plugins.includes(EditorPluginType.Image) && !testingSecret) {
-    /* eslint-disable no-console */
-    console.log(
-      'The image plugin needs the `testingSecret` but it is missing. Image plugin was disabled. Either provide it or deactivate the image plugin in the editor API.'
-    )
-    plugins = plugins.filter((plugin) => plugin !== EditorPluginType.Image)
-  }
-
   const allPlugins = [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
     },
-    ...(testingSecret
-      ? [
-          {
-            type: EditorPluginType.Image,
-            plugin: createTestingImagePlugin(testingSecret),
-          },
-          {
-            type: EditorPluginType.ImageGallery,
-            plugin: createImageGalleryPlugin(),
-          },
-        ]
-      : []),
+    {
+      type: EditorPluginType.Image,
+      plugin: createImagePlugin({}),
+    },
+    {
+      type: EditorPluginType.ImageGallery,
+      plugin: createImageGalleryPlugin(),
+    },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),

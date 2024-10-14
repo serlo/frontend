@@ -31,21 +31,12 @@ export interface SerloEditorProps {
   onChange?: (state: StorageFormat) => void
   language?: SupportedLanguage
   editorVariant: EditorVariant
-  _testingSecret?: string | null
   _ltik?: string
 }
 
 /** For exporting the editor */
 export function SerloEditor(props: SerloEditorProps) {
-  const {
-    children,
-    editorVariant,
-    onChange,
-    language,
-    plugins,
-    _testingSecret,
-    _ltik,
-  } = {
+  const { children, editorVariant, onChange, language, plugins, _ltik } = {
     ...defaultSerloEditorProps,
     ...props,
   }
@@ -62,7 +53,7 @@ export function SerloEditor(props: SerloEditorProps) {
 
   const { staticStrings, editStrings } = editorData[language]
 
-  const allPlugins = createBasicPlugins(plugins, _testingSecret)
+  const allPlugins = createBasicPlugins(plugins)
   editorPlugins.init(allPlugins)
 
   const basicRenderers = createRenderers()
