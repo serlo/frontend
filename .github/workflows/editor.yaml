@@ -59,12 +59,18 @@ jobs:
 
       - name: Create GitHub Release
         if: steps.check_published.outputs.already_published == 'false'
-        uses: elgohr/Github-Release-Action@v5
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag: v${{ steps.get_version.outputs.version }}
-          title: 'Serlo Editor - v${{ steps.get_version.outputs.version }}'
-          body: |
-            ## Serlo Editor Release Notes
-            ${{ env.RELEASE_NOTES }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.version }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/releases \
+            -d @- << EOF
+          {
+            "tag_name": "v${RELEASE_VERSION}",
+            "name": "Serlo Editor - v${RELEASE_VERSION}",
+            "body": $(echo "$RELEASE_NOTES" | jq -Rs .)
+          }
+          EOF
