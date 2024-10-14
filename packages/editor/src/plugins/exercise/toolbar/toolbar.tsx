@@ -12,7 +12,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import type { ExerciseProps } from '..'
-import { UuidType } from '@/data-types'
 
 export const ExerciseToolbar = ({
   id,
@@ -34,7 +33,7 @@ export const ExerciseToolbar = ({
       store.getState(),
       interactive.id
     ).plugin
-    return `${getPluginTitle(pluginStrings, UuidType.Exercise)}: ${getPluginTitle(pluginStrings, interactiveType)}`
+    return `${getPluginTitle(pluginStrings, 'exercise')}: ${getPluginTitle(pluginStrings, interactiveType)}`
   }
 
   const pluginSettings = interactive.defined ? (
