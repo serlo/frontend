@@ -30,7 +30,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
     () =>
       selectParentPluginType(store.getState(), pluginId) ===
       EditorPluginType.Rows,
-    [pluginId]
+    [pluginId, store]
   )
 
   const handleDuplicatePlugin = useCallback(() => {
@@ -47,7 +47,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         document,
       })
     )
-  }, [dispatch, pluginId])
+  }, [dispatch, pluginId, store])
 
   const handleRemovePlugin = useCallback(() => {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)

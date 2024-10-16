@@ -91,7 +91,6 @@ export function createBasicPlugins(
       plugin: createSerloInjectionPlugin(),
       renderer: SerloInjectionStaticRenderer,
     },
-
     // Exercises etc.
     // ===================================================
     {
@@ -115,12 +114,12 @@ export function createBasicPlugins(
       plugin: createBlanksExercisePlugin(),
     },
     {
-      type: EditorPluginType.DropzoneImage,
-      plugin: createDropzoneImagePlugin(),
-    },
-    {
       type: EditorPluginType.TextAreaExercise,
       plugin: textAreaExercisePlugin,
+    },
+    {
+      type: EditorPluginType.DropzoneImage,
+      plugin: createDropzoneImagePlugin(),
     },
 
     // Special plugins, never visible in suggestions

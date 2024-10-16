@@ -24,7 +24,7 @@ export function PluginCopyTool({ pluginId, noSeparator }: PluginCopyToolProps) {
     void navigator.clipboard.writeText(JSON.stringify(rowsDocument))
     showToastNotice(rowsStrings.copySuccess, 'success', 2000)
     showToastNotice('👉 ' + rowsStrings.pluginCopyInfo, undefined, 4000)
-  }, [pluginId, rowsStrings])
+  }, [pluginId, rowsStrings, store])
 
   if (!navigator.clipboard) return null
 

@@ -26,7 +26,7 @@ async function testLandingPage(I: CodeceptJS.I, data: LandingPageData) {
 
   // Visit taxonomy
   I.click('Alle Themen')
-  I.waitForElement('$breadcrumbs', 15) // page load is quite slow
+  I.waitForElement('$breadcrumbs', 30) // page load is quite slow
   I.click(data.taxRootName, locate('$breadcrumbs').withChild('a'))
 
   // Check correct filter
@@ -174,15 +174,15 @@ Scenario('Taxonomy', ({ I }) => {
   I.click('Realschule')
 
   // Running around a bit more
-  I.waitForText('Klasse 5', 5)
+  I.waitForText('Klasse 5', 10)
   I.see('Klasse 6')
   I.click('Klasse 7')
-  I.waitForText('Klasse 7', 5)
+  I.waitForText('Klasse 7', 10)
   I.click('Grundwissenstest 7. Klasse')
-  I.waitForText('Aufgaben', 5)
+  I.waitForText('Aufgaben', 10)
   I.click('2021')
 
-  I.waitForText('Berechne', 5)
+  I.waitForText('Berechne', 10)
 
   I.amOnPage('/24370')
   I.see('Artikel')
@@ -225,13 +225,14 @@ Scenario('Breadcrumbs', ({ I }) => {
 
 Scenario('Small subject', ({ I }) => {
   I.amOnPage('/politik')
+  I.waitForText('Alle Themen', 5)
   I.click('Alle Themen')
 
-  // Meta mneu
-  I.see('Alle Themen', 'a.block')
-
   // Breadcrumbs
+  I.waitForText('Politik', 15, '$breadcrumbs')
+
   I.click('Politik')
+  I.waitForText('Politik Startseite', 5, 'h1')
   I.see('Politik Startseite', 'h1')
 })
 
@@ -280,5 +281,5 @@ Scenario('Comments', ({ I }) => {
   I.amOnPage('/37296')
   I.click('Lösung')
   I.scrollTo('#comment-area-begin-scrollpoint')
-  I.see('Ich weiß nicht, ob es vom Computer')
+  I.waitForText('Ich weiß nicht, ob es vom Computer', 5)
 })

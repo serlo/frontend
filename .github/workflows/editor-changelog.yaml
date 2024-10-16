@@ -1,0 +1,176 @@
+name: Generate Editor Changelog
+
+on:
+  push:
+    branches:
+      - '**' # Runs on all branches
+
+jobs:
+  generate-editor-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Get current version of editor package
+        id: get_local_version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./packages/editor/package.json').version")
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+
+      - name: Check if changelog for this version already exists
+        id: check_existing_changelog
+        run: |
+          if [ -f packages/editor/CHANGELOG.md ] && grep -q "## Changelog for version $CURRENT_VERSION" packages/editor/CHANGELOG.md; then
+            echo "changelog_exists=true" >> $GITHUB_ENV
+          else
+            echo "changelog_exists=false" >> $GITHUB_ENV
+          fi
+
+      - name: Get latest published version from npm
+        if: env.changelog_exists == 'false'
+        id: get_npm_version
+        run: |
+          NPM_VERSION=$(npm view @serlo/editor version)
+          echo "NPM_VERSION=$NPM_VERSION" >> $GITHUB_ENV
+
+      - name: Check if version has changed
+        if: env.changelog_exists == 'false'
+        id: check_version
+        run: |
+          if [ "$CURRENT_VERSION" != "$NPM_VERSION" ]; then
+            echo "version_changed=true" >> $GITHUB_ENV
+          else
+            echo "version_changed=false" >> $GITHUB_ENV
+          fi
+
+      - name: Stop if version has not changed
+        if: env.version_changed == 'false'
+        run: exit 0
+
+      - name: Get last tag for editor package (if available)
+        if: env.version_changed == 'true'
+        id: get_last_tag
+        run: |
+          git fetch --all --tags
+          LAST_TAG=$(git describe --tags --match "v*-editor" --abbrev=0 2>/dev/null || echo "none")
+          if [ "$LAST_TAG" == "none" ]; then
+            echo "No previous tag found, this is the first release"
+            echo "LAST_TAG=" >> $GITHUB_ENV
+          else
+            echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+          fi
+
+      - name: Check if there are changes in packages/editor since last tag
+        if: env.version_changed == 'true'
+        id: check_editor_changes
+        run: |
+          if [ -z "$LAST_TAG" ]; then
+            # No previous tag, assume all changes in editor are new
+            echo "no_editor_changes=false" >> $GITHUB_ENV
+          else
+            # Compare changes since the last tag
+            CHANGED_FILES=$(git diff --name-only $LAST_TAG HEAD -- packages/editor)
+            if [ -z "$CHANGED_FILES" ]; then
+              echo "no_editor_changes=true" >> $GITHUB_ENV
+            else
+              echo "no_editor_changes=false" >> $GITHUB_ENV
+            fi
+          fi
+
+      - name: Stop if no changes in packages/editor
+        if: env.no_editor_changes == 'true'
+        run: exit 0
+
+      - name: Get merged PRs affecting editor package (last 10 if no tag)
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
+        id: get_prs
+        run: |
+          if [ -z "$LAST_TAG" ]; then
+            # No tag, get last 10 PRs
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=10" | jq -r '.[] | .number' | tr '\n' ' ')
+          else
+            # Fetch PRs since last tag
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | tr '\n' ' ')
+          fi
+          echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
+
+      - name: Get PR titles that touched editor folder
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false'
+        id: get_pr_titles
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_TITLES=""
+          IFS=' ' read -r -a PR_ARRAY <<< "$PR_NUMBERS"
+          echo "Processing ${#PR_ARRAY[@]} PRs"
+          for pr in "${PR_ARRAY[@]}"; do
+            echo "Checking PR #$pr"
+            PR_DATA=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/pulls/$pr")
+            if [ $? -ne 0 ]; then
+              echo "Error fetching PR data for #$pr"
+              continue
+            fi
+
+            MERGED=$(echo "$PR_DATA" | jq -r '.merged')
+            if [ "$MERGED" != "true" ]; then
+              echo "PR #$pr was not merged, skipping"
+              continue
+            fi
+
+            FILES=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/pulls/$pr/files")
+            if [ $? -ne 0 ]; then
+              echo "Error fetching files for PR #$pr"
+              continue
+            fi
+
+            if echo "$FILES" | jq -r '.[].filename' | grep -q "^packages/editor/"; then
+              PR_TITLE=$(echo "$PR_DATA" | jq -r '.title')
+              PR_URL=$(echo "$PR_DATA" | jq -r '.html_url')
+              PR_AUTHOR=$(echo "$PR_DATA" | jq -r '.user.login')
+              echo "PR #$pr touches editor package. Title: $PR_TITLE"
+              PR_TITLES="${PR_TITLES}- ${PR_TITLE}. Thank you @${PR_AUTHOR} in ${PR_URL}\n"
+            else
+              echo "PR #$pr does not touch editor package"
+            fi
+          done
+          echo "Final PR_TITLES: $PR_TITLES"
+          if [ -n "$PR_TITLES" ]; then
+            # Escape special characters and set PR_TITLES as an environment variable
+            escaped_titles=$(printf '%s\n' "$PR_TITLES" | sed -e 's/"/\\"/g' -e 's/!/\\!/g')
+            echo "PR_TITLES<<EOF" >> $GITHUB_ENV
+            echo "$escaped_titles" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+          else
+            echo "PR_TITLES=No relevant PRs found" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Generate Changelog
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
+        run: |
+          echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
+          echo "" >> packages/editor/CHANGELOG.md  # Adds a newline after the heading
+          echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
+          echo "" >> packages/editor/CHANGELOG.md  # Adds a newline after the PR list
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$NPM_VERSION...v$CURRENT_VERSION" >> packages/editor/CHANGELOG.md
+
+      - name: Run Prettier on Changelog
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
+        run: yarn prettier -w packages/editor/CHANGELOG.md
+
+      - name: Commit and Push Changelog
+        if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add packages/editor/CHANGELOG.md
+          git commit -m "chore: update changelog for version $CURRENT_VERSION"
+          git push origin ${{ github.ref_name }}

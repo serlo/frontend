@@ -84,11 +84,15 @@ export function ExerciseEditor(props: ExerciseProps) {
           />
         </div>
         <div className="h-10"></div>
-        {content.render({
-          config: {
-            textPluginPlaceholder: exStrings.placeholder,
-          },
-        })}
+        {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
+        {/* Background: Users often add their blanks-text to the task */}
+        <div className="group-has-[.blanks-child-plugin-selection]/exercise:hidden">
+          {content.render({
+            config: {
+              textPluginPlaceholder: exStrings.placeholder,
+            },
+          })}
+        </div>
         <div className="mx-side">
           {interactive.defined ? (
             <>
