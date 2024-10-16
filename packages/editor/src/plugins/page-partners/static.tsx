@@ -1,5 +1,5 @@
-import { PartnerList } from '@serlo/frontend/src/components/landing/rework/partner-list'
+import { PagePartnersRenderer } from './renderer'
 
 export function PagePartnersStaticRenderer() {
-  return <PartnerList inContent />
+  return <PagePartnersRenderer inContent />
 }

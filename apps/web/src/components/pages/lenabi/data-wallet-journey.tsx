@@ -1,9 +1,9 @@
+import { PagePartnersRenderer } from '@editor/plugins/page-partners/renderer'
 import clsx from 'clsx'
 import { SetStateAction, useState } from 'react'
 
 import { endpointEnmeshed } from '@/api/endpoint'
 import { HeadTags } from '@/components/head-tags'
-import { PartnerList } from '@/components/landing/rework/partner-list'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Logo } from '@/components/navigation/header/logo'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -124,7 +124,7 @@ export function DataWallet() {
         <h2 className="pb-12 pt-16 text-center font-bold">
           Partner und Unterstützer
         </h2>
-        <PartnerList />
+        <PagePartnersRenderer />
         <nav>
           <a
             href="https://de.serlo.org/serlo"
