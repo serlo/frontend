@@ -33,7 +33,7 @@ export function StaticSolutionRenderer({
 
   const prerequisiteElement = hasPrerequisite ? (
     <LinkRenderer href={prerequisite.alias ?? `/${prerequisite.id}`}>
-      <>{prerequisite.title}</>
+      {prerequisite.title}
     </LinkRenderer>
   ) : null
 
