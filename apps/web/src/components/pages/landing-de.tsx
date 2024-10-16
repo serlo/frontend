@@ -1,8 +1,9 @@
+import { PagePartnersRenderer } from '@editor/plugins/page-partners/renderer'
+
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
 import { LandingJsonLd } from '../landing/rework/landing-json-ld'
-import { PartnerList } from '../landing/rework/partner-list'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
 import { Header } from '../navigation/header/header'
 import { Quickbar } from '../navigation/quickbar'
@@ -117,7 +118,7 @@ export function LandingDE({ data }: LandingDEProps) {
           >
             Partner und Förderer
           </h3>
-          <PartnerList />
+          <PagePartnersRenderer />
           <Link
             className={cn(`
               serlo-button-with-eyebrows mx-auto mt-12 hidden

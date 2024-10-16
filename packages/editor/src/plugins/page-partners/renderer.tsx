@@ -1,4 +1,4 @@
-import { cn } from '@/helper/cn'
+import { cn } from '@editor/utils/cn'
 
 const partners = [
   {
@@ -43,7 +43,7 @@ const partners = [
   },
 ]
 
-export function PartnerList({ inContent }: { inContent?: boolean }) {
+export function PagePartnersRenderer({ inContent }: { inContent?: boolean }) {
   return (
     <div
       className={cn(
@@ -65,7 +65,6 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
     padding: number
   }) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
       <img
         key={name}
         className={cn(
