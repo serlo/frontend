@@ -6,7 +6,7 @@ import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction, type ClipboardEvent } from 'react'
+import { Dispatch, SetStateAction, useState, type ClipboardEvent } from 'react'
 
 import type { InjectionProps } from '.'
 import { EditorInput } from '../../editor-ui'
@@ -21,15 +21,19 @@ export const InjectionToolbar = ({
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
+  const [idState, setIdState] = useState(state.value)
+
   const injectionStrings = useEditStrings().plugins.injection
 
-  function validateBeforeClose() {
-    const [id, hash] = state.value.split('#')
+  function validateAndStoreBeforeClose() {
+    const [id, hash] = idState.split('#')
     const isValidId = /^\/[1-9]?[0-9]+$/.test(id)
     const isValidHash = hash === undefined || /[a-z0-9-]+/.test(hash)
 
-    if (isValidId && isValidHash) setShowSettingsModal(false)
-    else showToastNotice(injectionStrings.invalidStateWarning, 'warning')
+    if (isValidId && isValidHash) {
+      setShowSettingsModal(false)
+      state.set(idState)
+    } else showToastNotice(injectionStrings.invalidStateWarning, 'warning')
   }
 
   function onPaste(e: ClipboardEvent<HTMLInputElement>) {
@@ -37,7 +41,7 @@ export const InjectionToolbar = ({
     setTimeout(() => {
       const inputUrl = (e.target as HTMLInputElement).value
       const cleanUrl = getCleanUrl(inputUrl)
-      if (cleanUrl !== inputUrl) state.set(cleanUrl)
+      if (cleanUrl !== inputUrl) setIdState(cleanUrl)
     })
   }
 
@@ -55,7 +59,7 @@ export const InjectionToolbar = ({
           <EditorModal
             isOpen={showSettingsModal}
             setIsOpen={(open) => {
-              if (!open) validateBeforeClose()
+              if (!open) validateAndStoreBeforeClose()
             }}
             className="top-8 max-w-xl translate-y-0 sm:top-24"
             title={injectionStrings.title}
@@ -66,13 +70,13 @@ export const InjectionToolbar = ({
                 autoFocus
                 label={`${injectionStrings.serloId}: `}
                 placeholder={injectionStrings.placeholder}
-                value={state.value}
+                value={idState}
                 onPaste={onPaste}
                 onChange={(e) => {
                   const { value } = e.target
                   const prepended =
                     value.length > 0 && value[0] !== '/' ? `/${value}` : value
-                  state.set(prepended)
+                  setIdState(prepended)
                 }}
                 width="100%"
                 inputWidth="100%"
