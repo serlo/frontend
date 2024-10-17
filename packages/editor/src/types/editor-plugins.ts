@@ -20,7 +20,6 @@ import type { InteractiveVideoPluginState } from '@editor/plugins/interactive-vi
 import type { MultimediaPluginState } from '@editor/plugins/multimedia'
 import type { PageLayoutPluginState } from '@editor/plugins/page-layout'
 import type { PagePartnersPluginState } from '@editor/plugins/page-partners'
-import type { PageTeamPluginState } from '@editor/plugins/page-team'
 import type { RowsPluginState } from '@editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@editor/plugins/sc-mc-exercise'
 import type { SerloInjectionPluginState } from '@editor/plugins/serlo-injection'
@@ -214,11 +213,6 @@ export interface EditorPageLayoutDocument {
   state: PrettyStaticState<PageLayoutPluginState>
   id?: string
 }
-export interface EditorPageTeamDocument {
-  plugin: EditorPluginType.PageTeam
-  state: PrettyStaticState<PageTeamPluginState>
-  id?: string
-}
 export interface EditorPagePartnersDocument {
   plugin: EditorPluginType.PagePartners
   state: PrettyStaticState<PagePartnersPluginState>
@@ -288,7 +282,6 @@ export type SupportedEditorDocument =
   | EditorEquationsDocument
   | EditorExerciseDocument
   | EditorPageLayoutDocument
-  | EditorPageTeamDocument
   | EditorPagePartnersDocument
   | EditorEdusharingAssetDocument
   | EditorSerloInjectionDocument

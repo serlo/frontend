@@ -1,3 +1,4 @@
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor - Box plugin')
@@ -14,7 +15,7 @@ async function addBoxPlugin(I: CodeceptJS.I, type: string) {
 }
 
 Scenario('Create box plugin and set initial type', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   addBoxPlugin(I, 'attention')
 
@@ -24,7 +25,7 @@ Scenario('Create box plugin and set initial type', async ({ I }) => {
 })
 
 Scenario('Change box type in toolbar', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   addBoxPlugin(I, 'blank')
 
   I.say('Change box type')
@@ -35,7 +36,7 @@ Scenario('Change box type in toolbar', async ({ I }) => {
 })
 
 Scenario('Type inside box title', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   addBoxPlugin(I, 'blank')
 
   I.say('Type inside box title.')
@@ -46,7 +47,7 @@ Scenario('Type inside box title', async ({ I }) => {
 })
 
 Scenario('Type inside box content', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   addBoxPlugin(I, 'blank')
 
   I.say('Type inside box content')
@@ -59,7 +60,7 @@ Scenario('Type inside box content', async ({ I }) => {
 Scenario(
   'Arrow keys can be used to switch between title and content',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
     addBoxPlugin(I, 'blank')
 
     I.say('Switch between title and content')
@@ -80,7 +81,7 @@ Scenario(
 Scenario(
   'Empty box warning message appears when box content is empty',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
     addBoxPlugin(I, 'blank')
 
     I.say('Empty warning message visible after creating new box')
@@ -102,7 +103,7 @@ Scenario(
 )
 
 Scenario('Set box type using keyboard', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.say('Create box plugin')
   I.click('$add-new-plugin-row-button')
@@ -120,7 +121,7 @@ Scenario('Set box type using keyboard', async ({ I }) => {
 })
 
 Scenario('Move between box title and content with Tab', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   addBoxPlugin(I, 'blank')
 
   I.say('Select the box title')

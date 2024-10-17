@@ -26,7 +26,7 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
   const editStrings = useEditStrings()
   const lang = editStrings.lang
   const solutionStrings = editStrings.templatePlugins.solution
-  const isSerlo = useContext(IsSerloContext) // only on serlo
+  const isSerlo = useContext(IsSerloContext)
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
   const [showPrerequisiteLinkTool, setShowPrerequisiteLinkTool] =
     useState<boolean>(false)

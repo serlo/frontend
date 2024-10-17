@@ -1,20 +1,21 @@
 import dotenv from 'dotenv'
 
-function createConfig() {
+const localUrl = 'http://localhost:3000'
+const stagingUrl = 'https://de.serlo-staging.dev'
+
+export const configInput = (() => {
   dotenv.config()
 
-  const useLocalAPI = process.env.FRONTEND_API == 'local'
+  const isCI = Boolean(process.env.CI)
+  const browser = process.env.BROWSER ?? 'chromium'
+  const localApi = process.env.FRONTEND_API === 'local'
 
-  return {
-    isCI: Boolean(process.env.CI),
-    browser: process.env.BROWSER ?? 'chromium',
-    frontendUrl:
-      process.env.FRONTEND_URL ?? useLocalAPI
-        ? 'http://localhost:3000'
-        : 'https://de.serlo-staging.dev',
-  }
-}
+  const defaultUrl = localApi ? localUrl : stagingUrl
+  const frontendUrl = process.env.FRONTEND_URL ?? defaultUrl
 
-const config = createConfig()
+  const adminUser = localApi ? 'admin' : 'Kulla'
 
-export default config
+  const isChromium = browser === 'chromium'
+
+  return { isCI, browser, frontendUrl, adminUser, isChromium }
+})()

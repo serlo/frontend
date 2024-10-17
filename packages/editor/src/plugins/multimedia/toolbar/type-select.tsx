@@ -3,7 +3,7 @@ import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,
   selectStaticDocument,
-  store,
+  useStore,
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
@@ -24,6 +24,7 @@ export const MultimediaTypeSelect = ({
   stateCache,
   setStateCache,
 }: MultimediaTypeSelectProps) => {
+  const store = useStore()
   const pluginStrings = useEditStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)

@@ -15,7 +15,7 @@ import {
   focus,
   selectFocused,
   selectStaticDocument,
-  store,
+  useStore,
   useAppDispatch,
   useAppSelector,
 } from '../../store'
@@ -25,6 +25,8 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const { state, id, focused } = props
   const { answers } = state
   const inputExStrings = useEditStrings().templatePlugins.inputExercise
+
+  const store = useStore()
 
   const dispatch = useAppDispatch()
 

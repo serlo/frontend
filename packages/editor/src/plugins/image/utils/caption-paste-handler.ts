@@ -1,11 +1,10 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   selectParentPluginType,
-  store,
   selectAncestorDocumentIds,
   runChangeDocumentSaga,
 } from '@editor/store'
-import type { AppDispatch } from '@editor/store/store'
+import type { AppDispatch, RootState } from '@editor/store/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import type { ImageProps } from '..'
@@ -20,14 +19,16 @@ export async function captionPasteHandler({
   text,
   id,
   dispatch,
+  getStoreState,
 }: {
   event: React.ClipboardEvent
   files: File[]
   text: string
   id: string
   dispatch: AppDispatch
+  getStoreState: () => RootState
 }) {
-  const parentType = selectParentPluginType(store.getState(), id)
+  const parentType = selectParentPluginType(getStoreState(), id)
   if (parentType !== EditorPluginType.Image) return
 
   const plugin = editorPlugins.getByType(parentType)
@@ -35,7 +36,7 @@ export async function captionPasteHandler({
   if (!state?.state) return
 
   const src = (state.state as ImageProps['state']).src
-  const parentId = selectAncestorDocumentIds(store.getState(), id)?.at(-2)
+  const parentId = selectAncestorDocumentIds(getStoreState(), id)?.at(-2)
   if (!parentId) return
 
   dispatch(

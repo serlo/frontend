@@ -8,7 +8,7 @@ import {
   removePluginChild,
   selectChildTree,
   useAppDispatch,
-  store,
+  useStore,
   selectMayManipulateSiblings,
   useAppSelector,
   selectIsDocumentEmpty,
@@ -19,6 +19,7 @@ export const useEnableEditorHotkeys = (
   plugin: EditorPlugin,
   isFocused: boolean
 ) => {
+  const store = useStore()
   const dispatch = useAppDispatch()
   const isDocumentEmpty = useAppSelector((state) =>
     selectIsDocumentEmpty(state, id)

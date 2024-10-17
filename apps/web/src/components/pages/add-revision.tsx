@@ -109,14 +109,11 @@ export function AddRevision({
     <>
       <HeadTags data={{ title }} />
       {renderBacklink()}
-      <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
-      <div className="serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
-        <SerloEditor
-          entityNeedsReview={entityNeedsReview}
-          onSave={onSave}
-          initialState={initialState}
-        />
-      </div>
+      <SerloEditor
+        entityNeedsReview={entityNeedsReview}
+        onSave={onSave}
+        initialState={initialState}
+      />
     </>
   )
 

@@ -6,5 +6,9 @@ export function EditorRenderer({
 }: {
   document: unknown
 }): JSX.Element {
-  return <StaticRenderer document={document as AnyEditorDocument} />
+  return (
+    <div className="serlo-content-with-spacing-fixes">
+      <StaticRenderer document={document as AnyEditorDocument} />
+    </div>
+  )
 }

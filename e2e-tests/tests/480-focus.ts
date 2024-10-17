@@ -1,15 +1,19 @@
+import { create } from 'domain'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
+import { editExistingEntity } from './helpers/edit-existing-entity'
+
 Feature('Serlo Editor - focus behaviour')
 
 Scenario('Autofocus', async ({ I }) => {
-  I.amOnPage('/entity/create/Course/1377')
+  createNewEditorEntity(I, 'course')
   I.say('focused on title in new course')
   I.seeElement('h1 > input:focus')
 
-  I.amOnPage('/entity/repository/add-revision/277232')
+  editExistingEntity(I, 277232)
   I.say('focused on title in existing article')
   I.seeElement('h1 > input:focus')
 
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   I.say('focused on title in new article')
   I.seeElement('h1 > input:focus')
 
@@ -24,7 +28,7 @@ Scenario('Autofocus', async ({ I }) => {
 Scenario.todo('add test for exercises autofocus') // after exercise refactoring
 
 Scenario('focus plugins by clicking', async ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/5')
+  editExistingEntity(I, 5)
 
   I.say('focus the existing text plugin and change it to an image plugin')
   I.click('$plugin-text-editor')
@@ -61,7 +65,7 @@ Scenario('focus plugins by clicking', async ({ I }) => {
 })
 
 Scenario('focus plugins with tab key', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   I.waitForElement('h1 > input:focus', 5)
 
   I.say('focus on image plugin inside of introduction multimedia plugin')
@@ -97,7 +101,7 @@ Scenario('focus plugins with tab key', async ({ I }) => {
 })
 
 Scenario('focus plugins with arrow keys', ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   I.say('add first text plugin, type in it, check that it has focus')
   I.click('Füge ein Element hinzu')

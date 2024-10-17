@@ -240,10 +240,6 @@ export const editStrings = {
       title: 'Experimental State-Paste Plugin',
       description: 'only on staging',
     },
-    pageTeam: {
-      title: 'Team Overview',
-      description: 'Only for the teampages',
-    },
     pagePartners: {
       title: 'Partner List',
       description:
@@ -254,11 +250,14 @@ export const editStrings = {
       description: 'Rows plugin holds other plugins',
       searchForTools: 'Search for tools…',
       duplicate: 'Duplicate',
-      copyAnchorLink: 'Copy link to this element',
       remove: 'Remove',
       close: 'Close',
       dragElement: 'Drag the element within the document',
       addAnElement: 'Add an element',
+      copyAnchorLink: 'Copy link to this element',
+      copySuccess: 'Successfully copied!',
+      pluginCopyInfo: 'You can now paste this plugin into text plugins',
+      pluginCopyButtonLabel: 'Copy plugin to clipboard',
     },
     serloTable: {
       title: 'Table',
@@ -422,6 +421,10 @@ export const editStrings = {
       childPluginSelection:
         'Would you like to add blanks to a text or a table?',
     },
+    edusharingAsset: {
+      title: 'Edu-sharing Content',
+      description: 'Embed content from edu-sharing',
+    },
   },
   templatePlugins: {
     entity: {
@@ -548,8 +551,5 @@ export const editStrings = {
     author: 'Author',
     createdAt: 'when?',
     ready: 'Ready to save?',
-    pluginCopySuccess: 'Plugin copied!',
-    pluginCopyInfo: 'You can now paste this plugin into text plugins',
-    pluginCopyButtonLabel: 'Copy plugin to clipboard',
   },
 }

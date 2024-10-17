@@ -1,4 +1,6 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
+import { createNewEditorEntity } from './helpers/create-new-editor-entity'
+import { editExistingEntity } from './helpers/edit-existing-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 
 Feature('Serlo Editor')
@@ -6,7 +8,7 @@ Feature('Serlo Editor')
 Before(popupWarningFix)
 
 Scenario('Basic text interactions', async ({ I }) => {
-  I.amOnPage('/entity/repository/add-revision/74888')
+  editExistingEntity(I, 74888)
 
   addNewTextPlugin(I)
 
@@ -20,7 +22,7 @@ Scenario('Basic text interactions', async ({ I }) => {
 })
 
 Scenario('Add new plugins', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   // Spoiler
   I.say('I insert a text plugin')
@@ -59,7 +61,7 @@ Scenario('Add new plugins', async ({ I }) => {
 })
 
 Scenario('Close plugin selection modal', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
   const textPlugin = '$plugin-suggestion-text'
   I.dontSeeElement(textPlugin)
   I.click('Füge ein Element hinzu')
@@ -72,7 +74,7 @@ Scenario('Close plugin selection modal', async ({ I }) => {
 })
 
 Scenario('Add plugin via slash command', async ({ I }) => {
-  I.amOnPage('/entity/create/Article/1377')
+  createNewEditorEntity(I, 'article')
 
   // ensure there is no table yet
   I.dontSeeElement('.serlo-table')
@@ -87,7 +89,7 @@ Scenario('Add plugin via slash command', async ({ I }) => {
 Scenario(
   'Feature compatibility: "suggestions" and "empty lines restriction"',
   ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     I.say(
       'Add a Text plugin with two paragraphs and an empty line between them'
@@ -144,7 +146,7 @@ Scenario(
 Scenario(
   'Undo via keyboard in input field for article heading',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     const articleHeadingInput = '$entity-title-input'
     I.click(articleHeadingInput)
@@ -208,7 +210,7 @@ Scenario(
 Scenario(
   'Redo in input field for article heading via keyboard',
   async ({ I }) => {
-    I.amOnPage('/entity/create/Article/1377')
+    createNewEditorEntity(I, 'article')
 
     const articleHeadingInput = '$entity-title-input'
     I.click(articleHeadingInput)

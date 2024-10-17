@@ -1,13 +1,12 @@
-import { Editor } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import dynamic from 'next/dynamic'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
 import { useMemo } from 'react'
@@ -27,7 +26,10 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
-import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-handle-learner-event'
+
+const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
+  ssr: false,
+})
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -65,8 +67,6 @@ function Content() {
     withDefault(StringParam, emptyState)
   )
 
-  const handleLearnerEvent = useSerloHandleLearnerEvent()
-
   const isNotEmpty = previewState !== emptyState
 
   const debouncedSetState = debounce(
@@ -91,8 +91,6 @@ function Content() {
   editorPlugins.init(createPlugins({ lang }))
 
   editorRenderers.init(createRenderers())
-
-  editorLearnerEvent.init(handleLearnerEvent)
 
   return (
     <EditStringsProvider
@@ -149,16 +147,13 @@ function Content() {
               </button>
             </div>
           </header>
-          <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
-          <div className="serlo-editor-hacks mb-24 max-w-[816px] px-2">
-            {editor}
-          </div>
+          <div className="px-2">{editor}</div>
         </section>
         <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
           <h2 className="mx-side mb-12 font-bold text-editor-primary">
             Preview
           </h2>
-          <div className="serlo-content-with-spacing-fixes mt-[3rem]">
+          <div className="mt-[3rem]">
             <EditorRenderer document={parseDocumentString(previewState)} />
           </div>
         </section>

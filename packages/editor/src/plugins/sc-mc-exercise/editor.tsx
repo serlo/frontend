@@ -10,7 +10,7 @@ import {
   PreviewOverlaySimple,
 } from '../../editor-ui'
 import {
-  store,
+  useStore,
   selectFocused,
   selectStaticDocument,
   useAppSelector,
@@ -20,6 +20,7 @@ import { useIsPreviewActive } from '../exercise/context/preview-context'
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const { state, id, focused } = props
   const { answers, isSingleChoice } = state
+  const store = useStore()
 
   const staticDocument = useAppSelector(
     (storeState) =>

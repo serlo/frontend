@@ -249,10 +249,6 @@ export const editStrings = {
       title: '(experiment) Editor State einfügen',
       description: 'nur in staging',
     },
-    pageTeam: {
-      title: 'Teamübersicht',
-      description: 'Nur für Teamseiten',
-    },
     pagePartners: {
       title: 'Partner Liste',
       description:
@@ -263,11 +259,14 @@ export const editStrings = {
       description: 'Rows plugin holds other plugins',
       searchForTools: 'Suche hier nach Tools…',
       duplicate: 'Duplizieren',
-      copyAnchorLink: 'Link zu diesem Element kopieren',
       remove: 'Löschen',
       close: 'Schließen',
       dragElement: 'Verschiebe das Element innerhalb des Dokuments',
       addAnElement: 'Füge ein Element hinzu',
+      copyAnchorLink: 'Link zu diesem Element kopieren',
+      copySuccess: 'Erfolgreich kopiert',
+      pluginCopyInfo: 'Du kannst das Plugin jetzt in Text-Plugins einfügen',
+      pluginCopyButtonLabel: 'Plugin in die Zwischenablage kopieren',
     },
     serloTable: {
       title: 'Tabelle',
@@ -432,6 +431,10 @@ export const editStrings = {
       childPluginSelection:
         'Möchtest du einen Lückentext oder eine Tabelle mit Lücken?',
     },
+    edusharingAsset: {
+      title: 'Edu-sharing Inhalt',
+      description: 'Inhalte von edu-sharing einbinden',
+    },
   },
   templatePlugins: {
     entity: {
@@ -563,8 +566,5 @@ export const editStrings = {
     author: 'Autor*in',
     createdAt: 'Zeitstempel',
     ready: 'Bereit zum Speichern?',
-    pluginCopySuccess: 'Plugin kopiert!',
-    pluginCopyInfo: 'Du kannst das Plugin jetzt in Text-Plugins einfügen',
-    pluginCopyButtonLabel: 'Plugin in die Zwischenablage kopieren',
   },
 }

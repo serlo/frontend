@@ -17,7 +17,6 @@ export enum EditorPluginType {
 
   PageLayout = 'pageLayout',
   PagePartners = 'pagePartners',
-  PageTeam = 'pageTeam',
   PasteHack = 'pasteHack',
 
   Rows = 'rows',

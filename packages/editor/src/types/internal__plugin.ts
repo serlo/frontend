@@ -86,10 +86,6 @@ export interface EditorPlugin<
    * @param id - The id of the child that should be removed
    */
   removeChild?(state: StateTypeReturnType<S>, id: string): void
-
-  //optional metadata, mostly for edusharing integration
-  defaultTitle?: string
-  defaultDescription?: string
 }
 
 /**

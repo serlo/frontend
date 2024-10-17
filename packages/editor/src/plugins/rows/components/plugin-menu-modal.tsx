@@ -7,8 +7,9 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '@editor/plugins/rows/contexts/plugin-menu'
-import { selectAncestorPluginTypes, store } from '@editor/store'
+import { selectAncestorPluginTypes, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { isExerciseDocument } from '@editor/types/plugin-type-guards'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Key } from 'ts-key-enum'
 
@@ -26,6 +27,7 @@ interface PluginMenuModalProps {
 }
 
 export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
+  const store = useStore()
   const editorStrings = useEditStrings()
   const pluginsStrings = editorStrings.plugins
 
@@ -63,12 +65,19 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     menuItems,
     pluginMenuState.allowedChildPlugins,
     pluginMenuState.parentPluginId,
+    store,
   ])
 
   const allowedMenuItems = useMemo(() => {
-    return menuItems.filter(({ initialState }) =>
-      allowedPlugins.includes(initialState.plugin)
-    )
+    return menuItems.filter(({ initialState }) => {
+      const isPluginAllowed = allowedPlugins.includes(initialState.plugin)
+      if (!isExerciseDocument(initialState)) return isPluginAllowed
+      // extra check for wrapped interactive exercise plugins
+      const interactive = initialState.state.interactive?.plugin
+      return interactive
+        ? editorPlugins.isSupported(interactive)
+        : isPluginAllowed
+    })
   }, [allowedPlugins, menuItems])
 
   const { basicOptions, interactiveOptions, firstOption, isEmpty } =

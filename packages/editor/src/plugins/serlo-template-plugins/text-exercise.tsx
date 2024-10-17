@@ -3,7 +3,7 @@ import {
   type EditorPluginProps,
   type PrettyStaticState,
 } from '@editor/plugin'
-import { selectStaticDocument, store } from '@editor/store'
+import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
 import { UuidType } from '@serlo/frontend/src/data-types'
@@ -38,6 +38,8 @@ function TextExerciseTypeEditor({
   id,
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content } = state
+
+  const store = useStore()
 
   const staticDocument = selectStaticDocument(store.getState(), id)
     ?.state as PrettyStaticState<TextExerciseTypePluginState>

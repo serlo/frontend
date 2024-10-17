@@ -1,50 +1,66 @@
-// Scaffolding implementation of a preference context
-// Useful for settings across one editor instance
-// Basically a key-value store, no persistent yet
+// context (and localStorage) for user preferences & experiments
 
 import { createContext, ReactNode, useState } from 'react'
 
+const preferences = {
+  visualMath: {
+    storageKey: 'serlo-editor::visual-math',
+    defaultValue: true,
+  },
+  intermediateTasksExperiment: {
+    storageKey: 'serlo-editor::intermediate-tasks',
+    defaultValue: false,
+  },
+}
+
+export type PreferenceName = keyof typeof preferences
+
 export interface Preference {
-  getKey: (key: string) => unknown
-  setKey: (key: string, val: unknown) => void
+  set: (key: PreferenceName, value: boolean) => void
+  get: (key: PreferenceName) => boolean
 }
 
 export const PreferenceContext = createContext<Preference>({
-  getKey: () => {},
-  setKey: () => {},
+  set: () => {},
+  get: () => {
+    return false
+  },
 })
-
-const store: { [key: string]: unknown } = {}
-
-/**
- * Sets a preference
- *
- * @param key - The preference
- * @param val - The value
- */
-export function setDefaultPreference(key: string, val: unknown) {
-  store[key] = val
-}
 
 export function PreferenceContextProvider({
   children,
 }: {
   children: ReactNode
 }) {
-  const [state, setState] = useState(1)
+  // just to make sure the context updates
+  const [iterator, setIterator] = useState(0)
 
-  function setKey(key: string, val: unknown) {
-    store[key] = val
-    setState(state + 1)
-  }
-
-  function getKey(key: string) {
-    return store[key]
+  function set(name: PreferenceName, value: boolean) {
+    setWithoutContext(name, value)
+    setIterator(iterator + 1)
   }
 
   return (
-    <PreferenceContext.Provider value={{ setKey, getKey }}>
+    <PreferenceContext.Provider value={{ set, get: getWithoutContext }}>
       {children}
     </PreferenceContext.Provider>
   )
+}
+
+export function setWithoutContext(name: PreferenceName, value: boolean) {
+  const { storageKey, defaultValue } = preferences[name]
+
+  const isDefault = defaultValue === value
+
+  if (isDefault) localStorage.removeItem(storageKey)
+  else localStorage.setItem(storageKey, value ? '1' : '0')
+}
+
+export function getWithoutContext(name: PreferenceName) {
+  const { storageKey, defaultValue } = preferences[name]
+
+  if (typeof window === 'undefined') return defaultValue
+  const stored = localStorage.getItem(storageKey)
+
+  return stored === null ? defaultValue : stored === '1'
 }

@@ -21,7 +21,6 @@ import {
 } from '@editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@editor/plugins/page-partners'
-import { pageTeamPlugin } from '@editor/plugins/page-team'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
@@ -67,7 +66,6 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
 
     EditorPluginType.PageLayout,
     EditorPluginType.PagePartners,
-    EditorPluginType.PageTeam,
     EditorPluginType.PasteHack,
 
     EditorPluginType.Rows,
@@ -134,7 +132,6 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
         ]),
     { type: EditorPluginType.Anchor, plugin: anchorPlugin },
     { type: EditorPluginType.PageLayout, plugin: pageLayoutPlugin },
-    { type: EditorPluginType.PageTeam, plugin: pageTeamPlugin },
     { type: EditorPluginType.PagePartners, plugin: pagePartnersPlugin },
 
     // Exercises etc.
