@@ -1,10 +1,10 @@
+import { PagePartnersRenderer } from '@editor/plugins/page-partners/renderer'
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import Image from 'next/image'
 
 import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
-import { PartnerList } from '../landing/rework/partner-list'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Logo } from '@/components/navigation/header/logo'
 import { cn } from '@/helper/cn'
@@ -185,7 +185,7 @@ export function Donations() {
           <h3 className="mx-auto mb-8 text-lg font-bold text-almost-black">
             Partner und Förderer
           </h3>
-          <PartnerList />
+          <PagePartnersRenderer />
         </div>
         <div className="text-md mb-[3.5rem] bg-white py-8 text-center text-brand ">
           <a className="hover:underline" href="/datenschutz" target="_blank">

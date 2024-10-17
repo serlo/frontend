@@ -1,8 +1,8 @@
+import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import {
   EditorArticleDocument,
   EditorMultimediaDocument,
 } from '@editor/types/editor-plugins'
-import { Link } from '@serlo/frontend/src/components/content/link'
 
 import { ArticleRenderer } from './renderer'
 import { StaticRenderer } from '../../static-renderer/static-renderer'
@@ -39,6 +39,8 @@ export function ArticleStaticRenderer({
     <StaticRenderer document={{ ...introduction, plugin: 'multimedia' }} />
   )
 
+  const LinkRenderer = editorRenderers.getLinkRenderer()
+
   return (
     <ArticleRenderer
       introduction={introductionOrNull}
@@ -73,9 +75,7 @@ export function ArticleStaticRenderer({
       <>
         {items.map(({ id, title }) => (
           <li key={id}>
-            <a className="serlo-link" href={`/${id}`}>
-              {title}
-            </a>
+            <LinkRenderer href={`/${id}`}>{title}</LinkRenderer>
           </li>
         ))}
       </>
@@ -100,7 +100,7 @@ export function ArticleStaticRenderer({
           {sources.map((source) => (
             <li key={source.href} className="!mb-0">
               {source.href ? (
-                <Link href={source.href}>{source.title}</Link>
+                <LinkRenderer href={source.href}>{source.title}</LinkRenderer>
               ) : (
                 source.title
               )}
