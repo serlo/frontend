@@ -1,5 +1,6 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
+import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { gql } from 'graphql-request'
 
@@ -13,7 +14,6 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { InjectionSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
@@ -78,7 +78,7 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <InjectionSerloStaticRenderer
+        <InjectionStaticRenderer
           plugin={EditorPluginType.Injection}
           state={`/${id}`}
         />
