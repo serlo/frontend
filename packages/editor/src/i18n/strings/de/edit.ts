@@ -208,6 +208,27 @@ export const editStrings = {
       invalidStateWarning:
         "Bitte verwende eine gültige Serlo ID (nur Zahlen) – z.B. '/1555'",
     },
+    interactiveVideo: {
+      title: 'Interaktives Video',
+      description: 'Erstelle ein interaktives Video mit Aufgaben',
+      editOverlayTitle: 'Aufgabe erstellen',
+      titlePlaceholder: 'Aufgabentitel',
+      defaultTitle: 'Aufgabe',
+      autoOpenLabel: 'Automatisch öffnen',
+      autoOpenExplanation:
+        'Der Inhalt öffnet wird automatisch angezeigt, wenn das Video dort ankommt',
+      mandatoryLabel: 'Verpflichtende Aufgabe',
+      mandatoryExplanation:
+        'Die Aufgabe muss richtig beantwortet werden, um das Video weiter abzuspielen',
+      forceRewatchLabel: 'Auto-Wiederholung',
+      forceRewatchExplanation:
+        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lerner per Button den letzten Abschnitt noch mal anschauen',
+      editMark: 'Bearbeiten',
+      removeMark: 'Löschen',
+      addOverlayContent: 'Aufgabe an aktueller Stelle einfügen',
+      addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
+      changeVideo: 'Video austauschen',
+    },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
       description:

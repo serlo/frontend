@@ -9,6 +9,7 @@ export interface ScMcExerciseRendererAnswer {
 }
 
 export interface ScMcExerciseRendererProps {
+  id?: string
   isSingleChoice: boolean
   answers: ScMcExerciseRendererAnswer[]
   renderExtraAnswerContent?: (

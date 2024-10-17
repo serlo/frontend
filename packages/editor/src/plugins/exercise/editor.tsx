@@ -11,7 +11,7 @@ import {
 import { cn } from '@editor/utils/cn'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { lazy, useContext, useEffect, useState } from 'react'
+import { Suspense, lazy, useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
@@ -66,10 +66,12 @@ export function ExerciseEditor(props: ExerciseProps) {
         )}
       >
         {isSerlo ? (
-          <SerloLicenseChooser
-            licenseId={licenseId}
-            className="!right-[84px] !top-[-30px]"
-          />
+          <Suspense fallback={null}>
+            <SerloLicenseChooser
+              licenseId={licenseId}
+              className="!right-[84px] !top-[-30px]"
+            />
+          </Suspense>
         ) : null}
         <div
           className={cn(
@@ -84,18 +86,18 @@ export function ExerciseEditor(props: ExerciseProps) {
           />
         </div>
         <div className="h-10"></div>
-        {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
-        {/* Background: Users often add their blanks-text to the task */}
-        <div className="group-has-[.blanks-child-plugin-selection]/exercise:hidden">
-          {content.render({
-            config: {
-              textPluginPlaceholder: exStrings.placeholder,
-            },
-          })}
-        </div>
         <div className="mx-side">
           {interactive.defined ? (
             <>
+              {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
+              {/* Background: Users often add their blanks-text to the task */}
+              <div className="group-has-[.blanks-child-plugin-selection]/exercise:hidden">
+                {content.render({
+                  config: {
+                    textPluginPlaceholder: exStrings.placeholder,
+                  },
+                })}
+              </div>
               {interactive.render()}
               {hideInteractiveInitially.defined ? (
                 <small className="bg-editor-primary-200 p-1">

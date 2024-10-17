@@ -201,6 +201,25 @@ export const editStrings = {
       invalidStateWarning:
         "Please use a valid Serlo ID (just numbers). E.g. '/1555'",
     },
+    interactiveVideo: {
+      title: 'Interactive Video',
+      description: 'Create an interactive video with questions and feedback.',
+      editOverlayTitle: 'Edit Exercise',
+      titlePlaceholder: 'Exercise Title',
+      defaultTitle: 'Exercise',
+      autoOpenLabel: 'Automatically open',
+      autoOpenExplanation: 'Content automatically opens when video is at mark',
+      mandatoryLabel: 'Mandatory Exercise',
+      mandatoryExplanation: 'Exercise has to be solved to continue video',
+      forceRewatchLabel: 'Auto Rewatch',
+      forceRewatchExplanation:
+        'If an exercise is answered incorrectly, the video jumps back to the last mark',
+      editMark: 'Edit',
+      removeMark: 'Remove',
+      addOverlayContent: 'Add exercise',
+      addVideo: 'Add a video url (e.g. YouTube) to get started',
+      changeVideo: 'Change video',
+    },
     multimedia: {
       title: 'Multimedia content associated with text',
       description:

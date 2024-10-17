@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
+    "@vidstack/react": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",

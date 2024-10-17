@@ -40,6 +40,7 @@ export const staticStrings = {
       noRevisionForPage: 'Ungegeprüfte Seite',
     },
     exercise: {
+      title: 'Aufgabe',
       prerequisite: 'Für diese Aufgabe benötigst Du folgendes Grundwissen:',
       task: 'Aufgabenstellung',
       correct: 'Richtig',
@@ -64,6 +65,14 @@ export const staticStrings = {
     },
     video: {
       failed: 'Sorry, das Video konnte nicht geladen werden.',
+    },
+    interactiveVideo: {
+      play: 'Abspielen',
+      rewind: 'Zurückspulen',
+      mandatoryWarning: 'Du musst erst die Aufgabe lösen.',
+      exerciseSolved: "Gut gemacht! Jetzt geht's weiter.",
+      repeatPromt:
+        'Schau dir doch noch mal den Teil des Videos vor der Aufgabe an',
     },
   },
   embed: {

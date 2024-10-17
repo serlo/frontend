@@ -11,6 +11,7 @@ export enum EditorPluginType {
   Highlight = 'highlight',
   Image = 'image',
   ImageGallery = 'imageGallery',
+  InteractiveVideo = 'interactiveVideo',
   Injection = 'injection',
   Multimedia = 'multimedia',
 

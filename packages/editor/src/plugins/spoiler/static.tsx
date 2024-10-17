@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { SpoilerRenderer } from './renderer'
 
 export function SpoilerStaticRenderer({
+  id,
   state,
   openOverwrite,
 }: EditorSpoilerDocument & { openOverwrite?: boolean }) {
@@ -22,6 +23,7 @@ export function SpoilerStaticRenderer({
   function onOpen() {
     if (openOverwrite || eventAlreadySent) return
     editorLearnerEvent.trigger?.({
+      pluginId: id,
       verb: 'opened',
       contentType: 'spoiler',
       value: 'open',

@@ -27,15 +27,11 @@ export function InteractiveExercisesSelection({
     return getPluginMenuItems(editorStrings)
       .map((menuItem) => {
         if (!isExerciseDocument(menuItem.initialState)) return false
-        const interactive = menuItem.initialState.state.interactive
-        if (!interactive || !editorPlugins.isSupported(interactive.plugin)) {
+        const initialState = menuItem.initialState.state.interactive
+        if (!initialState || !editorPlugins.isSupported(initialState.plugin)) {
           return false
         }
-        const pluginMenuItem = {
-          ...menuItem,
-          initialState: interactive,
-        }
-        return pluginMenuItem
+        return { ...menuItem, initialState }
       })
       .filter(Boolean) as unknown as PluginMenuItem[]
   }, [editorStrings])

@@ -55,6 +55,7 @@ export function ScMcExerciseStaticRenderer({
   return (
     <Fragment key={id}>
       <ScMcExerciseRenderer
+        id={id}
         isSingleChoice={!!state.isSingleChoice}
         answers={answers}
         isPrintMode={isPrintMode}
