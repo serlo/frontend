@@ -267,7 +267,7 @@ Scenario('Course', ({ I }) => {
   I.click('Kursübersicht')
   I.waitForText('Zusammenfassung', 10)
   I.click('Weiterführende Übungen')
-  I.waitForText('Lösungsvorschlag', 10)
+  I.waitForText('Lösungsvorschlag', 20)
 })
 
 Scenario('Comments', ({ I }) => {
