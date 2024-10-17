@@ -1,4 +1,4 @@
-import { useShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import { useShadowRoot } from '@editor/core/hooks/use-shadow-root'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'

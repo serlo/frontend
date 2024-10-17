@@ -1,4 +1,4 @@
-import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import { isShadowRoot } from '@editor/core/hooks/use-shadow-root'
 import { MutableRefObject, ReactNode, useRef, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
