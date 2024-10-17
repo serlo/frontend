@@ -30,8 +30,6 @@ export class EditorWebComponent extends HTMLElement {
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
 
-  private _testingSecret: string | null = null
-
   private _editorVariant: EditorVariant = 'unknown'
 
   // By default, we are NOT attaching it to the shadow DOM
@@ -113,14 +111,6 @@ export class EditorWebComponent extends HTMLElement {
     return this._history
   }
 
-  get testingSecret(): string | null {
-    return this._testingSecret
-  }
-
-  set testingSecret(newTestingSecret) {
-    if (newTestingSecret) this.setAttribute('testing-secret', newTestingSecret)
-  }
-
   get editorVariant(): EditorVariant {
     return this._editorVariant
   }
@@ -167,7 +157,6 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
-    const testingSecretAttr = this.getAttribute('testing-secret')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
@@ -193,7 +182,6 @@ export class EditorWebComponent extends HTMLElement {
               <LazySerloEditor
                 editorVariant={this.editorVariant}
                 initialState={this.initialState}
-                _testingSecret={testingSecretAttr}
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)

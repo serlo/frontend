@@ -11,6 +11,7 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import { createImagePlugin } from '@editor/plugins/image'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
@@ -44,7 +45,6 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { H5pPlugin } from '@/serlo-editor-integration/h5p'
-import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
 export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
   const plugins = [
@@ -98,7 +98,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
 
   const allPlugins = [
     { type: EditorPluginType.Text, plugin: createTextPlugin({}) },
-    { type: EditorPluginType.Image, plugin: imagePlugin },
+    { type: EditorPluginType.Image, plugin: createImagePlugin({}) },
     { type: EditorPluginType.ImageGallery, plugin: createImageGalleryPlugin() },
     {
       type: EditorPluginType.Multimedia,
