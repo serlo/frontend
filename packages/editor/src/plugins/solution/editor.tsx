@@ -2,10 +2,6 @@ import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import {
-  QuickbarData,
-  fetchQuickbarData,
-} from '@serlo/frontend/src/components/navigation/quickbar'
 import { lazy, useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
@@ -23,25 +19,11 @@ const SerloLicenseChooser = lazy(() =>
 
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
-  const editStrings = useEditStrings()
-  const lang = editStrings.lang
-  const solutionStrings = editStrings.templatePlugins.solution
+  const solutionStrings = useEditStrings().templatePlugins.solution
   const isSerlo = useContext(IsSerloContext)
-  const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
+
   const [showPrerequisiteLinkTool, setShowPrerequisiteLinkTool] =
     useState<boolean>(false)
-
-  const isSerloLinkSearchActive = isSerlo && lang === 'de'
-
-  useEffect(() => {
-    if (!isSerloLinkSearchActive) return
-    if (!quickbarData) {
-      fetchQuickbarData()
-        .then((fetchedData) => fetchedData && setQuickbarData(fetchedData))
-        // eslint-disable-next-line no-console
-        .catch(console.error)
-    }
-  }, [isSerloLinkSearchActive, quickbarData])
 
   useEffect(() => {
     if (!focused) setShowPrerequisiteLinkTool(false)
@@ -114,7 +96,6 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
                   prerequisite.remove()
                   setShowPrerequisiteLinkTool(false)
                 }}
-                quickbarData={quickbarData}
               />
             ) : (
               <LinkOverlayEditMode
@@ -132,7 +113,6 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
                 }}
                 value=""
                 shouldFocus
-                quickbarData={quickbarData}
               />
             )}
           </div>
