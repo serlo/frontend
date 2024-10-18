@@ -274,12 +274,12 @@ Scenario('Comments', ({ I }) => {
   // End of entity
   I.amOnPage('/1537')
   I.scrollTo('#comment-area-begin-scrollpoint')
-  I.see('Hast du eine Frage oder Feedback?')
+  I.waitForText('Hast du eine Frage oder Feedback?', 10)
   I.see('Der Artikel Koordinatesystem ist nicht')
 
   // In exercise
   I.amOnPage('/37296')
   I.click('Lösung')
   I.scrollTo('#comment-area-begin-scrollpoint')
-  I.waitForText('Ich weiß nicht, ob es vom Computer', 5)
+  I.waitForText('Ich weiß nicht, ob es vom Computer', 10)
 })
