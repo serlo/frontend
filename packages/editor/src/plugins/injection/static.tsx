@@ -6,8 +6,9 @@ import {
 } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
-function getHost(currentHost: string) {
-  if (currentHost.endsWith('serlo-staging.dev')) return currentHost
+function getBase(currentHost: string) {
+  if (currentHost.endsWith('serlo-staging.dev'))
+    return 'https://serlo-staging.dev'
   return process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
     : 'https://serlo.org'
@@ -31,12 +32,15 @@ export function InjectionStaticRenderer({
     }
 
     async function fetchSerloContent() {
-      const host = getHost(window.location.host)
-      const url = `${host}/api/frontend/injection-content?href=${encodeURIComponent(href)}`
+      const base = getBase(window.location.host)
+      const url = `${base}/api/frontend/injection-content?href=${encodeURIComponent(href)}`
       const res = await fetch(url)
       const data = (await res.json()) as string | AnyEditorDocument[]
 
-      if (!res.ok) return handleError(data)
+      if (!res.ok) {
+        handleError(data)
+        return
+      }
       setContent(data as AnyEditorDocument[])
     }
 
