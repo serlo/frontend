@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 
 function getBase(currentHost: string) {
   if (currentHost.endsWith('serlo-staging.dev'))
-    return 'https://serlo-staging.dev'
+    return 'https://de.serlo-staging.dev'
   return process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
     : 'https://serlo.org'
