@@ -8,11 +8,6 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 // https://vitejs.dev/guide/build.html#library-mode
-/* we use vite only for building the serlo editor package */
-
-const js = (value: string) => JSON.stringify(value)
-
-const productionKeys = ['process.env.NODE_ENV', 'process.env.NEXT_PUBLIC_ENV']
 
 const notProvidedKeys = [
   '__NEXT_I18N_SUPPORT',
@@ -36,11 +31,12 @@ const notProvidedKeys = [
 ]
 
 const envReplacements = {
-  ...Object.fromEntries(productionKeys.map((key) => [key, js('production')])),
+  'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
+  'process.env.NEXT_PUBLIC_ENV': `"${process.env.NODE_ENV}"`,
   ...Object.fromEntries(
     notProvidedKeys.map((key) => [
       `process.env.${key}`,
-      js(`NOT_PROVIDED_${key}`),
+      JSON.stringify(`NOT_PROVIDED_${key}`),
     ])
   ),
 }
@@ -55,7 +51,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'lit', '@serlo/editor-web-component'],
       output: {
         globals: {
           react: 'React',
@@ -69,6 +65,9 @@ export default defineConfig({
       '@editor': resolve(__dirname, './src'),
       '@': resolve(__dirname, '../../apps/web/src'),
     },
+  },
+  define: {
+    global: {},
   },
   assetsInclude: ['./src/editor-ui/assets/plugin-icons/**/*.svg'],
   plugins: [
