@@ -17,7 +17,8 @@ export async function uploadFile(file: File) {
 
 async function getSignedUrlAndSrc(mimeType: string) {
   // TODO: depend on editor variant / environment
-  const url = `/api/media/presigned-url?mimeType=${encodeURIComponent(mimeType)}`
+  // TODO: add editorVariant
+  const url = `https://editor.serlo.dev/media/presigned-url?mimeType=${encodeURIComponent(mimeType)}&editorVariant=unknown`
 
   const result = await fetch(url).catch((e) => {
     // eslint-disable-next-line no-console
