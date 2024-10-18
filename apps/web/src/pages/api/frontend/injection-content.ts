@@ -15,10 +15,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const path = decodeURIComponent(String(req.query.path))
-  const hash = decodeURIComponent(String(req.query.hash))
+  const href = decodeURIComponent(String(req.query.href))
+
+  const [base, hash] = href.split('#')
+  const path = base.startsWith('/') ? base : `/${base}`
+
   if (!path) {
-    return res.status(401).send('no path provided')
+    return res.status(401).json('no path provided')
   }
 
   try {
@@ -28,16 +31,12 @@ export default async function handler(
         'Content-Type': 'application/json',
       },
       method: 'POST',
-
-      body: JSON.stringify({
-        query,
-        variables: { path },
-      }),
+      body: JSON.stringify({ query, variables: { path } }),
     })
       .then((res) => res.json())
       .then((data: { data: InjectionOnlyContentQuery }) => {
         if (!data.data?.uuid) {
-          return res.status(404).send('not found')
+          return res.status(404).json('not found')
         }
 
         const uuid = data.data.uuid
@@ -47,14 +46,14 @@ export default async function handler(
           uuid.__typename === 'TaxonomyTerm'
         ) {
           if (!uuid.alias) {
-            return res.status(404).send('something is wrong with the content')
+            return res.status(404).json('something is wrong with the content')
           }
           respondWithContent([createFallbackBox(uuid.alias, uuid.title)])
           return
         }
 
         if (!Object.hasOwn(uuid, 'currentRevision') || !uuid.currentRevision) {
-          return res.status(404).send('no current revision')
+          return res.status(404).json('no current revision')
         }
 
         if (uuid.__typename === 'Exercise') {
@@ -123,13 +122,13 @@ export default async function handler(
           ])
           return
         }
-        return res.status(422).send('unknown entity type')
+        return res.status(422).json('unknown entity type')
       })
       .catch((e) => {
-        return res.status(500).send(`${String(e)} at ${path}`)
+        return res.status(500).json(`${String(e)} at ${path}`)
       })
   } catch (e) {
-    return res.status(500).send(`${String(e)} at ${path}`)
+    return res.status(500).json(`${String(e)} at ${path}`)
   }
 
   function respondWithContent(content: any) {
