@@ -66,10 +66,10 @@ const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
     (mod) => mod.BlanksExerciseStaticRenderer
   )
 )
-const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
-  import(
-    '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
-  ).then((mod) => mod.InjectionSerloStaticRenderer)
+const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
+  import('@editor/plugins/injection/static').then(
+    (mod) => mod.InjectionStaticRenderer
+  )
 )
 
 const DropzoneImageStaticRenderer = dynamic<
@@ -164,7 +164,7 @@ export function createRenderers(): InitRenderersArgs {
           if (!props.state) return null
           return (
             <Lazy>
-              <InjectionSerloStaticRenderer {...props} />
+              <InjectionStaticRenderer {...props} />
               <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
             </Lazy>
           )

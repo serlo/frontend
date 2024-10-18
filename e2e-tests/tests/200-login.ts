@@ -8,7 +8,7 @@ Scenario('Login', ({ I }) => {
   I.click('Anmelden')
 
   // Reduce flakiness
-  I.waitForText('Benutzername oder E-Mailadresse', 10)
+  I.waitForText('Benutzername oder E-Mailadresse', 20)
 
   I.fillField('Benutzername oder E-Mailadresse', adminUser)
   I.fillField('Passwort', '123456')
