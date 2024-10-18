@@ -2,21 +2,20 @@ import { handleError, validateFile } from './validate-file'
 
 // while testing
 export function shouldUseNewUpload() {
-  const nodeEnv = Object.hasOwn(process.env, 'NODE_ENV')
-    ? process.env.NODE_ENV
-    : undefined
-  const nextPublicEnv = Object.hasOwn(process.env, 'NEXT_PUBLIC_ENV')
-    ? process.env.NEXT_PUBLIC_ENV
-    : undefined
-  const isDevOrStaging =
-    nodeEnv === 'development' ||
-    nextPublicEnv === 'staging' ||
-    nextPublicEnv === 'local'
-  if (isDevOrStaging) {
+  if (typeof window === 'undefined') return false
+  const host = window.location.hostname
+  const isDevOrPreviewOrStaging =
+    (host.startsWith('frontend-git') && host.endsWith('vercel.app')) ||
+    host.endsWith('serlo-staging.dev') ||
+    host === 'localhost' ||
+    process.env.NODE_ENV === 'development' ||
+    host.endsWith('serlo.dev')
+
+  if (isDevOrPreviewOrStaging) {
     // eslint-disable-next-line no-console
     console.warn('using new upload method and temporary bucket')
   }
-  return isDevOrStaging
+  return isDevOrPreviewOrStaging
 }
 
 export async function uploadFile(file: File) {
