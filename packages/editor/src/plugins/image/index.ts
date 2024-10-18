@@ -1,15 +1,12 @@
-import type { FileError } from '@editor/editor-integration/image-with-testing-config'
-import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { ImageEditor } from './editor'
 import { isImageUrl } from './utils/check-image-url'
+import { validateFile } from './utils/validate-file'
 import {
   type EditorPlugin,
   type EditorPluginProps,
-  type UploadHandler,
-  type UploadValidator,
   child,
   isTempFile,
   number,
@@ -82,24 +79,19 @@ export function createImagePlugin(
       }
     },
     onFiles(files) {
-      if (files.length === 1) {
-        const file = files[0]
-        const validation = config.validate(file)
-        if (validation.valid) {
-          return {
-            state: {
-              src: { pending: files[0] },
-              link: undefined,
-              alt: undefined,
-              licence: undefined,
-              imageSource: undefined,
-              maxWidth: undefined,
-              caption: { plugin: EditorPluginType.Text },
-            },
-          }
-        } else {
-          for (const error of validation.errors) showToastNotice(error.message)
-        }
+      if (files.length !== 1) return
+      const file = files[0]
+      if (!validateFile(file)) return
+      return {
+        state: {
+          src: { pending: file },
+          link: undefined,
+          alt: undefined,
+          licence: undefined,
+          imageSource: undefined,
+          maxWidth: undefined,
+          caption: { plugin: EditorPluginType.Text },
+        },
       }
     },
     isEmpty: (staticState) => {
@@ -119,6 +111,4 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 export interface ImagePluginConfig {
   onMultipleUpload?: (files: File[]) => void
   disableFileUpload?: boolean // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
-  upload: UploadHandler<string>
-  validate: UploadValidator<FileError[]>
 }

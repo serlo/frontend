@@ -10,6 +10,7 @@ import {
 import { useState } from 'react'
 
 import type { ImageProps } from '..'
+import { uploadFile } from '../utils/upload-file'
 
 interface UploadButtonProps {
   config: ImageProps['config']
@@ -64,7 +65,7 @@ export function UploadButton({
               const filesArray = Array.from(target.files)
 
               // Upload the first file like normal
-              void src.upload(filesArray[0], config.upload)
+              void src.upload(filesArray[0], uploadFile)
 
               // If multiple upload is allowed, call the multiple upload callback
               // with the remaining files
@@ -82,7 +83,7 @@ export function UploadButton({
         <button
           className="serlo-button-editor-primary serlo-tooltip-trigger mr-2 scale-90"
           onClick={() =>
-            src.upload((src.value as TempFile).failed!, config.upload)
+            src.upload((src.value as TempFile).failed!, uploadFile)
           }
           data-qa="plugin-image-retry"
         >
