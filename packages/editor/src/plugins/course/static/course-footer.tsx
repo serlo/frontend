@@ -7,7 +7,6 @@ import {
   faArrowCircleRight,
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
-import Head from 'next/head'
 import { MouseEvent } from 'react'
 
 import { type DummyNextRouter } from './static'
@@ -50,10 +49,6 @@ export function CourseFooter({
 
   return (
     <>
-      <Head>
-        {previousHref ? <link rel="prev" href={previousHref} /> : null}
-        {nextHref ? <link rel="next" href={nextHref} /> : null}
-      </Head>
       <nav className="mb-8 mt-10 flex justify-between bg-brand-50 py-5 align-top sm:bg-white">
         {previousHref ? (
           <a
