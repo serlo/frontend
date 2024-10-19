@@ -3,8 +3,6 @@ import {
   type EditorPluginProps,
   string,
 } from '@editor/plugin'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
@@ -27,20 +25,11 @@ export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
 }
 
 function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
-  const { content, title, id, revision, replaceOwnState } = props.state
+  const { content, title } = props.state
 
   return (
     <>
-      <div className="absolute right-0 -mt-10 mr-side flex">
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.Event}
-        />
-      </div>
       <EntityTitleInput title={title} />
-
       {content.render()}
     </>
   )
