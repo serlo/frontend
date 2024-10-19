@@ -1,9 +1,6 @@
-import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
 import { useState, MouseEvent } from 'react'
 
 import { CourseFooter } from './course-footer'
@@ -36,7 +33,6 @@ export function CourseStaticRenderer({
   const [courseNavOpen, setCourseNavOpen] = useState(
     pages.length < 4 || (isRevisionView ?? false)
   )
-  const strings = useStaticStrings()
 
   const activePageIndex = queryPageId
     ? Math.max(
@@ -80,11 +76,7 @@ export function CourseStaticRenderer({
             router={router}
           />
         </>
-      ) : (
-        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.plugins.course.noPagesWarning}
-        </InfoPanel>
-      )}
+      ) : null}
     </>
   )
 
