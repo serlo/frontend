@@ -31,7 +31,13 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const { title, content, meta_description: metaDescription } = props.state
+  const {
+    title,
+    content,
+    meta_description: metaDescription,
+    licenseId,
+    changes,
+  } = props.state
 
   return (
     <>
@@ -57,7 +63,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         />
         {content.render()}
 
-        <SaveButton showSubscriptionOptions {...props.state} />
+        <SaveButton changes={changes} licenseId={licenseId} />
       </article>
     </>
   )

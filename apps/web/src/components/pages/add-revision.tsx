@@ -82,7 +82,7 @@ export function AddRevision({
     data: SetEntityMutationData | TaxonomyCreateOrUpdateMutationData
   ) => {
     const willNeedReview = Object.hasOwn(data, 'controls')
-      ? !(data as OnSaveData).controls.noReview
+      ? !(data as OnSaveData).noReview
       : entityNeedsReview
 
     const success =

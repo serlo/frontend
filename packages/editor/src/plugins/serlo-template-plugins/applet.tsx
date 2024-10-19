@@ -45,6 +45,8 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     id,
     revision,
     replaceOwnState,
+    licenseId,
+    changes,
   } = props.state
 
   props.state.changes
@@ -69,7 +71,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       {url.render()}
       {content.render()}
 
-      <SaveButton showSubscriptionOptions {...props.state} />
+      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

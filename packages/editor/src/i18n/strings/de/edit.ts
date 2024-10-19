@@ -534,7 +534,6 @@ export const editStrings = {
     saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
     skipReview: 'Bearbeitung ohne Review freischalten (nicht empfohlen)',
-    enableNotifs: 'Benachrichtigungen auf serlo.org erhalten',
     switchRevision: 'Andere Version auswählen',
     importOther: 'Aus einem anderen Inhalt importieren',
     importOtherExplanation:
