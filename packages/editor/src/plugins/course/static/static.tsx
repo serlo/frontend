@@ -4,8 +4,7 @@ import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
-import { RevisionViewContext } from '@serlo/frontend/src/contexts/revision-view-context'
-import { useState, MouseEvent, useContext } from 'react'
+import { useState, MouseEvent } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
@@ -24,13 +23,16 @@ export function CourseStaticRenderer({
   state,
   serloContext,
   router,
-}: EditorCourseDocument & { router: DummyNextRouter }) {
+  isRevisionView,
+}: EditorCourseDocument & {
+  router: DummyNextRouter
+  isRevisionView?: boolean
+}) {
   const { pages } = state
 
   const routerCourseId = getCoursePageIdFromPath(router.asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
   // load nav opened when only some entries
-  const isRevisionView = useContext(RevisionViewContext)
   const [courseNavOpen, setCourseNavOpen] = useState(
     pages.length < 4 || (isRevisionView ?? false)
   )
