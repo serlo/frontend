@@ -8,25 +8,27 @@ import {
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
+
+import { type DummyNextRouter } from './static'
 
 export function CourseFooter({
   activePageIndex: index,
   pages,
   onOverviewButtonClick,
   pageUrls,
+  router,
 }: {
   activePageIndex: number
   pages: EditorCourseDocument['state']['pages']
   onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
   pageUrls?: string[]
+  router: DummyNextRouter
 }) {
   const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
     onOverviewButtonClick(e)
   }
-  const router = useRouter()
   const previousIndex = index - 1
   const nextIndex = index + 1
   const previousPage = pages[previousIndex]
