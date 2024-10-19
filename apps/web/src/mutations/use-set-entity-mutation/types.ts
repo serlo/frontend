@@ -17,7 +17,6 @@ export type TaxonomyCreateOrUpdateMutationData = Pick<
 
 export interface SetEntityMutationRunnerData {
   data: SetEntityMutationData
-  isRecursiveCall?: boolean
   savedParentId?: number
   taxonomyParentId?: number
 }

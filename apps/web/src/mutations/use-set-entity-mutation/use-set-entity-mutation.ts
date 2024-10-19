@@ -28,8 +28,6 @@ export function useSetEntityMutation() {
 
     async function setEntityMutationRunner({
       data,
-      isRecursiveCall,
-      savedParentId,
       taxonomyParentId,
     }: SetEntityMutationRunnerData) {
       if (!data.__typename) {
@@ -54,11 +52,7 @@ export function useSetEntityMutation() {
         input = {
           ...genericInput,
           ...additionalInput,
-          parentId: genericInput.entityId
-            ? undefined
-            : isRecursiveCall
-              ? savedParentId
-              : taxonomyParentId,
+          parentId: genericInput.entityId ? undefined : taxonomyParentId,
         }
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -81,30 +75,22 @@ export function useSetEntityMutation() {
         return false
       }
 
-      if (!isRecursiveCall) {
-        showToastNotice(
-          mutationStrings.success.saveNeedsReview,
-          'success',
-          7000
-        )
-        const id =
-          data.id === 0
-            ? savedId === 0
-              ? undefined
-              : (savedId as number)
-            : data.id
-        const redirectHref = id
-          ? getHistoryUrl(id)
-          : `/${taxonomyParentId as number}`
+      showToastNotice(mutationStrings.success.saveNeedsReview, 'success', 7000)
 
-        if (oldAlias) await revalidatePath(oldAlias)
+      const idFallback = savedId === 0 ? undefined : (savedId as number)
+      const id = data.id || idFallback
 
-        setTimeout(() => {
-          void router.push(redirectHref + successHash)
-        }, 200)
+      const redirectHref = id
+        ? getHistoryUrl(id)
+        : `/${taxonomyParentId as number}`
 
-        return true
-      }
+      if (oldAlias) await revalidatePath(oldAlias)
+
+      setTimeout(() => {
+        void router.push(redirectHref + successHash)
+      }, 200)
+
+      return true
     }
   }
 }
@@ -158,38 +144,17 @@ function getAdditionalInputData(
     description,
   } = data
   switch (data.__typename) {
-    case UuidType.Applet:
-      return {
-        title: getRequiredString(mutationStrings, 'title', title),
-        url: getRequiredString(mutationStrings, 'url', url),
-        metaTitle,
-        metaDescription,
-      }
-    case UuidType.Article:
-      return {
-        title: getRequiredString(mutationStrings, 'title', title),
-        metaTitle,
-        metaDescription,
-      }
     case UuidType.Course:
-      return {
-        title: getRequiredString(mutationStrings, 'title', title),
-        metaDescription,
-      }
+    case UuidType.Article:
     case UuidType.Event:
-      return {
-        title: getRequiredString(mutationStrings, 'title', title),
-        metaTitle,
-        metaDescription,
-      }
     case UuidType.Page:
       return {
         title: getRequiredString(mutationStrings, 'title', title),
         metaTitle,
         metaDescription,
       }
+
     case UuidType.Exercise:
-      return {}
     case UuidType.ExerciseGroup:
       return {}
     case UuidType.Video:
@@ -198,6 +163,13 @@ function getAdditionalInputData(
         // url is stored in content for some reason
         url: getRequiredString(mutationStrings, 'url', content),
         content: getRequiredString(mutationStrings, 'content', description),
+      }
+    case UuidType.Applet:
+      return {
+        title: getRequiredString(mutationStrings, 'title', title),
+        url: getRequiredString(mutationStrings, 'url', url),
+        metaTitle,
+        metaDescription,
       }
   }
   return {}
