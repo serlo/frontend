@@ -32,8 +32,7 @@ export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePlug
 function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<TextExerciseGroupTypePluginState>
 ) {
-  const { content, id, revision, replaceOwnState, licenseId, changes } =
-    props.state
+  const { content, id, revision, replaceOwnState } = props.state
   const store = useStore()
 
   const staticState = selectStaticDocument(store.getState(), props.id)
