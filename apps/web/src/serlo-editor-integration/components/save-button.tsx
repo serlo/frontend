@@ -7,9 +7,16 @@ import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/componen
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import type { SerloEditorProps } from '../serlo-editor'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
-export function SaveButton() {
+export function SaveButton({
+  onSave,
+  isInTestArea,
+}: {
+  onSave: SerloEditorProps['onSave']
+  isInTestArea?: boolean
+}) {
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
@@ -31,7 +38,12 @@ export function SaveButton() {
       <button className="serlo-button-green" onClick={handleClick}>
         <FaIcon icon={faSave} /> {editStrings.edtrIo.save}
       </button>
-      <SaveModal open={saveModalOpen} setOpen={setSaveModalOpen} />
+      <SaveModal
+        open={saveModalOpen}
+        setOpen={setSaveModalOpen}
+        onSave={onSave}
+        isInTestArea={isInTestArea}
+      />
     </div>,
     target
   )
