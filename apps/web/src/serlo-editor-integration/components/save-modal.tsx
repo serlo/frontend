@@ -10,6 +10,7 @@ import { isEmpty } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
 import { SaveContext } from '../context/save-context'
+import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -18,7 +19,6 @@ import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
-import { useHandleSave } from '@/serlo-editor-integration/use-handle-save'
 
 export interface SaveModalProps {
   open: boolean

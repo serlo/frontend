@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
+import { SaveButton } from './components/save-button'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
@@ -53,7 +54,10 @@ export function SerloEditor({
     <EditStringsProvider value={editString}>
       <IsSerloContext.Provider value>
         <SaveContext.Provider value={{ onSave, isInTestArea }}>
-          <Editor initialState={initialState}>{children}</Editor>
+          <Editor initialState={initialState}>
+            <SaveButton />
+            {children}
+          </Editor>
         </SaveContext.Provider>
       </IsSerloContext.Provider>
     </EditStringsProvider>

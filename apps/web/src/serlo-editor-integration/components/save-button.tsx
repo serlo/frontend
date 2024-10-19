@@ -5,12 +5,9 @@ import { selectHasPendingChanges, useAppSelector } from '@editor/store'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 
-import { LeaveConfirmation } from './leave-confirmation-render-null'
-
-const isNextApp = () => {
-  return Boolean(document.getElementById('__next'))
-}
+import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 export function SaveButton() {
   const isChanged = useAppSelector(selectHasPendingChanges)
@@ -23,18 +20,19 @@ export function SaveButton() {
       ? setSaveModalOpen(true)
       : showToastNotice('👀 ' + editStrings.noChangesWarning)
 
-  return (
-    <div>
-      {/* For the web component export, we don't want to call the useLeaveConfirm hook as the next router won't be available */}
-      {isNextApp() && <LeaveConfirmation isChanged={isChanged} />}
+  useLeaveConfirm(isChanged)
 
-      <button
-        className="serlo-button-green pointer-events-auto mb-0"
-        onClick={handleClick}
-      >
+  if (typeof window === 'undefined') return null
+  const target =
+    document.querySelector('.editor-toolbar-right') ?? document.body
+
+  return createPortal(
+    <div className="sticky right-0 top-0">
+      <button className="serlo-button-green" onClick={handleClick}>
         <FaIcon icon={faSave} /> {editStrings.edtrIo.save}
       </button>
       <SaveModal open={saveModalOpen} setOpen={setSaveModalOpen} />
-    </div>
+    </div>,
+    target
   )
 }
