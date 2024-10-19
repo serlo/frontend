@@ -6,7 +6,6 @@ import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
@@ -15,7 +14,6 @@ import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
-import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
@@ -25,19 +23,17 @@ const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
 
 export interface SerloEditorProps {
   children?: ReactNode
-  entityNeedsReview: boolean
+  isInTestArea?: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
   initialState: EditorProps['initialState']
 }
 
 export function SerloEditor({
   onSave,
-  entityNeedsReview,
+  isInTestArea,
   initialState,
   children,
 }: SerloEditorProps) {
-  const canDo = useCanDo()
-  const userCanSkipReview = canDo(Entity.checkoutRevision)
   const { lang } = useInstanceData()
 
   const handleLearnerEvent = useSerloHandleLearnerEvent()
@@ -56,9 +52,7 @@ export function SerloEditor({
   return (
     <EditStringsProvider value={editString}>
       <IsSerloContext.Provider value>
-        <SaveContext.Provider
-          value={{ onSave, userCanSkipReview, entityNeedsReview }}
-        >
+        <SaveContext.Provider value={{ onSave, isInTestArea }}>
           <Editor initialState={initialState}>{children}</Editor>
         </SaveContext.Provider>
       </IsSerloContext.Provider>

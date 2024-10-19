@@ -20,11 +20,7 @@ export function useSetEntityMutation() {
   if (!loggedInData) return false
   const mutationStrings = loggedInData.strings.mutations
 
-  return async (
-    data: SetEntityMutationData,
-    needsReview: boolean,
-    taxonomyParentId?: number
-  ) => {
+  return async (data: SetEntityMutationData, taxonomyParentId?: number) => {
     return await setEntityMutationRunner({
       data,
       taxonomyParentId,
@@ -47,11 +43,7 @@ export function useSetEntityMutation() {
 
       let input = {}
       try {
-        const genericInput = getGenericInputData(
-          mutationStrings,
-          data,
-          needsReview
-        )
+        const genericInput = getGenericInputData(mutationStrings, data)
         if (!genericInput) {
           // eslint-disable-next-line no-console
           console.error('no generic input data')
@@ -91,9 +83,7 @@ export function useSetEntityMutation() {
 
       if (!isRecursiveCall) {
         showToastNotice(
-          needsReview
-            ? mutationStrings.success.saveNeedsReview
-            : mutationStrings.success.save,
+          mutationStrings.success.saveNeedsReview,
           'success',
           7000
         )
@@ -134,8 +124,7 @@ export function getRequiredString(
 
 function getGenericInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
-  data: SetEntityMutationData,
-  needsReview: boolean
+  data: SetEntityMutationData
 ): SetAbstractEntityInput | undefined {
   const { __typename, changes, content, id } = data
   if (!__typename) return
@@ -150,7 +139,7 @@ function getGenericInputData(
     changes: changesOrFallback,
     content: getRequiredString(mutationStrings, 'content', content),
     entityId: id ? id : undefined,
-    needsReview,
+    needsReview: true,
     subscribeThis: true,
     subscribeThisByEmail: false,
   }

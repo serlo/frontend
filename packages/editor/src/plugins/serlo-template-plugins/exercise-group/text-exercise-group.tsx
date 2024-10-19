@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -52,10 +51,7 @@ function TextExerciseGroupTypeEditor(
           entityType={UuidType.ExerciseGroup}
         />
       </div>
-      <article className="mt-32">
-        {content.render()}
-        <SaveButton changes={changes} licenseId={licenseId} />
-      </article>
+      <article className="mt-32">{content.render()}</article>
     </>
   )
 }

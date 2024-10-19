@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -28,8 +27,7 @@ export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
 }
 
 function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
-  const { content, title, id, revision, replaceOwnState, licenseId, changes } =
-    props.state
+  const { content, title, id, revision, replaceOwnState } = props.state
 
   return (
     <>
@@ -44,8 +42,6 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
       <EntityTitleInput title={title} />
 
       {content.render()}
-
-      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

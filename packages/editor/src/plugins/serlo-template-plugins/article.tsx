@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -35,8 +34,6 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
     content,
     meta_title: metaTitle,
     meta_description: metaDescription,
-    licenseId,
-    changes,
   } = props.state
 
   return (
@@ -56,8 +53,6 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <EntityTitleInput title={title} forceFocus />
 
       <section itemProp="articleBody">{content.render()}</section>
-
-      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

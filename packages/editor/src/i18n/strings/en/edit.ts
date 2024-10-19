@@ -519,7 +519,6 @@ export const editStrings = {
     revisionSaved: 'Revision saved',
     saveRevision: 'Save revision',
     changes: 'Describe your changes to the content',
-    skipReview: 'Skip peer review (not recommended)',
     switchRevision: 'Switch to another revision',
     importOther: 'Import content from other entity',
     importOtherExplanation:

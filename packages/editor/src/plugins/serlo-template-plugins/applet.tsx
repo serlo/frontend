@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -45,8 +44,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     id,
     revision,
     replaceOwnState,
-    licenseId,
-    changes,
   } = props.state
 
   props.state.changes
@@ -70,8 +67,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
 
       {url.render()}
       {content.render()}
-
-      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

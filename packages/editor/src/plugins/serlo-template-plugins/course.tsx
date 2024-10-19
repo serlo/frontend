@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -31,13 +30,7 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const {
-    title,
-    content,
-    meta_description: metaDescription,
-    licenseId,
-    changes,
-  } = props.state
+  const { title, content, meta_description: metaDescription } = props.state
 
   return (
     <>
@@ -62,8 +55,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           }
         />
         {content.render()}
-
-        <SaveButton changes={changes} licenseId={licenseId} />
       </article>
     </>
   )

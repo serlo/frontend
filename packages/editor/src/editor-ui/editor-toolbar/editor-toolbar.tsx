@@ -1,3 +1,4 @@
+import { SaveButton } from './save-button'
 import { UndoRedoButtons } from './undo-redo-buttons'
 
 export function EditorToolbar() {
@@ -6,7 +7,9 @@ export function EditorToolbar() {
       <div className="pointer-events-auto -ml-2 flex gap-2 rounded-lg bg-white p-2 md:-ml-28 md:bg-transparent lg:-ml-40">
         <UndoRedoButtons />
       </div>
-      <div className="save-button-portal mr-2 rounded-lg bg-white p-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64" />
+      <div className="mr-2 rounded-lg bg-white p-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64">
+        <SaveButton />
+      </div>
     </nav>
   )
 }

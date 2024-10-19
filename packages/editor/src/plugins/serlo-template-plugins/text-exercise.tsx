@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -26,13 +25,14 @@ export const textExerciseTypePlugin: EditorPlugin<TextExerciseTypePluginState> =
   {
     Component: TextExerciseTypeEditor,
     state: textExerciseTypeState,
+    config: {},
   }
 
 function TextExerciseTypeEditor({
   state,
   id,
 }: EditorPluginProps<TextExerciseTypePluginState>) {
-  const { content, licenseId, changes } = state
+  const { content } = state
 
   const store = useStore()
 
@@ -50,11 +50,7 @@ function TextExerciseTypeEditor({
           entityType={UuidType.Exercise}
         />
       </div>
-      <article className="text-exercise mt-32">
-        {content.render()}
-
-        <SaveButton changes={changes} licenseId={licenseId} />
-      </article>
+      <article className="text-exercise mt-32">{content.render()}</article>
     </>
   )
 }

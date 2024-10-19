@@ -533,7 +533,6 @@ export const editStrings = {
     revisionSaved: 'Bearbeitung gespeichert',
     saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
-    skipReview: 'Bearbeitung ohne Review freischalten (nicht empfohlen)',
     switchRevision: 'Andere Version auswählen',
     importOther: 'Aus einem anderen Inhalt importieren',
     importOtherExplanation:
