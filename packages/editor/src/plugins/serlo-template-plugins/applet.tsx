@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -15,7 +16,6 @@ import {
 } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFieldsModal } from './common/metadata-fields-modal'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const appletTypeState = entityType(
   {
@@ -69,7 +69,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       {url.render()}
       {content.render()}
 
-      <ToolbarMain showSubscriptionOptions {...props.state} />
+      <SaveButton showSubscriptionOptions {...props.state} />
     </>
   )
 }

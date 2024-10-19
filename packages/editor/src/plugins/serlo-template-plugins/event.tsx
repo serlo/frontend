@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -8,7 +9,6 @@ import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/com
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const eventTypeState = entityType(
   {
@@ -44,7 +44,7 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
 
       {content.render()}
 
-      <ToolbarMain showSubscriptionOptions {...props.state} />
+      <SaveButton showSubscriptionOptions {...props.state} />
     </>
   )
 }
