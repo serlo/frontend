@@ -3,9 +3,9 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
+import { SerloExtraContext } from '@editor/utils/serlo-extra-context'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import type { SolutionProps } from '.'
 
@@ -21,8 +21,9 @@ export function SerloLicenseChooser({
   const solutionStrings = useEditStrings().templatePlugins.solution
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
-  const { licenses } = useInstanceData()
+  const { licenses } = useContext(SerloExtraContext)
 
+  if (!licenses) return null
   return (
     <>
       <button

@@ -38,7 +38,7 @@ export function SerloEditor({
   initialState,
   children,
 }: SerloEditorProps) {
-  const { lang } = useInstanceData()
+  const { lang, licenses } = useInstanceData()
 
   const handleLearnerEvent = useSerloHandleLearnerEvent()
 
@@ -55,7 +55,7 @@ export function SerloEditor({
 
   return (
     <EditStringsProvider value={editString}>
-      <SerloExtraContext.Provider value={{ isSerlo: true }}>
+      <SerloExtraContext.Provider value={{ isSerlo: true, licenses }}>
         <Editor initialState={initialState}>
           <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
           {renderContentLoaders()}
