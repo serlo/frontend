@@ -1,4 +1,16 @@
+import { EditorVariantContext } from '@editor/core/contexts/editor-variant-context'
+import { type EditorVariant } from '@editor/package/storage-format'
+import { type UploadHandler } from '@editor/plugin'
+import { useContext } from 'react'
+
 import { handleError, validateFile } from './validate-file'
+
+export function useUploadFile(oldFileUploader: UploadHandler<string>) {
+  const editorVariant = useContext(EditorVariantContext)
+  return shouldUseNewUpload()
+    ? (file: File) => uploadFile(file, editorVariant)
+    : oldFileUploader
+}
 
 // while testing
 export function shouldUseNewUpload() {
@@ -18,12 +30,11 @@ export function shouldUseNewUpload() {
   return isDevOrPreviewOrStaging
 }
 
-export async function uploadFile(file: File) {
+export async function uploadFile(file: File, editorVariant: EditorVariant) {
   const validated = validateFile(file)
-
   if (!validated) return Promise.reject()
 
-  const data = await getSignedUrlAndSrc(file.type)
+  const data = await getSignedUrlAndSrc(file.type, editorVariant)
   if (!data) return Promise.reject('Could not get signed URL')
 
   const { signedUrl, imgSrc } = data
@@ -33,14 +44,21 @@ export async function uploadFile(file: File) {
   return Promise.resolve(imgSrc)
 }
 
-async function getSignedUrlAndSrc(mimeType: string) {
-  // TODO: depend on environment
-  // TODO: add editorVariant
-  const url = `https://editor.serlo.dev/media/presigned-url?mimeType=${encodeURIComponent(mimeType)}&editorVariant=${encodeURIComponent('unknown')}`
+const signedUrlHost =
+  process.env.NODE_ENV === 'development'
+    ? 'editor.serlo.dev'
+    : 'editor.serlo.dev' // TODO: Change to production bucket after testing
+
+async function getSignedUrlAndSrc(
+  mimeType: string,
+  editorVariant: EditorVariant
+) {
+  const url = `https://${signedUrlHost}/media/presigned-url?mimeType=${encodeURIComponent(mimeType)}&editorVariant=${encodeURIComponent(editorVariant)}`
 
   const result = await fetch(url).catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e)
+    handleError(errorMessage)
   })
 
   const data = (await result?.json()) as { signedUrl: string; imgSrc: string }
