@@ -521,7 +521,6 @@ export const editStrings = {
     changes: 'Describe your changes to the content',
     skipReview: 'Skip peer review (not recommended)',
     enableNotifs: 'Enable serlo.org notifications',
-    enableNotifsMail: 'Enable notifications via e-mail',
     switchRevision: 'Switch to another revision',
     importOther: 'Import content from other entity',
     importOtherExplanation:

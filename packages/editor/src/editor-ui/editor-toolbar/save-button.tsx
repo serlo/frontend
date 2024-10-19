@@ -18,9 +18,7 @@ interface ToolbarMainProps {
   showSubscriptionOptions?: boolean
 }
 
-const isNextApp = () => {
-  return Boolean(document.getElementById('__next'))
-}
+const isNextApp = Boolean(document.getElementById('__next'))
 
 export function SaveButton({
   showSubscriptionOptions,
@@ -42,7 +40,7 @@ export function SaveButton({
   return (
     <div ref={containerRef}>
       {/* For the web component export, we don't want to call the useLeaveConfirm hook as the next router won't be available */}
-      {isNextApp() && <LeaveConfirmation isChanged={isChanged} />}
+      {isNextApp && <LeaveConfirmation isChanged={isChanged} />}
       <ClientOnlyPortal
         selector=".save-button-portal"
         shadowRootRef={shadowRoot}
