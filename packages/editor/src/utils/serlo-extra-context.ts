@@ -1,4 +1,4 @@
-import { ArticleProps } from '@editor/plugins/article'
+import type { ArticleProps } from '@editor/plugins/article'
 import { createContext } from 'react'
 
 // duplicated
