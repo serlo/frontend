@@ -2,9 +2,9 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
+import { SerloExtraContext } from '@editor/utils/serlo-extra-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { ArticleAddModal } from '@serlo/frontend/src/serlo-editor-integration/components/article-add-modal/article-add-modal'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import type { ArticleProps } from '.'
 import { buttonClass } from './const/button-class'
@@ -24,7 +24,7 @@ export function ArticleEditor({ state }: ArticleProps) {
     sources,
   } = state
   const [modalOpen, setModalOpen] = useState(false)
-
+  const { ArticleAddModal } = useContext(SerloExtraContext)
   const articleStrings = useEditStrings().templatePlugins.article
   const modalStrings = articleStrings.addModal
 
@@ -70,11 +70,13 @@ export function ArticleEditor({ state }: ArticleProps) {
         relatedContentExtra={renderButton(modalStrings.buttonContent)}
         sources={<ArticleSources sources={sources} />}
       />
-      <ArticleAddModal
-        data={state}
-        open={modalOpen}
-        setModalOpen={setModalOpen}
-      />
+      {ArticleAddModal ? (
+        <ArticleAddModal
+          data={state}
+          open={modalOpen}
+          setModalOpen={setModalOpen}
+        />
+      ) : null}
     </>
   )
 

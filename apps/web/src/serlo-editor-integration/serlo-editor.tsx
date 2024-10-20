@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
+import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ContentLoaders } from './components/content-loaders/content-loaders'
 import { SaveButton } from './components/save-button'
 import { createPlugins } from './create-plugins'
@@ -55,7 +56,10 @@ export function SerloEditor({
 
   return (
     <EditStringsProvider value={editString}>
-      <SerloExtraContext.Provider value={{ isSerlo: true, licenses }}>
+      <SerloExtraContext.Provider
+        //@ts-expect-error simplified type
+        value={{ isSerlo: true, licenses, ArticleAddModal }}
+      >
         <Editor initialState={initialState}>
           <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
           {renderContentLoaders()}
