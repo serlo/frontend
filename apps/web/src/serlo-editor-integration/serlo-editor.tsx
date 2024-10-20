@@ -57,7 +57,6 @@ export function SerloEditor({
   return (
     <EditStringsProvider value={editString}>
       <SerloExtraContext.Provider
-        //@ts-expect-error simplified type
         value={{ isSerlo: true, licenses, ArticleAddModal }}
       >
         <Editor initialState={initialState}>
