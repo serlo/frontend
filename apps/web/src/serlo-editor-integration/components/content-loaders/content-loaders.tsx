@@ -4,20 +4,13 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { useCallback } from 'react'
 
 import { ExternalRevisionLoader } from './external-revision-loader'
-import { RevisionHistoryLoader } from './revision-history-loader'
 import { UuidType } from '@/data-types'
 
 interface ContentLoadersProps {
-  id: number
-  currentRevision: number
   templateType: TemplatePluginType
 }
 
-export function ContentLoaders({
-  id,
-  currentRevision,
-  templateType,
-}: ContentLoadersProps) {
+export function ContentLoaders({ templateType }: ContentLoadersProps) {
   const dispatch = useAppDispatch()
 
   const handleReplace = useCallback(
@@ -35,18 +28,10 @@ export function ContentLoaders({
 
   return (
     <div className="-mb-8 mr-6 mt-4 flex justify-end">
-      {id ? (
-        <RevisionHistoryLoader
-          id={id}
-          currentRevision={currentRevision}
-          onSwitchRevision={handleReplace}
-        />
-      ) : (
-        <ExternalRevisionLoader
-          entityType={templateTypeToUuidType[templateType]!}
-          onSwitchRevision={handleReplace}
-        />
-      )}
+      <ExternalRevisionLoader
+        entityType={templateTypeToUuidType[templateType]!}
+        onSwitchRevision={handleReplace}
+      />
     </div>
   )
 }
