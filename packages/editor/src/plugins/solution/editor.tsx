@@ -1,7 +1,7 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
-import { SerloExtraContext } from '@editor/utils/serlo-extra-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { lazy, useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
@@ -20,7 +20,7 @@ const SerloLicenseChooser = lazy(() =>
 export function SolutionEditor({ state, focused }: SolutionProps) {
   const { prerequisite, strategy, licenseId } = state
   const solutionStrings = useEditStrings().templatePlugins.solution
-  const { isSerlo } = useContext(SerloExtraContext)
+  const { isSerlo } = useContext(SerloOnlyFeaturesContext)
 
   const [showPrerequisiteLinkTool, setShowPrerequisiteLinkTool] =
     useState<boolean>(false)

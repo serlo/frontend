@@ -8,7 +8,7 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { SerloExtraContext } from '@editor/utils/serlo-extra-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
@@ -56,7 +56,7 @@ export function SerloEditor({
 
   return (
     <EditStringsProvider value={editString}>
-      <SerloExtraContext.Provider
+      <SerloOnlyFeaturesContext.Provider
         value={{ isSerlo: true, licenses, ArticleAddModal }}
       >
         <Editor initialState={initialState}>
@@ -64,7 +64,7 @@ export function SerloEditor({
           {renderContentLoaders()}
           {children}
         </Editor>
-      </SerloExtraContext.Provider>
+      </SerloOnlyFeaturesContext.Provider>
     </EditStringsProvider>
   )
 

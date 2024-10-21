@@ -17,11 +17,15 @@ export interface ArticleAddModalProps {
   setModalOpen: (open: boolean) => void
 }
 
-interface SerloExtraData {
+interface SerloOnlyFeaturesData {
   isSerlo?: boolean
   licenses?: LicenseData[]
   ArticleAddModal?: (props: ArticleAddModalProps) => JSX.Element
 }
 
-/** used to enable features only in a serlo context and not e.g. on edusharing */
-export const SerloExtraContext = createContext<SerloExtraData>({})
+/**
+ * Some features of the editor are only enabled on serlo.org.
+ * This file provides types relating to these features, and a
+ * React Context that handles data & components relating to these features.
+ */
+export const SerloOnlyFeaturesContext = createContext<SerloOnlyFeaturesData>({})
