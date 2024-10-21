@@ -2,14 +2,18 @@ import { type EditorProps } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
+import { PrettyStaticState } from '@editor/plugin'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
 import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
+import { ContentLoaders } from './components/content-loaders/content-loaders'
 import { SaveButton } from './components/save-button'
 import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
@@ -56,10 +60,37 @@ export function SerloEditor({
         <SaveContext.Provider value={{ onSave, isInTestArea }}>
           <Editor initialState={initialState}>
             <SaveButton />
+            {renderContentLoaders()}
             {children}
           </Editor>
         </SaveContext.Provider>
       </IsSerloContext.Provider>
     </EditStringsProvider>
   )
+
+  function renderContentLoaders() {
+    const templateType = initialState.plugin as TemplatePluginType
+    if (!pluginsWithContentLoaders.includes(templateType)) return null
+
+    const state =
+      initialState.state as PrettyStaticState<ArticleTypePluginState>
+
+    return (
+      <ContentLoaders
+        id={state?.id}
+        currentRevision={state?.revision}
+        templateType={templateType}
+      />
+    )
+  }
 }
+
+const pluginsWithContentLoaders = [
+  TemplatePluginType.Applet,
+  TemplatePluginType.Article,
+  TemplatePluginType.Course,
+  TemplatePluginType.Event,
+  TemplatePluginType.TextExercise,
+  TemplatePluginType.TextExerciseGroup,
+  TemplatePluginType.Video,
+]
