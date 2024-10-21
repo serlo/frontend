@@ -2,7 +2,7 @@ import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { lazy, useContext, useEffect, useState } from 'react'
+import { Suspense, lazy, useContext, useEffect, useState } from 'react'
 
 import type { SolutionProps } from '.'
 import { SolutionRenderer } from './renderer'
@@ -32,7 +32,11 @@ export function SolutionEditor({ state, focused }: SolutionProps) {
   return (
     <SolutionRenderer
       elementBeforePrerequisite={
-        isSerlo ? <SerloLicenseChooser licenseId={licenseId} /> : null
+        isSerlo ? (
+          <Suspense>
+            <SerloLicenseChooser licenseId={licenseId} />
+          </Suspense>
+        ) : null
       }
       prerequisite={isSerlo ? renderPrerequisiteContent() : null}
       strategy={
