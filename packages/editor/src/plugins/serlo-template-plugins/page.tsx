@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -27,14 +26,13 @@ export const pageTypePlugin: EditorPlugin<PageTypePluginState> = {
 }
 
 function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
-  const { title, content, licenseId } = props.state
+  const { title, content } = props.state
 
   return (
     <article>
       <EntityTitleInput title={title} />
 
       <section itemProp="articleBody">{content.render()}</section>
-      <SaveButton licenseId={licenseId} />
     </article>
   )
 }

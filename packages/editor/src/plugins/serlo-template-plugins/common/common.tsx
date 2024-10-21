@@ -122,7 +122,7 @@ export function serializedChild(
   StateTypeValueType<ReturnType<typeof child>>,
   StateTypeReturnType<ReturnType<typeof child>>
 > {
-  const originalChild = child({ plugin, config: { skipControls: true } })
+  const originalChild = child({ plugin })
   return {
     ...originalChild,
     toStaticState(...args: Parameters<typeof originalChild.toStaticState>) {

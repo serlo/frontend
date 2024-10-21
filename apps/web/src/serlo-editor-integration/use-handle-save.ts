@@ -1,15 +1,14 @@
 import { storeStateToLocalStorage } from '@editor/editor-ui/save/local-storage-notice'
-import { selectStaticDocument, useStore } from '@editor/store'
-import { ROOT } from '@editor/store/root/constants'
-import { has } from 'ramda'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import type { SerloEditorProps } from './serlo-editor'
 import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
-import { SaveContext } from '@/serlo-editor-integration/context/save-context'
 
-export function useHandleSave(visible: boolean) {
-  const store = useStore()
-  const { onSave, entityNeedsReview } = useContext(SaveContext)
+export function useHandleSave(
+  visible: boolean,
+  serializedRootState: SupportedTypesSerializedState,
+  onSave: SerloEditorProps['onSave']
+) {
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -20,17 +19,10 @@ export function useHandleSave(visible: boolean) {
     setHasError(false)
   }, [visible])
 
-  const serializedRoot = selectStaticDocument(store.getState(), ROOT)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const serialized = has('state', serializedRoot) ? serializedRoot.state : null
-
-  const handleSave = (manualSkipReview?: boolean) => {
+  const handleSave = (changes?: string) => {
     setPending(true)
 
-    onSave({
-      noReview: manualSkipReview || !entityNeedsReview,
-      ...(serialized as SupportedTypesSerializedState),
-    })
+    onSave({ ...serializedRootState, changes })
       .then(() => {
         setTimeout(() => {
           storeStateToLocalStorage(null)

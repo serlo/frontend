@@ -6,7 +6,7 @@ export function EditorToolbar() {
       <div className="pointer-events-auto -ml-2 flex gap-2 rounded-lg bg-white p-2 md:-ml-28 md:bg-transparent lg:-ml-40">
         <UndoRedoButtons />
       </div>
-      <div className="save-button-portal mr-2 rounded-lg bg-white p-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64" />
+      <div className="editor-toolbar-right pointer-events-auto mr-2 rounded-lg bg-white p-2 md:mr-[-11.5vw] lg:-mr-52 xl:-mr-64" />
     </nav>
   )
 }

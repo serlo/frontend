@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -6,8 +5,6 @@ import {
 } from '@editor/plugin'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
@@ -31,25 +28,12 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const {
-    title,
-    content,
-    meta_description: metaDescription,
-    licenseId,
-    changes,
-  } = props.state
+  const { title, content, meta_description: metaDescription } = props.state
 
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">
         <MetadataFieldsModal metaDescription={metaDescription} />
-
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Course}
-        />
       </div>
       <article className="mt-20">
         <CourseHeader
@@ -62,8 +46,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           }
         />
         {content.render()}
-
-        <SaveButton changes={changes} licenseId={licenseId} />
       </article>
     </>
   )

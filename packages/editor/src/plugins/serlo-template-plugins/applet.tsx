@@ -1,12 +1,9 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import {
   entity,
@@ -42,11 +39,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     content,
     meta_title: metaTitle,
     meta_description: metaDescription,
-    id,
-    revision,
-    replaceOwnState,
-    licenseId,
-    changes,
   } = props.state
 
   props.state.changes
@@ -58,20 +50,11 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
           metaTitle={metaTitle}
           metaDescription={metaDescription}
         />
-
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.Applet}
-        />
       </div>
       <EntityTitleInput title={title} />
 
       {url.render()}
       {content.render()}
-
-      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

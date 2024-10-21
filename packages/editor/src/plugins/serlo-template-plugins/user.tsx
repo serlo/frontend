@@ -1,4 +1,3 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -18,10 +17,5 @@ export const userTypePlugin: EditorPlugin<UserTypePluginState> = {
 }
 
 function UserTypeEditor({ state }: EditorPluginProps<UserTypePluginState>) {
-  return (
-    <>
-      {state.description.render()}
-      <SaveButton />
-    </>
-  )
+  return <>{state.description.render()}</>
 }

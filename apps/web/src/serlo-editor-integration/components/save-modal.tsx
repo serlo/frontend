@@ -1,11 +1,14 @@
 import { LocalStorageButton } from '@editor/editor-ui/save/local-storage-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import type { StateTypeReturnType } from '@editor/plugin'
-import { entity } from '@editor/plugins/serlo-template-plugins/common/common'
+import { selectStaticDocument, useStore } from '@editor/store'
+import { ROOT } from '@editor/store/root/constants'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useEffect, useState } from 'react'
+import { isEmpty } from 'ramda'
+import { useEffect, useState } from 'react'
 
-import { SaveContext } from '../context/save-context'
+import type { SerloEditorProps } from '../serlo-editor'
+import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -13,26 +16,37 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useHandleSave } from '@/serlo-editor-integration/use-handle-save'
-
-export interface SaveModalProps {
-  open: boolean
-  setOpen: (arg0: boolean) => void
-  changes?: StateTypeReturnType<(typeof entity)['changes']>
-  licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
-}
+import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function SaveModal({
   open,
   setOpen,
-  licenseId,
-  changes,
-}: SaveModalProps) {
-  const { handleSave, pending, hasError } = useHandleSave(open)
-  const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
+  onSave,
+  isInTestArea,
+}: {
+  open: boolean
+  setOpen: (arg0: boolean) => void
+  onSave: SerloEditorProps['onSave']
+  isInTestArea?: boolean
+}) {
+  const store = useStore()
+  // can be empty before first change
+  const serializedRoot = isEmpty(store.getState().documents)
+    ? undefined
+    : selectStaticDocument(store.getState(), ROOT)
+  const serializedRootState =
+    serializedRoot?.state as SupportedTypesSerializedState
+
+  const licenseId = serializedRootState?.licenseId
+  const changes = serializedRootState?.changes
+
+  const { handleSave, pending, hasError } = useHandleSave(
+    open,
+    serializedRootState,
+    onSave
+  )
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
-  const [skipReview, setSkipReview] = useState(false)
-  const [changesText, setChangesText] = useState(changes?.value ?? '?')
+  const [changesText, setChangesText] = useState(changes ?? '')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses } = useInstanceData()
@@ -40,18 +54,27 @@ export function SaveModal({
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
-  const showSkipCheckout = userCanSkipReview && entityNeedsReview
-  const isOnlyText = !showSkipCheckout && !licenseId && !changes
+  const isNoEntity = serializedRoot
+    ? [
+        TemplatePluginType.User,
+        TemplatePluginType.Page,
+        TemplatePluginType.Taxonomy,
+      ].includes(serializedRoot.plugin as TemplatePluginType)
+    : false
+  const needsNoReview = isInTestArea || isNoEntity
+  const isOnlyText = needsNoReview && !licenseId && !changes
+
+  const showChanges = serializedRoot ? !isNoEntity : true
 
   useEffect(() => {
     if (!fireSave) return
-    handleSave(skipReview)
+    handleSave(changesText)
     setFireSave(false)
-  }, [skipReview, fireSave, handleSave])
+  }, [fireSave, handleSave, changesText])
 
   useEffect(() => {
     // make sure generated change text is used
-    if (!changesText) setChangesText(changes?.value ?? '')
+    if (!changesText) setChangesText(changes ?? '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
@@ -72,7 +95,6 @@ export function SaveModal({
       <div className="mx-side">
         {renderChanges()}
         {renderLicense()}
-        {renderCheckout()}
         {isOnlyText ? edtrIoStrings.ready : null}
         <hr className="mb-8 mt-8" />
         {renderAlert()}
@@ -93,7 +115,6 @@ export function SaveModal({
         <button
           onClick={() => {
             if (maySave) {
-              changes?.set(changesText)
               setFireSave(true)
             } else {
               setHighlightMissingFields(true)
@@ -112,7 +133,7 @@ export function SaveModal({
         >
           {pending
             ? edtrIoStrings.saving
-            : (showSkipCheckout && skipReview) || !showSkipCheckout
+            : needsNoReview
               ? edtrIoStrings.save
               : edtrIoStrings.saveWithReview}
         </button>
@@ -144,7 +165,7 @@ export function SaveModal({
   }
 
   function renderChanges() {
-    if (!changes) return null
+    if (!showChanges) return null
     return (
       <label
         className={cn(
@@ -170,26 +191,12 @@ export function SaveModal({
     )
   }
 
-  function renderCheckout() {
-    if (!showSkipCheckout) return null
-    return (
-      <label>
-        <input
-          type="checkbox"
-          checked={skipReview}
-          onChange={({ target }) => setSkipReview(target.checked)}
-        />{' '}
-        {edtrIoStrings.skipReview}
-      </label>
-    )
-  }
-
   function renderLicense() {
     if (licenseId === undefined) return null
-    const licenseAgreement = getLicense(
-      licenses,
-      licenseId?.defined ? licenseId.value : undefined
-    ).agreement.replace(/<a href/g, '<a target="_blank" href')
+    const licenseAgreement = getLicense(licenses, licenseId).agreement.replace(
+      /<a href/g,
+      '<a target="_blank" href'
+    )
 
     if (!licenseAgreement) return null
 

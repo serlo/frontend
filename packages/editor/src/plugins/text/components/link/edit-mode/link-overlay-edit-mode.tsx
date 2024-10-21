@@ -16,7 +16,7 @@ import { getCleanUrl } from '../../../utils/link'
 // based on Quickbar, duplicates some code
 
 interface LinkOverlayEditModeProps {
-  isSerloLinkSearchActive: boolean
+  isSerloLinkSearchActive?: boolean
   value: string
   setHref: (href: string, title?: string) => void
   setTitle?: (title: string) => void
