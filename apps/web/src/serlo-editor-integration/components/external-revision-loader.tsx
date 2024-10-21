@@ -1,10 +1,13 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
+import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
+import { ROOT } from '@editor/store/root/constants'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
@@ -25,25 +28,55 @@ import {
   isError,
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
+const templateTypeToUuidType = {
+  [TemplatePluginType.Applet]: UuidType.Applet,
+  [TemplatePluginType.Article]: UuidType.Article,
+  [TemplatePluginType.Course]: UuidType.Course,
+  [TemplatePluginType.Event]: UuidType.Event,
+  [TemplatePluginType.TextExercise]: UuidType.Exercise,
+  [TemplatePluginType.TextExerciseGroup]: UuidType.ExerciseGroup,
+  [TemplatePluginType.Video]: UuidType.Video,
+} as const
+
+const pluginsWithContentLoaders = Object.keys(templateTypeToUuidType)
+
 export function ExternalRevisionLoader<T>({
-  entityType,
-  onSwitchRevision,
+  templateType,
 }: {
-  entityType: UuidType
-  onSwitchRevision: (data: T) => void
+  templateType: TemplatePluginType
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 
   const { strings } = useInstanceData()
   const editorStrings = useEditStrings()
 
+  const dispatch = useAppDispatch()
+  const handleReplace = useCallback(
+    (newState: unknown) => {
+      dispatch(
+        runReplaceDocumentSaga({
+          id: ROOT,
+          pluginType: templateType,
+          state: newState,
+        })
+      )
+    },
+    [dispatch, templateType]
+  )
+
+  if (!pluginsWithContentLoaders.includes(templateType)) return null
+
+  const entityType: UuidType =
+    templateTypeToUuidType[templateType as keyof typeof templateTypeToUuidType]
+
   const exerciseTypes = [UuidType.Exercise]
+
   const supportedEntityTypes = exerciseTypes.includes(entityType)
     ? exerciseTypes
     : [entityType]
 
   return (
-    <div>
+    <div className="-mb-8 mr-6 mt-4 flex justify-end">
       <span onClick={() => setShowRevisions(true)}>
         <button className="serlo-button-editor-secondary serlo-tooltip-trigger">
           <EditorTooltip
@@ -117,7 +150,7 @@ export function ExternalRevisionLoader<T>({
               ? uuid.currentRevision.id
               : uuid.id
 
-          onSwitchRevision({
+          handleReplace({
             ...(converted.state as T),
             revision: 0,
             id: 0,

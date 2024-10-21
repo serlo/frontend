@@ -1,4 +1,4 @@
-import { faEye, faPencilAlt, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
@@ -9,29 +9,13 @@ import { Revision, Revisions } from '@/fetcher/query-types'
 import { cn } from '@/helper/cn'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
-export interface RevisionHistoryProps {
-  data?: Revisions
-  hideEdit?: boolean
-  onSelectRevision?: (id: number) => void
-  selectedRevisionId?: number
-  tableClassName?: string
-}
-
-export function RevisionHistory({
-  data,
-  hideEdit,
-  onSelectRevision,
-  selectedRevisionId,
-  tableClassName,
-}: RevisionHistoryProps) {
+export function RevisionHistory({ data }: { data?: Revisions }) {
   const { strings } = useInstanceData()
   if (!data) return null
   const { changes, status, author, date, view, edit } = strings.revisionHistory
 
   return (
-    <table
-      className={cn('relative mx-side w-full border-collapse', tableClassName)}
-    >
+    <table className="relative mx-side w-full border-collapse">
       <thead>
         <tr>
           {renderTh(changes)}
@@ -39,7 +23,7 @@ export function RevisionHistory({
           {renderTh(author)}
           {renderTh(date)}
           {renderTh(view)}
-          {!hideEdit && renderTh(edit)}
+          {renderTh(edit)}
         </tr>
       </thead>
       <tbody>{data.revisions?.nodes.map(renderRow)}</tbody>
@@ -50,40 +34,14 @@ export function RevisionHistory({
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
     const editUrl = getEditUrl(data!.id, entry.id)
-    const isEditorLink = onSelectRevision !== undefined
-
-    const isImportant =
-      selectedRevisionId === entry.id ||
-      (isCurrent && selectedRevisionId === undefined)
-    const isActiveEditorLink = isEditorLink && !isImportant
 
     const changes = Object.hasOwn(entry, 'changes') ? entry.changes : '–'
 
     return (
-      <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>
+      <tr key={entry.id}>
         <td className="serlo-td border-x-transparent">
-          <Link
-            title={strings.revisionHistory.viewLabel}
-            href={isEditorLink ? undefined : viewUrl}
-          >
-            <span
-              className={cn(
-                isImportant ? 'font-bold' : undefined,
-                isActiveEditorLink ? 'cursor-pointer' : ''
-              )}
-              onClick={
-                isActiveEditorLink
-                  ? (e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      onSelectRevision?.(entry.id)
-                      return
-                    }
-                  : undefined
-              }
-            >
-              {changes}
-            </span>
+          <Link title={strings.revisionHistory.viewLabel} href={viewUrl}>
+            {changes}
           </Link>
         </td>
         <td className="serlo-td border-x-transparent text-center">
@@ -96,41 +54,24 @@ export function RevisionHistory({
         <td className="serlo-td border-x-transparent">
           <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
         </td>
-        <td
-          className="serlo-td border-x-transparent text-center"
-          onClick={
-            isActiveEditorLink ? () => onSelectRevision?.(entry.id) : undefined
-          }
-        >
-          {isActiveEditorLink ? (
-            <span
-              className="serlo-button-light mx-auto my-0 cursor-pointer text-base"
-              title="Laden"
-            >
-              <FaIcon icon={faUpload} />
-            </span>
-          ) : null}
-          {!isEditorLink ? (
-            <Link
-              className="serlo-button-light mx-auto my-0 text-base"
-              title={strings.revisionHistory.viewLabel}
-              href={viewUrl}
-            >
-              <FaIcon icon={faEye} />
-            </Link>
-          ) : null}
+        <td className="serlo-td border-x-transparent text-center">
+          <Link
+            className="serlo-button-light mx-auto my-0 text-base"
+            title={strings.revisionHistory.viewLabel}
+            href={viewUrl}
+          >
+            <FaIcon icon={faEye} />
+          </Link>
         </td>
-        {!hideEdit && (
-          <td className="serlo-td border-x-transparent text-center">
-            <Link
-              className="serlo-button-light mx-auto my-0 text-base"
-              title={strings.revisionHistory.editLabel}
-              href={editUrl}
-            >
-              <FaIcon icon={faPencilAlt} />
-            </Link>
-          </td>
-        )}
+        <td className="serlo-td border-x-transparent text-center">
+          <Link
+            className="serlo-button-light mx-auto my-0 text-base"
+            title={strings.revisionHistory.editLabel}
+            href={editUrl}
+          >
+            <FaIcon icon={faPencilAlt} />
+          </Link>
+        </td>
       </tr>
     )
   }

@@ -533,7 +533,6 @@ export const editStrings = {
     revisionSaved: 'Bearbeitung gespeichert',
     saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
-    switchRevision: 'Andere Version auswählen',
     importOther: 'Aus einem anderen Inhalt importieren',
     importOtherExplanation:
       'Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)',
