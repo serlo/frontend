@@ -37,7 +37,6 @@ export function SaveModal({
   const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
-  const [emailSubscription, setEmailSubscription] = useState(true)
   const [skipReview, setSkipReview] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
@@ -53,16 +52,10 @@ export function SaveModal({
 
   useEffect(() => {
     if (fireSave) {
-      handleSave(notificationSubscription, emailSubscription, skipReview)
+      handleSave(notificationSubscription, skipReview)
       setFireSave(false)
     }
-  }, [
-    skipReview,
-    emailSubscription,
-    fireSave,
-    handleSave,
-    notificationSubscription,
-  ])
+  }, [skipReview, fireSave, handleSave, notificationSubscription])
 
   useEffect(() => {
     // make sure generated change text is used
@@ -247,17 +240,6 @@ export function SaveModal({
             }}
           />{' '}
           {edtrIoStrings.enableNotifs}
-        </label>
-        <label className="block pb-2">
-          <input
-            type="checkbox"
-            checked={emailSubscription}
-            onChange={(e) => {
-              const { checked } = e.target as HTMLInputElement
-              setEmailSubscription(checked)
-            }}
-          />{' '}
-          {edtrIoStrings.enableNotifsMail}
         </label>
       </>
     )

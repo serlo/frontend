@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -9,7 +10,6 @@ import {
 
 import { editorContent, uuid } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const pageTypeState = object({
   ...uuid,
@@ -34,7 +34,7 @@ function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
       <EntityTitleInput title={title} />
 
       <section itemProp="articleBody">{content.render()}</section>
-      <ToolbarMain {...props.state} />
+      <SaveButton {...props.state} />
     </article>
   )
 }

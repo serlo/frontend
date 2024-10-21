@@ -535,7 +535,6 @@ export const editStrings = {
     changes: 'Beschreibe deine Änderungen am Inhalt',
     skipReview: 'Bearbeitung ohne Review freischalten (nicht empfohlen)',
     enableNotifs: 'Benachrichtigungen auf serlo.org erhalten',
-    enableNotifsMail: 'Benachrichtigungen per E-mail erhalten',
     switchRevision: 'Andere Version auswählen',
     importOther: 'Aus einem anderen Inhalt importieren',
     importOtherExplanation:

@@ -6,7 +6,6 @@ import type {
 export interface OnSaveData {
   controls: {
     notificationSubscription?: boolean
-    emailSubscription?: boolean
     noReview: boolean // this entity needs no Review or user choose to skip review
   }
 }

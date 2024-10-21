@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -11,7 +12,6 @@ import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/com
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFieldsModal } from './common/metadata-fields-modal'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const courseTypeState = entityType(
   {
@@ -57,7 +57,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         />
         {content.render()}
 
-        <ToolbarMain showSubscriptionOptions {...props.state} />
+        <SaveButton showSubscriptionOptions {...props.state} />
       </article>
     </>
   )

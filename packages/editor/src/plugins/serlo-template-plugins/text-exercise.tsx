@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -10,7 +11,6 @@ import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const textExerciseTypeState = entityType(
   {
@@ -62,7 +62,7 @@ function TextExerciseTypeEditor({
       >
         {content.render()}
         {config.skipControls ? null : (
-          <ToolbarMain showSubscriptionOptions {...state} />
+          <SaveButton showSubscriptionOptions {...state} />
         )}
       </article>
     </>
