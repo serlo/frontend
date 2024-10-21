@@ -8,14 +8,14 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
+import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ContentLoaders } from './components/content-loaders/content-loaders'
 import { SaveButton } from './components/save-button'
-import { SaveContext } from './context/save-context'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
@@ -39,7 +39,7 @@ export function SerloEditor({
   initialState,
   children,
 }: SerloEditorProps) {
-  const { lang } = useInstanceData()
+  const { lang, licenses } = useInstanceData()
 
   const handleLearnerEvent = useSerloHandleLearnerEvent()
 
@@ -56,15 +56,15 @@ export function SerloEditor({
 
   return (
     <EditStringsProvider value={editString}>
-      <IsSerloContext.Provider value>
-        <SaveContext.Provider value={{ onSave, isInTestArea }}>
-          <Editor initialState={initialState}>
-            <SaveButton />
-            {renderContentLoaders()}
-            {children}
-          </Editor>
-        </SaveContext.Provider>
-      </IsSerloContext.Provider>
+      <SerloOnlyFeaturesContext.Provider
+        value={{ isSerlo: true, licenses, ArticleAddModal }}
+      >
+        <Editor initialState={initialState}>
+          <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
+          {renderContentLoaders()}
+          {children}
+        </Editor>
+      </SerloOnlyFeaturesContext.Provider>
     </EditStringsProvider>
   )
 

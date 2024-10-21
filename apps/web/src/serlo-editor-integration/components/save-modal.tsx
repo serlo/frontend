@@ -1,15 +1,13 @@
 import { LocalStorageButton } from '@editor/editor-ui/save/local-storage-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import type { StateTypeReturnType } from '@editor/plugin'
-import type { entity } from '@editor/plugins/serlo-template-plugins/common/common'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { isEmpty } from 'ramda'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { SaveContext } from '../context/save-context'
+import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -20,14 +18,17 @@ import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
-export interface SaveModalProps {
+export function SaveModal({
+  open,
+  setOpen,
+  onSave,
+  isInTestArea,
+}: {
   open: boolean
   setOpen: (arg0: boolean) => void
-  changes?: StateTypeReturnType<(typeof entity)['changes']>
-  licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
-}
-
-export function SaveModal({ open, setOpen }: SaveModalProps) {
+  onSave: SerloEditorProps['onSave']
+  isInTestArea?: boolean
+}) {
   const store = useStore()
   // can be empty before first change
   const serializedRoot = isEmpty(store.getState().documents)
@@ -41,9 +42,9 @@ export function SaveModal({ open, setOpen }: SaveModalProps) {
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
-    serializedRootState
+    serializedRootState,
+    onSave
   )
-  const { isInTestArea } = useContext(SaveContext)
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
   const [changesText, setChangesText] = useState(changes ?? '')
   const [fireSave, setFireSave] = useState(false)
