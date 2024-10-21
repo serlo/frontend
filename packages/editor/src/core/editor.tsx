@@ -1,3 +1,4 @@
+import { EditorToolbar } from '@editor/editor-ui/editor-toolbar/editor-toolbar'
 import {
   LocalStorageNotice,
   debouncedStoreToLocalStorage,
@@ -34,7 +35,7 @@ export function Editor(props: EditorProps) {
           {/* only on serlo for now */}
           {isSerlo ? (
             <>
-              <div className="controls-portal pointer-events-none sticky top-0 z-[90] bg-white md:bg-transparent" />
+              <EditorToolbar />
               <LocalStorageNotice
                 useStored={useStored}
                 setUseStored={setUseStored}

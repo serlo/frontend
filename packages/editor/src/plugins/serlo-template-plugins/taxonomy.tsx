@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -8,7 +9,6 @@ import {
 
 import { editorContent, uuid } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const taxonomyTypeState = object({
   ...uuid,
@@ -39,7 +39,7 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
 
       {description.render()}
 
-      <ToolbarMain />
+      <SaveButton />
     </>
   )
 }

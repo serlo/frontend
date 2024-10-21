@@ -19,7 +19,7 @@ Scenario('Save changes', async ({ I }) => {
 
   I.see('Some text')
 
-  I.click('button.serlo-button-green.ml-2')
+  I.click('.save-button-portal .serlo-button-green')
 
   I.see('Beschreibe deine Änderungen am Inhalt')
 

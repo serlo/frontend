@@ -152,7 +152,7 @@ function getGenericInputData(
     entityId: id ? id : undefined,
     needsReview,
     subscribeThis: controls.notificationSubscription ?? false,
-    subscribeThisByEmail: controls.emailSubscription ?? false,
+    subscribeThisByEmail: false,
   }
 }
 

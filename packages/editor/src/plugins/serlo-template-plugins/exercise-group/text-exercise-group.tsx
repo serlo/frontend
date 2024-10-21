@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -9,7 +10,6 @@ import { UuidType } from '@serlo/frontend/src/data-types'
 import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from '../common/common'
-import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
@@ -53,7 +53,7 @@ function TextExerciseGroupTypeEditor(
       </div>
       <article className="mt-32">
         {content.render()}
-        <ToolbarMain showSubscriptionOptions {...props.state} />
+        <SaveButton showSubscriptionOptions {...props.state} />
       </article>
     </>
   )

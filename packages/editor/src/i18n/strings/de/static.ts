@@ -11,6 +11,11 @@ export const staticStrings = {
       relatedContentText:
         'Hier findest du noch weitere passende Inhalte zum Thema:',
       sourcesTitle: 'Quellen',
+      subsectionTypes: {
+        articles: 'Artikel',
+        courses: 'Kurse',
+        videos: 'Videos',
+      },
     },
     audio: {
       failed: 'Sorry, beim laden der Audio-Datei ist was schiefgegangen.',

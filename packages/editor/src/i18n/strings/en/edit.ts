@@ -200,6 +200,7 @@ export const editStrings = {
       placeholder: 'Serlo ID (e.g. /1565)',
       invalidStateWarning:
         "Please use a valid Serlo ID (just numbers). E.g. '/1555'",
+      errorLoading: 'Content could not be loaded, please check the id',
     },
     multimedia: {
       title: 'Multimedia content associated with text',
@@ -520,7 +521,6 @@ export const editStrings = {
     changes: 'Describe your changes to the content',
     skipReview: 'Skip peer review (not recommended)',
     enableNotifs: 'Enable serlo.org notifications',
-    enableNotifsMail: 'Enable notifications via e-mail',
     switchRevision: 'Switch to another revision',
     importOther: 'Import content from other entity',
     importOtherExplanation:

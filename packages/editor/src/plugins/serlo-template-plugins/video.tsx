@@ -1,3 +1,4 @@
+import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -9,7 +10,6 @@ import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/com
 
 import { entity, editorContent, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const videoTypeState = entityType(
   {
@@ -53,7 +53,7 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
 
         {description.render()}
       </article>
-      <ToolbarMain showSubscriptionOptions {...props.state} />
+      <SaveButton showSubscriptionOptions {...props.state} />
     </>
   )
 }

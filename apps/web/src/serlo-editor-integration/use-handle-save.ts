@@ -18,10 +18,9 @@ export function useHandleSave(
 
   useEffect(() => {
     //reset when modal opens
-    if (visible) {
-      setPending(false)
-      setHasError(false)
-    }
+    if (!visible) return
+    setPending(false)
+    setHasError(false)
   }, [visible])
 
   const serializedRoot = selectStaticDocument(store.getState(), ROOT)
@@ -30,16 +29,13 @@ export function useHandleSave(
 
   const handleSave = (
     notificationSubscription?: boolean,
-    emailSubscription?: boolean,
     manualSkipReview?: boolean
   ) => {
     setPending(true)
 
     onSave({
       controls: {
-        ...(showSubscriptionOptions
-          ? { notificationSubscription, emailSubscription }
-          : {}),
+        ...(showSubscriptionOptions ? { notificationSubscription } : {}),
         noReview: manualSkipReview || !entityNeedsReview,
       },
       ...(serialized as SupportedTypesSerializedState),

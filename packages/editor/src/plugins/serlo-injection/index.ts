@@ -3,6 +3,7 @@ import { type EditorPlugin, type EditorPluginProps, string } from '../../plugin'
 
 const state = string()
 
+// as far as i know this is only used in edusharing right now
 export function createSerloInjectionPlugin(
   config: SerloInjectionConfig = {}
 ): EditorPlugin<SerloInjectionPluginState, SerloInjectionConfig> {

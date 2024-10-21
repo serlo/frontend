@@ -207,6 +207,8 @@ export const editStrings = {
       placeholder: 'Serlo ID (z.B. 1565)',
       invalidStateWarning:
         "Bitte verwende eine gültige Serlo ID (nur Zahlen) – z.B. '/1555'",
+      errorLoading:
+        'Inhalt konnte nicht geladen werden, bitte überprüfe die ID',
     },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
@@ -533,7 +535,6 @@ export const editStrings = {
     changes: 'Beschreibe deine Änderungen am Inhalt',
     skipReview: 'Bearbeitung ohne Review freischalten (nicht empfohlen)',
     enableNotifs: 'Benachrichtigungen auf serlo.org erhalten',
-    enableNotifsMail: 'Benachrichtigungen per E-mail erhalten',
     switchRevision: 'Andere Version auswählen',
     importOther: 'Aus einem anderen Inhalt importieren',
     importOtherExplanation:
