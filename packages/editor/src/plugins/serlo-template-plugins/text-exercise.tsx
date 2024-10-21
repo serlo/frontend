@@ -37,7 +37,7 @@ function TextExerciseTypeEditor({
   config,
   id,
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
-  const { content } = state
+  const { content, licenseId, changes } = state
 
   const store = useStore()
 
@@ -62,7 +62,7 @@ function TextExerciseTypeEditor({
       >
         {content.render()}
         {config.skipControls ? null : (
-          <SaveButton showSubscriptionOptions {...state} />
+          <SaveButton changes={changes} licenseId={licenseId} />
         )}
       </article>
     </>

@@ -4,10 +4,8 @@ import type {
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 export interface OnSaveData {
-  controls: {
-    notificationSubscription?: boolean
-    noReview: boolean // this entity needs no Review or user choose to skip review
-  }
+  // this entity needs no Review or user choose to skip review
+  noReview: boolean
 }
 
 export type SupportedTypesSerializedState = AbstractSerializedState

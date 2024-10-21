@@ -15,18 +15,13 @@ import { entity } from '../../plugins/serlo-template-plugins/common/common'
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<(typeof entity)['changes']>
   licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
-  showSubscriptionOptions?: boolean
 }
 
 const isNextApp = () => {
   return Boolean(document.getElementById('__next'))
 }
 
-export function SaveButton({
-  showSubscriptionOptions,
-  changes,
-  licenseId,
-}: ToolbarMainProps) {
+export function SaveButton({ changes, licenseId }: ToolbarMainProps) {
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -59,7 +54,6 @@ export function SaveButton({
         setOpen={setSaveModalOpen}
         changes={changes}
         licenseId={licenseId}
-        showSubscriptionOptions={showSubscriptionOptions}
       />
     </div>
   )

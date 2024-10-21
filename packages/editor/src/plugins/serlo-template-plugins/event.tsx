@@ -28,7 +28,8 @@ export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
 }
 
 function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
-  const { content, title, id, revision, replaceOwnState } = props.state
+  const { content, title, id, revision, replaceOwnState, licenseId, changes } =
+    props.state
 
   return (
     <>
@@ -44,7 +45,7 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
 
       {content.render()}
 
-      <SaveButton showSubscriptionOptions {...props.state} />
+      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

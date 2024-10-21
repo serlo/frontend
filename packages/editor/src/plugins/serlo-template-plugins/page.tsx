@@ -27,14 +27,14 @@ export const pageTypePlugin: EditorPlugin<PageTypePluginState> = {
 }
 
 function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
-  const { title, content } = props.state
+  const { title, content, licenseId } = props.state
 
   return (
     <article>
       <EntityTitleInput title={title} />
 
       <section itemProp="articleBody">{content.render()}</section>
-      <SaveButton {...props.state} />
+      <SaveButton licenseId={licenseId} />
     </article>
   )
 }

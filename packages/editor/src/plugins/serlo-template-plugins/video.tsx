@@ -30,8 +30,16 @@ export const videoTypePlugin: EditorPlugin<VideoTypePluginState> = {
 }
 
 function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
-  const { title, content, description, id, revision, replaceOwnState } =
-    props.state
+  const {
+    title,
+    content,
+    description,
+    id,
+    revision,
+    replaceOwnState,
+    licenseId,
+    changes,
+  } = props.state
 
   return (
     <>
@@ -53,7 +61,7 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
 
         {description.render()}
       </article>
-      <SaveButton showSubscriptionOptions {...props.state} />
+      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }
