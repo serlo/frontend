@@ -67,7 +67,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@editor': resolve(__dirname, './src'),
-      '@': resolve(__dirname, '../../apps/web/src'),
     },
   },
   assetsInclude: ['./src/editor-ui/assets/plugin-icons/**/*.svg'],

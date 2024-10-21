@@ -72,7 +72,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         child: pluginId,
       })
     )
-  }, [dispatch, pluginId])
+  }, [dispatch, pluginId, store])
 
   return (
     <>

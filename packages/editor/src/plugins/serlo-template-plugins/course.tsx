@@ -5,13 +5,10 @@ import {
 } from '@editor/plugin'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFieldsModal } from './common/metadata-fields-modal'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const courseTypeState = entityType(
   {
@@ -37,13 +34,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">
         <MetadataFieldsModal metaDescription={metaDescription} />
-
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Course}
-        />
       </div>
       <article className="mt-20">
         <CourseHeader
@@ -56,8 +46,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           }
         />
         {content.render()}
-
-        <ToolbarMain showSubscriptionOptions {...props.state} />
       </article>
     </>
   )

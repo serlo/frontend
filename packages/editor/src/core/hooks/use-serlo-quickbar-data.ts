@@ -1,10 +1,11 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { SerloExtraContext } from '@editor/utils/serlo-extra-context'
 import { useContext, useEffect, useState } from 'react'
 
 export function useSerloQuickbarData(shouldNotFetch?: boolean) {
   const { lang } = useEditStrings()
-  const isSerloLinkSearchActive = useContext(IsSerloContext) && lang === 'de'
+  const isSerloLinkSearchActive =
+    useContext(SerloExtraContext).isSerlo && lang === 'de'
 
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
 

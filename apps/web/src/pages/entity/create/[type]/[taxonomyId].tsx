@@ -7,7 +7,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base/frontend-c
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
-import { UuidType } from '@/data-types'
+import { BreadcrumbsData, UuidType } from '@/data-types'
 import { taxonomyParentsToRootToBreadcrumbsData } from '@/fetcher/create-breadcrumbs'
 import {
   GetTaxonomyTypeQuery,
@@ -32,7 +32,7 @@ export type AllowedPluginType = keyof typeof AllowedPlugins
 interface EntityCreateProps {
   entityType: AllowedPluginType
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
-  entityNeedsReview: boolean
+  breadcrumbsData?: BreadcrumbsData
 }
 
 export default renderedPageNoHooks<EntityCreateProps>((props) => {
@@ -40,7 +40,7 @@ export default renderedPageNoHooks<EntityCreateProps>((props) => {
 })
 
 function Content({
-  props: { taxonomyTerm, entityType, entityNeedsReview },
+  props: { taxonomyTerm, entityType, breadcrumbsData },
 }: {
   props: EntityCreateProps
 }) {
@@ -53,7 +53,7 @@ function Content({
   const addRevisionProps = {
     initialState,
     type: UuidType[entityType],
-    entityNeedsReview,
+    breadcrumbsData,
     taxonomyParentId,
     errorType: 'none',
   } as const
@@ -107,14 +107,11 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     result.uuid.instance
   )
 
-  const isTestArea =
-    breadcrumbsData && breadcrumbsData.some((entry) => entry.id === 106082)
-
   return {
     props: {
       entityType: entityType as keyof typeof AllowedPlugins,
       taxonomyTerm: { ...result.uuid },
-      entityNeedsReview: !isTestArea,
+      breadcrumbsData,
     },
     revalidate: 60 * 30, // 30 min
   }

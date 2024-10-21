@@ -51,8 +51,8 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
   if (typeof children !== 'function') {
     return (
       <>
-        {editor}
         {children}
+        {editor}
       </>
     )
   }

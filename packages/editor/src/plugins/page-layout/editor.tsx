@@ -31,15 +31,6 @@ export const PageLayoutEditor: React.FunctionComponent<
           />
         </div>
       )}
-      {/* Obviously a hack, good enough for now. */}
-      <style jsx global>
-        {`
-          .page-layout-plugin span[contenteditable='false'] {
-            overflow: hidden;
-            width: 100% !important;
-          }
-        `}
-      </style>
     </>
   )
 }

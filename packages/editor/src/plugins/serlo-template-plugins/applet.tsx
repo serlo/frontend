@@ -4,8 +4,6 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import {
   entity,
@@ -15,7 +13,6 @@ import {
 } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFieldsModal } from './common/metadata-fields-modal'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const appletTypeState = entityType(
   {
@@ -42,9 +39,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     content,
     meta_title: metaTitle,
     meta_description: metaDescription,
-    id,
-    revision,
-    replaceOwnState,
   } = props.state
 
   props.state.changes
@@ -56,20 +50,11 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
           metaTitle={metaTitle}
           metaDescription={metaDescription}
         />
-
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.Applet}
-        />
       </div>
       <EntityTitleInput title={title} />
 
       {url.render()}
       {content.render()}
-
-      <ToolbarMain showSubscriptionOptions {...props.state} />
     </>
   )
 }

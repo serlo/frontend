@@ -100,7 +100,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         // as low as possible but after the other focus handler is done rerendering
       }, 10)
     },
-    [document, focused, dispatch, id]
+    [document, focused, dispatch, id, store]
   )
 
   return useMemo(() => {
