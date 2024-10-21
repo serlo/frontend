@@ -10,6 +10,7 @@ import {
 import { useState } from 'react'
 
 import type { ImageProps } from '..'
+import { useUploadFile } from '../utils/upload-file'
 
 interface UploadButtonProps {
   config: ImageProps['config']
@@ -26,6 +27,8 @@ export function UploadButton({
 }: UploadButtonProps) {
   const imageStrings = useEditStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
+
+  const upload = useUploadFile(config.upload)
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)
 
@@ -64,7 +67,7 @@ export function UploadButton({
               const filesArray = Array.from(target.files)
 
               // Upload the first file like normal
-              void src.upload(filesArray[0], config.upload)
+              void src.upload(filesArray[0], upload)
 
               // If multiple upload is allowed, call the multiple upload callback
               // with the remaining files
@@ -81,9 +84,7 @@ export function UploadButton({
       {isFailed ? (
         <button
           className="serlo-button-editor-primary serlo-tooltip-trigger mr-2 scale-90"
-          onClick={() =>
-            src.upload((src.value as TempFile).failed!, config.upload)
-          }
+          onClick={() => src.upload((src.value as TempFile).failed!, upload)}
           data-qa="plugin-image-retry"
         >
           <EditorTooltip text={imageStrings.retry} className="top-10" />

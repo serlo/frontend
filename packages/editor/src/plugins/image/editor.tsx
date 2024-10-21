@@ -13,6 +13,7 @@ import { ImageSelectionScreen } from './components/image-selection-screen'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { isImageUrl } from './utils/check-image-url'
+import { useUploadFile } from './utils/upload-file'
 
 const captionFormattingOptions = [
   TextEditorFormattingOption.richTextBold,
@@ -24,10 +25,10 @@ const captionFormattingOptions = [
 export function ImageEditor(props: ImageProps) {
   const { id, focused, state, config } = props
   const imageStrings = useEditStrings().plugins.image
+  const upload = useUploadFile(config.upload)
+  usePendingFileUploader(state.src, upload)
 
   const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)
-
-  usePendingFileUploader(state.src, config.upload)
 
   // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const src = state.src.value.toString()
