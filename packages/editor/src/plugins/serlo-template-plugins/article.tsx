@@ -35,6 +35,8 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
     content,
     meta_title: metaTitle,
     meta_description: metaDescription,
+    licenseId,
+    changes,
   } = props.state
 
   return (
@@ -55,7 +57,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
 
       <section itemProp="articleBody">{content.render()}</section>
 
-      <SaveButton showSubscriptionOptions {...props.state} />
+      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }

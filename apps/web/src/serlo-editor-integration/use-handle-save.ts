@@ -7,10 +7,7 @@ import { useContext, useEffect, useState } from 'react'
 import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 import { SaveContext } from '@/serlo-editor-integration/context/save-context'
 
-export function useHandleSave(
-  visible: boolean,
-  showSubscriptionOptions?: boolean
-) {
+export function useHandleSave(visible: boolean) {
   const store = useStore()
   const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
@@ -27,17 +24,11 @@ export function useHandleSave(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 
-  const handleSave = (
-    notificationSubscription?: boolean,
-    manualSkipReview?: boolean
-  ) => {
+  const handleSave = (manualSkipReview?: boolean) => {
     setPending(true)
 
     onSave({
-      controls: {
-        ...(showSubscriptionOptions ? { notificationSubscription } : {}),
-        noReview: manualSkipReview || !entityNeedsReview,
-      },
+      noReview: manualSkipReview || !entityNeedsReview,
       ...(serialized as SupportedTypesSerializedState),
     })
       .then(() => {

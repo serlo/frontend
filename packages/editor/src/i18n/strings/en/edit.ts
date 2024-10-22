@@ -520,7 +520,6 @@ export const editStrings = {
     saveRevision: 'Save revision',
     changes: 'Describe your changes to the content',
     skipReview: 'Skip peer review (not recommended)',
-    enableNotifs: 'Enable serlo.org notifications',
     switchRevision: 'Switch to another revision',
     importOther: 'Import content from other entity',
     importOtherExplanation:

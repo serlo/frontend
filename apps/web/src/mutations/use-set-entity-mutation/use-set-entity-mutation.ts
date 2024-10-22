@@ -137,7 +137,7 @@ function getGenericInputData(
   data: SetEntityMutationData,
   needsReview: boolean
 ): SetAbstractEntityInput | undefined {
-  const { __typename, changes, content, controls, id } = data
+  const { __typename, changes, content, id } = data
   if (!__typename) return
 
   const changesOrFallback =
@@ -151,7 +151,7 @@ function getGenericInputData(
     content: getRequiredString(mutationStrings, 'content', content),
     entityId: id ? id : undefined,
     needsReview,
-    subscribeThis: controls.notificationSubscription ?? false,
+    subscribeThis: true,
     subscribeThisByEmail: false,
   }
 }

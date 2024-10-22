@@ -20,7 +20,6 @@ export interface SaveModalProps {
   setOpen: (arg0: boolean) => void
   changes?: StateTypeReturnType<(typeof entity)['changes']>
   licenseId?: StateTypeReturnType<(typeof entity)['licenseId']>
-  showSubscriptionOptions?: boolean
 }
 
 export function SaveModal({
@@ -28,15 +27,10 @@ export function SaveModal({
   setOpen,
   licenseId,
   changes,
-  showSubscriptionOptions,
 }: SaveModalProps) {
-  const { handleSave, pending, hasError } = useHandleSave(
-    open,
-    showSubscriptionOptions
-  )
+  const { handleSave, pending, hasError } = useHandleSave(open)
   const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
-  const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [skipReview, setSkipReview] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
@@ -47,15 +41,13 @@ export function SaveModal({
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
   const showSkipCheckout = userCanSkipReview && entityNeedsReview
-  const isOnlyText =
-    !showSkipCheckout && !showSubscriptionOptions && !licenseId && !changes
+  const isOnlyText = !showSkipCheckout && !licenseId && !changes
 
   useEffect(() => {
-    if (fireSave) {
-      handleSave(notificationSubscription, skipReview)
-      setFireSave(false)
-    }
-  }, [skipReview, fireSave, handleSave, notificationSubscription])
+    if (!fireSave) return
+    handleSave(skipReview)
+    setFireSave(false)
+  }, [skipReview, fireSave, handleSave])
 
   useEffect(() => {
     // make sure generated change text is used
@@ -80,7 +72,6 @@ export function SaveModal({
       <div className="mx-side">
         {renderChanges()}
         {renderLicense()}
-        {renderSubscription()}
         {renderCheckout()}
         {isOnlyText ? edtrIoStrings.ready : null}
         <hr className="mb-8 mt-8" />
@@ -223,25 +214,6 @@ export function SaveModal({
         />{' '}
         <span className="font-bold text-red-500">*</span>
       </label>
-    )
-  }
-
-  function renderSubscription() {
-    if (!showSubscriptionOptions) return null
-    return (
-      <>
-        <label className="block pb-2">
-          <input
-            type="checkbox"
-            checked={notificationSubscription}
-            onChange={(e) => {
-              const { checked } = e.target as HTMLInputElement
-              setNotificationSubscription(checked)
-            }}
-          />{' '}
-          {edtrIoStrings.enableNotifs}
-        </label>
-      </>
     )
   }
 }
