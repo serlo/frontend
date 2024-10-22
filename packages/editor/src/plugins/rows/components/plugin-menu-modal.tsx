@@ -71,7 +71,11 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
   const allowedMenuItems = useMemo(() => {
     return menuItems.filter(({ initialState }) => {
       const isPluginAllowed = allowedPlugins.includes(initialState.plugin)
-      if (!isExerciseDocument(initialState)) return isPluginAllowed
+      if (
+        !isExerciseDocument(initialState) ||
+        !allowedPlugins.includes(EditorPluginType.Exercise)
+      )
+        return isPluginAllowed
       // extra check for wrapped interactive exercise plugins
       const interactive = initialState.state.interactive?.plugin
       return interactive
