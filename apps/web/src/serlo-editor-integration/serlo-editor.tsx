@@ -2,11 +2,10 @@ import { type EditorProps } from '@editor/core'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import { PrettyStaticState } from '@editor/plugin'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
+import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import dynamic from 'next/dynamic'
@@ -14,7 +13,7 @@ import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
-import { ContentLoaders } from './components/content-loaders/content-loaders'
+import { ExternalRevisionLoader } from './components/external-revision-loader'
 import { SaveButton } from './components/save-button'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
@@ -54,6 +53,8 @@ export function SerloEditor({
   const editString =
     lang === 'de' ? mergeDeepRight(editStringsEn, editStringsDe) : editStringsEn
 
+  const isNewEntity = !(initialState.state as AnyEditorDocument)?.id
+
   return (
     <EditStringsProvider value={editString}>
       <SerloOnlyFeaturesContext.Provider
@@ -61,36 +62,15 @@ export function SerloEditor({
       >
         <Editor initialState={initialState}>
           <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
-          {renderContentLoaders()}
+          {isNewEntity ? (
+            <ExternalRevisionLoader
+              templateType={initialState.plugin as TemplatePluginType}
+            />
+          ) : null}
+
           {children}
         </Editor>
       </SerloOnlyFeaturesContext.Provider>
     </EditStringsProvider>
   )
-
-  function renderContentLoaders() {
-    const templateType = initialState.plugin as TemplatePluginType
-    if (!pluginsWithContentLoaders.includes(templateType)) return null
-
-    const state =
-      initialState.state as PrettyStaticState<ArticleTypePluginState>
-
-    return (
-      <ContentLoaders
-        id={state?.id}
-        currentRevision={state?.revision}
-        templateType={templateType}
-      />
-    )
-  }
 }
-
-const pluginsWithContentLoaders = [
-  TemplatePluginType.Applet,
-  TemplatePluginType.Article,
-  TemplatePluginType.Course,
-  TemplatePluginType.Event,
-  TemplatePluginType.TextExercise,
-  TemplatePluginType.TextExerciseGroup,
-  TemplatePluginType.Video,
-]
