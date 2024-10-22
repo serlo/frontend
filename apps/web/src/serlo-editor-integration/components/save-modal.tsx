@@ -192,7 +192,6 @@ export function SaveModal({
   }
 
   function renderLicense() {
-    if (licenseId === undefined) return null
     const licenseAgreement = getLicense(licenses, licenseId).agreement.replace(
       /<a href/g,
       '<a target="_blank" href'
