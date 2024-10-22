@@ -9,7 +9,7 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Suspense, lazy, useContext, useEffect, useState } from 'react'
 
@@ -33,7 +33,7 @@ export function ExerciseEditor(props: ExerciseProps) {
     licenseId,
     hideInteractiveInitially,
   } = state
-  const isSerlo = useContext(IsSerloContext) // only on serlo
+  const { isSerlo } = useContext(SerloOnlyFeaturesContext)
   const editorStrings = useEditStrings()
   const exStrings = editorStrings.plugins.exercise
 

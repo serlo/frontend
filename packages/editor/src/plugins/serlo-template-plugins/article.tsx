@@ -1,12 +1,9 @@
-import { SaveButton } from '@editor/editor-ui/editor-toolbar/save-button'
 import {
   type EditorPlugin,
   type EditorPluginProps,
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
@@ -35,8 +32,6 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
     content,
     meta_title: metaTitle,
     meta_description: metaDescription,
-    licenseId,
-    changes,
   } = props.state
 
   return (
@@ -46,18 +41,10 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
           metaTitle={metaTitle}
           metaDescription={metaDescription}
         />
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Article}
-        />
       </div>
       <EntityTitleInput title={title} forceFocus />
 
       <section itemProp="articleBody">{content.render()}</section>
-
-      <SaveButton changes={changes} licenseId={licenseId} />
     </>
   )
 }
