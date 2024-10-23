@@ -6,7 +6,7 @@ export const editStrings = {
     'Willst du wirklich die Seite verlassen ohne zu speichern?',
   noChangesWarning: 'Bisher hast du nichts geändert',
   savedContentMightDisappearWarning:
-    '⚠️ Dies ist eine Testumgebung. Bitte erstell hier noch keine Inhalte, die du langfristig behalten willst.',
+    '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst.',
   addPluginsModal: {
     searchInputPlaceholder: 'Suche...',
     basicPluginsTitle: 'Inhalte',
