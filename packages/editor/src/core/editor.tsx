@@ -4,6 +4,7 @@ import {
   debouncedStoreToLocalStorage,
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
+import { getEditorVersion } from '@editor/package/editor-version'
 import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { useContext, useState, useMemo } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
@@ -43,7 +44,10 @@ export function Editor(props: EditorProps) {
             </>
           ) : null}
 
-          <div className="serlo-editor-hacks mb-24">
+          <div
+            className="serlo-editor-hacks mb-24"
+            data-editor-version={getEditorVersion()}
+          >
             <InnerDocument
               {...props}
               initialState={initialState}
