@@ -4,7 +4,7 @@ import {
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { SerloExtraContext } from '@editor/utils/serlo-extra-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { useContext, useEffect, useState } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
@@ -24,7 +24,7 @@ export function LinkControls() {
   const { selection } = editor
 
   const isSerloLinkSearchActive =
-    useContext(SerloExtraContext).isSerlo && lang === 'de'
+    useContext(SerloOnlyFeaturesContext).isSerlo && lang === 'de'
 
   useEffect(() => {
     if (!selection) return

@@ -1,4 +1,5 @@
 import { Editor, type EditorProps } from '@editor/core'
+import { EditorVariantContext } from '@editor/core/contexts/editor-variant-context'
 import { type GetDocument } from '@editor/core/types'
 import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
@@ -73,14 +74,16 @@ export function SerloEditor(props: SerloEditorProps) {
   return (
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
-        <LtikContext.Provider value={_ltik}>
-          <Editor
-            initialState={migratedState.document}
-            onChange={handleDocumentChange}
-          >
-            {children}
-          </Editor>
-        </LtikContext.Provider>
+        <EditorVariantContext.Provider value={editorVariant}>
+          <LtikContext.Provider value={_ltik}>
+            <Editor
+              initialState={migratedState.document}
+              onChange={handleDocumentChange}
+            >
+              {children}
+            </Editor>
+          </LtikContext.Provider>
+        </EditorVariantContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>
   )

@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
+    "dompurify": "^3.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -64,6 +65,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@rollup/plugin-replace": "^5.0.5",
     "@serlo/typescript-config": "workspace:*",
+    "@types/dompurify": "^3.0.5",
     "@types/react": "^18.0.25",
     "@types/react-dnd-multi-backend": "^6.0.6",
     "@types/react-dom": "^18.0.8",
