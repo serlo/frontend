@@ -31,6 +31,7 @@ export interface SerloEditorProps {
   onChange?: (state: StorageFormat) => void
   language?: SupportedLanguage
   editorVariant: EditorVariant
+  isProductionEnvironment?: boolean
   _testingSecret?: string | null
   _ltik?: string
 }
@@ -43,6 +44,7 @@ export function SerloEditor(props: SerloEditorProps) {
     onChange,
     language,
     plugins,
+    isProductionEnvironment,
     _testingSecret,
     _ltik,
   } = {
@@ -72,6 +74,7 @@ export function SerloEditor(props: SerloEditorProps) {
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
         <LtikContext.Provider value={_ltik}>
+          {!isProductionEnvironment ? renderTestEnvironmentWarning() : null}
           <Editor
             initialState={migratedState.document}
             onChange={handleDocumentChange}
@@ -94,5 +97,13 @@ export function SerloEditor(props: SerloEditorProps) {
       editorVersion: getEditorVersion(),
       document,
     })
+  }
+
+  function renderTestEnvironmentWarning() {
+    return (
+      <div className="bg-editor-primary-100 px-1.5 py-0.5 text-sm">
+        {editStrings.savedContentMightDisappearWarning}
+      </div>
+    )
   }
 }

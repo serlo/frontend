@@ -4,6 +4,8 @@ export const editStrings = {
   lang: 'en',
   confirmRouteChange: 'Are you sure you want to leave without saving?',
   noChangesWarning: 'Nothing changed so there is no need to save yet',
+  savedContentMightDisappearWarning:
+    '⚠️ This is a test environment. Please do not create content that you want to keep long term here.',
   addPluginsModal: {
     searchInputPlaceholder: 'Search...',
     basicPluginsTitle: 'Content Elements',
