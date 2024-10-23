@@ -5,7 +5,7 @@ import {
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
 import { getEditorVersion } from '@editor/package/editor-version'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { useContext, useState, useMemo } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
@@ -19,7 +19,7 @@ import { createStore } from '../store'
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
-  const isSerlo = useContext(IsSerloContext)
+  const { isSerlo } = useContext(SerloOnlyFeaturesContext)
   const [useStored, setUseStored] = useState(false)
 
   const storedState = getStateFromLocalStorage()

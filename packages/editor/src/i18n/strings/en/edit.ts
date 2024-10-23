@@ -519,8 +519,6 @@ export const editStrings = {
     revisionSaved: 'Revision saved',
     saveRevision: 'Save revision',
     changes: 'Describe your changes to the content',
-    skipReview: 'Skip peer review (not recommended)',
-    switchRevision: 'Switch to another revision',
     importOther: 'Import content from other entity',
     importOtherExplanation:
       "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",

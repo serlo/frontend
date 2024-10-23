@@ -12,11 +12,11 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import { testAreaId } from '@/fetcher/testArea'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
-  OnSaveData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
 } from '@/mutations/use-set-entity-mutation/types'
@@ -27,7 +27,6 @@ import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 export function AddRevision({
   initialState,
   type,
-  entityNeedsReview,
   id,
   taxonomyParentId,
   breadcrumbsData,
@@ -35,6 +34,9 @@ export function AddRevision({
   const { strings } = useInstanceData()
 
   const auth = useAuthentication()
+  const isInTestArea = Boolean(
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.id === testAreaId)
+  )
 
   const setEntityMutation = useSetEntityMutation()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
@@ -78,27 +80,21 @@ export function AddRevision({
 
   // types needs refactoring here. splitting controls and data would probably make sense
 
-  const onSave = async (
+  const handleSave = async (
     data: SetEntityMutationData | TaxonomyCreateOrUpdateMutationData
   ) => {
-    const willNeedReview = Object.hasOwn(data, 'controls')
-      ? !(data as OnSaveData).noReview
-      : entityNeedsReview
+    if (type === UuidType.TaxonomyTerm) {
+      const success = await taxonomyCreateOrUpdateMutation(
+        data as TaxonomyCreateOrUpdateMutationData
+      )
+      return success ? Promise.resolve() : Promise.reject()
+    }
 
-    const success =
-      type === UuidType.TaxonomyTerm
-        ? await taxonomyCreateOrUpdateMutation(
-            data as TaxonomyCreateOrUpdateMutationData
-          )
-        : await setEntityMutation(
-            {
-              ...data,
-              __typename: type,
-            } as SetEntityMutationData,
-            willNeedReview,
-            taxonomyParentId
-          )
-
+    const mutationData = {
+      __typename: type,
+      ...data,
+    } as SetEntityMutationData
+    const success = await setEntityMutation(mutationData, taxonomyParentId)
     return success ? Promise.resolve() : Promise.reject()
   }
 
@@ -110,8 +106,8 @@ export function AddRevision({
       <HeadTags data={{ title }} />
       {renderBacklink()}
       <SerloEditor
-        entityNeedsReview={entityNeedsReview}
-        onSave={onSave}
+        onSave={handleSave}
+        isInTestArea={isInTestArea}
         initialState={initialState}
       />
     </>
