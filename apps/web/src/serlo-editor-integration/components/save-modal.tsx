@@ -192,6 +192,7 @@ export function SaveModal({
   }
 
   function renderLicense() {
+    if (isNoEntity) return null
     const licenseAgreement = getLicense(licenses, licenseId).agreement.replace(
       /<a href/g,
       '<a target="_blank" href'
