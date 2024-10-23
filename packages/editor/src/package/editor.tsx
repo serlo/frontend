@@ -76,7 +76,7 @@ export function SerloEditor(props: SerloEditorProps) {
       <EditStringsProvider value={editStrings}>
         <EditorVariantContext.Provider value={editorVariant}>
           <LtikContext.Provider value={_ltik}>
-            {!isProductionEnvironment ? renderTestEnvironmentWarning() : null}
+            {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
             <Editor
               initialState={migratedState.document}
               onChange={handleDocumentChange}
