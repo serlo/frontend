@@ -3,10 +3,10 @@ import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { selectHasPendingChanges, useAppSelector } from '@editor/store'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { SaveModal } from '@serlo/frontend/src/serlo-editor-integration/components/save-modal'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { SaveModal } from './save-modal'
 import type { SerloEditorProps } from '../serlo-editor'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 

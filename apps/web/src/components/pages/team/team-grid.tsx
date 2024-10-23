@@ -1,7 +1,8 @@
-import { cn } from '@editor/utils/cn'
-import { Link } from '@serlo/frontend/src/components/content/link'
-import { getAvatarUrl } from '@serlo/frontend/src/components/user/user-link'
 import Image from 'next/image'
+
+import { Link } from '@/components/content/link'
+import { getAvatarUrl } from '@/components/user/user-link'
+import { cn } from '@/helper/cn'
 
 export interface TeamDataEntry {
   firstName: string
