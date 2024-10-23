@@ -1,5 +1,5 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
-import { sanitize } from 'dompurify'
+import DOMPurify from 'dompurify'
 import IframeResizer from 'iframe-resizer-react'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
@@ -81,7 +81,7 @@ export function EdusharingAssetRenderer(props: {
         getEmbedHtml(responseJson)
 
       // Prevent common XSS methods
-      const sanitizedHtml = sanitize(html)
+      const sanitizedHtml = DOMPurify.sanitize(html)
 
       setEmbedType(embedType)
       setEmbedHtml(sanitizedHtml)
