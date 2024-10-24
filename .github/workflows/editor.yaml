@@ -46,8 +46,8 @@ jobs:
       - name: Create and push Git tag
         if: steps.check_published.outputs.already_published == 'false'
         run: |
-          git tag v$CURRENT_VERSION
-          git push origin v$CURRENT_VERSION
+          git tag v$CURRENT_VERSION-editor
+          git push origin v$CURRENT_VERSION-editor
 
       - name: Extract changelog for current version
         id: extract_changelog
