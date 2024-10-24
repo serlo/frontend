@@ -71,7 +71,7 @@ jobs:
           TAG_NAME="v${RELEASE_VERSION}-editor"
           # Debugging again
           echo "Release body:"
-          echo "${{ env.CHANGELOG }}"
+          echo "$CHANGELOG"
 
           curl -X POST \
             -H "Authorization: token $GH_TOKEN" \
@@ -81,6 +81,6 @@ jobs:
           {
             "tag_name": "${TAG_NAME}",
             "name": "Serlo Editor - v${RELEASE_VERSION}",
-            "body": $(echo "${{ env.CHANGELOG }}" | jq -Rs .)
+            "body": $(echo "$CHANGELOG" | jq -Rs .)
           }
           EOF
