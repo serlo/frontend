@@ -39,6 +39,7 @@
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
     "test": "jest",
+    "publish:package": "npm publish",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
