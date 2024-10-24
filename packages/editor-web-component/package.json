@@ -36,6 +36,7 @@
     "lint": "npm-run-all lint:eslint lint:prettier",
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
+    "publish:package": "npm publish",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
