@@ -167,7 +167,7 @@ jobs:
           echo "" >> temp_changelog.md
           echo -e "$PR_TITLES" >> temp_changelog.md
           echo "" >> temp_changelog.md
-          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$NPM_VERSION...v$CURRENT_VERSION" >> temp_changelog.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v${NPM_VERSION}-editor...v${CURRENT_VERSION}-editor" >> temp_changelog.md
           echo "" >> temp_changelog.md
 
           # Combine new changelog with existing one (if it exists)
