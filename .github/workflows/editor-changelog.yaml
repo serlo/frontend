@@ -89,13 +89,13 @@ jobs:
         if: env.no_editor_changes == 'true'
         run: exit 0
 
-      - name: Get merged PRs affecting editor package (last 10 if no tag)
+      - name: Get merged PRs affecting editor package (last 50 if no tag)
         if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_prs
         run: |
           if [ -z "$LAST_TAG" ]; then
-            # No tag, get last 10 PRs
-            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=10" | jq -r '.[] | .number' | tr '\n' ' ')
+            # No tag, get last 50 PRs
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=50" | jq -r '.[] | .number' | tr '\n' ' ')
           else
             # Fetch PRs since last tag
             PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | tr '\n' ' ')
