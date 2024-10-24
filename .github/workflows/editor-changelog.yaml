@@ -98,10 +98,12 @@ jobs:
             # No tag, get last 50 PRs
             PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=50" | jq -r '.[] | .number' | tr '\n' ' ')
           else
-            # Fetch PRs since last tag
+            # Get the commit date of the last tag
+            TAG_DATE=$(git log -1 --format=%aI $LAST_TAG)
+            # Fetch PRs since tag commit date
             PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | \
-              jq -r --arg LAST_TAG "$LAST_TAG" \
-              '.[] | select(.merged_at != null and .merged_at > $LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | \
+              jq -r --arg TAG_DATE "$TAG_DATE" \
+              '.[] | select(.merged_at != null and .merged_at > $TAG_DATE and .head.repo.full_name == "serlo/frontend") | .number' | \
               tr '\n' ' ')
           fi
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
