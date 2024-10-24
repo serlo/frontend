@@ -167,8 +167,12 @@ jobs:
           echo "" >> temp_changelog.md
           echo -e "$PR_TITLES" >> temp_changelog.md
           echo "" >> temp_changelog.md
-          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v${NPM_VERSION}-editor...v${CURRENT_VERSION}-editor" >> temp_changelog.md
-          echo "" >> temp_changelog.md
+          if [ -n "$LAST_TAG" ]; then
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LAST_TAG}...v${CURRENT_VERSION}-editor" >> temp_changelog.md
+          else
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v${NPM_VERSION}-editor...v${CURRENT_VERSION}-editor" >> temp_changelog.md
+          fi
+          echo "" >> temp_changelog.md || exit 1
 
           # Combine new changelog with existing one (if it exists)
           if [ -f packages/editor/CHANGELOG.md ]; then
