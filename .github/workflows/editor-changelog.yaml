@@ -60,11 +60,12 @@ jobs:
         id: get_last_tag
         run: |
           git fetch --all --tags
-          LAST_TAG=$(git describe --tags --match "v*-editor" --abbrev=0 2>/dev/null || echo "none")
+          LAST_TAG=$(git tag -l "v*-editor" | sort -V | tail -n 1 || echo "none")
           if [ "$LAST_TAG" == "none" ]; then
             echo "No previous tag found, this is the first release"
             echo "LAST_TAG=" >> $GITHUB_ENV
           else
+            echo "Found tag: $LAST_TAG"
             echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
           fi
 
@@ -89,16 +90,21 @@ jobs:
         if: env.no_editor_changes == 'true'
         run: exit 0
 
-      - name: Get merged PRs affecting editor package (last 10 if no tag)
+      - name: Get merged PRs affecting editor package (last 50 if no tag)
         if: env.version_changed == 'true' && env.no_editor_changes == 'false'
         id: get_prs
         run: |
           if [ -z "$LAST_TAG" ]; then
-            # No tag, get last 10 PRs
-            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=10" | jq -r '.[] | .number' | tr '\n' ' ')
+            # No tag, get last 50 PRs
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=50" | jq -r '.[] | .number' | tr '\n' ' ')
           else
-            # Fetch PRs since last tag
-            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | tr '\n' ' ')
+            # Get the commit date of the last tag
+            TAG_DATE=$(git log -1 --format=%aI $LAST_TAG)
+            # Fetch PRs since tag commit date
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | \
+              jq -r --arg TAG_DATE "$TAG_DATE" \
+              '.[] | select(.merged_at != null and .merged_at > $TAG_DATE and .head.repo.full_name == "serlo/frontend") | .number' | \
+              tr '\n' ' ')
           fi
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
 
@@ -161,8 +167,12 @@ jobs:
           echo "" >> temp_changelog.md
           echo -e "$PR_TITLES" >> temp_changelog.md
           echo "" >> temp_changelog.md
-          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$NPM_VERSION...v$CURRENT_VERSION" >> temp_changelog.md
-          echo "" >> temp_changelog.md
+          if [ -n "$LAST_TAG" ]; then
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LAST_TAG}...v${CURRENT_VERSION}-editor" >> temp_changelog.md
+          else
+            echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v${NPM_VERSION}-editor...v${CURRENT_VERSION}-editor" >> temp_changelog.md
+          fi
+          echo "" >> temp_changelog.md || exit 1
 
           # Combine new changelog with existing one (if it exists)
           if [ -f packages/editor/CHANGELOG.md ]; then
