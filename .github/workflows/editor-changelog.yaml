@@ -56,18 +56,18 @@ jobs:
         run: exit 0
 
       - name: Get last tag for editor package (if available)
-              if: env.version_changed == 'true'
-              id: get_last_tag
-              run: |
-                git fetch --all --tags
-                LAST_TAG=$(git tag -l "v*-editor" | sort -V | tail -n 1 || echo "none")
-                if [ "$LAST_TAG" == "none" ]; then
-                  echo "No previous tag found, this is the first release"
-                  echo "LAST_TAG=" >> $GITHUB_ENV
-                else
-                  echo "Found tag: $LAST_TAG"
-                  echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
-                fi
+        if: env.version_changed == 'true'
+        id: get_last_tag
+        run: |
+          git fetch --all --tags
+          LAST_TAG=$(git tag -l "v*-editor" | sort -V | tail -n 1 || echo "none")
+          if [ "$LAST_TAG" == "none" ]; then
+            echo "No previous tag found, this is the first release"
+            echo "LAST_TAG=" >> $GITHUB_ENV
+          else
+            echo "Found tag: $LAST_TAG"
+            echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+          fi
 
       - name: Check if there are changes in packages/editor since last tag
         if: env.version_changed == 'true'
