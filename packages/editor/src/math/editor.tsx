@@ -1,4 +1,4 @@
-import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import { isShadowRoot } from '@editor/core/hooks/use-shadow-root'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
@@ -163,7 +163,9 @@ export function MathEditor(props: MathEditorProps) {
     const isShadowRootNode = isShadowRoot(root)
     const target =
       (isShadowRootNode || isDocument
-        ? root.querySelector<HTMLDivElement>('.toolbar-controls-target')
+        ? root.querySelector<HTMLDivElement>(
+            '.plugin-text .toolbar-controls-target'
+          )
         : document.body) ?? document.body
 
     return createPortal(children, target)

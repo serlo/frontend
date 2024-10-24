@@ -42,6 +42,7 @@ const possiblePlugins: EditorPluginType[] = [
   EditorPluginType.SerloTable,
   EditorPluginType.Highlight,
   EditorPluginType.EdusharingAsset,
+  EditorPluginType.Exercise,
 ]
 
 export function createBoxPlugin(

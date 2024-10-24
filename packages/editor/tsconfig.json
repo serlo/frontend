@@ -3,7 +3,6 @@
   "compilerOptions": {
     "rootDir": "../..",
     "paths": {
-      "@/*": ["../../apps/web/src/*"],
       "@editor/*": ["./src/*"]
     },
     "outDir": "dist",
@@ -18,10 +17,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "__tests__/**/*.ts",
-    "__tests__/**/*.tsx",
-    "../../apps/web/src/data/old_comment_ids.json",
-    "../../apps/web/**/*ts",
-    "../../apps/web/**/*tsx"
+    "__tests__/**/*.tsx"
   ],
   "exclude": ["node_modules", "dist"]
 }

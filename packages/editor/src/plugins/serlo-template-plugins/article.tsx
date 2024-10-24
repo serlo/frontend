@@ -4,13 +4,10 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 import { MetadataFieldsModal } from './common/metadata-fields-modal'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const articleTypeState = entityType(
   {
@@ -44,18 +41,10 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
           metaTitle={metaTitle}
           metaDescription={metaDescription}
         />
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Article}
-        />
       </div>
       <EntityTitleInput title={title} forceFocus />
 
       <section itemProp="articleBody">{content.render()}</section>
-
-      <ToolbarMain showSubscriptionOptions {...props.state} />
     </>
   )
 }

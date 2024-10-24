@@ -1,4 +1,4 @@
-import { useEmptyPreview } from '@editor/core/helpers/use-empty-preview'
+import { useEmptyPreview } from '@editor/core/hooks/use-empty-preview'
 import { cn } from '@editor/utils/cn'
 import { useMemo } from 'react'
 import { useDrag } from 'react-dnd'

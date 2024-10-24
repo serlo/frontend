@@ -17,7 +17,6 @@ export default renderedPageNoHooks(() => {
       plugin: TemplatePluginType.Page,
     },
     type: UuidType.Page,
-    entityNeedsReview: false,
     errorType: 'none',
   } as const
 

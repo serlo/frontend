@@ -1,9 +1,9 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { PartnerList } from '@serlo/frontend/src/components/landing/rework/partner-list'
 
 import type { PagePartnersPluginProps } from '.'
+import { PagePartnersRenderer } from './renderer'
 
 export const PagePartnersEditor: React.FunctionComponent<
   PagePartnersPluginProps
@@ -18,7 +18,7 @@ export const PagePartnersEditor: React.FunctionComponent<
           pluginControls={<PluginDefaultTools pluginId={id} />}
         />
       ) : null}
-      <PartnerList inContent />
+      <PagePartnersRenderer inContent />
     </>
   )
 }

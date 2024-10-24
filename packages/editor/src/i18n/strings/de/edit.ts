@@ -5,6 +5,8 @@ export const editStrings = {
   confirmRouteChange:
     'Willst du wirklich die Seite verlassen ohne zu speichern?',
   noChangesWarning: 'Bisher hast du nichts geändert',
+  savedContentMightDisappearWarning:
+    '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst.',
   addPluginsModal: {
     searchInputPlaceholder: 'Suche...',
     basicPluginsTitle: 'Inhalte',
@@ -207,6 +209,8 @@ export const editStrings = {
       placeholder: 'Serlo ID (z.B. 1565)',
       invalidStateWarning:
         "Bitte verwende eine gültige Serlo ID (nur Zahlen) – z.B. '/1555'",
+      errorLoading:
+        'Inhalt konnte nicht geladen werden, bitte überprüfe die ID',
     },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
@@ -531,10 +535,6 @@ export const editStrings = {
     revisionSaved: 'Bearbeitung gespeichert',
     saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
-    skipReview: 'Bearbeitung ohne Review freischalten (nicht empfohlen)',
-    enableNotifs: 'Benachrichtigungen auf serlo.org erhalten',
-    enableNotifsMail: 'Benachrichtigungen per E-mail erhalten',
-    switchRevision: 'Andere Version auswählen',
     importOther: 'Aus einem anderen Inhalt importieren',
     importOtherExplanation:
       'Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)',

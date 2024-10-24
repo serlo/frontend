@@ -1,12 +1,12 @@
+import {
+  findResults,
+  useSerloQuickbarData,
+} from '@editor/core/hooks/use-serlo-quickbar-data'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import {
-  QuickbarData,
-  findResults,
-} from '@serlo/frontend/src/components/navigation/quickbar'
 import { useEffect, useState, KeyboardEvent } from 'react'
 
 import { EditModeInput } from './edit-mode-input'
@@ -16,13 +16,13 @@ import { getCleanUrl } from '../../../utils/link'
 // based on Quickbar, duplicates some code
 
 interface LinkOverlayEditModeProps {
-  isSerloLinkSearchActive: boolean
+  isSerloLinkSearchActive?: boolean
   value: string
   setHref: (href: string, title?: string) => void
   setTitle?: (title: string) => void
   removeLink?: () => void
   shouldFocus: boolean
-  quickbarData: QuickbarData | null
+  noAutocomplete?: boolean
 }
 
 export function LinkOverlayEditMode({
@@ -31,13 +31,15 @@ export function LinkOverlayEditMode({
   setHref,
   removeLink,
   shouldFocus,
-  quickbarData,
+  noAutocomplete,
 }: LinkOverlayEditModeProps) {
   const [query, setQuery] = useState(value)
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const editStrings = useEditStrings()
   const { lang } = editStrings
   const overlayStrings = editStrings.plugins.text.linkOverlay
+
+  const { quickbarData } = useSerloQuickbarData(noAutocomplete)
 
   useEffect(() => {
     setQuery(value)

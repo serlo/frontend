@@ -5,7 +5,6 @@ import {
 } from '@editor/plugin'
 
 import { editorContent } from './common/common'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
 
 export const userTypeState = object({ description: editorContent() })
 
@@ -18,10 +17,5 @@ export const userTypePlugin: EditorPlugin<UserTypePluginState> = {
 }
 
 function UserTypeEditor({ state }: EditorPluginProps<UserTypePluginState>) {
-  return (
-    <>
-      {state.description.render()}
-      <ToolbarMain />
-    </>
-  )
+  return <>{state.description.render()}</>
 }

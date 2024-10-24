@@ -5,11 +5,8 @@ import {
 } from '@editor/plugin'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { UuidType } from '@serlo/frontend/src/data-types'
-import { ContentLoaders } from '@serlo/frontend/src/serlo-editor-integration/components/content-loaders/content-loaders'
 
 import { editorContent, entity, entityType } from '../common/common'
-import { ToolbarMain } from '../toolbar-main/toolbar-main'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
@@ -33,7 +30,7 @@ export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePlug
 function TextExerciseGroupTypeEditor(
   props: EditorPluginProps<TextExerciseGroupTypePluginState>
 ) {
-  const { content, id, revision, replaceOwnState } = props.state
+  const { content } = props.state
   const store = useStore()
 
   const staticState = selectStaticDocument(store.getState(), props.id)
@@ -41,20 +38,5 @@ function TextExerciseGroupTypeEditor(
 
   if (!staticState) return null
 
-  return (
-    <>
-      <div className="absolute right-0 -mt-20 mr-side flex">
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.ExerciseGroup}
-        />
-      </div>
-      <article className="mt-32">
-        {content.render()}
-        <ToolbarMain showSubscriptionOptions {...props.state} />
-      </article>
-    </>
-  )
+  return <article className="mt-32">{content.render()}</article>
 }

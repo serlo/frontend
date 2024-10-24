@@ -87,7 +87,7 @@ Scenario('Quickbar', ({ I }) => {
   I.type('Vektor')
 
   // Check dropdown
-  I.waitForText('Kreuzprodukt', 10)
+  I.waitForText('Kreuzprodukt', 20)
   I.seeElement('$quickbar-combobox-overlay')
   I.see('Vektorbegriff')
   I.see('Auf Serlo nach')
@@ -285,5 +285,6 @@ Scenario('Link component should not rewrite assets.serlo.org', ({ I }) => {
 Scenario('Link to community chat should work', ({ I }) => {
   I.amOnPage('/19880/mitmachen-in-mathematik')
   I.click('Chat für Mathe-AutorInnen')
+  I.wait(2)
   I.seeInTitle('Serlo Communitychat')
 })

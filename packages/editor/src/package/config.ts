@@ -29,4 +29,5 @@ export const defaultSerloEditorProps = {
   plugins: defaultPlugins,
   onChange: undefined,
   language: 'de' as SupportedLanguage,
+  isProductionEnvironment: false,
 }
