@@ -136,7 +136,7 @@ jobs:
               PR_URL=$(echo "$PR_DATA" | jq -r '.html_url')
               PR_AUTHOR=$(echo "$PR_DATA" | jq -r '.user.login')
               echo "PR #$pr touches editor package. Title: $PR_TITLE"
-              PR_TITLES="${PR_TITLES}- ${PR_TITLE}. Thank you @${PR_AUTHOR} in ${PR_URL}\n"
+              PR_TITLES="${PR_TITLES}- ${PR_TITLE}. Thank you [@${PR_AUTHOR}](https://github.com/${PR_AUTHOR}) in ${PR_URL}\n"
             else
               echo "PR #$pr does not touch editor package"
             fi
@@ -156,11 +156,21 @@ jobs:
       - name: Generate Changelog
         if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
         run: |
-          echo "## Changelog for version $CURRENT_VERSION" > packages/editor/CHANGELOG.md
-          echo "" >> packages/editor/CHANGELOG.md  # Adds a newline after the heading
-          echo -e "$PR_TITLES" >> packages/editor/CHANGELOG.md
-          echo "" >> packages/editor/CHANGELOG.md  # Adds a newline after the PR list
-          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$NPM_VERSION...v$CURRENT_VERSION" >> packages/editor/CHANGELOG.md
+          # Create temporary file with new changelog
+          echo "## Changelog for version $CURRENT_VERSION" > temp_changelog.md
+          echo "" >> temp_changelog.md
+          echo -e "$PR_TITLES" >> temp_changelog.md
+          echo "" >> temp_changelog.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v$NPM_VERSION...v$CURRENT_VERSION" >> temp_changelog.md
+          echo "" >> temp_changelog.md
+
+          # Combine new changelog with existing one (if it exists)
+          if [ -f packages/editor/CHANGELOG.md ]; then
+            cat packages/editor/CHANGELOG.md >> temp_changelog.md
+          fi
+
+          # Replace old changelog with combined version
+          mv temp_changelog.md packages/editor/CHANGELOG.md
 
       - name: Run Prettier on Changelog
         if: env.version_changed == 'true' && env.no_editor_changes == 'false' && env.PR_TITLES != 'No relevant PRs found'
