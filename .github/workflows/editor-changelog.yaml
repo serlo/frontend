@@ -99,7 +99,10 @@ jobs:
             PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=50" | jq -r '.[] | .number' | tr '\n' ' ')
           else
             # Fetch PRs since last tag
-            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | jq -r '.[] | select(.merged_at != null and .merged_at > $GITHUB_ENV.LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | tr '\n' ' ')
+            PRS=$(curl -s "https://api.github.com/repos/serlo/frontend/pulls?state=closed&per_page=100" | \
+              jq -r --arg LAST_TAG "$LAST_TAG" \
+              '.[] | select(.merged_at != null and .merged_at > $LAST_TAG and .head.repo.full_name == "serlo/frontend") | .number' | \
+              tr '\n' ' ')
           fi
           echo "PR_NUMBERS=$PRS" >> $GITHUB_ENV
 
