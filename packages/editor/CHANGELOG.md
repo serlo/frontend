@@ -27,7 +27,7 @@
 
 **Full Changelog**: https://github.com/serlo/frontend/compare/v0.16.0-editor...v0.17.0-editor
 
-## Changelog for version 0.16
+## Changelog for version 0.16.0
 
 feat(editor): Enable gallery plugin, free text exercise plugin and interactive image (dropzone) plugin
 fix(rows): check if interactive exercise plugins are supported in menu items filter

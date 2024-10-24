@@ -53,8 +53,12 @@ jobs:
       - name: Extract changelog for current version
         id: extract_changelog
         run: |
+          echo "Extracting changelog for version $CURRENT_VERSION"
           CHANGELOG=$(awk "/## Changelog for version $CURRENT_VERSION/,/^##/" packages/editor/CHANGELOG.md | sed '$d')
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          # Only for debugging since in the last run, the body was not published
+          echo "Extracted changelog:"
+          echo "$CHANGELOG"
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
@@ -64,14 +68,19 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.version }}
         run: |
+          TAG_NAME="v${RELEASE_VERSION}-editor"
+          # Debugging again
+          echo "Release body:"
+          echo "$CHANGELOG"
+
           curl -X POST \
             -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/releases \
             -d @- << EOF
           {
-            "tag_name": "v${RELEASE_VERSION}",
+            "tag_name": "${TAG_NAME}",
             "name": "Serlo Editor - v${RELEASE_VERSION}",
-            "body": $(echo "$RELEASE_NOTES" | jq -Rs .)
+            "body": $(echo "$CHANGELOG" | jq -Rs .)
           }
           EOF
