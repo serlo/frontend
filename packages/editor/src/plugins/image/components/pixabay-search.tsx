@@ -24,7 +24,7 @@ interface PixabayImage {
   largeImageURL: string
 }
 
-interface PixabaySearchButtonProps {
+interface PixabaySearchProps {
   onSelectImage: (imageUrl: string) => void
   onFocus: () => void
   onBlur: () => void
@@ -49,11 +49,11 @@ const germanSearchTags = {
   school: 'Schule',
 }
 
-export const PixabaySearchButton = ({
+export const PixabaySearch = ({
   onSelectImage,
   onFocus,
   onBlur,
-}: PixabaySearchButtonProps) => {
+}: PixabaySearchProps) => {
   const [query, setQuery] = useState('')
   const [images, setImages] = useState<PixabayImage[]>([])
   const [isLoadingImage, setIsLoadingImage] = useState(false)
