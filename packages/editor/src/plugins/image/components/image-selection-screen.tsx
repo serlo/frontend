@@ -4,7 +4,7 @@ import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
 import React, { type RefObject } from 'react'
 
-import { PixabaySearch } from './pixabay-search'
+import { PixabaySearch } from './pixabay-search/pixabay-search'
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
