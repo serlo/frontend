@@ -4,19 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editor Dev</title>
+    <style>
+      html {
+        background-color: #ffbe5e;
+      }
+      body {
+        font-family: sans-serif;
+        border-radius: 0.4rem;
+        background-color: #fff;
+        margin: 0.3rem;
+        min-height: calc(100vh - 0.6rem);
+        box-sizing: border-box;
+      }
+      main {
+        padding-block: 2rem;
+        margin-inline: auto;
+        max-width: 400px;
+      }
+      h4{
+        margin-top: 2rem;
+        margin-bottom: 0.5rem;
+      }
+      a {
+        font-weight: bold;
+        background-color: #ffbe5e;
+        color:black;
+        padding-block:0.1rem;
+        padding-inline:0.2rem;
+        border-radius: 0.2rem;
+        text-decoration: none;
+        margin-bottom: 0.3rem;
+        display: inline-block;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>Hi there 👋</h1>
+    <main>
+      <h1>🐦 ✏️ 🚀</h1>
 
-    <p>Here are some live updating demos:</p>
-    <ul>
-      <li><a href="/demo/react/">react (standalone edit)</a><br />&nbsp;</li>
-      <li><a href="/demo/react-preview/">react (preview)</a><br />&nbsp;</li>
-      <li>
-        <a href="/demo/web-component/">web component (standalone edit)</a
-        ><br />&nbsp;
-      </li>
-      <li><a href="/demo/lit/">lit (preview)</a><br />&nbsp;</li>
-    </ul>
+      <p>
+        <h4>hot-reloads the editor:</h4>
+        <a href="/demo/react/">react</a> (edit only)<br />
+        <a href="/demo/react-preview/">react</a> (with preview)
+      </p>
+      <p>
+        <h4>hot-reloads the component (but not the editor):</h4>
+        <a href="/demo/web-component/">web component</a> (edit only)<br/>
+        <a href="/demo/lit/">lit</a> (with preview)
+      </p>
+    </main>
   </body>
 </html>
