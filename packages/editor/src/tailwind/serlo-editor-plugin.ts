@@ -14,7 +14,7 @@ function extractCSSClasses() {
       'utf-8'
     )
 
-    const regex = /\.serlo\-[^ \:\{\n,]+/gm
+    const regex = /\.serlo-[^ :{\n,]+/gm
     let execArray: RegExpExecArray | null = null
     const components: Record<string, any> = {}
 
