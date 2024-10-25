@@ -57,9 +57,6 @@
   .serlo-h4 {
     @apply mx-side mb-5 mt-0 text-base-plus font-bold;
   }
-  .serlo-h5 {
-    @apply mx-side mb-5 mt-0;
-  }
   .serlo-modal {
     @apply fixed left-1/2 max-w-[85%] -translate-x-1/2 -translate-y-1/2;
     @apply bottom-0 top-[40%] h-fit w-[500px] pb-10 outline-none;
@@ -126,9 +123,6 @@
     @apply overflow-x-auto overflow-y-hidden text-lg leading-browser;
     @apply my-[1em] px-side;
   }
-  .serlo-spoiler-body {
-    @apply pb-3.5 pt-6;
-  }
   .serlo-solution-box {
     @apply mx-side mb-block border-l-8 border-brand-200 py-2.5;
   }
@@ -189,12 +183,7 @@
       @apply px-0;
     }
 
-    & .serlo-spacing-fix,
-    & .serlo-important,
-    & .serlo-blockquote,
-    & .serlo-spoiler-body,
     & .serlo-solution-box,
-    & .serlo-styled-label,
     & .serlo-box,
     & .serlo-box > blockquote,
     & .slate-container,
