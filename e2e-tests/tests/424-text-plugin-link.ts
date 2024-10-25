@@ -54,7 +54,7 @@ Scenario('Add a link using link suggestion menu', async ({ I }) => {
 
   I.say('Select first suggestion')
   I.click('$link-suggestion-0')
-  I.seeElement({ css: '.serlo-editor-hacks a' })
+  I.seeElement({ css: '.editor-core a' })
 })
 
 Scenario('Edit existing link', async ({ I }) => {
@@ -69,9 +69,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.type('Mathematik Start')
   I.seeElement('$link-suggestion-0')
   I.pressKey('Enter')
-  I.seeElement(
-    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/19767' })
-  )
+  I.seeElement(locate({ css: '.editor-core a' }).withAttr({ href: '/19767' }))
 
   I.say('Click edit button')
   I.click('Some text')
@@ -82,9 +80,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.type('geometrie')
   I.seeElement('$link-suggestion-0')
   I.pressKey('Enter')
-  I.seeElement(
-    locate({ css: '.serlo-editor-hacks a' }).withAttr({ href: '/1288' })
-  )
+  I.seeElement(locate({ css: '.editor-core a' }).withAttr({ href: '/1288' }))
 })
 
 Scenario('Remove existing link', async ({ I }) => {
@@ -98,10 +94,10 @@ Scenario('Remove existing link', async ({ I }) => {
   I.click('$plugin-toolbar-button-link')
   I.type('Math')
   I.click('$link-suggestion-0')
-  I.seeElement({ css: '.serlo-editor-hacks a' })
+  I.seeElement({ css: '.editor-core a' })
 
   I.say('Remove link using the remove link button')
   I.click('Some text')
   I.click('$remove-link-button')
-  I.dontSeeElement({ css: '.serlo-editor-hacks a' })
+  I.dontSeeElement({ css: '.editor-core a' })
 })

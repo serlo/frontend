@@ -24,7 +24,7 @@ export function ImageRenderer({
 
   return (
     <figure
-      className="serlo-image-centered bg-white"
+      className="mb-block bg-white px-4 text-center"
       itemScope
       itemType="http://schema.org/ImageObject"
     >

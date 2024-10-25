@@ -5,6 +5,7 @@ import {
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
 import { getEditorVersion } from '@editor/package/editor-version'
+import { cn } from '@editor/utils/cn'
 import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { useContext, useState, useMemo } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
@@ -43,9 +44,16 @@ export function Editor(props: EditorProps) {
               />
             </>
           ) : null}
-
           <div
-            className="serlo-editor-hacks mb-24"
+            className={cn(
+              'editor-core mb-24 text-lg leading-cozy',
+              // some undocumented style hacks
+              '[&_h1]:hyphens-auto',
+              '[&_a[data-key]]:hyphens-auto',
+              '[&_div[contenteditable]_.serlo-h3]:mt-0',
+              '[&_select]:border-2',
+              '[&_button>div>svg]:mx-1.5 [&_button>div>svg]:mb-1 [&_button>div>svg]:mt-2'
+            )}
             data-editor-version={getEditorVersion()}
           >
             <InnerDocument
