@@ -140,13 +140,13 @@ export const PixabaySearch = ({
       <EditorModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        className="max-h-[700px] w-[900px] max-w-[90vw] pt-0"
+        className="top-1/2 flex max-h-[90vh] w-[900px] max-w-[90vw] flex-col pt-0"
         title={imageStrings.licenceFree}
         extraTitleClassName="text-lg ml-10 mt-1.5 border-none"
       >
         <div
           className={cn(
-            'max-h-[60vw] pt-2',
+            'flex max-h-[60vw] flex-col pt-2',
             isGermanLocale ? 'min-h-[20vw]' : 'min-h-[5vw]'
           )}
         >
@@ -197,7 +197,6 @@ export const PixabaySearch = ({
 
           <div
             className={cn(
-              'max-h-[500px]',
               'mt-4 flex flex-wrap pl-8 pr-10',
               isLoadingImage && 'max-h-100 border-1 border border-red-500',
               isLoadingImage ? 'overflow-hidden' : 'overflow-auto'
