@@ -208,7 +208,7 @@ Scenario('Breadcrumbs', ({ I }) => {
 
   // Another test
   I.amOnPage('/35149')
-  I.see('Angewandte Nachhaltigkeit', 'a.hidden')
+  I.waitForText('Angewandte Nachhaltigkeit', 15, 'a.hidden')
   I.see('Was bedeutet Nachhaltigkeit?', 'a.hidden')
   I.see('Grundlagen der Nachhaltigkeit', 'a.serlo-button')
 
@@ -218,7 +218,7 @@ Scenario('Breadcrumbs', ({ I }) => {
 
   // Check if right taxonomy is selected
   I.amOnPage('/1555')
-  I.see('Wichtige Grundkörper', 'a.serlo-button')
+  I.waitForText('Wichtige Grundkörper', 15, 'a.serlo-button')
   I.dontSee('Realschule')
   I.dontSee('Gymnasium')
 })
