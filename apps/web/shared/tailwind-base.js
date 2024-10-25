@@ -7,6 +7,8 @@ import colors from 'tailwindcss/colors'
 import plugin from 'tailwindcss/plugin'
 import tailwindAnimate from 'tailwindcss-animate'
 
+import { serloEditorPlugin } from '../../../packages/editor/src/tailwind/serlo-editor-plugin'
+
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'
@@ -175,7 +177,8 @@ export default {
   },
   plugins: [
     tailwindAnimate,
-    plugin(function ({ addUtilities, addComponents }) {
+    serloEditorPlugin,
+    plugin(function ({ addComponents }) {
       // add classes of serlo-components to autocomplete
       addComponents(extractCSSClasses())
     }),

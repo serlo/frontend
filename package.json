@@ -51,6 +51,7 @@
     "@serlo/typescript-config": "workspace:*",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.4.1",
+    "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.5.0"
   },

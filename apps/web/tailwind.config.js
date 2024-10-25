@@ -1,4 +1,4 @@
-import sharedTailwindBase from './shared/tailwind-base.js'
+import sharedTailwindBase from './shared/tailwind-base'
 
 /** @type {import('tailwindcss').Config} */
 export default {

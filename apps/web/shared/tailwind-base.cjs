@@ -2,6 +2,7 @@
 
 const colors = require('tailwindcss/colors')
 const plugin = require('tailwindcss/plugin')
+const serloEditorPlugin = require('../../../packages/editor/src/tailwind/serlo-editor-plugin')
 
 // base colors
 const brand = '#007ec1'
@@ -164,7 +165,8 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animate'),
-    plugin(function ({ addUtilities, addComponents }) {
+    serloEditorPlugin,
+    plugin(function ({ addComponents }) {
       // add classes of serlo-components to autocomplete
       addComponents(extractCSSClasses())
     }),

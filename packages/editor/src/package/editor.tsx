@@ -25,7 +25,7 @@ import {
 
 // TODO: figure out styling
 // eslint-disable-next-line import/no-unassigned-import
-import '../../../../apps/web/src/assets-webkit/styles/serlo-tailwind.css'
+import '../tailwind/editor.css'
 
 export interface SerloEditorProps {
   children: EditorProps['children']

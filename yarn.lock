@@ -5713,6 +5713,7 @@ __metadata:
     npm-run-all: ^4.1.5
     postcss: ^8.4.38
     postcss-flexbugs-fixes: ^5.0.2
+    postcss-import: ^16.1.0
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.5.0
     prettier-plugin-tailwindcss: ^0.5.14
@@ -5894,6 +5895,7 @@ __metadata:
     "@serlo/typescript-config": "workspace:*"
     cross-env: ^7.0.3
     dotenv-cli: ^7.4.1
+    postcss-import: ^16.1.0
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.5.0
   languageName: unknown
@@ -16189,6 +16191,19 @@ __metadata:
   peerDependencies:
     postcss: ^8.0.0
   checksum: 7bd04bd8f0235429009d0022cbf00faebc885de1d017f6d12ccb1b021265882efc9302006ba700af6cab24c46bfa2f3bc590be3f9aee89d064944f171b04e2a3
+  languageName: node
+  linkType: hard
+
+"postcss-import@npm:^16.1.0":
+  version: 16.1.0
+  resolution: "postcss-import@npm:16.1.0"
+  dependencies:
+    postcss-value-parser: ^4.0.0
+    read-cache: ^1.0.0
+    resolve: ^1.1.7
+  peerDependencies:
+    postcss: ^8.0.0
+  checksum: 6d7f2fd649b7c7c3ff58d9d08003a0502466a007176655922ec535c98ab1a6bb42f09f017bb05bd18dd5fb57419df0ed9a06ec7f53b1a286fcb2daf964eec19c
   languageName: node
   linkType: hard
 
