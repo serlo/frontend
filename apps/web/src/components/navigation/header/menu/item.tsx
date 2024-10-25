@@ -15,10 +15,10 @@ import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 
 const styledLinkCls = cn(`
-  navtrigger block flex w-full
-  items-center border-b border-brand-400
-  p-4 align-middle text-[1.33rem] font-bold text-brand
-  md:serlo-button-blue-transparent md:serlo-menu-entry-special
+  navtrigger md:serlo-menu-entry-special block flex
+  w-full items-center border-b
+  border-brand-400 p-4 align-middle text-[1.33rem] font-bold
+  text-brand md:serlo-button-blue-transparent
   hover:bg-brand-300 hover:no-underline md:my-0 md:mt-[2px] md:block
   md:px-[7px] md:py-0.5 md:text-center md:text-[0.9rem]
   md:leading-tight md:text-brand-700 md:transition
