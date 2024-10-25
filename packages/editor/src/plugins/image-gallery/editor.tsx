@@ -6,7 +6,7 @@ import {
   focus,
   selectHasFocusedChild,
   selectIsDocumentEmpty,
-  store,
+  useStore,
   useAppDispatch,
   useAppSelector,
 } from '@editor/store'
@@ -26,6 +26,7 @@ function replaceWithMaxImages(input: string) {
 
 export function ImageGalleryEditor(props: ImageGalleryProps) {
   const { id, focused, state } = props
+  const store = useStore()
 
   const [oldFocusState, setOldFocusState] = useState(focused)
   const [hasImages, setHasImages] = useState(state.images.length > 0)

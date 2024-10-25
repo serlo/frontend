@@ -5,7 +5,7 @@ import {
   selectChildTreeOfParent,
   selectParentPluginType,
   selectStaticDocumentWithoutIds,
-  store,
+  useStore,
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -22,6 +22,7 @@ interface PluginDefaultToolsProps {
 
 // tools for most plugins (duplicate / remove)
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
+  const store = useStore()
   const dispatch = useAppDispatch()
   const pluginStrings = useEditStrings().plugins
 
@@ -29,7 +30,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
     () =>
       selectParentPluginType(store.getState(), pluginId) ===
       EditorPluginType.Rows,
-    [pluginId]
+    [pluginId, store]
   )
 
   const handleDuplicatePlugin = useCallback(() => {
@@ -46,7 +47,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         document,
       })
     )
-  }, [dispatch, pluginId])
+  }, [dispatch, pluginId, store])
 
   const handleRemovePlugin = useCallback(() => {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)
@@ -71,7 +72,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         child: pluginId,
       })
     )
-  }, [dispatch, pluginId])
+  }, [dispatch, pluginId, store])
 
   return (
     <>

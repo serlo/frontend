@@ -5,5 +5,5 @@
   <path fill="#FFDDB2" d="m32.83 16.68-4.347 2.51v-5.02l4.348 2.51Z" />
   <path fill="#FFBB62" d="M8.584 28.181h12v1h-12z" />
   <path fill="#EBE1D6" d="M20.584 28.181h31v1h-31z" />
-  <path fill="#000" fillOpacity=".08" d="M8.62 32.181h42.928v2.638H8.62z" />
+  <path fill="#000" fill-opacity=".08" d="M8.62 32.181h42.928v2.638H8.62z" />
 </svg>

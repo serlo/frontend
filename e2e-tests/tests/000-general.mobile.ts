@@ -33,6 +33,7 @@ Scenario('About Serlo @mobile', ({ I }) => {
 
   // Navigating around
   I.click('Pädagogisches Konzept')
+  I.waitForText('Anleitung für die Lernplattform serlo.org', 5)
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
   I.click('Community')
@@ -92,7 +93,7 @@ Scenario('Quickbar @mobile', ({ I }) => {
   I.type('Vektor')
 
   // Check dropdown
-  I.waitForText('Kreuzprodukt', 10)
+  I.waitForText('Kreuzprodukt', 20)
   I.seeElement('$quickbar-combobox-overlay')
   I.see('Vektorbegriff')
   I.see('Auf Serlo nach')

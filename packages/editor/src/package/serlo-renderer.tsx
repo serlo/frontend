@@ -8,6 +8,7 @@ import type { SupportedLanguage } from '@editor/types/language-data'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
+import { getEditorVersion } from './editor-version'
 import { migrate, EditorVariant } from './storage-format'
 
 export interface SerloRendererProps {
@@ -37,7 +38,10 @@ export function SerloRenderer(props: SerloRendererProps) {
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
         <LtikContext.Provider value={_ltik}>
-          <div className="serlo-content-with-spacing-fixes">
+          <div
+            className="serlo-content-with-spacing-fixes"
+            data-editor-version={getEditorVersion()}
+          >
             <StaticRenderer document={migratedState.document} />
           </div>
         </LtikContext.Provider>

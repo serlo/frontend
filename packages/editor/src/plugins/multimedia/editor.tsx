@@ -3,7 +3,7 @@ import {
   selectAncestorPluginTypes,
   selectIsFocused,
   selectStaticDocument,
-  store,
+  useStore,
   useAppSelector,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -22,6 +22,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
   const { config, state, focused } = props
   const { explanation, multimedia, width } = state
+  const store = useStore()
 
   const multimediaStrings = useEditStrings().plugins.multimedia
 

@@ -9,13 +9,8 @@ import type {
 import { dataQuery } from './query'
 import type { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
-import { testAreaId } from './testArea'
 import { endpoint } from '@/api/endpoint'
-import {
-  type BreadcrumbsData,
-  UuidType,
-  type UuidWithRevType,
-} from '@/data-types'
+import { type BreadcrumbsData, type UuidWithRevType } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 import {
   convertEditorResponseToState,
@@ -27,7 +22,6 @@ import type { SerloEditorProps } from '@/serlo-editor-integration/serlo-editor'
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: UuidWithRevType
-  entityNeedsReview: boolean
   id?: number // only for existing
   taxonomyParentId?: number // only for new
   errorType: 'none'
@@ -37,12 +31,6 @@ export interface EditorPageData {
 export interface EditorFetchErrorData {
   errorType: 'failed-fetch'
 }
-
-const noReviewTypes: UuidWithRevType[] = [
-  UuidType.TaxonomyTerm,
-  UuidType.Page,
-  UuidType.User,
-]
 
 export async function fetchEditorData(
   localeString: string,
@@ -77,21 +65,12 @@ export async function fetchEditorData(
 
   const breadcrumbsData = createBreadcrumbs(data, instance)
 
-  const isTestArea =
-    breadcrumbsData && breadcrumbsData.some((entry) => entry.id === testAreaId)
-
-  const typeNeedsReview = !noReviewTypes.includes(
-    data.__typename as UuidWithRevType
-  )
-  const entityNeedsReview = !isTestArea && typeNeedsReview
-
   if (isError(result)) {
     throw new Error(result.error)
   } else {
     return {
       initialState: { ...result },
       type: data.__typename as UuidWithRevType,
-      entityNeedsReview,
       id: repoId,
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,

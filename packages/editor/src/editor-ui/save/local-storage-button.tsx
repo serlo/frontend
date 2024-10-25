@@ -1,11 +1,12 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { store, selectStaticDocument } from '@editor/store'
+import { useStore, selectStaticDocument } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
+  const store = useStore()
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
 
   const edtrIoStrings = useEditStrings().edtrIo

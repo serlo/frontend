@@ -6,7 +6,7 @@ import { EditorChildren } from './editor-children'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import type { EditorProps } from './types'
 import {
-  store,
+  useStore,
   useAppDispatch,
   runInitRootSaga,
   undo,
@@ -19,6 +19,7 @@ import { ROOT } from '../store/root/constants'
 
 export function InnerDocument({ children, onChange, ...props }: EditorProps) {
   const [isInitialized, setIsInitialized] = useState(false)
+  const store = useStore()
   const dispatch = useAppDispatch()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -37,7 +38,7 @@ export function InnerDocument({ children, onChange, ...props }: EditorProps) {
         pendingChanges = currentPendingChanges
       }
     })
-  }, [onChange])
+  }, [onChange, store])
 
   useEffect(() => {
     dispatch(runInitRootSaga({ initialState: props.initialState }))

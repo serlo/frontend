@@ -4,7 +4,7 @@ import {
   DocumentState,
   selectDocumentPluginType,
   selectStaticDocument,
-  store,
+  useStore,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
@@ -51,6 +51,8 @@ export function EditorRowRenderer({
 }) {
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
+
+  const store = useStore()
 
   const allowedPlugins = useMemo(() => {
     return config.allowedPlugins ? config.allowedPlugins : undefined

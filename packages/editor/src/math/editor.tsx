@@ -1,4 +1,4 @@
-import { isShadowRoot } from '@editor/core/helpers/use-shadow-root'
+import { isShadowRoot } from '@editor/core/hooks/use-shadow-root'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
@@ -123,7 +123,6 @@ export function MathEditor(props: MathEditorProps) {
                 { value: 'latex', text: mathStrings.latex },
               ]}
             />
-            123
             {!disableBlock && (
               <button
                 className="mr-2 rounded-md border border-gray-500 px-1 py-0.25 text-sm text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
@@ -164,7 +163,9 @@ export function MathEditor(props: MathEditorProps) {
     const isShadowRootNode = isShadowRoot(root)
     const target =
       (isShadowRootNode || isDocument
-        ? root.querySelector<HTMLDivElement>('.toolbar-controls-target')
+        ? root.querySelector<HTMLDivElement>(
+            '.plugin-text .toolbar-controls-target'
+          )
         : document.body) ?? document.body
 
     return createPortal(children, target)

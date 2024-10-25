@@ -1,5 +1,6 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { useStore } from '@editor/store'
 
 import type { DropzoneImageProps } from '../..'
 import { type AnswerType, type AnswerZoneState, ModalType } from '../../types'
@@ -26,6 +27,7 @@ export function EditorCanvasModal({
   currentAnswer,
 }: EditorCanvasModalProps) {
   const pluginStrings = useEditStrings().plugins.dropzoneImage
+  const store = useStore()
   const { answerZones, extraDraggableAnswers } = state
 
   const title = modalType ? pluginStrings.modal[modalType] : ''
@@ -53,7 +55,9 @@ export function EditorCanvasModal({
         <AnswerZoneSettingsForm
           answerZone={currentAnswer.zone}
           onDuplicate={() => {
-            duplicateAnswerZone(answerZones, currentAnswer.zone.id.value)
+            duplicateAnswerZone(answerZones, currentAnswer.zone.id.value, () =>
+              store.getState()
+            )
           }}
           onDelete={() => {
             setModalType(ModalType.Unset)

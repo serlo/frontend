@@ -1,8 +1,9 @@
-import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 import { cn } from '@editor/utils/cn'
+
+import { PluginMenuIcon } from './plugin-menu-icon'
 
 function getTooltipPosition(index: number) {
   return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
@@ -63,22 +64,6 @@ export function PluginMenuItems({
           : ''
         : '-left-24'
 
-      // The icon in next.js gets correctly turned into a component, in vite, we
-      // want to expose the raw svg string to the packages. As this is also used
-      // by the web-component, we can't expose a React component. Therefore, we
-      // have to turn the string here into an svg element using
-      // dangerouslySetInnerHTML. There should not be any XSS risk with this, as we
-      // are loading the svgs ourselves from the assets and they can never come
-      // from a user.
-      const iconElement =
-        typeof icon === 'string' ? (
-          <div dangerouslySetInnerHTML={{ __html: icon }} />
-        ) : typeof icon !== 'string' ? (
-          icon()
-        ) : (
-          <IconFallback />
-        )
-
       return (
         <li key={type}>
           <button
@@ -93,7 +78,7 @@ export function PluginMenuItems({
             )}
           >
             <EditorTooltip className={tooltipClassName} text={description} />
-            {iconElement}
+            <PluginMenuIcon icon={icon} />
             <b className="mt-2 block text-sm">{title}</b>
           </button>
         </li>

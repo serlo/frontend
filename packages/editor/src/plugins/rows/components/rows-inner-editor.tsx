@@ -2,7 +2,7 @@ import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 import {
   selectEmptyTextPluginChildrenIndexes,
   selectParentPluginType,
-  store,
+  useStore,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContext } from 'react'
@@ -17,6 +17,7 @@ import {
 } from '../contexts/plugin-menu'
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
+  const store = useStore()
   // since this is only used to check if the current plugin is the child of the
   // root plugin (like a template plugin or article plugin)
   // this should not change – so we don't need to use useAppSelector here

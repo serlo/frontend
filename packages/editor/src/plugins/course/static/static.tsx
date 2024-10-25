@@ -1,31 +1,38 @@
-import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { InfoPanel } from '@serlo/frontend/src/components/info-panel'
-import { RevisionViewContext } from '@serlo/frontend/src/contexts/revision-view-context'
-import { useRouter } from 'next/router'
-import { useState, MouseEvent, useContext } from 'react'
+import { useState, MouseEvent } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
 
+export interface DummyNextRouter {
+  asPath: string
+  push(
+    url: string,
+    as?: undefined,
+    options?: { shallow: boolean }
+  ): Promise<boolean>
+}
+
 export function CourseStaticRenderer({
   state,
   serloContext,
-}: EditorCourseDocument) {
+  router,
+  isRevisionView,
+}: EditorCourseDocument & {
+  router: DummyNextRouter
+  isRevisionView?: boolean
+}) {
   const { pages } = state
-  const router = useRouter()
+
   const routerCourseId = getCoursePageIdFromPath(router.asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
   // load nav opened when only some entries
-  const isRevisionView = useContext(RevisionViewContext)
   const [courseNavOpen, setCourseNavOpen] = useState(
     pages.length < 4 || (isRevisionView ?? false)
   )
-  const strings = useStaticStrings()
 
   const activePageIndex = queryPageId
     ? Math.max(
@@ -54,6 +61,7 @@ export function CourseStaticRenderer({
         courseNavOpen={courseNavOpen}
         setCourseNavOpen={setCourseNavOpen}
         pageUrls={pageUrls}
+        router={router}
       />
 
       {pages.length ? (
@@ -65,13 +73,10 @@ export function CourseStaticRenderer({
             onOverviewButtonClick={openCourseNav}
             activePageIndex={activePageIndex}
             pageUrls={serloContext?.coursePageUrls}
+            router={router}
           />
         </>
-      ) : (
-        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.plugins.course.noPagesWarning}
-        </InfoPanel>
-      )}
+      ) : null}
     </>
   )
 
@@ -80,9 +85,8 @@ export function CourseStaticRenderer({
       <h1 className="serlo-h1 mt-12" itemProp="name" id="course-title">
         <span
           className={cn(`
-          -mt-1.5 mr-1.5 inline-block h-7 w-7
-          justify-center rounded-full bg-brand-200 text-center align-middle
-          text-xl font-bold text-brand
+          -mt-1.5 mr-1.5 inline-block h-7 w-7 justify-center rounded-full
+          bg-brand-200 text-center align-middle text-xl font-bold text-brand
         `)}
         >
           {activePageIndex + 1}

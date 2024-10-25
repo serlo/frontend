@@ -2,7 +2,7 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
-  store,
+  useStore,
   focus,
   focusNext,
   focusPrevious,
@@ -38,6 +38,7 @@ export function EquationsEditor(props: EquationsProps) {
   const { focused, state, id } = props
 
   const dispatch = useAppDispatch()
+  const store = useStore()
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||

@@ -2,7 +2,7 @@ import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import {
-  store,
+  useStore,
   selectChildTreeOfParent,
   insertPluginChildBefore,
   selectStaticDocument,
@@ -46,6 +46,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
+  const store = useStore()
   const { focused, id } = props
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)

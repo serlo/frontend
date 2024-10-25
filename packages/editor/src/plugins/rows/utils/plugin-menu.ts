@@ -57,6 +57,8 @@ export const pluginMenuType = {
   DropzoneImage: EditorPluginType.DropzoneImage,
   H5p: EditorPluginType.H5p,
   ExerciseGroup: EditorPluginType.ExerciseGroup,
+
+  EdusharingAsset: EditorPluginType.EdusharingAsset,
 } as const
 
 export type PluginMenuType =
@@ -219,6 +221,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
+  [pluginMenuType.EdusharingAsset]: IconImage,
 }
 
 function getIconString(type: PluginMenuType) {

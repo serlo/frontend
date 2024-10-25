@@ -1,4 +1,4 @@
-import { selectStaticDocument, store } from '@editor/store'
+import { type RootState, selectStaticDocument } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorDropzoneImageDocument } from '@editor/types/editor-plugins'
 import {
@@ -20,17 +20,23 @@ export const defaultAnswerZoneLayout = {
   height: 0.1,
 }
 
-export const getAnswerZoneImageState = (answerZoneImageId: string) => {
+export const getAnswerZoneImageState = (
+  answerZoneImageId: string,
+  getStoreState: () => RootState
+) => {
   const answerImageDocument = selectStaticDocument(
-    store.getState(),
+    getStoreState(),
     answerZoneImageId
   )
   return isImageDocument(answerImageDocument) ? answerImageDocument.state : ''
 }
 
-export const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
+export const getAnswerZoneImageSrc = (
+  answerZoneImageId: string,
+  getStoreState: () => RootState
+) => {
   const answerImageDocument = selectStaticDocument(
-    store.getState(),
+    getStoreState(),
     answerZoneImageId
   )
   return isImageDocument(answerImageDocument)
@@ -38,9 +44,12 @@ export const getAnswerZoneImageSrc = (answerZoneImageId: string) => {
     : ''
 }
 
-export const getAnswerZoneText = (answerZoneTextId: string) => {
+export const getAnswerZoneText = (
+  answerZoneTextId: string,
+  getStoreState: () => RootState
+) => {
   const answerTextDocument = selectStaticDocument(
-    store.getState(),
+    getStoreState(),
     answerZoneTextId
   )
 
@@ -49,11 +58,14 @@ export const getAnswerZoneText = (answerZoneTextId: string) => {
     : undefined
 }
 
-export const convertAnswer = (answer: AnswerData) => {
+export const convertAnswer = (
+  answer: AnswerData,
+  getStoreState: () => RootState
+) => {
   const id = answer.image.id
-  const imageUrl = getAnswerZoneImageSrc(id)
+  const imageUrl = getAnswerZoneImageSrc(id, getStoreState)
   const zoneTextId = answer.text.id
-  const text = getAnswerZoneText(zoneTextId)
+  const text = getAnswerZoneText(zoneTextId, getStoreState)
   return { id, imageUrl, text }
 }
 
@@ -71,7 +83,8 @@ export const convertStaticAnswers = (
 
 export function duplicateAnswerZone(
   answerZones: DropzoneImageProps['state']['answerZones'],
-  idToDuplicate: string
+  idToDuplicate: string,
+  getStoreState: () => RootState
 ) {
   const toCopy = answerZones.find((zone) => zone.id.value === idToDuplicate)
   if (!toCopy) return
@@ -91,11 +104,11 @@ export function duplicateAnswerZone(
       id: uuidv4(),
       image: {
         plugin: EditorPluginType.Image,
-        state: getAnswerZoneImageState(answer.image.id),
+        state: getAnswerZoneImageState(answer.image.id, getStoreState),
       },
       text: {
         plugin: EditorPluginType.Text,
-        state: getAnswerZoneText(answer.text.id),
+        state: getAnswerZoneText(answer.text.id, getStoreState),
       },
     })),
   }

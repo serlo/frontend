@@ -4,11 +4,7 @@ import {
 } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 import { SlateOverlay } from '@editor/editor-ui/slate-overlay'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import {
-  QuickbarData,
-  fetchQuickbarData,
-} from '@serlo/frontend/src/components/navigation/quickbar'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { useContext, useEffect, useState } from 'react'
 import { Range, Transforms } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
@@ -23,12 +19,12 @@ export function LinkControls() {
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
-  const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
   const { lang } = useEditStrings()
   const editor = useSlate()
   const { selection } = editor
 
-  const isSerloLinkSearchActive = useContext(IsSerloContext) && lang === 'de'
+  const isSerloLinkSearchActive =
+    useContext(SerloOnlyFeaturesContext).isSerlo && lang === 'de'
 
   useEffect(() => {
     if (!selection) return
@@ -43,17 +39,6 @@ export function LinkControls() {
       setElement(null)
     }
   }, [selection, editor])
-
-  useEffect(() => {
-    if (!isSerloLinkSearchActive) return
-    if (element && !quickbarData) {
-      fetchQuickbarData()
-        .then((fetchedData) => fetchedData && setQuickbarData(fetchedData))
-        // eslint-disable-next-line no-console
-        .catch(console.error)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [element, quickbarData, isSerloLinkSearchActive])
 
   useEffect(() => {
     setIsEditMode(value.length === 0)
@@ -89,14 +74,12 @@ export function LinkControls() {
           removeLink={removeLink}
           value={value}
           shouldFocus={shouldFocus}
-          quickbarData={quickbarData}
         />
       ) : (
         <LinkOverlayWithHref
           value={value}
           removeLink={removeLink}
           setIsEditMode={setIsEditMode}
-          quickbarData={quickbarData}
         />
       )}
     </SlateOverlay>

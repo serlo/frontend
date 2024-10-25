@@ -6,7 +6,7 @@ import {
   isTextDocument,
 } from '@editor/types/plugin-type-guards'
 import request from 'graphql-request'
-import { Descendant } from 'slate'
+import type { Descendant } from 'slate'
 
 import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'

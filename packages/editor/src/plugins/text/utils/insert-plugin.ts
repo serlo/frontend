@@ -4,7 +4,7 @@ import {
   selectDocument,
   selectMayManipulateSiblings,
   selectChildTreeOfParent,
-  store,
+  type RootState,
 } from '@editor/store'
 import { Action, ThunkDispatch } from '@reduxjs/toolkit'
 import { Editor as SlateEditor, Node } from 'slate'
@@ -17,6 +17,8 @@ export interface insertPluginArgs {
   id: string
   dispatch: ThunkDispatch<unknown, unknown, Action<unknown>>
   state?: unknown
+
+  getStoreState: () => RootState
 }
 
 export function insertPlugin({
@@ -25,8 +27,9 @@ export function insertPlugin({
   id,
   dispatch,
   state,
+  getStoreState,
 }: insertPluginArgs) {
-  const storeState = store.getState()
+  const storeState = getStoreState()
 
   const document = selectDocument(storeState, id)
   const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)

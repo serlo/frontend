@@ -108,7 +108,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
             <LinkOverlayWithHref
               value={source.href.value}
               removeLink={() => source.href.set('')}
-              quickbarData={null}
+              noAutocomplete
             />
           ) : (
             <LinkOverlayEditMode
@@ -117,7 +117,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
               value=""
               removeLink={() => setSelectedInput(undefined)}
               shouldFocus={false}
-              quickbarData={null}
+              noAutocomplete
             />
           )}
         </div>
