@@ -1,3 +1,4 @@
+import { EditorImage } from '@editor/plugins/image/components/editor-image'
 import { cn } from '@editor/utils/cn'
 
 import type { GridImage } from '../../types'
@@ -17,7 +18,7 @@ export function StaticLightboxThumbnail({
 
   return (
     <button className="group relative" onClick={onClick}>
-      <img src={src} alt={alt} className="max-h-[120px] bg-white" />
+      <EditorImage src={src} alt={alt} className="max-h-[120px] bg-white" />
       <div
         className={cn(
           'absolute inset-0 bg-black bg-opacity-70 group-hover:block',
