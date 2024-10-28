@@ -54,13 +54,24 @@ jobs:
         id: extract_changelog
         run: |
           echo "Extracting changelog for version $CURRENT_VERSION"
-          CHANGELOG=$(awk "/## Changelog for version $CURRENT_VERSION/,/^##/" packages/editor/CHANGELOG.md | sed '$d')
-          # Only for debugging since in the last run, the body was not published
+            CHANGELOG=$(awk -v ver="$CURRENT_VERSION" '
+              $0 == "## Changelog for version " ver {
+                flag=1;
+                next
+              }
+              $0 ~ /^## / {
+                if(flag) exit
+              }
+              flag { print }
+            ' packages/editor/CHANGELOG.md)
+
+            echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+            echo "$CHANGELOG" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+
+          # Debug output since sometimes the body does not get published
           echo "Extracted changelog:"
           echo "$CHANGELOG"
-          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
-          echo "$CHANGELOG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         if: steps.check_published.outputs.already_published == 'false'
