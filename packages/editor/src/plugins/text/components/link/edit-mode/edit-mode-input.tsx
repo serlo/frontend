@@ -60,7 +60,7 @@ export function EditModeInput({
       />
       {query ? (
         <div
-          className="serlo-button-edit-secondary absolute right-6 top-4 flex h-8 w-8 cursor-pointer items-center justify-center text-gray-700"
+          className="serlo-button-round serlo-button-edit-secondary absolute right-6 top-4 flex h-8 w-8 cursor-pointer items-center justify-center text-gray-700"
           onClick={() => {
             setQuery('')
             setTimeout(() => {

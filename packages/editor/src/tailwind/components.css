@@ -37,6 +37,10 @@
     @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
   }
 
+  .serlo-button-round {
+    @apply aspect-square !rounded-full;
+  }
+
   .serlo-button-learner-primary {
     @apply serlo-button-learner bg-brand text-white hover:bg-brand-500;
   }

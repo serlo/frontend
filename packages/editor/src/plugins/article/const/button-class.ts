@@ -1,2 +1,2 @@
 export const buttonClass =
-  'serlo-button text-editor-primary hover:bg-editor-primary hover:text-almost-black w-8 serlo-tooltip-trigger'
+  'serlo-button-edit-secondary serlo-button-round w-8 serlo-tooltip-trigger'

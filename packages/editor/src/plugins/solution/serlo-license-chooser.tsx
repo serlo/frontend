@@ -29,7 +29,7 @@ export function SerloLicenseChooser({
       <button
         className={cn(
           'absolute -top-0.5 right-12 z-20',
-          'serlo-button-edit-secondary serlo-tooltip-trigger mr-2',
+          'serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger mr-2',
           className
         )}
         onMouseDown={(e) => {
