@@ -1,10 +1,3 @@
-## Changelog for version 0.18.0
-
-- feat(editor): Enable video plugin for integrations. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4226
-- fix(plugin-image): pixabay search vertical scroll bug on narrow screens. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4223
-
-**Full Changelog**: https://github.com/serlo/frontend/compare/v0.17.0-editor...v0.18.0-editor
-
 ## Changelog for version 0.17.0
 
 - feat(editor): show user a warning in test environments that content might disappear. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4216
