@@ -16,7 +16,7 @@ export function PixabaySearchInput(props: PixabaySearchInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
-    <div className="relative ml-10 w-[90%]">
+    <div className="relative w-full">
       <input
         ref={inputRef}
         type="text"

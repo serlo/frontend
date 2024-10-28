@@ -25,18 +25,16 @@ export function PixabaySearchTags(props: PixabaySearchTagsProps) {
   const { onClick } = props
 
   return (
-    <div>
-      <div className="mb-6 mt-10 flex flex-wrap justify-center">
-        {Object.values(germanSearchTags).map((tagKey) => (
-          <button
-            key={tagKey}
-            onClick={() => onClick(tagKey)}
-            className="m-2 inline-block rounded-md bg-white px-2 py-1 text-sm text-black shadow-md"
-          >
-            {tagKey}
-          </button>
-        ))}
-      </div>
+    <div className="mb-6 mt-10 flex flex-wrap justify-center overflow-auto">
+      {Object.values(germanSearchTags).map((tagKey) => (
+        <button
+          key={tagKey}
+          onClick={() => onClick(tagKey)}
+          className="m-2 inline-block rounded-md bg-white px-2 py-1 text-sm text-black shadow-md"
+        >
+          {tagKey}
+        </button>
+      ))}
     </div>
   )
 }

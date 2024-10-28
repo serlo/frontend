@@ -19,7 +19,7 @@ export function PixabaySearchResults(props: PixabaySearchResultsProps) {
   return (
     <div
       className={cn(
-        'mt-4 flex flex-wrap pl-8 pr-10',
+        'mt-4 grid grid-cols-2 gap-4',
         isLoadingImage && 'max-h-100 border-1 border border-red-500',
         isLoadingImage ? 'overflow-hidden' : 'overflow-auto'
       )}
@@ -36,21 +36,20 @@ export function PixabaySearchResults(props: PixabaySearchResultsProps) {
       ) : null}
 
       {hasSearched && images.length === 0 && !isSearching && (
-        <div className="mt-10 w-full text-center text-lg">
+        <div className="col-span-2 mt-10 w-full text-center text-lg">
           {imageStrings.noImagesFound}
         </div>
       )}
 
       {images.map((image) => (
-        <div className="w-1/2  px-2 pb-4" key={image.id}>
-          <img
-            src={image.webformatURL.replace('_640', '_340')}
-            alt={image.tags}
-            className="h-auto w-full cursor-pointer rounded-lg"
-            loading="lazy"
-            onClick={() => onClick(image)}
-          />
-        </div>
+        <img
+          key={image.id}
+          src={image.webformatURL.replace('_640', '_340')}
+          alt={image.tags}
+          className="h-auto w-full cursor-pointer rounded-lg"
+          loading="lazy"
+          onClick={() => onClick(image)}
+        />
       ))}
     </div>
   )

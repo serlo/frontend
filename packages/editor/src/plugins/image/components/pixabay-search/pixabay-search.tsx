@@ -1,6 +1,5 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { cn } from '@editor/utils/cn'
 import { ChangeEvent, useRef, useState, useEffect, useCallback } from 'react'
 import { debounce } from 'ts-debounce'
 
@@ -118,8 +117,7 @@ export function PixabaySearch({
     setIsOpen(false)
   }
 
-  const isGermanLocale = lang === 'de'
-  const showTags = isGermanLocale && images.length === 0 && !isSearching
+  const showTags = lang === 'de' && images.length === 0 && !isSearching
 
   return (
     <>
@@ -132,38 +130,29 @@ export function PixabaySearch({
       <EditorModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        className="top-1/2 flex max-h-[90vh] w-[900px] max-w-[90vw] flex-col pt-0"
+        className="top-1/2 flex max-h-[90vh] w-[900px] max-w-[90vw] flex-col px-10 pt-0"
         title={imageStrings.licenceFree}
-        extraTitleClassName="text-lg ml-10 mt-1.5 border-none"
+        extraTitleClassName="text-lg border-none ml-0"
       >
-        <div
-          className={cn(
-            'flex max-h-[60vw] flex-col pt-2',
-            isGermanLocale ? 'min-h-[20vw]' : 'min-h-[5vw]'
-          )}
-        >
-          <PixabaySearchInput
-            query={query}
-            onChange={handleInputChange}
-            onKeyDown={handleInputKeyDown}
-            onClearButtonClick={handleClearButtonClick}
-          />
+        <PixabaySearchInput
+          query={query}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+          onClearButtonClick={handleClearButtonClick}
+        />
 
-          {showTags ? <PixabaySearchTags onClick={handleTagClick} /> : null}
+        {showTags ? <PixabaySearchTags onClick={handleTagClick} /> : null}
 
-          <PixabaySearchResults
-            images={images}
-            isLoadingImage={isLoadingImage}
-            isSearching={isSearching}
-            hasSearched={hasSearched}
-            onClick={handleResultImageClick}
-          />
+        <PixabaySearchResults
+          images={images}
+          isLoadingImage={isLoadingImage}
+          isSearching={isSearching}
+          hasSearched={hasSearched}
+          onClick={handleResultImageClick}
+        />
 
-          <div className="w-full justify-center pt-4 text-center text-sm">
-            {showTags
-              ? imageStrings.pixabayText
-              : imageStrings.pixabayLoadedText}
-          </div>
+        <div className="w-full justify-center pt-4 text-center text-sm">
+          {showTags ? imageStrings.pixabayText : imageStrings.pixabayLoadedText}
         </div>
       </EditorModal>
     </>
