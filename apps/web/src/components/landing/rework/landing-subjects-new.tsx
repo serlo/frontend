@@ -83,7 +83,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
         <Link
           key={title}
           href={url}
-          className="landing-subjects serlo-subject-icon-wrapper group"
+          className="landing-subjects group serlo-subject-icon-wrapper"
         >
           {' '}
           <SubjectIcon subject={icon} />
