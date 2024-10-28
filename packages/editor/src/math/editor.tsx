@@ -54,7 +54,7 @@ export function MathEditor(props: MathEditorProps) {
   const isVisualMode = (visual && !hasError) || false
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={props.inline ? 'inline-block' : ''}>
       <MathHelpModal isHelpOpen={isHelpOpen} setIsHelpOpen={setIsHelpOpen} />
       {renderChildren()}
     </div>
