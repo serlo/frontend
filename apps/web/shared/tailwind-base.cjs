@@ -1,7 +1,6 @@
 // This tailwind preset is only used in https://github.com/serlo/serlo-editor-for-edusharing
 
 const colors = require('tailwindcss/colors')
-const plugin = require('tailwindcss/plugin')
 const serloEditorPlugin = require('../../../packages/editor/src/tailwind/serlo-editor-plugin')
 
 // base colors
@@ -163,37 +162,5 @@ module.exports = {
       print: { raw: 'print' },
     },
   },
-  plugins: [
-    require('tailwindcss-animate'),
-    serloEditorPlugin,
-    plugin(function ({ addComponents }) {
-      // add classes of serlo-components to autocomplete
-      addComponents(extractCSSClasses())
-    }),
-  ],
-}
-
-function extractCSSClasses() {
-  try {
-    const css = require('fs').readFileSync(
-      require('path').join(
-        __dirname,
-        '/../src/assets-webkit/styles/serlo-tailwind.css'
-      ),
-      'utf-8'
-    )
-
-    const regex = /\.serlo\-[^ \:\{\n,]+/gm
-    let m = ''
-    const components = {}
-
-    while ((m = regex.exec(css)) !== null) {
-      // The result can be accessed through the `m`-variable.
-      components[m[0]] = {}
-    }
-
-    return components
-  } catch (error) {
-    // don't run on client, no problem
-  }
+  plugins: [require('tailwindcss-animate'), serloEditorPlugin],
 }
