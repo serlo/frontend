@@ -82,25 +82,21 @@ const initialStateOfSingleChoice = pluginMenuEn[singleChoiceKey].initialState
 
 ## How to disable/remove plugins
 
-The Serlo Editor Web Component allows you to customize which plugins are available in the editor. By default, it uses all available plugins (defaultPlugins), but you can modify this list to remove specific plugins.
+The Serlo Editor Web Component allows you to customize which plugins are available in the editor. By default, it uses all available plugins (`defaultPlugins`), but you can modify this list to remove specific plugins.
 
-````typescript
+```javascript
 import { EditorPluginType, defaultPlugins } from '@serlo/editor-web-component'
 
-// Filter out specific plugins like here the video plugin
+// Filter out specific plugins like the video plugin here
 const filteredPlugins = defaultPlugins.filter(
-plugin => plugin !== EditorPluginType.Video
+  (plugin) => plugin !== EditorPluginType.Video
 )
-
-
-// Then you can pass the filteredPlugins to the plugins array of the editor-web-component
 ```
 
-You can also set the plugins configuration directly via the HTML attribute:
+Then you can pass the filteredPlugins to the plugins array of the editor-web-component via a property by holding a reference to the Serlo Editor or via HTML attribute as seen below.
+
 ```html
-<serlo-editor
-plugins='["text", "image", ...]'
-> </serlo-editor>
+<serlo-editor plugins='["text", "image", ...]'> </serlo-editor>
 ```
 
 The plugins attribute/property accepts an array of plugin types. You can reference EditorPluginType for all available plugin options. Note that upon first render, the object will be frozen. You can't change the available plugins dynamically, so make sure to filter out the plugins you don't want before the first render!
@@ -113,7 +109,7 @@ By default we are rendering the Serlo Editor within the normal DOM. If you want 
 
 ```html
 <editor-web-component use-shadow-dom="true"></editor-web-component>
-````
+```
 
 ## Releasing a new version to npm
 
