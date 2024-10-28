@@ -5,18 +5,18 @@ import { FeedbackData } from '../../types'
 
 interface FeedbackButtonProps {
   feedback: FeedbackData
-  isButtonVisible: boolean
+  isVisible: boolean
   onClick: () => void
 }
 
 export function FeedbackButton(props: FeedbackButtonProps) {
-  const { feedback, isButtonVisible, onClick } = props
+  const { feedback, isVisible, onClick } = props
 
   const exStrings = useStaticStrings().plugins.exercise
 
   return (
     <div className="flex">
-      {isButtonVisible ? (
+      {isVisible ? (
         <button
           className="serlo-button-blue mr-3 h-8"
           onClick={onClick}

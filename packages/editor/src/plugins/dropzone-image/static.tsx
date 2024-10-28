@@ -46,6 +46,11 @@ export function DropzoneImageStaticRenderer(
     setShuffledAnswers(shuffleArray(allAnswers))
   }, [allAnswers])
 
+  const nonEmptyAnswerZones = useMemo(
+    () => answerZones.filter(({ answers }) => answers.length),
+    [answerZones]
+  )
+
   // Filter out answers that are already in an answer zone
   const possibleAnswers = useMemo(() => {
     const droppedAnswers = Array.from(dropzoneAnswerMap.values()).flat()
@@ -140,8 +145,8 @@ export function DropzoneImageStaticRenderer(
 
   // Show answer button if none of the zones are empty
   const isCheckAnswersButtonVisible = useMemo(() => {
-    return isZoneCorrectMap.size === answerZones.length
-  }, [isZoneCorrectMap.size, answerZones.length])
+    return isZoneCorrectMap.size === nonEmptyAnswerZones.length
+  }, [isZoneCorrectMap.size, nonEmptyAnswerZones.length])
 
   const checkAnswers = () => {
     let newFeedback = FeedbackData.Unset
@@ -234,7 +239,7 @@ export function DropzoneImageStaticRenderer(
 
         <FeedbackButton
           feedback={feedback}
-          isButtonVisible={isCheckAnswersButtonVisible}
+          isVisible={isCheckAnswersButtonVisible}
           onClick={checkAnswers}
         />
       </DndWrapper>
