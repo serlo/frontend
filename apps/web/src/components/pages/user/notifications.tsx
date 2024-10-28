@@ -38,12 +38,15 @@ export const Notifications = ({
       {isLoading && <LoadingSpinner text={strings.loading.isLoading} />}
       {data.pageInfo.hasNextPage && !isLoading ? (
         <div className="flex justify-between">
-          <button className="serlo-button-blue mb-12 mt-5" onClick={loadMore}>
+          <button
+            className="serlo-button-learner-primary mb-12 mt-5"
+            onClick={loadMore}
+          >
             {strings.actions.loadMore}
           </button>
           {data.nodes[0]?.unread && (
             <button
-              className="serlo-button-light mb-12 mt-5"
+              className="serlo-button-learner-secondary mb-12 mt-5"
               onClick={setAllToRead}
             >
               <FaIcon icon={faCheck} /> {loggedInStrings.setAllToRead}

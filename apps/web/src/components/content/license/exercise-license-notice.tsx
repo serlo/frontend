@@ -64,7 +64,7 @@ export function ExerciseLicenseNotice({
     <>
       <Link
         className={cn(`
-          serlo-button-blue-transparent serlo-tooltip-trigger w-[33px] text-[18px] text-base font-normal hover:no-underline
+          serlo-button-learner-transparent serlo-tooltip-trigger w-[33px] text-[18px] text-base font-normal hover:no-underline
         `)}
         href={licenseHref}
         noExternalIcon

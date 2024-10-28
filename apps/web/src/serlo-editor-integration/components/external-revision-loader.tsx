@@ -78,7 +78,7 @@ export function ExternalRevisionLoader<T>({
   return (
     <div className="-mb-8 mr-6 mt-4 flex justify-end">
       <span onClick={() => setShowRevisions(true)}>
-        <button className="serlo-button-editor-secondary serlo-tooltip-trigger">
+        <button className="serlo-button-edit-secondary serlo-tooltip-trigger">
           <EditorTooltip
             text={editorStrings.edtrIo.importOther}
             className="-left-40"

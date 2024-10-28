@@ -22,31 +22,36 @@
     @apply mx-side mb-5 mt-0 text-base-plus font-bold;
   }
 
-  /* TODO: rename this to avoid conflicts with serlo-button in frontend and probably change style */
-  .serlo-button {
+  .serlo-button-learner {
     @apply inline-block rounded-4xl px-2 py-1 transition-all;
     @apply cursor-pointer border-none font-bold no-underline;
-    @apply font-serlo text-lg leading-browser tracking-slightestly-tighter;
+    @apply text-lg leading-browser tracking-slightestly-tighter;
+    @apply duration-200 ease-in-out hover:no-underline;
+    @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
+  }
+  .serlo-button-edit {
+    @apply inline-block rounded-md px-2 py-1 transition-all;
+    @apply cursor-pointer border-none font-bold no-underline;
+    @apply text-lg leading-browser tracking-slightestly-tighter;
     @apply duration-200 ease-in-out hover:no-underline;
     @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
   }
 
-  /* TODO: replace serlo-button usage in editor */
-  .serlo-button-blue {
-    @apply serlo-button bg-brand text-white hover:bg-brand-500;
+  .serlo-button-learner-primary {
+    @apply serlo-button-learner bg-brand text-white hover:bg-brand-500;
   }
-  .serlo-button-light {
-    @apply serlo-button bg-brand-100 text-brand-700 hover:bg-brand hover:text-white;
+  .serlo-button-learner-secondary {
+    @apply serlo-button-learner bg-brand-100 text-brand-700 hover:bg-brand hover:text-white;
   }
-  .serlo-button-blue-transparent {
-    @apply serlo-button bg-transparent text-brand hover:bg-brand-700 hover:text-white;
+  .serlo-button-learner-transparent {
+    @apply serlo-button-learner bg-transparent text-brand hover:bg-brand-700 hover:text-white;
   }
 
-  .serlo-button-editor-primary {
-    @apply serlo-button bg-editor-primary-200 text-almost-black hover:bg-editor-primary;
+  .serlo-button-edit-primary {
+    @apply serlo-button-edit bg-editor-primary-200 text-almost-black hover:bg-editor-primary;
   }
-  .serlo-button-editor-secondary {
-    @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
+  .serlo-button-edit-secondary {
+    @apply serlo-button-edit bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
   }
 
   .serlo-modal {

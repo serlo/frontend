@@ -100,7 +100,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
         </Td>
         <Td centered className="w-1/6 text-right">
           <Link
-            className="group serlo-button-light my-0 ml-auto text-base transition-none hover:bg-brand-100 hover:text-brand"
+            className="group serlo-button-learner-secondary my-0 ml-auto text-base transition-none hover:bg-brand-100 hover:text-brand"
             href={viewUrl}
           >
             <span className="hidden group-hover:inline">
@@ -141,7 +141,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   function renderLabel(text: string, note?: string) {
     return (
       <span
-        className="serlo-button-light cursor-default text-base"
+        className="serlo-button-learner-secondary cursor-default text-base"
         title={note}
       >
         {text}

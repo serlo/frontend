@@ -12,7 +12,7 @@ export interface SubItemProps {
 const itemClasses = cn(`
   block w-full
   border-b border-brand-400 p-4 font-bold
-  text-brand md:serlo-button-blue-transparent hover:bg-brand-300
+  text-brand md:serlo-button-learner-transparent hover:bg-brand-300
   hover:no-underline group-hover:bg-brand group-hover:text-white
   md:w-auto md:hyphens-auto md:rounded-[12px] md:py-0.25 md:text-base md:font-normal
   md:leading-5

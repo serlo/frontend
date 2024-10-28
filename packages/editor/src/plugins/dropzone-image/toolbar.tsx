@@ -106,7 +106,7 @@ export function DropzoneImageToolbar({
         <div className="mx-side my-3">
           <button
             onClick={handleChangeImageButtonClick}
-            className="serlo-button-editor-primary mr-2 mt-6"
+            className="serlo-button-edit-primary mr-2 mt-6"
           >
             {imageStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
           </button>

@@ -57,7 +57,7 @@ export function CourseFooter({
               e.preventDefault()
               navigate(previousHref, previousIndex)
             }}
-            className="serlo-button-light mx-side h-fit hover:no-underline"
+            className="serlo-button-learner-secondary mx-side h-fit hover:no-underline"
           >
             <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
             {courseStrings.back}
@@ -72,7 +72,7 @@ export function CourseFooter({
             }}
             className="ml-auto mr-side text-right hover:no-underline"
           >
-            <div className="serlo-button-blue mb-2 hover:no-underline">
+            <div className="serlo-button-learner-primary mb-2 hover:no-underline">
               <FaIcon icon={faArrowCircleRight} /> {courseStrings.next}
             </div>
             <div className="flex text-lg">
@@ -89,7 +89,7 @@ export function CourseFooter({
           </a>
         ) : (
           <button
-            className="serlo-button-blue mx-side"
+            className="serlo-button-learner-primary mx-side"
             onClick={onOverviewClick}
           >
             <FaIcon icon={faArrowCircleUp} /> {courseStrings.showPages}

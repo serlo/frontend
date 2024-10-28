@@ -35,7 +35,7 @@ export function TypeChooserBox({ typeState }: TypeChooserProps) {
           return (
             <li key={type} className="inline-block pb-3.5 pr-4">
               <button
-                className="serlo-button-editor-secondary"
+                className="serlo-button-edit-secondary"
                 onClick={(event) => handleTypeSelection(type, event)}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {

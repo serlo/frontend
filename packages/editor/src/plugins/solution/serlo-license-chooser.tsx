@@ -29,7 +29,7 @@ export function SerloLicenseChooser({
       <button
         className={cn(
           'absolute -top-0.5 right-12 z-20',
-          'serlo-button-editor-secondary serlo-tooltip-trigger mr-2',
+          'serlo-button-edit-secondary serlo-tooltip-trigger mr-2',
           className
         )}
         onMouseDown={(e) => {
@@ -51,7 +51,7 @@ export function SerloLicenseChooser({
       >
         <div className="mx-side mb-3">
           <select
-            className="serlo-button-light serlo-input-font-reset max-w-md"
+            className="serlo-button-learner-secondary serlo-input-font-reset max-w-md"
             onChange={(e) => {
               if (licenseId.defined) licenseId.set(parseInt(e.target.value))
               else licenseId.create(parseInt(e.target.value))

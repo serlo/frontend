@@ -13,7 +13,7 @@ export interface SubItemProps {
 }
 
 const itemClasses = cn(`
-  serlo-button-blue-transparent inline-flex items-center hyphens-auto rounded-[12px]
+  serlo-button-learner-transparent inline-flex items-center hyphens-auto rounded-[12px]
   py-1 text-left text-base font-normal leading-tight  group-hover:bg-brand group-hover:text-white
 `)
 

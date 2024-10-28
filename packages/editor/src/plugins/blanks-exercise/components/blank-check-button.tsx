@@ -20,7 +20,7 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
   return (
     <div className="mt-2 flex">
       <button
-        className="serlo-button-blue mr-3 h-8"
+        className="serlo-button-learner-primary mr-3 h-8"
         onClick={onClick}
         data-qa="plugin-exercise-check-answer-button"
       >

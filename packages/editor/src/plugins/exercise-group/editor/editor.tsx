@@ -33,7 +33,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
                 <nav className="flex justify-end">
                   {index > 0 ? (
                     <button
-                      className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                      className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
                       onClick={() => {
                         exercises.move(index, index - 1)
                       }}
@@ -45,7 +45,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
                     </button>
                   ) : null}
                   <button
-                    className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                    className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
                     onClick={() => exercises.remove(index)}
                   >
                     <EditorTooltip text={exGroupStrings.removeExercise} />

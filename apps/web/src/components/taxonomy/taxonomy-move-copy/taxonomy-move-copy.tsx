@@ -155,7 +155,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     taxType?: TaxonomyTermType
   ) {
     const buttonClass = cn(
-      'serlo-button-light mr-3 text-base',
+      'serlo-button-learner-secondary mr-3 text-base',
       !buttonsActive &&
         'cursor-not-allowed bg-gray-100 text-gray-400 hover:bg-gray-100 hover:text-gray-400'
     )

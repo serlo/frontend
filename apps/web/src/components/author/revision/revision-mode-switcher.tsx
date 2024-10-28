@@ -48,7 +48,7 @@ export function RevisionModeSwitcher({
           renderButton(DisplayModes.SideBySide, strings.revisions.sidebyside)}
         {isCurrent && previousRevisionId && (
           <Link
-            className="serlo-button-blue-transparent ml-1"
+            className="serlo-button-learner-transparent ml-1"
             href={`/entity/repository/compare/${repositoryId}/${previousRevisionId}#${DisplayModes.SideBySide}`}
           >
             Vorherige Bearbeitung ansehen
@@ -65,7 +65,7 @@ export function RevisionModeSwitcher({
       <button
         onClick={() => setDisplayMode(mode)}
         className={cn(
-          'serlo-button-blue-transparent ml-1',
+          'serlo-button-learner-transparent ml-1',
           displayMode === mode && 'bg-brand text-white'
         )}
       >

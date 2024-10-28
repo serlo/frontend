@@ -6,33 +6,11 @@
  */
 
 @layer components {
-  .serlo-button {
-    @apply inline-block rounded-4xl px-2 py-1 transition-all;
-    @apply cursor-pointer border-none font-bold no-underline;
-    @apply font-serlo text-lg leading-browser tracking-slightestly-tighter;
-    @apply duration-200 ease-in-out hover:no-underline;
-    @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
-  }
-  .serlo-button-blue {
-    @apply serlo-button bg-brand text-white hover:bg-brand-500;
-  }
   .serlo-button-green {
-    @apply serlo-button bg-brandgreen text-white hover:bg-brandgreen-300;
-  }
-  .serlo-button-light {
-    @apply serlo-button bg-brand-100 text-brand-700 hover:bg-brand hover:text-white;
+    @apply serlo-button-learner bg-brandgreen text-white hover:bg-brandgreen-300;
   }
   .serlo-button-green-transparent {
-    @apply serlo-button bg-transparent text-brandgreen hover:bg-brandgreen hover:text-white;
-  }
-  .serlo-button-blue-transparent {
-    @apply serlo-button bg-transparent text-brand hover:bg-brand-700 hover:text-white;
-  }
-  .serlo-button-editor-primary {
-    @apply serlo-button bg-editor-primary-200 text-almost-black hover:bg-editor-primary;
-  }
-  .serlo-button-editor-secondary {
-    @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
+    @apply serlo-button-learner bg-transparent text-brandgreen hover:bg-brandgreen hover:text-white;
   }
 
   .serlo-math-wrapper {

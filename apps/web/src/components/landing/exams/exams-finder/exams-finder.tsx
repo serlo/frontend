@@ -70,8 +70,8 @@ export function ExamsFinder({
               className={cn(
                 'mr-2',
                 regionKey === region
-                  ? 'serlo-button-blue'
-                  : 'serlo-button-blue-transparent'
+                  ? 'serlo-button-learner-primary'
+                  : 'serlo-button-learner-transparent'
               )}
               onClick={() => handleRegionChange(regionKey)}
             >
@@ -110,8 +110,8 @@ export function ExamsFinder({
                 className={cn(
                   'ml-2',
                   schoolTypeKey === schoolType
-                    ? 'serlo-button-blue'
-                    : 'serlo-button-blue-transparent'
+                    ? 'serlo-button-learner-primary'
+                    : 'serlo-button-learner-transparent'
                 )}
                 onClick={() => setSchoolType(schoolTypeKey as SchoolType)}
               >

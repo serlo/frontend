@@ -22,9 +22,7 @@ export function AddButton({
       title={title}
       onMouseDown={onClick}
       className={cn(
-        secondary
-          ? 'serlo-button-editor-secondary'
-          : 'serlo-button-editor-primary',
+        secondary ? 'serlo-button-edit-secondary' : 'serlo-button-edit-primary',
         'mr-2'
       )}
       data-qa={dataQa}

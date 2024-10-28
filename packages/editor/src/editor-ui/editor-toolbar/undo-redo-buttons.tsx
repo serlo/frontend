@@ -31,8 +31,10 @@ export function UndoRedoButtons() {
     return (
       <button
         className={cn(
-          'serlo-button serlo-tooltip-trigger',
-          disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
+          'serlo-button-edit serlo-tooltip-trigger',
+          disabled
+            ? 'cursor-default text-gray-300'
+            : 'serlo-button-edit-secondary'
         )}
         onClick={onClick}
         disabled={disabled}

@@ -35,7 +35,7 @@ export function Breadcrumbs({
 
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
     const withRightArrow = cn(`
-      serlo-button mb-1 mr-5 py-0.5 font-normal
+      serlo-button-learner mb-1 mr-5 py-0.5 font-normal
       after:absolute after:ml-3 after:text-gray-300 after:content-['>']
     `)
 
@@ -69,7 +69,7 @@ export function Breadcrumbs({
           <>
             <Link
               className={cn(`
-                serlo-button bg-brand-200 py-0.5 hover:bg-brand-400
+                serlo-button-learner bg-brand-200 py-0.5 hover:bg-brand-400
                 hover:text-white sm:bg-brand-100 sm:hover:bg-brand
               `)}
               href={bcEntry.url ?? undefined}

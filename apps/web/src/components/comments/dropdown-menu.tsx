@@ -154,7 +154,7 @@ export function DropdownMenu({
   function buildButton(onClick: () => void, children: JSX.Element) {
     return (
       <button
-        className="serlo-button-blue-transparent mb-1 text-base font-normal leading-browser"
+        className="serlo-button-learner-transparent mb-1 text-base font-normal leading-browser"
         onClick={onClick}
       >
         {children}

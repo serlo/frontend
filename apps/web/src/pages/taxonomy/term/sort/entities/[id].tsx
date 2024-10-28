@@ -119,7 +119,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       <PageTitle title={loggedInStrings.title} />
       <div className="mx-side">
         {renderCategories()}
-        <button className="serlo-button-blue mt-12" onClick={onSave}>
+        <button className="serlo-button-learner-primary mt-12" onClick={onSave}>
           {loggedInStrings.saveButtonText}
         </button>
       </div>
@@ -205,7 +205,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
                 snapshot.isDragging && 'bg-brand-100'
               )}
             >
-              <span className="serlo-button-blue-transparent">
+              <span className="serlo-button-learner-transparent">
                 <FaIcon icon={faGripLines} />
               </span>{' '}
               <Link

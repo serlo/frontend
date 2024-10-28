@@ -21,7 +21,7 @@ export function MetadataFieldsModal({
     <>
       <button
         onClick={() => setShowSettingsModal(true)}
-        className="serlo-button-editor-secondary mr-2 text-base"
+        className="serlo-button-edit-secondary mr-2 text-base"
       >
         Metadata <FaIcon icon={faPencilAlt} />
       </button>
@@ -52,7 +52,7 @@ export function MetadataFieldsModal({
           <SettingsTextarea autoFocus label={title} state={field} />
         ) : (
           <button
-            className="serlo-button-editor-primary mb-3"
+            className="serlo-button-edit-primary mb-3"
             onClick={() => field.create()}
           >
             <FaIcon icon={faPlusCircle} /> {title}
