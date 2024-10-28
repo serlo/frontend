@@ -1,3 +1,14 @@
+## Changelog for version 0.18.0
+
+- docs(editor): Document that plugins config can't be dynamically changed. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4233
+- fix(editor): Inline math should not have a line break when opening latex editor. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4232
+- fix(blanks-exercise): warn before switching between text and table. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4228
+- fix(dropzone-image): ignore empty dropzones for check button visibility logic. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4227
+- feat(editor): Enable video plugin for integrations. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4226
+- fix(plugin-image): pixabay search vertical scroll bug on narrow screens. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4223
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.17.0-editor...v0.18.0-editor
+
 ## Changelog for version 0.17.0
 
 - feat(editor): show user a warning in test environments that content might disappear. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4216
