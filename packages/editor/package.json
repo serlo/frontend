@@ -138,6 +138,7 @@
   },
   "postcss": {
     "plugins": {
+      "postcss-import": {},
       "tailwindcss/nesting": {},
       "tailwindcss": {},
       "postcss-flexbugs-fixes": {},
