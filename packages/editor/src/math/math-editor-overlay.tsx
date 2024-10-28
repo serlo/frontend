@@ -14,7 +14,7 @@ export function MathEditorOverlay({
 
   return (
     <div
-      className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu"
+      className="fixed bottom-0 left-1/2 z-50 -translate-x-1/2 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu"
       // Stops double/triple clicks inside the textArea field / modal to close
       // the overlay (see #2700)
       onClick={(e) => e.stopPropagation()}

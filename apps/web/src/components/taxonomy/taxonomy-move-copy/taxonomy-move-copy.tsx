@@ -1,9 +1,13 @@
+import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
+import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
+import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import {
   faArrowRight,
   faCopy,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm } from '@serlo/authorization'
+import { mergeDeepRight } from 'ramda'
 import { useEffect, useState } from 'react'
 
 import { getPreviewStringFromExercise } from './get-preview-string-from-exercise'
@@ -55,7 +59,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 
   const canMove = canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild)
 
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const loggedInData = useLoggedInData()
 
   if (!loggedInData) return <PleaseLogIn />
@@ -103,15 +107,23 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 
         <h2 className="mb-3 mt-6 font-bold">{loggedInStrings.target}</h2>
 
-        <UuidUrlInput
-          supportedEntityTypes={[UuidType.TaxonomyTerm]}
-          supportedTaxonomyTypes={[
-            TaxonomyTermType.Topic,
-            TaxonomyTermType.ExerciseFolder,
-          ]}
-          unsupportedIds={[taxonomyData.id]}
-          renderButtons={renderButtons}
-        />
+        <EditStringsProvider
+          value={
+            lang === 'de'
+              ? mergeDeepRight(editStringsEn, editStringsDe)
+              : editStringsEn
+          }
+        >
+          <UuidUrlInput
+            supportedEntityTypes={[UuidType.TaxonomyTerm]}
+            supportedTaxonomyTypes={[
+              TaxonomyTermType.Topic,
+              TaxonomyTermType.ExerciseFolder,
+            ]}
+            unsupportedIds={[taxonomyData.id]}
+            renderButtons={renderButtons}
+          />
+        </EditStringsProvider>
       </div>
       {renderFolderNotice()}
     </>
