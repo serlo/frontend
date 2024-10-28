@@ -1,7 +1,10 @@
-// This tailwind preset is only used in https://github.com/serlo/serlo-editor-for-edusharing
+// This tailwind preset is also used in https://github.com/serlo/serlo-editor-for-edusharing.
+// Using a tailwind preset like this allows sharing the configuration between multiple repos.
 
-const colors = require('tailwindcss/colors')
-const serloEditorPlugin = require('../../../packages/editor/src/tailwind/serlo-editor-plugin')
+import colors from 'tailwindcss/colors'
+import tailwindAnimate from 'tailwindcss-animate'
+
+import { serloEditorPlugin } from './serlo-editor-plugin'
 
 // base colors
 const brand = '#007ec1'
@@ -15,7 +18,7 @@ const sunflowerColors = {
   50: '#fff9f0',
 }
 
-module.exports = {
+export default {
   theme: {
     extend: {
       colors: {
@@ -81,7 +84,7 @@ module.exports = {
         cozy: '1.33',
       },
       margin: {
-        block: '28px',
+        block: '30px',
         '15vh': '15vh',
       },
       padding: {
@@ -106,6 +109,7 @@ module.exports = {
         menu: 'rgba(0, 0, 0, 0.2) 0px 2px 4px',
         modal: '0px 0px 10px 0px rgba(0, 0, 0, 0.25)',
         input: `0 0 4px 0 ${brand}`,
+        stickysearch: ' 0px 7px 7px 3px rgba(255,255,255,0.8)',
       },
       fontFamily: {
         serlo: 'Karla, sans-serif',
@@ -123,6 +127,11 @@ module.exports = {
       },
       backgroundSize: {
         '100%': '100% 100%',
+        'size-200': '200% 200%',
+      },
+      backgroundPosition: {
+        'pos-0': '0% 0%',
+        'pos-100': '100% 100%',
       },
       minHeight: {
         8: '32px',
@@ -159,8 +168,9 @@ module.exports = {
       md: '1024px',
       lg: '1216px',
       xl: '1300px',
+      '2xl': '1436px',
       print: { raw: 'print' },
     },
   },
-  plugins: [require('tailwindcss-animate'), serloEditorPlugin],
+  plugins: [tailwindAnimate, serloEditorPlugin],
 }

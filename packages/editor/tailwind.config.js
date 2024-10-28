@@ -1,11 +1,7 @@
-import sharedTailwindBase from '@serlo/frontend/shared/tailwind-base.js'
-import { serloEditorPlugin } from './src/tailwind/serlo-editor-plugin'
+import sharedTailwindBase from './src/tailwind/tailwind-base.js'
 
 /** @type {import('tailwindcss').Config} */
 export default {
   presets: [sharedTailwindBase],
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}'
-  ],
-  plugins: [serloEditorPlugin],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
 }
