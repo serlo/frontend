@@ -115,7 +115,7 @@ class SerloEditorDemo extends LitElement {
           `
         )}
       </select>
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 70px;">
         <serlo-editor
           use-shadow-dom=${!this.isRenderedInShadowRoot}
           mode=${this.editing ? 'write' : 'read'}
