@@ -1,6 +1,7 @@
-import { version } from '../../package.json'
+import packageInfo from '../../package.json'
 
 export function getEditorVersion() {
-  if (!version) throw new Error('Could not retrieve version from package.json')
-  return version
+  if (!packageInfo.version)
+    throw new Error('Could not retrieve version from package.json')
+  return packageInfo.version
 }
