@@ -1,8 +1,12 @@
 /* https://tailwindcss.com/docs/using-with-preprocessors#build-time-imports */
 @import 'tailwindcss/base';
-@import './components.css';
-@import '../../../../../packages/editor/src/tailwind/components.css';
+@import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* @import 'tailwindcss/base'; */
+@import '../../../../../packages/editor/src/tailwind/components.css';
+@import './components.css';
+/* @import 'tailwindcss/utilities'; */
 
 /* print and pdf styles */
 
