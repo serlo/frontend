@@ -73,14 +73,63 @@ const visibleTypes = Object.values(pluginMenuType).filter((type) => {
   return true
 })
 
-export function getPluginMenuItems(editStrings: EditStrings): PluginMenuItem[] {
-  return visibleTypes.map((type) => {
-    const [initialState, unwrappedPlugin] = getInitialState(type)
-    const strings = getTitleAndDescription(type, unwrappedPlugin, editStrings)
-    const icon = getIconString(type)
+/**
+ * Mapping from EditorPluginType which contains all internally available plugins
+ * to the pluginMenuType which contains all the plugins that are exposed in our
+ * plugin menu (e.g individual Sc/Mc exercise which internally is a single
+ * plugin).
+ */
+const editorPluginTypeToPluginMenuTypeMapping: Record<string, string[]> = {
+  [EditorPluginType.ScMcExercise]: [
+    pluginMenuType.SingleChoiceExercise,
+    pluginMenuType.MultipleChoiceExercise,
+  ],
+  [EditorPluginType.BlanksExercise]: [
+    pluginMenuType.BlanksExercise,
+    pluginMenuType.BlanksExerciseDragAndDrop,
+  ],
+}
 
-    return { type, icon, initialState, ...strings }
-  })
+function createPluginMenuItem(
+  type: PluginMenuType,
+  editStrings: EditStrings
+): PluginMenuItem {
+  const [initialState, unwrappedPlugin] = getInitialState(type)
+  const strings = getTitleAndDescription(type, unwrappedPlugin, editStrings)
+  const icon = getIconString(type)
+
+  return { type, icon, initialState, ...strings }
+}
+
+export function getPluginMenuItems(
+  editStrings: EditStrings,
+  allowedPlugins?: string[] | undefined
+): PluginMenuItem[] {
+  if (!allowedPlugins) {
+    return visibleTypes.map((type) => createPluginMenuItem(type, editStrings))
+  }
+
+  // Create a Set of all allowed menu types
+  const allowedMenuTypes = new Set(
+    allowedPlugins.flatMap((plugin) => {
+      // If this editor plugin type maps to multiple menu types (e.g
+      // scMcExercise), return all of them
+      const menuTypes = editorPluginTypeToPluginMenuTypeMapping[plugin]
+      if (menuTypes) {
+        return menuTypes
+      }
+
+      // Otherwise return the plugin type as is
+      return [plugin]
+    })
+  )
+
+  // Filter visibleTypes (which are menu types) against our set of allowed menu types
+  const filteredPluginMenuItems = visibleTypes
+    .filter((type) => allowedMenuTypes.has(type))
+    .map((type) => createPluginMenuItem(type, editStrings))
+
+  return filteredPluginMenuItems
 }
 
 export interface PluginMenuItem {

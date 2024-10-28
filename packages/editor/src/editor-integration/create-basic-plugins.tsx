@@ -129,7 +129,10 @@ export function createBasicPlugins(
 
     // Special plugins, never visible in suggestions
     // ===================================================
-    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
+    {
+      type: EditorPluginType.Rows,
+      plugin: createRowsPlugin(undefined, plugins),
+    },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     {
       type: TemplatePluginType.GenericContent,
@@ -137,5 +140,9 @@ export function createBasicPlugins(
     },
   ]
 
-  return allPlugins.filter(({ type }) => plugins.includes(type))
+  const filteredPlugins = allPlugins.filter(({ type }) =>
+    plugins.includes(type)
+  )
+
+  return filteredPlugins
 }

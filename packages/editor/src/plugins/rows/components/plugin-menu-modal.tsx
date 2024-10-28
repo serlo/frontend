@@ -39,7 +39,10 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
-  const menuItems = getPluginMenuItems(editorStrings)
+  const menuItems = getPluginMenuItems(
+    editorStrings,
+    pluginMenuState.allowedChildPlugins
+  )
 
   const allowedPlugins = useMemo(() => {
     const allPluginsWithDuplicates = menuItems.map(

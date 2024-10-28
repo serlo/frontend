@@ -20,13 +20,18 @@ const defaultConfig = {
 }
 
 export function createRowsPlugin(
-  config = defaultConfig
+  config = defaultConfig,
+  allowedPlugins?: string[]
 ): EditorPlugin<RowsPluginState, RowsConfig> {
   const { content } = config
 
   return {
     Component: RowsEditor,
-    config,
+    config: {
+      ...defaultConfig,
+      ...config,
+      allowedPlugins,
+    },
     state: createRowsState(content),
     insertChild(state, { previousSibling, document }) {
       if (!previousSibling) {
