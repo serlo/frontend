@@ -367,7 +367,7 @@ export const editStrings = {
       addOptionalInteractiveEx: 'Füge optional ein interaktives Element hinzu:',
       changeInteractive: 'Interaktives Element ändern',
       confirmRemoveInteractive:
-        'Your current changes will be replaced. Are you sure?',
+        'Deine aktuellen Änderungen werden dabei überschrieben, bist du sicher?',
       createSolution: 'Lösung hinzufügen',
       removeSolution: 'Lösung entfernen',
       previewMode: 'Vorschau',
