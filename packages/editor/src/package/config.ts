@@ -5,6 +5,7 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 export const defaultPlugins = [
   EditorPluginType.Text,
   EditorPluginType.Image,
+  EditorPluginType.Video,
   EditorPluginType.Multimedia,
   EditorPluginType.Spoiler,
   EditorPluginType.Box,
