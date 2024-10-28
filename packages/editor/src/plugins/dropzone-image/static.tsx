@@ -145,7 +145,7 @@ export function DropzoneImageStaticRenderer(
 
   // Show answer button if none of the zones are empty
   const isCheckAnswersButtonVisible = useMemo(() => {
-    return isZoneCorrectMap.size === nonEmptyAnswerZones.length
+    return isZoneCorrectMap.size >= nonEmptyAnswerZones.length
   }, [isZoneCorrectMap.size, nonEmptyAnswerZones.length])
 
   const checkAnswers = () => {
