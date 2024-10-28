@@ -80,14 +80,40 @@ const singleChoiceKey = Plugin.SingleChoiceExercise
 const initialStateOfSingleChoice = pluginMenuEn[singleChoiceKey].initialState
 ```
 
+## How to disable/remove plugins
+
+The Serlo Editor Web Component allows you to customize which plugins are available in the editor. By default, it uses all available plugins (defaultPlugins), but you can modify this list to remove specific plugins.
+
+````typescript
+import { EditorPluginType, defaultPlugins } from '@serlo/editor-web-component'
+
+// Filter out specific plugins like here the video plugin
+const filteredPlugins = defaultPlugins.filter(
+plugin => plugin !== EditorPluginType.Video
+)
+
+
+// Then you can pass the filteredPlugins to the plugins array of the editor-web-component
+```
+
+You can also set the plugins configuration directly via the HTML attribute:
+```html
+<serlo-editor
+plugins='["text", "image", ...]'
+> </serlo-editor>
+```
+
+The plugins attribute/property accepts an array of plugin types. You can reference EditorPluginType for all available plugin options. Note that upon first render, the object will be frozen. You can't change the available plugins dynamically, so make sure to filter out the plugins you don't want before the first render!
+
 ## Shadow DOM vs. normal DOM
 
 We give you the option whether you want to render the web-component within the Shadow DOM or not. Both have their pros and cons. Outside of the Shadow DOM, it's easier to run into style collisions. However, the Serlo Editor within the Shadow DOM is still buggy in a few places, especially when it comes to focus management.
-We are fixing them, but by default we are rendering the Serlo Editor within the normal DOM. If you want to render it within the Shadow DOM, you can pass `true` to the `use-shadow-dom` argument. Bug reports and fixes in form of a PR for the use-shadow-dom mode are very welcome!
+As we'll be deprecating the Shadow DOM soon, we highly recommend using the normal DOM!
+By default we are rendering the Serlo Editor within the normal DOM. If you want to render it within the Shadow DOM, you can pass `true` to the `use-shadow-dom` argument. Bug reports and fixes in form of a PR for the use-shadow-dom mode are very welcome!
 
 ```html
 <editor-web-component use-shadow-dom="true"></editor-web-component>
-```
+````
 
 ## Releasing a new version to npm
 
