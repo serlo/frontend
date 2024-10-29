@@ -232,6 +232,7 @@ export const editStrings = {
       addOverlayContent: 'Aufgabe an aktueller Stelle einfügen',
       addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
       changeVideo: 'Video austauschen',
+      saveButton: 'Speichern',
     },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
