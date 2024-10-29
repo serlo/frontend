@@ -4,7 +4,7 @@ export function loginAsAdmin(I: CodeceptJS.I) {
   I.amOnPage('/')
   I.see('Anmelden')
   I.click('Anmelden')
-  I.waitForText('Benutzername oder E-Mailadresse', 10)
+  I.waitForText('Benutzername oder E-Mailadresse', 20)
   I.fillField('Benutzername oder E-Mailadresse', adminUser)
   I.fillField('Passwort', '123456')
   I.click('Anmelden', "button[value='password']")

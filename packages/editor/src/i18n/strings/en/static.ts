@@ -9,6 +9,11 @@ export const staticStrings = {
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources',
+      subsectionTypes: {
+        articles: 'Articles',
+        courses: 'Courses',
+        videos: 'Videos',
+      },
     },
     audio: {
       failed: "Sorry, the audio file couldn't be loaded.",

@@ -46,16 +46,32 @@ jobs:
       - name: Create and push Git tag
         if: steps.check_published.outputs.already_published == 'false'
         run: |
-          git tag v$CURRENT_VERSION
-          git push origin v$CURRENT_VERSION
+          TAG_NAME="v${CURRENT_VERSION}-editor"
+          git tag "$TAG_NAME"
+          git push origin "$TAG_NAME"
 
       - name: Extract changelog for current version
         id: extract_changelog
         run: |
-          CHANGELOG=$(awk "/## Changelog for version $CURRENT_VERSION/,/^##/" packages/editor/CHANGELOG.md | sed '$d')
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          echo "$CHANGELOG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "Extracting changelog for version $CURRENT_VERSION"
+            CHANGELOG=$(awk -v ver="$CURRENT_VERSION" '
+              $0 == "## Changelog for version " ver {
+                flag=1;
+                next
+              }
+              $0 ~ /^## / {
+                if(flag) exit
+              }
+              flag { print }
+            ' packages/editor/CHANGELOG.md)
+
+            echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+            echo "$CHANGELOG" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+
+          # Debug output since sometimes the body does not get published
+          echo "Extracted changelog:"
+          echo "$CHANGELOG"
 
       - name: Create GitHub Release
         if: steps.check_published.outputs.already_published == 'false'
@@ -63,14 +79,19 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.version }}
         run: |
+          TAG_NAME="v${RELEASE_VERSION}-editor"
+          # Debugging again
+          echo "Release body:"
+          echo "$CHANGELOG"
+
           curl -X POST \
             -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/releases \
             -d @- << EOF
           {
-            "tag_name": "v${RELEASE_VERSION}",
+            "tag_name": "${TAG_NAME}",
             "name": "Serlo Editor - v${RELEASE_VERSION}",
-            "body": $(echo "$RELEASE_NOTES" | jq -Rs .)
+            "body": $(echo "$CHANGELOG" | jq -Rs .)
           }
           EOF

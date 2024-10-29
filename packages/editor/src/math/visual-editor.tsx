@@ -1,5 +1,5 @@
-import { isTouchDevice } from '@editor/core/helpers/is-touch-device'
 import { cn } from '@editor/utils/cn'
+import { isTouchDevice } from '@editor/utils/is-touch-device'
 import * as MQ from 'react-mathquill'
 
 import type { MathEditorProps } from './editor'

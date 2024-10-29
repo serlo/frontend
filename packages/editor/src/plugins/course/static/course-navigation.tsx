@@ -1,7 +1,7 @@
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useRouter } from 'next/router'
 
+import { type DummyNextRouter } from './static'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 
 export function CourseNavigation({
@@ -10,14 +10,15 @@ export function CourseNavigation({
   courseNavOpen,
   setCourseNavOpen,
   pageUrls,
+  router,
 }: {
   pages: EditorCourseDocument['state']['pages']
   activePageId?: string
   courseNavOpen: boolean
   setCourseNavOpen: (open: boolean) => void
   pageUrls?: string[]
+  router: DummyNextRouter
 }) {
-  const router = useRouter()
   if (!pages) return null
 
   const toggleCourseNav = () => setCourseNavOpen(!courseNavOpen)
@@ -31,6 +32,15 @@ export function CourseNavigation({
         const active = activePageId && activePageId.startsWith(id)
         const href = active ? undefined : pageUrls?.[index]
 
+        function handleClick(e: React.MouseEvent) {
+          e.preventDefault()
+          if (!href) return
+          void router.push(href, undefined, { shallow: true })
+          setTimeout(() => {
+            document.title = title
+          }, 100)
+        }
+
         return {
           key: id + title,
           element: (
@@ -40,14 +50,7 @@ export function CourseNavigation({
                 active && 'font-semibold text-almost-black hover:no-underline'
               )}
               href={href}
-              onClick={(e) => {
-                e.preventDefault()
-                if (!href) return
-                void router.push(href, undefined, { shallow: true })
-                setTimeout(() => {
-                  document.title = title
-                }, 100)
-              }}
+              onClick={handleClick}
             >
               {title}
             </a>
