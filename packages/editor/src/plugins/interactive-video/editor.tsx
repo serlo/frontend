@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { type InteractiveVideoProps } from '.'
 import { EditMode } from './editor/edit-mode'
 import { SelectVideoMode } from './editor/select-video-mode'
-import { InteractiveVideoStaticRenderer } from './static'
 import { InteractiveVideoToolbar } from './toolbar'
 
 export function InteractiveVideoEditor(props: InteractiveVideoProps) {
@@ -32,10 +31,13 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
           setPreviewActive={setPreviewActive}
         />
       )}
-      {previewActive && videoSrc.length ? (
-        <InteractiveVideoStaticRenderer {...staticDocument} />
-      ) : videoSrc ? (
-        <EditMode {...props} videoSrc={videoSrc} staticMarks={staticMarks} />
+      {videoSrc.length ? (
+        <EditMode
+          previewActive={previewActive}
+          {...props}
+          videoSrc={videoSrc}
+          staticMarks={staticMarks}
+        />
       ) : (
         <SelectVideoMode videoId={state.video.id} staticVideoSrc={videoSrc} />
       )}

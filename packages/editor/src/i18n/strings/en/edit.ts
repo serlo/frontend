@@ -382,9 +382,8 @@ export const editStrings = {
         'Your current changes will be replaced. Are you sure?',
       createSolution: 'Create solution',
       removeSolution: 'Remove solution',
-      previewMode: 'Preview',
-      previewIsActiveHint: 'Preview mode is active',
-      previewIsDeactiveHint: 'Here you can edit',
+      toLearnersView: 'To Learners View',
+      toEditView: 'To Edit View',
     },
     exerciseGroup: {
       title: 'Exercise Group',

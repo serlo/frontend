@@ -392,9 +392,8 @@ export const editStrings = {
         'Deine aktuellen Änderungen werden dabei überschrieben, bist du sicher?',
       createSolution: 'Lösung hinzufügen',
       removeSolution: 'Lösung entfernen',
-      previewMode: 'Vorschau',
-      previewIsActiveHint: 'Vorschaumodus ist aktiv',
-      previewIsDeactiveHint: 'Hier kannst du bearbeiten',
+      toLearnersView: 'Zur Lernenden-Ansicht',
+      toEditView: 'Zur Bearbeitungs-Ansicht',
     },
     exerciseGroup: {
       title: 'Aufgabe mit Teilaufgaben',

@@ -8,7 +8,10 @@ import { OverlayContentModal } from './overlay-content-modal'
 import { PlayerTools } from './player-tools'
 import { type InteractiveVideoProps } from '..'
 import { addOverlayContent } from '../helpers/add-overlay-content'
+import { useCheckSeekAndPlay } from '../helpers/use-check-seek-and-play'
+import { useLearnerInteractions } from '../helpers/use-learner-interactions'
 import { InteractiveVideoRenderer } from '../renderer/renderer'
+import { MarkOverlay } from '../static/mark-overlay'
 
 export function EditMode({
   id,
@@ -16,12 +19,20 @@ export function EditMode({
   state,
   staticMarks,
   videoSrc,
+  previewActive,
 }: InteractiveVideoProps & {
   staticMarks: EditorInteractiveVideoDocument['state']['marks']
   videoSrc: string
+  previewActive: boolean
 }) {
   const { marks } = state
   const dispatch = useDispatch()
+
+  const learnerInteractions = useLearnerInteractions()
+  const checkSeekAndPlay = useCheckSeekAndPlay({
+    marks: staticMarks,
+    learnerInteractions,
+  })
 
   const [showOverlayContentIndex, setShowOverlayContentIndex] = useState<
     null | number
@@ -38,16 +49,28 @@ export function EditMode({
       <InteractiveVideoRenderer
         videoSrc={videoSrc}
         marks={staticMarks}
+        learnerInteractions={previewActive ? learnerInteractions : undefined}
         tools={
-          <PlayerTools
-            addOverlayContent={(time: number) =>
-              addOverlayContent(time, marks, setShowOverlayContentIndex)
-            }
-            openOverlayByStartTime={openOverlayByStartTime}
-          />
+          previewActive ? (
+            <MarkOverlay
+              showOverlayContentIndex={showOverlayContentIndex}
+              marks={staticMarks}
+              learnerInteractions={learnerInteractions}
+              openOverlayByStartTime={openOverlayByStartTime}
+              close={() => setShowOverlayContentIndex(null)}
+            />
+          ) : (
+            <PlayerTools
+              addOverlayContent={(time: number) =>
+                addOverlayContent(time, marks, setShowOverlayContentIndex)
+              }
+              openOverlayByStartTime={openOverlayByStartTime}
+            />
+          )
         }
+        checkSeekAndPlay={checkSeekAndPlay}
       />
-      {showOverlayContentIndex === null ? null : (
+      {showOverlayContentIndex === null || previewActive ? null : (
         <OverlayContentModal
           onClose={() => {
             setShowOverlayContentIndex(null)
@@ -57,7 +80,7 @@ export function EditMode({
         />
       )}
       <div className="h-6" />
-      {focused ? (
+      {focused && !previewActive ? (
         <MarksList
           marks={marks}
           staticMarks={staticMarks}

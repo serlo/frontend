@@ -1,3 +1,5 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
@@ -14,8 +16,6 @@ import {
   getMarkInteractions,
   type LearnerInteractions,
 } from '../helpers/use-learner-interactions'
-import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export function MarkOverlay({
   showOverlayContentIndex,
@@ -94,16 +94,15 @@ export function MarkOverlay({
           </button>
         ) : null}
       </div>
-      <ModalWithCloseButton
+      <EditorModal
         isOpen={!!activeMark}
         setIsOpen={() => closeOverlay()}
         className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
         title={activeMark?.title ?? ''}
         extraTitleClassName="serlo-h2"
-        appElementOverride={player?.$el ?? undefined}
       >
         {renderContent()}
-      </ModalWithCloseButton>
+      </EditorModal>
     </>
   )
 

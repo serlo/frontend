@@ -31,7 +31,7 @@ export function OverlayContentModal({
       extraCloseButtonClassName="sr-only"
     >
       <button
-        className="serlo-button-editor-primary absolute right-side top-8"
+        className="serlo-button-editor-primary absolute right-2 top-3"
         onClick={onClose}
       >
         {pluginStrings.saveButton} <FaIcon icon={faCheck} />
