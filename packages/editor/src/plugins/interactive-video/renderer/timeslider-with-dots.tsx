@@ -1,11 +1,11 @@
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
+import { cn } from '@editor/utils/cn'
 import { TimeSlider } from '@vidstack/react'
 
 import {
   getMarkInteractions,
   type LearnerInteractions,
 } from '../helpers/use-learner-interactions'
-import { cn } from '@/helper/cn'
 
 export function TimeSliderWithDots({
   marks,

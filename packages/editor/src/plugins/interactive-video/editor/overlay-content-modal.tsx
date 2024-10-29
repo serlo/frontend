@@ -1,11 +1,11 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import { useRef } from 'react'
 
 import { type InteractiveVideoProps } from '..'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { cn } from '@/helper/cn'
 
 export function OverlayContentModal({
   mark,
@@ -20,7 +20,7 @@ export function OverlayContentModal({
   const titleRef = useRef<HTMLInputElement>(null)
 
   return (
-    <ModalWithCloseButton
+    <EditorModal
       isOpen
       setIsOpen={onClose}
       className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
@@ -75,6 +75,6 @@ export function OverlayContentModal({
         </label>
       </div>
       <div className="mx-side mt-16">{child.render()}</div>
-    </ModalWithCloseButton>
+    </EditorModal>
   )
 }
