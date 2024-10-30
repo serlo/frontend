@@ -27,6 +27,6 @@ Scenario('Save changes', async ({ I }) => {
   I.click('.license-wrapper')
 
   I.fillField('label textarea', 'I wrote some Text')
-  I.click('button.serlo-button.ml-2.serlo-button-green')
+  I.click('button.serlo-button-learner.serlo-button-green')
   I.dontSee('Bitte alle Pflichtfelder ausfüllen')
 })
