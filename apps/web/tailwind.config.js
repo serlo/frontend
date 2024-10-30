@@ -16,6 +16,28 @@ export default {
       addComponents(extractCSSClasses())
     }),
   ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        'circled-and-arrow':
+          "url('/_assets/img/landing/circled_and_arrow.svg')",
+        underlined: "url('/_assets/img/landing/underlined.svg')",
+        'underlined-simple': "url('/_assets/img/landing/simple-underline.svg')",
+        wiggle: "url('/_assets/img/landing/wiggle.svg')",
+        orangeBow: "url('/_assets/img/landing/about-container.svg')",
+        blueWave: "url('/_assets/img/landing/footer-container.svg')",
+        topWaveFromWhite: "url('/_assets/img/landing/top-wave.svg')",
+      },
+      backgroundSize: {
+        '100%': '100% 100%',
+      },
+      maxWidth: { xs: '300px' },
+      fontFamily: {
+        serlo: 'Karla, sans-serif',
+        handwritten: 'Caveat, sans-serif',
+      },
+    },
+  },
 }
 
 function extractCSSClasses() {
