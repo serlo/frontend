@@ -197,7 +197,7 @@ Scenario('Breadcrumbs', ({ I }) => {
   I.see('Mathematik', 'a.hidden')
   I.see('Realschule', 'a.hidden')
   I.see('Klasse 7', 'a.hidden')
-  I.see('Grundwissenstest 7. Klasse', 'a.serlo-button')
+  I.see('Grundwissenstest 7. Klasse', 'a.serlo-button-learner')
 
   // Is short-circuit
   I.dontSee('Deutschland')
