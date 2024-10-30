@@ -1,3 +1,9 @@
+## Changelog for version 0.19.0
+
+- refactor(editor): remove css injected by js plugin. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4234
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.18.0-editor...v0.19.0-editor
+
 ## Changelog for version 0.18.0
 
 - docs(editor): Document that plugins config can't be dynamically changed. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4233
