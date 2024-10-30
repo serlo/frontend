@@ -30,8 +30,8 @@ export function CommunityWallPersons({
             className={cn(
               `
                 group z-30 mx-1 mt-12
-                w-1/3v max-w-[13rem] text-center
-                sm:w-1/4v md:absolute md:w-1/8v
+                w-[33vw] max-w-[13rem] text-center
+                sm:w-[25vw] md:absolute md:w-[12.5vw]
               `,
               hideMobile && 'hidden md:block'
             )}

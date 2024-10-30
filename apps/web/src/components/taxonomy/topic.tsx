@@ -61,7 +61,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
       {data.trashed && renderTrashedNotice()}
       {renderHeader()}
       {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/2">
+      <div className="min-h-[50vh]">
         <div className="mt-6 sm:mb-5">
           <EditorRenderer
             document={data.description as unknown as EditorRowsDocument}

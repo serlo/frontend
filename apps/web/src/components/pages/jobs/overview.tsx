@@ -225,7 +225,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                     className="font-extrabold leading-cozy text-almost-black"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
-                  <p className="serlo-p mx-auto mt-2 max-w-65 hyphens-manual text-lg font-normal leading-snug">
+                  <p className="serlo-p mx-auto mt-2 max-w-[260px] hyphens-manual text-lg font-normal leading-snug">
                     {content}
                   </p>
                 </div>
@@ -345,7 +345,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         className={cn(`
           group relative mx-auto
           mt-12 max-w-[20rem]
-          text-center sm:w-1/3v
+          text-center sm:w-[33vw]
         `)}
       >
         <div className="relative w-full">

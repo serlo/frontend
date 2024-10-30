@@ -50,7 +50,7 @@ export function FooterNavNew() {
 
   function renderFooterNavChildren(items: { url: string; title: string }[]) {
     return (
-      <ul className="mt-8 mobile:mr-8 mobile:mt-0 mobile:max-w-30p md:max-w-none">
+      <ul className="mt-8 mobile:mr-8 mobile:mt-0 mobile:max-w-[30%] md:max-w-none">
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link

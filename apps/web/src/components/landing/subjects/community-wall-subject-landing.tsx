@@ -83,7 +83,7 @@ export function CommunityWallSubjectLanding({
         <div
           className={cn(`
             flex flex-wrap justify-evenly md:relative md:block
-            md:h-630 md:pb-12 lg:mx-auto lg:max-w-[85rem]
+            md:h-[630px] md:pb-12 lg:mx-auto lg:max-w-[85rem]
           `)}
         >
           <CommunityWallPersons

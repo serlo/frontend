@@ -31,31 +31,10 @@ export default {
       backgroundSize: {
         '100%': '100% 100%',
       },
-      backgroundPosition: {
-        'pos-0': '0% 0%',
-        'pos-100': '100% 100%',
-      },
-      maxWidth: {
-        xs: '300px',
-        65: '260px',
-        '30p': '30%',
-      },
-      width: {
-        '1/8v': '12.5vw',
-        '1/4v': '25vw',
-        '1/3v': '33vw',
-      },
-      height: {
-        630: '630px',
-      },
+      maxWidth: { xs: '300px' },
       fontFamily: {
         serlo: 'Karla, sans-serif',
         handwritten: 'Caveat, sans-serif',
-      },
-      minHeight: {
-        8: '32px',
-        '1/2': '50vh',
-        '1/4': '25vh',
       },
     },
   },

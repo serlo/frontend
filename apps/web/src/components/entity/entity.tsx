@@ -48,7 +48,7 @@ export function Entity({ data }: EntityProps) {
       {renderNotices()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/4" key={data.id}>
+      <div className="min-h-[25vh]" key={data.id}>
         {data.content && renderContent(data.content)}
         {isLenabiUserJourneyCoursePage ? <LenabiCourseFeedback /> : null}
       </div>
