@@ -21,5 +21,5 @@ function getSrc(isSerlo?: boolean, src?: string) {
 
   if (isAllowed) return src
 
-  return `https://asset-proxy.${serloDomain}/src?url=${encodeURIComponent(src)}`
+  return `https://asset-proxy.${serloDomain}/image?url=${encodeURIComponent(src)}`
 }
