@@ -35,7 +35,7 @@ export function SaveButton({
 
   return createPortal(
     <div className="sticky right-0 top-0">
-      <button className="serlo-button-green" onClick={handleClick}>
+      <button className="serlo-button-edit-primary" onClick={handleClick}>
         <FaIcon icon={faSave} /> {editStrings.edtrIo.save}
       </button>
       <SaveModal

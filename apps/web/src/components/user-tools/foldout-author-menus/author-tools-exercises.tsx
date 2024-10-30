@@ -45,7 +45,7 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
         <Item>
           <Trigger
             className={cn(`
-              serlo-button ml-1 hidden h-8 w-8
+              serlo-button-learner ml-1 hidden h-8 w-8
               p-0 text-center text-base leading-8
               text-brandgreen hover:bg-brandgreen hover:text-white sm:inline-block
             `)}

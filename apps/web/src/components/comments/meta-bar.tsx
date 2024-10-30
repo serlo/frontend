@@ -44,7 +44,7 @@ export function MetaBar({
         user={user}
         withIcon
         className={cn(`
-          serlo-button -ml-1 flex items-center
+          serlo-button-learner -ml-1 flex items-center
           pl-1 text-lg font-bold text-brand 
           hover:bg-brand-200 hover:text-brand hover:no-underline
         `)}
@@ -77,7 +77,7 @@ export function MetaBar({
               <TimeAgo datetime={date} />
             </span>
             <button
-              className="serlo-button ml-1 h-7 w-7 bg-brand-50 pr-2 text-brand "
+              className="serlo-button-learner ml-1 h-7 w-7 bg-brand-50 pr-2 text-brand "
               aria-label="Tool Menu"
             >
               <FaIcon icon={faEllipsisVertical} />

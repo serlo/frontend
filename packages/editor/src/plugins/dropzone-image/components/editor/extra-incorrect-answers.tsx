@@ -48,7 +48,7 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
         </>
       )}
       <button
-        className="serlo-button-editor-secondary"
+        className="serlo-button-edit-secondary"
         onClick={() => setModalType(ModalType.CreateWrongAnswer)}
         data-qa="plugin-dropzone-image-add-wrong-answer-button"
       >

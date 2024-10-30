@@ -22,7 +22,17 @@ export const AutogrowInput = forwardRef<
   }, [ref, cursor, value])
 
   return (
-    <span className="serlo-autogrow-input" data-value={String(value) + '_ '}>
+    /* heavily inspired by Shaw (https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas)
+       this needs a data-value on the wrapping element equal to the value of the input
+    */
+    <span
+      className={cn(
+        'serlo-autogrow-input relative inline-grid',
+        'after:w-auto after:min-w-16 after:resize-none after:resize-none after:px-3 after:[grid-area:1_/_2]',
+        "after:invisible after:-ml-2 after:whitespace-pre-wrap after:content-[attr(data-value)_'_']"
+      )}
+      data-value={String(value) + '_ '}
+    >
       <input
         // Assign the input to both the local and the passed on ref
         ref={(node) => {
@@ -31,7 +41,8 @@ export const AutogrowInput = forwardRef<
           else if (ref) ref.current = node
         }}
         className={cn(
-          `w-3/4 !min-w-[80px] rounded-full border border-brand bg-brand-50 focus:outline focus:outline-1`,
+          'w-auto min-w-[80px] resize-none rounded-full px-3 [grid-area:1_/_2]',
+          'border border-brand bg-brand-50 focus:outline focus:outline-1',
           className
         )}
         value={value}

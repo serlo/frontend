@@ -42,7 +42,7 @@ export function ArticleRelatedMagicInput({
       <>
         {typename === UuidType.TaxonomyTerm ? (
           <button
-            className="serlo-button-editor-secondary mr-2 text-base leading-browser"
+            className="serlo-button-edit-secondary mr-2 text-base leading-browser"
             onClick={() => {
               showExerciseFolderPreview(id)
               document.getElementById('exerciseFolderScroll')?.scrollIntoView({

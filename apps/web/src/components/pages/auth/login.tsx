@@ -134,7 +134,10 @@ export function Login({ oauth }: { oauth?: boolean }) {
         {showLogout ? <div>{loginStrings.logOut}</div> : null}
         <div className="mx-side mt-20 border-t-2 pt-4">
           {loginStrings.newHere}{' '}
-          <Link href={registrationUrl} className="serlo-button-light">
+          <Link
+            href={registrationUrl}
+            className="serlo-button-learner-secondary"
+          >
             {loginStrings.registerNewAccount}
           </Link>
         </div>

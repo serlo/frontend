@@ -363,7 +363,7 @@ export function Event({
         content={renderTooltip(loggedInStrings?.setToRead)}
       >
         <button
-          className="serlo-button-blue-transparent text-base"
+          className="serlo-button-learner-transparent text-base"
           onClick={() => setToRead(eventId)}
         >
           <FaIcon icon={faCheck} />
@@ -382,7 +382,7 @@ export function Event({
         content={renderTooltip(loggedInStrings?.hide)}
       >
         <button
-          className="serlo-button-blue-transparent mr-3 text-base"
+          className="serlo-button-learner-transparent mr-3 text-base"
           onClick={() => {
             void mute(objectId)
             if (unread) void setToRead(eventId)

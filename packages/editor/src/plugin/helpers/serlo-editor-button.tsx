@@ -16,7 +16,7 @@ export function SerloAddButton({
 }: SerloAddButtonProps) {
   return (
     <button
-      className={`serlo-button-editor-secondary ml-side text-base leading-browser ${
+      className={`serlo-button-edit-secondary ml-side text-base leading-browser ${
         className ?? ''
       }`}
       onClick={onClick}

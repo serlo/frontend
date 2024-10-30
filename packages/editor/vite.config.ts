@@ -4,15 +4,8 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import replace from '@rollup/plugin-replace'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 // https://vitejs.dev/guide/build.html#library-mode
-/* we use vite only for building the serlo editor package */
-
-const js = (value: string) => JSON.stringify(value)
-
-const productionKeys = ['process.env.NODE_ENV', 'process.env.NEXT_PUBLIC_ENV']
 
 const notProvidedKeys = [
   '__NEXT_I18N_SUPPORT',
@@ -36,11 +29,12 @@ const notProvidedKeys = [
 ]
 
 const envReplacements = {
-  ...Object.fromEntries(productionKeys.map((key) => [key, js('production')])),
+  'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
+  'process.env.NEXT_PUBLIC_ENV': `"${process.env.NODE_ENV}"`,
   ...Object.fromEntries(
     notProvidedKeys.map((key) => [
       `process.env.${key}`,
-      js(`NOT_PROVIDED_${key}`),
+      JSON.stringify(`NOT_PROVIDED_${key}`),
     ])
   ),
 }
@@ -55,7 +49,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'lit', '@serlo/editor-web-component'],
       output: {
         globals: {
           react: 'React',
@@ -69,6 +63,9 @@ export default defineConfig({
       '@editor': resolve(__dirname, './src'),
     },
   },
+  define: {
+    global: {},
+  },
   assetsInclude: ['./src/editor-ui/assets/plugin-icons/**/*.svg'],
   plugins: [
     replace({ ...envReplacements, preventAssignment: false }),
@@ -79,25 +76,5 @@ export default defineConfig({
       rollupTypes: true,
     }),
     svgr({ include: '**/*.svg' }),
-    cssInjectedByJsPlugin({
-      // Tried using the injectCodeFunction, but it didn't get called.
-      // preRenderCSSCode works!
-      preRenderCSSCode: (cssCode) => {
-        try {
-          // Ensure the dist directory exists
-          const distDir = resolve(__dirname, 'dist')
-          if (!existsSync(distDir)) {
-            mkdirSync(distDir, { recursive: true })
-          }
-
-          // Write the CSS to a file. Usually, this plugin excludes css bundles
-          // from the output but we need to export it for the shadow DOM
-          writeFileSync(resolve(__dirname, 'dist', 'style.css'), cssCode)
-        } catch (e) {
-          console.error('Failed to write CSS to file', e)
-        }
-        return cssCode
-      },
-    }),
   ],
 })

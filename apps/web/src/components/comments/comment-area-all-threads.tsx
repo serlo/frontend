@@ -129,7 +129,7 @@ export function CommentAreaAllThreads() {
               <LoadingSpinner noText />
             ) : (
               <button
-                className="serlo-button-blue mb-12 mt-5"
+                className="serlo-button-learner-primary mb-12 mt-5"
                 onClick={loadMore}
               >
                 {strings.actions.loadMore}

@@ -69,10 +69,10 @@ function Content() {
         <input
           ref={usernameInput}
           placeholder="Username"
-          className="serlo-button-light serlo-input-font-reset mr-5 hover:bg-brand-100 focus:bg-brand-300 focus:text-brand focus:outline-none"
+          className="serlo-button-learner-secondary serlo-input-font-reset mr-5 hover:bg-brand-100 focus:bg-brand-300 focus:text-brand focus:outline-none"
         />
         <button
-          className="serlo-button-blue"
+          className="serlo-button-learner-primary"
           onClick={async () => {
             const username = usernameInput.current?.value
             if (username && username.length > 0) {
@@ -101,7 +101,9 @@ function Content() {
               onClick={() => setShowRole(role)}
               className={cn(
                 'mb-2.5 mr-2',
-                showRole === role ? 'serlo-button-blue' : 'serlo-button-light',
+                showRole === role
+                  ? 'serlo-button-learner-primary'
+                  : 'serlo-button-learner-secondary',
                 'capitalize'
               )}
             >

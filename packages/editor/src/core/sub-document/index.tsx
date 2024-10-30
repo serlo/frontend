@@ -58,7 +58,7 @@ class ErrorBoundary extends Component<{
               this.props.undo()
               this.setState({ hasError: false })
             }}
-            className="serlo-button-blue mt-3 block"
+            className="serlo-button-edit-primary mt-3 block"
           >
             Letzte Änderung rückgänging machen
           </button>

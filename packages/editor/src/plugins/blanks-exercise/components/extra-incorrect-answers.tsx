@@ -99,7 +99,7 @@ export function ExtraIncorrectAnswers(props: ExtraIncorrectAnswersProps) {
       ) : null}
       <button
         onClick={handleExtraIncorrectAnswerAdd}
-        className="serlo-button-editor-secondary"
+        className="serlo-button-edit-secondary"
       >
         <FaIcon icon={faPlus} /> {blanksExerciseStrings.addDummyAnswer}
       </button>

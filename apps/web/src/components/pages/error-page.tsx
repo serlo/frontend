@@ -90,7 +90,7 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
         )}
         {isProbablyTemporary && (
           <button
-            className="serlo-button-blue mr-4 mt-4"
+            className="serlo-button-learner-primary mr-4 mt-4"
             onClick={() => window.location.reload()}
           >
             {errStrings.refreshNow}
@@ -104,7 +104,7 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
     // don't use csr here to make sure we refresh everything after crashing
     return (
       // eslint-disable-next-line @next/next/no-html-link-for-pages
-      <a href="/" className="serlo-button-blue mr-4 mt-4">
+      <a href="/" className="serlo-button-learner-primary mr-4 mt-4">
         {errStrings.backToHome}
       </a>
     )
@@ -114,7 +114,7 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
     if (!hasSerloBacklink) return null
     return (
       <button
-        className="serlo-button-blue mr-4 mt-4"
+        className="serlo-button-learner-primary mr-4 mt-4"
         onClick={() => window.history.back()}
       >
         {errStrings.backToPrevious}

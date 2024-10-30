@@ -17,7 +17,7 @@ export function LocalStorageButton({ open }: { open: boolean }) {
 
   return (
     <button
-      className="serlo-button-blue mt-3"
+      className="serlo-button-edit-primary mt-3"
       onClick={() => {
         const staticRoot = selectStaticDocument(store.getState(), ROOT)
         storeStateToLocalStorage(staticRoot)

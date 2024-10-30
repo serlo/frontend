@@ -123,7 +123,9 @@ export function PrivacyWrapper({
           >
             <button
               className={cn(
-                isTwingle ? 'serlo-button-blue' : 'serlo-button-light',
+                isTwingle
+                  ? 'serlo-button-learner-primary'
+                  : 'serlo-button-learner-secondary',
                 'group-hover:bg-brand-500 group-hover:text-white'
               )}
               onKeyDown={onKeyDown}

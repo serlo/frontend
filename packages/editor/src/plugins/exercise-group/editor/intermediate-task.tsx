@@ -47,7 +47,7 @@ export function IntermediateTask({
         <div>
           {canMoveTask(exerciseIndex - 1) ? (
             <button
-              className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+              className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
               onClick={() => {
                 task.afterIndex.set(exerciseIndex - 1)
               }}
@@ -58,7 +58,7 @@ export function IntermediateTask({
           ) : null}
           {canMoveTask(exerciseIndex + 1) ? (
             <button
-              className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+              className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
               onClick={() => {
                 task.afterIndex.set(exerciseIndex + 1)
               }}
@@ -67,7 +67,7 @@ export function IntermediateTask({
             </button>
           ) : null}
           <button
-            className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+            className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
             onClick={() => {
               intermediateTasks.set((currentTasks) => {
                 return currentTasks.filter((_, index) => index !== taskIndex)

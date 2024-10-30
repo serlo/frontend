@@ -125,7 +125,7 @@ export function SaveModal({
             }
           }}
           className={cn(
-            'serlo-button ml-2',
+            'serlo-button-learner ml-2',
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
           disabled={pending}

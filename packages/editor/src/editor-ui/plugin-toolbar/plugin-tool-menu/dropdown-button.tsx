@@ -26,7 +26,7 @@ export function DropdownButton({
       onClick={onClick}
       data-qa={dataQa}
     >
-      <span className="serlo-button-editor-secondary w-fit rounded-xl bg-transparent text-sm group-hover/button:bg-editor-primary-200">
+      <span className="serlo-button-edit-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-200">
         <FaIcon icon={icon} /> {label}
       </span>
     </button>

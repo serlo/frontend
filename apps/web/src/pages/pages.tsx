@@ -51,7 +51,7 @@ function Content({ pages }: PagesProps) {
 
       <Link
         href="/page/create"
-        className="serlo-button-blue float-right -mt-[4.4rem] mr-side sm:mr-48"
+        className="serlo-button-learner-primary float-right -mt-[4.4rem] mr-side sm:mr-48"
       >
         <FaIcon icon={faPlusCircle} /> {loggedInStrings.pages.newPage}
       </Link>
@@ -84,14 +84,14 @@ function Content({ pages }: PagesProps) {
           </Link>
           <span className="ml-3">
             <Link
-              className="serlo-button-blue-transparent"
+              className="serlo-button-learner-transparent"
               title={loggedInStrings.authorMenu.edit}
               href={getEditUrl(id)}
             >
               <FaIcon icon={faPencil} />
             </Link>
             <button
-              className="serlo-button-blue-transparent"
+              className="serlo-button-learner-transparent"
               title={
                 loggedInStrings.authorMenu[
                   trashed ? 'restoreContent' : 'moveToTrash'

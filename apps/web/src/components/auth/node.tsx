@@ -199,7 +199,7 @@ export function Node({
   function renderInput(attributes: UiNodeInputAttributes) {
     const basicFields = {
       className:
-        'text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-200 focus:bg-brand-200 focus:outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full border-2 border-transparent focus:border-brand border-solid',
+        'text-xl serlo-input-font-reset serlo-button-learner-secondary hover:bg-brand-200 focus:bg-brand-200 focus:outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full border-2 border-transparent focus:border-brand border-solid',
       name: attributes.name,
       onChange: (e: { target: { value: string } }) => {
         void onChange(e.target.value)
@@ -263,7 +263,7 @@ export function Node({
             e.preventDefault()
             setShowPassword(!showPassword)
           }}
-          className="serlo-button-blue-transparent relative -mt-24 ml-auto mr-1.5 block py-0 text-base"
+          className="serlo-button-learner-transparent relative -mt-24 ml-auto mr-1.5 block py-0 text-base"
         >
           <FaIcon icon={showPassword ? faEyeSlash : faEye} />{' '}
           {showPassword ? 'hide' : 'show'}

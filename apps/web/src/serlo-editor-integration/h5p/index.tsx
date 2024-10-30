@@ -157,7 +157,7 @@ function H5pEditor({ state }: H5pProps) {
               width="100%"
             />
             <button
-              className="serlo-button ml-3 mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
+              className="serlo-button-learner ml-3 mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
               disabled={
                 state.value === '' || error !== '' || mode === 'loading'
               }
@@ -187,7 +187,7 @@ function H5pEditor({ state }: H5pProps) {
           onClick={() => {
             setMode('edit')
           }}
-          className="serlo-button-editor-primary ml-4"
+          className="serlo-button-edit-primary ml-4"
         >
           Ändern
         </button>

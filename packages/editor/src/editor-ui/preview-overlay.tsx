@@ -38,7 +38,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
         {props.focused ? (
           <div className="flex h-full w-full text-center">
             <button
-              className="pointer-events-[all] serlo-button-editor-primary z-10 m-auto"
+              className="pointer-events-[all] serlo-button-edit-primary z-10 m-auto"
               onClick={() => setActive(true)}
             >
               Aktivieren
@@ -50,7 +50,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
       {active ? (
         <div className="flex h-full w-full text-center">
           <button
-            className="pointer-events-[all] serlo-button-editor-primary z-10 m-auto"
+            className="pointer-events-[all] serlo-button-edit-primary z-10 m-auto"
             onClick={() => setActive(false)}
           >
             Editieren

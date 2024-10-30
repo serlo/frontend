@@ -15,7 +15,10 @@ const ContentPage: NextPage = () => {
         <h1 className="serlo-h1">Diese URL kennen wir leider nicht. 😶‍🌫️</h1>
         (sorry, we don&apos;t seem to know this url)
         <br />
-        <a className="serlo-button-blue mt-6" href="https://serlo.org">
+        <a
+          className="serlo-button-learner-primary mt-6"
+          href="https://serlo.org"
+        >
           👉 serlo.org
         </a>
       </div>
