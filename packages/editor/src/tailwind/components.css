@@ -142,7 +142,7 @@
 
     /* duplicated in frontend */
     .serlo-input-font-reset {
-      @apply font-serlo text-base tracking-slightestly-tighter;
+      @apply font-sans text-base tracking-slightestly-tighter;
       @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
     }
 

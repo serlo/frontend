@@ -111,51 +111,14 @@ export default {
         input: `0 0 4px 0 ${brand}`,
         stickysearch: ' 0px 7px 7px 3px rgba(255,255,255,0.8)',
       },
-      fontFamily: {
-        serlo: 'Karla, sans-serif',
-        handwritten: 'Caveat, sans-serif',
-      },
-      backgroundImage: {
-        'circled-and-arrow':
-          "url('/_assets/img/landing/circled_and_arrow.svg')",
-        underlined: "url('/_assets/img/landing/underlined.svg')",
-        'underlined-simple': "url('/_assets/img/landing/simple-underline.svg')",
-        wiggle: "url('/_assets/img/landing/wiggle.svg')",
-        orangeBow: "url('/_assets/img/landing/about-container.svg')",
-        blueWave: "url('/_assets/img/landing/footer-container.svg')",
-        topWaveFromWhite: "url('/_assets/img/landing/top-wave.svg')",
-      },
-      backgroundSize: {
-        '100%': '100% 100%',
-        'size-200': '200% 200%',
-      },
-      backgroundPosition: {
-        'pos-0': '0% 0%',
-        'pos-100': '100% 100%',
-      },
       minHeight: {
         8: '32px',
-        '1/2': '50vh',
-        '1/4': '25vh',
-      },
-      maxWidth: {
-        xs: '300px',
-        65: '260px',
-        '30p': '30%',
       },
       fontSize: {
         'base-plus': ['1.1875rem', '1.22'],
         '1.5xl': ['1.3125rem', '1.22'],
         '2.5xl': ['1.7rem', '1.22'],
         '3.5xl': ['2rem', '1.22'],
-      },
-      width: {
-        '1/8v': '12.5vw',
-        '1/4v': '25vw',
-        '1/3v': '33vw',
-      },
-      height: {
-        630: '630px',
       },
       cursor: {
         'zoom-in': 'zoom-in',
