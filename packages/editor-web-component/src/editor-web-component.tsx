@@ -1,6 +1,11 @@
 /// <reference types="vite/client" />
 
-import { SerloRenderer, BaseEditor } from '@serlo/editor'
+import {
+  SerloRenderer,
+  BaseEditor,
+  defaultPlugins,
+  EditorPluginType,
+} from '@serlo/editor'
 import styles from '@serlo/editor/dist/style.css?raw'
 import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
@@ -34,6 +39,10 @@ export class EditorWebComponent extends HTMLElement {
 
   private _editorVariant: EditorVariant = 'unknown'
 
+  private _plugins = defaultPlugins
+
+  private _isProductionEnvironment: boolean = false
+
   // By default, we are NOT attaching it to the shadow DOM
   private _useShadowDOM: boolean = false
 
@@ -52,6 +61,8 @@ export class EditorWebComponent extends HTMLElement {
       'testing-secret',
       'use-shadow-dom',
       'editor-variant',
+      'plugins',
+      'is-production-environment',
     ]
   }
 
@@ -68,6 +79,10 @@ export class EditorWebComponent extends HTMLElement {
       this._useShadowDOM = newValue !== 'false'
     } else if (name === 'editor-variant' && oldValue !== newValue) {
       this.editorVariant = newValue as EditorVariant
+    } else if (name === 'plugins' && oldValue !== newValue) {
+      this.plugins = JSON.parse(newValue) as EditorPluginType[]
+    } else if (name === 'is-production-environment') {
+      this.isProductionEnvironment = newValue === 'true'
     }
   }
 
@@ -128,6 +143,28 @@ export class EditorWebComponent extends HTMLElement {
   set editorVariant(newVariant: EditorVariant) {
     this._editorVariant = newVariant
     this.setAttribute('editor-variant', newVariant)
+    this.mountReactComponent()
+  }
+
+  get plugins(): typeof defaultPlugins {
+    return this._plugins
+  }
+
+  set plugins(newPlugins) {
+    this._plugins = newPlugins
+    if (newPlugins) {
+      this.setAttribute('plugins', JSON.stringify(newPlugins))
+    }
+    this.mountReactComponent()
+  }
+
+  get isProductionEnvironment(): boolean {
+    return this._isProductionEnvironment
+  }
+
+  set isProductionEnvironment(value: boolean) {
+    this._isProductionEnvironment = value
+    this.setAttribute('is-production-environment', String(value))
     this.mountReactComponent()
   }
 
@@ -194,6 +231,8 @@ export class EditorWebComponent extends HTMLElement {
                 editorVariant={this.editorVariant}
                 initialState={this.initialState}
                 _testingSecret={testingSecretAttr}
+                plugins={this.plugins}
+                isProductionEnvironment={this.isProductionEnvironment}
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)

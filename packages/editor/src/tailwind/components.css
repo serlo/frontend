@@ -65,7 +65,7 @@
     @apply z-[101];
   }
   .serlo-table {
-    @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-normal break-normal border-brand-200;
+    @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-nowrap break-normal border-brand-200 sm:whitespace-normal;
   }
   .serlo-th {
     @apply border-b-3 border-r-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
