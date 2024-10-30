@@ -4,8 +4,6 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import replace from '@rollup/plugin-replace'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 // https://vitejs.dev/guide/build.html#library-mode
 
@@ -78,25 +76,5 @@ export default defineConfig({
       rollupTypes: true,
     }),
     svgr({ include: '**/*.svg' }),
-    cssInjectedByJsPlugin({
-      // Tried using the injectCodeFunction, but it didn't get called.
-      // preRenderCSSCode works!
-      preRenderCSSCode: (cssCode) => {
-        try {
-          // Ensure the dist directory exists
-          const distDir = resolve(__dirname, 'dist')
-          if (!existsSync(distDir)) {
-            mkdirSync(distDir, { recursive: true })
-          }
-
-          // Write the CSS to a file. Usually, this plugin excludes css bundles
-          // from the output but we need to export it for the shadow DOM
-          writeFileSync(resolve(__dirname, 'dist', 'style.css'), cssCode)
-        } catch (e) {
-          console.error('Failed to write CSS to file', e)
-        }
-        return cssCode
-      },
-    }),
   ],
 })
