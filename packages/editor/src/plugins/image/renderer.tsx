@@ -1,5 +1,7 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
+import { EditorImage } from './components/editor-image'
+
 interface ImageProps {
   image: {
     src: string
@@ -31,7 +33,7 @@ export function ImageRenderer({
       <div style={{ maxWidth }} className="mx-auto">
         {wrapWithLink(
           placeholder ?? (
-            <img
+            <EditorImage
               className="serlo-img"
               src={src}
               alt={alt ? alt : altFallbackString}
