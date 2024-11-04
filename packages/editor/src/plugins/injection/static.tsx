@@ -9,9 +9,11 @@ import { useEffect, useState } from 'react'
 function getBase(currentHost: string) {
   if (currentHost.endsWith('serlo-staging.dev'))
     return 'https://de.serlo-staging.dev'
+  if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
+
   return process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://serlo.org'
+    : 'https://de.serlo.org'
 }
 
 export function InjectionStaticRenderer({
