@@ -16,7 +16,10 @@ export function FaIcon({ icon, className, style }: FaIconProps) {
       viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`}
       aria-hidden
       focusable={false}
-      className={cn('serlo-fa-icon', className)}
+      className={cn(
+        'inline-block h-[1em] overflow-visible align-[-0.125em]',
+        className
+      )}
       style={style}
     >
       <path

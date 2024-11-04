@@ -77,7 +77,7 @@ export function EmbedWrapper({
           onClick={confirmLoad}
         >
           <button
-            className="serlo-button-editor-primary group-hover:bg-editor-primary"
+            className="serlo-button-edit-primary group-hover:bg-editor-primary"
             onKeyDown={onKeyDown}
           >
             <FaIcon

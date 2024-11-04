@@ -1,4 +1,5 @@
 import { EditorInput, PreviewOverlay } from '@editor/editor-ui'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
@@ -6,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { type SerloInjectionProps } from '.'
 import { useSerloInjectionConfig } from './config'
 import { SerloInjectionRenderer } from './renderer'
-import { FaIcon } from '../../../../../apps/web/src/components/fa-icon'
 import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { PluginToolbar } from '../../editor-ui/plugin-toolbar/plugin-toolbar'
 

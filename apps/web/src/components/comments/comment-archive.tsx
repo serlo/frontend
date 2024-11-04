@@ -32,7 +32,7 @@ export function CommentArchive({
       <p className="serlo-p">
         <button
           onClick={toogleShowArchived}
-          className="serlo-button-light mt-4"
+          className="serlo-button-learner-secondary mt-4"
         >
           {replacePlaceholders(strings.comments.showArchived, {
             threads: strings.entities.threads,

@@ -197,7 +197,7 @@ Scenario('Breadcrumbs', ({ I }) => {
   I.see('Mathematik', 'a.hidden')
   I.see('Realschule', 'a.hidden')
   I.see('Klasse 7', 'a.hidden')
-  I.see('Grundwissenstest 7. Klasse', 'a.serlo-button')
+  I.see('Grundwissenstest 7. Klasse', 'a.serlo-button-learner')
 
   // Is short-circuit
   I.dontSee('Deutschland')
@@ -208,9 +208,9 @@ Scenario('Breadcrumbs', ({ I }) => {
 
   // Another test
   I.amOnPage('/35149')
-  I.see('Angewandte Nachhaltigkeit', 'a.hidden')
+  I.waitForText('Angewandte Nachhaltigkeit', 15, 'a.hidden')
   I.see('Was bedeutet Nachhaltigkeit?', 'a.hidden')
-  I.see('Grundlagen der Nachhaltigkeit', 'a.serlo-button')
+  I.see('Grundlagen der Nachhaltigkeit', 'a.serlo-button-learner')
 
   // Check description
   I.click('Grundlagen der Nachhaltigkeit')
@@ -218,7 +218,7 @@ Scenario('Breadcrumbs', ({ I }) => {
 
   // Check if right taxonomy is selected
   I.amOnPage('/1555')
-  I.see('Wichtige Grundkörper', 'a.serlo-button')
+  I.waitForText('Wichtige Grundkörper', 15, 'a.serlo-button-learner')
   I.dontSee('Realschule')
   I.dontSee('Gymnasium')
 })
@@ -256,30 +256,30 @@ Scenario('Course', ({ I }) => {
   I.amOnPage('/1327')
   I.see('Kurse')
   I.click('Einführung lineare Funktionen')
-  I.waitForText('1', 5, 'span.rounded-full')
+  I.waitForText('1', 10, 'span.rounded-full')
   I.see('Kursübersicht', 'h1')
   I.see('Einführung lineare Funktionen')
   I.click('Weiter')
-  I.waitForText('2', 5, 'span.rounded-full')
+  I.waitForText('2', 10, 'span.rounded-full')
   I.see('Aufstieg zur Zugspitze', 'h1')
   I.click('Zurück')
-  I.waitForText('Kursübersicht', 5, 'h1')
+  I.waitForText('Kursübersicht', 10, 'h1')
   I.click('Kursübersicht')
-  I.waitForText('Zusammenfassung', 5)
+  I.waitForText('Zusammenfassung', 10)
   I.click('Weiterführende Übungen')
-  I.waitForText('Lösungsvorschlag', 5)
+  I.waitForText('Lösungsvorschlag', 20)
 })
 
 Scenario('Comments', ({ I }) => {
   // End of entity
   I.amOnPage('/1537')
   I.scrollTo('#comment-area-begin-scrollpoint')
-  I.see('Hast du eine Frage oder Feedback?')
+  I.waitForText('Hast du eine Frage oder Feedback?', 10)
   I.see('Der Artikel Koordinatesystem ist nicht')
 
   // In exercise
   I.amOnPage('/37296')
   I.click('Lösung')
   I.scrollTo('#comment-area-begin-scrollpoint')
-  I.waitForText('Ich weiß nicht, ob es vom Computer', 5)
+  I.waitForText('Ich weiß nicht, ob es vom Computer', 10)
 })

@@ -124,7 +124,7 @@ export function Comment({
           />
           <button
             onClick={() => setIsEditing(false)}
-            className="serlo-button-blue-transparent -mt-6 ml-auto mr-6 block text-base"
+            className="serlo-button-learner-transparent -mt-6 ml-auto mr-6 block text-base"
           >
             {strings.comments.cancelEdit}
           </button>

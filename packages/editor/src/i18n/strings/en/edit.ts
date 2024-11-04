@@ -4,6 +4,8 @@ export const editStrings = {
   lang: 'en',
   confirmRouteChange: 'Are you sure you want to leave without saving?',
   noChangesWarning: 'Nothing changed so there is no need to save yet',
+  savedContentMightDisappearWarning:
+    '⚠️ This is a test environment. Please do not create content that you want to keep long term here.',
   addPluginsModal: {
     searchInputPlaceholder: 'Search...',
     basicPluginsTitle: 'Content Elements',
@@ -200,6 +202,7 @@ export const editStrings = {
       placeholder: 'Serlo ID (e.g. /1565)',
       invalidStateWarning:
         "Please use a valid Serlo ID (just numbers). E.g. '/1555'",
+      errorLoading: 'Content could not be loaded, please check the id',
     },
     multimedia: {
       title: 'Multimedia content associated with text',
@@ -518,10 +521,6 @@ export const editStrings = {
     revisionSaved: 'Revision saved',
     saveRevision: 'Save revision',
     changes: 'Describe your changes to the content',
-    skipReview: 'Skip peer review (not recommended)',
-    enableNotifs: 'Enable serlo.org notifications',
-    enableNotifsMail: 'Enable notifications via e-mail',
-    switchRevision: 'Switch to another revision',
     importOther: 'Import content from other entity',
     importOtherExplanation:
       "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",

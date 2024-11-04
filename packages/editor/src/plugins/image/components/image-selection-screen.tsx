@@ -4,7 +4,7 @@ import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
 import React, { type RefObject } from 'react'
 
-import { PixabaySearchButton } from './pixabay-search-button'
+import { PixabaySearch } from './pixabay-search/pixabay-search'
 import type { ImageProps } from '..'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
@@ -61,7 +61,7 @@ export function ImageSelectionScreen({
           onBlur={() => setIsAButtonFocused(false)}
         />
         {showPixabayButton && (
-          <PixabaySearchButton
+          <PixabaySearch
             onFocus={() => setIsAButtonFocused(true)}
             onBlur={() => setIsAButtonFocused(false)}
             onSelectImage={onSelectPixabayImage}

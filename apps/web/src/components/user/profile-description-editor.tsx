@@ -14,7 +14,7 @@ export function ProfileDescriptionEditor({
 }: ProfileDescriptionEditorProps) {
   const setDescription = useUserSetDescriptionMutation()
 
-  const onSave = async (data: unknown) => {
+  const handleSave = async (data: unknown) => {
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
@@ -31,11 +31,7 @@ export function ProfileDescriptionEditor({
   return (
     <>
       <div className="[&>div.relative]:mt-12">
-        <SerloEditor
-          entityNeedsReview={false}
-          onSave={onSave}
-          initialState={initialState}
-        />
+        <SerloEditor onSave={handleSave} initialState={initialState} />
       </div>
     </>
   )

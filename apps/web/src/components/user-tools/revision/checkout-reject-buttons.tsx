@@ -87,7 +87,7 @@ export function CheckoutRejectButtons({
       <p className="mx-side mb-1">
         {strings.revisions[modalMode].explanation}
         {renderTextArea()}
-        <button className="serlo-button-light" onClick={onConfirm}>
+        <button className="serlo-button-learner-secondary" onClick={onConfirm}>
           {strings.revisions.confirm}
         </button>
       </p>

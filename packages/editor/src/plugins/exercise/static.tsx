@@ -31,7 +31,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
 
       {interactiveHidden ? (
         <button
-          className="serlo-button-blue-transparent ml-side text-base hover:bg-brand-100 hover:text-brand-700"
+          className="serlo-button-learner-transparent ml-side text-base hover:bg-brand-100 hover:text-brand-700"
           onClick={() => setInteractiveHidden(false)}
         >
           <FaIcon icon={faCircleCheck} /> {exStrings.showHiddenInteractive}

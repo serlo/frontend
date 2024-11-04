@@ -75,7 +75,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
           {index === 0 ? null : (
             <button
               onClick={() => sources.move(index, index - 1)}
-              className={buttonClass + ' relative'}
+              className={cn(buttonClass, 'relative')}
             >
               <EditorTooltip text={entityStrings.moveUpLabel} />
               <FaIcon icon={faCircleArrowUp} />
@@ -108,7 +108,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
             <LinkOverlayWithHref
               value={source.href.value}
               removeLink={() => source.href.set('')}
-              quickbarData={null}
+              noAutocomplete
             />
           ) : (
             <LinkOverlayEditMode
@@ -117,7 +117,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
               value=""
               removeLink={() => setSelectedInput(undefined)}
               shouldFocus={false}
-              quickbarData={null}
+              noAutocomplete
             />
           )}
         </div>

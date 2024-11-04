@@ -12,7 +12,7 @@ import { type CourseProps } from '..'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 
 const toolButtonClassnames = cn(
-  'serlo-button-editor-secondary serlo-tooltip-trigger mr-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100'
+  'serlo-button-edit-secondary serlo-tooltip-trigger mr-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100'
 )
 
 export function CourseNavigation({

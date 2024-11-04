@@ -307,7 +307,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           sessionStorage.setItem(hideDonationBannerKey, 'true')
           setBanner(undefined)
         }}
-        className="serlo-button-blue-transparent absolute right-6  h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
+        className="serlo-button-learner-transparent absolute right-6  h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
       >
         <FaIcon icon={faTimes} />
       </button>

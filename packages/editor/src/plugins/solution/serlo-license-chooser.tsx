@@ -3,9 +3,9 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import type { SolutionProps } from '.'
 
@@ -21,14 +21,15 @@ export function SerloLicenseChooser({
   const solutionStrings = useEditStrings().templatePlugins.solution
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
-  const { licenses } = useInstanceData()
+  const { licenses } = useContext(SerloOnlyFeaturesContext)
 
+  if (!licenses) return null
   return (
     <>
       <button
         className={cn(
           'absolute -top-0.5 right-12 z-20',
-          'serlo-button-editor-secondary serlo-tooltip-trigger mr-2',
+          'serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger mr-2',
           className
         )}
         onMouseDown={(e) => {
@@ -50,7 +51,7 @@ export function SerloLicenseChooser({
       >
         <div className="mx-side mb-3">
           <select
-            className="serlo-button-light serlo-input-font-reset max-w-md"
+            className="serlo-button-learner-secondary serlo-input-font-reset max-w-md"
             onChange={(e) => {
               if (licenseId.defined) licenseId.set(parseInt(e.target.value))
               else licenseId.create(parseInt(e.target.value))

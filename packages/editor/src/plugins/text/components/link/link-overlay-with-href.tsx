@@ -1,3 +1,4 @@
+import { useSerloQuickbarData } from '@editor/core/hooks/use-serlo-quickbar-data'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
@@ -8,19 +9,20 @@ import {
   faPencilAlt,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import type { QuickbarData } from '@serlo/frontend/src/components/navigation/quickbar'
 
 export function LinkOverlayWithHref({
   value,
   removeLink,
   setIsEditMode,
-  quickbarData,
+  noAutocomplete,
 }: {
   value: string
   removeLink: () => void
   setIsEditMode?: (mode: boolean) => void
-  quickbarData: QuickbarData | null
+  noAutocomplete?: boolean
 }) {
+  const { quickbarData } = useSerloQuickbarData(noAutocomplete)
+
   const serloId =
     value.startsWith('/') && value.slice(1).match(/^\d+$/)
       ? value.slice(1)
@@ -53,7 +55,7 @@ export function LinkOverlayWithHref({
       {setIsEditMode ? (
         <button
           onClick={() => setIsEditMode(true)}
-          className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
+          className="serlo-button-edit-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
           data-qa="edit-link-button"
         >
           <FaIcon icon={faPencilAlt} />
@@ -65,7 +67,7 @@ export function LinkOverlayWithHref({
       ) : null}
       <button
         onClick={removeLink}
-        className="serlo-button-editor-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
+        className="serlo-button-edit-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
         data-qa="remove-link-button"
       >
         <FaIcon icon={faTrashAlt} />

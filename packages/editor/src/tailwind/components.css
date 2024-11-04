@@ -1,0 +1,204 @@
+@tailwind components;
+
+@layer components {
+  .serlo-link {
+    @apply break-words text-brand-700 no-underline hover:underline;
+  }
+  .serlo-p {
+    @apply mx-side mb-block mt-0 hyphens-auto text-lg leading-cozy;
+  }
+  .serlo-h1 {
+    @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
+  }
+  .serlo-h2 {
+    @apply mx-side mb-6 mt-0 pb-1 pt-6;
+    @apply hyphens-auto text-2.5xl font-bold;
+    @apply border-b border-gray-300 text-gray-900;
+  }
+  .serlo-h3 {
+    @apply mx-side mb-8 mt-0 pt-3 text-1.5xl font-bold text-gray-900;
+  }
+  .serlo-h4 {
+    @apply mx-side mb-5 mt-0 text-base-plus font-bold;
+  }
+
+  .serlo-button-learner {
+    @apply inline-block rounded-4xl px-2 py-1 transition-all;
+    @apply cursor-pointer border-none font-bold no-underline;
+    @apply text-lg leading-browser tracking-slightestly-tighter;
+    @apply duration-200 ease-in-out hover:no-underline;
+    @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
+  }
+  .serlo-button-edit {
+    @apply inline-block rounded-md px-2 py-1 transition-all;
+    @apply cursor-pointer border-none font-bold no-underline;
+    @apply text-lg leading-browser tracking-slightestly-tighter;
+    @apply duration-200 ease-in-out hover:no-underline;
+    @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
+  }
+
+  .serlo-button-round {
+    @apply aspect-square !rounded-full;
+  }
+
+  .serlo-button-learner-primary {
+    @apply serlo-button-learner bg-brand text-white hover:bg-brand-500;
+  }
+  .serlo-button-learner-secondary {
+    @apply serlo-button-learner bg-brand-100 text-brand-700 hover:bg-brand hover:text-white;
+  }
+  .serlo-button-learner-transparent {
+    @apply serlo-button-learner bg-transparent text-brand hover:bg-brand-700 hover:text-white;
+  }
+
+  .serlo-button-edit-primary {
+    @apply serlo-button-edit bg-editor-primary-200 text-almost-black hover:bg-editor-primary;
+  }
+  .serlo-button-edit-secondary {
+    @apply serlo-button-edit bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
+  }
+
+  .serlo-modal {
+    @apply fixed left-1/2 max-w-[85%] -translate-x-1/2 -translate-y-1/2;
+    @apply bottom-0 top-[40%] h-fit w-[500px] pb-10 outline-none;
+    @apply rounded-xl border-none bg-white px-2.5 pt-2.5 shadow-modal;
+    @apply z-[101];
+  }
+  .serlo-table {
+    @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-nowrap break-normal border-brand-200 sm:whitespace-normal;
+  }
+  .serlo-th {
+    @apply border-b-3 border-r-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
+  }
+  .serlo-td {
+    @apply border-b-3 border-r-3 border-brand-200 p-1.5 align-top;
+    > p.serlo-p {
+      @apply mx-0;
+    }
+  }
+  .serlo-ul {
+    @apply mx-side mb-block mt-4 list-none pl-5;
+
+    & > li:before {
+      @apply absolute bg-brand-400 content-['_'];
+      @apply -ml-5 mt-2.25 h-2.5 w-2.5 rounded-full;
+    }
+    & > li {
+      @apply mb-2;
+    }
+    & > li > ul,
+    & > li > ol {
+      @apply !mb-4 mt-2;
+    }
+  }
+  .serlo-ol {
+    @apply mx-side mb-block mt-0 list-none pl-6 [counter-reset:list-counter];
+
+    & > li:before {
+      @apply absolute content-[counter(list-counter)] [counter-increment:list-counter];
+      @apply -ml-6 rounded-full text-center font-bold;
+      @apply mt-0.5 h-[17px] w-[17px] bg-brand-150 text-xs;
+      @apply pt-0.25 leading-tight text-brand-700;
+    }
+    & > li {
+      @apply mb-2;
+    }
+    & > li > ul,
+    & > li > ol {
+      @apply !mb-4 mt-2;
+    }
+  }
+  .serlo-sub-list {
+    @apply m-0 bg-white py-3 pl-2.5 pr-4;
+    @apply block w-auto list-none overflow-auto text-left;
+    @apply rounded-lg shadow-menu;
+  }
+  .serlo-sub-list-hover {
+    @apply serlo-sub-list min-w-180 bg-brand-50;
+  }
+  .serlo-img {
+    @apply inline h-auto max-w-full rounded-md;
+  }
+
+  .serlo-solution-box {
+    @apply mx-side mb-block border-l-8 border-brand-200 py-2.5;
+  }
+  .serlo-exercise-wrapper {
+    @apply mb-2.5 mt-10;
+
+    @media (hoverhover) {
+      /* -> use tailwind stuff instead */
+      input {
+        @apply opacity-20 transition-opacity;
+      }
+
+      &:hover {
+        /* UwU */
+        input {
+          @apply opacity-100;
+        }
+      }
+    }
+
+    /* duplicated in frontend */
+    .serlo-input-font-reset {
+      @apply font-sans text-base tracking-slightestly-tighter;
+      @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
+    }
+
+    .serlo-tooltip-trigger {
+      @apply relative;
+
+      &:hover > .serlo-tooltip,
+      &:focus > .serlo-tooltip {
+        @apply not-sr-only absolute z-[23] pb-[0.7rem] opacity-90;
+      }
+    }
+  }
+
+  /* TODO: rename? */
+  .serlo-content-with-spacing-fixes {
+    /* this feels really hacky */
+    @apply break-words;
+
+    & p:not(.slate-p) + ul {
+      @apply -mt-3.5;
+    }
+
+    & li > p,
+    & li > .slate-container > p {
+      @apply mx-0 mb-2;
+    }
+
+    & li > .serlo-math-wrapper {
+      @apply px-0;
+    }
+
+    & .serlo-solution-box,
+    & .serlo-box,
+    & .serlo-box > blockquote,
+    & .slate-container,
+    & li,
+    & th,
+    & td {
+      > p:last-child,
+      > .serlo-math-wrapper:last-child,
+      > ul:last-child,
+      > ol:last-child,
+      > figure:last-child,
+      > .serlo-exercise-wrapper:last-child,
+      > .slate-container:last-child {
+        @apply mb-0;
+      }
+
+      > .serlo-math-wrapper:first-child {
+        @apply mt-0;
+      }
+
+      /* fixed in postcss-nested 5.0.6 */
+      > .serlo-exercise-wrapper:first-child {
+        @apply mt-0;
+      }
+    }
+  }
+}

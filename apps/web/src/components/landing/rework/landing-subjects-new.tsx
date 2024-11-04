@@ -87,7 +87,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
         >
           {' '}
           <SubjectIcon subject={icon} />
-          <h2 className="serlo-button-blue-transparent group-hover:bg-brand-200 group-hover:text-brand">
+          <h2 className="serlo-button-learner-transparent group-hover:bg-brand-200 group-hover:text-brand">
             {title}
             <span className="ml-1.5 align-middle">
               <FaIcon icon={faArrowCircleRight} />

@@ -39,12 +39,12 @@ Scenario(
     I.click('$link-suggestion-0')
     I.click('Some text')
     I.waitForText('Hypotenuse', 10)
-    I.seeElement({ css: '.serlo-editor-hacks a' })
+    I.seeElement({ css: '.editor-core a' })
 
     I.say('Toggle link off')
     I.pressKey(['CommandOrControl', 'A'])
     I.pressKey(['CommandOrControl', 'K'])
-    I.dontSeeElement({ css: '.serlo-editor-hacks a' })
+    I.dontSeeElement({ css: '.editor-core a' })
 
     // Clear link
     I.pressKey(['CommandOrControl', 'A'])
@@ -146,18 +146,18 @@ Scenario(
     I.say('Toggle code on')
     I.click('$plugin-toolbar-button-code')
     I.see('Some text', 'code')
-    I.seeElement({ css: '.serlo-editor-hacks code' })
+    I.seeElement({ css: '.editor-core code' })
 
     I.say('Toggle code off')
     I.click('$plugin-toolbar-button-code')
-    I.dontSeeElement({ css: '.serlo-editor-hacks code' })
+    I.dontSeeElement({ css: '.editor-core code' })
 
     I.say('Toggle link on')
     I.click('$plugin-toolbar-button-link')
     I.type('https://de.serlo.org/mathe/1541/hypotenuse')
     // select the very first suggestion (index 0)
     I.click('$link-suggestion-0')
-    I.seeElement({ css: '.serlo-editor-hacks a' })
+    I.seeElement({ css: '.editor-core a' })
 
     I.say('Refocus link')
     I.click('Some text')
@@ -167,7 +167,7 @@ Scenario(
     I.say('Toggle link off via plugin bar')
     I.click('Some text')
     I.click('$plugin-toolbar-button-link')
-    I.dontSeeElement({ css: '.serlo-editor-hacks a' })
+    I.dontSeeElement({ css: '.editor-core a' })
 
     I.say('Toggle unordered list on')
     I.pressKey(['CommandOrControl', 'A'])
@@ -184,7 +184,7 @@ Scenario(
 
     I.say('Toggle ordered list off')
     I.click('$plugin-toolbar-button-nummerierte-liste')
-    I.dontSeeElement({ css: '.serlo-editor-hacks ol' })
+    I.dontSeeElement({ css: '.editor-core ol' })
 
     I.say('Toggle H1 on')
     I.click('$plugin-toolbar-button-überschriften')

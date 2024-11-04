@@ -5,17 +5,19 @@ import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
-import { Entity } from '@serlo/authorization'
+import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import dynamic from 'next/dynamic'
 import { mergeDeepRight } from 'ramda'
 import { type ReactNode } from 'react'
 
-import { SaveContext } from './context/save-context'
+import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
+import { ExternalRevisionLoader } from './components/external-revision-loader'
+import { SaveButton } from './components/save-button'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
-import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
@@ -25,20 +27,18 @@ const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
 
 export interface SerloEditorProps {
   children?: ReactNode
-  entityNeedsReview: boolean
+  isInTestArea?: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
   initialState: EditorProps['initialState']
 }
 
 export function SerloEditor({
   onSave,
-  entityNeedsReview,
+  isInTestArea,
   initialState,
   children,
 }: SerloEditorProps) {
-  const canDo = useCanDo()
-  const userCanSkipReview = canDo(Entity.checkoutRevision)
-  const { lang } = useInstanceData()
+  const { lang, licenses } = useInstanceData()
 
   const handleLearnerEvent = useSerloHandleLearnerEvent()
 
@@ -53,15 +53,24 @@ export function SerloEditor({
   const editString =
     lang === 'de' ? mergeDeepRight(editStringsEn, editStringsDe) : editStringsEn
 
+  const isNewEntity = !(initialState.state as AnyEditorDocument)?.id
+
   return (
     <EditStringsProvider value={editString}>
-      <IsSerloContext.Provider value>
-        <SaveContext.Provider
-          value={{ onSave, userCanSkipReview, entityNeedsReview }}
-        >
-          <Editor initialState={initialState}>{children}</Editor>
-        </SaveContext.Provider>
-      </IsSerloContext.Provider>
+      <SerloOnlyFeaturesContext.Provider
+        value={{ isSerlo: true, licenses, ArticleAddModal }}
+      >
+        <Editor initialState={initialState}>
+          <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
+          {isNewEntity ? (
+            <ExternalRevisionLoader
+              templateType={initialState.plugin as TemplatePluginType}
+            />
+          ) : null}
+
+          {children}
+        </Editor>
+      </SerloOnlyFeaturesContext.Provider>
     </EditStringsProvider>
   )
 }

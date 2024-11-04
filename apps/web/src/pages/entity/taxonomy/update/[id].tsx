@@ -92,7 +92,7 @@ function Content({ id, terms }: UpdateTaxonomyLinksProps) {
       <div className="flex border-b-2 py-3" key={term.alias}>
         <button
           onClick={() => onDelete(term.id)}
-          className="serlo-button-blue-transparent mr-2 text-brand-400"
+          className="serlo-button-learner-transparent mr-2 text-brand-400"
         >
           <FaIcon icon={faTrashAlt} />
         </button>
@@ -160,7 +160,7 @@ function Content({ id, terms }: UpdateTaxonomyLinksProps) {
         ({getTranslatedType(strings, taxType)}){' '}
         <button
           onClick={() => onAdd(taxId)}
-          className="'text-base serlo-button-light ml-3"
+          className="'text-base serlo-button-learner-secondary ml-3"
         >
           {loggedInStrings.addButtonText}
         </button>

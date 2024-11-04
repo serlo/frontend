@@ -1,22 +1,16 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { ArticleAddModalProps } from '@editor/utils/serlo-extra-context'
 import { useState } from 'react'
 
 import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
-import type { ArticleProps } from '../../../../../../packages/editor/src/plugins/article'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-
-interface ArticleAddModalProps {
-  open: boolean
-  data: ArticleProps['state']
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
 
 export function ArticleAddModal({
   open,

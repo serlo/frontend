@@ -1,5 +1,4 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
-import { useInstanceData } from '@serlo/frontend/src/contexts/instance-context'
 
 export interface ArticleRendererProps {
   introduction: JSX.Element | null
@@ -27,7 +26,6 @@ export function ArticleRenderer({
   title,
 }: ArticleRendererProps) {
   const articleStrings = useStaticStrings().plugins.article
-  const { strings } = useInstanceData()
 
   return (
     <>
@@ -87,7 +85,9 @@ export function ArticleRenderer({
 
     return (
       <>
-        <h3 className="serlo-h3 mb-0">{strings.categories[type]}</h3>
+        <h3 className="serlo-h3 mb-0">
+          {articleStrings.subsectionTypes[type]}
+        </h3>
         <ul className="serlo-ul mb-4 mt-2 text-lg">{relatedContent[type]}</ul>
       </>
     )

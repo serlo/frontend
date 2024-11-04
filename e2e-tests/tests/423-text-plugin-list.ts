@@ -40,13 +40,13 @@ Scenario('Unordered list shortcuts', ({ I }) => {
   I.pressKey(['CommandOrControl', 'A'])
   I.pressKey('Backspace')
   I.seeElement({
-    css: '.serlo-editor-hacks div[data-slate-editor="true"] ul:not(.unstyled-list)',
+    css: '.editor-core div[data-slate-editor="true"] ul:not(.unstyled-list)',
   })
 
   I.say('Remove empty list item on backspace')
   I.pressKey('Backspace')
   I.dontSeeElement({
-    css: '.serlo-editor-hacks div[data-slate-editor="true"] ul:not(.unstyled-list)',
+    css: '.editor-core div[data-slate-editor="true"] ul:not(.unstyled-list)',
   })
 })
 
@@ -85,13 +85,13 @@ Scenario('Ordered list shortcuts', ({ I }) => {
   I.pressKey(['CommandOrControl', 'A'])
   I.pressKey('Backspace')
   I.seeElement({
-    css: '.serlo-editor-hacks div[data-slate-editor="true"] ol:not(.unstyled-list)',
+    css: '.editor-core div[data-slate-editor="true"] ol:not(.unstyled-list)',
   })
 
   I.say('Remove empty list item on backspace')
   I.pressKey('Backspace')
   I.dontSeeElement({
-    css: '.serlo-editor-hacks div[data-slate-editor="true"] ol:not(.unstyled-list)',
+    css: '.editor-core div[data-slate-editor="true"] ol:not(.unstyled-list)',
   })
 })
 

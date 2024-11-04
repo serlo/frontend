@@ -47,7 +47,7 @@ function About() {
           <div>
             <Link
               href={footerData.aboutHref}
-              className="serlo-button-blue-transparent my-4 py-0.5 text-white"
+              className="serlo-button-learner-transparent my-4 py-0.5 text-white"
             >
               <FaIcon icon={faChevronCircleRight} className="h-4" />{' '}
               {strings.footer.learnMore}
@@ -60,7 +60,7 @@ function About() {
             className="group flex flex-col items-center hover:no-underline"
           >
             <ParticipateIcon className="w-14" />
-            <div className="serlo-button mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
+            <div className="serlo-button-learner mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.participate}
             </div>
           </Link>
@@ -69,7 +69,7 @@ function About() {
             className="group flex flex-col items-center hover:no-underline"
           >
             <DonateIcon className="w-14" />
-            <div className="serlo-button mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
+            <div className="serlo-button-learner mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.donate}
             </div>
           </Link>

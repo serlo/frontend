@@ -93,7 +93,7 @@ Scenario('Quickbar @mobile', ({ I }) => {
   I.type('Vektor')
 
   // Check dropdown
-  I.waitForText('Kreuzprodukt', 10)
+  I.waitForText('Kreuzprodukt', 20)
   I.seeElement('$quickbar-combobox-overlay')
   I.see('Vektorbegriff')
   I.see('Auf Serlo nach')

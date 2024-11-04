@@ -9,7 +9,7 @@ export interface PluginStaticRenderer {
 export type MathRenderer = ComponentType<MathElement>
 export type LinkRenderer = React.FunctionComponent<{
   href: string
-  children: JSX.Element | null
+  children: JSX.Element | string | null
 }>
 
 export interface InitRenderersArgs {

@@ -57,7 +57,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
     return (
       <>
         <Link
-          className="serlo-button-blue"
+          className="serlo-button-learner-primary"
           href={loginUrl}
           onClick={() => {
             submitEvent('invite2edit-click-login-' + type)

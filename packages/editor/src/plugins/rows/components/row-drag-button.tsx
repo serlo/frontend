@@ -32,7 +32,7 @@ export function RowDragButton({ drag }: RowDragButtonProps) {
         />
         <div
           className={cn(`
-              serlo-button-editor-primary rounded-full bg-transparent px-1.5
+              serlo-button-edit-primary rounded-full bg-transparent px-1.5
               py-0.5 text-almost-black hover:bg-editor-primary-200
           `)}
           aria-hidden="true"

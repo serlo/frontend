@@ -5,7 +5,6 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
@@ -33,6 +32,7 @@ import { ComponentProps } from 'react'
 
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { EditorH5PDocument } from './h5p'
+import { CourseSerloStaticRenderer } from './serlo-plugin-wrappers/course-serlo-static-renderer'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
@@ -66,10 +66,10 @@ const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
     (mod) => mod.BlanksExerciseStaticRenderer
   )
 )
-const InjectionSerloStaticRenderer = dynamic<EditorInjectionDocument>(() =>
-  import(
-    '@/serlo-editor-integration/serlo-plugin-wrappers/injection-serlo-static-renderer'
-  ).then((mod) => mod.InjectionSerloStaticRenderer)
+const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
+  import('@editor/plugins/injection/static').then(
+    (mod) => mod.InjectionStaticRenderer
+  )
 )
 
 const DropzoneImageStaticRenderer = dynamic<
@@ -156,7 +156,7 @@ export function createRenderers(): InitRenderersArgs {
         renderer: DropzoneImageStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
-      { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
+      { type: EditorPluginType.Course, renderer: CourseSerloStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
@@ -164,7 +164,7 @@ export function createRenderers(): InitRenderersArgs {
           if (!props.state) return null
           return (
             <Lazy>
-              <InjectionSerloStaticRenderer {...props} />
+              <InjectionStaticRenderer {...props} />
               <ExtraInfoIfRevisionView>{props.state}</ExtraInfoIfRevisionView>
             </Lazy>
           )

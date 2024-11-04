@@ -1,9 +1,9 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
+import DOMPurify from 'dompurify'
 import IframeResizer from 'iframe-resizer-react'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
 
-type RenderMethod = 'dangerously-set-inner-html' | 'iframe'
 type EmbedType =
   | 'unknown'
   | 'audio'
@@ -41,9 +41,6 @@ export function EdusharingAssetRenderer(props: {
   const { nodeId, repositoryId, ltik, contentWidth } = props
 
   const [embedHtml, setEmbedHtml] = useState<string | null>(null)
-  const [renderMethod, setRenderMethod] = useState<RenderMethod>(
-    'dangerously-set-inner-html'
-  )
   const [defineContainerHeight, setDefineContainerHeight] =
     useState<boolean>(false)
   const [embedType, setEmbedType] = useState<EmbedType>('unknown')
@@ -80,12 +77,14 @@ export function EdusharingAssetRenderer(props: {
       }
 
       // HTML snipped returned by edu-sharing cannot be used as it is.
-      const { embedType, html, renderMethod, defineContainerHeight } =
-        embedHtmlAndRenderMethod(responseJson)
+      const { embedType, html, defineContainerHeight } =
+        getEmbedHtml(responseJson)
+
+      // Prevent common XSS methods
+      const sanitizedHtml = DOMPurify.sanitize(html)
 
       setEmbedType(embedType)
-      setEmbedHtml(html)
-      setRenderMethod(renderMethod)
+      setEmbedHtml(sanitizedHtml)
       setDefineContainerHeight(defineContainerHeight)
     }
 
@@ -106,10 +105,9 @@ export function EdusharingAssetRenderer(props: {
     </figure>
   )
 
-  function embedHtmlAndRenderMethod(content: t.TypeOf<typeof EmbedJson>): {
+  function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): {
     embedType: EmbedType
     html: string
-    renderMethod: RenderMethod
     defineContainerHeight: boolean
   } {
     let { detailsSnippet } = content
@@ -138,7 +136,6 @@ export function EdusharingAssetRenderer(props: {
         return {
           embedType: 'unknown',
           html: '<div>Fehler beim Einbinden des Inhalts</div>',
-          renderMethod: 'dangerously-set-inner-html',
           defineContainerHeight: false,
         }
       }
@@ -150,7 +147,6 @@ export function EdusharingAssetRenderer(props: {
         }">${
           linkElement.innerText ? linkElement.innerText : linkElement.href
         }</a>`,
-        renderMethod: 'dangerously-set-inner-html',
         defineContainerHeight: false,
       }
     }
@@ -195,7 +191,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'pixabay',
         html: imageSnippet + emptyStringOrJumpToSource,
-        renderMethod: 'dangerously-set-inner-html',
         defineContainerHeight: false,
       }
     }
@@ -207,7 +202,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'image',
         html: imageSnippet,
-        renderMethod: 'dangerously-set-inner-html',
         defineContainerHeight: false,
       }
     }
@@ -223,7 +217,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'file',
         html: detailsSnippet,
-        renderMethod: 'dangerously-set-inner-html',
         defineContainerHeight: false,
       }
     }
@@ -241,7 +234,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'audio',
         html: appendIframeResizer(detailsSnippet),
-        renderMethod: 'iframe',
         defineContainerHeight: false,
       }
     }
@@ -265,7 +257,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'video',
         html: appendIframeResizer(detailsSnippet),
-        renderMethod: 'iframe',
         defineContainerHeight: false,
       }
     }
@@ -278,7 +269,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'h5p',
         html: appendIframeResizer(detailsSnippet),
-        renderMethod: 'iframe',
         defineContainerHeight: false,
       }
     }
@@ -290,7 +280,6 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'pdf',
         html: htmlDocument.body.innerHTML,
-        renderMethod: 'dangerously-set-inner-html',
         defineContainerHeight: true,
       }
     }
@@ -302,7 +291,6 @@ export function EdusharingAssetRenderer(props: {
         return {
           embedType: 'unknown',
           html: 'Error. Please contact support. Details: Could not find iframe in learningapp embed html.',
-          renderMethod: 'dangerously-set-inner-html',
           defineContainerHeight: false,
         }
       }
@@ -312,17 +300,14 @@ export function EdusharingAssetRenderer(props: {
       return {
         embedType: 'learning-app',
         html: iframeHtml,
-        renderMethod: 'dangerously-set-inner-html',
         defineContainerHeight: true,
       }
     }
 
-    // Backup when content type could not be determined above -> Render in iframe with iframe-resizer.
-    // This will make sure <script> tags execute. They would not if using 'dangerously-set-inner-html'
+    // Backup when content type could not be determined above
     return {
       embedType: 'unknown',
       html: appendIframeResizer(detailsSnippet),
-      renderMethod: 'iframe',
       defineContainerHeight: false,
     }
   }
@@ -330,61 +315,36 @@ export function EdusharingAssetRenderer(props: {
   function renderEmbed() {
     if (embedHtml === null) return
 
-    if (renderMethod === 'dangerously-set-inner-html') {
-      // dangerouslySetInnerHTML does not execute <script> tags.
-      return (
-        <div
-          className="not-prose max-w-full overflow-auto"
-          // className={`not-prose overflow-auto max-w-full !w-[${
-          //   contentWidth ? contentWidth : '100%'
-          // }]`}
-          style={{
-            width: contentWidth ? contentWidth : '100%',
-            aspectRatio: defineContainerHeight ? '16/9' : undefined,
-          }}
-          dangerouslySetInnerHTML={{ __html: embedHtml }}
-          data-embed-type={embedType}
-        />
-      )
-      // We could use dangerously-set-html-content npm package instead. This will execute <script> tags but sadly did not work in case of the video embed.
-      // return <InnerHTML className={`not-prose overflow-auto max-w-full`}
-      // style={{ width: contentWidth ? contentWidth : '100%' }} html={embedHtml} />
-    }
-
-    if (renderMethod === 'iframe') {
-      // IframeResizer properties:
-      // - `heightCalculationMethod="lowestElement"` -> Documentation says its the most accurate (however worse performance than others)
-      // - `srcDoc` -> Sets the iframe content
-      // - `checkOrigin={false}` -> Necessary when using srcDoc
-      // - `style={{ width: '1px', minWidth: '100%' }}` -> Makes Iframe have width 100% and take as much height as it needs. Recommended by documentation.
-      // - Missing `sandbox` -> Should put no restrictions on what the iframe can do: A) Make iframe send the same cookies as the host. B) Allow it to execute scripts. Both important to be able to fetch video.
-      return (
-        <div
-          className="max-w-full"
-          style={{
-            width: contentWidth ? contentWidth : '100%',
-            aspectRatio: defineContainerHeight ? '16/9' : undefined,
-          }}
-          data-embed-type={embedType}
-        >
-          {defineContainerHeight ? (
-            <iframe
-              srcDoc={embedHtml}
-              style={{ width: '100%', height: '100%' }}
-            />
-          ) : (
-            <MemoizedIframeResizer
-              heightCalculationMethod="lowestElement"
-              checkOrigin={false}
-              srcDoc={embedHtml}
-              style={{ width: '1px', minWidth: '100%' }}
-            />
-          )}
-        </div>
-      )
-    }
-
-    return null
+    // IframeResizer properties:
+    // - `heightCalculationMethod="lowestElement"` -> Documentation says its the most accurate (however worse performance than others)
+    // - `srcDoc` -> Sets the iframe content
+    // - `checkOrigin={false}` -> Necessary when using srcDoc
+    // - `style={{ width: '1px', minWidth: '100%' }}` -> Makes Iframe have width 100% and take as much height as it needs. Recommended by documentation.
+    // - Missing `sandbox` -> Should put no restrictions on what the iframe can do: A) Make iframe send the same cookies as the host. B) Allow it to execute scripts. Both important to be able to fetch video.
+    return (
+      <div
+        className="max-w-full"
+        style={{
+          width: contentWidth ? contentWidth : '100%',
+          aspectRatio: defineContainerHeight ? '16/9' : undefined,
+        }}
+        data-embed-type={embedType}
+      >
+        {defineContainerHeight ? (
+          <iframe
+            srcDoc={embedHtml}
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : (
+          <MemoizedIframeResizer
+            heightCalculationMethod="lowestElement"
+            checkOrigin={false}
+            srcDoc={embedHtml}
+            style={{ width: '1px', minWidth: '100%' }}
+          />
+        )}
+      </div>
+    )
   }
 }
 

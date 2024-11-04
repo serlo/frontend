@@ -9,9 +9,9 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { IsSerloContext } from '@editor/utils/is-serlo-context'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { lazy, useContext, useEffect, useState } from 'react'
+import { Suspense, lazy, useContext, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
@@ -33,7 +33,7 @@ export function ExerciseEditor(props: ExerciseProps) {
     licenseId,
     hideInteractiveInitially,
   } = state
-  const isSerlo = useContext(IsSerloContext) // only on serlo
+  const { isSerlo } = useContext(SerloOnlyFeaturesContext)
   const editorStrings = useEditStrings()
   const exStrings = editorStrings.plugins.exercise
 
@@ -66,10 +66,12 @@ export function ExerciseEditor(props: ExerciseProps) {
         )}
       >
         {isSerlo ? (
-          <SerloLicenseChooser
-            licenseId={licenseId}
-            className="!right-[84px] !top-[-30px]"
-          />
+          <Suspense>
+            <SerloLicenseChooser
+              licenseId={licenseId}
+              className="!right-[84px] !top-[-30px]"
+            />
+          </Suspense>
         ) : null}
         <div
           className={cn(
@@ -110,7 +112,7 @@ export function ExerciseEditor(props: ExerciseProps) {
             <div className="-ml-side mt-block">
               <nav className="flex justify-end">
                 <button
-                  className="serlo-button-editor-secondary serlo-tooltip-trigger relative top-7 z-20 mr-side"
+                  className="serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger relative top-[31px] z-20 mr-side"
                   onClick={() => solution.remove()}
                 >
                   <EditorTooltip text={exStrings.removeSolution} />

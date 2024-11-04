@@ -52,7 +52,7 @@ export function InteractiveAnswer({
         </div>
         <button
           onClick={remove}
-          className="serlo-button-editor-secondary absolute right-1 top-2 z-20"
+          className="serlo-button-round serlo-button-edit-secondary absolute right-1 top-2 z-20"
         >
           <FaIcon icon={faTrashAlt} />
         </button>

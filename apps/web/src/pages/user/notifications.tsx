@@ -58,8 +58,8 @@ function Content() {
         className={cn(
           'mb-5 mr-5',
           showUnread === setShowUnreadTo
-            ? 'serlo-button-blue'
-            : 'serlo-button-light'
+            ? 'serlo-button-learner-primary'
+            : 'serlo-button-learner-secondary'
         )}
         onClick={() => setShowUnread(setShowUnreadTo)}
       >

@@ -101,7 +101,7 @@ export function LicenseNotice({
     return (
       <>
         <Link
-          className="serlo-button-blue-transparent h-[max-content] text-base font-normal hover:no-underline"
+          className="serlo-button-learner-transparent h-[max-content] text-base font-normal hover:no-underline"
           title={minTitle}
           href={licenseHref}
           noExternalIcon

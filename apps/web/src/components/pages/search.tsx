@@ -106,7 +106,7 @@ export function Search() {
       <div className="mx-side rounded-xl border-2 px-side py-3 text-brand">
         {explanation}
         <button
-          className="serlo-button-blue mb-1 mt-2 block py-0.5"
+          className="serlo-button-learner-primary mb-1 mt-2 block py-0.5"
           onClick={() => {
             giveConsent(ExternalProvider.GoogleSearch)
             window.location.reload()

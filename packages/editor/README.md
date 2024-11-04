@@ -93,7 +93,7 @@ See below for the current API specification.
   - `history` - for persisting, undo, redo
   - `selectRootDocument` - a function for selecting the current state
 
-- **`plugins` (optional)**: List of plugins that should be active. If undefined, list `defaultPlugins` will be used. Only use in exceptional cases.
+- **`plugins` (optional)**: List of plugins that should be active. If undefined, the `defaultPlugins` will be used. Only use this if you need to filter out some plugins. Upon first render, the object will be frozen and you can't dynamically change the plugins anymore! Ensure to do any filtering before you render the Serlo Editor.
 
 - **`initialState` (optional)**: Pass in an `initialState` to the `SerloEditor` component to prevent seeing an empty editor state. [Here is the documentation](https://github.com/serlo/documentation/wiki/Serlo-Editor-Initial-State-of-Plugins) for sample initial states of each plugin, in case you want to render the Editor displaying a particular plugin by default.
 

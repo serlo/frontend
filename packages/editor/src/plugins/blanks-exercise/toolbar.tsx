@@ -15,6 +15,7 @@ export const BlanksExerciseToolbar = ({
   showSelection: boolean
 }) => {
   const pluginsStrings = useEditStrings().plugins
+  const exStrings = pluginsStrings.exercise
   const blanksExerciseStrings = pluginsStrings.blanksExercise
 
   return (
@@ -38,7 +39,11 @@ export const BlanksExerciseToolbar = ({
             tooltipText={blanksExerciseStrings.chooseChildPluginType}
             value={childPluginType}
             dataQa="plugin-blanks-child-plugin-switch"
-            changeValue={(value) => state.text.replace(value)}
+            changeValue={(value) => {
+              if (window.confirm(exStrings.confirmRemoveInteractive)) {
+                state.text.replace(value)
+              }
+            }}
             options={[
               {
                 value: EditorPluginType.Text,

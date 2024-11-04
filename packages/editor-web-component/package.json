@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -36,23 +36,19 @@
     "lint": "npm-run-all lint:eslint lint:prettier",
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
+    "publish:package": "npm publish",
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
-    "@serlo/editor": "0.16.0"
+    "@serlo/editor": "0.19.0"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^5.0.5",
-    "@serlo/editor": "0.16.0",
+    "@serlo/editor": "0.19.0",
     "@serlo/typescript-config": "workspace:*",
-    "@types/escodegen": "^0.0.10",
-    "@types/estraverse": "^5.1.7",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^4.2.1",
-    "acorn": "^8.11.3",
-    "dotenv": "^16.4.5",
-    "escodegen": "^2.1.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.2",
     "eslint-config-prettier": "^9.1.0",
@@ -60,21 +56,15 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "estraverse": "^5.3.0",
-    "jest": "^27.5.1",
     "npm": "^10.5.2",
     "npm-run-all": "^4.1.5",
-    "nprogress": "^0.2.0",
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.5.0",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "uuid": "^9.0.1",
     "vite": "^5.2.14",
-    "vite-plugin-css-injected-by-js": "^3.5.1",
-    "vite-plugin-dts": "3.8.3",
-    "vite-plugin-svgr": "^4.2.0"
+    "vite-plugin-dts": "3.8.3"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
@@ -87,8 +77,5 @@
       "postcss-flexbugs-fixes": {},
       "autoprefixer": {}
     }
-  },
-  "svgr": {
-    "svgo": false
   }
 }

@@ -117,7 +117,7 @@ export function BlankControls(props: BlankControlsProps) {
         {correctAnswers.length <= 1 ? (
           <button
             onClick={handleAlternativeAnswerAdd}
-            className="serlo-button-editor-primary text-sm font-normal"
+            className="serlo-button-edit-primary text-sm font-normal"
           >
             <FaIcon className="mr-1" icon={faPlus} />
             {blanksExerciseStrings.addAlternativeAnswer}
@@ -163,7 +163,7 @@ export function BlankControls(props: BlankControlsProps) {
               })}
               <button
                 onClick={handleAlternativeAnswerAdd}
-                className="serlo-button-editor-primary h-5 w-5 p-0 text-xs"
+                className="serlo-button-edit-primary h-5 w-5 p-0 text-xs"
               >
                 <FaIcon icon={faPlus} className="h-5 w-3" />
               </button>

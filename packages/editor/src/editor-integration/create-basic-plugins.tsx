@@ -20,6 +20,7 @@ import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
+import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
@@ -57,6 +58,10 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),
+    },
+    {
+      type: EditorPluginType.Video,
+      plugin: videoPlugin,
     },
     {
       type: EditorPluginType.Spoiler,

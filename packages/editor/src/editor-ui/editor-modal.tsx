@@ -1,7 +1,7 @@
 import {
   getFirstElementOrUndefined,
   useShadowRoot,
-} from '@editor/core/helpers/use-shadow-root'
+} from '@editor/core/hooks/use-shadow-root'
 import { cn } from '@editor/utils/cn'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'

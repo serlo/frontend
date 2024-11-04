@@ -1,0 +1,167 @@
+@tailwind components;
+/* Custom components all start with `serlo-*`
+ * They serve as a lightwight abstraction for common elements
+ * Or they need to use css selectors - with is hacky, but sometimes the only way to go
+ * Use react components for more complex elements
+ */
+
+@layer components {
+  .serlo-button-green {
+    @apply serlo-button-learner bg-brandgreen text-white hover:bg-brandgreen-300;
+  }
+  .serlo-button-green-transparent {
+    @apply serlo-button-learner bg-transparent text-brandgreen hover:bg-brandgreen hover:text-white;
+  }
+
+  .serlo-math-wrapper {
+    @apply px-4 py-0.5 text-left;
+    @apply overflow-x-auto overflow-y-hidden text-lg leading-browser;
+    @apply my-[1em] px-side;
+  }
+  .serlo-responsive-margin {
+    @apply mx-side lg:mx-side-lg;
+  }
+  .serlo-responsive-padding {
+    @apply px-side lg:px-side-lg;
+  }
+  .serlo-input-font-reset {
+    @apply font-serlo text-base tracking-slightestly-tighter;
+    @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
+  }
+  .serlo-new-landing-button {
+    @apply rounded-lg bg-brand text-xl font-bold text-white;
+    @apply mb-5 block px-8 py-4 text-center tracking-tight;
+    @apply hover:bg-brand-500 hover:no-underline;
+  }
+  .serlo-revision-extra-info {
+    .serlo-p:last-child {
+      margin-bottom: 0;
+    }
+
+    > .serlo-p {
+      font-size: 1rem !important;
+    }
+  }
+  .serlo-menu-entry-special {
+    &:active,
+    &:hover,
+    &[aria-expanded='true'] {
+      @apply bg-brand text-white;
+
+      /*just for notifications count*/
+      & span.notification-count-span {
+        color: #fff;
+      }
+    }
+  }
+
+  .serlo-header-navtrigger[data-state='open'] {
+    @apply bg-brand-700 text-white;
+  }
+
+  .serlo-fa-icon {
+    @apply inline-block h-[1em] overflow-visible;
+    vertical-align: -0.125em;
+  }
+
+  .serlo-subject-icon-wrapper {
+    &:hover,
+    &:focus,
+    &:active {
+      .blue {
+        @apply fill-brand;
+      }
+      .green {
+        @apply fill-[#becd2b];
+      }
+    }
+  }
+
+  .serlo-subject-icon {
+    @apply mx-auto mb-0 mt-4 block h-32 w-32 min-w-[10rem];
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation-play-state: paused;
+
+    .blue {
+      @apply fill-brand-300;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .green {
+      fill: #becd2b;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  .serlo-button-with-wings {
+    &:after,
+    &:before {
+      @apply pointer-events-none absolute -ml-20 mt-[-0.6rem] h-16 w-16 content-['_'];
+      @apply opacity-0 transition-opacity duration-200 ease-in;
+      @apply bg-[url('/_assets/img/landing/wing-left.svg')] bg-no-repeat;
+    }
+    &:after {
+      @apply ml-4 -scale-x-100;
+    }
+    &:hover {
+      &:after,
+      &:before {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  .serlo-button-with-eyebrows {
+    @apply serlo-button-with-wings;
+
+    &:before,
+    &:after {
+      @apply -mt-8 bg-[url('/_assets/img/landing/wink-left.svg')] bg-[length:65%];
+    }
+  }
+
+  .serlo-add-eyebrows {
+    @apply serlo-button-with-eyebrows;
+
+    &:before,
+    &:after {
+      @apply -ml-2 mt-[-1rem] h-10 w-10 bg-[length:75%] opacity-100;
+    }
+
+    &:before {
+      @apply -ml-6;
+    }
+  }
+
+  .serlo-underlined {
+    @apply whitespace-nowrap bg-underlined-simple bg-bottom bg-no-repeat pr-4;
+  }
+
+  .serlo-prose-hacks {
+    p {
+      @apply serlo-p;
+    }
+    h1 {
+      @apply serlo-h1;
+    }
+    h2 {
+      @apply serlo-h2;
+    }
+    h3 {
+      @apply serlo-h3;
+    }
+    h4 {
+      @apply serlo-h4;
+    }
+    a {
+      @apply serlo-link;
+    }
+    ul {
+      @apply serlo-ul text-lg;
+    }
+    ol {
+      @apply serlo-ol text-lg;
+    }
+  }
+}

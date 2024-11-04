@@ -48,7 +48,7 @@ export function AnswerRenderer({
       <div className="[&_textarea]:w-[430px] [&_textarea]:max-w-[100%]">
         {isAnswerTypeText ? answer.text.render() : answer.image.render()}
       </div>
-      <button className="serlo-button-editor-primary mt-4" onClick={onSave}>
+      <button className="serlo-button-edit-primary mt-4" onClick={onSave}>
         {editorStrings.save}
       </button>
     </>
