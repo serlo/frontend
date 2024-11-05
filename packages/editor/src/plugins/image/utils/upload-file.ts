@@ -1,15 +1,19 @@
-import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
-import { type EditorVariant } from '@editor/package/storage-format'
+import {
+  EditorMetaContext,
+  type EditorMeta,
+} from '@editor/core/contexts/editor-meta-context'
 import { type UploadHandler } from '@editor/plugin'
 import { useContext } from 'react'
 
 import { handleError, validateFile } from './validate-file'
 
-export function useUploadFile(oldFileUploader: UploadHandler<string>) {
-  const { variant } = useContext(EditorMetaContext)
-  return shouldUseNewUpload()
-    ? (file: File) => uploadFile(file, variant)
-    : oldFileUploader
+type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
+
+export function useUploadFile(oldUploader: UploadHandler<string>) {
+  const { editorVariant, userId } = useContext(EditorMetaContext)
+
+  const uploader = (file: File) => uploadFile({ file, editorVariant, userId })
+  return shouldUseNewUpload() ? uploader : oldUploader
 }
 
 // while testing
@@ -30,11 +34,21 @@ export function shouldUseNewUpload() {
   return isDevOrPreviewOrStaging
 }
 
-export async function uploadFile(file: File, editorVariant: EditorVariant) {
+async function uploadFile({
+  file,
+  editorVariant,
+  userId,
+}: UploadMeta & {
+  file: File
+}) {
   const validated = validateFile(file)
   if (!validated) return Promise.reject()
 
-  const data = await getSignedUrlAndSrc(file.type, editorVariant)
+  const data = await getSignedUrlAndSrc({
+    mimeType: file.type,
+    editorVariant,
+    userId,
+  })
   if (!data) return Promise.reject('Could not get signed URL')
 
   const { signedUrl, imgSrc } = data
@@ -49,11 +63,15 @@ const signedUrlHost =
     ? 'editor.serlo.dev'
     : 'editor.serlo.dev' // TODO: Change to production bucket after testing
 
-async function getSignedUrlAndSrc(
-  mimeType: string,
-  editorVariant: EditorVariant
-) {
-  const url = `https://${signedUrlHost}/media/presigned-url?mimeType=${encodeURIComponent(mimeType)}&editorVariant=${encodeURIComponent(editorVariant)}`
+async function getSignedUrlAndSrc({
+  mimeType,
+  editorVariant,
+  userId,
+}: UploadMeta & {
+  mimeType: string
+}) {
+  const params = `mimeType=${encodeURIComponent(mimeType)}&editorVariant=${encodeURIComponent(editorVariant)}&userId=${encodeURIComponent(userId ?? '')}`
+  const url = `https://${signedUrlHost}/media/presigned-url?${params}`
 
   const result = await fetch(url).catch((e) => {
     // eslint-disable-next-line no-console

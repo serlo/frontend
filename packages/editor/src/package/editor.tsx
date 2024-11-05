@@ -75,7 +75,7 @@ export function SerloEditor(props: SerloEditorProps) {
   return (
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
-        <EditorMetaContext.Provider value={{ variant: editorVariant }}>
+        <EditorMetaContext.Provider value={{ editorVariant }}>
           <LtikContext.Provider value={_ltik}>
             {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
             <Editor

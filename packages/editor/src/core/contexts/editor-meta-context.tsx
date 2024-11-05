@@ -1,10 +1,11 @@
 import type { EditorVariant } from '@editor/package/storage-format'
 import { createContext } from 'react'
 
-interface EditorMeta {
-  variant: EditorVariant
+export interface EditorMeta {
+  editorVariant: EditorVariant
+  userId?: string
 }
 
 export const EditorMetaContext = createContext<EditorMeta>({
-  variant: 'unknown',
+  editorVariant: 'unknown',
 })
