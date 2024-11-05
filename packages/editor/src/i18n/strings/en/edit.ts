@@ -380,8 +380,8 @@ export const editStrings = {
       changeInteractive: 'Change interactive element',
       confirmRemoveInteractive:
         'Your current changes will be replaced. Are you sure?',
-      createSolution: 'Create solution',
-      removeSolution: 'Remove solution',
+      createSolution: 'Create proposed solution',
+      removeSolution: 'Remove proposed solution',
       toLearnersView: 'To Learners View',
       toEditView: 'To Edit View',
     },

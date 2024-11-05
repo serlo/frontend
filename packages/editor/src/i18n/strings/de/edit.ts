@@ -390,8 +390,8 @@ export const editStrings = {
       changeInteractive: 'Interaktives Element ändern',
       confirmRemoveInteractive:
         'Deine aktuellen Änderungen werden dabei überschrieben, bist du sicher?',
-      createSolution: 'Lösung hinzufügen',
-      removeSolution: 'Lösung entfernen',
+      createSolution: 'Lösungsvorschlag hinzufügen',
+      removeSolution: 'Lösungsvorschlag entfernen',
       toLearnersView: 'Zur Lernenden-Ansicht',
       toEditView: 'Zur Bearbeitungs-Ansicht',
     },
