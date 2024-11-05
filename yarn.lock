@@ -5787,6 +5787,8 @@ __metadata:
   resolution: "@serlo/frontend@workspace:apps/web"
   dependencies:
     "@cortex-js/compute-engine": ^0.22.0
+    "@eslint/eslintrc": ^3.1.0
+    "@eslint/js": ^9.14.0
     "@fortawesome/fontawesome-svg-core": 6.5.2
     "@fortawesome/free-brands-svg-icons": 6.5.2
     "@fortawesome/free-regular-svg-icons": 6.5.2

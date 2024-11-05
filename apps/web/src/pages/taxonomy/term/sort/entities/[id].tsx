@@ -1,6 +1,7 @@
 import { isSolutionDocument } from '@editor/types/plugin-type-guards'
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
+// eslint-disable-next-line import/no-deprecated
 import { arrayMoveImmutable } from 'array-move'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'

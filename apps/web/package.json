@@ -84,6 +84,8 @@
     "use-query-params": "^2.2.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.14.0",
     "@graphiql/toolkit": "^0.9.1",
     "@graphql-codegen/add": "^5.0.2",
     "@graphql-codegen/cli": "5.0.2",
