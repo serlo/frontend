@@ -16,7 +16,7 @@ function getSrc(isSerlo?: boolean, src?: string) {
   if (!isSerlo || !src) return src
 
   const isAllowed =
-    src.startsWith('https://assets.serlo.org/') ||
+    src.match(/^https:\/\/[a-z]+.(serlo|serlo-staging).(org|dev)\//) ||
     src.startsWith('https://pixabay.com/')
 
   if (isAllowed) return src
