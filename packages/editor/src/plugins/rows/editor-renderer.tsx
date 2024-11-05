@@ -192,6 +192,7 @@ export function EditorRowRenderer({
     <>
       {draggingAbove ? dropPreview : null}
       <div
+        id={row.id}
         ref={container}
         className={cn(
           'rows-editor-renderer-container',

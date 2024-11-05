@@ -17,6 +17,12 @@ export function RowDragButton({ rows, index }: RowDragButtonProps) {
 
   function handleDown() {
     rows.move(index, index + 1)
+    scrollToMovedRow()
+  }
+
+  function scrollToMovedRow() {
+    const element = document.getElementById(rows[index].id)
+    if (element) setTimeout(() => element.scrollIntoView({ block: 'nearest' }))
   }
 
   return (
