@@ -7,7 +7,6 @@ import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
@@ -34,6 +33,7 @@ export interface SerloEditorProps {
   language?: SupportedLanguage
   editorVariant: EditorVariant
   isProductionEnvironment?: boolean
+  userId?: string
   _testingSecret?: string | null
   _ltik?: string
 }
@@ -47,6 +47,7 @@ export function SerloEditor(props: SerloEditorProps) {
     language,
     plugins,
     isProductionEnvironment,
+    userId,
     _testingSecret,
     _ltik,
   } = {
@@ -75,16 +76,16 @@ export function SerloEditor(props: SerloEditorProps) {
   return (
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
-        <EditorMetaContext.Provider value={{ editorVariant }}>
-          <LtikContext.Provider value={_ltik}>
-            {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
-            <Editor
-              initialState={migratedState.document}
-              onChange={handleDocumentChange}
-            >
-              {children}
-            </Editor>
-          </LtikContext.Provider>
+        <EditorMetaContext.Provider
+          value={{ editorVariant, userId, ltik: _ltik }}
+        >
+          {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
+          <Editor
+            initialState={migratedState.document}
+            onChange={handleDocumentChange}
+          >
+            {children}
+          </Editor>
         </EditorMetaContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>

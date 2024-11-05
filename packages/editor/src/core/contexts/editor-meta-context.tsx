@@ -4,6 +4,7 @@ import { createContext } from 'react'
 export interface EditorMeta {
   editorVariant: EditorVariant
   userId?: string
+  ltik?: string
 }
 
 export const EditorMetaContext = createContext<EditorMeta>({
