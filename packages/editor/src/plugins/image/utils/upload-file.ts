@@ -1,4 +1,4 @@
-import { EditorVariantContext } from '@editor/core/contexts/editor-variant-context'
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { type EditorVariant } from '@editor/package/storage-format'
 import { type UploadHandler } from '@editor/plugin'
 import { useContext } from 'react'
@@ -6,9 +6,9 @@ import { useContext } from 'react'
 import { handleError, validateFile } from './validate-file'
 
 export function useUploadFile(oldFileUploader: UploadHandler<string>) {
-  const editorVariant = useContext(EditorVariantContext)
+  const { variant } = useContext(EditorMetaContext)
   return shouldUseNewUpload()
-    ? (file: File) => uploadFile(file, editorVariant)
+    ? (file: File) => uploadFile(file, variant)
     : oldFileUploader
 }
 

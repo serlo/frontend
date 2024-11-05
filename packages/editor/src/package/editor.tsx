@@ -1,5 +1,5 @@
 import { Editor, type EditorProps } from '@editor/core'
-import { EditorVariantContext } from '@editor/core/contexts/editor-variant-context'
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { type GetDocument } from '@editor/core/types'
 import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
@@ -23,7 +23,6 @@ import {
   type EditorVariant,
 } from './storage-format'
 
-// TODO: figure out styling
 // eslint-disable-next-line import/no-unassigned-import
 import '../tailwind/editor.css'
 
@@ -76,7 +75,7 @@ export function SerloEditor(props: SerloEditorProps) {
   return (
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
-        <EditorVariantContext.Provider value={editorVariant}>
+        <EditorMetaContext.Provider value={{ variant: editorVariant }}>
           <LtikContext.Provider value={_ltik}>
             {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
             <Editor
@@ -86,7 +85,7 @@ export function SerloEditor(props: SerloEditorProps) {
               {children}
             </Editor>
           </LtikContext.Provider>
-        </EditorVariantContext.Provider>
+        </EditorMetaContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>
   )
