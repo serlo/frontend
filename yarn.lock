@@ -5680,6 +5680,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@serlo/editor@workspace:packages/editor"
   dependencies:
+    "@eslint/eslintrc": ^3.1.0
+    "@eslint/js": ^9.14.0
     "@fortawesome/fontawesome-svg-core": 6.5.2
     "@fortawesome/free-brands-svg-icons": 6.5.2
     "@fortawesome/free-regular-svg-icons": 6.5.2
