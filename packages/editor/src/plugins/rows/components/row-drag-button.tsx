@@ -1,45 +1,59 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { StateTypeReturnType } from '@editor/types/internal__plugin-state'
 import { cn } from '@editor/utils/cn'
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import type { ConnectDragSource } from 'react-dnd'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+
+import type { RowsPluginState } from '..'
 
 interface RowDragButtonProps {
-  drag: ConnectDragSource
+  rows: StateTypeReturnType<RowsPluginState>
+  index: number
 }
 
-export function RowDragButton({ drag }: RowDragButtonProps) {
-  const editorStrings = useEditStrings()
+export function RowDragButton({ rows, index }: RowDragButtonProps) {
+  function handleUp() {
+    rows.move(index, index - 1)
+  }
+
+  function handleDown() {
+    rows.move(index, index + 1)
+  }
 
   return (
     <div
       className={cn(
         'rows-tools',
-        'absolute left-2 z-[22] rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
+        'absolute bottom-14 left-2 top-0 z-[22] flex flex-col justify-center gap-2',
+        'rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
       )}
     >
       <button
-        className={cn(`
-            serlo-tooltip-trigger -mt-[3px] mb-1.5 cursor-grab select-none
-            border-0 bg-none active:cursor-grabbing
-        `)}
-        ref={drag as unknown as React.LegacyRef<HTMLButtonElement>}
+        className={cn(buttonStyles, index === 0 && 'hidden')}
+        onClick={handleUp}
       >
-        <EditorTooltip
-          text={editorStrings.plugins.rows.dragElement}
-          className="-ml-4 !pb-2"
-        />
-        <div
-          className={cn(`
-              serlo-button-edit-primary rounded-full bg-transparent px-1.5
-              py-0.5 text-almost-black hover:bg-editor-primary-200
-          `)}
-          aria-hidden="true"
-        >
-          <FaIcon icon={faGripVertical} />
+        <div className={iconWrapperStyles} aria-hidden="true">
+          <FaIcon icon={faCaretUp} />
+        </div>
+      </button>
+
+      <button
+        className={cn(buttonStyles, index === rows.length - 1 && 'hidden')}
+        onClick={handleDown}
+      >
+        <div className={iconWrapperStyles} aria-hidden="true">
+          <FaIcon icon={faCaretDown} />
         </div>
       </button>
     </div>
   )
 }
+
+const buttonStyles = cn(`
+  serlo-tooltip-trigger -mt-[3px] cursor-grab select-none
+  border-0 bg-none active:cursor-grabbing
+`)
+
+const iconWrapperStyles = cn(`
+  serlo-button-edit-primary rounded-full bg-transparent px-1.5
+  py-0.5 text-almost-black hover:bg-editor-primary-200
+`)
