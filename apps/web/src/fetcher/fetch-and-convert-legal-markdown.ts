@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-deprecated
 import { micromark } from 'micromark'
 
 const legalRepo =

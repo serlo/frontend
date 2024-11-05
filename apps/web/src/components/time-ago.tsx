@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-// eslint-disable-next-line import/no-deprecated
 import ReactTimeAgo, { TimeAgoProps as ReactTimeAgoProps } from 'timeago-react'
-// eslint-disable-next-line import/no-deprecated
 import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
