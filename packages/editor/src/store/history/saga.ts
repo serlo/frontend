@@ -58,12 +58,12 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
     const payload: ChannelAction = yield take(chan)
     const actions = payload.resolve || payload.reject || []
 
-    yield put(pureCommitActionToHistory({ combine: false, actions }))
-
     // Saga will silently fail if a frozen action is passed to `put`.
     // Therefore, we first clone the action.
     // More info: https://github.com/redux-saga/redux-saga/issues/1254
     yield all(actions.map((a) => put(R.clone(a.action))))
+
+    yield put(pureCommitActionToHistory({ combine: false, actions }))
 
     if (payload.resolve || payload.reject) {
       break
