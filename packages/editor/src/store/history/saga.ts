@@ -39,13 +39,11 @@ function* temporaryCommitSaga(
     }
   }
 
-  if (action.payload.executor) {
-    action.payload.executor(
-      createPutToChannel('resolve'),
-      createPutToChannel('reject')
-    )
-    yield call(resolveSaga, chan)
-  }
+  action.payload.executor(
+    createPutToChannel('resolve'),
+    createPutToChannel('reject')
+  )
+  yield call(resolveSaga, chan)
 }
 
 interface ChannelAction {
