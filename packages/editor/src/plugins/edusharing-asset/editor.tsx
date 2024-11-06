@@ -175,11 +175,7 @@ export function EdusharingAssetEditor({
           },
         }}
       >
-        <iframe
-          src={url.href}
-          className="edusharing-h-full edusharing-w-full"
-          ref={iframeRef}
-        />
+        <iframe src={url.href} className="h-full w-full" ref={iframeRef} />
       </Modal>
     )
   }

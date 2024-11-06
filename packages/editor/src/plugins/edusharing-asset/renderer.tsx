@@ -10,7 +10,7 @@ type EmbedType =
   | 'brockhaus'
   | 'file'
   | 'h5p'
-  | 'image'
+  | 'edusharing-image'
   | 'learning-app'
   | 'link'
   | 'pdf'
@@ -200,8 +200,8 @@ export function EdusharingAssetRenderer(props: {
       // Create completely new <img> element because patching the existing one is more work/error-prone
       const imageSnippet = buildImageSnippet(image)
       return {
-        embedType: 'image',
-        html: imageSnippet,
+        embedType: 'edusharing-image',
+        html: appendIframeResizer(imageSnippet),
         defineContainerHeight: false,
       }
     }
@@ -369,13 +369,7 @@ function getImageOrUndefined(
 }
 
 function buildImageSnippet(image: HTMLImageElement): string {
-  return `
-    <img style="width: 100%; object-fit: contain;" src="${image.getAttribute(
-      'src'
-    )}" alt="${image.getAttribute('alt')}" title="${image.getAttribute(
-      'title'
-    )}" />
-  `
+  return `<img style="width: 100%; object-fit: contain;" src="${image.getAttribute('src')}" alt="${image.getAttribute('alt')}" title="${image.getAttribute('title')}">`
 }
 
 function appendIframeResizer(htmlSnippet: string) {
