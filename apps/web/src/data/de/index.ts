@@ -344,6 +344,8 @@ export const instanceData = {
         code1010001: "Anmelden",
         code1010002: "Anmelden mit Mein Bildungsraum",
         code1010013: "Weiter mit SSO",
+        code1010022: "Anmelden",
+        // Login with password
         code1040001: "Account anlegen",
         code1040002: "Über „Mein Bildungsraum“ Account registrieren",
         code1040003: "Weiter",
