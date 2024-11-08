@@ -155,15 +155,11 @@ export function EdusharingAssetEditor({
       <EditorModal
         isOpen={modalIsOpen}
         setIsOpen={() => setModalIsOpen(false)}
-        className="top-8 max-h-[90vh] w-[80%] w-auto translate-y-0 overflow-y-scroll pt-0"
+        className="top-[50%] h-full w-full max-w-[95%]"
         title="Edusharing-Inhalt auswählen"
         extraTitleClassName="sr-only"
       >
-        <iframe
-          src={url.href}
-          className="min-h-[90vh] w-full"
-          ref={iframeRef}
-        />
+        <iframe src={url.href} className="h-full w-full" ref={iframeRef} />
       </EditorModal>
     )
   }
