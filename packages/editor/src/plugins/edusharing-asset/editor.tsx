@@ -1,10 +1,10 @@
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import * as t from 'io-ts'
 import { useContext, useEffect, useRef, useState } from 'react'
 
 import type { EdusharingAssetProps } from '.'
-import { LtikContext } from './ltik-context'
 import { EdusharingAssetRenderer } from './renderer'
 import { PluginToolbar } from '../../editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
@@ -52,7 +52,7 @@ export function EdusharingAssetEditor({
     return () => window.removeEventListener('message', handleIFrameEvent)
   }, [state.edusharingAsset])
 
-  const ltik = useContext(LtikContext)
+  const { ltik } = useContext(EditorMetaContext)
   if (!ltik) return <p>Error: ltik missing</p>
 
   return (
