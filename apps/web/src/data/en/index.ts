@@ -373,6 +373,7 @@ export const instanceData = {
         code1010001: 'Sign in',
         code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: 'Continue with SSO',
+        code1010022: 'Login', // Login with password
         code1040001: 'Register',
         code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',

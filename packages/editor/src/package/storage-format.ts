@@ -9,9 +9,12 @@ import { getEditorVersion } from './editor-version'
 /** The creator of the saved data -> Serlo editor */
 const documentType = 'https://serlo.org/editor'
 
-/** The variant of the Serlo editor that created this saved data */
+/** The variant of the Serlo editor that created this saved data
+ * allowed characters: 'a-z' '0-9' '-'
+ * max length: 50
+ */
 const EditorVariantType = t.union([
-  t.literal('https://github.com/serlo/serlo-editor-for-edusharing'),
+  t.literal('https://github.com/serlo/serlo-editor-for-edusharing'), // TODO: remove soon
   t.literal('lti-tool'),
   t.literal('serlo-org'),
   t.literal('kiron'),

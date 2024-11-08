@@ -1,4 +1,5 @@
 import { type EditorProps } from '@editor/core'
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
@@ -18,6 +19,7 @@ import { SaveButton } from './components/save-button'
 import { createPlugins } from './create-plugins'
 import { createRenderers } from './create-renderers'
 import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
@@ -39,6 +41,7 @@ export function SerloEditor({
   children,
 }: SerloEditorProps) {
   const { lang, licenses } = useInstanceData()
+  const auth = useAuthentication()
 
   const handleLearnerEvent = useSerloHandleLearnerEvent()
 
@@ -57,20 +60,24 @@ export function SerloEditor({
 
   return (
     <EditStringsProvider value={editString}>
-      <SerloOnlyFeaturesContext.Provider
-        value={{ isSerlo: true, licenses, ArticleAddModal }}
+      <EditorMetaContext.Provider
+        value={{ editorVariant: 'serlo-org', userId: String(auth?.id) }}
       >
-        <Editor initialState={initialState}>
-          <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
-          {isNewEntity ? (
-            <ExternalRevisionLoader
-              templateType={initialState.plugin as TemplatePluginType}
-            />
-          ) : null}
+        <SerloOnlyFeaturesContext.Provider
+          value={{ isSerlo: true, licenses, ArticleAddModal }}
+        >
+          <Editor initialState={initialState}>
+            <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
+            {isNewEntity ? (
+              <ExternalRevisionLoader
+                templateType={initialState.plugin as TemplatePluginType}
+              />
+            ) : null}
 
-          {children}
-        </Editor>
-      </SerloOnlyFeaturesContext.Provider>
+            {children}
+          </Editor>
+        </SerloOnlyFeaturesContext.Provider>
+      </EditorMetaContext.Provider>
     </EditStringsProvider>
   )
 }
