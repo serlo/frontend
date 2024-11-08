@@ -79,7 +79,7 @@ export function CommunityWall() {
       <div
         className={cn(`
           flex flex-wrap justify-evenly
-          md:relative md:mb-72 md:block md:h-630
+          md:relative md:mb-72 md:block md:h-[630px]
         `)}
       >
         <CommunityWallPersons persons={persons} positions={positions} />

@@ -6,7 +6,7 @@ import {
   defaultPlugins,
   EditorPluginType,
 } from '@serlo/editor'
-import styles from '@serlo/editor/style.css?raw'
+import styles from '@serlo/editor/dist/style.css?raw'
 import React, { Suspense, lazy } from 'react'
 import * as ReactDOM from 'react-dom/client'
 
