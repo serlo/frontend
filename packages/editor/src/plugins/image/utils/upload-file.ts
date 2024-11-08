@@ -62,12 +62,12 @@ async function uploadFile({
 
   const data = (await result?.json()) as {
     signedUrl: string
-    imgSrc: string
+    fileUrl: string
     tagging: string
   }
   if (!data) return Promise.reject('Could not get signed URL')
 
-  const { signedUrl, imgSrc, tagging } = data
+  const { signedUrl, fileUrl, tagging } = data
 
   const success = await uploadToBucket({
     file,
@@ -75,7 +75,7 @@ async function uploadFile({
     tagging,
   })
   if (!success) return Promise.reject('Could not upload file')
-  return Promise.resolve(imgSrc)
+  return Promise.resolve(fileUrl)
 }
 
 const signedUrlHost =
