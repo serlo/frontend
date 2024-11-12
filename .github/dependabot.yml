@@ -1,0 +1,19 @@
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "npm" # See documentation for possible values
+    directories:
+      - "/"
+      - "apps/web"
+      - "packages/editor"
+      - "packages/editor-web-component"
+      - "packages/eslint-config"
+    schedule:
+      interval: "monthly"
+      
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+      
