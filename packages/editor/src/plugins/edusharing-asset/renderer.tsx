@@ -9,7 +9,7 @@ type EmbedType =
   | 'brockhaus'
   | 'file'
   | 'h5p'
-  | 'edusharing-image'
+  | 'image'
   | 'learning-app'
   | 'link'
   | 'pdf'
@@ -216,7 +216,7 @@ export function EdusharingAssetRenderer(props: {
       // Create completely new <img> element because patching the existing one is more work/error-prone
       const imageSnippet = buildImageSnippet(image)
       return {
-        embedType: 'edusharing-image',
+        embedType: 'image',
         htmlSnippet: imageSnippet,
         defineContainerHeight: false,
       }
