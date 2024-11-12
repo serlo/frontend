@@ -96,7 +96,7 @@
     "@serlo/eslint-config": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
     "@svgr/webpack": "^8.1.0",
-    "@tailwindcss/typography": "^0.5.12",
+    "@tailwindcss/typography": "^0.5.15",
     "@types/canvas-confetti": "^1.6.4",
     "@types/iframe-resizer": "^3.5.13",
     "@types/jest": "^29.5.12",
