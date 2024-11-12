@@ -19,8 +19,8 @@ import type { SerloTableProps } from '.'
 import { CellSwitchButton } from './cell-switch-button'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
-import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
+import { getTableType } from './utils/get-table-type'
 import { instanceStateStore } from '../text/utils/instance-state-store'
 
 const newCell = { content: { plugin: EditorPluginType.Text } }

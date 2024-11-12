@@ -2,8 +2,8 @@ import { cn } from '@editor/utils/cn'
 import { ReactNode, useContext } from 'react'
 import { useDrop } from 'react-dnd'
 
-import { blankDraggableAnswerDragType } from './blank-draggable-answer'
 import type { BlankId, DraggableId } from '..'
+import { blankDraggableAnswerDragType } from './blank-draggable-answer'
 import { BlanksContext } from '../context/blank-context'
 
 interface DroppableBlankProps {

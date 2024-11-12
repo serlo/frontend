@@ -1,5 +1,5 @@
-import { MultimediaSizeSelectButton } from './size-select-button'
 import type { MultimediaProps } from '..'
+import { MultimediaSizeSelectButton } from './size-select-button'
 
 interface MultimediaSizeSelectProps {
   state: MultimediaProps['state']['width']

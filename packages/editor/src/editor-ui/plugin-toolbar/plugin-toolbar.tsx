@@ -5,9 +5,9 @@ import { cn } from '@editor/utils/cn'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { ReactElement } from 'react'
 
-import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 import { EditorTooltip } from '../editor-tooltip'
 import { FaIcon } from '../fa-icon'
+import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string
