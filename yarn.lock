@@ -5716,7 +5716,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.7.1
     "@vitejs/plugin-react": ^4.2.1
     autoprefixer: ^10.4.19
-    clsx: ^2.1.0
+    clsx: ^2.1.1
     dompurify: ^3.1.7
     eslint: ^8.57.0
     eslint-config-next: ^14.2.2
@@ -5841,7 +5841,7 @@ __metadata:
     array-move: ^4.0.0
     autoprefixer: ^10.4.19
     canvas-confetti: ^1.9.2
-    clsx: ^2.1.0
+    clsx: ^2.1.1
     cross-env: ^7.0.3
     dotenv: ^16.4.5
     eslint: ^8.57.0
@@ -8661,10 +8661,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "clsx@npm:2.1.0"
-  checksum: 43fefc29b6b49c9476fbce4f8b1cc75c27b67747738e598e6651dd40d63692135dc60b18fa1c5b78a2a9ba8ae6fd2055a068924b94e20b42039bd53b78b98e1d
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: acd3e1ab9d8a433ecb3cc2f6a05ab95fe50b4a3cfc5ba47abb6cbf3754585fcb87b84e90c822a1f256c4198e3b41c7f6c391577ffc8678ad587fc0976b24fd57
   languageName: node
   linkType: hard
 
