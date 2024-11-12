@@ -1,8 +1,8 @@
 import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 
 import { runInitRootSaga } from '.'
-import { ROOT } from './constants'
 import type { ReversibleAction } from '..'
+import { ROOT } from './constants'
 import { selectDocuments } from '../documents'
 import { handleRecursiveInserts } from '../documents/saga'
 import { persistHistory } from '../history'

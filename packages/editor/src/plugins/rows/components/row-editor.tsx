@@ -3,8 +3,8 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { selectIsFocused, useAppSelector } from '@editor/store'
 import { type MouseEvent, useRef } from 'react'
 
-import { AddRowButtonFloating } from './add-row-button-floating'
 import type { RowsPluginConfig, RowsPluginState } from '..'
+import { AddRowButtonFloating } from './add-row-button-floating'
 import { EditorRowRenderer } from '../editor-renderer'
 
 interface RowEditorProps {

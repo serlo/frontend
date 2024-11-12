@@ -1,11 +1,11 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { StateTypeReturnType } from '@editor/plugin'
 
+import type { stepProps } from '..'
 import { TransformationTarget } from './editor-renderer'
 import type { GridFocus } from './grid-focus'
 import { InlineMath } from './inline-math'
 import { StepSegment } from './step-segment'
-import type { stepProps } from '..'
 import { Sign, signStrings } from '../sign'
 
 export interface StepEditorProps {
