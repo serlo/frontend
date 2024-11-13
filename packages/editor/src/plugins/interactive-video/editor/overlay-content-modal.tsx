@@ -31,7 +31,7 @@ export function OverlayContentModal({
       extraCloseButtonClassName="sr-only"
     >
       <button
-        className="serlo-button-editor-primary absolute right-2 top-3"
+        className="serlo-button-edit-primary absolute right-7 top-[56px]"
         onClick={onClose}
       >
         {pluginStrings.saveButton} <FaIcon icon={faCheck} />
@@ -47,7 +47,7 @@ export function OverlayContentModal({
         )}
         placeholder={pluginStrings.titlePlaceholder}
       />
-      <div className="mx-side mt-4 flex gap-3">
+      <div className="mx-side mt-8 flex gap-3">
         <label className="serlo-tooltip-trigger cursor-pointer">
           <EditorTooltip text={pluginStrings.autoOpenExplanation} />
           <SwitchButton

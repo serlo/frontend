@@ -1,3 +1,4 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faPlusCircle, faTasks } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -7,7 +8,6 @@ import {
 } from '@vidstack/react'
 
 import { longerThanVideoDuration, markDuration } from '../const'
-import { FaIcon } from '@/components/fa-icon'
 
 // editor player tools (currently just the hovering button)
 export function PlayerTools({
@@ -47,7 +47,7 @@ export function PlayerTools({
         </button>
       ) : addOverlayContent && isFillLongEnough ? (
         <button
-          className="serlo-button-editor-primary pointer-events-auto"
+          className="serlo-button-edit-primary pointer-events-auto"
           onClick={() => {
             addOverlayContent(player.currentTime)
             void player.pause()

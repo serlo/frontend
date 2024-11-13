@@ -1,3 +1,4 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { getInteractiveItemByStaticState } from '@editor/plugins/rows/utils/plugin-menu'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
@@ -5,7 +6,6 @@ import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { formatTime } from '@vidstack/react'
 
 import { type InteractiveVideoProps } from '..'
-import { FaIcon } from '@/components/fa-icon'
 
 export function MarksList({
   marks,

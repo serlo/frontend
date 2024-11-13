@@ -3,10 +3,10 @@ import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugin
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { type InteractiveVideoProps } from '..'
 import { MarksList } from './marks-list'
 import { OverlayContentModal } from './overlay-content-modal'
 import { PlayerTools } from './player-tools'
-import { type InteractiveVideoProps } from '..'
 import { addOverlayContent } from '../helpers/add-overlay-content'
 import { useCheckSeekAndPlay } from '../helpers/use-check-seek-and-play'
 import { useLearnerInteractions } from '../helpers/use-learner-interactions'

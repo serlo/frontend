@@ -117,7 +117,7 @@ export function MarkOverlay({
             <i>{staticStrings.exerciseSolved}</i>
             <br />
             <button
-              className="serlo-button-editor-primary mt-1"
+              className="serlo-button-edit-primary mt-1"
               onClick={() => {
                 closeOverlay()
                 void player?.play()
@@ -132,7 +132,7 @@ export function MarkOverlay({
             <i>{staticStrings.repeatPromt}</i>
             <br />
             <button
-              className="serlo-button-editor-primary mt-1"
+              className="serlo-button-edit-primary mt-1"
               onClick={() => {
                 closeOverlay()
                 if (!player) return
