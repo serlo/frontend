@@ -51,7 +51,6 @@ export function Quickbar({
         // eslint-disable-next-line no-console
         .catch(console.error)
     }
-     
   }, [query, data, subject])
 
   useEffect(() => {

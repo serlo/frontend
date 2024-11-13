@@ -75,7 +75,6 @@ function Title() {
 }
 
 function useNotificationFetch(unread: boolean) {
-   
   return useGraphqlSwrPaginationWithAuth<
     GetNotificationsQuery['notifications']['nodes'][number]
   >({

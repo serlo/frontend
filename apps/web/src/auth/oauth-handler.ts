@@ -37,7 +37,6 @@ const queries: Record<HandlerType, string> = {
 }
 
 const throwError = (error?: unknown) => {
-   
   console.error(error)
   throw new Error('problem in oauth')
 }

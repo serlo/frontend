@@ -12,7 +12,6 @@ export function createGraphqlFetch() {
   return async function fetch(args: string) {
     const { query, variables } = JSON.parse(args) as ParsedArgs
 
-     
     return await executeQuery()
 
     function executeQuery() {

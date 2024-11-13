@@ -190,11 +190,10 @@ export function handleFlowError<S>(
     // at moment all flows are in the same folder. Adjust if they were moved somewhere else
     const flowPath = `/auth/${flowType}`
 
-     
     switch (data.error?.id) {
       case 'session_aal2_required':
         // 2FA is enabled and enforced, but user did not perform 2fa yet!
-         
+
         window.location.href = data.redirect_browser_to
         return
       case 'session_already_available': {
@@ -222,7 +221,7 @@ export function handleFlowError<S>(
       }
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
-         
+
         window.location.href = data.redirect_browser_to
         return
       case 'self_service_flow_return_to_forbidden':
@@ -248,7 +247,7 @@ export function handleFlowError<S>(
         return
       case 'browser_location_change_required':
         // Ory Kratos asked us to point the user to this URL.
-         
+
         window.location.href = data.redirect_browser_to
         return
     }

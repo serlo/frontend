@@ -369,7 +369,6 @@ type Node =
   PotentialSpamUsersQuery['user']['potentialSpamUsers']['nodes'][number]
 
 function usePotentialSpamUsersFetch() {
-   
   return useGraphqlSwrPaginationWithAuth<Node>({
     query: potentialSpamUsersQuery,
     variables: { first: 20 },

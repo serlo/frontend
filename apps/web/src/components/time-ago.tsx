@@ -20,7 +20,6 @@ export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
       const promise = getTimeAgoLang(lang)
       if (promise) {
         void promise.then((module) => {
-           
           timeago.register(lang, module.default)
           setLanguageLoaded(true)
         })
@@ -42,14 +41,13 @@ export function TimeAgo({ datetime, dateAsTitle, className }: TimeAgoProps) {
 }
 
 function getTimeAgoLang(lang: string) {
-   
   if (lang === Instance.De) return import('timeago.js/lib/lang/de')
-   
+
   if (lang === Instance.Es) return import('timeago.js/lib/lang/es')
-   
+
   if (lang === Instance.Fr) return import('timeago.js/lib/lang/fr')
-   
+
   if (lang === Instance.Hi) return import('timeago.js/lib/lang/hi_IN')
-   
+
   if (lang === Instance.Ta) return import('timeago.js/lib/lang/ta')
 }

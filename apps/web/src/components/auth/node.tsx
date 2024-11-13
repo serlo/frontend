@@ -128,7 +128,6 @@ export function Node({
       }
 
       case 'submit': {
-         
         const label =
           node.meta.label?.id &&
           getKratosMessageString(

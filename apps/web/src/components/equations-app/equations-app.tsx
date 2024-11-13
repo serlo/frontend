@@ -95,7 +95,6 @@ export function EquationsApp() {
     return () => {
       window.removeEventListener('popstate', handlePopstate)
     }
-     
   }, [])
 
   if (showOverview) {

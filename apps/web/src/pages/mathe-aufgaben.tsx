@@ -1,4 +1,3 @@
- 
 import request from 'graphql-request'
 import { GetStaticProps, NextPage } from 'next'
 import React from 'react'

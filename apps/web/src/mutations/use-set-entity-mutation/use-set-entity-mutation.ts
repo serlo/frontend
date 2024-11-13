@@ -1,4 +1,3 @@
- 
 import { useRouter } from 'next/router'
 
 import { setAbstractEntityMutation } from './set-abstract-entity-mutation'
