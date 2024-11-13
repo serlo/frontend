@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import request from 'graphql-request'
 import { GetStaticProps, NextPage } from 'next'
 import React from 'react'

@@ -1,6 +1,5 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
-// eslint-disable-next-line import/no-internal-modules
 import type { FetcherResponse } from 'swr/_internal'
 
 import { GetCommentsQuery } from './graphql-types/operations'

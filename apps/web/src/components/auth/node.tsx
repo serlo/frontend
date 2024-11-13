@@ -128,7 +128,6 @@ export function Node({
       }
 
       case 'submit': {
-        // eslint-disable-next-line no-case-declarations
         const label =
           node.meta.label?.id &&
           getKratosMessageString(

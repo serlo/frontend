@@ -1,6 +1,5 @@
 import { gql } from 'graphql-request'
 import { useSWRConfig, Cache } from 'swr'
-// eslint-disable-next-line import/no-internal-modules
 import { ScopedMutator } from 'swr/_internal'
 
 import { useMutationFetchAuthed } from './helper/use-mutation-fetch'

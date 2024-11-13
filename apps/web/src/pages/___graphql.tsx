@@ -4,7 +4,7 @@ import { ExecutionResult } from 'graphql'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-// eslint-disable-next-line import/no-internal-modules, import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import
 import 'graphiql/graphiql.css'
 
 import { AuthProvider } from '@/auth/auth-provider'
