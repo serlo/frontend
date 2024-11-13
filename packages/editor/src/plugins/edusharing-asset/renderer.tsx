@@ -34,8 +34,7 @@ const EmbedJson = t.type({
 const iframeResizerHtml =
   '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js"></script>'
 
-// Set some styles to default values to create consistency between different browsers similar to a CSS reset, see https://meyerweb.com/eric/tools/css/reset/
-const defaultStyle = 'padding: 0; margin: 0; border: 0;'
+const cssReset = 'padding: 0; margin: 0; border: 0;'
 
 export function EdusharingAssetRenderer(props: {
   nodeId?: string
@@ -112,8 +111,8 @@ export function EdusharingAssetRenderer(props: {
   function buildHtml(htmlSnippet: string, defineContainerHeight: boolean) {
     // Hack: Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
     return `
-      <html style="${defaultStyle}${defineContainerHeight ? 'height: 97%;' : ''}">
-        <body style="${defaultStyle}${defineContainerHeight ? 'height: 100%;' : ''}">
+      <html style="${cssReset}${defineContainerHeight ? 'height: 97%;' : ''}">
+        <body style="${cssReset}${defineContainerHeight ? 'height: 100%;' : ''}">
           ${htmlSnippet}
           ${defineContainerHeight ? '' : iframeResizerHtml}
         </body>
@@ -295,7 +294,7 @@ export function EdusharingAssetRenderer(props: {
     if (isLearningApp || isPdf) {
       return {
         embedType: isLearningApp ? 'learning-app' : isPdf ? 'pdf' : 'unknown',
-        htmlSnippet: `<iframe style="${defaultStyle} height: 100%; width: 100%;" src="${iframe.src}"></iframe>`,
+        htmlSnippet: `<iframe style="${cssReset} height: 100%; width: 100%;" src="${iframe.src}"></iframe>`,
         defineContainerHeight: true,
       }
     }
