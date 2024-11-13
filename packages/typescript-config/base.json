@@ -23,6 +23,5 @@
     "strict": true,
     "target": "es6"
   },
-  "exclude": ["node_modules"],
-  "include": ["eslint.config.mjs"]
+  "exclude": ["node_modules"]
 }
