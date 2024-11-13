@@ -4137,12 +4137,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ory/client@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@ory/client@npm:1.9.0"
+"@ory/client@npm:^1.15.10":
+  version: 1.15.10
+  resolution: "@ory/client@npm:1.15.10"
   dependencies:
     axios: ^1.6.1
-  checksum: c732911c967a67a96ae8acbd5f83b3e5dc38ffbc8b2d8c8f865c2659533762939ee6fe5594540aef3cd91ea5be24af708a46950f338009b3ea2ed6356aeb7a5e
+  checksum: 35b5140c4f6d940807a6708abb3b5a3d33fc5e02470b82757f7a01b4634eb7343678f5ce0ce62e0f04f05090629605f18445322863f488a02d8abd75cf2d9b32
   languageName: node
   linkType: hard
 
@@ -5827,7 +5827,7 @@ __metadata:
     "@hello-pangea/dnd": ^16.6.0
     "@lumieducation/h5p-react": ^9.3.2
     "@next/bundle-analyzer": ^13.5.6
-    "@ory/client": ^1.9.0
+    "@ory/client": ^1.15.10
     "@ory/integrations": ^1.1.5
     "@radix-ui/react-dialog": ^1.1.1
     "@radix-ui/react-navigation-menu": ^1.1.4
