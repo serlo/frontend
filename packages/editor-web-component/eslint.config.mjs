@@ -12,6 +12,9 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
+/**
+ * @type {import('eslint').Linter.Config[]}
+ */
 export default [
   ...compat.extends('@serlo/eslint-config/editor.js'),
   {

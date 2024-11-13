@@ -12,6 +12,9 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
+/**
+ * @type {import('eslint').Linter.Config[]}
+ */
 export default [
   {
     ignores: ['apps/**/*', 'packages/**/*', 'e2e-tests/**/*'],
