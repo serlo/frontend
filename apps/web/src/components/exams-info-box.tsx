@@ -53,7 +53,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                   <Link
                     href="/mathe-pruefungen"
                     className={cn(
-                      'serlo-button-light -ml-1 mt-1 !px-3 !py-2',
+                      'serlo-button-learner-secondary -ml-1 mt-1 !px-3 !py-2',
                       'md:rounded-lg md:!px-4 md:!py-2.5 xl:flex xl:justify-around'
                     )}
                   >
@@ -77,7 +77,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
                   <Link
                     href="https://discord.com/invite/HyPx9jVq5G"
                     className={cn(
-                      'serlo-button-light -ml-1 mt-1 !px-3 !py-2',
+                      'serlo-button-learner-secondary -ml-1 mt-1 !px-3 !py-2',
                       'md:rounded-lg md:!px-4 md:!py-2.5 xl:flex xl:justify-around'
                     )}
                     noExternalIcon

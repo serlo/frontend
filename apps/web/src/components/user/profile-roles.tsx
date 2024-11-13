@@ -48,7 +48,9 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
 
   function Role({ text, role }: { text: string; role: string }) {
     const label = (
-      <span className="serlo-button-light ml-1 text-sm">{text}</span>
+      <span className="serlo-button-learner-secondary ml-1 text-sm">
+        {text}
+      </span>
     )
 
     return (

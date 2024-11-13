@@ -1,4 +1,5 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { EditorImage } from '@editor/plugins/image/components/editor-image'
 import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { faListUl } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
@@ -146,8 +147,7 @@ export function SubjectLandingTopicOverview({
                       alt={`Illustration: ${term.title}`}
                     />
                   ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={src} className="h-12 w-12 object-cover" />
+                    <EditorImage src={src} className="h-12 w-12 object-cover" />
                   )
                 ) : null}
               </div>

@@ -116,13 +116,13 @@ export function ModalWithCloseButton({
                   <p className="px-2">{confirmCloseDescription}</p>
                   <div className="mt-4 flex space-x-4">
                     <button
-                      className="serlo-button-blue-transparent mr-4"
+                      className="serlo-button-learner-transparent mr-4"
                       onClick={() => setIsOpen(false)}
                     >
                       {strings.modal.leaveNow}
                     </button>
                     <button
-                      className="serlo-button-blue"
+                      className="serlo-button-learner-primary"
                       onClick={() => setShowConfirmation(false)}
                     >
                       {strings.modal.noStay}

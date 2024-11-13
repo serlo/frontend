@@ -70,7 +70,7 @@ export function SolutionRenderer({
     return (
       <button
         className={cn(
-          'serlo-button-blue-transparent mb-4 ml-side mr-auto pr-2 text-base hover:bg-brand-100 hover:text-brand-700',
+          'serlo-button-learner-transparent mb-4 ml-side mr-auto pr-2 text-base hover:bg-brand-100 hover:text-brand-700',
           isVisible && 'bg-brand text-white'
         )}
         onClick={() => {

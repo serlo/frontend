@@ -1,3 +1,4 @@
+import { EditorImage } from '@editor/plugins/image/components/editor-image'
 import { UIEvent, useEffect, useRef } from 'react'
 
 import { GridImage } from '../../types'
@@ -37,7 +38,7 @@ export function StaticLightboxCarousel({
           key={index}
           className="w-full flex-shrink-0 snap-center snap-always text-center"
         >
-          <img src={src} alt={alt} />
+          <EditorImage src={src} alt={alt} />
           <div className="mt-3">
             {caption ? (
               <div className="italic text-gray-100 [&_a]:text-brand-400">

@@ -65,12 +65,12 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                 >
                   <span
                     className={cn(
-                      `serlo-button rounded-xl py-[3px] tracking-slightly-tighter
+                      `serlo-button-learner rounded-xl py-[3px] tracking-slightly-tighter
                       group-hover:bg-brand group-hover:text-white
                       `,
                       entry.active
                         ? 'bg-brand-200 text-black'
-                        : 'serlo-button-blue-transparent'
+                        : 'serlo-button-learner-transparent'
                     )}
                   >
                     {entry.title}

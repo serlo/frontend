@@ -24,14 +24,14 @@ export function ArticleExercises({ exercises }: ArticleExercisesProps) {
                 {index === 0 ? null : (
                   <button
                     onClick={() => exercises.move(index, index - 1)}
-                    className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                    className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
                   >
                     <EditorTooltip text={entityStrings.moveUpLabel} />
                     <FaIcon icon={faArrowCircleUp} />
                   </button>
                 )}
                 <button
-                  className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                  className="serlo-button-edit-secondary serlo-tooltip-trigger mr-2"
                   onClick={() => exercises.remove(index)}
                 >
                   <EditorTooltip text={articleStrings.removeLabel} />

@@ -52,7 +52,7 @@ function Content() {
 
     return (
       <p className="serlo-p mt-8">
-        <button onClick={loadMore} className="serlo-button-blue">
+        <button onClick={loadMore} className="serlo-button-learner-primary">
           {strings.actions.loadMore}
         </button>
       </p>
@@ -95,7 +95,7 @@ function Content() {
         <td className="serlo-td">
           <button
             title={loggedInData.strings.authorMenu.restoreContent}
-            className="serlo-button-blue-transparent text-brand-300"
+            className="serlo-button-learner-transparent text-brand-300"
             onClick={async () => {
               const success = await setUuidState({ id: [id], trashed: false })
               if (success) window.location.href = alias

@@ -22,7 +22,7 @@ export function CourseNavigationRenderer({
       {pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}
-          className="serlo-button-light ml-2"
+          className="serlo-button-learner-secondary ml-2"
         >
           {courseStrings.pages}{' '}
           <span

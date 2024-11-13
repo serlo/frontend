@@ -20,7 +20,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "shared/tailwind-base.js",
     "../../packages/editor/src/**/*.ts",
     "../../packages/editor/src/**/*.tsx"
   ],

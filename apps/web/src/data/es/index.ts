@@ -344,6 +344,8 @@ export const instanceData = {
         code1010001: "Iniciar sesión",
         code1010002: "Inicia sesión a través de „Mein Bildungsraum“ (programa en Alemania)",
         code1010013: "Continuar con SSO",
+        code1010022: "Ingresar",
+        // Login with password
         code1040001: "Registrarse",
         code1040002: "Inscríbete a través de  „Mein Bildungsraum“ (programa de Alemania)",
         code1040003: "Continuar",

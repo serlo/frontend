@@ -144,7 +144,7 @@ function ExampleWithEditSwitch({
 
           <button
             onClick={() => setIsEdit(!isEdit)}
-            className="serlo-button-light !px-4 text-base"
+            className="serlo-button-learner-secondary !px-4 text-base"
           >
             {isEdit ? (
               <>

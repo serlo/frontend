@@ -62,7 +62,7 @@ export function DropdownMenu({
   return (
     <div
       className={cn(`
-        -mt-4 max-w-65 rounded-lg bg-brand-50
+        -mt-4 max-w-[260px] rounded-lg bg-brand-50
         py-3 pl-2.5 pr-4 text-right shadow  
       `)}
     >
@@ -154,7 +154,7 @@ export function DropdownMenu({
   function buildButton(onClick: () => void, children: JSX.Element) {
     return (
       <button
-        className="serlo-button-blue-transparent mb-1 text-base font-normal leading-browser"
+        className="serlo-button-learner-transparent mb-1 text-base font-normal leading-browser"
         onClick={onClick}
       >
         {children}

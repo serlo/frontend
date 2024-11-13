@@ -134,7 +134,10 @@ export function Login({ oauth }: { oauth?: boolean }) {
         {showLogout ? <div>{loginStrings.logOut}</div> : null}
         <div className="mx-side mt-20 border-t-2 pt-4">
           {loginStrings.newHere}{' '}
-          <Link href={registrationUrl} className="serlo-button-light">
+          <Link
+            href={registrationUrl}
+            className="serlo-button-learner-secondary"
+          >
             {loginStrings.registerNewAccount}
           </Link>
         </div>
@@ -159,9 +162,16 @@ export function Login({ oauth }: { oauth?: boolean }) {
       unwantedPaths: [verificationUrl, logoutUrl, loginUrl, recoveryUrl],
     })
 
-    const hackedValues = // @ts-expect-error try
-      values.method === 'nbp' // @ts-expect-error try
-        ? ({ ...values, provider: 'nbp' } as UpdateLoginFlowBody)
+    // We are currently not sure why this workaround is needed.
+    // values.method is supposed to be 'oidc' or 'password'
+    const provider = values.method as unknown as string
+    const hackedValues =
+      provider === 'nbp' || provider === 'vidis'
+        ? ({
+            ...values,
+            provider,
+            method: 'oidc',
+          } as UpdateLoginFlowBody)
         : values
 
     try {
@@ -185,7 +195,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           FlowType.login,
           setFlow,
           strings
-        )(e as AxiosError<LoginFlow>)
+        )(e as AxiosError)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

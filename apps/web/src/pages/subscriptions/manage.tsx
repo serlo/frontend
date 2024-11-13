@@ -64,8 +64,8 @@ function Content() {
             className={cn(
               'mb-2.5 mr-2',
               showTypename === typename
-                ? 'serlo-button-blue'
-                : 'serlo-button-light'
+                ? 'serlo-button-learner-primary'
+                : 'serlo-button-learner-secondary'
             )}
           >
             {getEntityStringByTypename(typename, strings)}

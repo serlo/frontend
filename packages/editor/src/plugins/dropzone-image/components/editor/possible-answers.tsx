@@ -23,7 +23,7 @@ export function PossibleAnswers({ answerZones }: PossibleAnswersProps) {
   return (
     <div className="mt-4">
       <button
-        className="serlo-button-editor-primary"
+        className="serlo-button-edit-primary"
         onClick={() => insertAnswerZone(answerZones)}
         data-qa="plugin-dropzone-image-add-answer-zone-button"
       >

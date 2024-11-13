@@ -1,3 +1,5 @@
+import { EditorImage } from '@editor/plugins/image/components/editor-image'
+
 import { GridImage } from '../../types'
 
 interface StaticCarouselProps {
@@ -14,7 +16,7 @@ export function StaticCarousel({ images, onImageClick }: StaticCarouselProps) {
           className="w-full flex-shrink-0 snap-center snap-always text-center"
           onClick={() => onImageClick(index)}
         >
-          <img src={src} alt={alt} />
+          <EditorImage src={src} alt={alt} />
           <div className="mt-3">
             {caption ? (
               <div className="italic text-gray-700 [&_a]:text-brand-400">

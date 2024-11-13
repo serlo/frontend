@@ -1,0 +1,10 @@
+/* https://tailwindcss.com/docs/using-with-preprocessors#build-time-imports */
+@import 'tailwindcss/base';
+@import './components.css';
+@import 'tailwindcss/utilities';
+
+/* stop body from scrolling when a modal is open */
+body.ReactModal__Body--open {
+  overflow: hidden;
+  height: 100vh;
+}

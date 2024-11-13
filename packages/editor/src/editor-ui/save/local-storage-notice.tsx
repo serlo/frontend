@@ -31,7 +31,7 @@ export function LocalStorageNotice({
         {storageStrings[useStored ? 'restoreInitial' : 'found']}
         <br />
         <button
-          className="serlo-button-editor-primary mt-2"
+          className="serlo-button-edit-primary mt-2"
           onClick={() => {
             if (useStored) {
               if (window.confirm(storageStrings.confirmRestore)) {

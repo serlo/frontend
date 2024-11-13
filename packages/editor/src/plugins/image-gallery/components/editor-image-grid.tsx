@@ -5,11 +5,11 @@ import { isImageDocument } from '@editor/types/plugin-type-guards'
 import { cn } from '@editor/utils/cn'
 import { useEffect, useState } from 'react'
 
+import type { ImageGalleryProps } from '..'
 import { DragAndDropOverlay } from './drag-and-drop-overlay'
 import { ImageGrid } from './image-grid'
 import { ImageGridSkeleton } from './image-grid-skeleton'
 import { RemoveImageButton } from './remove-image-button'
-import type { ImageGalleryProps } from '..'
 import { getDimensions } from '../utils/helpers'
 
 interface EditorImageGridProps {

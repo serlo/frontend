@@ -44,7 +44,7 @@ export function RevisionHeader({
       <MaxWidthDiv noMarginBottom>
         <Link
           href={repositoryAlias}
-          className="serlo-button-light mx-side mt-6"
+          className="serlo-button-learner-secondary mx-side mt-6"
         >
           <FaIcon icon={faArrowCircleLeft} className="mr-0.5 text-base" />{' '}
           {strings.revisions.toContent}

@@ -7,10 +7,10 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useContext } from 'react'
 
+import type { RowsProps } from '..'
 import { AddRowButtonLarge } from './add-row-button-large'
 import { PluginMenuModal } from './plugin-menu-modal'
 import { RowEditor } from './row-editor'
-import type { RowsProps } from '..'
 import {
   PluginMenuActionTypes,
   PluginMenuContext,

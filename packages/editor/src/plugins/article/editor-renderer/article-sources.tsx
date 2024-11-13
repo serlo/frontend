@@ -75,7 +75,7 @@ export function ArticleSources({ sources }: ArticleSourcesProps) {
           {index === 0 ? null : (
             <button
               onClick={() => sources.move(index, index - 1)}
-              className={buttonClass + ' relative'}
+              className={cn(buttonClass, 'relative')}
             >
               <EditorTooltip text={entityStrings.moveUpLabel} />
               <FaIcon icon={faCircleArrowUp} />

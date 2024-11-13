@@ -1,7 +1,7 @@
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { EditorEdusharingAssetDocument } from '@editor/types/editor-plugins'
 import { useContext } from 'react'
 
-import { LtikContext } from './ltik-context'
 import { EdusharingAssetRenderer } from './renderer'
 
 export function EdusharingAssetStaticRenderer(
@@ -12,7 +12,7 @@ export function EdusharingAssetStaticRenderer(
 
   const { contentWidth: widthInPercent } = props.state
 
-  const ltik = useContext(LtikContext)
+  const { ltik } = useContext(EditorMetaContext)
 
   if (!ltik) return null
 

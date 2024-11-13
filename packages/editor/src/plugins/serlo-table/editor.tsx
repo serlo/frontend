@@ -19,8 +19,8 @@ import type { SerloTableProps } from '.'
 import { CellSwitchButton } from './cell-switch-button'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
-import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
+import { getTableType } from './utils/get-table-type'
 import { instanceStateStore } from '../text/utils/instance-state-store'
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
@@ -294,7 +294,7 @@ export function SerloTableEditor(props: SerloTableProps) {
       <div className="relative">
         <button
           className={cn(
-            'serlo-button-editor-secondary serlo-tooltip-trigger',
+            'serlo-button-edit-secondary serlo-tooltip-trigger',
             'absolute -bottom-1.5 z-20 mx-side w-[calc(100%-1.9rem)]'
           )}
           onClick={() => insertRow()}
@@ -313,7 +313,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     return (
       <button
         className={cn(
-          'serlo-button-editor-secondary serlo-tooltip-trigger -ml-1 mb-8 px-2.5'
+          'serlo-button-edit-secondary serlo-tooltip-trigger -ml-1 mb-8 px-2.5'
         )}
         onClick={() => insertCol()}
       >

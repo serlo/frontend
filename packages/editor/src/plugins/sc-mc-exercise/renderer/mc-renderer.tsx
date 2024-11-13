@@ -87,7 +87,7 @@ export function McRenderer({
       <div className="mt-2 flex">
         <button
           data-qa="plugin-exercise-check-answer-button"
-          className="serlo-button-blue mr-3 h-8"
+          className="serlo-button-learner-primary mr-3 h-8"
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({

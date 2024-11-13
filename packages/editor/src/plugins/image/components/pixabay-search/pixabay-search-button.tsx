@@ -18,7 +18,7 @@ export const PixabaySearchButton = (props: PixabaySearchButtonProps) => {
       onClick={onClick}
       onFocus={onFocus}
       onBlur={onBlur}
-      className="serlo-button-editor-primary mb-4 min-w-full rounded-lg px-1 py-2 font-semibold"
+      className="serlo-button-edit-primary mb-4 min-w-full rounded-lg px-1 py-2 font-semibold"
     >
       <span className="mr-2 inline-block">
         <FaIcon icon={faMagnifyingGlass} />

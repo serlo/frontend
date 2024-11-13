@@ -95,7 +95,6 @@ export function EquationsApp() {
     return () => {
       window.removeEventListener('popstate', handlePopstate)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (showOverview) {

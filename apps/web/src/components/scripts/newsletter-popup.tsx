@@ -104,7 +104,6 @@ export function NewsletterPopup() {
           <br />
         </p>
         <div className="text-center">
-          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
             target="_blank"
             rel="noreferrer"

@@ -105,19 +105,19 @@ export function LenabiWelcome() {
             Nach Lehrplan
           </h2>
           <div className="text-center">
-            <Link href="/mathe" className="serlo-button-light">
+            <Link href="/mathe" className="serlo-button-learner-secondary">
               Realschule
             </Link>{' '}
-            <Link href="/mathe" className="serlo-button-light">
+            <Link href="/mathe" className="serlo-button-learner-secondary">
               Mittelschule (Hauptschule)
             </Link>{' '}
-            <Link href="/mathe" className="serlo-button-light">
+            <Link href="/mathe" className="serlo-button-learner-secondary">
               FOS &amp; BOS
             </Link>{' '}
-            <Link href="/mathe" className="serlo-button-light">
+            <Link href="/mathe" className="serlo-button-learner-secondary">
               Hochschule
             </Link>{' '}
-            <Link href="/mathe" className="serlo-button-light">
+            <Link href="/mathe" className="serlo-button-learner-secondary">
               Prüfungen
             </Link>
           </div>

@@ -107,7 +107,7 @@ export function ArticleRelatedTaxonomy({
         </a>{' '}
         {isTax ? (
           <button
-            className="serlo-button-editor-secondary invisible ml-2 max-h-8 self-center whitespace-nowrap text-base leading-browser group-focus-within:visible group-hover:visible"
+            className="serlo-button-edit-secondary invisible ml-2 max-h-8 self-center whitespace-nowrap text-base leading-browser group-focus-within:visible group-hover:visible"
             onClick={() => {
               showExerciseFolderPreview(item.id)
             }}

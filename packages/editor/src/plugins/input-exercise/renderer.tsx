@@ -84,7 +84,7 @@ export function InputExerciseRenderer({
       <div className="mt-4 flex">
         <button
           className={cn(
-            'serlo-button-blue h-8',
+            'serlo-button-learner-primary h-8',
             value === '' && 'pointer-events-none opacity-0'
           )}
           onClick={handleEvaluate}

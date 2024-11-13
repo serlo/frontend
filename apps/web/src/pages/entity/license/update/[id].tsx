@@ -41,13 +41,13 @@ function Content({ id }: UpdateLicenseProps) {
 
       <div className="mx-side flex">
         <select
-          className="serlo-button-light serlo-input-font-reset max-w-xl"
+          className="serlo-button-learner-secondary serlo-input-font-reset max-w-xl"
           onChange={(e) => setLicenseId(parseInt(e.target.value))}
         >
           {licenses.map(renderOption)}
         </select>
         <button
-          className="serlo-button-blue ml-4"
+          className="serlo-button-learner-primary ml-4"
           onClick={() => void updateLicense({ entityId: id, licenseId })}
         >
           Update

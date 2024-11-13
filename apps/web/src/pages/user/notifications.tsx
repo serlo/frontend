@@ -58,8 +58,8 @@ function Content() {
         className={cn(
           'mb-5 mr-5',
           showUnread === setShowUnreadTo
-            ? 'serlo-button-blue'
-            : 'serlo-button-light'
+            ? 'serlo-button-learner-primary'
+            : 'serlo-button-learner-secondary'
         )}
         onClick={() => setShowUnread(setShowUnreadTo)}
       >
@@ -75,7 +75,6 @@ function Title() {
 }
 
 function useNotificationFetch(unread: boolean) {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   return useGraphqlSwrPaginationWithAuth<
     GetNotificationsQuery['notifications']['nodes'][number]
   >({

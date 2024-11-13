@@ -24,8 +24,11 @@ export function ExerciseGroupRenderer({
               key={id ?? index}
               id={id?.split('-')[0]}
               className={cn(`
-                serlo-exercise-wrapper serlo-grouped-exercise-wrapper
-                mt-6 pt-2 [&>div]:border-none
+                serlo-exercise-wrapper mt-6 pt-2 [counter-increment:exercises]
+                before:mx-side before:mb-2.5 before:flex before:h-7 before:w-7 before:justify-center
+                before:rounded-full before:bg-brand-200 before:align-middle before:text-xl
+                before:font-bold before:text-brand before:content-[counter(exercises,_lower-alpha)]
+                before:sm:absolute before:sm:-ml-10 before:sm:-mt-1 [&>div]:border-none
               `)}
             >
               {element}

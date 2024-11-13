@@ -1,3 +1,4 @@
+import { EditorImage } from '@editor/plugins/image/components/editor-image'
 import { cn } from '@editor/utils/cn'
 
 import { GridImage } from '../types'
@@ -35,7 +36,7 @@ export function ImageGrid({
               style={isLastImage ? {} : getFlex(leftImage)}
             >
               <button onClick={() => onImageClick(index)}>
-                <img
+                <EditorImage
                   src={leftImage.src}
                   alt={leftImage.alt}
                   className={cn(isLastImage && 'max-h-96')}
@@ -47,7 +48,10 @@ export function ImageGrid({
             {rightImage ? (
               <div className="group relative" style={getFlex(rightImage)}>
                 <button onClick={() => onImageClick(rightIndex)}>
-                  <img src={rightImage.src} alt={`Image ${rightImage.src}`} />
+                  <EditorImage
+                    src={rightImage.src}
+                    alt={`Image ${rightImage.src}`}
+                  />
                 </button>
                 {extraChildren?.[rightIndex]}
                 {renderHoverOverlay(rightImage.caption, rightIndex)}

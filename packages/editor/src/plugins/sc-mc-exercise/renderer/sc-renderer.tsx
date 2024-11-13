@@ -72,7 +72,7 @@ export function ScRenderer({
       <div className="mt-5 flex">
         <button
           className={cn(
-            'serlo-button-blue mb-5 mr-3 h-8',
+            'serlo-button-learner-primary mb-5 mr-3 h-8',
             selected === undefined &&
               'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}

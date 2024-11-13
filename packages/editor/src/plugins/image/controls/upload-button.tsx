@@ -83,7 +83,7 @@ export function UploadButton({
 
       {isFailed ? (
         <button
-          className="serlo-button-editor-primary serlo-tooltip-trigger mr-2 scale-90"
+          className="serlo-button-edit-primary serlo-tooltip-trigger mr-2 scale-90"
           onClick={() => src.upload((src.value as TempFile).failed!, upload)}
           data-qa="plugin-image-retry"
         >

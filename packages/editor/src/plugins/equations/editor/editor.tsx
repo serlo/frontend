@@ -25,11 +25,11 @@ import { includes } from 'ramda'
 import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
+import type { EquationsProps } from '..'
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
 import { StepSegment } from './step-segment'
-import type { EquationsProps } from '..'
 import { renderDownArrow } from '../renderer'
 import { EquationsStaticRenderer } from '../static'
 import { EquationsToolbar } from '../toolbar'
@@ -326,7 +326,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <button
-        className="serlo-button-editor-secondary mt-6 text-base"
+        className="serlo-button-edit-secondary mt-6 text-base"
         onClick={() => insertNewEquationWithFocus(state.steps.length)}
       >
         <FaIcon icon={faPlusCircle} /> {equationsStrings.addNewRow}
@@ -337,7 +337,7 @@ export function EquationsEditor(props: EquationsProps) {
   function renderButtons(row: number) {
     if (!nestedFocus) return
     const buttonClass = cn(
-      `serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
+      `serlo-button-edit-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
     )
 
     return (

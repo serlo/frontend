@@ -1,8 +1,8 @@
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { SupportedLanguage } from '@editor/types/language-data'
 
@@ -37,14 +37,14 @@ export function SerloRenderer(props: SerloRendererProps) {
   return (
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
-        <LtikContext.Provider value={_ltik}>
+        <EditorMetaContext.Provider value={{ editorVariant, ltik: _ltik }}>
           <div
             className="serlo-content-with-spacing-fixes"
             data-editor-version={getEditorVersion()}
           >
             <StaticRenderer document={migratedState.document} />
           </div>
-        </LtikContext.Provider>
+        </EditorMetaContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>
   )

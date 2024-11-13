@@ -1,4 +1,3 @@
-/* eslint-disable import/no-internal-modules */
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
 import c from 'react-syntax-highlighter/dist/cjs/languages/prism/c'
