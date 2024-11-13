@@ -63,17 +63,12 @@ async function uploadFile({
   const data = (await result?.json()) as {
     signedUrl: string
     fileUrl: string
-    tagging: string
   }
   if (!data) return Promise.reject('Could not get signed URL')
 
-  const { signedUrl, fileUrl, tagging } = data
+  const { signedUrl, fileUrl } = data
 
-  const success = await uploadToBucket({
-    file,
-    signedUrl,
-    tagging,
-  })
+  const success = await uploadToBucket({ file, signedUrl })
   if (!success) return Promise.reject('Could not upload file')
   return Promise.resolve(fileUrl)
 }
@@ -88,19 +83,16 @@ const errorMessage = 'Error while uploading'
 async function uploadToBucket({
   file,
   signedUrl,
-  tagging,
 }: {
   file: File
   signedUrl: string
-  tagging: string
 }) {
   const response = await fetch(signedUrl, {
     method: 'PUT',
     body: file,
     headers: {
-      'Content-Type': file.type,
-      'x-amz-tagging': tagging,
       'Access-Control-Allow-Origin': '*',
+      'Content-Type': file.type,
     },
   }).catch((e) => {
     // eslint-disable-next-line no-console

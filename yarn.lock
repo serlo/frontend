@@ -2282,11 +2282,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphiql/react@npm:^0.22.2":
-  version: 0.22.2
-  resolution: "@graphiql/react@npm:0.22.2"
+"@graphiql/react@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@graphiql/react@npm:0.27.0"
   dependencies:
-    "@graphiql/toolkit": ^0.9.1
+    "@graphiql/toolkit": ^0.11.0
     "@headlessui/react": ^1.7.15
     "@radix-ui/react-dialog": ^1.0.4
     "@radix-ui/react-dropdown-menu": ^2.0.5
@@ -2295,17 +2295,34 @@ __metadata:
     "@types/codemirror": ^5.60.8
     clsx: ^1.2.1
     codemirror: ^5.65.3
-    codemirror-graphql: ^2.0.12
+    codemirror-graphql: ^2.1.1
     copy-to-clipboard: ^3.2.0
     framer-motion: ^6.5.1
-    graphql-language-service: ^5.2.1
+    get-value: ^3.0.1
+    graphql-language-service: ^5.3.0
     markdown-it: ^14.1.0
     set-value: ^4.1.0
   peerDependencies:
-    graphql: ^15.5.0 || ^16.0.0
+    graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: 48d9fa93fef067c20cc6b8e48b2a25311589dfc03573ce70c2cca993b0561a0b2f281d8111508ad5c19887b91c077d20bdcb0eb16cb3f15842f8432cf937431b
+  checksum: 0575bd27dd1173070991799429e9041e415905fa3944b987a72b3603bbb961ee967f301681ae837d3991a853b5e81488a102e9116e18cdc20dab170a14a32bfc
+  languageName: node
+  linkType: hard
+
+"@graphiql/toolkit@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@graphiql/toolkit@npm:0.11.0"
+  dependencies:
+    "@n1ru4l/push-pull-async-iterable-iterator": ^3.1.0
+    meros: ^1.1.4
+  peerDependencies:
+    graphql: ^15.5.0 || ^16.0.0 || ^17.0.0-alpha.2
+    graphql-ws: ">= 4.5.0"
+  peerDependenciesMeta:
+    graphql-ws:
+      optional: true
+  checksum: b933f9082ce12964c8338d62cf879ef3504d30d586e3bb093a70da5832d65b7796bc0f3a7761839b6a15f34ba2f5f94f9cef4876e5af4009005b51e013a5ed43
   languageName: node
   linkType: hard
 
@@ -5753,7 +5770,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.7.1
     "@vitejs/plugin-react": ^4.2.1
     autoprefixer: ^10.4.19
-    clsx: ^2.1.0
+    clsx: ^2.1.1
     dompurify: ^3.1.7
     eslint: ^9.14.0
     eslint-config-next: ^15.0.3
@@ -5878,7 +5895,7 @@ __metadata:
     array-move: ^4.0.0
     autoprefixer: ^10.4.19
     canvas-confetti: ^1.9.2
-    clsx: ^2.1.0
+    clsx: ^2.1.1
     cross-env: ^7.0.3
     dotenv: ^16.4.5
     eslint: ^9.14.0
@@ -5890,7 +5907,7 @@ __metadata:
     eslint-plugin-react-hooks: ^5.0.0
     fast-xml-parser: ^4.4.1
     fp-ts: ^2.16.5
-    graphiql: ^3.2.3
+    graphiql: ^3.7.2
     graphql: ^16.8.1
     graphql-request: ^6.1.0
     graphql-tag: 2.12.6
@@ -8699,10 +8716,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "clsx@npm:2.1.0"
-  checksum: 43fefc29b6b49c9476fbce4f8b1cc75c27b67747738e598e6651dd40d63692135dc60b18fa1c5b78a2a9ba8ae6fd2055a068924b94e20b42039bd53b78b98e1d
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: acd3e1ab9d8a433ecb3cc2f6a05ab95fe50b4a3cfc5ba47abb6cbf3754585fcb87b84e90c822a1f256c4198e3b41c7f6c391577ffc8678ad587fc0976b24fd57
   languageName: node
   linkType: hard
 
@@ -8720,17 +8737,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"codemirror-graphql@npm:^2.0.12":
-  version: 2.0.12
-  resolution: "codemirror-graphql@npm:2.0.12"
+"codemirror-graphql@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "codemirror-graphql@npm:2.1.1"
   dependencies:
     "@types/codemirror": ^0.0.90
-    graphql-language-service: 5.2.1
+    graphql-language-service: 5.3.0
   peerDependencies:
     "@codemirror/language": 6.0.0
     codemirror: ^5.65.3
-    graphql: ^15.5.0 || ^16.0.0
-  checksum: 1824d0fb64f4d2547fcb9c3c5e53541dc73deccdc69f2cb987409121c0ce79158268b57a4accac1d4108b340facb12763622b44d75e12c4e2185d09c359fb030
+    graphql: ^15.5.0 || ^16.0.0 || ^17.0.0-alpha.2
+  checksum: e839875d89d121ed0b1a5229492fc25401877f213431506ca3a242cc991e32bc28d4ed885de0ffd0af9c4738ea9770c529bbdbd59b84f757a4b1454e9e68d829
   languageName: node
   linkType: hard
 
@@ -9269,6 +9286,13 @@ __metadata:
   version: 1.0.2
   resolution: "de-indent@npm:1.0.2"
   checksum: 8deacc0f4a397a4414a0fc4d0034d2b7782e7cb4eaf34943ea47754e08eccf309a0e71fa6f56cc48de429ede999a42d6b4bca761bf91683be0095422dbf24611
+  languageName: node
+  linkType: hard
+
+"debounce-promise@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "debounce-promise@npm:3.1.2"
+  checksum: 29bac4524c423cc852319d7455363909ea3d933a3b9e3eb1149d963cffc34c475fe37219d0bafc61af566500b5d663cba579bbad7ee4023bef06f8394ed900ad
   languageName: node
   linkType: hard
 
@@ -11240,6 +11264,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-value@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "get-value@npm:3.0.1"
+  dependencies:
+    isobject: ^3.0.1
+  checksum: d2df36858c34f0ef63d928e760740b23d14a7b955eaf740fea0d908b60cf2504de388a2ff72fb531318719645271f506390005f811a53d35ce4d7f7eba98e470
+  languageName: node
+  linkType: hard
+
 "getpass@npm:^0.1.1":
   version: 0.1.7
   resolution: "getpass@npm:0.1.7"
@@ -11431,19 +11464,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphiql@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "graphiql@npm:3.2.3"
+"graphiql@npm:^3.7.2":
+  version: 3.7.2
+  resolution: "graphiql@npm:3.7.2"
   dependencies:
-    "@graphiql/react": ^0.22.2
-    "@graphiql/toolkit": ^0.9.1
-    graphql-language-service: ^5.2.1
-    markdown-it: ^14.1.0
+    "@graphiql/react": ^0.27.0
   peerDependencies:
-    graphql: ^15.5.0 || ^16.0.0
+    graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
-  checksum: 838a29c654ab058ac5c30f614331837cf6d5ae88f148ec206277159f41dfdcd1c8940a4cc72c1e88bd82fdee9bcb480ff79c6e52e48d23c5fe494fdb3c32f6fc
+  checksum: 09fb485d5d8d2c42e2699c1c31c9962928624ebf0693fd4c634d56ea3d12e684d73b4828f58bf758f8c6ab258d9d7feab56c612ae180f822979855ed2dfe43df
   languageName: node
   linkType: hard
 
@@ -11472,17 +11502,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-language-service@npm:5.2.1, graphql-language-service@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "graphql-language-service@npm:5.2.1"
+"graphql-language-service@npm:5.3.0, graphql-language-service@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "graphql-language-service@npm:5.3.0"
   dependencies:
+    debounce-promise: ^3.1.2
     nullthrows: ^1.0.0
     vscode-languageserver-types: ^3.17.1
   peerDependencies:
-    graphql: ^15.5.0 || ^16.0.0
+    graphql: ^15.5.0 || ^16.0.0 || ^17.0.0-alpha.2
   bin:
     graphql: dist/temp-bin.js
-  checksum: e29034aceeae9f05895cf2932ea71a454ae787f82c1585bd2d6e197d93d32a444b87f44cb50d045cce908da66d39b6177f39deef6f318ca077386b845a644195
+  checksum: 9cee9a5cd9ff7db86104d6fa32ff909f1d69396185683a00bc8b5329ef3249fa8d0207dbeda82d4bd738cfd659ce1a1d39339650d5278f8712d5353ccc60a9fb
   languageName: node
   linkType: hard
 
