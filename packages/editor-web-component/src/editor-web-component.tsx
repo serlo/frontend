@@ -2,7 +2,7 @@
 
 import {
   SerloRenderer,
-  BaseEditor,
+  type BaseEditor,
   defaultPlugins,
   EditorPluginType,
 } from '@serlo/editor'
@@ -206,7 +206,6 @@ export class EditorWebComponent extends HTMLElement {
     const initialStateAttr = this.getAttribute('initial-state')
     const testingSecretAttr = this.getAttribute('testing-secret')
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
       : exampleInitialState

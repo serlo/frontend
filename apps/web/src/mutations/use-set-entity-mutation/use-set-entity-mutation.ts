@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-internal-modules
+ 
 import { useRouter } from 'next/router'
 
 import { setAbstractEntityMutation } from './set-abstract-entity-mutation'

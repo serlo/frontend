@@ -51,7 +51,7 @@ export function Quickbar({
         // eslint-disable-next-line no-console
         .catch(console.error)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [query, data, subject])
 
   useEffect(() => {

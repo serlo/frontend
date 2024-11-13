@@ -12,7 +12,7 @@ export function createGraphqlFetch() {
   return async function fetch(args: string) {
     const { query, variables } = JSON.parse(args) as ParsedArgs
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+     
     return await executeQuery()
 
     function executeQuery() {

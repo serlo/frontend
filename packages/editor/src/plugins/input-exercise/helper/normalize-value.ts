@@ -11,7 +11,6 @@ export function normalizeValue(
     case InputExerciseType.NumberExact:
       return normalizeNumber(_value).replace(/\s/g, '')
     case InputExerciseType.ExpressionEqual:
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       return Number(mathjsEvaluate(normalizeNumber(_value)))
     case InputExerciseType.StringNormalized:
       return _value.toUpperCase()

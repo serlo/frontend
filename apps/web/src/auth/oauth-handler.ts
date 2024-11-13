@@ -37,7 +37,7 @@ const queries: Record<HandlerType, string> = {
 }
 
 const throwError = (error?: unknown) => {
-  // eslint-disable-next-line no-console
+   
   console.error(error)
   throw new Error('problem in oauth')
 }

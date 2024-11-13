@@ -120,7 +120,6 @@ export type StateTypeReturnType<D extends StateType> =
 export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeReturnType<Ds[K]>
 }
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
  * Helpers to be used by a [[StateType]] when working with a static state

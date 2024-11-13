@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+ 
 import { MathfieldElement } from 'mathlive'
 import { useState, useEffect, createRef } from 'react'
 

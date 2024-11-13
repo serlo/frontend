@@ -369,7 +369,7 @@ type Node =
   PotentialSpamUsersQuery['user']['potentialSpamUsers']['nodes'][number]
 
 function usePotentialSpamUsersFetch() {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   return useGraphqlSwrPaginationWithAuth<Node>({
     query: potentialSpamUsersQuery,
     variables: { first: 20 },

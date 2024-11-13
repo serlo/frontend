@@ -41,7 +41,6 @@ export function EquationsStaticRenderer({ state }: EditorEquationsDocument) {
   }
 
   function formulaRenderer(formula: string) {
-    // eslint-disable-next-line react/no-children-prop
     return (
       <MathRenderer
         src={formula}

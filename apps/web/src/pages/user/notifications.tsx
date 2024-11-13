@@ -75,7 +75,7 @@ function Title() {
 }
 
 function useNotificationFetch(unread: boolean) {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
+   
   return useGraphqlSwrPaginationWithAuth<
     GetNotificationsQuery['notifications']['nodes'][number]
   >({
