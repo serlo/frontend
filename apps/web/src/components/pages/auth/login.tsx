@@ -162,13 +162,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
       unwantedPaths: [verificationUrl, logoutUrl, loginUrl, recoveryUrl],
     })
 
-    // The real hack is certainly somewhere else, because values.method is supposed to be oidc or password
+    // We are currently not sure why this workaround is needed.
+    // values.method is supposed to be 'oidc' or 'password'
+    const provider = values.method as unknown as string
     const hackedValues =
-      (values.method as unknown as string) === 'nbp' ||
-      (values.method as unknown as string) === 'vidis'
+      provider === 'nbp' || provider === 'vidis'
         ? ({
             ...values,
-            provider: values.method,
+            provider,
             method: 'oidc',
           } as UpdateLoginFlowBody)
         : values
@@ -194,7 +195,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           FlowType.login,
           setFlow,
           strings
-        )(e as AxiosError<LoginFlow>)
+        )(e as AxiosError)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

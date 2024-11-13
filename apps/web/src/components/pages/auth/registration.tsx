@@ -82,13 +82,14 @@ export function Registration() {
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   async function onSubmit(values: UpdateRegistrationFlowBody) {
-    // The real hack is certainly somewhere else, because values.method is supposed to be oidc or password
+    // We are currently not sure why this workaround is needed.
+    // values.method is supposed to be 'oidc' or 'password'
+    const provider = values.method as unknown as string
     const hackedValues =
-      (values.method as unknown as string) === 'nbp' ||
-      (values.method as unknown as string) === 'vidis'
+      provider === 'nbp' || provider === 'vidis'
         ? ({
             ...values,
-            provider: values.method,
+            provider,
             method: 'oidc',
           } as UpdateRegistrationFlowBody)
         : values
