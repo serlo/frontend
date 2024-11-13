@@ -76,7 +76,7 @@ export class EditorWebComponent extends HTMLElement {
     ) {
       this.mode = newValue
     } else if (name === 'use-shadow-dom') {
-      this._useShadowDOM = newValue !== 'false'
+      this._useShadowDOM = newValue === 'true'
     } else if (name === 'editor-variant' && oldValue !== newValue) {
       this.editorVariant = newValue as EditorVariant
     } else if (name === 'plugins' && oldValue !== newValue) {
