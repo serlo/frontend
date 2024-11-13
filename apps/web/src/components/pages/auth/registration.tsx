@@ -82,7 +82,19 @@ export function Registration() {
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   async function onSubmit(values: UpdateRegistrationFlowBody) {
-    const valuesWithLanguage = { ...values, 'traits.language': lang }
+    // The real hack is certainly somewhere else, because values.method is supposed to be oidc or password
+    const hackedValues =
+      (values.method as unknown as string) === 'nbp' ||
+      (values.method as unknown as string) === 'vidis'
+        ? ({
+            ...values,
+            provider: values.method,
+            method: 'oidc',
+          } as UpdateRegistrationFlowBody)
+        : values
+
+    const valuesWithLanguage = { ...hackedValues, 'traits.language': lang }
+
     nProgress.start()
     return kratos
       .updateRegistrationFlow({
