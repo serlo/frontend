@@ -162,9 +162,15 @@ export function Login({ oauth }: { oauth?: boolean }) {
       unwantedPaths: [verificationUrl, logoutUrl, loginUrl, recoveryUrl],
     })
 
-    const hackedValues = // @ts-expect-error try
-      values.method === 'nbp' // @ts-expect-error try
-        ? ({ ...values, provider: 'nbp' } as UpdateLoginFlowBody)
+    // The real hack is certainly somewhere else, because values.method is supposed to be oidc or password
+    const hackedValues =
+      (values.method as unknown as string) === 'nbp' ||
+      (values.method as unknown as string) === 'vidis'
+        ? ({
+            ...values,
+            provider: values.method,
+            method: 'oidc',
+          } as UpdateLoginFlowBody)
         : values
 
     try {
