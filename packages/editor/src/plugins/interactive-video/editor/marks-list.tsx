@@ -20,25 +20,6 @@ export function MarksList({
   const pluginsStrings = editStrings.plugins
   const interactiveVideoStrings = pluginsStrings.interactiveVideo
 
-  function getTitleAndIcon(index: number) {
-    const staticMark = staticMarks[index]
-    const menuItem = getInteractiveItemByStaticState(
-      staticMark.child,
-      editStrings
-    )
-    const title =
-      staticMark.title || menuItem?.title || pluginsStrings.exercise.title
-
-    const icon =
-      menuItem && typeof menuItem?.icon !== 'string' ? (
-        // @ts-expect-error 123
-        (menuItem.icon() as JSX.Element)
-      ) : (
-        <div className="h-8 w-full rounded-sm bg-editor-primary-100" />
-      )
-    return { title, icon }
-  }
-
   return (
     <div className="mx-side mb-12 border-b-2 border-b-gray-300 pb-12">
       <ul>
@@ -77,4 +58,23 @@ export function MarksList({
       </ul>
     </div>
   )
+
+  function getTitleAndIcon(index: number) {
+    const staticMark = staticMarks[index]
+    const menuItem = getInteractiveItemByStaticState(
+      staticMark.child,
+      editStrings
+    )
+    const title =
+      staticMark.title || menuItem?.title || pluginsStrings.exercise.title
+
+    const icon =
+      menuItem && typeof menuItem?.icon !== 'string' ? (
+        // @ts-expect-error 123
+        (menuItem.icon() as JSX.Element)
+      ) : (
+        <div className="h-8 w-full rounded-sm bg-editor-primary-100" />
+      )
+    return { title, icon }
+  }
 }

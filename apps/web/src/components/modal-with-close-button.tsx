@@ -17,8 +17,7 @@ export interface ModalWithCloseButtonProps {
   extraCloseButtonClassName?: string
   extraOverlayClassName?: string
   onEscapeKeyDown?: (event: KeyboardEvent) => void
-  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void
-  appElementOverride?: HTMLElement
+  onKeyDown?: (event: React.KeyboardEvent) => void
 }
 
 export function ModalWithCloseButton({
@@ -33,7 +32,6 @@ export function ModalWithCloseButton({
   extraOverlayClassName,
   onEscapeKeyDown,
   onKeyDown,
-  appElementOverride,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
 
@@ -77,7 +75,7 @@ export function ModalWithCloseButton({
   return (
     <>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
-        <Dialog.Portal container={appElementOverride}>
+        <Dialog.Portal>
           <Dialog.Overlay
             className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
           />

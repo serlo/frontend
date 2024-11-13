@@ -84,7 +84,7 @@ export function MarkOverlay({
         {activeCue?.text ? (
           <button
             ref={buttonRef}
-            className="serlo-button-blue pointer-events-auto animate-in slide-in-from-bottom-4 [&.triggered]:animate-bounce"
+            className="serlo-button-learner-primary pointer-events-auto animate-in slide-in-from-bottom-4 [&.triggered]:animate-bounce"
             onClick={() => {
               openOverlayByStartTime(activeCue.startTime)
               void player.pause()
@@ -112,42 +112,31 @@ export function MarkOverlay({
       <>
         <div className="h-6" />
         <StaticRenderer document={activeMark.child} />
-        {attempts > 0 && solved ? (
+        {attempts > 0 ? (
           <p className="mx-side my-4">
-            <i>{staticStrings.exerciseSolved}</i>
+            <i>{staticStrings[solved ? 'exerciseSolved' : 'repeatPromt']}</i>
             <br />
             <button
               className="serlo-button-edit-primary mt-1"
               onClick={() => {
                 closeOverlay()
-                void player?.play()
-              }}
-            >
-              <FaIcon icon={faPlay} /> {staticStrings.play}
-            </button>
-          </p>
-        ) : null}
-        {attempts > 0 && !solved ? (
-          <p className="mx-side my-4">
-            <i>{staticStrings.repeatPromt}</i>
-            <br />
-            <button
-              className="serlo-button-edit-primary mt-1"
-              onClick={() => {
-                closeOverlay()
+
                 if (!player) return
 
-                const time =
-                  showOverlayContentIndex === 0
-                    ? 0
-                    : marks[showOverlayContentIndex - 1].startTime +
-                      markDuration
+                if (!solved) {
+                  const time =
+                    showOverlayContentIndex === 0
+                      ? 0
+                      : marks[showOverlayContentIndex - 1].startTime +
+                        markDuration
 
-                player.currentTime = time
+                  player.currentTime = time
+                }
                 void player.play()
               }}
             >
-              <FaIcon icon={faBackward} /> {staticStrings.rewind}
+              <FaIcon icon={solved ? faPlay : faBackward} />{' '}
+              {staticStrings[solved ? 'play' : 'rewind']}
             </button>
           </p>
         ) : null}

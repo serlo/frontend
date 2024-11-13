@@ -34,7 +34,8 @@ export function InteractiveVideoRenderer({
   onPlay?: (nativeEvent: MediaPlayEvent) => void
   learnerInteractions?: LearnerInteractions
 }) {
-  const exerciseString = useStaticStrings().plugins.exercise.title
+  const { lang, plugins } = useStaticStrings()
+  const exerciseString = plugins.exercise.title
   const cues = createCues(marks, exerciseString)
 
   return (
@@ -44,10 +45,7 @@ export function InteractiveVideoRenderer({
         src={videoSrc}
         playsInline
         className="[&_.vds-chapter-title]:opacity-0"
-        muted
-        hideControlsOnMouseLeave={false}
-        controlsDelay={60000}
-        // load="play"
+        load="play"
         aspectRatio="16:9"
         onMediaPlayRequest={(nativeEvent) => {
           const allowed = checkSeekAndPlay?.(nativeEvent.target)
@@ -63,7 +61,7 @@ export function InteractiveVideoRenderer({
             id="chapters"
             content={{ cues }}
             kind="chapters"
-            language="de-DE"
+            language={lang === 'de' ? 'de-DE' : 'en_US'}
             default
           />
         </MediaProvider>
@@ -79,10 +77,6 @@ export function InteractiveVideoRenderer({
             ),
           }}
         />
-        {/* <Poster
-        className="vds-poster"
-        src="https://files.vidstack.io/sprite-fight/poster.webp"
-      /> */}
       </MediaPlayer>
     </div>
   )

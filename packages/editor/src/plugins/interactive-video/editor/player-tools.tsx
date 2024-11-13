@@ -37,7 +37,7 @@ export function PlayerTools({
     <div className="pointer-events-none absolute top-3 flex w-full sm:justify-center">
       {activeCue?.text ? (
         <button
-          className="serlo-button-blue pointer-events-auto"
+          className="serlo-button-learner-primary pointer-events-auto"
           onClick={() => {
             openOverlayByStartTime(activeCue.startTime)
             void player.pause()
