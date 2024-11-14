@@ -5814,8 +5814,8 @@ __metadata:
     "@types/react": ^18.3.12
     "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.3.1
-    "@types/react-resizable": ^3.0.7
-    "@types/react-syntax-highlighter": ^15.5.11
+    "@types/react-resizable": ^3.0.8
+    "@types/react-syntax-highlighter": ^15.5.13
     "@types/slate-react": ^0.50.1
     "@typescript-eslint/eslint-plugin": ^7.7.1
     "@typescript-eslint/parser": ^7.7.1
@@ -5860,7 +5860,7 @@ __metadata:
     react-mathquill: Entkenntnis/tmp-react-mathquill
     react-redux: ^8.1.3
     react-resizable: ^3.0.5
-    react-syntax-highlighter: ^15.5.0
+    react-syntax-highlighter: ^15.6.1
     redux: ^4.2.1
     redux-saga: ^1.3.0
     reselect: ^4.1.8
@@ -5940,7 +5940,7 @@ __metadata:
     "@types/ramda": ^0.30.2
     "@types/react": ^18.3.12
     "@types/react-dom": ^18.3.1
-    "@types/react-lazyload": ^3.2.1
+    "@types/react-lazyload": ^3.2.3
     "@typescript-eslint/eslint-plugin": ^7.7.1
     "@typescript-eslint/parser": ^7.7.1
     array-move: ^4.0.0
@@ -5989,8 +5989,8 @@ __metadata:
     react-diff-viewer: ^3.1.1
     react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
-    react-lazyload: ^3.2.0
-    react-textarea-autosize: ^8.5.3
+    react-lazyload: ^3.2.1
+    react-textarea-autosize: ^8.5.5
     slate: ^0.103.0
     swr: ^2.2.5
     tailwindcss: ^3.4.14
@@ -6782,7 +6782,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-lazyload@npm:^3.2.1":
+"@types/react-lazyload@npm:^3.2.3":
   version: 3.2.3
   resolution: "@types/react-lazyload@npm:3.2.3"
   dependencies:
@@ -6791,21 +6791,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-resizable@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "@types/react-resizable@npm:3.0.7"
+"@types/react-resizable@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "@types/react-resizable@npm:3.0.8"
   dependencies:
     "@types/react": "*"
-  checksum: e66dfabcb614f1da1f561d0ecaf1dc384fc0e361d97fa7b219f04f8b85ad9dd2576437117af52ae6bf33644061db2d9452e0a4aadfe457588d93a36d2db8de0b
+  checksum: aabdef8056bbab3065559bce7ce93232e645fb4f915fd55f0903a2f4df5d2395762dfd75bb0242d5a73d39461e8c062d81eaab87b91213dddfd973ff908f79e4
   languageName: node
   linkType: hard
 
-"@types/react-syntax-highlighter@npm:^15.5.11":
-  version: 15.5.11
-  resolution: "@types/react-syntax-highlighter@npm:15.5.11"
+"@types/react-syntax-highlighter@npm:^15.5.13":
+  version: 15.5.13
+  resolution: "@types/react-syntax-highlighter@npm:15.5.13"
   dependencies:
     "@types/react": "*"
-  checksum: 8363ded0138963407c909f198ddcac58d9c937b118f16a46fb3e97078dd0c6234746f9efa85f6aa660efebe357bab11047c95b57bd9508dd4b09619b1a237087
+  checksum: 55f751c140eb6641b16a5644af3b6fc25223957141085758ae6898948e70eaca33d8276e86e75d5d60939aff63af1d20278aba0d3a25483266f9deee1eb468e3
   languageName: node
   linkType: hard
 
@@ -11637,6 +11637,13 @@ __metadata:
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
   checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
+  languageName: node
+  linkType: hard
+
+"highlightjs-vue@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "highlightjs-vue@npm:1.0.0"
+  checksum: 895f2dd22c93a441aca7df8d21f18c00697537675af18832e50810a071715f79e45eda677e6244855f325234c6a06f7bd76f8f20bd602040fc350c80ac7725e4
   languageName: node
   linkType: hard
 
@@ -16537,13 +16544,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-lazyload@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "react-lazyload@npm:3.2.0"
+"react-lazyload@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "react-lazyload@npm:3.2.1"
   peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-    react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 871a88c698a80c53ead85c293b493ac67c94e5980590094128c371e3f1e3d5bc17841ead1e7830771c87ece7fe677a6c9c323f3e6ce392a5f6f0328a36c38fe7
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: c6134a3d6eb0e4db8046211fdcf32fe2585ab2d0738ff7fe22db34d30fe13fd0f2d089bf966f0cc4258913cc36bab64c8959eeeaad6e2472d474c87481c0f7bc
   languageName: node
   linkType: hard
 
@@ -16694,31 +16701,32 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"react-syntax-highlighter@npm:^15.5.0":
-  version: 15.5.0
-  resolution: "react-syntax-highlighter@npm:15.5.0"
+"react-syntax-highlighter@npm:^15.6.1":
+  version: 15.6.1
+  resolution: "react-syntax-highlighter@npm:15.6.1"
   dependencies:
     "@babel/runtime": ^7.3.1
     highlight.js: ^10.4.1
+    highlightjs-vue: ^1.0.0
     lowlight: ^1.17.0
     prismjs: ^1.27.0
     refractor: ^3.6.0
   peerDependencies:
     react: ">= 0.14.0"
-  checksum: c082b48f30f8ba8d0c55ed1d761910630860077c7ff5793c4c912adcb5760df06436ed0ad62be0de28113aac9ad2af55eccd995f8eee98df53382e4ced2072fb
+  checksum: 417b6f1f2e0c1e00dcc12d34da457b94c7419345306a951d0a8d2d031a0c964179d6b700137870ad1397572cbc3a4454e94de7bbef914a81674edae2098f02dc
   languageName: node
   linkType: hard
 
-"react-textarea-autosize@npm:^8.5.3":
-  version: 8.5.3
-  resolution: "react-textarea-autosize@npm:8.5.3"
+"react-textarea-autosize@npm:^8.5.5":
+  version: 8.5.5
+  resolution: "react-textarea-autosize@npm:8.5.5"
   dependencies:
     "@babel/runtime": ^7.20.13
     use-composed-ref: ^1.3.0
     use-latest: ^1.2.1
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: b317c3763f37a89621bbafd0e6e2d068e7876790a5ae77f497adfd6ba9334ceea138c8a0b7d907bae0f79c765cb24e8b2ca2b8033b4144c0bce28571a3658921
+  checksum: 21a3f08d44da37857ef6251b49e56654f3a221efe70a05b6b3308afb16a58c71d26dcd5d54aea90d88a60289ad40f035f58b5031e7812f8e1cbf447812c1405b
   languageName: node
   linkType: hard
 
