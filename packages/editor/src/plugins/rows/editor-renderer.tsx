@@ -191,9 +191,6 @@ export function EditorRowRenderer({
           'hover:shadow-plugin-hover',
           'focus-within:shadow-plugin-focus',
           'hover:focus-within:!shadow-plugin-focus',
-          '[&:has(.rows-editor-renderer-container:focus-within)]:shadow-none',
-          '[&:hover:has(.rows-editor-renderer-container:focus-within)]:!shadow-plugin-hover',
-          '[&:hover:has(.rows-editor-renderer-container:hover)]:!shadow-none',
           // Left sidebar styles
           '[&:focus-within>.rows-tools]:opacity-100',
           '[&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0',
