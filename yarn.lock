@@ -5789,7 +5789,7 @@ __metadata:
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.5.0
     prettier-plugin-tailwindcss: ^0.5.14
-    ramda: ^0.29.1
+    ramda: ^0.30.1
     rdndmb-html5-to-touch: ^8.0.3
     react: ^18.2.0
     react-dnd: ^16.0.1
@@ -5879,7 +5879,7 @@ __metadata:
     "@types/node": ^20.12.7
     "@types/nprogress": ^0.2.3
     "@types/qrcode.react": ^1.0.5
-    "@types/ramda": ^0.29.12
+    "@types/ramda": ^0.30.2
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.8
     "@types/react-lazyload": ^3.2.1
@@ -5926,7 +5926,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.5.14
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
-    ramda: ^0.29.1
+    ramda: ^0.30.1
     react: ^18.2.0
     react-diff-viewer: ^3.1.1
     react-dom: ^18.2.0
@@ -6675,12 +6675,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.29.12":
-  version: 0.29.12
-  resolution: "@types/ramda@npm:0.29.12"
+"@types/ramda@npm:^0.30.2":
+  version: 0.30.2
+  resolution: "@types/ramda@npm:0.30.2"
   dependencies:
-    types-ramda: ^0.29.10
-  checksum: 2a57806fcadb1e70095824da2ba94de08be1d03eba0bf1844bc23cdf3c86085eda182cb152afd41c52656c78d17f96b018cc6ac467a348d4b4e1f6eac602b475
+    types-ramda: ^0.30.1
+  checksum: 528e62da967adb38b7b6be3314ee11009f4e7312e4fbb9670f4556bb2f640754f08ae68ede87822ae255aba747e67296f40b37d53bfb427c58ab82f5b7a4989e
   languageName: node
   linkType: hard
 
@@ -16800,10 +16800,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.29.1":
-  version: 0.29.1
-  resolution: "ramda@npm:0.29.1"
-  checksum: df7c627597a66d5f317f6ba77ad17d7ba818efc9c2c4a638440bc23f2c651e823970ea05b05a28895738c0e4b738fadbdc17b2c97b3ad922826febc09c859c44
+"ramda@npm:^0.30.1":
+  version: 0.30.1
+  resolution: "ramda@npm:0.30.1"
+  checksum: ce6f4b6b967a84a4e65c01ab1b1cdd73d46b8efe71aeccf5d1443c56c4e31a0ea82ece7df6510453dd3d83b92cabf8a6b4d50d189a1b35c08a6f44b281bebf79
   languageName: node
   linkType: hard
 
@@ -19484,12 +19484,12 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"types-ramda@npm:^0.29.10":
-  version: 0.29.10
-  resolution: "types-ramda@npm:0.29.10"
+"types-ramda@npm:^0.30.1":
+  version: 0.30.1
+  resolution: "types-ramda@npm:0.30.1"
   dependencies:
     ts-toolbelt: ^9.6.0
-  checksum: 9308ad9ed0b53a3d108e605b59452249e0dac529972ec35d2ff9e90cb325e0960406e16e1712aa781bd1293dea49469420aeafcc30f0e72d46182287450665fc
+  checksum: 7af1b5b6dbb5878e5104013f7eca7feff999b538d98d59c91ce82e69908b31223b44a163271b0c13c9828c27f6cff39f78cff0f83d82b73ac47f74ffb3fe7ded
   languageName: node
   linkType: hard
 
