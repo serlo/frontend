@@ -38,7 +38,7 @@ export function Lazy(props: LazyProps) {
           />
         }
       >
-        {props.children}
+        {props.children as JSX.Element}
       </LazyLoad>
       <noscript>{props.children}</noscript>
     </>

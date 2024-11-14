@@ -1,4 +1,5 @@
 import { cn } from '@editor/utils/cn'
+import { type LegacyRef } from 'react'
 import { useDrag } from 'react-dnd'
 
 import type { PossibleAnswerType } from '../../types'
@@ -38,7 +39,7 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
         getSize(imageUrl, isOnlyDroppedAnswer),
         getBorder(imageUrl, isCorrect, isOnlyDroppedAnswer)
       )}
-      ref={dragRef}
+      ref={dragRef as unknown as LegacyRef<HTMLDivElement>}
     >
       <AnswerContent
         url={imageUrl}

@@ -5757,8 +5757,8 @@ __metadata:
     "@rollup/plugin-replace": ^6.0.1
     "@serlo/editor": 0.19.0
     "@serlo/typescript-config": "workspace:*"
-    "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react": ^18.3.12
+    "@types/react-dom": ^18.3.1
     "@vitejs/plugin-react": ^4.3.3
     eslint: ^9.14.0
     eslint-config-next: ^15.0.3
@@ -5772,8 +5772,8 @@ __metadata:
     prettier: ^3.2.5
     prettier-plugin-packagejson: ^2.5.0
     prettier-plugin-tailwindcss: ^0.5.14
-    react: ^18.2.0
-    react-dom: ^18.2.0
+    react: ^18.3.1
+    react-dom: ^18.3.1
     vite: ^5.4.11
     vite-plugin-dts: 4.3.0
   languageName: unknown
@@ -5814,9 +5814,9 @@ __metadata:
     "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@types/dompurify": ^3.0.5
-    "@types/react": ^18.0.25
+    "@types/react": ^18.3.12
     "@types/react-dnd-multi-backend": ^6.0.6
-    "@types/react-dom": ^18.0.8
+    "@types/react-dom": ^18.3.1
     "@types/react-resizable": ^3.0.7
     "@types/react-syntax-highlighter": ^15.5.11
     "@types/slate-react": ^0.50.1
@@ -5852,12 +5852,12 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.5.14
     ramda: ^0.30.1
     rdndmb-html5-to-touch: ^8.0.3
-    react: ^18.2.0
+    react: ^18.3.1
     react-dnd: ^16.0.1
     react-dnd-html5-backend: ^16.0.1
     react-dnd-multi-backend: ^8.0.3
     react-dnd-touch-backend: ^16.0.1
-    react-dom: ^18.2.0
+    react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-hotkeys-hook: ^4.5.0
     react-mathquill: Entkenntnis/tmp-react-mathquill
@@ -5941,8 +5941,8 @@ __metadata:
     "@types/nprogress": ^0.2.3
     "@types/qrcode.react": ^1.0.5
     "@types/ramda": ^0.30.2
-    "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.8
+    "@types/react": ^18.3.12
+    "@types/react-dom": ^18.3.1
     "@types/react-lazyload": ^3.2.1
     "@typescript-eslint/eslint-plugin": ^7.7.1
     "@typescript-eslint/parser": ^7.7.1
@@ -5988,9 +5988,9 @@ __metadata:
     prop-types: ^15.8.1
     qrcode.react: ^3.2.0
     ramda: ^0.30.1
-    react: ^18.2.0
+    react: ^18.3.1
     react-diff-viewer: ^3.1.1
-    react-dom: ^18.2.0
+    react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-lazyload: ^3.2.0
     react-textarea-autosize: ^8.5.3
@@ -6776,12 +6776,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.8":
-  version: 18.2.17
-  resolution: "@types/react-dom@npm:18.2.17"
+"@types/react-dom@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "@types/react-dom@npm:18.3.1"
   dependencies:
     "@types/react": "*"
-  checksum: 7a4e704ed4be6e0c3ccd8a22ff69386fe548304bf4db090513f42e059ff4c65f7a427790320051524d6578a2e4c9667bb7a80a4c989b72361c019fbe851d9385
+  checksum: ad28ecce3915d30dc76adc2a1373fda1745ba429cea290e16c6628df9a05fd80b6403c8e87d78b45e6c60e51df7a67add389ab62b90070fbfdc9bda8307d9953
   languageName: node
   linkType: hard
 
@@ -6812,7 +6812,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.25":
+"@types/react@npm:*":
   version: 18.2.42
   resolution: "@types/react@npm:18.2.42"
   dependencies:
@@ -6820,6 +6820,16 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: d2019afdf48303a3a598a97cc9dd2284e3c04b369e791f6ba3c33232b7f8645daff97b093a19f8b3ce75ac8a261b47552cb4513226ab16d843eb9443b0f91844
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.3.12":
+  version: 18.3.12
+  resolution: "@types/react@npm:18.3.12"
+  dependencies:
+    "@types/prop-types": "*"
+    csstype: ^3.0.2
+  checksum: 4ab1577a8c2105a5e316536f724117c90eee5f4bd5c137fc82a2253d8c1fd299dedaa07e8dfc95d6e2f04a4be3cb8b0e1b06098c6233ebd55c508d88099395b7
   languageName: node
   linkType: hard
 
@@ -16469,6 +16479,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "react-dom@npm:18.3.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    scheduler: ^0.23.2
+  peerDependencies:
+    react: ^18.3.1
+  checksum: 298954ecd8f78288dcaece05e88b570014d8f6dce5db6f66e6ee91448debeb59dcd31561dddb354eee47e6c1bb234669459060deb238ed0213497146e555a0b9
+  languageName: node
+  linkType: hard
+
 "react-draggable@npm:^4.0.3":
   version: 4.4.6
   resolution: "react-draggable@npm:4.4.6"
@@ -16709,6 +16731,15 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   dependencies:
     loose-envify: ^1.1.0
   checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "react@npm:18.3.1"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: a27bcfa8ff7c15a1e50244ad0d0c1cb2ad4375eeffefd266a64889beea6f6b64c4966c9b37d14ee32d6c9fcd5aa6ba183b6988167ab4d127d13e7cb5b386a376
   languageName: node
   linkType: hard
 
@@ -17311,6 +17342,15 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   dependencies:
     loose-envify: ^1.1.0
   checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.23.2":
+  version: 0.23.2
+  resolution: "scheduler@npm:0.23.2"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 3e82d1f419e240ef6219d794ff29c7ee415fbdc19e038f680a10c067108e06284f1847450a210b29bbaf97b9d8a97ced5f624c31c681248ac84c80d56ad5a2c4
   languageName: node
   linkType: hard
 

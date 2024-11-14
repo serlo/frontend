@@ -68,6 +68,7 @@ export function PluginMenuItems({
         <li key={type}>
           <button
             data-qa={`plugin-suggestion-${initialState.plugin}`}
+            // @ts-expect-error not sure what is expected here
             ref={(el) => (itemRefs.current[currentIndex] = el)}
             onClick={() => onInsertPlugin(pluginMenuItem)}
             onFocus={() => setFocusedItemIndex(currentIndex)}

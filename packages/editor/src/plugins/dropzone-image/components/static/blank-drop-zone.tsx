@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { memo } from 'react'
+import { LegacyRef, memo } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
@@ -64,7 +64,7 @@ export const BlankDropZone = memo(function BlankDropZone(
 
   return (
     <div
-      ref={drop}
+      ref={drop as unknown as LegacyRef<HTMLDivElement>}
       className={cn(
         `absolute flex flex-wrap items-center justify-center gap-1 rounded p-0`,
         getBackgroundColor(visibility, isOver, canDrop),

@@ -28,7 +28,7 @@ export function DraggableArea(props: DraggableAreaProps) {
         className
       )}
       data-qa="blank-solution-area"
-      ref={dropRef as LegacyRef<HTMLDivElement>}
+      ref={dropRef as unknown as LegacyRef<HTMLDivElement>}
     >
       {children}
     </div>

@@ -1,7 +1,7 @@
 import { selectStaticDocument, useStore } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useEffect, useState } from 'react'
+import { type LegacyRef, useEffect, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { defaultLargeCanvasDimension } from './background-shape-select'
@@ -113,7 +113,7 @@ export function EditorCanvas({
 
   return (
     <div
-      ref={drop}
+      ref={drop as unknown as LegacyRef<HTMLDivElement>}
       className={cn(`
         relative mx-auto box-content max-w-full overflow-auto overflow-hidden
         rounded-lg border border-almost-black bg-cover bg-center bg-no-repeat

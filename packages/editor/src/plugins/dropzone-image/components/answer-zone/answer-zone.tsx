@@ -1,4 +1,5 @@
 import { cn } from '@editor/utils/cn'
+import { type LegacyRef } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
 
@@ -55,12 +56,12 @@ export const AnswerZone = (props: AnswerZoneProps) => {
 
   // Hide source element while dragging
   if (collected.isDragging) {
-    return <div ref={dragPreview} />
+    return <div ref={dragPreview as unknown as LegacyRef<HTMLDivElement>} />
   }
 
   return (
     <div
-      ref={dragPreview}
+      ref={dragPreview as unknown as LegacyRef<HTMLDivElement>}
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       style={positionState}
       onClick={onClick}
@@ -69,7 +70,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       <div className="relative z-20">
         <ResizableBox {...resizableBoxProps}>
           <div
-            ref={drag}
+            ref={drag as unknown as LegacyRef<HTMLDivElement>}
             className={cn(
               `group relative flex h-full w-full flex-wrap items-center
             justify-center gap-1 border-2 border-blue-500 bg-white`,
