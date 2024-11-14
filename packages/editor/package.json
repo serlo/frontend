@@ -77,7 +77,6 @@
     "@types/react-resizable": "^3.0.7",
     "@types/react-syntax-highlighter": "^15.5.11",
     "@types/slate-react": "^0.50.1",
-    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "@vitejs/plugin-react": "^4.2.1",
@@ -126,7 +125,7 @@
     "ts-jest": "^29.2.5",
     "ts-key-enum": "^2.0.12",
     "typescript": "^5.4.5",
-    "uuid": "^9.0.1",
+    "uuid": "^11.0.3",
     "vite": "^5.4.8",
     "vite-plugin-dts": "3.8.3",
     "vite-plugin-svgr": "^4.2.0"
