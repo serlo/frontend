@@ -36,8 +36,8 @@ export function PluginToolbar({
     <div
       className={cn(
         `
-        plugin-toolbar absolute -top-[2.6rem] left-[5px] right-0 z-[21] flex
-        h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
+        plugin-toolbar clip-vertical-shadow absolute -top-[2rem] left-[7px] right-0 z-[21]
+        flex h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2 shadow-plugin-focus
         `,
         !noWhiteShadow &&
           `

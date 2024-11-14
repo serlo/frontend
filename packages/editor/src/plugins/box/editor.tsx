@@ -67,7 +67,6 @@ export function BoxEditor(props: BoxProps) {
           `
             [&_.plugin-toolbar]:ml-[-2px]
             [&_.plugin-toolbar]:mr-[-16px]
-            [&_.plugin-toolbar]:rounded-none
             [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
           `
         )}

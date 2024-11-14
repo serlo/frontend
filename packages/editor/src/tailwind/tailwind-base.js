@@ -110,6 +110,8 @@ export default {
         modal: '0px 0px 10px 0px rgba(0, 0, 0, 0.25)',
         input: `0 0 4px 0 ${brand}`,
         stickysearch: ' 0px 7px 7px 3px rgba(255,255,255,0.8)',
+        'plugin-hover': '0 4px 4px 0 rgba(0, 0, 0, 0.1)',
+        'plugin-focus': '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
       },
       minHeight: {
         8: '32px',

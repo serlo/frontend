@@ -59,8 +59,8 @@ export function BoxRenderer({
       id={anchorId}
       className={cn(
         `
-          serlo-box relative mx-side mb-6 
-          rounded-xl border-3 pb-2 pt-[2px]
+          serlo-box relative mb-6 
+          rounded-lg border-3 pb-2 pt-[2px]
           [&>div.my-block]:first:mt-3.5
           [&>div.my-block]:last:mb-3.5
         `,
