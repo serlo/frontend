@@ -1942,12 +1942,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.24.0, @babel/runtime@npm:^7.24.1":
+"@babel/runtime@npm:^7.24.1":
   version: 7.24.4
   resolution: "@babel/runtime@npm:7.24.4"
   dependencies:
     regenerator-runtime: ^0.14.0
   checksum: 2f27d4c0ffac7ae7999ac0385e1106f2a06992a8bdcbf3da06adcac7413863cd08c198c2e4e970041bbea849e17f02e1df18875539b6afba76c781b6b59a07c3
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.25.7":
+  version: 7.26.0
+  resolution: "@babel/runtime@npm:7.26.0"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: c8e2c0504ab271b3467a261a8f119bf2603eb857a0d71e37791f4e3fae00f681365073cc79f141ddaa90c6077c60ba56448004ad5429d07ac73532be9f7cf28a
   languageName: node
   linkType: hard
 
@@ -5831,9 +5840,9 @@ __metadata:
     is-hotkey: ^0.2.0
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
-    katex: ^0.16.10
+    katex: ^0.16.11
     lit: ^3.2.1
-    mathjs: ^12.4.1
+    mathjs: ^13.2.2
     npm-run-all: ^4.1.5
     postcss: ^8.4.49
     postcss-flexbugs-fixes: ^5.0.2
@@ -5961,8 +5970,8 @@ __metadata:
     jest: ^29.7.0
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
-    katex: ^0.16.10
-    mathjs: ^12.4.1
+    katex: ^0.16.11
+    mathjs: ^13.2.2
     mathlive: ^0.98.6
     micromark: ^4.0.1
     next: ^14.2.2
@@ -8874,6 +8883,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"complex.js@npm:^2.2.5":
+  version: 2.4.2
+  resolution: "complex.js@npm:2.4.2"
+  checksum: 989332b1ca2ac4c71cb42e79501b535f5c95e2356570a027a47cd03e515ff1ddfe4ea497dc26edf249610e097fe730092f498995306f02ad0443f9a5a7b6e5f3
+  languageName: node
+  linkType: hard
+
 "compute-scroll-into-view@npm:^3.0.2":
   version: 3.1.0
   resolution: "compute-scroll-into-view@npm:3.1.0"
@@ -10915,13 +10931,6 @@ __metadata:
   version: 2.16.9
   resolution: "fp-ts@npm:2.16.9"
   checksum: 910a443dbd2a1a3f76527e8b9c1ccaae103cffd797b812cb2fdd7143fca5c010a05df35dca18bb7b2083249ceaec59fa0436c0c3f4b5b60bf5c62934c1a23ce5
-  languageName: node
-  linkType: hard
-
-"fraction.js@npm:4.3.4":
-  version: 4.3.4
-  resolution: "fraction.js@npm:4.3.4"
-  checksum: 26fdecf114e3b693c760d3b2d5447f8ba9e815991ca7c7cdb930156780793b87f10936979a890b389676d960d7cd026273da9a44a6e20c12e3c4fd282a026ed3
   languageName: node
   linkType: hard
 
@@ -13446,14 +13455,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.16.10":
-  version: 0.16.10
-  resolution: "katex@npm:0.16.10"
+"katex@npm:^0.16.11":
+  version: 0.16.11
+  resolution: "katex@npm:0.16.11"
   dependencies:
     commander: ^8.3.0
   bin:
     katex: cli.js
-  checksum: 108e9d810e17840c43eef8d46171096f4cc97852bfd1e2dd1890d9b3435846816e3e98678a31d38bd064eb97eea83b18ff224cb65d5f9511b54ce7ff4359b591
+  checksum: 49d9340705f4922ee22aacedad45664971449e5ca65e42a70228961336c8d4746c37c3c719bcc2114b6ad21182800c7d3d8bea28fe6f951fc45fe7e8322ea3bd
   languageName: node
   linkType: hard
 
@@ -14041,22 +14050,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mathjs@npm:^12.4.1":
-  version: 12.4.1
-  resolution: "mathjs@npm:12.4.1"
+"mathjs@npm:^13.2.2":
+  version: 13.2.2
+  resolution: "mathjs@npm:13.2.2"
   dependencies:
-    "@babel/runtime": ^7.24.0
-    complex.js: ^2.1.1
+    "@babel/runtime": ^7.25.7
+    complex.js: ^2.2.5
     decimal.js: ^10.4.3
     escape-latex: ^1.2.0
-    fraction.js: 4.3.4
+    fraction.js: ^4.3.7
     javascript-natural-sort: ^0.7.1
     seedrandom: ^3.0.5
     tiny-emitter: ^2.1.0
-    typed-function: ^4.1.1
+    typed-function: ^4.2.1
   bin:
     mathjs: bin/cli.js
-  checksum: cf0c0ff604083033c13b223cdc60ed646a0fbdd2f2f6951b11f838f57702f1045cf4414eae9d4ae1796b1dd59af2e319e1f5bba7b1730571d19c6b14fc45c39c
+  checksum: b93e54fa6ad5bbdaf6db51c504c62dcc2cdeecd3d938a9ec34d1f55b831cfa2254850a500d2785e873cf22ee4524b10558014cbce76b60ea0f26a33c0c6a2ff1
   languageName: node
   linkType: hard
 
@@ -18916,10 +18925,10 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"typed-function@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "typed-function@npm:4.1.1"
-  checksum: ac9619d96c70f5023fee9fa393560ebc91080b0bbdd1e4ec5d924a56db77cee49b78d9e897c17935ed58000eee104bc9b59f29c1a5c86bcc2a3e58ff8449aff5
+"typed-function@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "typed-function@npm:4.2.1"
+  checksum: 00d2dbbc61cf238fda6e0359eee8c5d344e92de3c54588a6da202be24dd8d31a5c87715a8401a65d384b8fdba7c971b19ac86e572f27e23976cccbd6ed842487
   languageName: node
   linkType: hard
 
