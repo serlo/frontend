@@ -16,7 +16,7 @@ export function SaveButton({
 }: {
   onSave: SerloEditorProps['onSave']
   isInTestArea?: boolean
-}) {
+}): React.ReactPortal | null {
   const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
