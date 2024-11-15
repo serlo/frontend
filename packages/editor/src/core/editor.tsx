@@ -6,8 +6,7 @@ import {
 } from '@editor/editor-ui/save/local-storage-notice'
 import { getEditorVersion } from '@editor/package/editor-version'
 import { cn } from '@editor/utils/cn'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
-import { useContext, useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
@@ -15,12 +14,13 @@ import { DndWrapper } from './components/dnd-wrapper'
 import { InnerDocument } from './inner-document'
 import type { EditorProps } from './types'
 import { createStore } from '../store'
+import { useIsSerlo } from './hooks/use-is-serlo'
 
 /**
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
-  const { isSerlo } = useContext(SerloOnlyFeaturesContext)
+  const isSerlo = useIsSerlo()
   const [useStored, setUseStored] = useState(false)
 
   const storedState = getStateFromLocalStorage()
