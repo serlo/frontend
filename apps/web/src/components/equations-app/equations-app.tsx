@@ -28,7 +28,8 @@ export function EquationsApp() {
   try {
     window.MathfieldElement.decimalSeparator = ','
   } catch (e) {
-    //
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
   const [description, setDescription] = useState(
     'Löse die Gleichung und bestimme die Lösungsmenge.'
@@ -404,6 +405,8 @@ export function EquationsApp() {
                       setMode('input')
                       setInputState('error')
                     } catch (e) {
+                      // eslint-disable-next-line no-console
+                      console.error(e)
                       setMode('input')
                       setInputState('error')
                     }
@@ -508,7 +511,8 @@ export function EquationsApp() {
                                 try {
                                   void confetti.default()
                                 } catch (e) {
-                                  // don't care
+                                  // eslint-disable-next-line no-console
+                                  console.error(e)
                                 }
                                 setMode('done')
                                 setSolution(op.displayLatex!)

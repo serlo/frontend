@@ -167,9 +167,7 @@ export function Registration() {
                     // simplifies the types and also allows the flow component
                     // to react to validation errors in the future
                     setHasValidationErrorMissingConsent(true)
-                    return Promise.reject({
-                      type: VALIDATION_ERROR_TYPE,
-                    })
+                    return Promise.reject(new Error(VALIDATION_ERROR_TYPE))
                   }
             }
             contentAfterLastTrait={renderAgreement()}

@@ -76,6 +76,5 @@ export type ChildStateType<K extends string = string, S = unknown> = StateType<
 export interface ChildStateTypeConfig<K extends string = string, S = unknown> {
   plugin: K
   initialState?: S
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  config?: {}
+  config?: object
 }

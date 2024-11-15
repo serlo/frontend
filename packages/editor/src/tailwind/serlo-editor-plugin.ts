@@ -24,7 +24,9 @@ function extractCSSClasses() {
       components[execArray[0]] = {}
     }
     return components ?? {}
-  } catch (error) {
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e)
     // don't run on client, no problem
     return {}
   }

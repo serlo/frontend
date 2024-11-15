@@ -38,7 +38,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
   try {
     window.MathfieldElement.decimalSeparator = ','
   } catch (e) {
-    //
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
   const ce = new ComputeEngine()
 
@@ -185,7 +186,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                         try {
                           void confetti.default()
                         } catch (e) {
-                          // don't care
+                          // eslint-disable-next-line no-console
+                          console.error(e)
                         }
 
                         /*submit({

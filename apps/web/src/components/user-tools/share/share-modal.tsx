@@ -60,7 +60,9 @@ export function ShareModal({
         '👌 ' + (text ? text : strings.share.copySuccess),
         'success'
       )
-    } catch (err) {
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
       showToastNotice(
         '❌ ' + (text ? text : strings.share.copyFailed),
         'warning'

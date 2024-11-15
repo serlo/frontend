@@ -22,7 +22,7 @@ export function useLeaveConfirm(protect: boolean) {
         if (router.asPath !== window.location.pathname) {
           window.history.pushState('', '', router.asPath)
         }
-        throw "Abort route change by user's confirmation."
+        throw new Error("Abort route change by user's confirmation.")
       }
     },
     [protect, editStrings.confirmRouteChange, router.asPath]

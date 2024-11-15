@@ -108,7 +108,8 @@ export function MathElement({
       // Set property `inline` on MathElement to new value
       Transforms.setNodes(editor, { inline: newInlineValue }, { at: path })
 
-      newInlineValue ? transformNodeToInline() : transformNodeToBlock()
+      if (newInlineValue) transformNodeToInline()
+      else transformNodeToBlock()
 
       function transformNodeToInline() {
         // We can be sure that Node at `path` has type MathElementType here
