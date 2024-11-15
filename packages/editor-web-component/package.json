@@ -49,7 +49,7 @@
     "@serlo/editor": "0.19.0",
     "@serlo/typescript-config": "workspace:*",
     "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.8",
+    "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^9.14.0",
     "eslint-config-next": "^15.0.3",
@@ -64,7 +64,7 @@
     "prettier-plugin-packagejson": "^2.5.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "vite": "^5.4.11",
     "vite-plugin-dts": "4.3.0"
   },
