@@ -104,7 +104,7 @@ export function SubjectLandingTopicOverview({
           const buttonClass = cn(
             `
               m-2 flex min-h-[4rem] w-auto
-              items-center rounded-xl p-2 text-left text-left font-bold
+              items-center rounded-xl p-2 text-left font-bold
               text-brand shadow-menu transition-colors hover:bg-brand/5
             `,
             isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : ''

@@ -28,7 +28,7 @@ export const AutogrowInput = forwardRef<
     <span
       className={cn(
         'serlo-autogrow-input relative inline-grid',
-        'after:w-auto after:min-w-16 after:resize-none after:resize-none after:px-3 after:[grid-area:1_/_2]',
+        'after:w-auto after:min-w-16 after:resize-none after:px-3 after:[grid-area:1_/_2]',
         "after:invisible after:-ml-2 after:whitespace-pre-wrap after:content-[attr(data-value)_'_']"
       )}
       data-value={String(value) + '_ '}
