@@ -5773,8 +5773,8 @@ __metadata:
     eslint-plugin-react-hooks: ^5.0.0
     npm: ^10.9.0
     npm-run-all: ^4.1.5
-    prettier: ^3.2.5
-    prettier-plugin-packagejson: ^2.5.0
+    prettier: ^3.3.3
+    prettier-plugin-packagejson: ^2.5.3
     prettier-plugin-tailwindcss: ^0.5.14
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -5851,8 +5851,8 @@ __metadata:
     postcss: ^8.4.49
     postcss-flexbugs-fixes: ^5.0.2
     postcss-import: ^16.1.0
-    prettier: ^3.2.5
-    prettier-plugin-packagejson: ^2.5.0
+    prettier: ^3.3.3
+    prettier-plugin-packagejson: ^2.5.3
     prettier-plugin-tailwindcss: ^0.5.14
     ramda: ^0.30.1
     rdndmb-html5-to-touch: ^8.0.3
@@ -5986,8 +5986,8 @@ __metadata:
     postcss-flexbugs-fixes: ^5.0.2
     postcss-import: ^16.1.0
     postcss-nested: ^7.0.2
-    prettier: ^3.2.5
-    prettier-plugin-packagejson: ^2.5.0
+    prettier: ^3.3.3
+    prettier-plugin-packagejson: ^2.5.3
     prettier-plugin-tailwindcss: ^0.5.14
     prop-types: ^15.8.1
     qrcode.react: ^3.2.0
@@ -6036,8 +6036,8 @@ __metadata:
     cross-env: ^7.0.3
     dotenv-cli: ^7.4.2
     postcss-import: ^16.1.0
-    prettier: ^3.2.5
-    prettier-plugin-packagejson: ^2.5.0
+    prettier: ^3.3.3
+    prettier-plugin-packagejson: ^2.5.3
   languageName: unknown
   linkType: soft
 
@@ -16005,18 +16005,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-packagejson@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "prettier-plugin-packagejson@npm:2.5.0"
+"prettier-plugin-packagejson@npm:^2.5.3":
+  version: 2.5.3
+  resolution: "prettier-plugin-packagejson@npm:2.5.3"
   dependencies:
-    sort-package-json: 2.10.0
-    synckit: 0.9.0
+    sort-package-json: 2.10.1
+    synckit: 0.9.2
   peerDependencies:
     prettier: ">= 1.16.0"
   peerDependenciesMeta:
     prettier:
       optional: true
-  checksum: 0b05b02e96173abc1220d11a5ae6fbdefd45823ad86e5aba70bd52377f555db82fbe41c67bdfb186fa3f4c2ef5d12d4803b7215cb301533829a8389b411bb99a
+  checksum: 0b3063cb3d1be8e908fa2dcbee8601134f4aa847d41cdc7d3204b09a737b0c2b3606b2c531dfdbe4fc7ade9d21975528b9a56200f241c3450c461b9f046be3d7
   languageName: node
   linkType: hard
 
@@ -16084,12 +16084,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.2.5":
-  version: 3.2.5
-  resolution: "prettier@npm:3.2.5"
+"prettier@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 2ee4e1417572372afb7a13bb446b34f20f1bf1747db77cf6ccaf57a9be005f2f15c40f903d41a6b79eec3f57fff14d32a20fb6dee1f126da48908926fe43c311
+  checksum: bc8604354805acfdde6106852d14b045bb20827ad76a5ffc2455b71a8257f94de93f17f14e463fe844808d2ccc87248364a5691488a3304f1031326e62d9276e
   languageName: node
   linkType: hard
 
@@ -17763,9 +17763,9 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"sort-package-json@npm:2.10.0":
-  version: 2.10.0
-  resolution: "sort-package-json@npm:2.10.0"
+"sort-package-json@npm:2.10.1":
+  version: 2.10.1
+  resolution: "sort-package-json@npm:2.10.1"
   dependencies:
     detect-indent: ^7.0.1
     detect-newline: ^4.0.0
@@ -17777,7 +17777,7 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
     sort-object-keys: ^1.1.3
   bin:
     sort-package-json: cli.js
-  checksum: 095e5c5075c9799d3d6174f82e963fa3be0a1d193af0be656b651d2e5b563dfc794f46c7aa74e3fc761de3fba76951ad2d3de716cf50b3aca4e938f63edbfcae
+  checksum: 861d8161565fba322414d70b6be10fb331680549b73399778965be628783833c85c4e02929bcea5a2d96994884b0327dfe2f7c7a79409c901d2582b703f5333d
   languageName: node
   linkType: hard
 
@@ -18312,13 +18312,13 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"synckit@npm:0.9.0":
-  version: 0.9.0
-  resolution: "synckit@npm:0.9.0"
+"synckit@npm:0.9.2":
+  version: 0.9.2
+  resolution: "synckit@npm:0.9.2"
   dependencies:
     "@pkgr/core": ^0.1.0
     tslib: ^2.6.2
-  checksum: c38bc3df0306c3242ddc5628d766ef0b4ca85a8a861b0a26b03483f09eca31a7fbdbcefb1b9fdee9e49db7739df25ce728cb2c6aef02ddc58bf46ee71924a36b
+  checksum: 3a30e828efbdcf3b50fccab4da6e90ea7ca24d8c5c2ad3ffe98e07d7c492df121e0f75227c6e510f96f976aae76f1fa4710cb7b1d69db881caf66ef9de89360e
   languageName: node
   linkType: hard
 

@@ -41,7 +41,7 @@ export function MoreAuthorTools({
         <UserToolsItem
           title={
             taxNewItems
-              ? title ?? strings.editOrAdd.addNewEntities
+              ? (title ?? strings.editOrAdd.addNewEntities)
               : loggedInData.strings.tools
           }
           aboveContent={aboveContent}
