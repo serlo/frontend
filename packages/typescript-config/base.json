@@ -21,7 +21,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es6"
+    "target": "ES2018"
   },
   "exclude": ["node_modules"]
 }
