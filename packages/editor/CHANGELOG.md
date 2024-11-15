@@ -1,3 +1,31 @@
+## Changelog for version 0.19.1
+
+- chore: upgrade redux etc. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4288
+- chore: upgrade typescript version, bump target to es2018. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4286
+- chore: upgrade react dom and misc. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4284
+- chore: upgrade prettier. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4283
+- chore: upgrade next & misc packages. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4282
+- Add icon for text area exercise (frei text plugin). Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4276
+- Revert \"chore(deps): bump @radix-ui/react-navigation-menu from 1.1.4 to 1.2.1\". Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4272
+- chore(deps): bump @radix-ui/react-navigation-menu from 1.1.4 to 1.2.1. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4266
+- chore(deps): bump clsx from 2.1.0 to 2.1.1. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4265
+- refactor(editor): remove upload tagging code. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4260
+- refactor(editor): adapt variable name from imgSrc to fileUrl. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4259
+- fix(plugin-edusharing): fix visual errors in embeds. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4258
+- refactor(editor): adapt upload code to changes on server, get parent host for usage in iframe. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4257
+- fix(editor): commit temporary actions to history only after resolving them. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4252
+- feat(editor): add user id to image upload. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4251
+- fix(editor): adapt image proxy rule. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4250
+- chore: migrate eslint to use new config format. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4249
+- Production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4245
+- Deploy: fix(editor): update injection url for production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4244
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4243
+- refactor: move some tailwind theme stuff to frontend. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4240
+- refactor(edusharing-asset): replace react-modal. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4239
+- refactor(editor): add image proxy for privacy (serlo-only). Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4224
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.19.0-editor...v0.19.1-editor
+
 ## Changelog for version 0.19.0
 
 - refactor(editor): remove css injected by js plugin. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4234
