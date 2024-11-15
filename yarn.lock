@@ -1951,7 +1951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.24.4":
+"@babel/runtime@npm:^7.24.4, @babel/runtime@npm:^7.25.7":
   version: 7.26.0
   resolution: "@babel/runtime@npm:7.26.0"
   dependencies:
@@ -3297,6 +3297,26 @@ __metadata:
   version: 0.4.1
   resolution: "@humanwhocodes/retry@npm:0.4.1"
   checksum: f11167c28e8266faba470fd273cbaafe2827523492bc18c5623015adb7ed66f46b2e542e3d756fed9ca614300249267814220c2f5f03a59e07fdfa64fc14ad52
+  languageName: node
+  linkType: hard
+
+"@iframe-resizer/core@npm:5.3.2":
+  version: 5.3.2
+  resolution: "@iframe-resizer/core@npm:5.3.2"
+  checksum: dccfa96e9e760827e6133dd0d57e17d5bdece6561fef73c7786a9304884ddffc1c511e29eb5a9a2dfbd642f7bc50dc5a15bd3da903eaf052e66b020a48e7018c
+  languageName: node
+  linkType: hard
+
+"@iframe-resizer/react@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "@iframe-resizer/react@npm:5.3.2"
+  dependencies:
+    "@babel/runtime": ^7.25.7
+    "@iframe-resizer/core": 5.3.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0  || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0  || ^19.0.0
+  checksum: fd05015db207d85d9de0726a112271860d1604eb3a7e0e5ed23d8c561f9126af1ce5f1e0829091fabeaa3d76c5eef405f5241ccf501e7df5746b521c1e5b5f20
   languageName: node
   linkType: hard
 
@@ -5809,6 +5829,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.6.0
     "@fortawesome/free-solid-svg-icons": 6.6.0
     "@fortawesome/react-fontawesome": ^0.2.2
+    "@iframe-resizer/react": ^5.3.2
     "@prezly/slate-lists": ^0.107.0
     "@radix-ui/react-dialog": ^1.1.2
     "@radix-ui/react-navigation-menu": ^1.2.1

@@ -1,5 +1,5 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
-import IframeResizer from 'iframe-resizer-react'
+import IframeResizer from '@iframe-resizer/react'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
 
@@ -32,7 +32,7 @@ const EmbedJson = t.type({
 })
 
 const iframeResizerHtml =
-  '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js"></script>'
+  '<script src="https://cdn.jsdelivr.net/npm/@iframe-resizer/child@5.3.2"></script>'
 
 const cssReset = 'padding: 0; margin: 0; border: 0;'
 
@@ -335,12 +335,11 @@ export function EdusharingAssetRenderer(props: {
           />
         ) : (
           <MemoizedIframeResizer
-            heightCalculationMethod="lowestElement"
+            license="GPLv3"
             checkOrigin={false}
             srcDoc={embedHtml}
             style={{
-              width: '1px',
-              minWidth: '100%',
+              width: '100%',
             }}
           />
         )}
