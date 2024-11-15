@@ -57,7 +57,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-packagejson": "^2.5.3"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@3.8.6",
   "engines": {
     "node": ">=20"
   }

@@ -130,7 +130,7 @@
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-svgr": "^4.3.0"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@3.8.6",
   "engines": {
     "node": ">=20.0.0"
   },
