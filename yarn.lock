@@ -1942,7 +1942,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.24.4, @babel/runtime@npm:^7.25.6":
+"@babel/runtime@npm:^7.25.6, @babel/runtime@npm:^7.25.7":
   version: 7.26.0
   resolution: "@babel/runtime@npm:7.26.0"
   dependencies:
@@ -2093,7 +2093,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cortex-js/compute-engine@npm:0.22.0, @cortex-js/compute-engine@npm:^0.22.0":
+"@cortex-js/compute-engine@npm:0.24.1":
+  version: 0.24.1
+  resolution: "@cortex-js/compute-engine@npm:0.24.1"
+  dependencies:
+    complex.js: ^2.1.1
+    decimal.js: ^10.4.3
+  checksum: 0c6a3d37438f5e38b44caf67d6a8249f74354cfffcf30c47fd8db08db0ceeb3c047742f99565db2bdb569fef75210b07c7d9abd83e16438149d851511a37dbce
+  languageName: node
+  linkType: hard
+
+"@cortex-js/compute-engine@npm:^0.22.0":
   version: 0.22.0
   resolution: "@cortex-js/compute-engine@npm:0.22.0"
   dependencies:
@@ -5837,7 +5847,7 @@ __metadata:
     jest-environment-jsdom: ^29.7.0
     katex: ^0.16.11
     lit: ^3.2.1
-    mathjs: ^12.4.3
+    mathjs: ^13.2.2
     npm-run-all: ^4.1.5
     postcss: ^8.4.49
     postcss-flexbugs-fixes: ^5.0.2
@@ -5957,7 +5967,7 @@ __metadata:
     fp-ts: ^2.16.9
     graphiql: ^3.7.2
     graphql: ^16.9.0
-    graphql-request: ^6.1.0
+    graphql-request: ^7.1.2
     graphql-tag: 2.12.6
     iframe-resizer: ^4.4.5
     io-ts: ^2.2.21
@@ -5965,8 +5975,8 @@ __metadata:
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
     katex: ^0.16.11
-    mathjs: ^12.4.3
-    mathlive: ^0.98.6
+    mathjs: ^13.2.2
+    mathlive: ^0.101.1
     micromark: ^4.0.1
     next: ^14.2.18
     next-query-params: ^5.0.1
@@ -8747,6 +8757,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"complex.js@npm:^2.2.5":
+  version: 2.4.2
+  resolution: "complex.js@npm:2.4.2"
+  checksum: 989332b1ca2ac4c71cb42e79501b535f5c95e2356570a027a47cd03e515ff1ddfe4ea497dc26edf249610e097fe730092f498995306f02ad0443f9a5a7b6e5f3
+  languageName: node
+  linkType: hard
+
 "compute-scroll-into-view@npm:^3.0.2":
   version: 3.1.0
   resolution: "compute-scroll-into-view@npm:3.1.0"
@@ -10791,13 +10808,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fraction.js@npm:4.3.4":
-  version: 4.3.4
-  resolution: "fraction.js@npm:4.3.4"
-  checksum: 26fdecf114e3b693c760d3b2d5447f8ba9e815991ca7c7cdb930156780793b87f10936979a890b389676d960d7cd026273da9a44a6e20c12e3c4fd282a026ed3
-  languageName: node
-  linkType: hard
-
 "fraction.js@npm:^4.3.7":
   version: 4.3.7
   resolution: "fraction.js@npm:4.3.7"
@@ -11262,7 +11272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^6.0.0, graphql-request@npm:^6.1.0":
+"graphql-request@npm:^6.0.0":
   version: 6.1.0
   resolution: "graphql-request@npm:6.1.0"
   dependencies:
@@ -11271,6 +11281,17 @@ __metadata:
   peerDependencies:
     graphql: 14 - 16
   checksum: 6d62630a0169574442320651c1f7626c0c602025c3c46b19e09417c9579bb209306ee63de9793a03be2e1701bb7f13971f8545d99bc6573e340f823af0ad35b2
+  languageName: node
+  linkType: hard
+
+"graphql-request@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "graphql-request@npm:7.1.2"
+  dependencies:
+    "@graphql-typed-document-node/core": ^3.2.0
+  peerDependencies:
+    graphql: 14 - 16
+  checksum: 1b071bb8625ded9e487f93516a902b652502f781660dc1f1802b6988d2af90927f5b1efecbc2999a59e2f9cf586d7e78d5672e5bb6e7624f3e3eef355af3bb9a
   languageName: node
   linkType: hard
 
@@ -13909,31 +13930,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mathjs@npm:^12.4.3":
-  version: 12.4.3
-  resolution: "mathjs@npm:12.4.3"
+"mathjs@npm:^13.2.2":
+  version: 13.2.2
+  resolution: "mathjs@npm:13.2.2"
   dependencies:
-    "@babel/runtime": ^7.24.4
-    complex.js: ^2.1.1
+    "@babel/runtime": ^7.25.7
+    complex.js: ^2.2.5
     decimal.js: ^10.4.3
     escape-latex: ^1.2.0
-    fraction.js: 4.3.4
+    fraction.js: ^4.3.7
     javascript-natural-sort: ^0.7.1
     seedrandom: ^3.0.5
     tiny-emitter: ^2.1.0
-    typed-function: ^4.1.1
+    typed-function: ^4.2.1
   bin:
     mathjs: bin/cli.js
-  checksum: 5d0f78717492d72653a87d2ad219cb7e1ac82399e0c2199caa44852583e2f2efbdc33d5008911994f9a1bfb7cb13575aa6824ff88d2c11127e61364f02ef3f7c
+  checksum: b93e54fa6ad5bbdaf6db51c504c62dcc2cdeecd3d938a9ec34d1f55b831cfa2254850a500d2785e873cf22ee4524b10558014cbce76b60ea0f26a33c0c6a2ff1
   languageName: node
   linkType: hard
 
-"mathlive@npm:^0.98.6":
-  version: 0.98.6
-  resolution: "mathlive@npm:0.98.6"
+"mathlive@npm:^0.101.1":
+  version: 0.101.1
+  resolution: "mathlive@npm:0.101.1"
   dependencies:
-    "@cortex-js/compute-engine": 0.22.0
-  checksum: 8950d1c2ec02cfca513f63eb61c8768b82de60076160182e135b2c0576345151937f0a8b20645d745a3cea51ddedc6abe82cdc237811da416d44f5bf7b3706bf
+    "@cortex-js/compute-engine": 0.24.1
+  checksum: 7b521acea549c2b587a08665cc7157d0eaafa63fb26bd10c5c3ac4ab643ebd52a0a5029d417a0f2c4d94a8649f855f0fd0cde8d0a5635025cc41cce07bf95ec7
   languageName: node
   linkType: hard
 
@@ -18791,10 +18812,10 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"typed-function@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "typed-function@npm:4.1.1"
-  checksum: ac9619d96c70f5023fee9fa393560ebc91080b0bbdd1e4ec5d924a56db77cee49b78d9e897c17935ed58000eee104bc9b59f29c1a5c86bcc2a3e58ff8449aff5
+"typed-function@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "typed-function@npm:4.2.1"
+  checksum: 00d2dbbc61cf238fda6e0359eee8c5d344e92de3c54588a6da202be24dd8d31a5c87715a8401a65d384b8fdba7c971b19ac86e572f27e23976cccbd6ed842487
   languageName: node
   linkType: hard
 
