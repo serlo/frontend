@@ -40,7 +40,7 @@
     "@hello-pangea/dnd": "^16.6.0",
     "@lumieducation/h5p-react": "^9.3.2",
     "@ory/client": "^1.15.10",
-    "@ory/integrations": "^1.2.1",
+    "@ory/integrations": "1.1.5",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@reduxjs/toolkit": "^1.9.7",
