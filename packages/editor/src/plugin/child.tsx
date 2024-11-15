@@ -32,16 +32,19 @@ export function child<K extends string, S = unknown>(
         },
       }
     },
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     createInitialState({ createDocument }) {
       const id = v4()
       createDocument({ id, plugin, state: initialState })
       return id
     },
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     toStoreState(staticDocument, { createDocument }) {
       const id = staticDocument?.id ?? v4()
       createDocument({ id, ...staticDocument })
       return id
     },
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     toStaticState(id, { getStoreDocument, omitId }: ToStaticHelpers<K, S>) {
       const document = getStoreDocument(id)
       if (document === null) {
