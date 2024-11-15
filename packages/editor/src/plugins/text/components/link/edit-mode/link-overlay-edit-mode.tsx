@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import {
   findResults,
   useSerloQuickbarData,
@@ -39,6 +40,8 @@ export function LinkOverlayEditMode({
   const { lang } = editStrings
   const overlayStrings = editStrings.plugins.text.linkOverlay
 
+  const isSerlo = useIsSerlo()
+
   const { quickbarData } = useSerloQuickbarData(noAutocomplete)
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export function LinkOverlayEditMode({
 
     const hasResult = activeIndex < results.length
     const href = hasResult ? `/${results[activeIndex].entry.id}` : query
-    const cleanUrl = getCleanUrl(href, lang)
+    const cleanUrl = getCleanUrl(href, lang, !isSerlo)
     const title = hasResult ? results[activeIndex].entry.title : undefined
 
     if (

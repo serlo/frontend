@@ -10,7 +10,6 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Suspense, lazy, useEffect, useState } from 'react'
 
