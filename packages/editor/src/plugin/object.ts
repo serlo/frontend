@@ -19,7 +19,6 @@ export function object<Ds extends Record<string, StateType>>(
   type U = StateTypesReturnType<Ds>
 
   const getObjectChildIds = (children: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [K in keyof Ds]: { id: string }[]
   }) => R.flatten<readonly FocusableChild[][]>(R.values(children))
 
@@ -102,7 +101,6 @@ export function object<Ds extends Record<string, StateType>>(
     getFocusableChildren(state) {
       const children = R.mapObjIndexed((type, key) => {
         return type.getFocusableChildren(state[key])
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       }, types) as { [K in keyof Ds]: { id: string }[] }
       return getObjectChildIds(children)
     },

@@ -33,6 +33,7 @@ export function EditorImageGrid({
       const hasVisibleCaption = caption && !isEmptyTextDocument(caption)
 
       return {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         src: String(src),
         alt: alt ?? '',
         dimensions: {

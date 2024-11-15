@@ -96,7 +96,8 @@ export function SubjectLandingTopicOverview({
           const firstRow = term.description?.state[0]
           const src =
             firstRow && isImageDocument(firstRow)
-              ? String(firstRow.state.src)
+              ? // eslint-disable-next-line @typescript-eslint/no-base-to-string
+                String(firstRow.state.src)
               : undefined
 
           const isExtraTerm = Object.hasOwn(term, 'href')

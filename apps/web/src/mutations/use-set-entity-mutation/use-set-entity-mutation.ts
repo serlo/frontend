@@ -102,7 +102,7 @@ export function getRequiredString(
   if (!value || !value.trim()) {
     const msg = `${mutationStrings.errors.valueMissing} ("${name}")`
     showToastNotice(msg, 'warning')
-    throw msg
+    throw new Error(msg)
   }
   return value
 }

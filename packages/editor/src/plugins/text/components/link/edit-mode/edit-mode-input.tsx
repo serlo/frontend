@@ -31,7 +31,7 @@ export function EditModeInput({
     })
 
     return () => {
-      timeout && clearTimeout(timeout)
+      if (timeout) clearTimeout(timeout)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
