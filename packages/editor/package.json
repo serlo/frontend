@@ -78,7 +78,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/slate-react": "^0.50.1",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
-    "@typescript-eslint/parser": "^7.7.1",
+    "@typescript-eslint/parser": "^8.14.0",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",

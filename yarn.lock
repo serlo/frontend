@@ -5825,7 +5825,7 @@ __metadata:
     "@types/react-syntax-highlighter": ^15.5.13
     "@types/slate-react": ^0.50.1
     "@typescript-eslint/eslint-plugin": ^7.7.1
-    "@typescript-eslint/parser": ^7.7.1
+    "@typescript-eslint/parser": ^8.14.0
     "@vitejs/plugin-react": ^4.3.3
     autoprefixer: ^10.4.20
     clsx: ^2.1.1
@@ -5890,7 +5890,7 @@ __metadata:
   resolution: "@serlo/eslint-config@workspace:packages/eslint-config"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^7.7.1
-    "@typescript-eslint/parser": ^7.7.1
+    "@typescript-eslint/parser": ^8.14.0
     eslint-config-next: ^15.0.3
     eslint-config-prettier: ^9.1.0
     eslint-import-resolver-typescript: ^3.6.3
@@ -5949,7 +5949,7 @@ __metadata:
     "@types/react-dom": ^18.3.1
     "@types/react-lazyload": ^3.2.3
     "@typescript-eslint/eslint-plugin": ^7.7.1
-    "@typescript-eslint/parser": ^7.7.1
+    "@typescript-eslint/parser": ^8.14.0
     array-move: ^4.0.0
     autoprefixer: ^10.4.20
     canvas-confetti: ^1.9.3
@@ -6974,7 +6974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0":
+"@typescript-eslint/parser@npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0, @typescript-eslint/parser@npm:^8.14.0":
   version: 8.14.0
   resolution: "@typescript-eslint/parser@npm:8.14.0"
   dependencies:
@@ -6989,24 +6989,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 11a2c52efc5813e615c60d13a548e5c13d75a54ab359f64fa7a8d1739b3179ff98f716c6f7789efa293b24e7a1906db1a7331f8a32d8f6405115d50f557af7ea
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/parser@npm:^7.7.1":
-  version: 7.7.1
-  resolution: "@typescript-eslint/parser@npm:7.7.1"
-  dependencies:
-    "@typescript-eslint/scope-manager": 7.7.1
-    "@typescript-eslint/types": 7.7.1
-    "@typescript-eslint/typescript-estree": 7.7.1
-    "@typescript-eslint/visitor-keys": 7.7.1
-    debug: ^4.3.4
-  peerDependencies:
-    eslint: ^8.56.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 737035f259120533ffede288a7a9b4f6261e41558ccf333f0422cadc8fe2bf7dee91e64369003b623cc972c0f7149822250c1b2afdd05b94383252a68d8dca97
   languageName: node
   linkType: hard
 
