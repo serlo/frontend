@@ -11,18 +11,18 @@ export function getCleanUrl(
   const serloContentMatch = inputUrl.match(
     /https?:\/\/([a-z]{2}\.)?serlo\.org(\/[a-z]+)?\/([1-9]?[0-9]+)/
   )
-  const testId = parseInt(serloContentMatch?.[3] ?? 'NaN')
+  const serloId = parseInt(serloContentMatch?.[3] ?? 'NaN')
 
   const hashPart = inputUrl.split('#')[1]
   const hash = hashPart ? `#${hashPart}` : ''
 
   // If yieldAbsoluteUrl is true and it's a Serlo content URL, we want to keep
   // the absolute URL instead of replacing it with a relative one!
-  if (yieldAbsoluteUrl && !isNaN(testId)) {
+  if (yieldAbsoluteUrl && !isNaN(serloId)) {
     return (serloContentMatch ? serloContentMatch[0] : inputUrl) + hash
   }
 
-  if (!isNaN(testId)) return `/${testId}${hash}`
+  if (!isNaN(serloId)) return `/${serloId}${hash}`
 
   const cleanedUrl = instance
     ? inputUrl
