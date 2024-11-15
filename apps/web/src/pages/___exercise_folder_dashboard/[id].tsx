@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
@@ -235,8 +233,8 @@ export default function Page() {
                   <span className="ml-4 text-sm text-gray-500">
                     Gesamtquote:{' '}
                     {(
-                      (data.versions[start].solved! /
-                        data.versions[start].visits!) *
+                      (data.versions[start].solved /
+                        data.versions[start].visits) *
                       100
                     ).toFixed(2)}
                     %
@@ -246,7 +244,7 @@ export default function Page() {
                 data.versions[start].medianTimeCount !== undefined && (
                   <span className="ml-4 text-sm text-gray-500">
                     Median Arbeitszeit:{' '}
-                    {Math.round(data.versions[start].medianTime! / 1000 / 60)}{' '}
+                    {Math.round(data.versions[start].medianTime / 1000 / 60)}{' '}
                     min ({data.versions[start].medianTimeCount})
                   </span>
                 )}
@@ -269,8 +267,8 @@ export default function Page() {
                       <span className="ml-4 text-sm text-gray-500">
                         Gesamtquote:{' '}
                         {(
-                          (data.versions[end].solved! /
-                            data.versions[end].visits!) *
+                          (data.versions[end].solved /
+                            data.versions[end].visits) *
                           100
                         ).toFixed(2)}
                         %
@@ -280,7 +278,7 @@ export default function Page() {
                     data.versions[end].medianTimeCount !== undefined && (
                       <span className="ml-4 text-sm text-gray-500">
                         Median Arbeitszeit:{' '}
-                        {Math.round(data.versions[end].medianTime! / 1000 / 60)}{' '}
+                        {Math.round(data.versions[end].medianTime / 1000 / 60)}{' '}
                         min ({data.versions[end].medianTimeCount})
                       </span>
                     )}
@@ -328,6 +326,7 @@ export default function Page() {
                 </a>
                 ){' '}
                 {renderSolved(
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   entry.__id,
                   data.versions[i].start,
                   data.versions[i].end,
@@ -360,7 +359,8 @@ export default function Page() {
                   )
                 </p>
                 {entry.children
-                  ? entry.children.map((child: any) => {
+                  ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                    entry.children.map((child: any) => {
                       return (
                         <p key={child.__id} className="my-2 ml-5">
                           Teilaufgabe {child.__id} (
@@ -382,6 +382,7 @@ export default function Page() {
                           </a>
                           ){' '}
                           {renderSolved(
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                             child.__id,
                             data.versions[i].start,
                             data.versions[i].end,

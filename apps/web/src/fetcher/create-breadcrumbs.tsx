@@ -59,9 +59,7 @@ export function taxonomyParentsToRootToBreadcrumbsData(
 
   // get the subject from the secondary menu data so we link to the correct landing pages
   const subject = secondaryMenus.find(
-    // this is probably a bug in our code, but for now we ignore it:
-    // eslint-disable-next-line no-constant-binary-expression
-    (menu) => menu.rootId === breadcrumbs[0]?.id ?? term.id
+    (menu) => menu.rootId === (breadcrumbs[0]?.id || term.id)
   )
 
   if (subject) {
