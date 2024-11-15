@@ -43,7 +43,6 @@
     "@ory/integrations": "1.1.5",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-navigation-menu": "^1.2.1",
-    "@reduxjs/toolkit": "^1.9.7",
     "@serlo/authorization": "^0.60.0",
     "@serlo/editor": "workspace:*",
     "@serlo/katex-styles": "1.0.1",
