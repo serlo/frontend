@@ -794,7 +794,7 @@ function findActions(
           }
           return op
         })
-        .filter((x) => x !== null) as Action[]
+        .filter((x) => x !== null)
     }
   }
   throw new Error('invalid input')

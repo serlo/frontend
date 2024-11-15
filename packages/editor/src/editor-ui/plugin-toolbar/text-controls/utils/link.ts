@@ -13,7 +13,7 @@ export function isLinkActive(editor: SlateEditor) {
 
 export function getLinkElement(editor: SlateEditor): Link | undefined {
   const [match] = Array.from(SlateEditor.nodes(editor, { match: matchLinks }))
-  return match && (match[0] as Link)
+  return match && match[0]
 }
 
 export function toggleLink(editor: SlateEditor) {
