@@ -9,7 +9,7 @@ import {
   faDownload,
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons'
-import QRCode from 'qrcode.react'
+import { QRCodeSVG } from 'qrcode.react'
 import { MouseEvent, useState, useEffect } from 'react'
 
 import { FaIcon, FaIconProps } from '../../fa-icon'
@@ -143,7 +143,7 @@ export function ShareModal({
       className="top-1/2"
     >
       <div className="mx-side mb-4 sm:float-right sm:mb-0">
-        <QRCode value={shareUrl} renderAs="svg" fgColor={colors.brand} />
+        <QRCodeSVG value={shareUrl} fgColor={colors.brand} />
       </div>
       {renderShareInput()}
       <hr className="mx-side my-4" />
