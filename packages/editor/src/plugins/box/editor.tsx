@@ -51,7 +51,7 @@ export function BoxEditor(props: BoxProps) {
   }
 
   return (
-    <div data-qa="plugin-box">
+    <div data-qa="plugin-box" className="pl-0.5">
       {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div

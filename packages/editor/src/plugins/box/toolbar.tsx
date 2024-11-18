@@ -37,7 +37,7 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
-      className="!left-[5px] top-[-31px] w-[calc(100%-5px)]"
+      className="top-[-31px]"
     />
   )
 }

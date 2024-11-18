@@ -57,7 +57,7 @@ export function SpoilerEditor(props: SpoilerProps) {
   }
 
   return (
-    <>
+    <div className="pl-0.5">
       {renderPluginToolbar()}
       <div
         className={cn(
@@ -78,7 +78,7 @@ export function SpoilerEditor(props: SpoilerProps) {
           openOverwrite // should check focused but that's unreliable atm.
         />
       </div>
-    </>
+    </div>
   )
 
   function renderPluginToolbar() {
@@ -88,7 +88,7 @@ export function SpoilerEditor(props: SpoilerProps) {
       <PluginToolbar
         pluginType={EditorPluginType.Spoiler}
         pluginControls={<PluginDefaultTools pluginId={id} />}
-        className="!left-[5px] top-[-31px] w-[calc(100%-5px)]"
+        className="top-[-31px]"
       />
     )
   }
