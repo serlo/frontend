@@ -36,8 +36,8 @@ export function PluginToolbar({
     <div
       className={cn(
         `
-        plugin-toolbar clip-vertical-shadow absolute -top-[2rem] left-[7px] right-0 z-[21]
-        flex h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2 shadow-plugin-focus
+        plugin-toolbar absolute -top-[2rem] left-[7px] right-0 z-[21]
+        flex h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
         `,
         !noWhiteShadow &&
           `
@@ -48,6 +48,9 @@ export function PluginToolbar({
         className
       )}
     >
+      {/* Shadow helper element */}
+      <div className="clip-vertical-shadow absolute inset-0 rounded-t-lg shadow-plugin-focus" />
+
       {/* Content controls */}
       <div>
         {contentControls}
