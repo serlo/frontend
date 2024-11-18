@@ -72,11 +72,14 @@ export function SpoilerEditor(props: SpoilerProps) {
       >
         <SpoilerRenderer
           title={<div className="grow">{richTitle.render(titleConfig)}</div>}
-          content={content.render({
-            config: { isInlineChildEditor: true },
-          })}
           openOverwrite // should check focused but that's unreliable atm.
-        />
+        >
+          <div className="mx-side">
+            {content.render({
+              config: { isInlineChildEditor: true },
+            })}
+          </div>
+        </SpoilerRenderer>
       </div>
     </div>
   )

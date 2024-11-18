@@ -34,9 +34,10 @@ export function SpoilerStaticRenderer({
   return (
     <SpoilerRenderer
       title={renderedTitle}
-      content={<StaticRenderer document={content} />}
       openOverwrite={openOverwrite}
       onOpen={onOpen}
-    />
+    >
+      <StaticRenderer document={content} />
+    </SpoilerRenderer>
   )
 }

@@ -83,7 +83,7 @@ export function BoxEditor(props: BoxProps) {
           }
           anchorId={anchorId.value}
         >
-          <div className="ml-0.5" data-qa="plugin-box-content">
+          <div className="mx-side" data-qa="plugin-box-content">
             {content.render()}
           </div>
         </BoxRenderer>

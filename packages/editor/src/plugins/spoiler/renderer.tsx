@@ -3,14 +3,14 @@ import { useState } from 'react'
 
 export interface SpoilerRendererProps {
   title: JSX.Element
-  content: JSX.Element
+  children: JSX.Element
   openOverwrite?: boolean
   onOpen?: () => void
 }
 
 export function SpoilerRenderer({
   title,
-  content,
+  children,
   openOverwrite,
   onOpen,
 }: SpoilerRendererProps) {
@@ -46,7 +46,7 @@ export function SpoilerRenderer({
         </span>
       </button>
 
-      {isOpen ? content : null}
+      {isOpen ? children : null}
     </div>
   )
 }
