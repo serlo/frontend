@@ -73,9 +73,9 @@ export function useTaxonomyCreateOrUpdateMutation() {
         toastKey: 'save',
         redirectUrl: `/${data.id ?? parentIdString}`,
       })
-    } catch (error) {
+    } catch (e) {
       // eslint-disable-next-line no-console
-      console.error('probably missing value?')
+      console.error(e, 'probably missing value?')
       return false
     }
   }
@@ -83,7 +83,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
 
 function getTaxonomyType(idString?: string) {
   if (!idString || !parseInt(idString))
-    throw 'invalid url -> unknown taxonomy type'
+    throw new Error('invalid url -> unknown taxonomy type')
 
   const id = parseInt(idString)
 
@@ -94,5 +94,5 @@ function getTaxonomyType(idString?: string) {
   if (exerciseFolderIds.includes(id))
     return TaxonomyTypeCreateOptions.ExerciseFolder
 
-  throw 'unknown taxonomy type'
+  throw new Error('unknown taxonomy type')
 }

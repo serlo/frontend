@@ -138,10 +138,12 @@ function readSolved() {
       sessionStorage.getItem('serlo_gleichungs_app_solved') ?? '[]'
     )
     if (Array.isArray(state) && state.every((x) => typeof x === 'number')) {
-      return state as number[]
+      return state
     }
     return []
   } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e)
     return []
   }
 }

@@ -16,10 +16,13 @@ export function createLangTemplates(templateSlug: string[]) {
         // @ts-expect-error good enough for this use case
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         string = strings[flowType][valid][strippedFileName] as string
-        if (!string) throw ''
-      } catch (error) {
+        if (!string) throw new Error()
+      } catch (e) {
         // eslint-disable-next-line no-console
-        console.error('unknown template requested: ' + templateSlug.join('.'))
+        console.error(
+          e,
+          'unknown template requested: ' + templateSlug.join('.')
+        )
       }
       return `{{define "${instance}_template"}}
 ${string}

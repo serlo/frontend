@@ -150,6 +150,5 @@ export interface ToStaticHelpers<K extends string = string, S = unknown> {
 }
 
 export interface PluginProps {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  config?: {}
+  config?: object
 }

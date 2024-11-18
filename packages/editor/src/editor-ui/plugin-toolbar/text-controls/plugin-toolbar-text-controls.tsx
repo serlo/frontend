@@ -64,9 +64,8 @@ export function PluginToolbarTextControls({
                 onMouseDown={(event) => {
                   event.preventDefault()
                   event.stopPropagation()
-                  isNestedControlButton(control)
-                    ? setSubMenu(index)
-                    : control.onClick(editor)
+                  if (isNestedControlButton(control)) setSubMenu(index)
+                  else control.onClick(editor)
                 }}
               >
                 {control.renderIcon(editor)}

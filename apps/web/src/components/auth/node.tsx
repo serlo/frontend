@@ -145,7 +145,7 @@ export function Node({
             )}
           >
             <button
-              className="serlo-button-green mt-10 mt-10 block w-full py-2 text-xl"
+              className="serlo-button-green mt-10 block w-full py-2 text-xl"
               name={attributes.name}
               onClick={(e) => {
                 void onSubmit(e, (attributes as { value: string }).value)

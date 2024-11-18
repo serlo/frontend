@@ -64,12 +64,12 @@ async function uploadFile({
     signedUrl: string
     fileUrl: string
   }
-  if (!data) return Promise.reject('Could not get signed URL')
+  if (!data) return Promise.reject(new Error('Could not get signed URL'))
 
   const { signedUrl, fileUrl } = data
 
   const success = await uploadToBucket({ file, signedUrl })
-  if (!success) return Promise.reject('Could not upload file')
+  if (!success) return Promise.reject(new Error('Could not upload file'))
   return Promise.resolve(fileUrl)
 }
 

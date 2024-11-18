@@ -85,6 +85,8 @@ function H5pEditor({ state }: H5pProps) {
           setDownloadUrl(json.downloadPath)
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
         // e.g. invalid id
         setError(
           'H5P-Inhalt konnte nicht geladen werden, prüfe nochmal die URL'

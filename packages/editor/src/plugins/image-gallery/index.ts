@@ -35,7 +35,7 @@ export function createImageGalleryPlugin(
 
 export type ImageGalleryPluginState = ReturnType<typeof createImageGalleryState>
 
-export interface ImageGalleryConfig {}
+export type ImageGalleryConfig = object
 
 export type ImageGalleryProps = EditorPluginProps<
   ImageGalleryPluginState,

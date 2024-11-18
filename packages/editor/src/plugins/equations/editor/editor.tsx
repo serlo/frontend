@@ -299,7 +299,7 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   function handleKeyDown(e: KeyboardEvent | undefined, callback: () => void) {
-    e && e.preventDefault()
+    e?.preventDefault()
     callback()
   }
 

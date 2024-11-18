@@ -15,7 +15,7 @@ export interface insertPluginArgs {
   pluginType: string
   editor: SlateEditor
   id: string
-  dispatch: ThunkDispatch<unknown, unknown, Action<unknown>>
+  dispatch: ThunkDispatch<unknown, unknown, Action<string>>
   state?: unknown
 
   getStoreState: () => RootState

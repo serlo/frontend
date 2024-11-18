@@ -155,7 +155,9 @@ export function Flow<T extends SubmitPayload>({
         // Right now there is nothing for us to do here when a validation error
         // is thrown.
         if (error?.type !== VALIDATION_ERROR_TYPE) {
-          throw error
+          // eslint-disable-next-line no-console
+          console.error(error)
+          throw new Error(error.type)
         }
       })
       .finally(() => {

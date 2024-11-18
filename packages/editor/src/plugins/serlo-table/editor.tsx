@@ -223,10 +223,10 @@ export function SerloTableEditor(props: SerloTableProps) {
           ? rowIndex + 1 < rows.length
             ? rowIndex + 1
             : rowIndex - 1
-          : focusedRowIndex ?? 0
+          : (focusedRowIndex ?? 0)
 
         const colToFocusAfter = isRow
-          ? focusedColIndex ?? 0
+          ? (focusedColIndex ?? 0)
           : colIndex + 1 < rows[0].columns.length
             ? colIndex + 1
             : colIndex - 1

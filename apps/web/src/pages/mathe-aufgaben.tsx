@@ -307,7 +307,8 @@ export const getStaticProps: GetStaticProps<FolderData> = async () => {
       })
     })
   } catch (e) {
-    // ignore
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
 
   let i = 0
