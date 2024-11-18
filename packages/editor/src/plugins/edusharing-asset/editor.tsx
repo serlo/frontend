@@ -72,7 +72,6 @@ export function EdusharingAssetEditor({
         }
         ltik={ltik}
         contentWidth={contentWidth.defined ? contentWidth.value : undefined}
-        id={id}
       />
     </>
   )
