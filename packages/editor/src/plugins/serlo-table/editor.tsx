@@ -51,7 +51,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     <>
       {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
 
-      <div className="relative pt-[19px]">
+      <div className="relative pb-5 pl-4 pt-8">
         <div className="flex">
           <div className="flex flex-col">
             <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
@@ -153,7 +153,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className="absolute -top-2 z-20">
+        <nav className="absolute top-2 z-20">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -223,10 +223,10 @@ export function SerloTableEditor(props: SerloTableProps) {
           ? rowIndex + 1 < rows.length
             ? rowIndex + 1
             : rowIndex - 1
-          : (focusedRowIndex ?? 0)
+          : focusedRowIndex ?? 0
 
         const colToFocusAfter = isRow
-          ? (focusedColIndex ?? 0)
+          ? focusedColIndex ?? 0
           : colIndex + 1 < rows[0].columns.length
             ? colIndex + 1
             : colIndex - 1
