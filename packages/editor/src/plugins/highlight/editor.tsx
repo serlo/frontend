@@ -34,7 +34,7 @@ export function HighlightEditor(props: HighlightProps) {
 
   if (!throttledEdit && !focused) {
     return (
-      <div className="px-2 pb-4 pt-6">
+      <div className="px-2 py-4">
         <Renderer
           language={state.language.value}
           showLineNumbers={state.showLineNumbers.value}
@@ -45,7 +45,7 @@ export function HighlightEditor(props: HighlightProps) {
   }
 
   return (
-    <div className="mx-side px-2 pb-4 pt-6">
+    <div className="mx-side px-2 py-4">
       {focused && <HighlightToolbar {...props} />}
       <textarea
         value={state.code.value}
