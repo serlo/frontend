@@ -57,87 +57,89 @@ export function ExerciseEditor(props: ExerciseProps) {
 
   return (
     <PreviewProvider value={previewActive}>
-      <div
-        data-qa="plugin-exercise"
-        className={cn(
-          'plugin-exercise group/exercise rounded-b-lg border-3 border-transparent pb-6',
-          'focus-within:rounded-tl-lg focus-within:!border-gray-100 focus-within:border-gray-100',
-          isFocused && '!rounded-tl-lg !border-gray-100'
-        )}
-      >
-        {isSerlo ? (
-          <Suspense>
-            <SerloLicenseChooser
-              licenseId={licenseId}
-              className="!right-[84px] !top-[-30px]"
-            />
-          </Suspense>
-        ) : null}
+      <div className="pl-0.5">
         <div
+          data-qa="plugin-exercise"
           className={cn(
-            'group-focus-within/exercise:block',
-            isFocused ? 'block' : 'hidden'
+            'plugin-exercise group/exercise rounded-b-lg border-3 border-transparent pb-6',
+            'focus-within:!border-gray-100 focus-within:border-gray-100',
+            isFocused && '!border-gray-100'
           )}
         >
-          <ExerciseToolbar
-            {...props}
-            previewActive={previewActive}
-            setPreviewActive={setPreviewActive}
-          />
-        </div>
-        <div className="h-10"></div>
-        <div className="mx-side">
-          {interactive.defined ? (
-            <>
-              {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
-              {/* Background: Users often add their blanks-text to the task */}
+          {isSerlo ? (
+            <Suspense>
+              <SerloLicenseChooser
+                licenseId={licenseId}
+                className="!right-[84px] !top-[-30px]"
+              />
+            </Suspense>
+          ) : null}
+          <div
+            className={cn(
+              'group-focus-within/exercise:block',
+              isFocused ? 'block' : 'hidden'
+            )}
+          >
+            <ExerciseToolbar
+              {...props}
+              previewActive={previewActive}
+              setPreviewActive={setPreviewActive}
+            />
+          </div>
+          <div className="h-10"></div>
+          <div className="mx-side">
+            {interactive.defined ? (
+              <>
+                {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
+                {/* Background: Users often add their blanks-text to the task */}
+                <div
+                  className={cn(
+                    'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
+                    '[&_.plugin-rows]:pl-[7px]'
+                  )}
+                >
+                  {content.render({
+                    config: {
+                      textPluginPlaceholder: exStrings.placeholder,
+                    },
+                  })}
+                </div>
+                {interactive.render()}
+                {hideInteractiveInitially.defined ? (
+                  <small className="bg-editor-primary-200 p-1">
+                    [{exStrings.hideInteractiveInitially.info}]
+                  </small>
+                ) : null}
+              </>
+            ) : (
+              <InteractiveExercisesSelection interactive={interactive} />
+            )}
+            {solution.defined ? (
+              <div className="-ml-side mt-block">
+                <nav className="flex justify-end">
+                  <button
+                    className="serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger relative top-[31px] z-20 mr-side"
+                    onClick={() => solution.remove()}
+                  >
+                    <EditorTooltip text={exStrings.removeSolution} />
+                    <FaIcon icon={faTrashAlt} />
+                  </button>
+                </nav>
+                {solution.render()}
+              </div>
+            ) : (
               <div
                 className={cn(
-                  'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
-                  '[&_.plugin-rows]:pl-[7px]'
+                  'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
+                  isFocused ? 'block' : 'hidden'
                 )}
               >
-                {content.render({
-                  config: {
-                    textPluginPlaceholder: exStrings.placeholder,
-                  },
-                })}
+                <AddButton onClick={() => solution.create()}>
+                  {exStrings.createSolution}
+                </AddButton>
               </div>
-              {interactive.render()}
-              {hideInteractiveInitially.defined ? (
-                <small className="bg-editor-primary-200 p-1">
-                  [{exStrings.hideInteractiveInitially.info}]
-                </small>
-              ) : null}
-            </>
-          ) : (
-            <InteractiveExercisesSelection interactive={interactive} />
-          )}
-          {solution.defined ? (
-            <div className="-ml-side mt-block">
-              <nav className="flex justify-end">
-                <button
-                  className="serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger relative top-[31px] z-20 mr-side"
-                  onClick={() => solution.remove()}
-                >
-                  <EditorTooltip text={exStrings.removeSolution} />
-                  <FaIcon icon={faTrashAlt} />
-                </button>
-              </nav>
-              {solution.render()}
-            </div>
-          ) : (
-            <div
-              className={cn(
-                'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
-                isFocused ? 'block' : 'hidden'
-              )}
-            >
-              <AddButton onClick={() => solution.create()}>
-                {exStrings.createSolution}
-              </AddButton>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </PreviewProvider>
