@@ -1,7 +1,6 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 export function PreviewButton({
   previewActive,
@@ -15,19 +14,11 @@ export function PreviewButton({
   return (
     <button
       onClick={() => setPreviewActive(!previewActive)}
-      className="serlo-tooltip-trigger mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+      className="mr-2 rounded-md bg-editor-primary-200 px-1.5 py-0.5 text-sm transition-colors hover:bg-editor-primary-300 focus-visible:bg-editor-primary-300"
       data-qa="plugin-exercise-preview-button"
     >
-      <EditorTooltip
-        text={
-          previewActive
-            ? exStrings.previewIsActiveHint
-            : exStrings.previewIsDeactiveHint
-        }
-        className="-ml-5 !pb-1"
-      />
-      {exStrings.previewMode}{' '}
-      <FaIcon icon={previewActive ? faCheckCircle : faCircle} />
+      {previewActive ? exStrings.toEditView : exStrings.toLearnersView}{' '}
+      <FaIcon icon={previewActive ? faPencilAlt : faEye} />
     </button>
   )
 }

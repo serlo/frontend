@@ -8,6 +8,7 @@ import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function InputExerciseStaticRenderer({
+  id,
   state,
 }: EditorInputExerciseDocument) {
   const answers = state.answers.map((answer) => {
@@ -28,6 +29,7 @@ export function InputExerciseStaticRenderer({
       answers={answers}
       onEvaluate={(correct: boolean, value: string) => {
         editorLearnerEvent.trigger?.({
+          pluginId: id,
           verb: 'answered',
           correct,
           value,
