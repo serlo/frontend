@@ -31,11 +31,19 @@ export function getStyleHacks(
     // Improve toolbars for multimedia children.
     // hacky but this way the complexity is contained in the parent plugin
 
-    // put top child toolbars in position of multimedia toolbar (for article intro, first rows child, media child)
+    // put top child toolbars in position of multimedia toolbar (first rows child)
     `
-    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!-top-[12]
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[12]
-    [&_.media-wrapper_.plugin-toolbar]:!-top-[12]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[56px]
+    `,
+
+    // make multimedia explanation children left aligned
+    `
+    [&_.explanation-wrapper_.rows-child]:!pl-[3.25rem]
+    `,
+
+    // make multimedia explanation toolbars full width
+    `
+    [&_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[197%]
     `,
 
     // adapt to borders of parent
