@@ -17,7 +17,16 @@ export function getCleanUrl(
   const hash = hashPart ? `#${hashPart}` : ''
 
   if (!isSerlo && !isNaN(serloId)) {
-    return (serloContentMatch ? serloContentMatch[0] : inputUrl) + hash
+    if (serloContentMatch) {
+      return serloContentMatch[0] + hash
+    }
+
+    // Handle www case without http(s)://
+    if (inputUrl.match(/^(www\.)?([a-z]{2}\.)?serlo\.org/)) {
+      return 'https://' + inputUrl.replace(/^www\./, '') + hash
+    }
+
+    return inputUrl + hash
   }
 
   if (!isNaN(serloId)) return `/${serloId}${hash}`
