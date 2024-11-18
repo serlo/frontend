@@ -64,11 +64,7 @@ export function BoxEditor(props: BoxProps) {
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
-          `
-            [&_.plugin-toolbar]:ml-[-2px]
-            [&_.plugin-toolbar]:mr-[-16px]
-            [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
-          `
+          '[&_.rows-child:first-child_.plugin-toolbar:before]:hidden'
         )}
       >
         {isEmptyContent && !showToolbar ? <EmptyWarning /> : null}
@@ -85,7 +81,7 @@ export function BoxEditor(props: BoxProps) {
           }
           anchorId={anchorId.value}
         >
-          <div className="-ml-3 px-side" data-qa="plugin-box-content">
+          <div className="ml-[2px]" data-qa="plugin-box-content">
             {content.render()}
           </div>
         </BoxRenderer>
