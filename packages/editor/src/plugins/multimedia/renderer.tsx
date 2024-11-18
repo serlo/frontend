@@ -18,7 +18,7 @@ export function MultimediaRenderer({
   const widthClasses = getWidthClasses()
 
   return (
-    <div className="flex rounded-xl">
+    <div className={cn('flex rounded-xl', widthClasses.wrapper)}>
       <div
         className={cn(
           'explanation-wrapper',
@@ -45,6 +45,10 @@ export function MultimediaRenderer({
   function getWidthClasses() {
     const width = Math.round(mediaWidth / 25) * 25
     return {
+      wrapper:
+        width === 25
+          ? 'multimedia-renderer-wrapper-quarter'
+          : 'multimedia-renderer-wrapper-half',
       explanation: width === 25 ? 'mobile:basis-3/4' : 'mobile:basis-2/4',
       media: width === 25 ? 'mobile:basis-1/4' : 'mobile:basis-2/4',
     }

@@ -43,6 +43,11 @@ export function getStyleHacks(
     [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:left-[7px]
     `,
 
+    // properly align non-top children toolbars
+    `
+    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:left-[6px]
+    `,
+
     // make multimedia explanation children left aligned
     `
     [&_.explanation-wrapper_.rows-child]:!pl-[3.25rem]
@@ -50,7 +55,8 @@ export function getStyleHacks(
 
     // make multimedia explanation toolbars full width
     `
-    [&_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[197%]
+    [&_.multimedia-renderer-wrapper-half_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[197%]
+    [&_.multimedia-renderer-wrapper-quarter_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[131.9%]
     `,
 
     // adapt to borders of parent
