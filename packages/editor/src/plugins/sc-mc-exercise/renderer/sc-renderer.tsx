@@ -10,6 +10,7 @@ import { useState } from 'react'
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function ScRenderer({
+  id,
   answers,
   renderExtraAnswerContent,
   isPrintMode,
@@ -36,6 +37,7 @@ export function ScRenderer({
                     setSelected(i)
 
                     editorLearnerEvent.trigger?.({
+                      pluginId: id,
                       verb: 'interacted',
                       value: i,
                       contentType: 'sc-exercise',
@@ -78,6 +80,7 @@ export function ScRenderer({
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({
+              pluginId: id,
               verb: 'answered',
               correct: answers[selected ?? 0].isCorrect,
               value: selected,

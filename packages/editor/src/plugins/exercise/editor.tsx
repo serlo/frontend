@@ -86,23 +86,23 @@ export function ExerciseEditor(props: ExerciseProps) {
           />
         </div>
         <div className="h-10"></div>
-        {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
-        {/* Background: Users often add their blanks-text to the task */}
-        <div
-          className={cn(
-            'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
-            '[&_.plugin-rows]:pl-[7px]'
-          )}
-        >
-          {content.render({
-            config: {
-              textPluginPlaceholder: exStrings.placeholder,
-            },
-          })}
-        </div>
         <div className="mx-side">
           {interactive.defined ? (
             <>
+              {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
+              {/* Background: Users often add their blanks-text to the task */}
+              <div
+                className={cn(
+                  'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
+                  '[&_.plugin-rows]:pl-[7px]'
+                )}
+              >
+                {content.render({
+                  config: {
+                    textPluginPlaceholder: exStrings.placeholder,
+                  },
+                })}
+              </div>
               {interactive.render()}
               {hideInteractiveInitially.defined ? (
                 <small className="bg-editor-primary-200 p-1">

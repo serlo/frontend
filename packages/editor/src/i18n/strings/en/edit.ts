@@ -204,6 +204,26 @@ export const editStrings = {
         "Please use a valid Serlo ID (just numbers). E.g. '/1555'",
       errorLoading: 'Content could not be loaded, please check the id',
     },
+    interactiveVideo: {
+      title: 'Interactive Video',
+      description: 'Create an interactive video with questions and feedback.',
+      editOverlayTitle: 'Edit Exercise',
+      titlePlaceholder: 'Exercise Title',
+      defaultTitle: 'Exercise',
+      autoOpenLabel: 'Automatically open',
+      autoOpenExplanation: 'Content automatically opens when video is at mark',
+      mandatoryLabel: 'Mandatory Exercise',
+      mandatoryExplanation: 'Exercise has to be solved to continue video',
+      forceRewatchLabel: 'Auto Rewatch',
+      forceRewatchExplanation:
+        'If an exercise is answered incorrectly, the video jumps back to the last mark',
+      editMark: 'Edit',
+      removeMark: 'Remove',
+      addOverlayContent: 'Add exercise',
+      addVideo: 'Add a video url (e.g. YouTube) to get started',
+      changeVideo: 'Change video',
+      saveButton: 'Save',
+    },
     multimedia: {
       title: 'Multimedia content associated with text',
       description:
@@ -360,11 +380,10 @@ export const editStrings = {
       changeInteractive: 'Change interactive element',
       confirmRemoveInteractive:
         'Your current changes will be replaced. Are you sure?',
-      createSolution: 'Create solution',
-      removeSolution: 'Remove solution',
-      previewMode: 'Preview',
-      previewIsActiveHint: 'Preview mode is active',
-      previewIsDeactiveHint: 'Here you can edit',
+      createSolution: 'Create proposed solution',
+      removeSolution: 'Remove proposed solution',
+      toLearnersView: 'To Learners View',
+      toEditView: 'To Edit View',
     },
     exerciseGroup: {
       title: 'Exercise Group',
