@@ -57,7 +57,7 @@ export function ExerciseEditor(props: ExerciseProps) {
 
   return (
     <PreviewProvider value={previewActive}>
-      <div className="pl-0.5">
+      <div className="-mt-2 pl-0.5">
         <div
           data-qa="plugin-exercise"
           className={cn(
