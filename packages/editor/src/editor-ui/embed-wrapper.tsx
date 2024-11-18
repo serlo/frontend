@@ -49,7 +49,7 @@ export function EmbedWrapper({
       className={cn(
         `
         group relative mb-block block cursor-pointer
-        bg-cover bg-center pl-[2px] [contain:content]
+        bg-cover bg-center pl-0.5 [contain:content]
         `,
         className
       )}
