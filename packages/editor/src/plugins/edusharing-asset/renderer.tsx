@@ -41,8 +41,9 @@ export function EdusharingAssetRenderer(props: {
   repositoryId?: string
   ltik: string
   contentWidth: string | undefined
+  id?: string
 }) {
-  const { nodeId, repositoryId, ltik, contentWidth } = props
+  const { nodeId, repositoryId, ltik, contentWidth, id } = props
 
   const [embedHtml, setEmbedHtml] = useState<string | null>(null)
   const [defineContainerHeight, setDefineContainerHeight] =
@@ -327,14 +328,17 @@ export function EdusharingAssetRenderer(props: {
       >
         {defineContainerHeight ? (
           <iframe
+            id={id}
             srcDoc={embedHtml}
             style={{
               width: '100%',
               height: '100%',
             }}
+            onLoad={registerIframeClickHandler}
           />
         ) : (
           <MemoizedIframeResizer
+            id={id}
             heightCalculationMethod="lowestElement"
             checkOrigin={false}
             srcDoc={embedHtml}
@@ -342,10 +346,21 @@ export function EdusharingAssetRenderer(props: {
               width: '1px',
               minWidth: '100%',
             }}
+            onLoad={registerIframeClickHandler}
           />
         )}
       </div>
     )
+  }
+
+  // https://stackoverflow.com/a/6452599
+  function registerIframeClickHandler() {
+    const element = document.getElementById(id) as HTMLIFrameElement
+    if (!element) return
+    if (!element.contentWindow) return
+    element.contentWindow.document.body.onclick = () => {
+      console.log(`Clicked iframe id=${id}`)
+    }
   }
 }
 
