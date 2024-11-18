@@ -39,8 +39,8 @@ export function getStyleHacks(
 
     // put top child toolbars in position of multimedia toolbar (first rows child)
     `
-    [&_.explanation-wrapper>.rows-child:first-child_.plugin-toolbar]:left-[7px]
     [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[72px]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:left-[7px]
     `,
 
     // make multimedia explanation children left aligned
