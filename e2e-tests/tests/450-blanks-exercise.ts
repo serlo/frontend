@@ -34,11 +34,11 @@ Scenario(
 
     I.click(BlanksExerciseButton)
     I.click('$plugin-blanks-child-text-button')
-    I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
+    I.see('Aufgabe: Lückentext')
 
     I.pressKey(['CommandOrControl', 'Z'])
 
-    I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount)
+    I.dontSee('Aufgabe: Lückentext')
   }
 )
 
