@@ -16,6 +16,7 @@ import type { ImagePluginState } from '@editor/plugins/image'
 import type { ImageGalleryPluginState } from '@editor/plugins/image-gallery'
 import type { InjectionPluginState } from '@editor/plugins/injection'
 import type { InputExercisePluginState } from '@editor/plugins/input-exercise'
+import type { InteractiveVideoPluginState } from '@editor/plugins/interactive-video'
 import type { MultimediaPluginState } from '@editor/plugins/multimedia'
 import type { PageLayoutPluginState } from '@editor/plugins/page-layout'
 import type { PagePartnersPluginState } from '@editor/plugins/page-partners'
@@ -161,6 +162,11 @@ export interface EditorBlanksExerciseDocument {
 export interface EditorDropzoneImageDocument {
   plugin: EditorPluginType.DropzoneImage
   state: PrettyStaticState<DropzoneImagePluginState>
+  id?: string
+}
+export interface EditorInteractiveVideoDocument {
+  plugin: EditorPluginType.InteractiveVideo
+  state: PrettyStaticState<InteractiveVideoPluginState>
   id?: string
 }
 export interface EditorSpoilerDocument {

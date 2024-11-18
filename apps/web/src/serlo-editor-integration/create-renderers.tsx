@@ -26,6 +26,7 @@ import type {
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
   EditorDropzoneImageDocument,
+  EditorInteractiveVideoDocument,
 } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
@@ -66,12 +67,16 @@ const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
     (mod) => mod.BlanksExerciseStaticRenderer
   )
 )
+const InteractiveVideoRenderer = dynamic<EditorInteractiveVideoDocument>(() =>
+  import('@editor/plugins/interactive-video/static').then(
+    (mod) => mod.InteractiveVideoStaticRenderer
+  )
+)
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
   )
 )
-
 const DropzoneImageStaticRenderer = dynamic<
   EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
 >(() =>
@@ -79,7 +84,6 @@ const DropzoneImageStaticRenderer = dynamic<
     (mod) => mod.DropzoneImageStaticRenderer
   )
 )
-
 const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
   import('@editor/plugins/page-layout/static').then(
     (mod) => mod.PageLayoutStaticRenderer
@@ -100,7 +104,6 @@ const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/solution-serlo-static-renderer'
   ).then((mod) => mod.SolutionSerloStaticRenderer)
 )
-
 const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
   import('@editor/plugins/serlo-table/static').then(
     (mod) => mod.SerloTableStaticRenderer
@@ -225,6 +228,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.BlanksExercise,
         renderer: BlanksExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.InteractiveVideo,
+        renderer: InteractiveVideoRenderer,
       },
       {
         type: EditorPluginType.Solution,

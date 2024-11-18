@@ -547,6 +547,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
 
           if (mf && command) {
             mf.focus()
+            // @ts-expect-error unsure about this
             mf.executeCommand(command)
           }
         }}

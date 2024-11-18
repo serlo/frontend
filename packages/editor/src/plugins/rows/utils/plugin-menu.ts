@@ -21,7 +21,13 @@ import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { EditStrings } from '@editor/types/language-data'
+import {
+  isBlanksExerciseDocument,
+  isExerciseDocument,
+  isScMcExerciseDocument,
+} from '@editor/types/plugin-type-guards'
 
 const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
 
@@ -44,6 +50,7 @@ export const pluginMenuType = {
   Injection: EditorPluginType.Injection,
   Multimedia: EditorPluginType.Multimedia,
 
+  InteractiveVideo: EditorPluginType.InteractiveVideo,
   Audio: EditorPluginType.Audio,
   PageLayout: EditorPluginType.PageLayout,
   PagePartners: EditorPluginType.PagePartners,
@@ -74,13 +81,15 @@ const visibleTypes = Object.values(pluginMenuType).filter((type) => {
 })
 
 export function getPluginMenuItems(editStrings: EditStrings): PluginMenuItem[] {
-  return visibleTypes.map((type) => {
-    const [initialState, unwrappedPlugin] = getInitialState(type)
-    const strings = getTitleAndDescription(type, unwrappedPlugin, editStrings)
-    const icon = getIconString(type)
+  return visibleTypes.map((type) => getPluginMenuItem(editStrings, type))
+}
 
-    return { type, icon, initialState, ...strings }
-  })
+function getPluginMenuItem(editStrings: EditStrings, type: PluginMenuType) {
+  const [initialState, unwrappedPlugin] = getInitialState(type)
+  const strings = getTitleAndDescription(type, unwrappedPlugin, editStrings)
+  const icon = getIconString(type)
+
+  return { type, icon, initialState, ...strings }
 }
 
 export interface PluginMenuItem {
@@ -218,6 +227,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.BlanksExerciseDragAndDrop]: IconBlanksDragAndDrop,
   [pluginMenuType.H5p]: IconH5p,
   [pluginMenuType.ExerciseGroup]: IconFallback,
+  [pluginMenuType.InteractiveVideo]: IconFallback,
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
@@ -243,4 +253,33 @@ export function filterPluginMenuItemsBySearchString(
       entry.type.toLowerCase().includes(search) ||
       entry.initialState.plugin.toLowerCase().includes(search)
   )
+}
+
+export function getInteractiveItemByStaticState(
+  exercise: AnyEditorDocument,
+  editStrings: EditStrings
+) {
+  if (!exercise || !isExerciseDocument(exercise)) return null
+
+  const interactive = exercise.state.interactive
+  if (!interactive) return null
+
+  if (isScMcExerciseDocument(interactive)) {
+    const type = interactive.state.isSingleChoice
+      ? 'singleChoiceExercise'
+      : 'multipleChoiceExercise'
+    return getPluginMenuItem(editStrings, type)
+  }
+  if (isBlanksExerciseDocument(interactive)) {
+    const type =
+      interactive.state.mode === 'drag-and-drop'
+        ? 'blanksExerciseDragAndDrop'
+        : EditorPluginType.BlanksExercise
+    return getPluginMenuItem(editStrings, type)
+  }
+  // extra check for typescript
+  if (interactive.plugin === EditorPluginType.ScMcExercise) return
+
+  // default cases:
+  return getPluginMenuItem(editStrings, interactive.plugin)
 }

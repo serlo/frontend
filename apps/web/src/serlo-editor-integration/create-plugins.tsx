@@ -14,6 +14,7 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import {
   createArticleIntroduction,
   createMultimediaPlugin,
@@ -80,6 +81,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     EditorPluginType.ScMcExercise,
     EditorPluginType.InputExercise,
     EditorPluginType.BlanksExercise,
+    EditorPluginType.InteractiveVideo,
     EditorPluginType.Solution,
 
     EditorPluginType.Unsupported,
@@ -120,6 +122,14 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     ...(isProduction
       ? []
       : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.InteractiveVideo,
+            plugin: interactiveVideoPlugin,
+          },
+        ]),
     { type: EditorPluginType.Anchor, plugin: anchorPlugin },
     { type: EditorPluginType.PageLayout, plugin: pageLayoutPlugin },
     { type: EditorPluginType.PagePartners, plugin: pagePartnersPlugin },
