@@ -29,7 +29,7 @@ export function shouldUseNewUpload() {
 
   if (isDevOrPreviewOrStaging) {
     // eslint-disable-next-line no-console
-    console.warn('using new upload method and temporary bucket')
+    console.log('using new upload method and temporary bucket')
   }
   return isDevOrPreviewOrStaging
 }
@@ -44,18 +44,33 @@ async function uploadFile({
   const validated = validateFile(file)
   if (!validated) return Promise.reject()
 
-  const data = await getSignedUrlAndSrc({
-    mimeType: file.type,
-    editorVariant,
-    userId,
+  const parentHost = getParentHost()
+
+  // url for signedUrl fetch
+  const url = new URL(`https://${signedUrlHost}/media/presigned-url`)
+  url.searchParams.append('mimeType', file.type)
+  url.searchParams.append('editorVariant', editorVariant)
+  url.searchParams.append('parentHost', parentHost)
+  if (userId) url.searchParams.append('userId', userId)
+
+  // fetch signedUrl endpoint
+  const result = await fetch(url).catch((e) => {
+    // eslint-disable-next-line no-console
+    console.error(e)
+    handleError(errorMessage)
   })
-  if (!data) return Promise.reject('Could not get signed URL')
 
-  const { signedUrl, imgSrc } = data
+  const data = (await result?.json()) as {
+    signedUrl: string
+    fileUrl: string
+  }
+  if (!data) return Promise.reject(new Error('Could not get signed URL'))
 
-  const success = await uploadToBucket(file, signedUrl)
-  if (!success) return Promise.reject('Could not upload file')
-  return Promise.resolve(imgSrc)
+  const { signedUrl, fileUrl } = data
+
+  const success = await uploadToBucket({ file, signedUrl })
+  if (!success) return Promise.reject(new Error('Could not upload file'))
+  return Promise.resolve(fileUrl)
 }
 
 const signedUrlHost =
@@ -63,35 +78,21 @@ const signedUrlHost =
     ? 'editor.serlo.dev'
     : 'editor.serlo.dev' // TODO: Change to production bucket after testing
 
-async function getSignedUrlAndSrc({
-  mimeType,
-  editorVariant,
-  userId,
-}: UploadMeta & {
-  mimeType: string
-}) {
-  const params = `mimeType=${encodeURIComponent(mimeType)}&editorVariant=${encodeURIComponent(editorVariant)}&userId=${encodeURIComponent(userId ?? '')}`
-  const url = `https://${signedUrlHost}/media/presigned-url?${params}`
-
-  const result = await fetch(url).catch((e) => {
-    // eslint-disable-next-line no-console
-    console.error(e)
-    handleError(errorMessage)
-  })
-
-  const data = (await result?.json()) as { signedUrl: string; imgSrc: string }
-  return data
-}
-
 const errorMessage = 'Error while uploading'
 
-async function uploadToBucket(file: File, signedUrl: string) {
+async function uploadToBucket({
+  file,
+  signedUrl,
+}: {
+  file: File
+  signedUrl: string
+}) {
   const response = await fetch(signedUrl, {
     method: 'PUT',
     body: file,
     headers: {
-      'Content-Type': file.type,
       'Access-Control-Allow-Origin': '*',
+      'Content-Type': file.type,
     },
   }).catch((e) => {
     // eslint-disable-next-line no-console
@@ -105,4 +106,13 @@ async function uploadToBucket(file: File, signedUrl: string) {
     return
   }
   return true
+}
+
+function getParentHost() {
+  // this should work for iframes as well
+  const url =
+    window.location.ancestorOrigins?.[0] ||
+    (window !== window.parent && document.referrer) ||
+    window.location.href
+  return new URL(url).host
 }

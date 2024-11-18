@@ -35,32 +35,33 @@ export const useEnableEditorHotkeys = (
       return
     }
 
-    event && event.preventDefault()
+    event?.preventDefault()
     callback()
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   useHotkeys('backspace, del', (e) => {
-    if (isDocumentEmpty) {
-      handleKeyDown(e, () => {
-        if (!e) return
+    if (!isDocumentEmpty) return
 
-        const mayManipulateSiblings = selectMayManipulateSiblings(
-          store.getState(),
-          id
-        )
-        if (!mayManipulateSiblings) return
+    handleKeyDown(e, () => {
+      if (!e) return
 
-        const parent = selectChildTreeOfParent(store.getState(), id)
-        if (!parent) return
+      const mayManipulateSiblings = selectMayManipulateSiblings(
+        store.getState(),
+        id
+      )
+      if (!mayManipulateSiblings) return
 
-        if (e.key === 'Backspace') {
-          dispatch(focusPrevious(selectChildTree(store.getState())))
-        } else if (e.key === 'Delete') {
-          dispatch(focusNext(selectChildTree(store.getState())))
-        }
-        dispatch(removePluginChild({ parent: parent.id, child: id }))
-      })
-    }
+      const parent = selectChildTreeOfParent(store.getState(), id)
+      if (!parent) return
+
+      if (e.key === 'Backspace') {
+        dispatch(focusPrevious(selectChildTree(store.getState())))
+      } else if (e.key === 'Delete') {
+        dispatch(focusNext(selectChildTree(store.getState())))
+      }
+      dispatch(removePluginChild({ parent: parent.id, child: id }))
+    })
   }),
     {
       enableOnContentEditable: true,

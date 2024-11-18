@@ -38,7 +38,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
   try {
     window.MathfieldElement.decimalSeparator = ','
   } catch (e) {
-    //
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
   const ce = new ComputeEngine()
 
@@ -185,7 +186,8 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
                         try {
                           void confetti.default()
                         } catch (e) {
-                          // don't care
+                          // eslint-disable-next-line no-console
+                          console.error(e)
                         }
 
                         /*submit({
@@ -545,6 +547,7 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
 
           if (mf && command) {
             mf.focus()
+            // @ts-expect-error unsure about this
             mf.executeCommand(command)
           }
         }}
@@ -792,7 +795,7 @@ function findActions(
           }
           return op
         })
-        .filter((x) => x !== null) as Action[]
+        .filter((x) => x !== null)
     }
   }
   throw new Error('invalid input')

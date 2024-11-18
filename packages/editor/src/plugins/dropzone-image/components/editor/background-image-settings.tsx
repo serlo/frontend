@@ -44,6 +44,7 @@ export function BackgroundImageSettings({ id }: { id: string }) {
     )
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const srcValue = src ? String(src) : ''
 
   return (

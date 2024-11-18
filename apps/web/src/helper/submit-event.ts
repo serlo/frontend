@@ -17,7 +17,8 @@ export function submitEvent(name: string, callback?: () => void) {
       return true
     }
   } catch (e) {
-    // ignore failures
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
   return false
 }

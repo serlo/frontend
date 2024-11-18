@@ -155,7 +155,9 @@ export function Flow<T extends SubmitPayload>({
         // Right now there is nothing for us to do here when a validation error
         // is thrown.
         if (error?.type !== VALIDATION_ERROR_TYPE) {
-          throw error
+          // eslint-disable-next-line no-console
+          console.error(error)
+          throw new Error(error.type)
         }
       })
       .finally(() => {
@@ -190,11 +192,10 @@ export function handleFlowError<S>(
     // at moment all flows are in the same folder. Adjust if they were moved somewhere else
     const flowPath = `/auth/${flowType}`
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     switch (data.error?.id) {
       case 'session_aal2_required':
         // 2FA is enabled and enforced, but user did not perform 2fa yet!
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+
         window.location.href = data.redirect_browser_to
         return
       case 'session_already_available': {
@@ -222,7 +223,7 @@ export function handleFlowError<S>(
       }
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+
         window.location.href = data.redirect_browser_to
         return
       case 'self_service_flow_return_to_forbidden':
@@ -248,7 +249,7 @@ export function handleFlowError<S>(
         return
       case 'browser_location_change_required':
         // Ory Kratos asked us to point the user to this URL.
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+
         window.location.href = data.redirect_browser_to
         return
     }

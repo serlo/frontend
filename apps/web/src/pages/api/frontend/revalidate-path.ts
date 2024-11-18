@@ -13,7 +13,9 @@ export default async function handler(
   try {
     await res.revalidate(decodeURIComponent(path))
     return res.json({ revalidated: true })
-  } catch (err) {
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e)
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
     return res.status(500).send('Error revalidating')

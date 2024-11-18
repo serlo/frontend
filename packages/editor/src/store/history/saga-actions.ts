@@ -9,5 +9,5 @@ export const runCommitActionToHistorySaga = createAction<ReversibleAction[]>(
 
 export const runCommitTemporaryActionToHistorySaga = createAction<{
   initial: ReversibleAction[]
-  executor?: StateExecutor<ReversibleAction[]>
+  executor: StateExecutor<ReversibleAction[]>
 }>('history/commitTemporaryActionToHistory')

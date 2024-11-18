@@ -28,8 +28,7 @@ export function TestimonialDonationsPage() {
       <aside
         className={cn(`
           relative z-10 my-16 mt-20 mt-24 
-          overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
-          bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
+          overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
           pb-12 pb-14 pt-6 text-center text-2xl
           sm:flex sm:justify-between sm:px-0 sm:text-left
         `)}

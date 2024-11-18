@@ -4,7 +4,7 @@
  * dynamically & lazily imported only when needed.
  */
 
-// eslint-disable-next-line import/no-internal-modules, import/no-unassigned-import
+// eslint-disable-next-line import/no-unassigned-import
 import 'iframe-resizer/js/iframeResizer.contentWindow'
 
 export const IFrameResizer = () => {

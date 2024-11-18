@@ -1,15 +1,12 @@
 import * as R from 'ramda'
-import { createSelectorCreator, defaultMemoize } from 'reselect'
+import { createSelectorCreator, lruMemoize } from 'reselect'
 
-export const createDeepEqualSelector = createSelectorCreator(defaultMemoize, {
+export const createDeepEqualSelector = createSelectorCreator(lruMemoize, {
   resultEqualityCheck: R.equals,
   maxSize: 50,
 })
 
-export const createJsonStringifySelector = createSelectorCreator(
-  defaultMemoize,
-  {
-    resultEqualityCheck: (a, b) => JSON.stringify(a) === JSON.stringify(b),
-    maxSize: 50,
-  }
-)
+export const createJsonStringifySelector = createSelectorCreator(lruMemoize, {
+  resultEqualityCheck: (a, b) => JSON.stringify(a) === JSON.stringify(b),
+  maxSize: 50,
+})

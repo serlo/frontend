@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import request from 'graphql-request'
 import { GetStaticProps, NextPage } from 'next'
 import React from 'react'
@@ -308,7 +307,8 @@ export const getStaticProps: GetStaticProps<FolderData> = async () => {
       })
     })
   } catch (e) {
-    // ignore
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
 
   let i = 0

@@ -28,7 +28,7 @@ import '../tailwind/editor.css'
 export interface SerloEditorProps {
   children: EditorProps['children']
   plugins?: (EditorPluginType | TemplatePluginType)[]
-  initialState?: unknown // Either type `StorageFormat` or outdated storage format that will be migrated to `StorageFormat`
+  initialState?: unknown // Type `StorageFormat` or outdated storage format that will be migrated to `StorageFormat` or null
   onChange?: (state: StorageFormat) => void
   language?: SupportedLanguage
   editorVariant: EditorVariant

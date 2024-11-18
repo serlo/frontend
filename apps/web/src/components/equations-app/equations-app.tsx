@@ -28,7 +28,8 @@ export function EquationsApp() {
   try {
     window.MathfieldElement.decimalSeparator = ','
   } catch (e) {
-    //
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
   const [description, setDescription] = useState(
     'Löse die Gleichung und bestimme die Lösungsmenge.'
@@ -95,7 +96,6 @@ export function EquationsApp() {
     return () => {
       window.removeEventListener('popstate', handlePopstate)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (showOverview) {
@@ -405,6 +405,8 @@ export function EquationsApp() {
                       setMode('input')
                       setInputState('error')
                     } catch (e) {
+                      // eslint-disable-next-line no-console
+                      console.error(e)
                       setMode('input')
                       setInputState('error')
                     }
@@ -509,7 +511,8 @@ export function EquationsApp() {
                                 try {
                                   void confetti.default()
                                 } catch (e) {
-                                  // don't care
+                                  // eslint-disable-next-line no-console
+                                  console.error(e)
                                 }
                                 setMode('done')
                                 setSolution(op.displayLatex!)
@@ -960,7 +963,7 @@ function findActions(
           }
           return op
         })
-        .filter((x) => x !== null) as Action[]
+        .filter((x) => x !== null)
     }
   }
   throw new Error('invalid input')

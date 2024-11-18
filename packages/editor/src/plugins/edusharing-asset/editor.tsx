@@ -1,8 +1,8 @@
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import * as t from 'io-ts'
 import { useContext, useEffect, useRef, useState } from 'react'
-import Modal from 'react-modal'
 
 import type { EdusharingAssetProps } from '.'
 import { EdusharingAssetRenderer } from './renderer'
@@ -146,41 +146,21 @@ export function EdusharingAssetEditor({
   }
 
   function renderModal(ltik: string) {
-    if (!modalIsOpen) return
-
-    // See https://reactcommunity.org/react-modal/accessibility/
-    Modal.setAppElement(document.getElementsByTagName('body')[0])
-
     const url = new URL(window.location.origin)
 
     url.pathname = '/edusharing-embed/start'
     url.searchParams.append('ltik', ltik)
 
     return (
-      <Modal
+      <EditorModal
         isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        style={{
-          content: {
-            width: '80%',
-            height: '80vh',
-            top: '50%',
-            left: '50%',
-            bottom: 'auto',
-            right: 'auto',
-            transform: 'translate(-50%, -50%)',
-          },
-          overlay: {
-            zIndex: 100,
-          },
-        }}
+        setIsOpen={() => setModalIsOpen(false)}
+        className="top-[50%] h-full w-full max-w-[95%]"
+        title="Edusharing-Inhalt auswählen"
+        extraTitleClassName="sr-only"
       >
-        <iframe
-          src={url.href}
-          className="edusharing-h-full edusharing-w-full"
-          ref={iframeRef}
-        />
-      </Modal>
+        <iframe src={url.href} className="h-full w-full" ref={iframeRef} />
+      </EditorModal>
     )
   }
 }

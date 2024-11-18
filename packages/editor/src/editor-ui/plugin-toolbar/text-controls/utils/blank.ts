@@ -23,7 +23,7 @@ export function isBlankActive(editor: SlateEditor) {
 
 export function getBlankElement(editor: SlateEditor): Blank | undefined {
   const [match] = Array.from(SlateEditor.nodes(editor, { match: matchBlanks }))
-  return match && (match[0] as Blank)
+  return match && match[0]
 }
 
 export function toggleBlank(editor: SlateEditor) {
