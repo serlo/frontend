@@ -60,9 +60,9 @@ export function ExerciseEditor(props: ExerciseProps) {
       <div
         data-qa="plugin-exercise"
         className={cn(
-          'plugin-exercise group/exercise rounded-b-xl border-3 border-transparent pb-6',
-          'focus-within:rounded-tl-xl focus-within:!border-gray-100 focus-within:border-gray-100',
-          isFocused && '!rounded-tl-xl !border-gray-100'
+          'plugin-exercise group/exercise rounded-b-lg border-3 border-transparent pb-6',
+          'focus-within:rounded-tl-lg focus-within:!border-gray-100 focus-within:border-gray-100',
+          isFocused && '!rounded-tl-lg !border-gray-100'
         )}
       >
         {isSerlo ? (
@@ -88,7 +88,12 @@ export function ExerciseEditor(props: ExerciseProps) {
         <div className="h-10"></div>
         {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
         {/* Background: Users often add their blanks-text to the task */}
-        <div className="group-has-[.blanks-child-plugin-selection]/exercise:hidden">
+        <div
+          className={cn(
+            'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
+            '[&_.plugin-rows]:pl-[7px]'
+          )}
+        >
           {content.render({
             config: {
               textPluginPlaceholder: exStrings.placeholder,
