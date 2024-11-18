@@ -57,7 +57,7 @@ export function CommentArea({
     highlightedCommentId !== undefined
 
   const [showThreadChildren, setShowThreadChildren] = useState<string[]>(
-    showAll ? commentData.active?.map(({ id }) => id) ?? [] : []
+    showAll ? (commentData.active?.map(({ id }) => id) ?? []) : []
   )
 
   return (

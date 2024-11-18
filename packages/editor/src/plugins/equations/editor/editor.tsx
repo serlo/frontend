@@ -25,11 +25,11 @@ import { includes } from 'ramda'
 import { useCallback, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
+import type { EquationsProps } from '..'
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
 import { StepSegment } from './step-segment'
-import type { EquationsProps } from '..'
 import { renderDownArrow } from '../renderer'
 import { EquationsStaticRenderer } from '../static'
 import { EquationsToolbar } from '../toolbar'
@@ -299,7 +299,7 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   function handleKeyDown(e: KeyboardEvent | undefined, callback: () => void) {
-    e && e.preventDefault()
+    e?.preventDefault()
     callback()
   }
 

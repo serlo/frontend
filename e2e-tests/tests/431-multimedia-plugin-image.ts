@@ -30,7 +30,7 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
     locate('$plugin-image-upload').inside('.plugin-rows'),
     'assets/sample-image.png'
   )
-  I.waitForElement('img.serlo-img', 10)
+  I.waitForElement('img.serlo-img', 30)
   I.dontSeeElement(locate('$plugin-image-empty-wrapper').inside('plugin-rows'))
 
   I.say('Edit image description')

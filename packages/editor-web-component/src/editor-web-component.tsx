@@ -2,7 +2,7 @@
 
 import {
   SerloRenderer,
-  BaseEditor,
+  type BaseEditor,
   defaultPlugins,
   EditorPluginType,
 } from '@serlo/editor'
@@ -76,7 +76,7 @@ export class EditorWebComponent extends HTMLElement {
     ) {
       this.mode = newValue
     } else if (name === 'use-shadow-dom') {
-      this._useShadowDOM = newValue !== 'false'
+      this._useShadowDOM = newValue === 'true'
     } else if (name === 'editor-variant' && oldValue !== newValue) {
       this.editorVariant = newValue as EditorVariant
     } else if (name === 'plugins' && oldValue !== newValue) {
@@ -206,7 +206,6 @@ export class EditorWebComponent extends HTMLElement {
     const initialStateAttr = this.getAttribute('initial-state')
     const testingSecretAttr = this.getAttribute('testing-secret')
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
       : exampleInitialState

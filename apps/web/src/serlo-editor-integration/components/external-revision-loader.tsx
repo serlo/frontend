@@ -161,6 +161,8 @@ export function ExternalRevisionLoader<T>({
           setShowRevisions(false)
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
         handleError('editor: revision conversion failed')
       } finally {
         NProgress.done()

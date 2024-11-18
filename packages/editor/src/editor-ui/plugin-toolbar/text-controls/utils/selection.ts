@@ -26,11 +26,13 @@ export function trimSelection(editor: SlateEditor): Range | null {
   let focusOffset = selection.focus.offset
 
   while (selectedText.startsWith(' ')) {
-    isBackwardSelection ? focusOffset++ : anchorOffset++
+    if (isBackwardSelection) focusOffset++
+    else anchorOffset++
     selectedText = selectedText.substring(1)
   }
   while (selectedText.endsWith(' ')) {
-    isBackwardSelection ? anchorOffset-- : focusOffset--
+    if (isBackwardSelection) anchorOffset--
+    else focusOffset--
     selectedText = selectedText.substring(0, selectedText.length - 1)
   }
 

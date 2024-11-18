@@ -30,6 +30,7 @@ export function ImageGalleryStaticRenderer({
       const hasVisibleCaption = caption && !isEmptyTextDocument(caption)
 
       return {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         src: String(src),
         alt: getAltOrFallback(altFallbackString, caption, alt),
         dimensions: state.images[index].dimensions,

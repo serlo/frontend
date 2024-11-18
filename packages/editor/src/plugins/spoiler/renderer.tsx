@@ -19,7 +19,7 @@ export function SpoilerRenderer({
 
   const handleSpoilerClick = () => {
     setOpen(!open)
-    onOpen && onOpen()
+    onOpen?.()
   }
 
   return (

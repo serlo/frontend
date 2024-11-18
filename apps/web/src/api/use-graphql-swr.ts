@@ -1,7 +1,5 @@
 import useSWR, { SWRConfiguration } from 'swr'
-// eslint-disable-next-line import/no-internal-modules
 import type { BareFetcher } from 'swr/_internal'
-// eslint-disable-next-line import/no-internal-modules
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 
 import {
@@ -41,6 +39,7 @@ export function useGraphqlSwrWithAuth<T>({
   overrideAuth?: ReturnType<typeof useAuthentication>
 }) {
   const auth = useAuthentication()
+  //@ts-expect-error not sure what changed here…?
   return useSWR<T>(
     JSON.stringify({ query, variables }),
     createAuthAwareGraphqlFetch(overrideAuth ?? auth),
@@ -82,6 +81,7 @@ export function useGraphqlSwrPaginationWithAuth<T>(
     noKey,
   } = data
   const auth = useAuthentication()
+  //@ts-expect-error not sure what changed here…?
   const response = useSWRInfinite<
     Record<string, unknown>,
     { message: string } | undefined

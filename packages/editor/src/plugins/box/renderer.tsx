@@ -51,7 +51,7 @@ export function BoxRenderer({
   const isAttention = boxType === 'attention'
 
   const icon = boxTypeIcons[boxType] ? (
-    <FaIcon className="mr-1" icon={boxTypeIcons[boxType]!} />
+    <FaIcon className="mr-1" icon={boxTypeIcons[boxType]} />
   ) : null
 
   return (

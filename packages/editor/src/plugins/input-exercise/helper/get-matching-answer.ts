@@ -23,6 +23,8 @@ export function getMatchingAnswer(
       }
       return solution === submission
     } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
       return false
     }
   })

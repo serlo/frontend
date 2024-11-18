@@ -10,15 +10,12 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 const maxFileSize = 2 * 1024 * 1024
 const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
-const supportedMimeTypes = [
-  'image/gif',
-  'image/jpeg',
-  'image/png',
-  'image/svg+xml',
-  'image/webp',
-] as const
-
-type SupportedMimeType = (typeof supportedMimeTypes)[number]
+type SupportedMimeType =
+  | 'image/gif'
+  | 'image/jpeg'
+  | 'image/png'
+  | 'image/svg+xml'
+  | 'image/webp'
 
 const mimeTypesToMediaType: Record<SupportedMimeType, MediaType> = {
   'image/gif': MediaType.ImageGif,
@@ -68,6 +65,7 @@ function createUploadImageHandler() {
     const validation = validateFile(file)
     if (!validation.valid) {
       onError(validation.errors)
+      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       return Promise.reject(validation.errors)
     }
 

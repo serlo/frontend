@@ -40,6 +40,7 @@ export function MultimediaSerloStaticRenderer(state: EditorMultimediaDocument) {
         onClose={() => setOpen(false)}
         alt={imageState.alt}
         label={<EditorRenderer document={imageState.caption} />}
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         src={String(imageState.src)}
       />
     )

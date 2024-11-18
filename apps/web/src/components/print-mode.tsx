@@ -59,7 +59,8 @@ export function PrintMode() {
 
           if (p > 0.9 && !scrolledToBottom) setScrolled(true)
         } catch (e) {
-          //
+          // eslint-disable-next-line no-console
+          console.error(e)
         }
       })
     }

@@ -82,9 +82,9 @@ export function ImageEditor(props: ImageProps) {
 
   function handleChangeImageButtonClick() {
     state.src.set('')
-    state.alt.defined && state.alt.remove()
-    state.caption.defined && state.caption.remove()
-    state.link.defined && state.link.remove()
+    if (state.alt.defined) state.alt.remove()
+    if (state.caption.defined) state.caption.remove()
+    if (state.link.defined) state.link.remove()
   }
 
   return (

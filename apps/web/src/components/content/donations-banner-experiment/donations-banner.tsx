@@ -213,8 +213,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       <aside
         ref={bannerRef}
         className={cn(`
-            relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
-            bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
+            relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
             px-side py-6 text-center
             text-xl sm:-mx-2 sm:flex sm:max-w-[100vw] sm:justify-between
             sm:px-0 sm:text-left lg:my-16 lg:py-10 lg:text-2xl

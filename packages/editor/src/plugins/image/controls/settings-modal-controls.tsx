@@ -43,7 +43,6 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
         label={imageStrings.imageSource}
         autoFocus
         placeholder={imageStrings.placeholderSource}
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         value={imageSource.defined ? imageSource.value.toString() : ''}
         onChange={(e) => {
           if (!imageSource?.defined) imageSource.create(e.target.value)

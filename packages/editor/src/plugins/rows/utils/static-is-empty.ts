@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-cycle
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
 

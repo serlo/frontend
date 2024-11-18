@@ -7,8 +7,8 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useContext } from 'react'
 
-import { IntermediateTask } from './intermediate-task'
 import { type ExerciseGroupProps } from '..'
+import { IntermediateTask } from './intermediate-task'
 import { ExerciseGroupRenderer } from '../renderer'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
