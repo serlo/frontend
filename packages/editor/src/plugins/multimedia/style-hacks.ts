@@ -46,6 +46,12 @@ export function getStyleHacks(
     [&_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[197%]
     `,
 
+    // make article intro toolbar full width and well positioned
+    `
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:left-[9px]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!w-[196%]
+    `,
+
     // adapt to borders of parent
     `
     [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:!ml-[1px]
