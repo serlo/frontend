@@ -31,9 +31,16 @@ export function getStyleHacks(
     // Improve toolbars for multimedia children.
     // hacky but this way the complexity is contained in the parent plugin
 
+    // make article intro toolbar full width and well positioned
+    `
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:left-[9px]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!w-[196%]
+    `,
+
     // put top child toolbars in position of multimedia toolbar (first rows child)
     `
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[56px]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:left-[7px]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[72px]
     `,
 
     // make multimedia explanation children left aligned
@@ -44,12 +51,6 @@ export function getStyleHacks(
     // make multimedia explanation toolbars full width
     `
     [&_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[197%]
-    `,
-
-    // make article intro toolbar full width and well positioned
-    `
-    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:left-[9px]
-    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!w-[196%]
     `,
 
     // adapt to borders of parent

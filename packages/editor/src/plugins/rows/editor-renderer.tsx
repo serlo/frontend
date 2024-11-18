@@ -187,7 +187,7 @@ export function EditorRowRenderer({
           // Base class, used for nested selectors and DOM querying
           'rows-editor-renderer-container',
           // Hover and focus indicator styles
-          'rounded-b-lg',
+          'rounded-b-lg pt-2',
           'hover:shadow-plugin-hover',
           'focus-within:shadow-plugin-focus',
           'hover:focus-within:!shadow-plugin-focus',

@@ -64,7 +64,9 @@ export function BoxEditor(props: BoxProps) {
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
-          '[&_.rows-child:first-child_.plugin-toolbar:before]:hidden'
+          '[&_.rows-child:first-child_.plugin-toolbar:before]:hidden',
+          // shadow finetuning
+          '-mt-2'
         )}
       >
         {isEmptyContent && !showToolbar ? <EmptyWarning /> : null}

@@ -65,9 +65,9 @@ export function SpoilerEditor(props: SpoilerProps) {
           // making space for first toolbar, not wysiwyg
           '[&>div>button]:!mb-[17px]',
           // toolbar finetuning
-          `
-            [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
-          `
+          '[&_.rows-child:first-child_.plugin-toolbar:before]:hidden',
+          // shadow finetuning
+          '-mt-2'
         )}
       >
         <SpoilerRenderer
@@ -88,7 +88,7 @@ export function SpoilerEditor(props: SpoilerProps) {
       <PluginToolbar
         pluginType={EditorPluginType.Spoiler}
         pluginControls={<PluginDefaultTools pluginId={id} />}
-        className="top-[-31px]"
+        className="top-[-33px]"
       />
     )
   }
