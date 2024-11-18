@@ -49,7 +49,7 @@ export function PluginToolbar({
       )}
     >
       {/* Shadow helper element */}
-      <div className="clip-vertical-shadow absolute inset-0 rounded-t-lg shadow-plugin-focus" />
+      <div className="clip-vertical-shadow pointer-events-none absolute inset-0 rounded-t-lg shadow-plugin-focus" />
 
       {/* Content controls */}
       <div>
