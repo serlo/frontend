@@ -59,22 +59,33 @@ export function EdusharingAssetEditor({
     <>
       {renderPluginToolbar()}
       {renderModal(ltik)}
-      <EdusharingAssetRenderer
-        nodeId={
-          state.edusharingAsset.defined
-            ? state.edusharingAsset.nodeId.value
-            : undefined
-        }
-        repositoryId={
-          state.edusharingAsset.defined
-            ? state.edusharingAsset.repositoryId.value
-            : undefined
-        }
-        ltik={ltik}
-        contentWidth={contentWidth.defined ? contentWidth.value : undefined}
-      />
+      <div className="relative">
+        <EdusharingAssetRenderer
+          nodeId={
+            state.edusharingAsset.defined
+              ? state.edusharingAsset.nodeId.value
+              : undefined
+          }
+          repositoryId={
+            state.edusharingAsset.defined
+              ? state.edusharingAsset.repositoryId.value
+              : undefined
+          }
+          ltik={ltik}
+          contentWidth={contentWidth.defined ? contentWidth.value : undefined}
+        />
+        {renderOverlay()}
+      </div>
     </>
   )
+
+  // Transparent overlay while the edu-sharing plugin is unfocused. Clicking it will focus the plugin and let the user interact with the content.
+  // Explanation: Content is inside an iframe. Clicking within the iframe does sadly not change the editor focus automatically. Solutions I found are not easy and don't work reliably. So, we require an extra click from the user to be able to interact with the content in the editor.
+  function renderOverlay() {
+    if (focused) return null
+
+    return <div className="absolute left-0 top-0 z-[15] h-full w-full"></div>
+  }
 
   function renderPluginToolbar() {
     if (!focused) return null

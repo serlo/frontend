@@ -95,7 +95,7 @@ export function EdusharingAssetRenderer(props: {
   }, [nodeId, repositoryId, ltik])
 
   return (
-    <figure className="w-full">
+    <figure className="relative z-[15] w-full">
       <div className="mx-side">
         {embedHtml ? (
           renderEmbed()
@@ -318,7 +318,7 @@ export function EdusharingAssetRenderer(props: {
     // - Missing `sandbox` -> Should put no restrictions on what the iframe can do: A) Make iframe send the same cookies as the host. B) Allow it to execute scripts. Both important to be able to fetch video.
     return (
       <div
-        className="max-w-full"
+        className="z-15 max-w-full"
         style={{
           width: contentWidth ? contentWidth : '100%',
           aspectRatio: defineContainerHeight ? '16/9' : undefined,
