@@ -101,7 +101,11 @@ export function LinkOverlayEditMode({
 
   return (
     <>
-      <label className="block px-side pt-4">{overlayStrings.inputLabel}</label>
+      <label className="block px-side pt-4">
+        {isSerlo
+          ? overlayStrings.inputLabel
+          : overlayStrings.inputLabelNonSerlo}
+      </label>
       <div className="relative w-[27rem]">
         <EditModeInput
           query={query}
@@ -109,7 +113,11 @@ export function LinkOverlayEditMode({
           setQuery={setQuery}
           shouldFocus={shouldFocus}
           value={value}
-          placeholder={overlayStrings.placeholder}
+          placeholder={
+            isSerlo
+              ? overlayStrings.placeholder
+              : overlayStrings.placeholderNonSerlo
+          }
         />
       </div>
       {query ? (

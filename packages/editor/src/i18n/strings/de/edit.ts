@@ -320,7 +320,9 @@ export const editStrings = {
         'Sorry, dieses Plugin kannst du hier nicht einfügen.',
       linkOverlay: {
         placeholder: 'Suchbegriff oder "/1234"',
+        placeholderNonSerlo: 'Link',
         inputLabel: 'Suche einen Inhalt oder füge einen Link ein',
+        inputLabelNonSerlo: 'Füge einen Link ein',
         edit: 'Link bearbeiten',
         remove: 'Link entfernen',
         customLink: 'Eigener Link',

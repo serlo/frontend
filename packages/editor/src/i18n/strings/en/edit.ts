@@ -310,7 +310,9 @@ export const editStrings = {
         'Sorry, pasting this plugin here is not allowed.',
       linkOverlay: {
         placeholder: 'https://… or /1234',
+        placeholderNonSerlo: 'https://',
         inputLabel: 'Paste or type a link',
+        inputLabelNonSerlo: 'Insert a link',
         edit: 'Edit Link',
         remove: 'Remove Link',
         customLink: 'Custom Link',
