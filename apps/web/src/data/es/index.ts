@@ -354,6 +354,7 @@ export const instanceData = {
         code1060002: "Se ha enviado un correo con un enlace de recuperación a la dirección de correo electrónico que proporcionaste. %break% Comprueba tu buzón y haz clic en el enlace que contiene.",
         code1070003: "Guardar",
         code1070005: "Enviar",
+        code1070009: "Continuar",
         code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
         code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
         code4000001: '%reason%',
