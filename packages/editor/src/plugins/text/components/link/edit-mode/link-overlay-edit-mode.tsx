@@ -60,7 +60,7 @@ export function LinkOverlayEditMode({
 
     const hasResult = activeIndex < results.length
     const href = hasResult ? `/${results[activeIndex].entry.id}` : query
-    const cleanUrl = getCleanUrl(href, lang, isSerlo)
+    const cleanUrl = getCleanUrl(href, isSerlo, lang)
     const title = hasResult ? results[activeIndex].entry.title : undefined
 
     if (

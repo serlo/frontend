@@ -1,35 +1,21 @@
 export function getCleanUrl(
   inputUrl: string,
-  instance?: string,
-  isSerlo: boolean = true
+  isSerlo: boolean,
+  instance?: string
 ) {
-  const isJustId = /^\/[1-9][0-9]*$/.test(inputUrl)
-  if (isJustId && !isSerlo) {
-    const domain = instance ? `${instance}.serlo.org` : 'serlo.org'
-    return `https://${domain}${inputUrl}`
-  }
+  // currently we only do normalizing for the links on serlo.org
+  if (!isSerlo) return inputUrl
 
-  const serloContentMatch = inputUrl.match(
-    /https?:\/\/([a-z]{2}\.)?serlo\.org(\/[a-z]+)?\/([1-9]?[0-9]+)/
+  const testId = parseInt(
+    inputUrl.match(
+      /https?:\/\/([a-z]{2}\.)?serlo\.org(\/[a-z]+)?\/([1-9]?[0-9]+)/
+    )?.[3] ?? 'NaN'
   )
-  const serloId = parseInt(serloContentMatch?.[3] ?? 'NaN')
+
   const hashPart = inputUrl.split('#')[1]
   const hash = hashPart ? `#${hashPart}` : ''
 
-  if (!isSerlo && !isNaN(serloId)) {
-    if (serloContentMatch) {
-      return serloContentMatch[0] + hash
-    }
-
-    // Handle www case without http(s)://
-    if (inputUrl.match(/^(www\.)?([a-z]{2}\.)?serlo\.org/)) {
-      return 'https://' + inputUrl.replace(/^www\./, '') + hash
-    }
-
-    return inputUrl + hash
-  }
-
-  if (!isNaN(serloId)) return `/${serloId}${hash}`
+  if (!isNaN(testId)) return `/${testId}${hash}`
 
   const cleanedUrl = instance
     ? inputUrl
