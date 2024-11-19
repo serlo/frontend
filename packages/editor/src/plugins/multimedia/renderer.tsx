@@ -1,19 +1,19 @@
 import { cn } from '@editor/utils/cn'
 
 export interface MultimediaRendererProps {
-  mediaWidth: number // 25 | 50 Percent
   media: JSX.Element
   explanation: JSX.Element
+  mediaWidth: number // 25 | 50 Percent
+  extraMediaClasses?: string
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
-  extraImageClass?: string
 }
 
 export function MultimediaRenderer({
-  mediaWidth,
   media,
   explanation,
+  mediaWidth,
+  extraMediaClasses,
   onClick,
-  extraImageClass,
 }: MultimediaRendererProps) {
   const widthClasses = getWidthClasses()
 
@@ -33,12 +33,11 @@ export function MultimediaRenderer({
         className={cn(
           'media-wrapper relative',
           widthClasses.media,
-          extraImageClass
+          extraMediaClasses
         )}
       >
         {media}
       </div>
-      <div className="clear-both" />
     </div>
   )
 

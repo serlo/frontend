@@ -39,24 +39,30 @@ export function getStyleHacks(
 
     // put top child toolbars in position of multimedia toolbar (first rows child)
     `
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[72px]
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:left-[7px]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[48px]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:left-[-5px]
     `,
 
     // properly align non-top children toolbars
     `
-    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:left-[6px]
+    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:left-[-6px]
+    `,
+
+    // properly vertically align explanation
+    `
+    [&_.explanation-wrapper_.plugin-rows_>_div]:mt-0
     `,
 
     // make multimedia explanation children left aligned
     `
-    [&_.explanation-wrapper_.rows-child]:!pl-[3.25rem]
+    [&_.explanation-wrapper_.rows-child]:!pl-[4rem]
+    [&_.explanation-wrapper_.rows-child]:!pr-[0.75rem]
     `,
 
     // make multimedia explanation toolbars full width
     `
-    [&_.multimedia-renderer-wrapper-half_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[197%]
-    [&_.multimedia-renderer-wrapper-quarter_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[131.9%]
+    [&_.multimedia-renderer-wrapper-half_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[209.4%]
+    [&_.multimedia-renderer-wrapper-quarter_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[137.3%]
     `,
 
     // adapt to borders of parent
