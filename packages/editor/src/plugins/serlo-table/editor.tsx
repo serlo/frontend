@@ -51,7 +51,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     <>
       {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
 
-      <div className="relative pb-5 pl-4 pt-6">
+      <div className="relative pb-5 pl-4 pr-3 pt-6">
         <div className="flex">
           <div className="flex flex-col">
             <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
