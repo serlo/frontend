@@ -45,8 +45,9 @@ export function Editor(props: EditorProps) {
               />
             </>
           ) : (
-            // For non serlo environment, we need to render the toaster
-            // https://react-hot-toast.com/docs/toaster (already rendered in web)
+            // For non serlo environments, we need to render the toaster
+            // https://react-hot-toast.com/docs/toaster (already gets rendered
+            // in the web project)
             <Toaster />
           )}
           <div
