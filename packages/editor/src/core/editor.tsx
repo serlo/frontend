@@ -7,6 +7,7 @@ import {
 import { getEditorVersion } from '@editor/package/editor-version'
 import { cn } from '@editor/utils/cn'
 import { useState, useMemo } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { HotkeysProvider } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
@@ -43,7 +44,11 @@ export function Editor(props: EditorProps) {
                 setUseStored={setUseStored}
               />
             </>
-          ) : null}
+          ) : (
+            // For non serlo environment, we need to render the toaster
+            // https://react-hot-toast.com/docs/toaster (already rendered in web)
+            <Toaster />
+          )}
           <div
             className={cn(
               'editor-core mb-24 text-lg leading-cozy',
