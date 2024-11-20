@@ -1,4 +1,11 @@
-export function getCleanUrl(inputUrl: string, instance?: string) {
+export function getCleanUrl(
+  inputUrl: string,
+  isSerlo: boolean,
+  instance?: string
+) {
+  // currently we only do normalizing for the links on serlo.org
+  if (!isSerlo) return inputUrl
+
   const testId = parseInt(
     inputUrl.match(
       /https?:\/\/([a-z]{2}\.)?serlo\.org(\/[a-z]+)?\/([1-9]?[0-9]+)/

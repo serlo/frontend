@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
@@ -9,9 +10,8 @@ import {
   useAppSelector,
 } from '@editor/store'
 import { cn } from '@editor/utils/cn'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { Suspense, lazy, useContext, useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 
 import { type ExerciseProps } from '.'
 import { InteractiveExercisesSelection } from './components/interactive-exercises-selection'
@@ -33,7 +33,7 @@ export function ExerciseEditor(props: ExerciseProps) {
     licenseId,
     hideInteractiveInitially,
   } = state
-  const { isSerlo } = useContext(SerloOnlyFeaturesContext)
+  const isSerlo = useIsSerlo()
   const editorStrings = useEditStrings()
   const exStrings = editorStrings.plugins.exercise
 
