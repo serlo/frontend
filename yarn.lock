@@ -5786,7 +5786,7 @@ __metadata:
     "@eslint/eslintrc": ^3.1.0
     "@eslint/js": ^9.14.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/editor": 0.19.0
+    "@serlo/editor": 0.19.1
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.3.1
@@ -5810,18 +5810,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.19.0":
-  version: 0.19.0
-  resolution: "@serlo/editor@npm:0.19.0"
+"@serlo/editor@npm:0.19.1":
+  version: 0.19.1
+  resolution: "@serlo/editor@npm:0.19.1"
   dependencies:
     "@serlo/katex-styles": 1.0.1
-    dompurify: ^3.1.7
+    "@vidstack/react": next
+    dompurify: ^3.2.0
     lit: ^3.2.1
     react: ^18.2.0
-    react-dom: ^18.2.0
+    react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-resizable: ^3.0.5
-  checksum: c3b1c55ae80d1b61de2b3aa9c5056d2bd479a55920210c2cc0e812274270efab7e35fee000e3049557d890c25b350f2e66391d5da186c3c72f2c8aad3d841b55
+  checksum: d511a8ab1e096d09dd10db9d186196804070d566f95a495847f3584b87b05612c9aa826d0b4b58616a498439e7214485107693c1fc3033db16a0127a598b1f9d
   languageName: node
   linkType: hard
 
@@ -9510,13 +9511,6 @@ __metadata:
   dependencies:
     domelementtype: ^2.3.0
   checksum: 0f58f4a6af63e6f3a4320aa446d28b5790a009018707bce2859dcb1d21144c7876482b5188395a188dfa974238c019e0a1e610d2fc269a12b2c192ea2b0b131c
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:^3.1.7":
-  version: 3.1.7
-  resolution: "dompurify@npm:3.1.7"
-  checksum: 0a9b811bbc94f3dba60cf6486962362b0f1a5b4ab789f5e1cbd4749b6ba1a1fad190a677a962dc8850ce28764424765fe425e9d6508e4e93ba648ef15d54bc24
   languageName: node
   linkType: hard
 
@@ -16376,18 +16370,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
-  dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.23.0
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -17228,15 +17210,6 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   dependencies:
     xmlchars: ^2.2.0
   checksum: d3fa3e2aaf6c65ed52ee993aff1891fc47d5e47d515164b5449cbf5da2cbdc396137e55590472e64c5c436c14ae64a8a03c29b9e7389fc6f14035cf4e982ef3b
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
   languageName: node
   linkType: hard
 
