@@ -34,16 +34,18 @@ export function HighlightEditor(props: HighlightProps) {
 
   if (!throttledEdit && !focused) {
     return (
-      <Renderer
-        language={state.language.value}
-        showLineNumbers={state.showLineNumbers.value}
-        code={state.code.value}
-      />
+      <div className="px-2 py-4">
+        <Renderer
+          language={state.language.value}
+          showLineNumbers={state.showLineNumbers.value}
+          code={state.code.value}
+        />
+      </div>
     )
   }
 
   return (
-    <div className="mx-side">
+    <div className="mx-side px-2 py-4">
       {focused && <HighlightToolbar {...props} />}
       <textarea
         value={state.code.value}
@@ -57,9 +59,9 @@ export function HighlightEditor(props: HighlightProps) {
         // make sure editor does not create new plugin on enter etc
         onKeyDown={(e) => e.stopPropagation()}
         className={cn(`
-            m-auto w-full items-center rounded-xl border-3 border-editor-primary-200 p-side
-            pt-6 font-mono
-            focus-within:border-editor-primary-200 focus-within:outline-none
+            m-auto block w-full items-center rounded-xl border-3 border-brand-200
+            p-side pt-6 font-mono
+            focus-within:border-brand-200 focus-within:outline-none
         `)}
         style={{ height: `${50 + numberOflines * 26}px` }} // simple autogrow
       >

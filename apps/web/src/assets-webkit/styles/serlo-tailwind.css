@@ -3,6 +3,7 @@
 @import 'tailwindcss/components';
 
 @import '../../../../../packages/editor/src/tailwind/components.css';
+@import '../../../../../packages/editor/src/tailwind/utilities.css';
 @import './components.css';
 
 @import 'tailwindcss/utilities';

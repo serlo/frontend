@@ -51,7 +51,7 @@ export function BoxEditor(props: BoxProps) {
   }
 
   return (
-    <div data-qa="plugin-box">
+    <div data-qa="plugin-box" className="pl-0.5">
       {showToolbar ? <BoxToolbar {...props} /> : null}
 
       <div
@@ -64,12 +64,9 @@ export function BoxEditor(props: BoxProps) {
           // making space for first toolbar, not wysiwyg
           '[&>figure>figcaption]:!mb-9',
           // toolbar finetuning
-          `
-            [&_.plugin-toolbar]:ml-[-2px]
-            [&_.plugin-toolbar]:mr-[-16px]
-            [&_.plugin-toolbar]:rounded-none
-            [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
-          `
+          '[&_.rows-child:first-child_.plugin-toolbar:before]:hidden',
+          // shadow finetuning
+          '-mt-2'
         )}
       >
         {isEmptyContent && !showToolbar ? <EmptyWarning /> : null}
@@ -86,7 +83,7 @@ export function BoxEditor(props: BoxProps) {
           }
           anchorId={anchorId.value}
         >
-          <div className="-ml-3 px-side" data-qa="plugin-box-content">
+          <div className="mx-side" data-qa="plugin-box-content">
             {content.render()}
           </div>
         </BoxRenderer>

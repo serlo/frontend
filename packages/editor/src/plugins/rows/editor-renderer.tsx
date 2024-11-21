@@ -25,15 +25,6 @@ interface RowDragObject {
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
 
-const pluginsWithOwnBorder = [
-  EditorPluginType.Box,
-  EditorPluginType.Geogebra,
-  EditorPluginType.Highlight,
-  EditorPluginType.SerloTable,
-  EditorPluginType.Spoiler,
-  EditorPluginType.Video,
-]
-
 export function EditorRowRenderer({
   config,
   row,
@@ -184,7 +175,6 @@ export function EditorRowRenderer({
     ) : null
 
   const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
-  const shouldShowBorder = !pluginsWithOwnBorder.includes(rowPluginType)
 
   const isMultimediaPlugin = rowPluginType === EditorPluginType.Multimedia
 
@@ -194,22 +184,17 @@ export function EditorRowRenderer({
       <div
         ref={container}
         className={cn(
+          // Base class, used for nested selectors and DOM querying
           'rows-editor-renderer-container',
-          'border-l-2 border-transparent',
-          shouldShowBorder &&
-            `
-            transition-colors
-            focus-within:border-gray-400
-            hover:!border-gray-200
-            hover:focus-within:!border-gray-400
-            [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
-            [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-200
-            `,
-          `
-          [&:focus-within>.rows-tools]:opacity-100
-          [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
-          [&:hover>.rows-tools]:!opacity-100
-          `,
+          // Hover and focus indicator styles
+          'rounded-b-lg pt-2',
+          'hover:shadow-plugin-hover',
+          'focus-within:shadow-plugin-focus',
+          'hover:focus-within:!shadow-plugin-focus',
+          // Left sidebar styles
+          '[&:focus-within>.rows-tools]:opacity-100',
+          '[&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0',
+          '[&:hover>.rows-tools]:!opacity-100',
           isMultimediaPlugin &&
             '[&>.rows-tools]:!-left-1 [&>.rows-tools]:!-top-9'
         )}

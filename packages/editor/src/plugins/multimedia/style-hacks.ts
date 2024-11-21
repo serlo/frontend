@@ -31,11 +31,38 @@ export function getStyleHacks(
     // Improve toolbars for multimedia children.
     // hacky but this way the complexity is contained in the parent plugin
 
-    // put top child toolbars in position of multimedia toolbar (for article intro, first rows child, media child)
+    // make article intro toolbar full width and well positioned
     `
-    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!-top-[12]
-    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[12]
-    [&_.media-wrapper_.plugin-toolbar]:!-top-[12]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:left-[9px]
+    [&_.explanation-wrapper>.plugin-wrapper-container_.plugin-toolbar]:!w-[196%]
+    `,
+
+    // put top child toolbars in position of multimedia toolbar (first rows child)
+    `
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:!-top-[48px]
+    [&_.explanation-wrapper_.rows-child:first-child_.plugin-toolbar]:left-[-5px]
+    `,
+
+    // properly align non-top children toolbars
+    `
+    [&_.explanation-wrapper_.rows-child:not(:first-child)_.plugin-toolbar]:left-[-6px]
+    `,
+
+    // properly vertically align explanation
+    `
+    [&_.explanation-wrapper_.plugin-rows_>_div]:mt-0
+    `,
+
+    // make multimedia explanation children left aligned
+    `
+    [&_.explanation-wrapper_.rows-child]:!pl-[4rem]
+    [&_.explanation-wrapper_.rows-child]:!pr-[0.75rem]
+    `,
+
+    // make multimedia explanation toolbars full width
+    `
+    [&_.multimedia-renderer-wrapper-half_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[209.4%]
+    [&_.multimedia-renderer-wrapper-quarter_.explanation-wrapper_.rows-child_.plugin-toolbar]:!w-[137.3%]
     `,
 
     // adapt to borders of parent

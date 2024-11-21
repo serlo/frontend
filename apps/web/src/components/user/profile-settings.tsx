@@ -77,25 +77,22 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     )
 
     return (
-      <SpoilerRenderer
-        title={<>{buttonText}</>}
-        content={
-          <>
-            <p className="serlo-p mt-5">
-              {replacePlaceholders(description, { chatLink })}
-            </p>
-            <ol className="serlo-ol">
-              <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
-              <li>{steps.signIn}</li>
-              <li>
-                {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
-              </li>
-              <li>{steps.uploadPicture}</li>
-              <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
-            </ol>
-          </>
-        }
-      />
+      <SpoilerRenderer title={<>{buttonText}</>}>
+        <>
+          <p className="serlo-p mt-5">
+            {replacePlaceholders(description, { chatLink })}
+          </p>
+          <ol className="serlo-ol">
+            <li>{replacePlaceholders(steps.goToChat, { chatLink })}</li>
+            <li>{steps.signIn}</li>
+            <li>
+              {replacePlaceholders(steps.goToMyAccount, { myAccountLink })}
+            </li>
+            <li>{steps.uploadPicture}</li>
+            <li>{replacePlaceholders(steps.refreshPage, { refreshLink })}</li>
+          </ol>
+        </>
+      </SpoilerRenderer>
     )
   }
 
@@ -105,20 +102,17 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 
     return (
-      <SpoilerRenderer
-        title={<>{buttonText}</>}
-        content={
-          <>
-            <p className="serlo-p mt-5">{intro}</p>
-            <p className="serlo-p">{privacy}</p>
-            <p className="serlo-p">
-              <a href={editUrl} className="serlo-button-learner-primary">
-                {toForm}
-              </a>
-            </p>
-          </>
-        }
-      />
+      <SpoilerRenderer title={<>{buttonText}</>}>
+        <>
+          <p className="serlo-p mt-5">{intro}</p>
+          <p className="serlo-p">{privacy}</p>
+          <p className="serlo-p">
+            <a href={editUrl} className="serlo-button-learner-primary">
+              {toForm}
+            </a>
+          </p>
+        </>
+      </SpoilerRenderer>
     )
   }
 
