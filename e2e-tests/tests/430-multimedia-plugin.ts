@@ -43,7 +43,7 @@ Scenario('Multimedia plugin toolbar controls', async ({ I }) => {
     'aria-selected': 'true',
   })
   I.click('$modal-close-button')
-  I.seeElement('.media-wrapper.mobile\\:w-1\\/4')
+  I.seeElement('.media-wrapper.mobile\\:basis-1\\/4')
 
   I.say('Change the type of the multimedia content to video')
   I.click('$plugin-multimedia-settings-button')
