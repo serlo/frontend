@@ -4335,9 +4335,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prezly/slate-lists@npm:^0.107.0":
-  version: 0.107.0
-  resolution: "@prezly/slate-lists@npm:0.107.0"
+"@prezly/slate-lists@npm:0.116.0":
+  version: 0.116.0
+  resolution: "@prezly/slate-lists@npm:0.116.0"
   dependencies:
     is-hotkey: ^0.2.0
     uuid: ^8.3.0
@@ -4346,7 +4346,7 @@ __metadata:
     react-dom: ^18.3.0
     slate: ^0.101.5
     slate-react: ^0.101.5
-  checksum: 137ec2356f4422078ba802b092d46fed3535408e548d2eea146a6a9a84f911c678b65305609d829cabc1314443425ee36d1cbf6417ef1aa881610398dfa5c50d
+  checksum: f78d24f1e02c73690f748cc48beba0b7104f858d287c83ed0010952d7fc0c426c2e140994559669faf91c267724351f4eb7ce638e448fe6fae1876dc7c2276f7
   languageName: node
   linkType: hard
 
@@ -5837,7 +5837,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.6.0
     "@fortawesome/free-solid-svg-icons": 6.6.0
     "@fortawesome/react-fontawesome": ^0.2.2
-    "@prezly/slate-lists": ^0.107.0
+    "@prezly/slate-lists": 0.116.0
     "@radix-ui/react-dialog": ^1.1.2
     "@radix-ui/react-navigation-menu": ^1.2.1
     "@radix-ui/react-select": ^2.1.2
@@ -5846,12 +5846,12 @@ __metadata:
     "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@types/dompurify": ^3.0.5
+    "@types/is-hotkey": 0.1.10
     "@types/react": ^18.0.25
     "@types/react-dnd-multi-backend": ^6.0.6
     "@types/react-dom": ^18.3.1
     "@types/react-resizable": ^3.0.8
     "@types/react-syntax-highlighter": ^15.5.13
-    "@types/slate-react": ^0.50.1
     "@typescript-eslint/eslint-plugin": ^8.14.0
     "@typescript-eslint/parser": ^8.14.0
     "@vidstack/react": next
@@ -5870,7 +5870,7 @@ __metadata:
     iframe-resizer: ^4.4.5
     iframe-resizer-react: ^1.1.1
     io-ts: ^2.2.21
-    is-hotkey: ^0.2.0
+    is-hotkey: 0.2.0
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
     katex: ^0.16.11
@@ -5900,8 +5900,9 @@ __metadata:
     redux: ^5.0.1
     redux-saga: ^1.3.0
     reselect: ^5.1.1
-    slate: ^0.103.0
-    slate-react: ^0.107.1
+    slate: 0.110.2
+    slate-dom: 0.111.0
+    slate-react: 0.111.0
     tailwindcss: ^3.4.15
     ts-debounce: ^4.0.0
     ts-jest: ^29.2.5
@@ -6027,7 +6028,7 @@ __metadata:
     react-hot-toast: ^2.4.1
     react-lazyload: ^3.2.1
     react-textarea-autosize: ^8.5.5
-    slate: ^0.103.0
+    slate: 0.110.2
     swr: ^2.2.5
     tailwindcss: ^3.4.15
     tailwindcss-animate: ^1.0.7
@@ -6624,7 +6625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/is-hotkey@npm:^0.1.8":
+"@types/is-hotkey@npm:0.1.10":
   version: 0.1.10
   resolution: "@types/is-hotkey@npm:0.1.10"
   checksum: 9ecc49fb3822b3cfa8335132d54c6e577d0b14bb52d0bf1f817cdd19c442555b7523945e2ae72f6098e3c7f64b4777390f38afec3e4660343cfb471377e7fd82
@@ -6723,13 +6724,6 @@ __metadata:
   version: 0.16.7
   resolution: "@types/katex@npm:0.16.7"
   checksum: 4fd15d93553be97c02c064e16be18d7ccbabf66ec72a9dc7fd5bfa47f0c7581da2f942f693c7cb59499de4c843c2189796e49c9647d336cbd52b777b6722a95a
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:^4.14.200":
-  version: 4.14.202
-  resolution: "@types/lodash@npm:4.14.202"
-  checksum: a91acf3564a568c6f199912f3eb2c76c99c5a0d7e219394294213b3f2d54f672619f0fde4da22b29dc5d4c31457cd799acc2e5cb6bd90f9af04a1578483b6ff7
   languageName: node
   linkType: hard
 
@@ -6860,15 +6854,6 @@ __metadata:
   version: 0.16.8
   resolution: "@types/scheduler@npm:0.16.8"
   checksum: 6c091b096daa490093bf30dd7947cd28e5b2cd612ec93448432b33f724b162587fed9309a0acc104d97b69b1d49a0f3fc755a62282054d62975d53d7fd13472d
-  languageName: node
-  linkType: hard
-
-"@types/slate-react@npm:^0.50.1":
-  version: 0.50.1
-  resolution: "@types/slate-react@npm:0.50.1"
-  dependencies:
-    slate-react: "*"
-  checksum: cb9e1f02ea19da2c15189f95e5113f7867c3f6e4e0d1e848c49a37754449acce424fd2e615a517cb514531f865f4bee169ff3c26f537155db524f7c52df6eeea
   languageName: node
   linkType: hard
 
@@ -12128,7 +12113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-hotkey@npm:^0.2.0":
+"is-hotkey@npm:0.2.0, is-hotkey@npm:^0.2.0":
   version: 0.2.0
   resolution: "is-hotkey@npm:0.2.0"
   checksum: 97d295cfd8c3eb2c9b218daee5bff0ddaf47210930e3eb1eff36d2e6ad74854028203c640f35ea2d183d0cba94ac4c4bcd291925bc3a343d8a4c7d2c5ab3e2a6
@@ -17535,13 +17520,28 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"slate-react@npm:*":
-  version: 0.101.2
-  resolution: "slate-react@npm:0.101.2"
+"slate-dom@npm:0.111.0":
+  version: 0.111.0
+  resolution: "slate-dom@npm:0.111.0"
   dependencies:
     "@juggle/resize-observer": ^3.4.0
-    "@types/is-hotkey": ^0.1.8
-    "@types/lodash": ^4.14.200
+    direction: ^1.0.4
+    is-hotkey: ^0.2.0
+    is-plain-object: ^5.0.0
+    lodash: ^4.17.21
+    scroll-into-view-if-needed: ^3.1.0
+    tiny-invariant: 1.3.1
+  peerDependencies:
+    slate: ">=0.99.0"
+  checksum: 8e84fbb5c5d32545f72f5b6fbc4d78286d36ca4c8e91a7b09a2ba1851b454bf456c1fc502f093e9651eadeaae6c76cfc7668398ca61cd0627259468ab6845ab1
+  languageName: node
+  linkType: hard
+
+"slate-react@npm:0.111.0":
+  version: 0.111.0
+  resolution: "slate-react@npm:0.111.0"
+  dependencies:
+    "@juggle/resize-observer": ^3.4.0
     direction: ^1.0.4
     is-hotkey: ^0.2.0
     is-plain-object: ^5.0.0
@@ -17552,39 +17552,19 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
     react: ">=18.2.0"
     react-dom: ">=18.2.0"
     slate: ">=0.99.0"
-  checksum: 8236f4f1149ad2bfcdaee263c2ad4818d40fafb3bdb77d2b360d434cc3794e123a8da93f7acd73813dc27ad9723d21e9080dea98053693460d0f5376858c6515
+    slate-dom: ">=0.110.2"
+  checksum: 2cb742d47d528a43884b0d57e321e918c2352001c5a2ad78d47f1fbc93efe4ff6f1946061a15b54ff607c46f5a0fa3ac8ecab856966d059dde73c29c3eb1175e
   languageName: node
   linkType: hard
 
-"slate-react@npm:^0.107.1":
-  version: 0.107.1
-  resolution: "slate-react@npm:0.107.1"
-  dependencies:
-    "@juggle/resize-observer": ^3.4.0
-    "@types/is-hotkey": ^0.1.8
-    "@types/lodash": ^4.14.200
-    direction: ^1.0.4
-    is-hotkey: ^0.2.0
-    is-plain-object: ^5.0.0
-    lodash: ^4.17.21
-    scroll-into-view-if-needed: ^3.1.0
-    tiny-invariant: 1.3.1
-  peerDependencies:
-    react: ">=18.2.0"
-    react-dom: ">=18.2.0"
-    slate: ">=0.99.0"
-  checksum: 8424f07b0ea934fda0a3e5d8a7326c37c32940491082135f7089dadb35e52793708a35832584648f76f1b77eee599dec5a9b60551a35c85f12f523afb7422377
-  languageName: node
-  linkType: hard
-
-"slate@npm:^0.103.0":
-  version: 0.103.0
-  resolution: "slate@npm:0.103.0"
+"slate@npm:0.110.2":
+  version: 0.110.2
+  resolution: "slate@npm:0.110.2"
   dependencies:
     immer: ^10.0.3
     is-plain-object: ^5.0.0
     tiny-warning: ^1.0.3
-  checksum: 50a2f79f80b11be7f475c74d666bdccd39720354cb08932864161dd48094e991f10f66a4d8ecc455fff9327895a6d7cf8591d113c606ca2565404d56d4d7fea3
+  checksum: 94a4de95d47350a5989699d311e1f129c095560ec3d7561d3ebcde3eee52133f39058f5ce08bb612853213c837f2327902cd94de2e7be85d984f74c7ff83074e
   languageName: node
   linkType: hard
 
