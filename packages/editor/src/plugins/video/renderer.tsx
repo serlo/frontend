@@ -59,7 +59,8 @@ export function parseVideoUrl(
       VideoType.Vimeo,
     ]
 
-  const legacyWikimediaRegex = /^(https?:\/\/)?(.*?assets\.serlo\.org\/wikimedia\/)(.+)/
+  const legacyWikimediaRegex =
+    /^(https?:\/\/)?(.*?assets\.serlo\.org\/wikimedia\/)(.+)/
   const legacyWikimedia = legacyWikimediaRegex.exec(inputSrc)
   if (legacyWikimedia) return [inputSrc, VideoType.LegacyWikimediaCommons]
 

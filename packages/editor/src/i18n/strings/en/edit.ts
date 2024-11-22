@@ -356,8 +356,7 @@ export const editStrings = {
     },
     video: {
       title: 'Video',
-      description:
-        'Embed videos from e.g. YouTube or Vimeo.',
+      description: 'Embed videos from e.g. YouTube or Vimeo.',
       videoUrl: 'Video URL',
       videoDescription: 'Description',
       titlePlaceholder: 'Title',
