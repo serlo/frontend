@@ -5,7 +5,7 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 export enum VideoType {
   YouTube = 'YouTube',
-  WikimediaCommons = 'WikimediaCommons',
+  LegacyWikimediaCommons = 'LegacyWikimediaCommons',
   Vimeo = 'Vimeo',
 }
 
@@ -30,7 +30,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
 
   return (
     <div className="my-0 aspect-[16/9] w-full p-0">
-      {type === VideoType.WikimediaCommons ? (
+      {type === VideoType.LegacyWikimediaCommons ? (
         <video controls src={src} className={videoClassName} />
       ) : (
         <iframe
@@ -59,9 +59,9 @@ export function parseVideoUrl(
       VideoType.Vimeo,
     ]
 
-  const wikimediaRegex = /^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/
-  const wikimedia = wikimediaRegex.exec(inputSrc)
-  if (wikimedia) return [inputSrc, VideoType.WikimediaCommons]
+  const legacyWikimediaRegex = /^(https?:\/\/)?(.*?assets\.serlo\.org\/wikimedia\/)(.+)/
+  const legacyWikimedia = legacyWikimediaRegex.exec(inputSrc)
+  if (legacyWikimedia) return [inputSrc, VideoType.LegacyWikimediaCommons]
 
   const youtubeRegex =
     /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/
