@@ -5,7 +5,7 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 export enum VideoType {
   YouTube = 'YouTube',
-  LegacyWikimediaCommons = 'LegacyWikimediaCommons',
+  SerloAsset = 'SerloAsset',
   Vimeo = 'Vimeo',
 }
 
@@ -30,7 +30,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
 
   return (
     <div className="my-0 aspect-[16/9] w-full p-0">
-      {type === VideoType.LegacyWikimediaCommons ? (
+      {type === VideoType.SerloAsset ? (
         <video controls src={src} className={videoClassName} />
       ) : (
         <iframe
@@ -58,11 +58,9 @@ export function parseVideoUrl(
       `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
       VideoType.Vimeo,
     ]
-
-  const legacyWikimediaRegex =
-    /^(https?:\/\/)?(.*?assets\.serlo\.org\/wikimedia\/)(.+)/
-  const legacyWikimedia = legacyWikimediaRegex.exec(inputSrc)
-  if (legacyWikimedia) return [inputSrc, VideoType.LegacyWikimediaCommons]
+  const serloAssetRegex = /^(https?:\/\/)?(.*?assets\.serlo\.org\/)(.+)/
+  const serloAsset = serloAssetRegex.exec(inputSrc)
+  if (serloAsset) return [inputSrc, VideoType.SerloAsset]
 
   const youtubeRegex =
     /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/
