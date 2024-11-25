@@ -1,7 +1,7 @@
 import { StateTypeReturnType } from '@editor/plugin'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { selectIsFocused, useAppSelector } from '@editor/store'
-import { motion } from 'motion/react'
+import * as motion from 'motion/react-m'
 import { type MouseEvent, useRef } from 'react'
 
 import type { RowsPluginConfig, RowsPluginState } from '..'

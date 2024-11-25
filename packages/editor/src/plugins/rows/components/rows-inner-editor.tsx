@@ -5,6 +5,7 @@ import {
   useStore,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { LazyMotion } from 'motion/react'
 import { useContext } from 'react'
 
 import type { RowsProps } from '..'
@@ -15,6 +16,9 @@ import {
   PluginMenuActionTypes,
   PluginMenuContext,
 } from '../contexts/plugin-menu'
+
+const loadMotionFeatures = () =>
+  import('motion/react').then((res) => res.domMax)
 
 export function RowsInnerEditor({ state, config, id }: RowsProps) {
   const store = useStore()
@@ -57,21 +61,24 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
   return (
     <>
       <div className="relative mt-6">
-        {state.map((row, index) => {
-          const hideAddButton = showLargeAddButton && index === state.length - 1
-          return (
-            <RowEditor
-              config={config}
-              key={row.id}
-              index={index}
-              rows={state}
-              row={row}
-              isRootRow={parentType === EditorPluginType.Rows}
-              hideAddButton={!!hideAddButton}
-              onAddButtonClick={handleOpenPluginMenu}
-            />
-          )
-        })}
+        <LazyMotion features={loadMotionFeatures} strict>
+          {state.map((row, index) => {
+            const hideAddButton =
+              showLargeAddButton && index === state.length - 1
+            return (
+              <RowEditor
+                config={config}
+                key={row.id}
+                index={index}
+                rows={state}
+                row={row}
+                isRootRow={parentType === EditorPluginType.Rows}
+                hideAddButton={!!hideAddButton}
+                onAddButtonClick={handleOpenPluginMenu}
+              />
+            )
+          })}
+        </LazyMotion>
       </div>
       {showLargeAddButton ? (
         <AddRowButtonLarge
