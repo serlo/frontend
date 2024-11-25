@@ -1,7 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { StateTypeReturnType } from '@editor/types/internal__plugin-state'
 import { cn } from '@editor/utils/cn'
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
 import type { RowsPluginState } from '..'
 
@@ -10,7 +10,7 @@ interface RowDragButtonProps {
   index: number
 }
 
-export function RowDragButton({ rows, index }: RowDragButtonProps) {
+export function RowControls({ rows, index }: RowDragButtonProps) {
   function handleUp() {
     rows.move(index, index - 1)
   }
@@ -28,8 +28,8 @@ export function RowDragButton({ rows, index }: RowDragButtonProps) {
   return (
     <div
       className={cn(
-        'rows-tools',
-        'absolute bottom-14 left-2 top-0 z-[22] flex flex-col justify-center gap-2',
+        'row-controls',
+        'absolute bottom-14 left-2 top-0 z-[22] flex flex-col justify-center gap-4',
         'rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
       )}
     >
@@ -38,7 +38,7 @@ export function RowDragButton({ rows, index }: RowDragButtonProps) {
         onClick={handleUp}
       >
         <div className={iconWrapperStyles} aria-hidden="true">
-          <FaIcon icon={faCaretUp} />
+          <FaIcon icon={faAngleUp} className="text-xl" />
         </div>
       </button>
 
@@ -47,7 +47,7 @@ export function RowDragButton({ rows, index }: RowDragButtonProps) {
         onClick={handleDown}
       >
         <div className={iconWrapperStyles} aria-hidden="true">
-          <FaIcon icon={faCaretDown} />
+          <FaIcon icon={faAngleDown} className="text-xl" />
         </div>
       </button>
     </div>
@@ -55,11 +55,11 @@ export function RowDragButton({ rows, index }: RowDragButtonProps) {
 }
 
 const buttonStyles = cn(`
-  serlo-tooltip-trigger -mt-[3px] cursor-grab select-none
-  border-0 bg-none active:cursor-grabbing
+  serlo-tooltip-trigger -mt-[3px] select-none
+  rounded-full border-0 bg-none p-0
 `)
 
 const iconWrapperStyles = cn(`
-  serlo-button-edit-primary rounded-full bg-transparent px-1.5
-  py-0.5 text-almost-black hover:bg-editor-primary-200
+  serlo-button-edit-primary block rounded-full bg-editor-primary-100
+  px-0.5 py-0 text-almost-black hover:bg-editor-primary-300
 `)
