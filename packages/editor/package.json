@@ -47,6 +47,7 @@
     "@serlo/katex-styles": "1.0.1"
   },
   "dependencies": {
+    "@open-iframe-resizer/react": "1.2.1",
     "@serlo/katex-styles": "1.0.1",
     "@vidstack/react": "next",
     "dompurify": "^3.2.0",

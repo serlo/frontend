@@ -1,5 +1,5 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
-import IframeResizer from 'iframe-resizer-react'
+import { IframeResizer } from '@open-iframe-resizer/react'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
 
@@ -32,7 +32,7 @@ const EmbedJson = t.type({
 })
 
 const iframeResizerHtml =
-  '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js"></script>'
+  '<script type="module" src="https://cdn.jsdelivr.net/npm/@open-iframe-resizer/core@1.2.1/dist/index.min.js"></script>'
 
 const cssReset = 'padding: 0; margin: 0; border: 0;'
 
@@ -112,9 +112,11 @@ export function EdusharingAssetRenderer(props: {
     // Hack: Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
     return `
       <html style="${cssReset}${defineContainerHeight ? 'height: 97%;' : ''}">
+        <head>
+          ${defineContainerHeight ? '' : iframeResizerHtml}
+        </head>
         <body style="${cssReset}${defineContainerHeight ? 'height: 100%;' : ''}">
           ${htmlSnippet}
-          ${defineContainerHeight ? '' : iframeResizerHtml}
         </body>
       </html> 
     `
@@ -311,10 +313,8 @@ export function EdusharingAssetRenderer(props: {
     if (embedHtml === null) return
 
     // IframeResizer properties:
-    // - `heightCalculationMethod="lowestElement"` -> Documentation says its the most accurate (however worse performance than others)
     // - `srcDoc` -> Sets the iframe content
     // - `checkOrigin={false}` -> Necessary when using srcDoc
-    // - `style={{ width: '1px', minWidth: '100%' }}` -> Makes Iframe have width 100% and take as much height as it needs. Recommended by documentation.
     // - Missing `sandbox` -> Should put no restrictions on what the iframe can do: A) Make iframe send the same cookies as the host. B) Allow it to execute scripts. Both important to be able to fetch video.
     return (
       <div
@@ -335,13 +335,9 @@ export function EdusharingAssetRenderer(props: {
           />
         ) : (
           <MemoizedIframeResizer
-            heightCalculationMethod="lowestElement"
             checkOrigin={false}
             srcDoc={embedHtml}
-            style={{
-              width: '1px',
-              minWidth: '100%',
-            }}
+            style={{ width: '100%' }}
           />
         )}
       </div>

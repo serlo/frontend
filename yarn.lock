@@ -4278,6 +4278,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@open-iframe-resizer/core@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@open-iframe-resizer/core@npm:1.2.1"
+  checksum: 611919d099b9490da2a469ac598cbaddeea03df5a139ade27246c719cc32629645cf94d288592ac4bf2cb188b11e8c46b40f5db1df4feed146bd3ab4cf492b0a
+  languageName: node
+  linkType: hard
+
+"@open-iframe-resizer/react@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@open-iframe-resizer/react@npm:1.2.1"
+  dependencies:
+    "@open-iframe-resizer/core": 1.2.1
+  peerDependencies:
+    react: ">=17.0.0"
+    react-dom: ">=17.0.0"
+  checksum: a21ea5a890320b6d55e86d984d772da4ab27052a3196e95cc4f1a082f69ef860605d380d3a168d9b653518b4aafc938fc2edaa9c44dbc336fcc432161e121565
+  languageName: node
+  linkType: hard
+
 "@ory/client@npm:^1.15.10":
   version: 1.15.10
   resolution: "@ory/client@npm:1.15.10"
@@ -5837,6 +5856,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": 6.6.0
     "@fortawesome/free-solid-svg-icons": 6.6.0
     "@fortawesome/react-fontawesome": ^0.2.2
+    "@open-iframe-resizer/react": 1.2.1
     "@prezly/slate-lists": ^0.107.0
     "@radix-ui/react-dialog": ^1.1.2
     "@radix-ui/react-navigation-menu": ^1.2.1
