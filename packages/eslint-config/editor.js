@@ -86,6 +86,10 @@ module.exports = {
     '@typescript-eslint/no-unsafe-enum-comparison': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-redundant-type-constituents': 'off',
+    '@typescript-eslint/prefer-promise-reject-errors': [
+      'error',
+      { allowEmptyReject: true },
+    ],
 
     // eslint-plugin-import
     'import/export': 'error',

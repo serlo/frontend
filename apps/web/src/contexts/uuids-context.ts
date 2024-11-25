@@ -7,8 +7,6 @@ export interface UuidsContextData {
 
 export const UuidsContext = createContext<UuidsContextData | null>(null)
 
-UuidsContext['Provider']['propTypes']
-
 export const UuidsProvider = UuidsContext.Provider
 
 const errorMessage = 'attempted to use uuid data outside of provider!'

@@ -269,7 +269,7 @@ export async function requestPage(
 
     const fullTitle = page.title ? `${page.title} – ${uuid.title}` : uuid.title
     const metaTitle =
-      fullTitle.length < 75 ? fullTitle : page.title ?? uuid.title
+      fullTitle.length < 75 ? fullTitle : (page.title ?? uuid.title)
 
     const canonicalUrl = pageIndex ? coursePageUrls[pageIndex] : uuid.alias
     const metaDescription = sharedMetadata.metaDescription?.length

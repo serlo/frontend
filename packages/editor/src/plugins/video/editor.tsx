@@ -36,7 +36,7 @@ export const VideoEditor = (props: VideoProps) => {
         </EmbedWrapper>
       ) : (
         <div
-          className="mx-side cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
+          className="cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
           data-qa="plugin-video-placeholder"
           onClick={() => setShowSettingsModal('url')}
         >

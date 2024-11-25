@@ -97,7 +97,7 @@ export function useMutationFetchAuthed() {
 
 function handleError(
   type: ErrorType,
-  errorStrings?: { [key in ErrorType]: string },
+  errorStrings?: Record<ErrorType, string>,
   e?: { message?: string }
 ): false {
   if (!errorStrings) return false

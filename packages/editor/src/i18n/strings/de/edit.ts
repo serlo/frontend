@@ -212,6 +212,28 @@ export const editStrings = {
       errorLoading:
         'Inhalt konnte nicht geladen werden, bitte überprüfe die ID',
     },
+    interactiveVideo: {
+      title: 'Interaktives Video',
+      description: 'Erstelle ein interaktives Video mit Aufgaben',
+      editOverlayTitle: 'Aufgabe erstellen',
+      titlePlaceholder: 'Aufgabentitel',
+      defaultTitle: 'Aufgabe',
+      autoOpenLabel: 'Automatisch öffnen',
+      autoOpenExplanation:
+        'Der Inhalt öffnet wird automatisch angezeigt, wenn das Video dort ankommt',
+      mandatoryLabel: 'Verpflichtende Aufgabe',
+      mandatoryExplanation:
+        'Die Aufgabe muss richtig beantwortet werden, um das Video weiter abzuspielen',
+      forceRewatchLabel: 'Auto-Wiederholung',
+      forceRewatchExplanation:
+        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lerner per Button den letzten Abschnitt noch mal anschauen',
+      editMark: 'Bearbeiten',
+      removeMark: 'Löschen',
+      addOverlayContent: 'Aufgabe an aktueller Stelle einfügen',
+      addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
+      changeVideo: 'Video austauschen',
+      saveButton: 'Speichern',
+    },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
       description:
@@ -298,7 +320,9 @@ export const editStrings = {
         'Sorry, dieses Plugin kannst du hier nicht einfügen.',
       linkOverlay: {
         placeholder: 'Suchbegriff oder "/1234"',
+        placeholderNonSerlo: 'Link',
         inputLabel: 'Suche einen Inhalt oder füge einen Link ein',
+        inputLabelNonSerlo: 'Füge einen Link ein',
         edit: 'Link bearbeiten',
         remove: 'Link entfernen',
         customLink: 'Eigener Link',
@@ -368,11 +392,10 @@ export const editStrings = {
       changeInteractive: 'Interaktives Element ändern',
       confirmRemoveInteractive:
         'Deine aktuellen Änderungen werden dabei überschrieben, bist du sicher?',
-      createSolution: 'Lösung hinzufügen',
-      removeSolution: 'Lösung entfernen',
-      previewMode: 'Vorschau',
-      previewIsActiveHint: 'Vorschaumodus ist aktiv',
-      previewIsDeactiveHint: 'Hier kannst du bearbeiten',
+      createSolution: 'Lösungsvorschlag hinzufügen',
+      removeSolution: 'Lösungsvorschlag entfernen',
+      toLearnersView: 'Zur Lernenden-Ansicht',
+      toEditView: 'Zur Bearbeitungs-Ansicht',
     },
     exerciseGroup: {
       title: 'Aufgabe mit Teilaufgaben',

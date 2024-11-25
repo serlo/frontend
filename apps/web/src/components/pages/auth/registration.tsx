@@ -82,7 +82,20 @@ export function Registration() {
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   async function onSubmit(values: UpdateRegistrationFlowBody) {
-    const valuesWithLanguage = { ...values, 'traits.language': lang }
+    // We are currently not sure why this workaround is needed.
+    // values.method is supposed to be 'oidc' or 'password'
+    const provider = values.method as unknown as string
+    const hackedValues =
+      provider === 'nbp' || provider === 'vidis'
+        ? ({
+            ...values,
+            provider,
+            method: 'oidc',
+          } as UpdateRegistrationFlowBody)
+        : values
+
+    const valuesWithLanguage = { ...hackedValues, 'traits.language': lang }
+
     nProgress.start()
     return kratos
       .updateRegistrationFlow({
@@ -154,9 +167,7 @@ export function Registration() {
                     // simplifies the types and also allows the flow component
                     // to react to validation errors in the future
                     setHasValidationErrorMissingConsent(true)
-                    return Promise.reject({
-                      type: VALIDATION_ERROR_TYPE,
-                    })
+                    return Promise.reject(new Error(VALIDATION_ERROR_TYPE))
                   }
             }
             contentAfterLastTrait={renderAgreement()}

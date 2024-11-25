@@ -5,9 +5,9 @@ import { cn } from '@editor/utils/cn'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { ReactElement } from 'react'
 
-import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 import { EditorTooltip } from '../editor-tooltip'
 import { FaIcon } from '../fa-icon'
+import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string
@@ -36,8 +36,8 @@ export function PluginToolbar({
     <div
       className={cn(
         `
-        plugin-toolbar absolute -top-[2.6rem] left-[5px] right-0 z-[21] flex
-        h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
+        plugin-toolbar absolute -top-10 left-[7px] right-0 z-[21]
+        flex h-9 items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
         `,
         !noWhiteShadow &&
           `
@@ -48,6 +48,9 @@ export function PluginToolbar({
         className
       )}
     >
+      {/* Shadow helper element */}
+      <div className="clip-vertical-shadow pointer-events-none absolute inset-0 rounded-t-lg shadow-plugin-focus" />
+
       {/* Content controls */}
       <div>
         {contentControls}

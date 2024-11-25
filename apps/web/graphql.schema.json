@@ -12,6 +12,7 @@
         "kind": "INTERFACE",
         "name": "AbstractEntity",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -246,6 +247,7 @@
         "kind": "OBJECT",
         "name": "AbstractEntityConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -313,6 +315,7 @@
         "kind": "INTERFACE",
         "name": "AbstractEntityRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "author",
@@ -534,6 +537,7 @@
         "kind": "INTERFACE",
         "name": "AbstractEntityRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -647,6 +651,7 @@
         "kind": "INTERFACE",
         "name": "AbstractNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -814,6 +819,7 @@
         "kind": "OBJECT",
         "name": "AbstractNotificationEventConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -865,6 +871,7 @@
         "kind": "INTERFACE",
         "name": "AbstractRepository",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -1099,6 +1106,7 @@
         "kind": "INTERFACE",
         "name": "AbstractRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -1333,6 +1341,7 @@
         "kind": "INTERFACE",
         "name": "AbstractTaxonomyTermChild",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -1538,6 +1547,7 @@
         "kind": "INTERFACE",
         "name": "AbstractUuid",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -1719,6 +1729,7 @@
         "kind": "OBJECT",
         "name": "AbstractUuidConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -1786,6 +1797,7 @@
         "kind": "OBJECT",
         "name": "AiQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "executePrompt",
@@ -1838,6 +1850,7 @@
         "kind": "INPUT_OBJECT",
         "name": "AliasInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1881,6 +1894,7 @@
         "kind": "OBJECT",
         "name": "Applet",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -2206,6 +2220,7 @@
         "kind": "OBJECT",
         "name": "AppletRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -2495,6 +2510,7 @@
         "kind": "OBJECT",
         "name": "AppletRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -2568,6 +2584,7 @@
         "kind": "OBJECT",
         "name": "Article",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -2893,6 +2910,7 @@
         "kind": "OBJECT",
         "name": "ArticleRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -3178,6 +3196,7 @@
         "kind": "OBJECT",
         "name": "ArticleRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -3251,6 +3270,7 @@
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3261,6 +3281,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CacheRemoveInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3296,6 +3317,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ChatCompletionMessageParam",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3339,6 +3361,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CheckoutRevisionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3382,6 +3405,7 @@
         "kind": "OBJECT",
         "name": "CheckoutRevisionNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -3532,6 +3556,7 @@
         "kind": "OBJECT",
         "name": "Comment",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -3770,6 +3795,7 @@
         "kind": "OBJECT",
         "name": "CommentConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -3837,6 +3863,7 @@
         "kind": "ENUM",
         "name": "CommentStatus",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3866,6 +3893,7 @@
         "kind": "OBJECT",
         "name": "Course",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -4240,6 +4268,7 @@
         "kind": "OBJECT",
         "name": "CoursePage",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -4535,6 +4564,7 @@
         "kind": "OBJECT",
         "name": "CoursePageRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -4812,6 +4842,7 @@
         "kind": "OBJECT",
         "name": "CoursePageRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -4885,6 +4916,7 @@
         "kind": "OBJECT",
         "name": "CourseRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -5166,6 +5198,7 @@
         "kind": "OBJECT",
         "name": "CourseRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -5239,6 +5272,7 @@
         "kind": "OBJECT",
         "name": "CreateCommentNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -5373,6 +5407,7 @@
         "kind": "OBJECT",
         "name": "CreateEntityLinkNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -5507,6 +5542,7 @@
         "kind": "OBJECT",
         "name": "CreateEntityNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -5625,6 +5661,7 @@
         "kind": "OBJECT",
         "name": "CreateEntityRevisionNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -5759,6 +5796,7 @@
         "kind": "OBJECT",
         "name": "CreateTaxonomyLinkNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -5893,6 +5931,7 @@
         "kind": "OBJECT",
         "name": "CreateTaxonomyTermNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -6011,6 +6050,7 @@
         "kind": "OBJECT",
         "name": "CreateThreadNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -6145,6 +6185,7 @@
         "kind": "SCALAR",
         "name": "DateTime",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6155,6 +6196,7 @@
         "kind": "OBJECT",
         "name": "DefaultResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "query",
@@ -6198,6 +6240,7 @@
         "kind": "OBJECT",
         "name": "DeletedEntity",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "dateOfDeletion",
@@ -6233,6 +6276,7 @@
         "kind": "OBJECT",
         "name": "DeletedEntityConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -6300,6 +6344,7 @@
         "kind": "OBJECT",
         "name": "EntityMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "checkoutRevision",
@@ -6443,6 +6488,7 @@
         "kind": "OBJECT",
         "name": "EntityQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "deletedEntities",
@@ -6507,6 +6553,7 @@
         "kind": "INPUT_OBJECT",
         "name": "EntityUpdateLicenseInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6550,6 +6597,7 @@
         "kind": "OBJECT",
         "name": "Event",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -6875,6 +6923,7 @@
         "kind": "OBJECT",
         "name": "EventRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -7160,6 +7209,7 @@
         "kind": "OBJECT",
         "name": "EventRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -7233,6 +7283,7 @@
         "kind": "OBJECT",
         "name": "ExecutePromptResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "record",
@@ -7276,6 +7327,7 @@
         "kind": "OBJECT",
         "name": "Exercise",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -7601,6 +7653,7 @@
         "kind": "OBJECT",
         "name": "ExerciseGroup",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -7926,6 +7979,7 @@
         "kind": "OBJECT",
         "name": "ExerciseGroupRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -8203,6 +8257,7 @@
         "kind": "OBJECT",
         "name": "ExerciseGroupRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -8276,6 +8331,7 @@
         "kind": "OBJECT",
         "name": "ExerciseRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -8553,6 +8609,7 @@
         "kind": "OBJECT",
         "name": "ExerciseRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -8626,6 +8683,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ExerciseSubmissionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -8733,6 +8791,7 @@
         "kind": "OBJECT",
         "name": "ExperimentMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createExerciseSubmission",
@@ -8777,6 +8836,7 @@
         "kind": "ENUM",
         "name": "Instance",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -8824,6 +8884,7 @@
         "kind": "INTERFACE",
         "name": "InstanceAware",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "instance",
@@ -8977,6 +9038,7 @@
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -8987,6 +9049,7 @@
         "kind": "SCALAR",
         "name": "JSON",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -8997,6 +9060,7 @@
         "kind": "SCALAR",
         "name": "JSONObject",
         "description": "The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -9007,6 +9071,7 @@
         "kind": "OBJECT",
         "name": "MediaQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "newUpload",
@@ -9051,6 +9116,7 @@
         "kind": "ENUM",
         "name": "MediaType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -9092,6 +9158,7 @@
         "kind": "OBJECT",
         "name": "MediaUpload",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "uploadUrl",
@@ -9135,6 +9202,7 @@
         "kind": "OBJECT",
         "name": "MetadataQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "publisher",
@@ -9243,6 +9311,7 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "_cache",
@@ -9414,6 +9483,7 @@
         "kind": "OBJECT",
         "name": "Notification",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "email",
@@ -9501,6 +9571,7 @@
         "kind": "OBJECT",
         "name": "NotificationConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -9568,6 +9639,7 @@
         "kind": "OBJECT",
         "name": "NotificationMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "setState",
@@ -9608,6 +9680,7 @@
         "kind": "INPUT_OBJECT",
         "name": "NotificationSetStateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9659,6 +9732,7 @@
         "kind": "INPUT_OBJECT",
         "name": "OauthAcceptInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9702,6 +9776,7 @@
         "kind": "OBJECT",
         "name": "OauthAcceptResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "redirectUri",
@@ -9745,6 +9820,7 @@
         "kind": "OBJECT",
         "name": "OauthMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "acceptConsent",
@@ -9855,6 +9931,7 @@
         "kind": "OBJECT",
         "name": "Page",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -10180,6 +10257,7 @@
         "kind": "OBJECT",
         "name": "PageInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "endCursor",
@@ -10219,6 +10297,7 @@
         "kind": "OBJECT",
         "name": "PageQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "pages",
@@ -10267,6 +10346,7 @@
         "kind": "OBJECT",
         "name": "PageRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -10544,6 +10624,7 @@
         "kind": "OBJECT",
         "name": "PageRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -10617,6 +10698,7 @@
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "ai",
@@ -11027,6 +11109,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RejectRevisionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -11070,6 +11153,7 @@
         "kind": "OBJECT",
         "name": "RejectRevisionNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -11220,6 +11304,7 @@
         "kind": "OBJECT",
         "name": "RemoveTaxonomyLinkNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -11354,6 +11439,7 @@
         "kind": "OBJECT",
         "name": "ResourceMetadataConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -11405,6 +11491,7 @@
         "kind": "ENUM",
         "name": "Role",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -11464,6 +11551,7 @@
         "kind": "ENUM",
         "name": "Scope",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -11517,6 +11605,7 @@
         "kind": "OBJECT",
         "name": "ScopedRole",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "role",
@@ -11556,6 +11645,7 @@
         "kind": "OBJECT",
         "name": "ScopedRoleConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -11623,6 +11713,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SetAbstractEntityInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -11798,6 +11889,7 @@
         "kind": "OBJECT",
         "name": "SetEntityResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "entity",
@@ -11877,6 +11969,7 @@
         "kind": "OBJECT",
         "name": "SetLicenseNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -11995,6 +12088,7 @@
         "kind": "OBJECT",
         "name": "SetTaxonomyParentNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -12137,6 +12231,7 @@
         "kind": "OBJECT",
         "name": "SetTaxonomyTermNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -12255,6 +12350,7 @@
         "kind": "OBJECT",
         "name": "SetThreadStateNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -12389,6 +12485,7 @@
         "kind": "OBJECT",
         "name": "SetUuidStateNotificationEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "actor",
@@ -12523,6 +12620,7 @@
         "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12533,6 +12631,7 @@
         "kind": "OBJECT",
         "name": "Subject",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -12617,6 +12716,7 @@
         "kind": "OBJECT",
         "name": "SubjectQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "subjects",
@@ -12669,6 +12769,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "object",
@@ -12712,6 +12813,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionInfoConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -12779,6 +12881,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "set",
@@ -12823,6 +12926,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "currentUserHasSubscribed",
@@ -12908,6 +13012,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SubscriptionSetInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12975,6 +13080,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TaxonomyEntityLinksInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13026,6 +13132,7 @@
         "kind": "OBJECT",
         "name": "TaxonomyTerm",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -13331,6 +13438,7 @@
         "kind": "OBJECT",
         "name": "TaxonomyTermConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -13398,6 +13506,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TaxonomyTermCreateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13469,6 +13578,7 @@
         "kind": "OBJECT",
         "name": "TaxonomyTermCreateResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "query",
@@ -13524,6 +13634,7 @@
         "kind": "OBJECT",
         "name": "TaxonomyTermMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "create",
@@ -13700,6 +13811,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TaxonomyTermSetNameAndDescriptionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13755,6 +13867,7 @@
         "kind": "INPUT_OBJECT",
         "name": "TaxonomyTermSortInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13806,6 +13919,7 @@
         "kind": "ENUM",
         "name": "TaxonomyTermType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13841,6 +13955,7 @@
         "kind": "ENUM",
         "name": "TaxonomyTypeCreateOptions",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13864,6 +13979,7 @@
         "kind": "OBJECT",
         "name": "Thread",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "archived",
@@ -14024,6 +14140,7 @@
         "kind": "INTERFACE",
         "name": "ThreadAware",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "threads",
@@ -14201,6 +14318,7 @@
         "kind": "OBJECT",
         "name": "ThreadConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -14268,6 +14386,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadCreateCommentInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14343,6 +14462,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadCreateThreadInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14434,6 +14554,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadEditCommentInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14477,6 +14598,7 @@
         "kind": "OBJECT",
         "name": "ThreadMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "createComment",
@@ -14719,6 +14841,7 @@
         "kind": "OBJECT",
         "name": "ThreadQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "allThreads",
@@ -14807,6 +14930,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadSetCommentStateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14858,6 +14982,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadSetThreadArchivedInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14909,6 +15034,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadSetThreadStateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14960,6 +15086,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ThreadSetThreadStatusInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15011,6 +15138,7 @@
         "kind": "OBJECT",
         "name": "User",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "activityByType",
@@ -15432,6 +15560,7 @@
         "kind": "OBJECT",
         "name": "UserActivityByType",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "comments",
@@ -15507,6 +15636,7 @@
         "kind": "OBJECT",
         "name": "UserConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -15574,6 +15704,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserDeleteBotsInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15609,6 +15740,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserDeleteRegularUsersInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15652,6 +15784,7 @@
         "kind": "OBJECT",
         "name": "UserDeleteRegularUsersResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "reason",
@@ -15703,6 +15836,7 @@
         "kind": "OBJECT",
         "name": "UserMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "addRole",
@@ -15879,6 +16013,7 @@
         "kind": "OBJECT",
         "name": "UserQuery",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "potentialSpamUsers",
@@ -16029,6 +16164,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserRoleInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -16084,6 +16220,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserSetDescriptionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -16111,6 +16248,7 @@
         "kind": "OBJECT",
         "name": "UuidMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "setState",
@@ -16155,6 +16293,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UuidSetStateInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -16206,6 +16345,7 @@
         "kind": "OBJECT",
         "name": "Video",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -16531,6 +16671,7 @@
         "kind": "OBJECT",
         "name": "VideoRevision",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alias",
@@ -16812,6 +16953,7 @@
         "kind": "OBJECT",
         "name": "VideoRevisionConnection",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "nodes",
@@ -16885,6 +17027,7 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -17001,6 +17144,7 @@
         "kind": "ENUM",
         "name": "__DirectiveLocation",
         "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -17126,6 +17270,7 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -17193,6 +17338,7 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -17313,6 +17459,7 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -17408,6 +17555,7 @@
         "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -17519,6 +17667,7 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "kind",
@@ -17722,6 +17871,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "isOneOf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -17733,6 +17894,7 @@
         "kind": "ENUM",
         "name": "__TypeKind",
         "description": "An enum describing what kind of type a given `__Type` is.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -17792,6 +17954,7 @@
         "kind": "OBJECT",
         "name": "_cacheMutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "remove",

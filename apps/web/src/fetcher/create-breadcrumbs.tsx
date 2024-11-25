@@ -59,7 +59,7 @@ export function taxonomyParentsToRootToBreadcrumbsData(
 
   // get the subject from the secondary menu data so we link to the correct landing pages
   const subject = secondaryMenus.find(
-    (menu) => menu.rootId === breadcrumbs[0]?.id ?? term.id
+    (menu) => menu.rootId === (breadcrumbs[0]?.id || term.id)
   )
 
   if (subject) {

@@ -10,6 +10,7 @@ import { useState } from 'react'
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function McRenderer({
+  id,
   answers,
   renderExtraAnswerContent,
 }: ScMcExerciseRendererProps) {
@@ -32,13 +33,13 @@ export function McRenderer({
     <div className="mx-side mb-block">
       <ul className="unstyled-list m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
         {answers.map((answer, i) => {
-          const id = answer.key
+          const { key } = answer
           return (
-            <li key={id}>
+            <li key={key}>
               <div className="flex">
                 <input
                   className="w-0.25 opacity-0"
-                  id={id}
+                  id={key}
                   type="checkbox"
                   checked={selectedArray[i]}
                   onChange={() => {
@@ -48,6 +49,7 @@ export function McRenderer({
                     setSelectedArray(newArr)
 
                     editorLearnerEvent.trigger?.({
+                      pluginId: id,
                       verb: 'interacted',
                       value: i,
                       contentType: 'mc-exercise',
@@ -59,7 +61,7 @@ export function McRenderer({
                     /* we override some styles in the answer content to show it inline */
                     'flex cursor-pointer items-center [&_.slate-container]:mb-0 [&_.slate-p]:ml-2'
                   )}
-                  htmlFor={id}
+                  htmlFor={key}
                 >
                   <FaIcon
                     icon={selectedArray[i] ? faCheckSquare : faSquare}
@@ -89,6 +91,7 @@ export function McRenderer({
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({
+              pluginId: id,
               verb: 'answered',
               correct: allCorrect,
               // value: selected,

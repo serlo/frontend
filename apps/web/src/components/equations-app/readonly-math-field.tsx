@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { MathfieldElement } from 'mathlive'
 import { useState, useEffect, createRef } from 'react'
 
@@ -32,7 +31,6 @@ export function ReadonlyMathField(props: MathFieldProps) {
       mf.current.menuItems = []
       mf.current.readOnly = true
       if (mf.current.registers) {
-        // @ts-expect-error readonly?
         mf.current.registers.arraystretch = 1.5
       }
     }

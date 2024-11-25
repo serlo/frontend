@@ -5,8 +5,8 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { CourseNavigation } from './course-navigation'
 import type { CourseProps } from '..'
+import { CourseNavigation } from './course-navigation'
 
 export function CourseEditor(props: CourseProps) {
   const { state } = props

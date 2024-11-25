@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
@@ -22,6 +23,7 @@ export const InjectionToolbar = ({
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
   const [idState, setIdState] = useState(state.value)
+  const isSerlo = useIsSerlo()
 
   const injectionStrings = useEditStrings().plugins.injection
 
@@ -40,7 +42,7 @@ export const InjectionToolbar = ({
     // cleanup pasted links
     setTimeout(() => {
       const inputUrl = (e.target as HTMLInputElement).value
-      const cleanUrl = getCleanUrl(inputUrl)
+      const cleanUrl = getCleanUrl(inputUrl, isSerlo)
       if (cleanUrl !== inputUrl) setIdState(cleanUrl)
     })
   }

@@ -26,7 +26,7 @@ export function ImageRenderer({
 
   return (
     <figure
-      className="mb-block bg-white px-4 text-center"
+      className="mb-block px-4 text-center"
       itemScope
       itemType="http://schema.org/ImageObject"
     >
@@ -34,7 +34,7 @@ export function ImageRenderer({
         {wrapWithLink(
           placeholder ?? (
             <EditorImage
-              className="serlo-img"
+              className="serlo-img bg-white"
               src={src}
               alt={alt ? alt : altFallbackString}
               itemProp="contentUrl"

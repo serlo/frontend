@@ -94,8 +94,7 @@ export interface EditorPlugin<
  */
 export interface EditorPluginProps<
   S extends StateType = StateType,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  Config extends {} = {},
+  Config extends object = object,
 > {
   /**
    * Plugin configuration

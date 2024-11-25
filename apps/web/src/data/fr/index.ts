@@ -344,6 +344,8 @@ export const instanceData = {
         code1010001: 'Sign in',
         code1010002: 'Sign in via „Mein Bildungsraum“',
         code1010013: 'Continue with SSO',
+        code1010022: "Se connecter",
+        // Login with password
         code1040001: 'Register',
         code1040002: 'Register via „Mein Bildungsraum“',
         code1040003: 'Continue',
@@ -352,6 +354,7 @@ export const instanceData = {
         code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
         code1070003: "Sauvegarder",
         code1070005: "Soumettre",
+        code1070009: 'Continue',
         code1080001: 'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
@@ -363,6 +366,7 @@ export const instanceData = {
         code4000007: 'An account with the same email or username exists already.',
         code4000008: 'The provided authentication code is invalid, please try again.',
         code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4000032: "You inserted less than 8 characters.",
         code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
         code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
         code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'

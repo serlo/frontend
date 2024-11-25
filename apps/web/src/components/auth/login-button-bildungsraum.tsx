@@ -20,7 +20,7 @@ export function LoginButtonBildungsraum({
       <hr />
       <button
         className={cn(`
-        mt-10 w-full items-center border border-transparent px-[22px] py-2 py-2 text-center
+        mt-10 w-full items-center border border-transparent px-[22px] py-2 text-center
         text-lg font-bold shadow-menu transition-all hover:border-black focus-visible:border-black
         sm:flex sm:text-left
         `)}
