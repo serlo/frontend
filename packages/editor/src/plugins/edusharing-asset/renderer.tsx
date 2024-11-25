@@ -109,9 +109,10 @@ export function EdusharingAssetRenderer(props: {
   )
 
   function buildHtml(htmlSnippet: string, defineContainerHeight: boolean) {
-    // Hack: Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
+    // Hack: height: 97% -> Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
+    // Hack: overflow-y: hidden -> Sometimes after setting the correct iframe height the vertical scroll bar does not disappear.
     return `
-      <html style="${cssReset}${defineContainerHeight ? 'height: 97%;' : ''}">
+      <html style="${cssReset}${defineContainerHeight ? 'height: 97%;' : 'overflow-y: hidden;'}">
         <head>
           ${defineContainerHeight ? '' : iframeResizerHtml}
         </head>
