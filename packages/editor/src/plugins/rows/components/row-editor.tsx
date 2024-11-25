@@ -1,11 +1,12 @@
 import { StateTypeReturnType } from '@editor/plugin'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { selectIsFocused, useAppSelector } from '@editor/store'
+import { motion } from 'motion/react'
 import { type MouseEvent, useRef } from 'react'
 
 import type { RowsPluginConfig, RowsPluginState } from '..'
 import { AddRowButtonFloating } from './add-row-button-floating'
-import { EditorRowRenderer } from '../editor-renderer'
+import { EditorRowRenderer } from '../editor-row-renderer'
 
 interface RowEditorProps {
   config: RowsPluginConfig
@@ -36,8 +37,9 @@ export function RowEditor({
   }
 
   return (
-    <div
-      key={row.id}
+    <motion.div
+      layout
+      transition={{ duration: 0.3, type: 'linear' }}
       ref={dropContainer}
       // bigger drop zone with padding hack
       className="rows-child relative -ml-12 pl-12"
@@ -62,6 +64,6 @@ export function RowEditor({
           onClick={(e) => handleAddPluginButtonClick(e, index + 1)}
         />
       )}
-    </div>
+    </motion.div>
   )
 }

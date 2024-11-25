@@ -52,25 +52,23 @@ export function EditorRowRenderer({
 
   const [collectedDragProps, dragPreview] = useDrag({
     type: 'row',
-    item: () => {
-      return {
-        id: row.id,
-        static: selectStaticDocument(store.getState(), row.id),
-        onDrop() {
-          // Remove the dragged plugin from its original rows plugin
-          rows.set((list) => {
-            const index = list.findIndex((id) => id === row.id)
-            return R.remove(index, 1, list)
-          })
+    item: () => ({
+      id: row.id,
+      static: selectStaticDocument(store.getState(), row.id),
+      onDrop() {
+        // Remove the dragged plugin from its original rows plugin
+        rows.set((list) => {
+          const index = list.findIndex((id) => id === row.id)
+          return R.remove(index, 1, list)
+        })
 
-          // If the dragged plugin was the only plugin in the current rows plugin,
-          // add an empty text plugin to replace it
-          if (rows.length <= 1) {
-            rows.insert(0, { plugin: EditorPluginType.Text })
-          }
-        },
-      }
-    },
+        // If the dragged plugin was the only plugin in the current rows plugin,
+        // add an empty text plugin to replace it
+        if (rows.length <= 1) {
+          rows.insert(0, { plugin: EditorPluginType.Text })
+        }
+      },
+    }),
     collect(monitor) {
       return { isDragging: !!monitor.isDragging() }
     },
@@ -171,7 +169,7 @@ export function EditorRowRenderer({
   const dropPreview =
     collectedDropProps.isDragging &&
     (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
-      <hr className="m-0 border-2 border-editor-primary p-0" />
+      <hr className="m-0 border-2 border-brand p-0" />
     ) : null
 
   const rowPluginType = selectDocumentPluginType(store.getState(), row.id)

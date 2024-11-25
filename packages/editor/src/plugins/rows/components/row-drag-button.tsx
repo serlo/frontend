@@ -17,12 +17,12 @@ export function RowDragButton({ rows, index }: RowDragButtonProps) {
 
   function handleDown() {
     rows.move(index, index + 1)
-    scrollToMovedRow()
+    setTimeout(() => scrollToMovedRow(), 400)
   }
 
   function scrollToMovedRow() {
     const element = document.getElementById(rows[index].id)
-    if (element) setTimeout(() => element.scrollIntoView({ block: 'nearest' }))
+    if (element) element.scrollIntoView({ block: 'nearest' })
   }
 
   return (
