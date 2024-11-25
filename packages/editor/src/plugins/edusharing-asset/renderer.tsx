@@ -100,8 +100,8 @@ export function EdusharingAssetRenderer(props: {
         {embedHtml ? (
           renderEmbed()
         ) : (
-          <div className="flex justify-center">
-            <EdusharingIcon />
+          <div className="flex aspect-[16/9] w-full items-center justify-center">
+            <EdusharingIcon style={{ width: '5rem', height: '5rem' }} />
           </div>
         )}
       </div>

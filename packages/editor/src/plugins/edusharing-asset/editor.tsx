@@ -1,6 +1,7 @@
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import * as t from 'io-ts'
 import { useContext, useEffect, useRef, useState } from 'react'
 
@@ -79,12 +80,20 @@ export function EdusharingAssetEditor({
     </>
   )
 
-  // Transparent overlay while the edu-sharing plugin is unfocused. Clicking it will focus the plugin and let the user interact with the content.
+  // Transparent overlay. If the plugin is ...
+  // ... unfocused -> Clicking it will focus the plugin
+  // ... focused -> Clicking it does nothing and the events are handled in the iframe behind it
   // Explanation: Content is inside an iframe. Clicking within the iframe does sadly not change the editor focus automatically. Solutions I found are not easy and don't work reliably. So, we require an extra click from the user to be able to interact with the content in the editor.
   function renderOverlay() {
-    if (focused) return null
-
-    return <div className="absolute left-0 top-0 z-[15] h-full w-full"></div>
+    const captureClick = !focused
+    return (
+      <div
+        className={cn(
+          'absolute left-0 top-0 z-[15] h-full w-full',
+          captureClick ? 'pointer-events-auto' : 'pointer-events-none'
+        )}
+      ></div>
+    )
   }
 
   function renderPluginToolbar() {

@@ -1,3 +1,11 @@
+## Changelog for version 0.19.2
+
+- chore: upgrade Slate. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4308
+- fix(editor): Render toasts in Toaster. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4307
+- feat: plugin hover focus state frame shadow. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4277
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.19.1-editor...v0.19.2-editor
+
 ## Changelog for version 0.19.1
 
 - fix(editor): remove fixed size from text area icon. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4303
