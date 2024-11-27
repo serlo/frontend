@@ -11,6 +11,7 @@ import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg?raw'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg?raw'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg?raw'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg?raw'
+import IconInputExercise from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg?raw'
 import IconMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-mc-exercise.svg?raw'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg?raw'
 import IconScExercise from '@editor/editor-ui/assets/plugin-icons/icon-sc-exercise.svg?raw'
@@ -221,7 +222,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.DropzoneImage]: IconDropzones,
   [pluginMenuType.SingleChoiceExercise]: IconScExercise,
   [pluginMenuType.MultipleChoiceExercise]: IconMcExercise,
-  [pluginMenuType.InputExercise]: IconTextArea,
+  [pluginMenuType.InputExercise]: IconInputExercise,
   [pluginMenuType.TextAreaExercise]: IconTextArea,
   [pluginMenuType.BlanksExercise]: IconBlanksTyping,
   [pluginMenuType.BlanksExerciseDragAndDrop]: IconBlanksDragAndDrop,
