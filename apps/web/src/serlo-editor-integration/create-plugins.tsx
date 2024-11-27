@@ -37,6 +37,7 @@ import { videoTypePlugin } from '@editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
+import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -82,6 +83,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     EditorPluginType.InputExercise,
     EditorPluginType.BlanksExercise,
     EditorPluginType.InteractiveVideo,
+    EditorPluginType.TextAreaExercise,
     EditorPluginType.Solution,
 
     EditorPluginType.Unsupported,
@@ -154,6 +156,14 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
       plugin: createDropzoneImagePlugin(),
     },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    ...(isProduction
+      ? []
+      : [
+          {
+            type: EditorPluginType.TextAreaExercise,
+            plugin: textAreaExercisePlugin,
+          },
+        ]),
 
     { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
