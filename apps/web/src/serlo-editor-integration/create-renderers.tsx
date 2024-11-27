@@ -10,6 +10,7 @@ import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
+import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorBlanksExerciseDocument,
@@ -232,6 +233,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.InteractiveVideo,
         renderer: InteractiveVideoRenderer,
+      },
+      {
+        type: EditorPluginType.TextAreaExercise,
+        renderer: TextAreaExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,
