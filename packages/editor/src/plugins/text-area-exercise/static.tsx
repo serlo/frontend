@@ -3,7 +3,11 @@ import { EditorTextAreaExerciseDocument } from '@editor/types/editor-plugins'
 import { TextAreaExerciseRenderer } from './renderer'
 
 export function TextAreaExerciseStaticRenderer(
-  _: EditorTextAreaExerciseDocument
+  state: EditorTextAreaExerciseDocument
 ) {
-  return <TextAreaExerciseRenderer />
+  return (
+    <TextAreaExerciseRenderer
+      scaffoldingEnabled={state.state.scaffoldingEnabled}
+    />
+  )
 }

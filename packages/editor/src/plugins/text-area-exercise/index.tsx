@@ -1,9 +1,16 @@
-import { type EditorPlugin, object, EditorPluginProps } from '@editor/plugin'
+import {
+  type EditorPlugin,
+  object,
+  EditorPluginProps,
+  boolean,
+} from '@editor/plugin'
 
 import { TextAreaExerciseEditor } from './editor'
 
 function createTextAreaExerciseState() {
-  return object({})
+  return object({
+    scaffoldingEnabled: boolean(false),
+  })
 }
 
 export const textAreaExercisePlugin: EditorPlugin<TextAreaExercisePluginState> =
