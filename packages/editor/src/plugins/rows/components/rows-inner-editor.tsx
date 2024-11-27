@@ -60,7 +60,7 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
 
   return (
     <>
-      <div className="relative mt-6">
+      <div className="relative mt-6" style={containerCustomStyle}>
         <LazyMotion features={loadMotionFeatures} strict>
           {state.map((row, index) => {
             const hideAddButton =
@@ -90,4 +90,10 @@ export function RowsInnerEditor({ state, config, id }: RowsProps) {
       <PluginMenuModal onInsertPlugin={handleInsertPlugin} />
     </>
   )
+}
+
+const containerCustomStyle: React.HTMLAttributes<HTMLDivElement>['style'] = {
+  // `overflow-anchor: none` makes sure that the page doesn't jump
+  // when moving plugins using the sidebar up/down arrow buttons
+  overflowAnchor: 'none',
 }

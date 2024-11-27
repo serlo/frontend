@@ -11,18 +11,20 @@ interface RowDragButtonProps {
 }
 
 export function RowControls({ rows, index }: RowDragButtonProps) {
-  function handleUp() {
-    rows.move(index, index - 1)
+  function handleUpButtonClick() {
+    const previousRow = document.getElementById(rows[index - 1].id)
+    if (!previousRow) return
+    scrollToElement(previousRow, () => {
+      rows.move(index, index - 1)
+    })
   }
 
-  function handleDown() {
-    rows.move(index, index + 1)
-    setTimeout(() => scrollToMovedRow(), 400)
-  }
-
-  function scrollToMovedRow() {
-    const element = document.getElementById(rows[index].id)
-    if (element) element.scrollIntoView({ block: 'nearest' })
+  function handleDownButtonClick() {
+    const nextRow = document.getElementById(rows[index + 1].id)
+    if (!nextRow) return
+    scrollToElement(nextRow, () => {
+      rows.move(index, index + 1)
+    })
   }
 
   return (
@@ -35,7 +37,7 @@ export function RowControls({ rows, index }: RowDragButtonProps) {
     >
       <button
         className={cn(buttonStyles, index === 0 && 'hidden')}
-        onClick={handleUp}
+        onClick={handleUpButtonClick}
       >
         <div className={iconWrapperStyles} aria-hidden="true">
           <FaIcon icon={faAngleUp} className="text-xl" />
@@ -44,7 +46,7 @@ export function RowControls({ rows, index }: RowDragButtonProps) {
 
       <button
         className={cn(buttonStyles, index === rows.length - 1 && 'hidden')}
-        onClick={handleDown}
+        onClick={handleDownButtonClick}
       >
         <div className={iconWrapperStyles} aria-hidden="true">
           <FaIcon icon={faAngleDown} className="text-xl" />
@@ -63,3 +65,20 @@ const iconWrapperStyles = cn(`
   serlo-button-edit-primary block rounded-full bg-editor-primary-100
   px-0.5 py-0 text-almost-black hover:bg-editor-primary-300
 `)
+
+function scrollToElement(target: HTMLElement, callback: () => void) {
+  target.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      if (!entries[0].isIntersecting) return
+      observer.disconnect()
+      callback()
+    },
+    // Using a treshold of 1, meaning that the element is fully visible,
+    // doesn't work consistently. Therefore, 0.95.
+    { threshold: 0.95 }
+  )
+
+  observer.observe(target)
+}
