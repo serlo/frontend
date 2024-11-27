@@ -14,7 +14,7 @@ export function RowControls({ rows, index }: RowDragButtonProps) {
   function handleUpButtonClick() {
     const previousRow = document.getElementById(rows[index - 1].id)
     if (!previousRow) return
-    scrollToElement(previousRow, () => {
+    scrollToElement(previousRow, { offset: 60, direction: 'up' }, () => {
       rows.move(index, index - 1)
     })
   }
@@ -22,7 +22,7 @@ export function RowControls({ rows, index }: RowDragButtonProps) {
   function handleDownButtonClick() {
     const nextRow = document.getElementById(rows[index + 1].id)
     if (!nextRow) return
-    scrollToElement(nextRow, () => {
+    scrollToElement(nextRow, { offset: 40, direction: 'down' }, () => {
       rows.move(index, index + 1)
     })
   }
@@ -66,18 +66,35 @@ const iconWrapperStyles = cn(`
   px-0.5 py-0 text-almost-black hover:bg-editor-primary-300
 `)
 
-function scrollToElement(target: HTMLElement, callback: () => void) {
-  target.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+function scrollToElement(
+  target: HTMLElement,
+  options: { offset: number; direction: 'up' | 'down' },
+  callback: () => void
+) {
+  const { offset, direction } = options
+  const rect = target.getBoundingClientRect()
 
+  const isFullyVisible =
+    rect.top >= offset && rect.bottom <= window.innerHeight - offset
+
+  if (isFullyVisible) return callback()
+
+  const targetPosition =
+    direction === 'up'
+      ? rect.top + window.scrollY - offset
+      : rect.bottom + window.scrollY + offset - window.innerHeight
+
+  window.scrollTo({ top: targetPosition, behavior: 'smooth' })
+
+  // Call the callback function once the element is in view
   const observer = new IntersectionObserver(
     (entries, observer) => {
       if (!entries[0].isIntersecting) return
       observer.disconnect()
       callback()
     },
-    // Using a treshold of 1, meaning that the element is fully visible,
-    // doesn't work consistently. Therefore, 0.95.
-    { threshold: 0.95 }
+    // Make sure that the whole element is in view
+    { threshold: 1 }
   )
 
   observer.observe(target)
