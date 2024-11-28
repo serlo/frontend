@@ -21,9 +21,7 @@ Hier ist die Musterlösung:
 </musterloesung>
 
 
-Das Feedback soll im JSON-Format gegeben werden. Es soll aus zwei Hauptteilen bestehen:
-1. Allgemeines Feedback zur gesamten Lösung
-2. Spezifisches Feedback zu einzelnen Lösungsschritten
+Das Feedback soll im JSON-Format gegeben werden. Es soll ein allgemeines Feedback zur gesamten Lösung erhalten.
 
 Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Musterlösung. Achte besonders auf:
 - Korrektheit der technischen Konzepte
@@ -31,7 +29,6 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 - Klarheit und Struktur der Darstellung
 - Verwendung korrekter mathematischer Notation
 - Gebe im generellen Feedback an, ob die Lösung insgesamt richtig oder falsch ist. Nutze hierfür den Parameter "isCorrect".
-- Gebe im spezifischen Feedback pro Lösungsschritt an, ob dieser richtig oder falsch ist. Nutze hierfür den Parameter "isCorrect".
 
 Hier sind einige Beispiele für gutes Feedback:
 - "Dein Ansatz zur Lösung der Gleichung ist korrekt. Du hast die Äquivalenzumformungen richtig angewendet."
@@ -98,26 +95,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                   isCorrect: {
                     type: 'boolean',
                   },
-                  specificFeedback: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        paragraphId: {
-                          type: 'number',
-                        },
-                        feedback: {
-                          type: 'string',
-                        },
-                        isCorrect: {
-                          type: 'boolean',
-                        },
-                      },
-                      required: ['paragraphId', 'feedback', 'isCorrect'],
-                    },
-                  },
                 },
-                required: ['generalFeedback', 'isCorrect', 'specificFeedback'],
+                required: ['generalFeedback', 'isCorrect'],
               },
               name: '2024-09-22-feedback-schema',
             },
