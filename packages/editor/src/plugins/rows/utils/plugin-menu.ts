@@ -12,6 +12,7 @@ import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg?raw'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg?raw'
 import IconInputExercise from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg?raw'
+import IconInteractiveVideo from '@editor/editor-ui/assets/plugin-icons/icon-interactive-video.svg?raw'
 import IconMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-mc-exercise.svg?raw'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg?raw'
 import IconScExercise from '@editor/editor-ui/assets/plugin-icons/icon-sc-exercise.svg?raw'
@@ -228,7 +229,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.BlanksExerciseDragAndDrop]: IconBlanksDragAndDrop,
   [pluginMenuType.H5p]: IconH5p,
   [pluginMenuType.ExerciseGroup]: IconFallback,
-  [pluginMenuType.InteractiveVideo]: IconFallback,
+  [pluginMenuType.InteractiveVideo]: IconInteractiveVideo,
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
