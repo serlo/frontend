@@ -5845,6 +5845,7 @@ __metadata:
     "@rollup/plugin-replace": ^6.0.1
     "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
+    "@tanstack/react-query": ^5.61.5
     "@types/dompurify": ^3.0.5
     "@types/is-hotkey": 0.1.10
     "@types/react": ^18.0.25
@@ -6419,6 +6420,24 @@ __metadata:
   peerDependencies:
     tailwindcss: "*"
   checksum: 4e7ad4f7cf0e290030de63f123b53b431fdc3b0fc76e43b9abe21945cf9eca59b7d0d557bb6c7ebd16769586b22ca8cf40e75dc6db069a3afac4c678f4e4ed1e
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/query-core@npm:5.61.5"
+  checksum: 112cc6a3e3cde9fc2657d283e8383c64ff7de5780b10c7892c93664ce475bf251bfba79daf2302ce04f2d43b96ced188bd098c220432b21408d7b99cfee58fe0
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/react-query@npm:5.61.5"
+  dependencies:
+    "@tanstack/query-core": 5.61.5
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 35f2ed483d03acf77148d338173943bb3b675e38c763f5e763903e48f0ed1d4757d3129e03f4d0231bba808761616f6b3c0a2adcd11d3eebf8ecfb03f7fa7b4b
   languageName: node
   linkType: hard
 

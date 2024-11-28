@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@serlo/katex-styles": "1.0.1",
+    "@tanstack/react-query": "^5.61.5",
     "@vidstack/react": "next",
     "dompurify": "^3.2.0",
     "lit": "^3.2.1",
