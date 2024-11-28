@@ -224,7 +224,7 @@ export const editStrings = {
       addOverlayContent: 'Add exercise',
       addVideo: 'Add a video url (e.g. YouTube) to get started',
       changeVideo: 'Change video',
-      saveButton: 'Save',
+      saveInfo: 'Changes are continually saved!',
     },
     multimedia: {
       title: 'Multimedia content associated with text',
