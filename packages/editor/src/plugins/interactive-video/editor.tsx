@@ -22,16 +22,19 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
     ? staticDocument.state.video.state.src
     : ''
 
+  const hasVideo = videoSrc.length > 0
+
   return (
     <>
       {focused && (
         <InteractiveVideoToolbar
           {...props}
+          hasVideo={hasVideo}
           previewActive={previewActive}
           setPreviewActive={setPreviewActive}
         />
       )}
-      {videoSrc.length ? (
+      {hasVideo ? (
         <EditMode
           previewActive={previewActive}
           {...props}
