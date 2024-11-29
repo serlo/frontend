@@ -51,7 +51,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!exercise || !solution || !studentSolution) {
       return NextResponse.json(
         { error: 'Missing a necessary argument' },
-        { status: 400 },
+        { status: 400 }
       )
     }
 
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
               role: 'user',
               content: userPrompt.replace(
                 '{{STUDENT_SOLUTION}}',
-                studentSolution,
+                studentSolution
               ),
             },
           ],
@@ -104,7 +104,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         })
 
         controller.enqueue(
-          encoder.encode(openAIResponse.choices[0]?.message?.content ?? 'null'),
+          encoder.encode(openAIResponse.choices[0]?.message?.content ?? 'null')
         )
 
         controller.close()
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     console.error('Error fetching suggestion:', error)
     return NextResponse.json(
       { error: 'Failed to fetch suggestion' },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
