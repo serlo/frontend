@@ -3,6 +3,7 @@ import {
   object,
   EditorPluginProps,
   boolean,
+  string,
 } from '@editor/plugin'
 
 import { TextAreaExerciseEditor } from './editor'
@@ -10,6 +11,7 @@ import { TextAreaExerciseEditor } from './editor'
 function createTextAreaExerciseState() {
   return object({
     scaffoldingEnabled: boolean(false),
+    solution: string('banana'),
   })
 }
 

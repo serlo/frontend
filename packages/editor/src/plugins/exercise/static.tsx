@@ -7,8 +7,10 @@ import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
+import { ExercisePluginStateContext } from '../text-area-exercise/exercise-plugin-state-context'
 
-export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
+export function ExerciseStaticRenderer(props: EditorExerciseDocument) {
+  const { state } = props
   const { content, interactive, solution, hideInteractiveInitially } = state
   const [interactiveHidden, setInteractiveHidden] = useState(
     hideInteractiveInitially
@@ -22,7 +24,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
     isEmptyTextDocument(content.state[0])
 
   return (
-    <>
+    <ExercisePluginStateContext.Provider value={props}>
       {isEmptyContent ? (
         <div className="mt-6"></div>
       ) : (
@@ -41,6 +43,6 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
       )}
 
       <StaticRenderer document={solution} />
-    </>
+    </ExercisePluginStateContext.Provider>
   )
 }

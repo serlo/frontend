@@ -1,24 +1,30 @@
+import { useContext } from 'react'
+
+import { ExercisePluginStateContext } from './exercise-plugin-state-context'
 import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
+import { TextAreaPluginStateContext } from './text-area-plugin-state-context'
 import { AiFeedback } from './types'
 
-export function FeedbackButton({
-  id,
-  exercise,
-  solution,
-  studentSolution,
-}: {
-  id: string
-  exercise: string
-  solution: string
-  studentSolution: string
-}) {
+export function FeedbackButton({ id }: { id: string }) {
+  const textAreaExerciseState = useContext(TextAreaPluginStateContext)
+  const exerciseState = useContext(ExercisePluginStateContext)
+  const blocks = PrototypeStateStore.useState((s) => s.textAreaBlocks)
+
   async function fetchFeedback() {
     const url = new URL('/api/ai/student-feedback', window.location.href)
+    // Careful: Formatting in exercise content does not work. Only one text plugin without any unformatted works.
+    // TODO: If necessary, build text from slate node structure.
+    // @ts-expect-error types
+    const contentText = exerciseState.state.content.state[0].state[0]
+      .children[0].text as string
 
-    url.searchParams.append('exercise', exercise)
-    url.searchParams.append('solution', solution)
+    url.searchParams.append('exercise', contentText)
+    url.searchParams.append('solution', textAreaExerciseState.state.solution)
     // Maybe do it per paragraph like in the original prototype?
-    url.searchParams.append('studentSolution', studentSolution)
+    url.searchParams.append(
+      'studentSolution',
+      blocks.find((block) => block.id === id)?.content || ''
+    )
 
     const response = await fetch(url.toString(), { method: 'POST' })
 
