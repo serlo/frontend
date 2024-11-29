@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Script from 'next/script'
 
-import { LazyIframeResizer } from '@/components/content/lazy-iframe-resizer'
 import { Entity } from '@/components/entity/entity'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
@@ -52,7 +52,10 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       serloEntityData={{ entityId }}
       authorization={pageData.authorization}
     >
-      <LazyIframeResizer />
+      <Script
+        src="https://cdn.jsdelivr.net/npm/@open-iframe-resizer/core@1.2.1/dist/index.min.js"
+        strategy="lazyOnload"
+      />
       {pageData.metaData ? (
         <HeadTags
           data={pageData.metaData}

@@ -105,7 +105,7 @@ function Content() {
         value={{ editorVariant: 'serlo-org', userId: 'serlo-preview-user' }}
       >
         <main id="content" className="flex">
-          <section className="min-h-screen w-[50vw] border-4 border-r-0 border-editor-primary">
+          <section className="min-h-screen w-1/2 border-4 border-r-0 border-editor-primary">
             <header className="mx-side flex justify-between align-middle font-bold">
               <h2 className="mb-12 text-editor-primary">Edit</h2>
               <div>
@@ -153,7 +153,7 @@ function Content() {
             </header>
             <div className="px-2">{editor}</div>
           </section>
-          <section className="min-h-screen w-[50vw] border-4 border-editor-primary">
+          <section className="min-h-screen w-1/2 border-4 border-editor-primary">
             <h2 className="mx-side mb-12 font-bold text-editor-primary">
               Preview
             </h2>
