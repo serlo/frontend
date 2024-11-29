@@ -67,6 +67,7 @@
     "next": "^14.2.18",
     "next-query-params": "^5.0.1",
     "nprogress": "^0.2.0",
+    "openai": "^4.73.1",
     "postcss": "^8.4.49",
     "qrcode.react": "^4.1.0",
     "ramda": "^0.30.1",
