@@ -31,12 +31,16 @@ export function Editor(props: EditorProps) {
   // New store for every editor instance
   const store = useMemo(() => createStore(), [])
 
+  const isSerloEditorPreviewPage =
+    window?.location?.href &&
+    window?.location?.href.includes('___editor_preview')
+
   return (
     <Provider store={store}>
       <DndWrapper>
         <HotkeysProvider initiallyActiveScopes={['global']}>
           {/* only on serlo for now */}
-          {isSerlo ? (
+          {isSerlo && !isSerloEditorPreviewPage ? (
             <>
               <EditorToolbar />
               <LocalStorageNotice
@@ -44,12 +48,10 @@ export function Editor(props: EditorProps) {
                 setUseStored={setUseStored}
               />
             </>
-          ) : (
-            // For non serlo environments, we need to render the toaster
-            // https://react-hot-toast.com/docs/toaster (already gets rendered
-            // in the web project)
-            <Toaster />
-          )}
+          ) : null}
+          {/* For non serlo environments, we need to render the toaster
+          (already gets rendered in the web project) */}
+          {!isSerlo ? <Toaster /> : null}
           <div
             className={cn(
               'editor-core mb-24 text-lg leading-cozy',
