@@ -10,3 +10,8 @@ export interface Text {
   type: 'text'
   content: string
 }
+
+export interface AiFeedback {
+  isCorrect: boolean
+  generalFeedback: string
+}

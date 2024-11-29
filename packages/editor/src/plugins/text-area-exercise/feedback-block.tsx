@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
-import { v4 as uuid_v4 } from 'uuid'
 
 import { AnimateChangeInHeight } from './animate-change-in-height'
-import type { AiFeedback } from './feedback-button'
 import { PrototypeStateStore } from './prototype-state'
 import { Feedback, Text } from './types'
 
@@ -38,14 +36,4 @@ export function FeedbackBlock({ id, content }: Feedback) {
       <AnimateChangeInHeight>{content}</AnimateChangeInHeight>
     </div>
   )
-}
-
-export function createFeedbackBlock(
-  feedback: AiFeedback | null = null
-): Feedback {
-  if (!feedback) {
-    return { id: uuid_v4(), type: 'feedback', content: 'failed' }
-  }
-
-  return { id: uuid_v4(), type: 'feedback', content: feedback.generalFeedback }
 }

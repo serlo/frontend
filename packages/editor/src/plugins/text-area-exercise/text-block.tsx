@@ -1,27 +1,11 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { cn } from '@editor/utils/cn'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import {
-  Bold,
-  ClassicEditor,
-  Essentials,
-  Italic,
-  Mention,
-  Paragraph,
-} from 'ckeditor5'
-import { useContext, useEffect, useRef } from 'react'
-import { v4 as uuid_v4 } from 'uuid'
+import { useEffect, useRef } from 'react'
 
 import { FeedbackButton } from './feedback-button'
-import { StateContext } from './state-context'
+import { createTextBlock, PrototypeStateStore } from './prototype-state'
 import { Text } from './types'
-import { PrototypeStateStore } from './prototype-state'
 
 // Where user types text
-export function TextBlock({ id, content, type }: Text) {
-  //const { state, setState } = useContext(StateContext)
-
+export function TextBlock({ id /*, content, type TODO */ }: Text) {
   const autofocusId = useRef<string | null>(null)
 
   useEffect(() => {
@@ -30,7 +14,7 @@ export function TextBlock({ id, content, type }: Text) {
     console.log(autofocusId.current)
 
     setTimeout(() => {
-      document.getElementById(autofocusId).focus()
+      document.getElementById(autofocusId.current ?? '')!.focus()
       autofocusId.current = null
     }, 100)
   }, [autofocusId])
@@ -45,17 +29,13 @@ export function TextBlock({ id, content, type }: Text) {
           PrototypeStateStore.update((s) => {
             const index = s.textAreaBlocks.findIndex((block) => block.id === id)
             const newTextBlock = createTextBlock()
-            //autofocusId.current = newTextBlock.id
+            autofocusId.current = newTextBlock.id
             s.textAreaBlocks.splice(index + 1, 0, newTextBlock)
           })
         }}
         className="plugin-text-area-text-area grow resize-none bg-transparent outline-none"
       ></textarea>
-      <FeedbackButton id={id} />
+      <FeedbackButton id={id} exercise="" solution="" studentSolution="" />
     </div>
   )
-}
-
-export function createTextBlock(): Text {
-  return { id: uuid_v4(), type: 'text', content: '' }
 }

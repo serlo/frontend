@@ -1,12 +1,28 @@
 import { Store } from 'pullstate'
+import { v4 as uuid_v4 } from 'uuid'
 
-import { createTextBlock } from './text-block'
-import { Block } from './types'
+import { Block, Text, AiFeedback, Feedback } from './types'
 
 interface PrototypeState {
   textAreaBlocks: Block[]
+  silentMode: boolean
 }
 
 export const PrototypeStateStore = new Store<PrototypeState>({
   textAreaBlocks: [createTextBlock()],
+  silentMode: false,
 })
+
+export function createFeedbackBlock(
+  feedback: AiFeedback | null = null
+): Feedback {
+  if (!feedback) {
+    return { id: uuid_v4(), type: 'feedback', content: 'failed' }
+  }
+
+  return { id: uuid_v4(), type: 'feedback', content: feedback.generalFeedback }
+}
+
+export function createTextBlock(): Text {
+  return { id: uuid_v4(), type: 'text', content: '' }
+}

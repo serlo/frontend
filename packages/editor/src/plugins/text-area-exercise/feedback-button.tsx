@@ -1,19 +1,5 @@
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { cn } from '@editor/utils/cn'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { useMutation } from '@tanstack/react-query'
-import { useContext, useState } from 'react'
-
-import { createFeedbackBlock } from './feedback-block'
-import { StateContext } from './state-context'
-import { createTextBlock } from './text-block'
-import { Block } from './types'
-import { PrototypeStateStore } from './prototype-state'
-
-export interface AiFeedback {
-  isCorrect: boolean
-  generalFeedback: string
-}
+import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
+import { AiFeedback } from './types'
 
 export function FeedbackButton({
   id,
@@ -55,23 +41,6 @@ export function FeedbackButton({
         //const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
       }
     })
-    /*setState((oldState) => {
-      const blocks = oldState.blocks
-      const index = blocks.findIndex((block) => block.id === id)
-      const nextBlock = blocks.at(index + 1)
-      // Only one feedback block after text block
-      if (nextBlock && nextBlock.type === 'feedback') return oldState
-      const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
-      const newBlocks = [
-        ...blocks.slice(0, index + 1),
-        createFeedbackBlock(feedback),
-        ...endSlice,
-      ]
-      return {
-        ...oldState,
-        blocks: newBlocks,
-      }
-    })*/
   }
   return (
     <>
