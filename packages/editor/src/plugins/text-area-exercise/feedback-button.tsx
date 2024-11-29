@@ -6,6 +6,7 @@ import { useContext } from 'react'
 
 import { createFeedbackBlock } from './feedback-block'
 import { StateContext } from './state-context'
+import { createTextBlock } from './text-block'
 import { Block } from './types'
 
 export function FeedbackButton({ id }: { id: string }) {
@@ -40,11 +41,12 @@ export function FeedbackButton({ id }: { id: string }) {
       const index = blocks.findIndex((block) => block.id === id)
       const nextBlock = blocks.at(index + 1)
       // Only one feedback block after text block
-      if (!nextBlock || nextBlock.type === 'feedback') return oldState
+      if (nextBlock && nextBlock.type === 'feedback') return oldState
+      const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
       const newBlocks = [
         ...blocks.slice(0, index + 1),
         createFeedbackBlock(),
-        ...blocks.slice(index + 1),
+        ...endSlice,
       ]
       return {
         ...oldState,
@@ -54,16 +56,8 @@ export function FeedbackButton({ id }: { id: string }) {
   }
   return (
     <>
-      <button
-        className={cn('serlo-button-light')}
-        onClick={handleKiButtonClick}
-      >
-        <div>🤖 ⟳</div>
-        {/* {fetchFeedback.isPending ? (
-          <FaIcon icon={faSpinner} className="animate-spin-slow" />
-        ) : (
-          <div>🤖 ⟳</div>
-        )} */}
+      <button className="" onClick={handleKiButtonClick}>
+        <div>🐦</div>
       </button>
     </>
   )

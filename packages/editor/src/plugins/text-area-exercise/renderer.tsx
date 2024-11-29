@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Blocks } from './blocks'
 import { createFeedbackBlock } from './feedback-block'
@@ -13,13 +13,7 @@ export function TextAreaExerciseRenderer({
 }) {
   // Global state
   const [state, setState] = useState({
-    blocks: [
-      createTextBlock(),
-      createTextBlock(),
-      createTextBlock(),
-      createTextBlock(),
-      createFeedbackBlock(),
-    ],
+    blocks: [createTextBlock()],
     // silentMode: boolean,
     // ...
   })

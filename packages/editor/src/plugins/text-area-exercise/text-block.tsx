@@ -10,7 +10,7 @@ import {
   Mention,
   Paragraph,
 } from 'ckeditor5'
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { v4 as uuid_v4 } from 'uuid'
 
 import { FeedbackButton } from './feedback-button'
@@ -19,33 +19,48 @@ import { Text } from './types'
 
 // Where user types text
 export function TextBlock({ id, content, type }: Text) {
-  return (
-    <>
-      <textarea></textarea>
-      <FeedbackButton id={id} />
-    </>
+  const { state, setState } = useContext(StateContext)
 
-    // <CKEditor
-    //   editor={ClassicEditor}
-    //   config={{
-    //     toolbar: {
-    //       items: ['undo', 'redo', '|', 'bold', 'italic'],
-    //     },
-    //     plugins: [SCAYT],
-    //     licenseKey: '<YOUR_LICENSE_KEY>',
-    //     initialData: '<p>Hello from CKEditor 5 in React!</p>',
-    //   }}
-    // />
-    // <textarea
-    //   id={id}
-    //   key={id}
-    //   rows={3}
-    //   // onKeyDown={(keyDownEvent) => {
-    //   //   keyDownEvent.preventDefault()
-    //   //   if (keyDownEvent.key === 'Enter')
-    //   //     setBlocks((blocks) => [...blocks, createEmptyTextBlock()])
-    //   // }}
-    // ></textarea>
+  const autofocusId = useRef<string | null>(null)
+
+  useEffect(() => {
+    if (!autofocusId.current) return
+
+    console.log(autofocusId.current)
+
+    setTimeout(() => {
+      document.getElementById(autofocusId).focus()
+      autofocusId.current = null
+    }, 100)
+  }, [autofocusId])
+
+  return (
+    <div className="flex flex-row">
+      <textarea
+        id={id}
+        onKeyDown={(keyDownEvent) => {
+          if (keyDownEvent.key !== 'Enter') return
+          keyDownEvent.preventDefault() // Don't add newline
+          setState((oldState) => {
+            const blocks = oldState.blocks
+            const index = blocks.findIndex((block) => block.id === id)
+            const newTextBlock = createTextBlock()
+            autofocusId.current = newTextBlock.id
+            const newBlocks = [
+              ...blocks.slice(0, index + 1),
+              newTextBlock,
+              ...blocks.slice(index + 1),
+            ]
+            return {
+              ...oldState,
+              blocks: newBlocks,
+            }
+          })
+        }}
+        className="plugin-text-area-text-area grow resize-none bg-transparent outline-none"
+      ></textarea>
+      <FeedbackButton id={id} />
+    </div>
   )
 }
 
