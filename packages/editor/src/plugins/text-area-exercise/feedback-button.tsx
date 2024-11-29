@@ -8,6 +8,7 @@ import { createFeedbackBlock } from './feedback-block'
 import { StateContext } from './state-context'
 import { createTextBlock } from './text-block'
 import { Block } from './types'
+import { PrototypeStateStore } from './prototype-state'
 
 export interface AiFeedback {
   isCorrect: boolean
@@ -25,8 +26,6 @@ export function FeedbackButton({
   solution: string
   studentSolution: string
 }) {
-  const { state, setState } = useContext(StateContext)
-
   async function fetchFeedback() {
     const url = new URL('/api/ai/student-feedback', window.location.href)
 
@@ -48,7 +47,15 @@ export function FeedbackButton({
   async function handleKiButtonClick() {
     const feedback = await fetchFeedback()
 
-    setState((oldState) => {
+    PrototypeStateStore.update((s) => {
+      const index = s.textAreaBlocks.findIndex((block) => block.id === id)
+      const nextBlock = s.textAreaBlocks.at(index + 1)
+      if (!nextBlock || nextBlock.type !== 'feedback') {
+        s.textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
+        //const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
+      }
+    })
+    /*setState((oldState) => {
       const blocks = oldState.blocks
       const index = blocks.findIndex((block) => block.id === id)
       const nextBlock = blocks.at(index + 1)
@@ -64,7 +71,7 @@ export function FeedbackButton({
         ...oldState,
         blocks: newBlocks,
       }
-    })
+    })*/
   }
   return (
     <>

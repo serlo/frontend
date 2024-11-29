@@ -1,4 +1,5 @@
 export type Block = Text | Feedback
+
 export interface Feedback {
   id: string
   type: 'feedback'

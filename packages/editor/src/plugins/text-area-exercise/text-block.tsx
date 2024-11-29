@@ -16,10 +16,11 @@ import { v4 as uuid_v4 } from 'uuid'
 import { FeedbackButton } from './feedback-button'
 import { StateContext } from './state-context'
 import { Text } from './types'
+import { PrototypeStateStore } from './prototype-state'
 
 // Where user types text
 export function TextBlock({ id, content, type }: Text) {
-  const { state, setState } = useContext(StateContext)
+  //const { state, setState } = useContext(StateContext)
 
   const autofocusId = useRef<string | null>(null)
 
@@ -41,20 +42,11 @@ export function TextBlock({ id, content, type }: Text) {
         onKeyDown={(keyDownEvent) => {
           if (keyDownEvent.key !== 'Enter') return
           keyDownEvent.preventDefault() // Don't add newline
-          setState((oldState) => {
-            const blocks = oldState.blocks
-            const index = blocks.findIndex((block) => block.id === id)
+          PrototypeStateStore.update((s) => {
+            const index = s.textAreaBlocks.findIndex((block) => block.id === id)
             const newTextBlock = createTextBlock()
-            autofocusId.current = newTextBlock.id
-            const newBlocks = [
-              ...blocks.slice(0, index + 1),
-              newTextBlock,
-              ...blocks.slice(index + 1),
-            ]
-            return {
-              ...oldState,
-              blocks: newBlocks,
-            }
+            //autofocusId.current = newTextBlock.id
+            s.textAreaBlocks.splice(index + 1, 0, newTextBlock)
           })
         }}
         className="plugin-text-area-text-area grow resize-none bg-transparent outline-none"

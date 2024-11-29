@@ -12,19 +12,17 @@ export function TextAreaExerciseRenderer({
   scaffoldingEnabled: boolean
 }) {
   // Global state
-  const [state, setState] = useState({
+  /*const [state, setState] = useState({
     blocks: [createTextBlock()],
     // silentMode: boolean,
     // ...
-  })
+  })*/
 
   return (
     <>
       {/* Like global state for all child components to use */}
-      <StateContext.Provider value={{ state, setState }}>
-        <Blocks />
-        <div>Scaffolding {scaffoldingEnabled ? '✅' : '❌'}</div>
-      </StateContext.Provider>
+      <Blocks />
+      <div>Scaffolding {scaffoldingEnabled ? '✅' : '❌'}</div>
     </>
   )
 }

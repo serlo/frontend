@@ -5884,6 +5884,7 @@ __metadata:
     prettier: ^3.3.3
     prettier-plugin-packagejson: ^2.5.3
     prettier-plugin-tailwindcss: ^0.6.8
+    pullstate: 1.25.0
     ramda: ^0.30.1
     rdndmb-html5-to-touch: ^8.0.3
     react: ^18.2.0
@@ -11807,6 +11808,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^9.0.16":
+  version: 9.0.21
+  resolution: "immer@npm:9.0.21"
+  checksum: 70e3c274165995352f6936695f0ef4723c52c92c92dd0e9afdfe008175af39fa28e76aafb3a2ca9d57d1fb8f796efc4dd1e1cc36f18d33fa5b74f3dfb0375432
+  languageName: node
+  linkType: hard
+
 "immutable@npm:~3.7.6":
   version: 3.7.6
   resolution: "immutable@npm:3.7.6"
@@ -16291,6 +16299,18 @@ __metadata:
   version: 1.9.0
   resolution: "psl@npm:1.9.0"
   checksum: 20c4277f640c93d393130673f392618e9a8044c6c7bf61c53917a0fddb4952790f5f362c6c730a9c32b124813e173733f9895add8d26f566ed0ea0654b2e711d
+  languageName: node
+  linkType: hard
+
+"pullstate@npm:1.25.0":
+  version: 1.25.0
+  resolution: "pullstate@npm:1.25.0"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    immer: ^9.0.16
+  peerDependencies:
+    react: ^16.12.0 || ^17.0.0 || ^18.0.0
+  checksum: 9a5518077c4b4db736fc456fcb46f68d43f18822e005e5a5edcbcdf34dd3b81d0d302c8021c4a15bc95015e23758a7a3960ed2ba64246589b4d3656a03d773b5
   languageName: node
   linkType: hard
 
