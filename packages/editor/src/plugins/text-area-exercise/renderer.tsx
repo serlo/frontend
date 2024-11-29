@@ -9,7 +9,7 @@ export function TextAreaExerciseRenderer({
   return (
     <>
       <Blocks />
-      <div>Scaffolding {scaffoldingEnabled ? '✅' : '❌'}</div>
+      {/* <div>Scaffolding {scaffoldingEnabled ? '✅' : '❌'}</div> */}
     </>
   )
 }

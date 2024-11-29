@@ -134,9 +134,10 @@ export function ExerciseEditor(props: ExerciseProps) {
                   isFocused ? 'block' : 'hidden'
                 )}
               >
-                <AddButton onClick={() => solution.create()}>
+                {/* Hack: Deactivate for prototype */}
+                {/* <AddButton onClick={() => solution.create()}>
                   {exStrings.createSolution}
-                </AddButton>
+                </AddButton> */}
               </div>
             )}
           </div>

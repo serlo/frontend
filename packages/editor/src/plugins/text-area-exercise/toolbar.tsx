@@ -22,7 +22,7 @@ export function TextAreaExerciseToolbar({
     // Render into exercise toolbar
     <InteractiveToolbarPortal containerRef={containerRef}>
       <>
-        <button
+        {/* <button
           onClick={() => setShowSettingsModal(true)}
           className={cn(
             `mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200`
@@ -30,7 +30,7 @@ export function TextAreaExerciseToolbar({
         >
           Einstellungen <FaIcon icon={faCog} />
         </button>
-        {renderSettingsModal()}
+        {renderSettingsModal()} */}
       </>
     </InteractiveToolbarPortal>
   )
