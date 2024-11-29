@@ -141,3 +141,16 @@ main b {
 body {
   @apply tracking-slightly-tighter;
 }
+
+/* Autogrow textarea (requires Chrome browser) */
+.plugin-text-area-text-area {
+  field-sizing: content;
+}
+
+/* Language tool plugin styles */
+/* .lt-comp-card-base__logo {
+  opacity: 0;
+}
+.lt-toolbar__status-icon {
+  opacity: 0;
+} */
