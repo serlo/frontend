@@ -31,6 +31,10 @@ export function Editor(props: EditorProps) {
   // New store for every editor instance
   const store = useMemo(() => createStore(), [])
 
+  const isSerloEditorPreviewPage =
+    window?.location?.href &&
+    window?.location?.href.includes('___editor_preview')
+
   return (
     <Provider store={store}>
       <DndWrapper>
@@ -38,7 +42,7 @@ export function Editor(props: EditorProps) {
           {/* only on serlo for now */}
           {isSerlo ? (
             <>
-              <EditorToolbar />
+              {isSerloEditorPreviewPage ? null : <EditorToolbar />}
               <LocalStorageNotice
                 useStored={useStored}
                 setUseStored={setUseStored}
