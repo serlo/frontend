@@ -2,11 +2,11 @@ import { useContext } from 'react'
 
 import { ExercisePluginStateContext } from './exercise-plugin-state-context'
 import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
-import { TextAreaPluginStateContext } from './text-area-plugin-state-context'
+import { useTextAreaPluginStateValues } from './text-area-plugin-state-context'
 import { AiFeedback } from './types'
 
 export function FeedbackButton({ id }: { id: string }) {
-  const textAreaExerciseState = useContext(TextAreaPluginStateContext)
+  const { solution } = useTextAreaPluginStateValues()
   const exerciseState = useContext(ExercisePluginStateContext)
   const blocks = PrototypeStateStore.useState((s) => s.textAreaBlocks)
 
@@ -19,7 +19,7 @@ export function FeedbackButton({ id }: { id: string }) {
       .children[0].text as string
 
     url.searchParams.append('exercise', contentText)
-    url.searchParams.append('solution', textAreaExerciseState.state.solution)
+    url.searchParams.append('solution', solution)
     // Maybe do it per paragraph like in the original prototype?
     url.searchParams.append(
       'studentSolution',
