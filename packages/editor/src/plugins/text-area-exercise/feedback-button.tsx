@@ -14,8 +14,8 @@ export function FeedbackButton({ id }: { id: string }) {
     const url = new URL('/api/ai/student-feedback', window.location.href)
     // Careful: Formatting in exercise content does not work. Only one text plugin without any unformatted works.
     // TODO: If necessary, build text from slate node structure.
-    // @ts-expect-error types
-    const contentText = exerciseState.state.content.state[0].state[0]
+    // @ts-expect-error Pick text without type checking for now
+    const contentText = exerciseState?.state.content.state[0].state[0]
       .children[0].text as string
 
     url.searchParams.append('exercise', contentText)

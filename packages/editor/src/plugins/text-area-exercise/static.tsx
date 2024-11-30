@@ -9,9 +9,7 @@ export function TextAreaExerciseStaticRenderer(
 ) {
   return (
     <TextAreaPluginStateContext.Provider value={state}>
-      <TextAreaExerciseRenderer
-        scaffoldingEnabled={state.state.scaffoldingEnabled}
-      />
+      <TextAreaExerciseRenderer />
     </TextAreaPluginStateContext.Provider>
   )
 }

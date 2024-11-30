@@ -1,15 +1,14 @@
 import { Blocks } from './blocks'
+import { useTextAreaPluginStateValues } from './text-area-plugin-state-context'
 
 // Schüly Ansicht
-export function TextAreaExerciseRenderer({
-  scaffoldingEnabled,
-}: {
-  scaffoldingEnabled: boolean
-}) {
+export function TextAreaExerciseRenderer() {
+  const { allowShowSolution, solution } = useTextAreaPluginStateValues()
+
   return (
     <>
       <Blocks />
-      {/* <div>Scaffolding {scaffoldingEnabled ? '✅' : '❌'}</div> */}
+      {allowShowSolution ? <div>Solution: {solution}</div> : null}
     </>
   )
 }

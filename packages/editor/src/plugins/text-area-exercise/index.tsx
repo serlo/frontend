@@ -4,14 +4,25 @@ import {
   EditorPluginProps,
   boolean,
   string,
+  number,
 } from '@editor/plugin'
 
 import { TextAreaExerciseEditor } from './editor'
 
 function createTextAreaExerciseState() {
   return object({
-    scaffoldingEnabled: boolean(false),
-    solution: string('banana'),
+    solution: string(''),
+    allowShowSolution: boolean(true),
+    solutionStrategy: string(''),
+    allowShowSolutionStrategy: boolean(true),
+    allowWritingAssistance: boolean(false),
+    evaluationCriteria: string(''),
+    allowShowEvaluationCriteria: boolean(false),
+    additionalInfoForAi: string(''), // 'Hinweise, Fehlkonzepte, ...
+    allowParagraphFeedback: boolean(false),
+    allowSubmitFeedback: boolean(false),
+    timeInMinutes: number(-1), // -1 -> No time limit
+    numberOfRetries: number(3), // -1 -> Unlimited
   })
 }
 
