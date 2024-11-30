@@ -6,8 +6,11 @@ import { AiFeedback } from './types'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 export function FeedbackButton({ id }: { id: string }) {
+  // Get text area plugin state values
   const { solution } = useTextAreaPluginStateValues()
+  // Get text area plugin state (incl. set functions)
   const exerciseState = useContext(ExercisePluginStateContext)
+  // Get client-side state
   const blocks = PrototypeStateStore.useState((s) => s.textAreaBlocks)
 
   async function fetchFeedback() {

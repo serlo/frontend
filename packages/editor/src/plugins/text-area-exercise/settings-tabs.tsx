@@ -17,7 +17,7 @@ export function SettingsTabs() {
 
   return (
     <>
-      <p className="serlo-p">
+      <div>
         {tabs.map((tab, index) => {
           return (
             <button
@@ -35,8 +35,10 @@ export function SettingsTabs() {
             </button>
           )
         })}
-      </p>
-      <tabContent.content />
+      </div>
+      <div className="w-full">
+        <tabContent.content />
+      </div>
     </>
   )
 }
@@ -47,7 +49,7 @@ function Solution() {
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
   return (
     <textarea
-      className="rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
+      className="w-full rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
       value={solution}
       onChange={(e) => {
         const newValue = e.target.value

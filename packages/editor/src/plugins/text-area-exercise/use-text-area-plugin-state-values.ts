@@ -1,10 +1,11 @@
 import type { PrettyStaticState } from '@editor/plugin/internal-plugin-state'
 import { useContext } from 'react'
 
-import type { TextAreaExercisePluginState } from './index.jsx'
-import { TextAreaEditorContext } from './text-area-exercise-props-context.js'
-import { TextAreaStaticRendererContext } from './text-area-static-renderer-context.js'
+import type { TextAreaExercisePluginState } from '.'
+import { TextAreaEditorContext } from './text-area-exercise-props-context'
+import { TextAreaStaticRendererContext } from './text-area-static-renderer-context'
 
+// Get the text area plugin state values. Works both in editor and static renderer.
 export function useTextAreaPluginStateValues(): PrettyStaticState<TextAreaExercisePluginState> {
   // We get one of those two depending on if we are rendered by the editor or static renderer
   const textAreaEditorContext = useContext(TextAreaEditorContext)
@@ -13,6 +14,7 @@ export function useTextAreaPluginStateValues(): PrettyStaticState<TextAreaExerci
   )
 
   if (textAreaEditorContext) {
+    // Hack: Return the state in the same format as in static renderer
     const state = textAreaEditorContext.state
     const shallowClone = { ...state }
     Object.keys(shallowClone).forEach((key) => {
