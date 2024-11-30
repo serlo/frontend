@@ -1,3 +1,4 @@
+import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { cn } from '@editor/utils/cn'
 import { useContext, useState } from 'react'
 
@@ -47,15 +48,26 @@ function Solution() {
   const { solution } = useTextAreaPluginStateValues()
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
+
+  const { allowShowSolution } = textAreaPluginStateContext.state
   return (
-    <textarea
-      className="w-full rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
-      value={solution}
-      onChange={(e) => {
-        const newValue = e.target.value
-        textAreaPluginStateContext.state.solution.set(newValue)
-      }}
-    ></textarea>
+    <>
+      <div className="serlo-p">
+        <label className="mr-5">Musterlösung anzeigen</label>
+        <SwitchButton
+          isOn={allowShowSolution.value}
+          onClick={() => allowShowSolution.set((old) => !old)}
+        />
+      </div>
+      <textarea
+        className="w-full rounded-xl border-2 border-editor-primary-200 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
+        value={solution}
+        onChange={(e) => {
+          const newValue = e.target.value
+          textAreaPluginStateContext.state.solution.set(newValue)
+        }}
+      ></textarea>
+    </>
   )
 }
 
