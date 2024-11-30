@@ -1,11 +1,8 @@
 import { cn } from '@editor/utils/cn'
 import { useContext, useState } from 'react'
 
-import { TextAreaExerciseProps } from '.'
-import {
-  TextAreaPluginStateContext,
-  useTextAreaPluginStateValues,
-} from './text-area-plugin-state-context'
+import { TextAreaEditorContext } from './text-area-exercise-props-context'
+import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 const tabs = [
   { name: 'Musterlösung', content: Solution },
@@ -46,9 +43,8 @@ export function SettingsTabs() {
 
 function Solution() {
   const { solution } = useTextAreaPluginStateValues()
-  const textAreaPluginStateContext = useContext(
-    TextAreaPluginStateContext
-  ) as TextAreaExerciseProps
+  const textAreaPluginStateContext = useContext(TextAreaEditorContext)
+  if (!textAreaPluginStateContext) throw new Error('Missing text area context')
   return (
     <textarea
       className="rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"

@@ -2,8 +2,8 @@ import { useContext } from 'react'
 
 import { ExercisePluginStateContext } from './exercise-plugin-state-context'
 import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
-import { useTextAreaPluginStateValues } from './text-area-plugin-state-context'
 import { AiFeedback } from './types'
+import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 export function FeedbackButton({ id }: { id: string }) {
   const { solution } = useTextAreaPluginStateValues()

@@ -1,5 +1,5 @@
 import { Blocks } from './blocks'
-import { useTextAreaPluginStateValues } from './text-area-plugin-state-context'
+import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 // Schüly Ansicht
 export function TextAreaExerciseRenderer() {
