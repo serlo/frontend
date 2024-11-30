@@ -1,5 +1,11 @@
 import { cn } from '@editor/utils/cn'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+
+import { TextAreaExerciseProps } from '.'
+import {
+  TextAreaPluginStateContext,
+  useTextAreaPluginStateValues,
+} from './text-area-plugin-state-context'
 
 const tabs = [
   { name: 'Musterlösung', content: Solution },
@@ -39,7 +45,20 @@ export function SettingsTabs() {
 }
 
 function Solution() {
-  return <div>Solution</div>
+  const { solution } = useTextAreaPluginStateValues()
+  const textAreaPluginStateContext = useContext(
+    TextAreaPluginStateContext
+  ) as TextAreaExerciseProps
+  return (
+    <textarea
+      className="rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
+      value={solution}
+      onChange={(e) => {
+        const newValue = e.target.value
+        textAreaPluginStateContext.state.solution.set(newValue)
+      }}
+    ></textarea>
+  )
 }
 
 function Strategy() {
