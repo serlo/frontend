@@ -20,7 +20,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
       <AnimateChangeInHeight className="mt-8">
         <div
           className={cn(
-            'flex flex-col items-center p-3',
+            'flex flex-col items-center px-3 py-6',
             settingsOpen ? 'bg-editor-primary-100' : ''
           )}
         >
