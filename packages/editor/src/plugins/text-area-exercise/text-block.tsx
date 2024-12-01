@@ -24,7 +24,7 @@ export function TextBlock({ id }: Text) {
             s.textAreaBlocks.splice(index + 1, 0, newTextBlock)
           })
         }}
-        className="plugin-text-area-text-area grow resize-none bg-transparent outline-none"
+        className="text-area-chrome-autogrow grow resize-none bg-transparent outline-none"
       ></textarea>
       <FeedbackButton id={id} />
     </div>

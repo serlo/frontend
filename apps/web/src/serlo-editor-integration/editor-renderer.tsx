@@ -9,7 +9,7 @@ export function EditorRenderer({
 }): JSX.Element {
   return (
     <div className="serlo-content-with-spacing-fixes">
-      <StickyHeader />
+      <StickyHeader allowEdit={false} />
       <StaticRenderer document={document as AnyEditorDocument} />
     </div>
   )
