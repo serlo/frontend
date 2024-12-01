@@ -1,6 +1,8 @@
+import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
 
 import type { TextAreaExerciseProps } from '.'
+import { AnimateChangeInHeight } from './animate-change-in-height'
 import { HelpAndFeedbackSettings } from './help-and-feedback-settings'
 import { TextAreaExerciseRenderer } from './renderer'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
@@ -15,18 +17,31 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
     <TextAreaEditorContext.Provider value={props}>
       <TextAreaExerciseToolbar {...props} />
       <TextAreaExerciseRenderer />
-      <div className="flex w-full">
-        <button
-          onClick={() => setSettingsOpen(true)}
-          className="mx-auto my-8 rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 hover:cursor-pointer hover:bg-editor-primary-200"
+      <AnimateChangeInHeight className="mt-8">
+        <div
+          className={cn(
+            'flex flex-col items-center p-3',
+            settingsOpen ? 'bg-editor-primary-100' : ''
+          )}
         >
-          Hilfe und Feedback hinzufügen
-        </button>
-      </div>
-      {settingsOpen ? <HelpAndFeedbackSettings /> : null}
+          <button
+            onClick={() => setSettingsOpen(true)}
+            disabled={settingsOpen}
+            className={cn(
+              'mb-3 rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 font-bold',
+              settingsOpen
+                ? ''
+                : 'hover:cursor-pointer hover:bg-editor-primary-200'
+            )}
+          >
+            Hilfe und Feedback hinzufügen
+          </button>
+          {settingsOpen ? <HelpAndFeedbackSettings /> : null}
+        </div>
+      </AnimateChangeInHeight>
       {/* <button className={cn('serlo-button-edit-primary', 'mr-2')}>
         Musterlösung hinzufügen
-      </button> */}
+        </button> */}
     </TextAreaEditorContext.Provider>
   )
 }

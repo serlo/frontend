@@ -2,13 +2,14 @@ import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { cn } from '@editor/utils/cn'
 import { useContext, useState } from 'react'
 
+import { AnimateChangeInHeight } from './animate-change-in-height'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 const tabs = [
-  { name: 'Musterlösung', content: Solution },
+  { name: 'Musterlösung und Bewertungskriterien', content: Solution },
   { name: 'Lösungsstrategie', content: Strategy },
-  { name: 'Feedbackkriterien', content: FeedbackCriteria },
+  { name: 'Individuelle Hilfestellungen', content: FeedbackCriteria },
 ]
 
 export function SettingsTabs() {
@@ -18,18 +19,17 @@ export function SettingsTabs() {
 
   return (
     <>
-      <div>
+      <div className="flex flex-row items-center">
         {tabs.map((tab, index) => {
           return (
             <button
               key={tab.name}
               onClick={() => setSelectedTabIndex(index)}
               className={cn(
-                'mb-2.5 mr-2',
+                'serlo-button-edit mb-2.5 mr-2 max-w-52 rounded-md',
                 selectedTabIndex === index
-                  ? 'serlo-button-learner-primary'
-                  : 'serlo-button-learner-secondary',
-                'capitalize'
+                  ? 'serlo-button-edit-primary'
+                  : 'serlo-button-edit-secondary'
               )}
             >
               {tab.name}
