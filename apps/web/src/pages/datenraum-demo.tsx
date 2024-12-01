@@ -1,6 +1,5 @@
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { SearchModal } from '@/components/datenraum/search-modal'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
