@@ -22,6 +22,7 @@ export const defaultPlugins = [
   EditorPluginType.Rows,
   EditorPluginType.TextAreaExercise,
   EditorPluginType.ImageGallery,
+  EditorPluginType.DatenraumIntegration,
   EditorPluginType.Unsupported,
   TemplatePluginType.GenericContent,
 ]

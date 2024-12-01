@@ -38,6 +38,15 @@ export function AddRevision({
     breadcrumbsData && breadcrumbsData.some((entry) => entry.id === testAreaId)
   )
 
+  useEffect(() => {
+    setTimeout(() => {
+      showToastNotice(
+        'Erfolgreich importiert, viel Erfolg beim Bearbeiten!',
+        'success'
+      )
+    }, 600)
+  }, [])
+
   const setEntityMutation = useSetEntityMutation()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 

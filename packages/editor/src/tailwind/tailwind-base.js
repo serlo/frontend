@@ -19,6 +19,7 @@ const sunflowerColors = {
 }
 
 export default {
+  darkMode: ['class'],
   theme: {
     extend: {
       colors: {
@@ -63,6 +64,39 @@ export default {
           DEFAULT: colors.red[900],
           100: colors.red[100],
         },
+        background: 'hsl(0 0% 100%)',
+        foreground: 'hsl(20 14.3% 4.1%)',
+        card: {
+          DEFAULT: 'hsl(0 0% 100%)',
+          foreground: 'hsl(20 14.3% 4.1%)',
+        },
+        popover: {
+          DEFAULT: 'hsl(0 0% 100%)',
+          foreground: 'hsl(20 14.3% 4.1%)',
+        },
+
+        muted: {
+          DEFAULT: 'hsl(60 4.8% 95.9%)',
+          foreground: 'hsl(25 5.3% 44.7%)',
+        },
+        accent: {
+          DEFAULT: 'hsl(60 4.8% 95.9%)',
+          foreground: 'hsl(24 9.8% 10%)',
+        },
+        destructive: {
+          DEFAULT: 'hsl(0 84.2% 60.2%)',
+          foreground: 'hsl(60 9.1% 97.8%)',
+        },
+        border: 'hsl(20 5.9% 90%)',
+        input: 'hsl(20 5.9% 90%)',
+        ring: 'hsl(20 14.3% 4.1%)',
+        chart: {
+          1: 'hsl(12 76% 61%)',
+          2: 'hsl(173 58% 39%)',
+          3: 'hsl(197 37% 24%)',
+          4: 'hsl(43 74% 66%)',
+          5: 'hsl(27 87% 67%)',
+        },
       },
       borderWidth: {
         3: '3px',
@@ -78,6 +112,9 @@ export default {
       },
       borderRadius: {
         '4xl': '4rem',
+        lg: '0.5rem',
+        md: 'calc(0.5rem - 2px)',
+        sm: 'calc(0.5rem - 4px)',
       },
       lineHeight: {
         browser: 'normal',

@@ -22,10 +22,11 @@ export function Breadcrumbs({
   asBackButton,
   noIcon,
 }: BreadcrumbsProps) {
+  return null
   return (
     <nav className="mx-side mt-5 sm:ml-2.5" data-qa="breadcrumbs">
       {data &&
-        data.map((bcEntry, i) => {
+        data?.map((bcEntry, i) => {
           return (
             <Fragment key={i}>{renderBreadcrumbEntry(bcEntry, i)}</Fragment>
           )

@@ -4349,6 +4349,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-checkbox@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@radix-ui/react-checkbox@npm:1.1.2"
+  dependencies:
+    "@radix-ui/primitive": 1.1.0
+    "@radix-ui/react-compose-refs": 1.1.0
+    "@radix-ui/react-context": 1.1.1
+    "@radix-ui/react-presence": 1.1.1
+    "@radix-ui/react-primitive": 2.0.0
+    "@radix-ui/react-use-controllable-state": 1.1.0
+    "@radix-ui/react-use-previous": 1.1.0
+    "@radix-ui/react-use-size": 1.1.0
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: c59e1c74b8d2cb668aabba22b3e896ffef6c35435df3e83db9c04192e3d7b2bf7c69895b17da5bfaa6c704f369e8b3a6b226d542523b685940d20e9e096a1855
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-collection@npm:1.0.3":
   version: 1.0.3
   resolution: "@radix-ui/react-collection@npm:1.0.3"
@@ -4731,6 +4757,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-label@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@radix-ui/react-label@npm:2.1.0"
+  dependencies:
+    "@radix-ui/react-primitive": 2.0.0
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 462f3b47f43bd69c937e660dee229eb05990441e1b214923cdcf848aea62226e9f1c4673de6664bb4ad66f8a480acdb0f5d2ce4c88c425652b47432876b3f32f
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-menu@npm:2.0.6":
   version: 2.0.6
   resolution: "@radix-ui/react-menu@npm:2.0.6"
@@ -5005,6 +5050,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-scroll-area@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@radix-ui/react-scroll-area@npm:1.2.1"
+  dependencies:
+    "@radix-ui/number": 1.1.0
+    "@radix-ui/primitive": 1.1.0
+    "@radix-ui/react-compose-refs": 1.1.0
+    "@radix-ui/react-context": 1.1.1
+    "@radix-ui/react-direction": 1.1.0
+    "@radix-ui/react-presence": 1.1.1
+    "@radix-ui/react-primitive": 2.0.0
+    "@radix-ui/react-use-callback-ref": 1.1.0
+    "@radix-ui/react-use-layout-effect": 1.1.0
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: f22d0a96f27802c37ed3bebc2b737661d5d8abb927c8f68d7a293b5da52b8d4bafac5b7dede2ecf908c9846bae043e13806ef32642774edcc8982a6d182c3cb3
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-select@npm:^2.1.2":
   version: 2.1.2
   resolution: "@radix-ui/react-select@npm:2.1.2"
@@ -5060,7 +5132,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-slot@npm:1.1.0":
+"@radix-ui/react-slot@npm:1.1.0, @radix-ui/react-slot@npm:^1.1.0":
   version: 1.1.0
   resolution: "@radix-ui/react-slot@npm:1.1.0"
   dependencies:
@@ -5763,7 +5835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/editor@workspace:*, @serlo/editor@workspace:packages/editor":
+"@serlo/editor@workspace:^, @serlo/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@serlo/editor@workspace:packages/editor"
   dependencies:
@@ -5781,8 +5853,10 @@ __metadata:
     "@radix-ui/react-select": ^2.1.2
     "@reduxjs/toolkit": ^2.3.0
     "@rollup/plugin-replace": ^6.0.1
+    "@serlo/frontend": "workspace:^"
     "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
+    "@tanstack/react-query": ^5.62.0
     "@types/dompurify": ^3.0.5
     "@types/is-hotkey": 0.1.10
     "@types/react": ^18.0.25
@@ -5867,7 +5941,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/frontend@workspace:apps/web":
+"@serlo/frontend@workspace:^, @serlo/frontend@workspace:apps/web":
   version: 0.0.0-use.local
   resolution: "@serlo/frontend@workspace:apps/web"
   dependencies:
@@ -5890,15 +5964,21 @@ __metadata:
     "@next/bundle-analyzer": ^15.0.3
     "@ory/client": ^1.15.10
     "@ory/integrations": 1.1.5
+    "@radix-ui/react-checkbox": ^1.1.2
     "@radix-ui/react-dialog": ^1.1.2
+    "@radix-ui/react-label": ^2.1.0
     "@radix-ui/react-navigation-menu": ^1.2.1
+    "@radix-ui/react-scroll-area": ^1.2.1
+    "@radix-ui/react-select": ^2.1.2
+    "@radix-ui/react-slot": ^1.1.0
     "@serlo/authorization": ^0.60.0
-    "@serlo/editor": "workspace:*"
+    "@serlo/editor": "workspace:^"
     "@serlo/eslint-config": "workspace:*"
     "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.15
+    "@tanstack/react-query": ^5.62.0
     "@tippyjs/react": ^4.2.6
     "@types/canvas-confetti": ^1.6.4
     "@types/iframe-resizer": ^3.5.13
@@ -5915,10 +5995,12 @@ __metadata:
     "@types/react-lazyload": ^3.2.3
     "@typescript-eslint/eslint-plugin": ^8.14.0
     "@typescript-eslint/parser": ^8.14.0
+    "@uidotdev/usehooks": ^2.4.1
     "@vidstack/react": next
     array-move: ^4.0.0
     autoprefixer: ^10.4.20
     canvas-confetti: ^1.9.3
+    class-variance-authority: ^0.7.1
     clsx: ^2.1.1
     cross-env: ^7.0.3
     dotenv: ^16.4.5
@@ -5941,6 +6023,7 @@ __metadata:
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
     katex: ^0.16.11
+    lucide-react: ^0.462.0
     mathjs: ^13.2.2
     mathlive: ^0.101.1
     micromark: ^4.0.1
@@ -5966,6 +6049,7 @@ __metadata:
     react-textarea-autosize: ^8.5.5
     slate: 0.110.2
     swr: ^2.2.5
+    tailwind-merge: ^2.5.5
     tailwindcss: ^3.4.15
     tailwindcss-animate: ^1.0.7
     timeago-react: ^3.0.6
@@ -5999,6 +6083,7 @@ __metadata:
     "@eslint/js": ^9.14.0
     "@serlo/eslint-config": "workspace:*"
     "@serlo/typescript-config": "workspace:*"
+    "@tanstack/react-query": ^5.62.0
     cross-env: ^7.0.3
     dotenv-cli: ^7.4.2
     postcss-import: ^16.1.0
@@ -6355,6 +6440,24 @@ __metadata:
   peerDependencies:
     tailwindcss: "*"
   checksum: 4e7ad4f7cf0e290030de63f123b53b431fdc3b0fc76e43b9abe21945cf9eca59b7d0d557bb6c7ebd16769586b22ca8cf40e75dc6db069a3afac4c678f4e4ed1e
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@tanstack/query-core@npm:5.62.0"
+  checksum: e071653bd29cfb713dc9f5641d2308e731d195129c5c5382826917573ae963033afa6f97605668824e7deb7aa1349b7355992aef0d8c1cb7da7793ef2ce2011e
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.62.0":
+  version: 5.62.0
+  resolution: "@tanstack/react-query@npm:5.62.0"
+  dependencies:
+    "@tanstack/query-core": 5.62.0
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 5ef06034a415c710b44014a138051d2d15e6a8d4bd9d82988e9b780b90bcd25e78bf64032e2dbbd1ff96351f14a142e5f0d1d3f5b0be1e983c6d5c87535f603d
   languageName: node
   linkType: hard
 
@@ -6982,6 +7085,16 @@ __metadata:
     "@typescript-eslint/types": 8.14.0
     eslint-visitor-keys: ^3.4.3
   checksum: 5f1279bf7cd830ed96a2769b3f27d6102bce630fc4f72c03fee92d06c599ce4e35b9648d0643d7bc9f2613d6587104731c97126bb23805548717bf99854f1094
+  languageName: node
+  linkType: hard
+
+"@uidotdev/usehooks@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@uidotdev/usehooks@npm:2.4.1"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  checksum: d381ce7d4853abe53127b70b0734935d1cfba97bfd2314e67aa42d4f35cd5b955712c6e968f435d8818bd51bea9cf7688b60eeb0db19bae2a6666a37ceee8b5f
   languageName: node
   linkType: hard
 
@@ -8457,6 +8570,15 @@ __metadata:
   version: 1.2.3
   resolution: "cjs-module-lexer@npm:1.2.3"
   checksum: 5ea3cb867a9bb609b6d476cd86590d105f3cfd6514db38ff71f63992ab40939c2feb68967faa15a6d2b1f90daa6416b79ea2de486e9e2485a6f8b66a21b4fb0a
+  languageName: node
+  linkType: hard
+
+"class-variance-authority@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "class-variance-authority@npm:0.7.1"
+  dependencies:
+    clsx: ^2.1.1
+  checksum: e05ba26ef9ec38f7c675047ce366b067d60af6c954dba08f7802af19a9460a534ae752d8fe1294fff99d0fa94a669b16ccebd87e8a20f637c0736cf2751dd2c5
   languageName: node
   linkType: hard
 
@@ -13747,6 +13869,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lucide-react@npm:^0.462.0":
+  version: 0.462.0
+  resolution: "lucide-react@npm:0.462.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+  checksum: ffeb54d9c22e6625727f6dc863ae4cde952dbc02ff50c96179f3c0ce14b2f9a63ae8472fe86387c17a534bdae1ca0f518e81c47553a4f97718139805befc625e
+  languageName: node
+  linkType: hard
+
 "magic-string@npm:^0.30.11":
   version: 0.30.12
   resolution: "magic-string@npm:0.30.12"
@@ -18133,6 +18264,13 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
     "@pkgr/core": ^0.1.0
     tslib: ^2.6.2
   checksum: 3a30e828efbdcf3b50fccab4da6e90ea7ca24d8c5c2ad3ffe98e07d7c492df121e0f75227c6e510f96f976aae76f1fa4710cb7b1d69db881caf66ef9de89360e
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^2.5.5":
+  version: 2.5.5
+  resolution: "tailwind-merge@npm:2.5.5"
+  checksum: c835c763642988aa7185f242f93a61a6ce45d577edbefa4016727e664d9e130fa153b0d3a8bbcfcefd1de6a204e9d302971826d4d1068b6fd92ef66a27f35351
   languageName: node
   linkType: hard
 

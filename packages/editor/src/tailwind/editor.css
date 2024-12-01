@@ -1,5 +1,5 @@
 /* https://tailwindcss.com/docs/using-with-preprocessors#build-time-imports */
-@import 'tailwindcss/base';
+@import './base.css';
 @import './components.css';
 @import './utilities.css';
 

@@ -17,6 +17,7 @@ export function MetadataFieldsModal({
   const entityStrings = useEditStrings().templatePlugins.entity
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
+  return null
   return (
     <>
       <button

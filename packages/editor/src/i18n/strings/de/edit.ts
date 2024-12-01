@@ -39,6 +39,10 @@ export const editStrings = {
     },
   },
   plugins: {
+    datenraumIntegration: {
+      title: 'Datenraum Inhalte',
+      description: 'Importiere und Editiere Inhalte aus dem Datenraum',
+    },
     anchor: {
       title: 'Sprungmarke',
       description: 'Füge eine Sprungmarke innerhalb deines Inhalts hinzu.',

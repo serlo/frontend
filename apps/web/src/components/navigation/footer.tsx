@@ -13,6 +13,8 @@ import { cn } from '@/helper/cn'
 
 export function Footer() {
   const { footerData } = useInstanceData()
+
+  return null
   return (
     <footer id="footer">
       <About />

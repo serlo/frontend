@@ -3,6 +3,7 @@ import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static
 import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
 import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import type { AuthorizationPayload } from '@serlo/authorization'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Head from 'next/head'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
@@ -56,6 +57,8 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
   }
 })
 Router.events.on('routeChangeError', () => NProgress.done())
+
+const queryClient = new QueryClient()
 
 export function FrontendClientBase({
   children,
@@ -118,48 +121,50 @@ export function FrontendClientBase({
   //console.dir(initialProps)
 
   return (
-    <InstanceDataProvider value={instanceData}>
-      <PrintMode />
-      {noIndex ? (
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-      ) : null}
-      <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-        <SerloOnlyFeaturesContext.Provider value={{ isSerlo: true }}>
-          <StaticStringsProvider
-            value={
-              instanceData.lang === 'de'
-                ? mergeDeepRight(staticStringsEn, staticStringsDe)
-                : staticStringsEn
-            }
-          >
-            <LoggedInDataProvider value={loggedInData}>
-              <UuidsProvider value={serloEntityData ?? null}>
-                <Toaster />
-                <ConditionalWrap
-                  condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
-                >
+    <QueryClientProvider client={queryClient}>
+      <InstanceDataProvider value={instanceData}>
+        <PrintMode />
+        {noIndex ? (
+          <Head>
+            <meta name="robots" content="noindex" />
+          </Head>
+        ) : null}
+        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
+          <SerloOnlyFeaturesContext.Provider value={{ isSerlo: true }}>
+            <StaticStringsProvider
+              value={
+                instanceData.lang === 'de'
+                  ? mergeDeepRight(staticStringsEn, staticStringsDe)
+                  : staticStringsEn
+              }
+            >
+              <LoggedInDataProvider value={loggedInData}>
+                <UuidsProvider value={serloEntityData ?? null}>
+                  <Toaster />
                   <ConditionalWrap
-                    condition={!noContainers}
-                    wrapper={(kids) => (
-                      <div className="relative">
-                        <MaxWidthDiv showNav={showNav}>
-                          <main id="content">{kids}</main>
-                        </MaxWidthDiv>
-                      </div>
-                    )}
+                    condition={!noHeaderFooter}
+                    wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
                   >
-                    {children}
+                    <ConditionalWrap
+                      condition={!noContainers}
+                      wrapper={(kids) => (
+                        <div className="relative">
+                          <MaxWidthDiv showNav={showNav}>
+                            <main id="content">{kids}</main>
+                          </MaxWidthDiv>
+                        </div>
+                      )}
+                    >
+                      {children}
+                    </ConditionalWrap>
+                    <MaintenanceBanner />
                   </ConditionalWrap>
-                  <MaintenanceBanner />
-                </ConditionalWrap>
-              </UuidsProvider>
-            </LoggedInDataProvider>
-          </StaticStringsProvider>
-        </SerloOnlyFeaturesContext.Provider>
-      </AuthProvider>
-    </InstanceDataProvider>
+                </UuidsProvider>
+              </LoggedInDataProvider>
+            </StaticStringsProvider>
+          </SerloOnlyFeaturesContext.Provider>
+        </AuthProvider>
+      </InstanceDataProvider>
+    </QueryClientProvider>
   )
 }

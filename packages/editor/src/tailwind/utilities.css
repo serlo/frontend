@@ -5,3 +5,9 @@
     clip-path: inset(0 -10px);
   }
 }
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

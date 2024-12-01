@@ -39,6 +39,8 @@ export function Header() {
     }
   }, [])
 
+  return null
+
   return (
     <header
       className={cn(

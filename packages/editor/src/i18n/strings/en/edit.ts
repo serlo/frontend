@@ -37,6 +37,10 @@ export const editStrings = {
     },
   },
   plugins: {
+    datenraumIntegration: {
+      title: 'Datenraum Inhalte',
+      description: 'Importiere und Editiere Inhalte aus dem Datenraum',
+    },
     anchor: {
       title: 'Anchor',
       description: 'Insert an anchor.',

@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { DatenraumIntegrationStaticRenderer } from '@editor/plugins/datenraum-integration/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
@@ -138,6 +139,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.ImageGallery,
         renderer: ImageGalleryStaticRenderer,
+      },
+      {
+        type: EditorPluginType.DatenraumIntegration,
+        renderer: DatenraumIntegrationStaticRenderer,
       },
       {
         type: EditorPluginType.Multimedia,

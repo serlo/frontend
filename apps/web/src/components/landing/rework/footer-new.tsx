@@ -7,6 +7,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 
 export function FooterNew() {
   const { footerData } = useInstanceData()
+  return null
   return (
     <footer
       id="footer"

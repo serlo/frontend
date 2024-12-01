@@ -23,6 +23,7 @@ export function LocalStorageNotice({
 
   const stored = getStateFromLocalStorage()
 
+  return null
   if (!stored) return null
 
   return (

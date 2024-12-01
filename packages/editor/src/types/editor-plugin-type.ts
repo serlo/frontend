@@ -5,6 +5,7 @@ export enum EditorPluginType {
   ArticleIntroduction = 'articleIntroduction',
   Box = 'box',
   Course = 'course',
+  DatenraumIntegration = 'datenraumIntegration',
   Equations = 'equations',
   Geogebra = 'geogebra',
   H5p = 'h5p',

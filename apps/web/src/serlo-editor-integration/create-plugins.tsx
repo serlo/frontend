@@ -5,6 +5,7 @@ import { audioPlugin } from '@editor/plugins/audio'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { coursePlugin } from '@editor/plugins/course'
+import { datenraumIntegrationPlugin } from '@editor/plugins/datenraum-integration'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
@@ -56,6 +57,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     EditorPluginType.ArticleIntroduction,
     EditorPluginType.Box,
     EditorPluginType.Course,
+    EditorPluginType.DatenraumIntegration,
     EditorPluginType.Equations,
     EditorPluginType.Geogebra,
     EditorPluginType.H5p,
@@ -124,6 +126,11 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     ...(isProduction
       ? []
       : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
+
+    {
+      type: EditorPluginType.DatenraumIntegration,
+      plugin: datenraumIntegrationPlugin,
+    },
     ...(isProduction
       ? []
       : [
