@@ -1,5 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import {
+  faCreativeCommons,
   faCreativeCommonsBy,
   faCreativeCommonsPd,
   faCreativeCommonsSa,
@@ -56,49 +57,37 @@ export function SaveModal({
   }
 
   function renderLicenseCards() {
-    return (
-      <>
+    const opts = [
+      { title: 'CC-0', icons: [faCreativeCommonsZero] },
+      { title: 'Public Domain Mark', icons: [faCreativeCommonsPd] },
+      { title: 'CC-BY 4.0', icons: [faCreativeCommons, faCreativeCommonsBy] },
+      {
+        title: 'CC-BY-SA 4.0',
+        icons: [faCreativeCommons, faCreativeCommonsBy, faCreativeCommonsSa],
+      },
+    ]
+    return opts.map(({ title, icons }) => {
+      return (
         <Card
-          className="flex cursor-pointer flex-col justify-between bg-sky-50"
+          key={title}
+          className="cursor-pointer bg-sky-50"
           onClick={handleLicenseClick}
         >
-          <CardHeader className="flex flex-row items-center gap-2">
-            <CardTitle className="text-lg">
-              <FaIcon icon={faCreativeCommonsZero} /> CC-0
+          <CardHeader>
+            <CardTitle className="flex justify-between text-lg">
+              <span>{title}</span>
+              <span>
+                {icons.map((icon, i) => (
+                  <span key={i}>
+                    {' '}
+                    <FaIcon icon={icon} className="text-sky-300" />
+                  </span>
+                ))}
+              </span>
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card
-          className="flex cursor-pointer flex-col justify-between bg-sky-50"
-          onClick={handleLicenseClick}
-        >
-          <CardHeader className="flex flex-row items-center gap-2">
-            <CardTitle className="text-lg">
-              <FaIcon icon={faCreativeCommonsPd} /> Public Domain Mark
-            </CardTitle>
-          </CardHeader>
-        </Card>
-        <Card
-          className="flex cursor-pointer flex-col justify-between bg-sky-50"
-          onClick={handleLicenseClick}
-        >
-          <CardHeader className="flex flex-row items-center gap-2">
-            <CardTitle className="text-lg">
-              <FaIcon icon={faCreativeCommonsBy} /> CC-BY 4.0
-            </CardTitle>
-          </CardHeader>
-        </Card>
-        <Card
-          className="flex cursor-pointer flex-col justify-between bg-sky-50"
-          onClick={handleLicenseClick}
-        >
-          <CardHeader className="flex flex-row items-center gap-2">
-            <CardTitle className="text-lg">
-              <FaIcon icon={faCreativeCommonsSa} /> CC-BY-SA 4.0
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      </>
-    )
+      )
+    })
   }
 }
