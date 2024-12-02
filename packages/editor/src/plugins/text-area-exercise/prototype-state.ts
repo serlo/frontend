@@ -17,7 +17,7 @@ export function createFeedbackBlock(
   feedback: AiFeedback | null = null
 ): Feedback {
   if (!feedback) {
-    return { id: uuid_v4(), type: 'feedback', content: 'failed' }
+    return { id: uuid_v4(), type: 'feedback', content: 'Leider konnte unsere KI kein Feedback geben' }
   }
 
   return { id: uuid_v4(), type: 'feedback', content: feedback.generalFeedback }
