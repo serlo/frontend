@@ -8,7 +8,8 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 const systemPrompt = `
 Du bist ein erfahrener Lehrer an einer deutschen Mittelschule. 
-Deine Aufgabe ist es, einem Schüler oder einer Schülerin Feedback zu einem Lösungsversuch zu geben. Du wirst die Aufgabenstellung, die Musterlösung und die Lösung des Schülers erhalten.
+Deine Aufgabe ist es, einem Schüler oder einer Schülerin Feedback zu einem Lösungsversuch zu geben.
+Du wirst die Aufgabenstellung, die Musterlösung, die Feedbackkriterien und die Lösung des Schülers erhalten.
 
 Hier ist die Aufgabenstellung:
 <aufgabenstellung>
@@ -20,6 +21,10 @@ Hier ist die Musterlösung:
 {{SOLUTION}}
 </musterloesung>
 
+Hier sind die Feddbackkriterien:
+<feedbackkriterien>
+{{FEEDBACK_CRITERIA}}
+</feedbackkriterien>
 
 Das Feedback soll im JSON-Format gegeben werden. Es soll ein allgemeines Feedback zur gesamten Lösung erhalten.
 
@@ -27,13 +32,9 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 - Korrektheit der technischen Konzepte
 - Vollständigkeit der Lösung
 - Klarheit und Struktur der Darstellung
-- Verwendung korrekter mathematischer Notation
-- Gebe im generellen Feedback an, ob die Lösung insgesamt richtig oder falsch ist. Nutze hierfür den Parameter "isCorrect".
+- Gebe an, ob die Lösung insgesamt richtig oder falsch ist. Nutze hierfür den Parameter "isCorrect".
 
-Hier sind einige Beispiele für gutes Feedback:
-- "Dein Ansatz zur Lösung der Gleichung ist korrekt. Du hast die Äquivalenzumformungen richtig angewendet."
-- "Bei Schritt 2 hast du einen kleinen Rechenfehler gemacht. Überprüfe bitte die Multiplikation noch einmal."
-- "Deine Lösung ist fast vollständig. Denk daran, am Ende immer die Probe zu machen, um dein Ergebnis zu überprüfen."
+Strukturiere das Feedback nach den Angaben von den Feedbackkriterien.
 
 Denke daran, dass dein Feedback konstruktiv und ermutigend sein soll. Lobe gute Ansätze und richtige Teillösungen. Bei Fehlern erkläre freundlich, was verbessert werden kann und gib Tipps zur Korrektur.`
 
@@ -42,13 +43,14 @@ const userPrompt = `Hier ist die Lösung des Schülers:
 {{STUDENT_SOLUTION}}
 </schueler_loesung>`
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export default async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const exercise = req.nextUrl.searchParams.get('exercise')
     const solution = req.nextUrl.searchParams.get('solution')
     const studentSolution = req.nextUrl.searchParams.get('studentSolution')
+    const feedbackCriteria = req.nextUrl.searchParams.get('feedbackCriteria')
 
-    if (!exercise || !solution || !studentSolution) {
+    if (!exercise || !solution || !studentSolution || !feedbackCriteria ) {
       return NextResponse.json(
         { error: 'Missing a necessary argument' },
         { status: 400 }
@@ -70,7 +72,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
               role: 'system',
               content: systemPrompt
                 .replace('{{EXERCISE}}', exercise)
-                .replace('{{SOLUTION}}', solution),
+                .replace('{{SOLUTION}}', solution)
+                .replace('{{FEEDBACK_CRITERIA}}', feedbackCriteria),
             },
             {
               role: 'user',
