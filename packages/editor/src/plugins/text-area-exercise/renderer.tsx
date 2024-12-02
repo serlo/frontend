@@ -6,39 +6,40 @@ import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-value
 
 // Schüly Ansicht
 export function TextAreaExerciseRenderer() {
-  const { allowShowSolution, solution } = useTextAreaPluginStateValues()
-  const [showSolution, setShowSolution] = useState(false)
+  const { solutionStrategy, allowShowSolutionStrategy } =
+    useTextAreaPluginStateValues()
+  const [showStrategy, setShowStrategy] = useState(false)
 
   return (
     <>
       <Blocks />
-      {allowShowSolution ? (
+      {allowShowSolutionStrategy ? (
         <>
           <button
             className={cn(
               'serlo-button-learner-transparent mb-4 ml-side mr-auto pr-2 text-base hover:bg-brand-100 hover:text-brand-700',
-              showSolution && 'bg-brand text-white'
+              showStrategy && 'bg-brand text-white'
             )}
             onClick={() => {
-              setShowSolution((previousValue) => !previousValue)
+              setShowStrategy((previousValue) => !previousValue)
             }}
           >
             <span className="mr-1 w-3.5">
               <span
                 className={cn(
                   'inline-block transition-transform duration-300',
-                  showSolution && 'translate-y-[1px] rotate-180'
+                  showStrategy && 'translate-y-[1px] rotate-180'
                 )}
               >
                 ▾
               </span>
               &nbsp;
             </span>
-            Musterlösung
+            Lösungsstrategie
           </button>
-          {showSolution ? (
+          {showStrategy ? (
             <div className="serlo-solution-box p-3">
-              <div className="solution">{solution}</div>
+              <div className="solution">{solutionStrategy}</div>
             </div>
           ) : null}
         </>
