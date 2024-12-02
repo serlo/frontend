@@ -4,7 +4,7 @@ import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { runChangeDocumentSaga } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import { faArrowsRotate, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { type Dispatch, type SetStateAction } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -12,10 +12,12 @@ import type { InteractiveVideoProps } from '.'
 
 export const InteractiveVideoToolbar = ({
   id,
+  hasVideo,
   state,
   previewActive,
   setPreviewActive,
 }: InteractiveVideoProps & {
+  hasVideo: boolean
   previewActive: boolean
   setPreviewActive: Dispatch<SetStateAction<boolean>>
 }) => {
@@ -31,6 +33,11 @@ export const InteractiveVideoToolbar = ({
     )
   }
 
+  function handleRemoveAllMarks() {
+    if (!window.confirm(interactiveVideoStrings.confirmRemoveAllMarks)) return
+    state.marks.forEach(() => state.marks.remove(0))
+  }
+
   return (
     <PluginToolbar
       pluginType={EditorPluginType.InteractiveVideo}
@@ -43,12 +50,24 @@ export const InteractiveVideoToolbar = ({
       pluginControls={
         <>
           <PluginDefaultTools pluginId={id} />
-          <DropdownButton
-            onClick={handleOnChangeVideo}
-            label={interactiveVideoStrings.changeVideo}
-            icon={faArrowsRotate}
-            separatorTop
-          />
+          {hasVideo ? (
+            <>
+              {state.marks.length > 0 ? (
+                <DropdownButton
+                  onClick={handleRemoveAllMarks}
+                  label={interactiveVideoStrings.removeAllMarks}
+                  icon={faTrashAlt}
+                  separatorTop
+                />
+              ) : null}
+              <DropdownButton
+                onClick={handleOnChangeVideo}
+                label={interactiveVideoStrings.changeVideo}
+                icon={faArrowsRotate}
+                separatorTop
+              />
+            </>
+          ) : null}
         </>
       }
     />

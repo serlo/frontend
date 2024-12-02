@@ -34,7 +34,7 @@ export function MarksList({
               </span>
               <div>
                 <button
-                  className="serlo-button-editor-secondary mr-2"
+                  className="serlo-button-edit-secondary mr-2"
                   onClick={() => onMarkClick(index)}
                 >
                   <span className="sr-only">
@@ -43,7 +43,7 @@ export function MarksList({
                   <FaIcon icon={faPencilAlt} />
                 </button>
                 <button
-                  className="serlo-button-editor-secondary"
+                  className="serlo-button-edit-secondary"
                   onClick={() => marks.remove(index)}
                 >
                   <span className="sr-only">

@@ -229,10 +229,13 @@ export const editStrings = {
         'Wenn die Aufgabe falsch beantwortet wurde, kann der Lerner per Button den letzten Abschnitt noch mal anschauen',
       editMark: 'Bearbeiten',
       removeMark: 'Löschen',
+      removeAllMarks: 'Alle Aufgaben löschen',
+      confirmRemoveAllMarks:
+        'Bist du sicher, dass du alle Aufgaben löschen willst?',
       addOverlayContent: 'Aufgabe an aktueller Stelle einfügen',
       addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
       changeVideo: 'Video austauschen',
-      saveButton: 'Speichern',
+      saveInfo: 'Änderungen werden automatisch gespeichert!',
     },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
