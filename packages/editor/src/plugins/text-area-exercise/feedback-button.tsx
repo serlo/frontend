@@ -7,7 +7,7 @@ import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-value
 
 export function FeedbackButton({ id }: { id: string }) {
   // Get text area plugin state values
-  const { solution } = useTextAreaPluginStateValues()
+  const { solution, evaluationCriteria } = useTextAreaPluginStateValues()
   // Get text area plugin state (incl. set functions)
   const exerciseState = useContext(ExercisePluginStateContext)
   // Get client-side state
@@ -28,11 +28,12 @@ export function FeedbackButton({ id }: { id: string }) {
       'studentSolution',
       blocks.find((block) => block.id === id)?.content || ''
     )
+    url.searchParams.append('feedbackCriteria', evaluationCriteria)
 
     const response = await fetch(url.toString(), { method: 'POST' })
 
     if (!response.ok) {
-      console.error('Network response was not ok')
+      console.error('Network response was not ok', response)
       return null
     }
 
