@@ -2,6 +2,7 @@ import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { OverlayInput } from '@editor/editor-ui/overlay-input'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
+import { EditorTextArea } from '@editor/plugins/text-area-exercise/editor-text-area'
 import { faArrowRight, faCog } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
@@ -38,7 +39,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
           <div className="flex flex-col gap-6">
             <div>
               <div>Welchen Titel soll der Lernschritt haben?</div>
-              <textarea className="text-area-chrome-autogrow min-w-96 resize-none rounded-xl border-2 border-editor-primary-200 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"></textarea>
+              <EditorTextArea />
             </div>
 
             <div>
@@ -46,12 +47,8 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
                 Wie viel Bearbeitungszeit haben die Lernenden für diesen
                 Lernschritt?
               </div>
-              <div className="flex flex-row items-center justify-start gap-3">
-                <textarea
-                  cols={5}
-                  rows={1}
-                  className="resize-none rounded-xl border-2 border-editor-primary-200 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
-                ></textarea>
+              <div className="w- flex flex-row items-center justify-start gap-3">
+                <EditorTextArea className="w-16" showMicrophoneIcon={false} />
                 Minuten
               </div>
               <div className="flex flex-row gap-3">
@@ -71,12 +68,11 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
                 widerholt werden?
               </div>
               <div className="flex flex-row items-center justify-start gap-3">
-                <textarea
+                <EditorTextArea
                   placeholder="∞"
-                  cols={5}
-                  rows={1}
-                  className="resize-none rounded-xl border-2 border-editor-primary-200 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none"
-                ></textarea>
+                  className="w-14"
+                  showMicrophoneIcon={false}
+                />
               </div>
             </div>
 

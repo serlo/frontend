@@ -1,4 +1,6 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEventHandler } from 'react'
 
 export function EditorTextArea({
@@ -6,21 +8,30 @@ export function EditorTextArea({
   value,
   onChange,
   placeholder,
+  showMicrophoneIcon = true,
 }: {
   className?: string
   value?: string
   onChange?: ChangeEventHandler<HTMLTextAreaElement>
   placeholder?: string
+  showMicrophoneIcon?: boolean
 }) {
   return (
-    <textarea
-      placeholder={placeholder}
-      className={cn(
-        'text-area-chrome-autogrow w-full resize-none rounded-xl border-2 border-editor-primary-200 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none',
-        className
-      )}
-      value={value}
-      onChange={onChange}
-    ></textarea>
+    <div className="my-3 flex flex-row items-end gap-3">
+      <textarea
+        placeholder={placeholder}
+        className={cn(
+          'text-area-chrome-autogrow flex-grow resize-none rounded-xl border-2 border-editor-primary-200 bg-editor-primary-100 px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none',
+          className
+        )}
+        value={value}
+        onChange={onChange}
+      ></textarea>
+      {showMicrophoneIcon ? (
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-editor-primary-200 p-2 hover:bg-editor-primary-300">
+          <FaIcon className="h-full" icon={faMicrophone} />
+        </button>
+      ) : null}
+    </div>
   )
 }
