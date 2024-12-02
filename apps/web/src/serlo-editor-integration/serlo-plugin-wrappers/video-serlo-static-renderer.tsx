@@ -1,4 +1,4 @@
-import { parseVideoUrl } from '@editor/plugins/video/renderer'
+import { parseVideoUrl, VideoType } from '@editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorVideoDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
@@ -17,6 +17,16 @@ export function VideoSerloStaticRenderer(props: EditorVideoDocument) {
   const { src } = props.state
   if (!src) return null
   const [iframeSrc, type] = parseVideoUrl(src)
+
+  if (type === VideoType.SerloAsset) {
+    return (
+      <Lazy noPrint>
+        <VideoStaticRenderer {...props} />
+        <p className="serlo-p hidden print:block">[{src}]</p>
+      </Lazy>
+    )
+  }
+
   return (
     <Lazy noPrint>
       <PrivacyWrapper

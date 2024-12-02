@@ -58,7 +58,7 @@ export const VideoToolbar = ({
                 }}
                 inputWidth="100%"
                 width="100%"
-                placeholder="(YouTube, Wikimedia Commons, Vimeo)"
+                placeholder="(YouTube, Vimeo)"
                 className="block"
               />
             </div>
