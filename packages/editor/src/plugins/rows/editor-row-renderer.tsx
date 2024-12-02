@@ -14,7 +14,7 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import type { RowsPluginConfig, RowsPluginState } from '.'
-import { RowDragButton } from './components/row-drag-button'
+import { RowControls } from './components/row-controls'
 import { useCanDrop } from './hooks/use-can-drop'
 
 interface RowDragObject {
@@ -50,27 +50,25 @@ export function EditorRowRenderer({
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
-  const [collectedDragProps, drag, dragPreview] = useDrag({
+  const [collectedDragProps, dragPreview] = useDrag({
     type: 'row',
-    item: () => {
-      return {
-        id: row.id,
-        static: selectStaticDocument(store.getState(), row.id),
-        onDrop() {
-          // Remove the dragged plugin from its original rows plugin
-          rows.set((list) => {
-            const index = list.findIndex((id) => id === row.id)
-            return R.remove(index, 1, list)
-          })
+    item: () => ({
+      id: row.id,
+      static: selectStaticDocument(store.getState(), row.id),
+      onDrop() {
+        // Remove the dragged plugin from its original rows plugin
+        rows.set((list) => {
+          const index = list.findIndex((id) => id === row.id)
+          return R.remove(index, 1, list)
+        })
 
-          // If the dragged plugin was the only plugin in the current rows plugin,
-          // add an empty text plugin to replace it
-          if (rows.length <= 1) {
-            rows.insert(0, { plugin: EditorPluginType.Text })
-          }
-        },
-      }
-    },
+        // If the dragged plugin was the only plugin in the current rows plugin,
+        // add an empty text plugin to replace it
+        if (rows.length <= 1) {
+          rows.insert(0, { plugin: EditorPluginType.Text })
+        }
+      },
+    }),
     collect(monitor) {
       return { isDragging: !!monitor.isDragging() }
     },
@@ -171,7 +169,7 @@ export function EditorRowRenderer({
   const dropPreview =
     collectedDropProps.isDragging &&
     (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
-      <hr className="m-0 border-2 border-editor-primary p-0" />
+      <hr className="m-0 border-2 border-brand p-0" />
     ) : null
 
   const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
@@ -182,6 +180,7 @@ export function EditorRowRenderer({
     <>
       {draggingAbove ? dropPreview : null}
       <div
+        id={row.id}
         ref={container}
         className={cn(
           // Base class, used for nested selectors and DOM querying
@@ -191,15 +190,15 @@ export function EditorRowRenderer({
           'hover:shadow-plugin-hover',
           'focus-within:shadow-plugin-focus',
           'hover:focus-within:!shadow-plugin-focus',
-          // Left sidebar styles
-          '[&:focus-within>.rows-tools]:opacity-100',
-          '[&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0',
-          '[&:hover>.rows-tools]:!opacity-100',
+          // Row controls (left sidebar) styles
+          '[&:focus-within>.row-controls]:opacity-100',
+          '[&:has(.rows-editor-renderer-container:focus-within)>.row-controls]:opacity-0',
+          '[&:hover>.row-controls]:!opacity-100',
           isMultimediaPlugin &&
-            '[&>.rows-tools]:!-left-1 [&>.rows-tools]:!-top-9'
+            '[&>.row-controls]:!-left-1 [&>.row-controls]:!-top-9'
         )}
       >
-        <RowDragButton drag={drag} />
+        <RowControls rows={rows} index={index} />
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >
