@@ -41,7 +41,7 @@ export function SpoilerRenderer({
         )}
       >
         <span className="flex">
-          <span className="inline-block w-4">{isOpen ? '▾ ' : '▸ '} </span>
+          <span className="inline-block w-4">{isOpen ? '▴ ' : '▾ '} </span>
           {title}
         </span>
       </button>

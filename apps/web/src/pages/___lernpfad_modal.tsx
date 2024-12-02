@@ -66,9 +66,11 @@ export function Content() {
           </ul>
         </SpoilerRenderer>
       </div>
-      <button className="serlo-button-learner-primary mx-side mb-10 rounded-md p-3 text-2xl font-medium">
-        Los geht&apos;s
-      </button>
+      <div className="mx-side mb-10 flex justify-end">
+        <button className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium">
+          Los geht&apos;s
+        </button>
+      </div>
     </ModalWithCloseButton>
   )
 }
