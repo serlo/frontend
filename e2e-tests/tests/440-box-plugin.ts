@@ -129,9 +129,6 @@ Scenario('Move between box title and content with Tab', async ({ I }) => {
   I.type('Boxtitel')
 
   I.say('Move to the box content with Tab')
-  // Selects the row drag button of the box content first
-  I.pressKey('Tab')
-  // Selects the box content
   I.pressKey('Tab')
   I.type('Boxinhalt')
 
