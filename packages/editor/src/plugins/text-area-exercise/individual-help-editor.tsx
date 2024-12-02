@@ -40,6 +40,7 @@ export function IndividualHelp() {
         <EditorTextArea
           placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
           onChange={(e) => additionalInfoForAi.set(e.target.value)}
+          value={additionalInfoForAi.value}
         />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
