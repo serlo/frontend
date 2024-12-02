@@ -4,6 +4,8 @@ import {
   string,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { cn } from '@editor/utils/cn'
+import { useEffect, useState } from 'react'
 
 import { editorContent, entity, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
@@ -34,8 +36,20 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
     meta_description: metaDescription,
   } = props.state
 
+  const [zoomedOut, setZoomedOut] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setZoomedOut(false), 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
-    <>
+    <div
+      className={cn(
+        'transition-transform duration-1000 ease-in-out',
+        zoomedOut && '-translate-y-1/4 scale-50'
+      )}
+    >
       <div className="absolute right-0 -mt-10 mr-side flex">
         <MetadataFieldsModal
           metaTitle={metaTitle}
@@ -45,6 +59,6 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <EntityTitleInput title={title} forceFocus />
 
       <section itemProp="articleBody">{content.render()}</section>
-    </>
+    </div>
   )
 }
