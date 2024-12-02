@@ -3,17 +3,15 @@ import { useContext } from 'react'
 
 import { EditorTextArea } from './editor-text-area'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
-import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 export function Solution() {
-  const { solution } = useTextAreaPluginStateValues()
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
   const { allowShowSolution, allowShowEvaluationCriteria } =
     textAreaPluginStateContext.state
   return (
-    <div className="flex flex-col gap-8 leading-10">
+    <>
       <div>
         <div className="flex flex-row items-center gap-3">
           <label className="mr-5">Musterlösung anzeigen</label>
@@ -51,6 +49,6 @@ export function Solution() {
           </button>
         </div>
       </div>
-    </div>
+    </>
   )
 }

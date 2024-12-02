@@ -1,12 +1,14 @@
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
 
+import { IndividualHelp } from './individual-help'
 import { Solution } from './solution-editor'
+import { Strategy } from './strategy'
 
 const tabs = [
   { name: 'Musterlösung und Bewertungskriterien', content: Solution },
   { name: 'Lösungsstrategie', content: Strategy },
-  { name: 'Individuelle Hilfestellungen', content: FeedbackCriteria },
+  { name: 'Individuelle Hilfestellungen', content: IndividualHelp },
 ]
 
 export function SettingsTabs() {
@@ -16,14 +18,14 @@ export function SettingsTabs() {
 
   return (
     <>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row flex-wrap items-center justify-center">
         {tabs.map((tab, index) => {
           return (
             <button
               key={tab.name}
               onClick={() => setSelectedTabIndex(index)}
               className={cn(
-                'serlo-button-edit serlo-button-edit-primary mb-2.5 mr-2 max-w-52 rounded-md',
+                'serlo-button-edit serlo-button-edit-primary mb-2.5 mr-2 max-w-48 rounded-md',
                 selectedTabIndex === index
                   ? 'serlo-button-edit-primary'
                   : 'serlo-button-edit-secondary'
@@ -34,17 +36,9 @@ export function SettingsTabs() {
           )
         })}
       </div>
-      <div className="w-full">
+      <div className="flex w-full flex-col gap-8 leading-10">
         <tabContent.content />
       </div>
     </>
   )
-}
-
-function Strategy() {
-  return <div>Strategy</div>
-}
-
-function FeedbackCriteria() {
-  return <div>FeedbackCriteria</div>
 }

@@ -23,6 +23,7 @@ function createTextAreaExerciseState() {
     allowSubmitFeedback: boolean(false),
     timeInMinutes: number(-1), // -1 -> No time limit
     numberOfRetries: number(3), // -1 -> Unlimited
+    allowAiFeedback: boolean(true),
   })
 }
 
