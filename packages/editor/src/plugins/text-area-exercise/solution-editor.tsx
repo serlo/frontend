@@ -8,8 +8,12 @@ export function Solution() {
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
-  const { allowShowSolution, allowShowEvaluationCriteria } =
-    textAreaPluginStateContext.state
+  const {
+    allowShowSolution,
+    allowShowEvaluationCriteria,
+    solution,
+    evaluationCriteria,
+  } = textAreaPluginStateContext.state
   return (
     <>
       <div>
@@ -20,7 +24,10 @@ export function Solution() {
             onClick={() => allowShowSolution.set((old) => !old)}
           />
         </div>
-        <EditorTextArea placeholder="Musterlösung" />
+        <EditorTextArea
+          placeholder="Musterlösung"
+          onChange={(e) => solution.set(e.target.value)}
+        />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload
@@ -39,7 +46,10 @@ export function Solution() {
             onClick={() => allowShowEvaluationCriteria.set((old) => !old)}
           />
         </div>
-        <EditorTextArea placeholder="Bewertungskriterien" />
+        <EditorTextArea
+          placeholder="Bewertungskriterien"
+          onChange={(e) => evaluationCriteria.set(e.target.value)}
+        />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload

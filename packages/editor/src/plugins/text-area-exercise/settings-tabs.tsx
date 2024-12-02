@@ -1,9 +1,9 @@
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
 
-import { IndividualHelp } from './individual-help'
+import { IndividualHelp } from './individual-help-editor'
 import { Solution } from './solution-editor'
-import { Strategy } from './strategy'
+import { Strategy } from './strategy-editor'
 
 const tabs = [
   { name: 'Musterlösung und Bewertungskriterien', content: Solution },

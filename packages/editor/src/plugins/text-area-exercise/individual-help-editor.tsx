@@ -13,6 +13,7 @@ export function IndividualHelp() {
     allowAiFeedback,
     allowParagraphFeedback,
     allowSubmitFeedback,
+    additionalInfoForAi,
   } = textAreaPluginStateContext.state
   return (
     <>
@@ -36,7 +37,10 @@ export function IndividualHelp() {
             onClick={() => allowAiFeedback.set((old) => !old)}
           />
         </div>
-        <EditorTextArea placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?" />
+        <EditorTextArea
+          placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
+          onChange={(e) => additionalInfoForAi.set(e.target.value)}
+        />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload

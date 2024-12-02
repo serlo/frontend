@@ -1,6 +1,5 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { OverlayInput } from '@editor/editor-ui/overlay-input'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { EditorTextArea } from '@editor/plugins/text-area-exercise/editor-text-area'
 import { faArrowRight, faCog } from '@fortawesome/free-solid-svg-icons'

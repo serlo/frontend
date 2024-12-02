@@ -8,7 +8,8 @@ export function Strategy() {
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
-  const { allowShowSolutionStrategy } = textAreaPluginStateContext.state
+  const { allowShowSolutionStrategy, solutionStrategy } =
+    textAreaPluginStateContext.state
   return (
     <>
       <div>
@@ -19,7 +20,10 @@ export function Strategy() {
             onClick={() => allowShowSolutionStrategy.set((old) => !old)}
           />
         </div>
-        <EditorTextArea placeholder="Lösungsstrategie" />
+        <EditorTextArea
+          placeholder="Lösungsstrategie"
+          onChange={(e) => solutionStrategy.set(e.target.value)}
+        />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload
