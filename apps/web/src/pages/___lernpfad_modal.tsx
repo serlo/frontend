@@ -1,15 +1,8 @@
-import {
-  PreferenceName,
-  getWithoutContext,
-  setWithoutContext,
-} from '@editor/core/contexts'
 import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
-import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import { useState } from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { cn } from '@/helper/cn'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export interface LegalData {
