@@ -27,6 +27,7 @@ export function Solution() {
         <EditorTextArea
           placeholder="Musterlösung"
           onChange={(e) => solution.set(e.target.value)}
+          value={solution.value}
         />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
@@ -49,6 +50,7 @@ export function Solution() {
         <EditorTextArea
           placeholder="Bewertungskriterien"
           onChange={(e) => evaluationCriteria.set(e.target.value)}
+          value={evaluationCriteria.value}
         />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
