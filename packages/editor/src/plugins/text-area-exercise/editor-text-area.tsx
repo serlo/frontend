@@ -29,7 +29,7 @@ export function EditorTextArea({
       ></textarea>
       {showMicrophoneIcon ? (
         <button className="flex h-8 w-8 items-center justify-center rounded-full bg-editor-primary-200 p-2 hover:bg-editor-primary-300">
-          <FaIcon className="h-full" icon={faMicrophone} />
+          <FaIcon className="h-5 w-5" icon={faMicrophone} />
         </button>
       ) : null}
     </div>
