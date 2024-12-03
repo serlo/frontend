@@ -8,8 +8,8 @@ export function SubmitButtonAndFeedback() {
   const [triesLeft, setTriesLeft] = useState(3)
 
   return (
-    <div className="relative">
-      <AnimateChangeInHeight className="sticky bottom-1 z-50 p-3">
+    <div className="">
+      <AnimateChangeInHeight className="">
         <button
           onClick={() => {
             setTriesLeft((previous) => previous - 1)
@@ -23,13 +23,15 @@ export function SubmitButtonAndFeedback() {
           Zur Rückmeldung abschicken ({triesLeft})
         </button>
         {showFeedback ? (
-          <div className="flex w-full flex-row gap-3 bg-purple-200 p-3">
-            <img src="/_assets/img/birdie.svg" className="max-w-20" />
-            <div>
-              Feedback text Feedback text Feedback text Feedback text Feedback
-              text Feedback text Feedback text Feedback text Feedback text
-              Feedback text Feedback text Feedback text Feedback text Feedback
-              text Feedback text Feedback text Feedback text{' '}
+          <div className="fixed bottom-0 z-50 p-3">
+            <div className="flex w-full flex-row gap-3 rounded-md bg-purple-200 p-3">
+              <img src="/_assets/img/birdie.svg" className="max-w-10" />
+              <div>
+                Feedback text Feedback text Feedback text Feedback text Feedback
+                text Feedback text Feedback text Feedback text Feedback text
+                Feedback text Feedback text Feedback text Feedback text Feedback
+                text Feedback text Feedback text Feedback text{' '}
+              </div>
             </div>
           </div>
         ) : null}
