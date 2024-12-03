@@ -5965,6 +5965,7 @@ __metadata:
     react-hot-toast: ^2.4.1
     react-lazyload: ^3.2.1
     react-textarea-autosize: ^8.5.5
+    react-zoom-pan-pinch: ^3.6.1
     slate: 0.110.2
     swr: ^2.2.5
     tailwindcss: ^3.4.15
@@ -16549,6 +16550,16 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 21a3f08d44da37857ef6251b49e56654f3a221efe70a05b6b3308afb16a58c71d26dcd5d54aea90d88a60289ad40f035f58b5031e7812f8e1cbf447812c1405b
+  languageName: node
+  linkType: hard
+
+"react-zoom-pan-pinch@npm:^3.6.1":
+  version: 3.6.1
+  resolution: "react-zoom-pan-pinch@npm:3.6.1"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: b75a12438ed8b342cdcc98d6b1d158e25cac1aa8c11523a7f97959ddc16a70d40b7ff71a259d733c6cc58c1284bd150723b78c1f987a1601316af39e570fee5d
   languageName: node
   linkType: hard
 

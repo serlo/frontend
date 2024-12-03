@@ -76,6 +76,7 @@
     "react-hot-toast": "^2.4.1",
     "react-lazyload": "^3.2.1",
     "react-textarea-autosize": "^8.5.5",
+    "react-zoom-pan-pinch": "^3.6.1",
     "swr": "^2.2.5",
     "timeago-react": "^3.0.6",
     "timeago.js": "^4.0.2",
