@@ -163,9 +163,7 @@ export function MathEditor(props: MathEditorProps) {
     const isShadowRootNode = isShadowRoot(root)
     const target =
       (isShadowRootNode || isDocument
-        ? root.querySelector<HTMLDivElement>(
-            '.plugin-text .toolbar-controls-target'
-          )
+        ? root.querySelector<HTMLDivElement>('.toolbar-controls-target')
         : document.body) ?? document.body
 
     return createPortal(children, target)
