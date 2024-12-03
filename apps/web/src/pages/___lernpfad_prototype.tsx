@@ -29,18 +29,34 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
   )
 })
 
+type ExerciseId = string
+interface Exercise {
+  done: boolean
+  title: string
+  next: ExerciseId | null
+}
+
 function Content() {
-  const [exercises, setExercises] = useState<Record<string, boolean>>({
-    '1': false,
-    '2': false,
+  const [exercises, setExercises] = useState<Record<ExerciseId, Exercise>>({
+    '1': {
+      done: false,
+      title: 'Exercise 1',
+      next: '2',
+    },
+    '2': {
+      done: false,
+      title: 'Exercise 2',
+      next: null,
+    },
   })
   const [isExerciseShown, setIsExerciseShown] = useState(false)
-  const [activeExercise, setActiveExercise] = useState<string | null>(null)
+  const [activeExercise, setActiveExercise] = useState<ExerciseId | null>(null)
   const [showModal, setShowModal] = useState(false)
 
-  return isExerciseShown ? (
+  return isExerciseShown && activeExercise ? (
     <Exercise
       id={activeExercise}
+      data={exercises[activeExercise]}
       onBackToMapClick={handleBackToMapClick}
       onSubmitClick={handleExerciseSubmitClick}
     />
@@ -49,56 +65,58 @@ function Content() {
       <TransformWrapper initialScale={0.75} minScale={0.75} centerOnInit>
         <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
       </TransformWrapper>
-      <ModalWithCloseButton
-        isOpen={showModal}
-        setIsOpen={setShowModal}
-        title="Writing an Opinion – step by step"
-        extraCloseButtonClassName="bg-brand-200"
-        className="top-[12%] w-[47%] translate-y-0 overflow-y-auto p-5 pt-12"
-        extraTitleClassName="border-none"
-      >
-        <p className="serlo-p">
-          <ul className="serlo-ul ml-0">
-            <li>
-              Diesen Lernschritt kannst du <b>drei Mal</b> vor der entgültigen
-              Abgabe <b>bearbeiten</b>.
-            </li>
-            <li>
-              Du hast <b>20 Minuten</b> Zeit.
-            </li>
-            <li>
-              Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>
-            </li>
-          </ul>
-        </p>
-        <div className="serlo-p [&>div]:border-0 [&_button]:bg-transparent [&_button]:p-0">
-          <SpoilerRenderer title={<b>Deine Bewertungskriterien</b>}>
-            <ul className="serlo-ul mb-0">
+      {activeExercise ? (
+        <ModalWithCloseButton
+          isOpen={showModal}
+          setIsOpen={setShowModal}
+          title={exercises[activeExercise].title}
+          extraCloseButtonClassName="bg-brand-200"
+          className="top-[12%] w-[47%] translate-y-0 overflow-y-auto p-5 pt-12"
+          extraTitleClassName="border-none"
+        >
+          <p className="serlo-p">
+            <ul className="serlo-ul ml-0">
               <li>
-                Textgestaltung und Sprachfluss (Formulierungen, Stuktur,
-                Verwendung von Konnektoren, eindeutige Bezüge)
+                Diesen Lernschritt kannst du <b>drei Mal</b> vor der entgültigen
+                Abgabe <b>bearbeiten</b>.
               </li>
-              <li>Wortschatz und Idiomatik</li>
               <li>
-                Satzbau und Grammatik (Satzmuster und damit einhergehende
-                Verständlichkeit insgesamt)
+                Du hast <b>20 Minuten</b> Zeit.
+              </li>
+              <li>
+                Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>
               </li>
             </ul>
-          </SpoilerRenderer>
-        </div>
-        <div className="mx-side mb-10 flex justify-end">
-          <button
-            className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium"
-            onClick={handleModalConfirmClick}
-          >
-            Los geht&apos;s
-          </button>
-        </div>
-      </ModalWithCloseButton>
+          </p>
+          <div className="serlo-p [&>div]:border-0 [&_button]:bg-transparent [&_button]:p-0">
+            <SpoilerRenderer title={<b>Deine Bewertungskriterien</b>}>
+              <ul className="serlo-ul mb-0">
+                <li>
+                  Textgestaltung und Sprachfluss (Formulierungen, Stuktur,
+                  Verwendung von Konnektoren, eindeutige Bezüge)
+                </li>
+                <li>Wortschatz und Idiomatik</li>
+                <li>
+                  Satzbau und Grammatik (Satzmuster und damit einhergehende
+                  Verständlichkeit insgesamt)
+                </li>
+              </ul>
+            </SpoilerRenderer>
+          </div>
+          <div className="mx-side mb-10 flex justify-end">
+            <button
+              className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium"
+              onClick={handleModalConfirmClick}
+            >
+              Los geht&apos;s
+            </button>
+          </div>
+        </ModalWithCloseButton>
+      ) : null}
     </>
   )
 
-  function handleExerciseClick(id: string) {
+  function handleExerciseClick(id: ExerciseId) {
     setActiveExercise(id)
     setShowModal(true)
   }
@@ -113,10 +131,13 @@ function Content() {
     setActiveExercise(null)
   }
 
-  function handleExerciseSubmitClick(id: string) {
-    setIsExerciseShown(false)
-    setActiveExercise(null)
-    setExercises((exercises) => ({ ...exercises, [id]: true }))
+  function handleExerciseSubmitClick(id: ExerciseId) {
+    setExercises((exercises) => ({
+      ...exercises,
+      [id]: { ...exercises[id], done: true },
+    }))
+    if (exercises[id].next === null) setIsExerciseShown(false)
+    setActiveExercise(exercises[id].next)
   }
 }
 
@@ -124,15 +145,15 @@ function Map({
   exercises,
   onExerciseClick,
 }: {
-  exercises: Record<string, boolean>
-  onExerciseClick: (id: string) => void
+  exercises: Record<ExerciseId, Exercise>
+  onExerciseClick: (id: ExerciseId) => void
 }) {
   const { zoomToElement } = useControls()
 
   useEffect(() => {
     // Find first exercise that's not done yet
     const idToZoomTo = Object.keys(exercises).find(
-      (key) => exercises[key] === false
+      (key) => exercises[key].done === false
     )
     // Exit if all exercises are done
     if (!idToZoomTo) return
@@ -177,26 +198,28 @@ function Map({
     </TransformComponent>
   )
 
-  function getExerciseClasses(id: string) {
+  function getExerciseClasses(id: ExerciseId) {
     return cn(
       'absolute cursor-pointer',
       isExerciseDone(id) ? 'bg-editor-primary-300' : 'bg-brand-300'
     )
   }
 
-  function isExerciseDone(id: string) {
-    return exercises[id] === true
+  function isExerciseDone(id: ExerciseId) {
+    return exercises[id].done === true
   }
 }
 
 function Exercise({
   id,
+  data,
   onBackToMapClick,
   onSubmitClick,
 }: {
-  id: string | null
+  id: ExerciseId | null
+  data: Exercise
   onBackToMapClick: () => void
-  onSubmitClick: (id: string) => void
+  onSubmitClick: (id: ExerciseId) => void
 }) {
   if (id === null) return null
 
@@ -207,13 +230,17 @@ function Exercise({
       </button>
 
       <div className="flex h-full flex-col items-center justify-center">
-        <h1>Exercise {id}</h1>
-        <button
-          className="serlo-button-edit-primary"
-          onClick={() => onSubmitClick(id)}
-        >
-          Submit
-        </button>
+        <h1>{data.title}</h1>
+        {data.done ? (
+          <h2>Done</h2>
+        ) : (
+          <button
+            className="serlo-button-edit-primary"
+            onClick={() => onSubmitClick(id)}
+          >
+            Submit
+          </button>
+        )}
       </div>
     </div>
   )
