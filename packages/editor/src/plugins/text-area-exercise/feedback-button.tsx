@@ -29,8 +29,8 @@ export function FeedbackButton({ id }: { id: string }) {
       method: 'POST',
       body: JSON.stringify({
         exercise: contentText,
-        solution,
-        evaluationCriteria,
+        solution: solution ?? 'keine Musterlösung',
+        evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
         // Maybe do it per paragraph like in the original prototype?
         studentSolution: blocks.find((block) => block.id === id)?.content || '',
       }),
