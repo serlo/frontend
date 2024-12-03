@@ -1,10 +1,28 @@
+import { useEffect } from 'react'
+
 import { FeedbackBlock } from './feedback-block'
-import { PrototypeStateStore } from './prototype-state'
+import { createTextBlock, PrototypeStateStore } from './prototype-state'
 import { TextBlock } from './text-block'
+import { usePluginId } from './use-plugin-id'
 
 // All text and feedback blocks
 export function Blocks() {
-  const blocks = PrototypeStateStore.useState((s) => s.textAreaBlocks)
+  const pluginId = usePluginId()
+  const blocks = PrototypeStateStore.useState(
+    (s) => s.textAreaPlugins[pluginId]?.textAreaBlocks || []
+  )
+
+  // Initialize blocks
+  useEffect(() => {
+    if (blocks.length !== 0) return
+
+    PrototypeStateStore.update((s) => {
+      s.textAreaPlugins[pluginId] = { textAreaBlocks: [createTextBlock()] }
+    })
+  })
+
+  // Dont render blocks because their state is not initialized on first render
+  if (!blocks) return <></>
 
   return (
     <div className="my-5 p-3">

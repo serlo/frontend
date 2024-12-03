@@ -3,15 +3,19 @@ import { useContext } from 'react'
 import { ExercisePluginStateContext } from './exercise-plugin-state-context'
 import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
 import { AiFeedback } from './types'
+import { usePluginId } from './use-plugin-id'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 export function FeedbackButton({ id }: { id: string }) {
+  const pluginId = usePluginId()
   // Get text area plugin state values
   const { solution, evaluationCriteria } = useTextAreaPluginStateValues()
   // Get text area plugin state (incl. set functions)
   const exerciseState = useContext(ExercisePluginStateContext)
   // Get client-side state
-  const blocks = PrototypeStateStore.useState((s) => s.textAreaBlocks)
+  const blocks = PrototypeStateStore.useState(
+    (s) => s.textAreaPlugins[pluginId]?.textAreaBlocks || []
+  )
 
   async function fetchFeedback() {
     const url = new URL('/api/ai/student-feedback', window.location.href)
@@ -40,15 +44,22 @@ export function FeedbackButton({ id }: { id: string }) {
     return (await response.json()) as AiFeedback
   }
 
-  async function handleKiButtonClick() {
+  async function handleKiButtonClick(pluginId: string) {
     const feedback = await fetchFeedback()
 
     PrototypeStateStore.update((s) => {
-      const index = s.textAreaBlocks.findIndex((block) => block.id === id)
-      const nextBlock = s.textAreaBlocks.at(index + 1)
-      if (!nextBlock || nextBlock.type !== 'feedback') {
-        s.textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
-        //const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
+      if (!s.textAreaPlugins[pluginId]) {
+        s.textAreaPlugins[pluginId] = {
+          textAreaBlocks: [createFeedbackBlock(feedback)],
+        }
+      } else {
+        const textAreaBlocks = s.textAreaPlugins[pluginId].textAreaBlocks
+        const index = textAreaBlocks.findIndex((block) => block.id === id)
+        const nextBlock = textAreaBlocks.at(index + 1)
+        if (!nextBlock || nextBlock.type !== 'feedback') {
+          textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
+          //const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
+        }
       }
     })
   }
@@ -56,7 +67,7 @@ export function FeedbackButton({ id }: { id: string }) {
     <>
       <button
         className="h-8 w-8 rounded-full bg-brand-200 hover:bg-brand-300"
-        onClick={handleKiButtonClick}
+        onClick={() => handleKiButtonClick(pluginId)}
       >
         <div>🐦</div>
       </button>

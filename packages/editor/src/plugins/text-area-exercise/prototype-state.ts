@@ -3,13 +3,19 @@ import { v4 as uuid_v4 } from 'uuid'
 
 import { Block, Text, AiFeedback, Feedback } from './types'
 
-interface PrototypeState {
+interface TextAreaPluginState {
   textAreaBlocks: Block[]
+}
+
+interface PrototypeState {
+  textAreaPlugins: {
+    [id: string]: TextAreaPluginState
+  }
   silentMode: boolean
 }
 
 export const PrototypeStateStore = new Store<PrototypeState>({
-  textAreaBlocks: [createTextBlock()],
+  textAreaPlugins: {},
   silentMode: false,
 })
 
@@ -17,7 +23,11 @@ export function createFeedbackBlock(
   feedback: AiFeedback | null = null
 ): Feedback {
   if (!feedback) {
-    return { id: uuid_v4(), type: 'feedback', content: 'Leider konnte unsere KI kein Feedback geben' }
+    return {
+      id: uuid_v4(),
+      type: 'feedback',
+      content: 'Leider konnte unsere KI kein Feedback geben',
+    }
   }
 
   return { id: uuid_v4(), type: 'feedback', content: feedback.generalFeedback }
