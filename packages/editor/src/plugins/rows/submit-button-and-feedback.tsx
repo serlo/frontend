@@ -24,7 +24,7 @@ export function SubmitButtonAndFeedback() {
         </button>
         {showFeedback ? (
           <div className="fixed bottom-0 z-50 p-3">
-            <div className="flex w-full flex-row gap-3 rounded-md bg-purple-200 p-3">
+            <div className="flex w-full flex-row gap-3 rounded-md bg-purple-200 p-3 shadow-plugin-focus">
               <img src="/_assets/img/birdie.svg" className="max-w-10" />
               <div>
                 Feedback text Feedback text Feedback text Feedback text Feedback
