@@ -43,15 +43,10 @@ export class EditorWebComponent extends HTMLElement {
 
   private _isProductionEnvironment: boolean = false
 
-  // By default, we are NOT attaching it to the shadow DOM
-  private _useShadowDOM: boolean = false
-
   constructor() {
     super()
 
     this.container = document.createElement('div')
-
-    // Shadow DOM will be attached in connectedCallback if needed
   }
 
   static get observedAttributes() {
@@ -59,7 +54,6 @@ export class EditorWebComponent extends HTMLElement {
       'initial-state',
       'mode',
       'testing-secret',
-      'use-shadow-dom',
       'editor-variant',
       'plugins',
       'is-production-environment',
@@ -75,8 +69,6 @@ export class EditorWebComponent extends HTMLElement {
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
-    } else if (name === 'use-shadow-dom') {
-      this._useShadowDOM = newValue === 'true'
     } else if (name === 'editor-variant' && oldValue !== newValue) {
       this.editorVariant = newValue as EditorVariant
     } else if (name === 'plugins' && oldValue !== newValue) {
@@ -169,13 +161,7 @@ export class EditorWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this._useShadowDOM && !this.shadowRoot) {
-      this.attachShadow({ mode: 'open' })
-      this.shadowRoot!.appendChild(this.container)
-    } else if (!this._useShadowDOM) {
-      this.appendChild(this.container)
-    }
-
+    this.appendChild(this.container)
     this.loadAndApplyStyles()
 
     if (!this.reactRoot) {
@@ -188,11 +174,7 @@ export class EditorWebComponent extends HTMLElement {
   loadAndApplyStyles() {
     const styleEl = document.createElement('style')
     styleEl.textContent = styles
-    if (this._useShadowDOM) {
-      this.shadowRoot!.appendChild(styleEl)
-    } else {
-      this.appendChild(styleEl)
-    }
+    this.appendChild(styleEl)
   }
 
   broadcastNewState(newState: unknown): void {
