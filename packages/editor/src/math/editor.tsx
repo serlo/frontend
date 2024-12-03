@@ -164,7 +164,9 @@ export function MathEditor(props: MathEditorProps) {
     const target =
       (isShadowRootNode || isDocument
         ? root.querySelector<HTMLDivElement>(
-            '.plugin-text .toolbar-controls-target'
+            // Either equations and toolbar, or plugin-text and toolbar (for
+            // nested math plugins)
+            '.plugin-text .toolbar-controls-target, .plugin-equations .toolbar-controls-target'
           )
         : document.body) ?? document.body
 
