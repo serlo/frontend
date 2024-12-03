@@ -54,7 +54,10 @@ export function FeedbackButton({ id }: { id: string }) {
   }
   return (
     <>
-      <button className="" onClick={handleKiButtonClick}>
+      <button
+        className="h-8 w-8 rounded-full bg-brand-200 hover:bg-brand-300"
+        onClick={handleKiButtonClick}
+      >
         <div>🐦</div>
       </button>
     </>
