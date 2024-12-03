@@ -1,4 +1,3 @@
-import { EditorModal } from '@editor/editor-ui/editor-modal'
 import {
   insertPluginChildBefore,
   removePluginChild,
@@ -7,6 +6,7 @@ import {
   useStore,
 } from '@editor/store'
 import { SearchModal } from '@serlo/frontend/src/components/datenraum/search-modal'
+import { Dialog, DialogContent } from '@serlo/frontend/src/components/ui/dialog'
 import { useState } from 'react'
 
 import { type DatenraumIntegrationProps } from '.'
@@ -18,16 +18,17 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   const store = useStore()
 
   return (
-    <EditorModal
-      title=""
-      isOpen={showSearch}
-      className="top-1/2 max-h-[80vh] min-h-[60vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto"
-      setIsOpen={setShowSearch}
+    <Dialog
+      open={showSearch}
+      defaultOpen={showSearch}
+      onOpenChange={setShowSearch}
     >
-      <div className="px-3">
-        <SearchModal noNew onImport={handleImport} />
-      </div>
-    </EditorModal>
+      <DialogContent className="top-[45%] w-[900px] max-w-[90vw]">
+        <div className="px-3">
+          <SearchModal noNew onImport={handleImport} />
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 
   function handleImport(state?: unknown) {

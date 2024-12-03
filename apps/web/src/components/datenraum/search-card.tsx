@@ -93,7 +93,7 @@ export default function SearchCard({
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="z-[1000] sm:max-w-2xl">
+      <DialogContent className="z-[200] sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{entry.title}</DialogTitle>
           <DialogDescription className="py-3 text-gray-800">

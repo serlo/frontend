@@ -30,7 +30,7 @@ export function SaveModal({
       isOpen={open}
       setIsOpen={setOpen}
       title=""
-      className="top-1/4 max-h-full w-[600px] -translate-x-1/2 translate-y-0 overflow-y-auto pb-20"
+      className="top-[10%] max-h-full w-[600px] -translate-x-1/2 translate-y-0 overflow-y-auto pb-20"
     >
       <div className="mx-side">
         <p className="my-4 text-lg font-bold">
@@ -44,7 +44,9 @@ export function SaveModal({
           Möchtest du den Inhalt für andere Lehrkräfte freigeben?
         </p>
 
-        <div className="mb-20 mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <p className="mb-2 mt-4 text-lg font-bold">Wähle eine Lizenz:</p>
+
+        <div className="mb-20 grid grid-cols-1 gap-6 sm:grid-cols-2">
           {renderLicenseCards()}
         </div>
       </div>
@@ -52,7 +54,11 @@ export function SaveModal({
   )
 
   function handleLicenseClick() {
-    showToastNotice('Danke! Inhalt als OER veröffentlicht 🎉', 'success')
+    showToastNotice(
+      'Danke! Inhalt im Datenraum veröffentlicht 🎉',
+      'success',
+      3000
+    )
     setOpen(false)
   }
 
