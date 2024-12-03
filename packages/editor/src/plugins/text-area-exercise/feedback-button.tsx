@@ -21,16 +21,16 @@ export function FeedbackButton({ id }: { id: string }) {
     const contentText = exerciseState?.state.content.state[0].state[0]
       .children[0].text as string
 
-    url.searchParams.append('exercise', contentText)
-    url.searchParams.append('solution', solution)
-    // Maybe do it per paragraph like in the original prototype?
-    url.searchParams.append(
-      'studentSolution',
-      blocks.find((block) => block.id === id)?.content || ''
-    )
-    url.searchParams.append('feedbackCriteria', evaluationCriteria)
-
-    const response = await fetch(url.toString(), { method: 'POST' })
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      body: JSON.stringify({
+        exercise: contentText,
+        solution,
+        evaluationCriteria,
+        // Maybe do it per paragraph like in the original prototype?
+        studentSolution: blocks.find((block) => block.id === id)?.content || '',
+      }),
+    })
 
     if (!response.ok) {
       console.error('Network response was not ok', response)

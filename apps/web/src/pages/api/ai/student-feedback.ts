@@ -1,3 +1,4 @@
+import * as t from 'io-ts'
 import { NextResponse, NextRequest } from 'next/server'
 import { OpenAI } from 'openai'
 
@@ -43,14 +44,27 @@ const userPrompt = `Hier ist die Lösung des Schülers:
 {{STUDENT_SOLUTION}}
 </schueler_loesung>`
 
+const bodyType = t.type({
+  exercise: t.string,
+  solution: t.string,
+  studentSolution: t.string,
+  evaluationCriteria: t.string,
+})
+
 export default async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const exercise = req.nextUrl.searchParams.get('exercise')
-    const solution = req.nextUrl.searchParams.get('solution')
-    const studentSolution = req.nextUrl.searchParams.get('studentSolution')
-    const feedbackCriteria = req.nextUrl.searchParams.get('feedbackCriteria')
+    const data = (await req.json()) as unknown
 
-    if (!exercise || !solution || !studentSolution || !feedbackCriteria ) {
+    if (!bodyType.is(data)) {
+      return NextResponse.json(
+        { error: 'Invalid argument sent' },
+        { status: 400 }
+      )
+    }
+
+    const { exercise, solution, studentSolution, evaluationCriteria } = data
+
+    if (!exercise || !solution || !evaluationCriteria) {
       return NextResponse.json(
         { error: 'Missing a necessary argument' },
         { status: 400 }
@@ -73,7 +87,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
               content: systemPrompt
                 .replace('{{EXERCISE}}', exercise)
                 .replace('{{SOLUTION}}', solution)
-                .replace('{{FEEDBACK_CRITERIA}}', feedbackCriteria),
+                .replace('{{FEEDBACK_CRITERIA}}', evaluationCriteria),
             },
             {
               role: 'user',
