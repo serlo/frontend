@@ -5,8 +5,6 @@ import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { SubmitButtonAndFeedback } from '@editor/plugins/rows/submit-button-and-feedback'
-import { StickyHeaderLearner } from '@editor/prototype-microadaptivity/sticky-header-learner'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
@@ -15,7 +13,6 @@ import { mergeDeepRight } from 'ramda'
 import { useState } from 'react'
 import { QueryParamProvider } from 'use-query-params'
 
-import { GetAiFeedbackButton } from '../../../../packages/editor/src/prototype-microadaptivity/get-ai-feedback-button'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { useInstanceData } from '@/contexts/instance-context'
 import { microadaptivityState } from '@/data/microadaptivity-state'
@@ -92,9 +89,7 @@ function Content() {
               </div>
             </section>
           </main>
-          <aside className="flex-shrink flex-grow basis-0">
-            <GetAiFeedbackButton />
-          </aside>
+          <aside className="flex-shrink flex-grow basis-0"></aside>
         </div>
       </EditorMetaContext.Provider>
     </EditStringsProvider>

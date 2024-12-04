@@ -22,7 +22,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   const preferences = useContext(PreferenceContext)
 
   return (
-    <>
+    <div className="p-2">
       <ExerciseGroupRenderer
         content={<>{content.render()}</>}
         exercises={exercises.map((exercise, index) => {
@@ -64,7 +64,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
         })}
       />
       {renderButtons()}
-    </>
+    </div>
   )
 
   function renderButtons() {

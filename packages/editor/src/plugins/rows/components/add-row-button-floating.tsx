@@ -20,7 +20,7 @@ export function AddRowButtonFloating(props: AddRowButtonFloatingProps) {
       ref={buttonRef}
       className={cn(
         `
-        relative -top-4 mb-6 flex w-full cursor-pointer items-center bg-gradient-to-b
+        relative -top-4 flex w-full cursor-pointer items-center bg-gradient-to-b
         from-transparent via-white to-transparent px-8 text-editor-primary-200 opacity-0
         transition-opacity duration-300 hover:z-50 hover:opacity-100 focus:z-50 focus:opacity-100
         `,

@@ -7,17 +7,17 @@ import { HelpAndFeedbackSettings } from './help-and-feedback-settings'
 import { TextAreaExerciseRenderer } from './renderer'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
 import { TextAreaExerciseToolbar } from './toolbar'
-import { useIsPreviewActive } from '../exercise/context/preview-context'
 
 export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const isPreviewActive = useIsPreviewActive()
+  // const isPreviewActive = useIsPreviewActive()
+  // const { focused } = props
 
   return (
     <TextAreaEditorContext.Provider value={props}>
       <TextAreaExerciseToolbar {...props} />
       <TextAreaExerciseRenderer />
-      <AnimateChangeInHeight className="mt-8">
+      <AnimateChangeInHeight className={cn('mt-8')}>
         <div
           className={cn(
             'flex flex-col items-center px-3 py-6',
