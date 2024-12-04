@@ -23,15 +23,23 @@ export function Map({
     )
     if (!idToZoomTo) return
 
-    const timer = setTimeout(() => zoomToElement(idToZoomTo, 2), 1500)
-    setInitialZoomDone(true)
+    const timer = setTimeout(() => {
+      zoomToElement(idToZoomTo, 2)
+      setInitialZoomDone(true)
+    }, 1500)
 
     return () => clearTimeout(timer)
   }, [exercises, initialZoomDone, zoomToElement])
 
   return (
     <TransformComponent>
-      <div className="relative h-screen w-screen bg-gray-200">
+      <div
+        className={cn(
+          'relative h-screen w-screen',
+          'bg-[url(/_assets/img/prototype/map_full.svg)]',
+          'bg-cover bg-top bg-no-repeat'
+        )}
+      >
         {Object.keys(exercises).map((id) => (
           <button
             key={id}
@@ -39,7 +47,11 @@ export function Map({
             className={getExerciseClasses(id)}
             onClick={() => onExerciseClick(id)}
           >
-            {id}
+            {isExerciseDone(id) ? (
+              <img src="/_assets/img/prototype/exercise_done.svg" />
+            ) : (
+              <img src="/_assets/img/prototype/exercise_todo.svg" />
+            )}
           </button>
         ))}
       </div>
@@ -48,9 +60,8 @@ export function Map({
 
   function getExerciseClasses(id: ExerciseId) {
     return cn(
-      'absolute aspect-square w-[6%] cursor-pointer',
-      `left-[${exercises[id].position.x}%] top-[${exercises[id].position.y}%]`,
-      isExerciseDone(id) ? 'bg-editor-primary-300' : 'bg-brand-300'
+      'absolute aspect-square w-[6%] cursor-pointer rounded-full',
+      `left-[${exercises[id].position.x}%] top-[${exercises[id].position.y}%]`
     )
   }
 
