@@ -5,6 +5,7 @@ import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { SubmitButtonAndFeedback } from '@editor/plugins/rows/submit-button-and-feedback'
+import { StickyHeaderLearner } from '@editor/prototype-microadaptivity/sticky-header-learner'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
@@ -49,8 +50,6 @@ function Content() {
 
   editorRenderers.init(createRenderers())
 
-  const maxContentWidth = '60rem'
-
   return (
     <EditStringsProvider
       value={
@@ -64,10 +63,12 @@ function Content() {
       >
         <div className="flex flex-row">
           <aside className="flex-shrink flex-grow basis-0"></aside>
+          {/* To change content width, change both max-w and basis */}
           <main
             id="content"
-            className={`mb-[50%] flex max-w-[min(100%,${maxContentWidth})] flex-shrink flex-grow basis-[${maxContentWidth}] justify-center`}
+            className="mb-[50%] max-w-[min(100%,60rem)] flex-shrink flex-grow basis-[60rem]"
           >
+            <StickyHeaderLearner />
             <section className="min-h-screen border-4">
               <div className="mt-[3rem]">
                 <EditorRenderer document={parseDocumentString(previewState)} />
