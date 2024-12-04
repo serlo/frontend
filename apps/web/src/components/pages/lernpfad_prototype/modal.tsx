@@ -1,0 +1,64 @@
+import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
+
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+
+export function Modal({
+  title,
+  isOpen,
+  setIsOpen,
+  onConfirmClick,
+}: {
+  title: string
+  isOpen: boolean
+  setIsOpen: (value: boolean) => void
+  onConfirmClick: () => void
+}) {
+  return (
+    <ModalWithCloseButton
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title={title}
+      extraCloseButtonClassName="bg-brand-200"
+      className="top-[12%] w-[47%] translate-y-0 overflow-y-auto p-5 pt-12"
+      extraTitleClassName="border-none"
+    >
+      <p className="serlo-p">
+        <ul className="serlo-ul ml-0">
+          <li>
+            Diesen Lernschritt kannst du <b>drei Mal</b> vor der entgültigen
+            Abgabe <b>bearbeiten</b>.
+          </li>
+          <li>
+            Du hast <b>20 Minuten</b> Zeit.
+          </li>
+          <li>
+            Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>
+          </li>
+        </ul>
+      </p>
+      <div className="serlo-p [&>div]:border-0 [&_button]:bg-transparent [&_button]:p-0">
+        <SpoilerRenderer title={<b>Deine Bewertungskriterien</b>}>
+          <ul className="serlo-ul mb-0">
+            <li>
+              Textgestaltung und Sprachfluss (Formulierungen, Stuktur,
+              Verwendung von Konnektoren, eindeutige Bezüge)
+            </li>
+            <li>Wortschatz und Idiomatik</li>
+            <li>
+              Satzbau und Grammatik (Satzmuster und damit einhergehende
+              Verständlichkeit insgesamt)
+            </li>
+          </ul>
+        </SpoilerRenderer>
+      </div>
+      <div className="mx-side mb-10 flex justify-end">
+        <button
+          className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium"
+          onClick={onConfirmClick}
+        >
+          Los geht&apos;s
+        </button>
+      </div>
+    </ModalWithCloseButton>
+  )
+}

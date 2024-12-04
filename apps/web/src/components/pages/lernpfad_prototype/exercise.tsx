@@ -1,0 +1,37 @@
+import type { Exercise, ExerciseId } from './types'
+
+export function Exercise({
+  id,
+  data,
+  onBackToMapClick,
+  onSubmitClick,
+}: {
+  id: ExerciseId | null
+  data: Exercise
+  onBackToMapClick: () => void
+  onSubmitClick: (id: ExerciseId) => void
+}) {
+  if (id === null) return null
+
+  return (
+    <div className="h-screen w-screen">
+      <button className="absolute left-4 top-4" onClick={onBackToMapClick}>
+        Back to map
+      </button>
+
+      <div className="flex h-full flex-col items-center justify-center">
+        <h1>{data.title}</h1>
+        {data.done ? (
+          <h2>Done</h2>
+        ) : (
+          <button
+            className="serlo-button-edit-primary"
+            onClick={() => onSubmitClick(id)}
+          >
+            Submit
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
