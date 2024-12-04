@@ -177,7 +177,7 @@ function Map({
           id="1"
           className={cn(
             getExerciseClasses('1'),
-            'left-[431px] top-[227px] h-[58px] w-[67px]'
+            'left-[502px] top-[233px] h-[69px] w-[79px]'
           )}
           onClick={() => onExerciseClick('1')}
         >
@@ -188,7 +188,7 @@ function Map({
           id="2"
           className={cn(
             getExerciseClasses('2'),
-            'left-[431px] top-[379px] h-[59px] w-[67px]'
+            'left-[502px] top-[411px] h-[69px] w-[79px]'
           )}
           onClick={() => onExerciseClick('2')}
         >
