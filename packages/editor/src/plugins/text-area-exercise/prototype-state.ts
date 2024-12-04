@@ -34,5 +34,5 @@ export function createFeedbackBlock(
 }
 
 export function createTextBlock(): Text {
-  return { id: uuid_v4(), type: 'text', content: '' }
+  return { id: uuid_v4(), type: 'text', content: '', feedbackPending: false }
 }

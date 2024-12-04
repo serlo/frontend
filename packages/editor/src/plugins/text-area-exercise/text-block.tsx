@@ -7,6 +7,10 @@ import { usePluginId } from './use-plugin-id'
 export function TextBlock({ id }: Text) {
   const pluginId = usePluginId()
 
+  const thisBlock = PrototypeStateStore.getRawState().textAreaPlugins[
+    pluginId
+  ].textAreaBlocks.find((b) => b.id === id)
+
   return (
     <div className="flex flex-row">
       <textarea
@@ -40,7 +44,10 @@ export function TextBlock({ id }: Text) {
         }}
         className="text-area-chrome-autogrow grow resize-none bg-transparent outline-none"
       ></textarea>
-      <FeedbackButton id={id} />
+      <FeedbackButton
+        id={id}
+        spinner={thisBlock?.type === 'text' && thisBlock.feedbackPending}
+      />
     </div>
   )
 }

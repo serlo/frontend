@@ -9,6 +9,7 @@ export interface Text {
   id: string
   type: 'text'
   content: string
+  feedbackPending: boolean
 }
 
 export interface AiFeedback {

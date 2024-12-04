@@ -5,8 +5,16 @@ import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
 import { AiFeedback } from './types'
 import { usePluginId } from './use-plugin-id'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-export function FeedbackButton({ id }: { id: string }) {
+export function FeedbackButton({
+  id,
+  spinner,
+}: {
+  id: string
+  spinner: boolean
+}) {
   const pluginId = usePluginId()
   // Get text area plugin state values
   const { solution, evaluationCriteria } = useTextAreaPluginStateValues()
@@ -45,6 +53,14 @@ export function FeedbackButton({ id }: { id: string }) {
   }
 
   async function handleKiButtonClick(pluginId: string) {
+    PrototypeStateStore.update((s) => {
+      const thisBlock = s.textAreaPlugins[pluginId].textAreaBlocks.find(
+        (b) => b.id === id
+      )
+      if (thisBlock && thisBlock.type === 'text') {
+        thisBlock.feedbackPending = true
+      }
+    })
     const feedback = await fetchFeedback()
 
     PrototypeStateStore.update((s) => {
@@ -55,6 +71,9 @@ export function FeedbackButton({ id }: { id: string }) {
       } else {
         const textAreaBlocks = s.textAreaPlugins[pluginId].textAreaBlocks
         const index = textAreaBlocks.findIndex((block) => block.id === id)
+        if (textAreaBlocks[index].type === 'text') {
+          textAreaBlocks[index].feedbackPending = false
+        }
         const nextBlock = textAreaBlocks.at(index + 1)
         if (!nextBlock || nextBlock.type !== 'feedback') {
           textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
@@ -65,12 +84,18 @@ export function FeedbackButton({ id }: { id: string }) {
   }
   return (
     <>
-      <button
-        className="h-8 w-8 rounded-full bg-brand-200 hover:bg-brand-300"
-        onClick={() => handleKiButtonClick(pluginId)}
-      >
-        <div>🐦</div>
-      </button>
+      {spinner ? (
+        <button className="h-8 w-8 animate-spin-slow">
+          <FaIcon icon={faSpinner} />
+        </button>
+      ) : (
+        <button
+          className="h-8 w-8 rounded-full bg-brand-200 hover:bg-brand-300"
+          onClick={() => handleKiButtonClick(pluginId)}
+        >
+          <div>🐦</div>
+        </button>
+      )}
     </>
   )
 }
