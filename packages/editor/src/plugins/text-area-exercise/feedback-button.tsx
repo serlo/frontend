@@ -1,3 +1,5 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useContext } from 'react'
 
 import { ExercisePluginStateContext } from './exercise-plugin-state-context'
@@ -5,8 +7,6 @@ import { createFeedbackBlock, PrototypeStateStore } from './prototype-state'
 import { AiFeedback } from './types'
 import { usePluginId } from './use-plugin-id'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 export function FeedbackButton({
   id,
