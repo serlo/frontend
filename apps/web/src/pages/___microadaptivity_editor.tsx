@@ -9,6 +9,7 @@ import { SubmitButtonAndFeedback } from '@editor/plugins/rows/submit-button-and-
 import { StickyHeaderLearner } from '@editor/prototype-microadaptivity/sticky-header-learner'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
 import { useState } from 'react'
@@ -22,7 +23,10 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+
+const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
+  ssr: false,
+})
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -75,12 +79,16 @@ function Content() {
             id="content"
             className="mb-[50%] max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
           >
-            <StickyHeaderLearner />
-            <section className="min-h-screen border-4">
+            <section className="min-h-screen">
               <div className="mt-[3rem]">
-                <EditorRenderer document={parseDocumentString(previewState)} />
+                <Editor
+                  initialState={parseDocumentString(previewState)}
+                  // onChange={({ changed, getDocument }) => {
+                  //   if (!changed) return
+                  //   void debouncedSetState(JSON.stringify(getDocument()))
+                  // }}
+                />
                 {/* HACK: Microadaptivity prototype */}
-                <SubmitButtonAndFeedback />
               </div>
             </section>
           </main>

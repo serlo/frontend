@@ -33,8 +33,9 @@ export function Editor(props: EditorProps) {
   const store = useMemo(() => createStore(), [])
 
   const isSerloEditorPreviewPage =
-    window?.location?.href &&
-    window?.location?.href.includes('___editor_preview')
+    (window?.location?.href &&
+      window?.location?.href.includes('___editor_preview')) ||
+    window?.location?.href.includes('___microadaptivity')
 
   return (
     <>

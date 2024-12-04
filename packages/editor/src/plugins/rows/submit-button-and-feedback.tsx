@@ -1,6 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { AnimateChangeInHeight } from '../text-area-exercise/animate-change-in-height'
@@ -73,7 +74,10 @@ export function SubmitButtonAndFeedback() {
                   {aiFeedback.feedback.map((entry, index) => (
                     <div key={index}>
                       <div className="flex flex-row items-center gap-1 ">
-                        <FaIcon icon={faCircleXmark} className="text-red-400" />
+                        <FaIcon
+                          icon={faTriangleExclamation}
+                          className="text-purple-400"
+                        />
                         <a
                           href="#feedback-criteria"
                           className="text-brand-700"
