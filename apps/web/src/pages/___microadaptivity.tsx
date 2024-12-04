@@ -11,6 +11,7 @@ import { mergeDeepRight } from 'ramda'
 import { useState } from 'react'
 import { QueryParamProvider } from 'use-query-params'
 
+import { GetAiFeedbackButton } from '../../../../packages/editor/src/prototype-microadaptivity/get-ai-feedback-button'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { useInstanceData } from '@/contexts/instance-context'
 import { microadaptivityState } from '@/data/microadaptivity-state'
@@ -75,7 +76,9 @@ function Content() {
               </div>
             </section>
           </main>
-          <aside className="flex-shrink flex-grow basis-0"></aside>
+          <aside className="flex-shrink flex-grow basis-0">
+            <GetAiFeedbackButton />
+          </aside>
         </div>
       </EditorMetaContext.Provider>
     </EditStringsProvider>
