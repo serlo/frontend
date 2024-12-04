@@ -12,7 +12,7 @@ export function TextBlock({ id }: Text) {
   ].textAreaBlocks.find((b) => b.id === id)
 
   return (
-    <div className="flex flex-row">
+    <div className="group flex flex-row">
       <textarea
         autoFocus
         id={id}

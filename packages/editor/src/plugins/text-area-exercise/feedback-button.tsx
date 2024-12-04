@@ -90,7 +90,7 @@ export function FeedbackButton({
         </button>
       ) : (
         <button
-          className="h-8 w-8 rounded-full bg-brand-200 hover:bg-brand-300"
+          className="h-8 w-8 rounded-full bg-brand-200 opacity-0 transition-opacity hover:bg-brand-300 group-focus-within:opacity-100"
           onClick={() => handleKiButtonClick(pluginId)}
         >
           <div>🐦</div>
