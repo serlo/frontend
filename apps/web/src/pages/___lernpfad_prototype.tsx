@@ -35,20 +35,59 @@ interface Exercise {
   title: string
   next: ExerciseId | null
 }
+type ExercisesRecord = Record<ExerciseId, Exercise>
+
+const localStorageKey = 'lernpfad_prototype'
+
+const initialExercisesData: ExercisesRecord = {
+  '1': {
+    done: false,
+    title: 'Exercise 1',
+    next: '2',
+  },
+  '2': {
+    done: false,
+    title: 'Exercise 2',
+    next: null,
+  },
+}
+
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T) => void] {
+  const [storedValue, setStoredValue] = useState<T>(initialValue)
+
+  useEffect(() => {
+    try {
+      const item = localStorage.getItem(key)
+      if (item) {
+        setStoredValue(JSON.parse(item) as T)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }, [key])
+
+  const setValue = (value: T) => {
+    try {
+      setStoredValue(value)
+      localStorage.setItem(key, JSON.stringify(value))
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }
+
+  return [storedValue, setValue]
+}
 
 function Content() {
-  const [exercises, setExercises] = useState<Record<ExerciseId, Exercise>>({
-    '1': {
-      done: false,
-      title: 'Exercise 1',
-      next: '2',
-    },
-    '2': {
-      done: false,
-      title: 'Exercise 2',
-      next: null,
-    },
-  })
+  const [exercises, setExercises] = useLocalStorage<ExercisesRecord>(
+    localStorageKey,
+    initialExercisesData
+  )
   const [isExerciseShown, setIsExerciseShown] = useState(false)
   const [activeExercise, setActiveExercise] = useState<ExerciseId | null>(null)
   const [showModal, setShowModal] = useState(false)
@@ -132,10 +171,12 @@ function Content() {
   }
 
   function handleExerciseSubmitClick(id: ExerciseId) {
-    setExercises((exercises) => ({
+    const newExercises = {
       ...exercises,
       [id]: { ...exercises[id], done: true },
-    }))
+    }
+    localStorage.setItem(localStorageKey, JSON.stringify(newExercises))
+    setExercises(newExercises)
     if (exercises[id].next === null) setIsExerciseShown(false)
     setActiveExercise(exercises[id].next)
   }
@@ -145,12 +186,14 @@ function Map({
   exercises,
   onExerciseClick,
 }: {
-  exercises: Record<ExerciseId, Exercise>
+  exercises: ExercisesRecord
   onExerciseClick: (id: ExerciseId) => void
 }) {
+  const [initialZoomDone, setInitialZoomDone] = useState(false)
   const { zoomToElement } = useControls()
 
   useEffect(() => {
+    if (initialZoomDone) return
     // Find first exercise that's not done yet
     const idToZoomTo = Object.keys(exercises).find(
       (key) => exercises[key].done === false
@@ -158,11 +201,13 @@ function Map({
     // Exit if all exercises are done
     if (!idToZoomTo) return
     // Zoom to the first exercise that's not done yet
-    const timer = setTimeout(() => zoomToElement(idToZoomTo, 2), 1500)
+    const timer = setTimeout(() => {
+      zoomToElement(idToZoomTo, 2)
+      setInitialZoomDone(true)
+    }, 1500)
     // Clear timeout on onmount
     return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [exercises, initialZoomDone, zoomToElement])
 
   return (
     <TransformComponent>
