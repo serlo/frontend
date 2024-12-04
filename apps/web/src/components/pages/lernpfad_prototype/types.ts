@@ -3,7 +3,7 @@ export type ExerciseId = string
 export interface Exercise {
   done: boolean
   title: string
-  next: ExerciseId | null
+  nextExercises: ExerciseId[] | null
   position: {
     x: number
     y: number

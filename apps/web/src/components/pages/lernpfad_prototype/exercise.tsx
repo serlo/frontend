@@ -5,11 +5,13 @@ export function Exercise({
   data,
   onBackToMapClick,
   onSubmitClick,
+  onNextExerciseClick,
 }: {
   id: ExerciseId | null
   data: Exercise
   onBackToMapClick: () => void
   onSubmitClick: (id: ExerciseId) => void
+  onNextExerciseClick: (id: ExerciseId) => void
 }) {
   if (id === null) return null
 
@@ -22,7 +24,7 @@ export function Exercise({
       <div className="flex h-full flex-col items-center justify-center">
         <h1>{data.title}</h1>
         {data.done ? (
-          <h2>Done</h2>
+          renderDoneState()
         ) : (
           <button
             className="serlo-button-edit-primary"
@@ -34,4 +36,23 @@ export function Exercise({
       </div>
     </div>
   )
+
+  function renderDoneState() {
+    return (
+      <div className="text-center">
+        <p>Exercise done!</p>
+        <div className="align-center flex justify-center gap-2">
+          {data.nextExercises?.map((nextId) => (
+            <button
+              key={nextId}
+              className="serlo-button-edit-primary"
+              onClick={() => onNextExerciseClick(nextId)}
+            >
+              Go to {nextId}
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
 }

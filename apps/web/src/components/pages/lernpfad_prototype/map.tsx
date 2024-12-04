@@ -44,7 +44,8 @@ export function Map({
           <button
             key={id}
             id={id}
-            className={getExerciseClasses(id)}
+            className="absolute aspect-square w-[6%] cursor-pointer rounded-full"
+            style={getExerciseStyle(id)}
             onClick={() => onExerciseClick(id)}
           >
             {isExerciseDone(id) ? (
@@ -58,11 +59,11 @@ export function Map({
     </TransformComponent>
   )
 
-  function getExerciseClasses(id: ExerciseId) {
-    return cn(
-      'absolute aspect-square w-[6%] cursor-pointer rounded-full',
-      `left-[${exercises[id].position.x}%] top-[${exercises[id].position.y}%]`
-    )
+  function getExerciseStyle(id: ExerciseId) {
+    return {
+      left: `${exercises[id].position.x}%`,
+      top: `${exercises[id].position.y}%`,
+    }
   }
 
   function isExerciseDone(id: ExerciseId) {

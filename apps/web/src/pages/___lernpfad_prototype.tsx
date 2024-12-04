@@ -49,6 +49,7 @@ function Content() {
       data={exercises[activeExercise]}
       onBackToMapClick={handleBackToMapClick}
       onSubmitClick={handleExerciseSubmitClick}
+      onNextExerciseClick={handleNextExerciseClick}
     />
   ) : (
     <>
@@ -88,7 +89,10 @@ function Content() {
     }
     localStorage.setItem(localStorageKey, JSON.stringify(newExercises))
     setExercises(newExercises)
-    if (exercises[id].next === null) setIsExerciseShown(false)
-    setActiveExercise(exercises[id].next)
+    if (exercises[id].nextExercises === null) setIsExerciseShown(false)
+  }
+
+  function handleNextExerciseClick(id: ExerciseId) {
+    setActiveExercise(id)
   }
 }
