@@ -39,7 +39,9 @@ export function TextAreaExerciseRenderer() {
           </button>
           {showStrategy ? (
             <div className="serlo-solution-box p-3">
-              <div className="solution">{solutionStrategy}</div>
+              <div className="solution whitespace-pre-wrap">
+                {solutionStrategy}
+              </div>
             </div>
           ) : null}
         </>

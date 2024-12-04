@@ -36,7 +36,7 @@ export function SettingsTabs() {
           )
         })}
       </div>
-      <div className="flex w-full flex-col gap-8 leading-10">
+      <div className="flex w-full flex-col gap-8">
         <tabContent.content />
       </div>
     </>

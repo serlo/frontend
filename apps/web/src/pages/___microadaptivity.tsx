@@ -78,7 +78,7 @@ function Content() {
             <StickyHeaderLearner />
             <section className="min-h-screen border-4">
               <div className="mt-[3rem]">
-                <EditorRenderer document={parseDocumentString(previewState)} />
+                <EditorRenderer document={previewState} />
                 {/* HACK: Microadaptivity prototype */}
                 <SubmitButtonAndFeedback />
               </div>

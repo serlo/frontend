@@ -79,7 +79,7 @@ function Content() {
             <section className="min-h-screen">
               <div className="mt-[3rem]">
                 <Editor
-                  initialState={parseDocumentString(previewState)}
+                  initialState={previewState}
                   // onChange={({ changed, getDocument }) => {
                   //   if (!changed) return
                   //   void debouncedSetState(JSON.stringify(getDocument()))

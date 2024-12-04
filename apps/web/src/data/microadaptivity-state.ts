@@ -1,491 +1,442 @@
-export const microadaptivityState = `{
-  "plugin": "rows",
-  "state": [
+export const microadaptivityState = {
+  plugin: 'rows',
+  state: [
     {
-      "plugin": "exerciseGroup",
-      "state": {
-        "content": {
-          "plugin": "rows",
-          "state": [
+      plugin: 'exerciseGroup',
+      state: {
+        content: {
+          plugin: 'rows',
+          state: [
             {
-              "plugin": "text",
-              "state": [
+              plugin: 'text',
+              state: [
                 {
-                  "type": "h",
-                  "children": [
+                  type: 'h',
+                  children: [
                     {
-                      "text": "Writing your opinion: Should students have homework every day?"
-                    }
+                      text: 'Writing your opinion: Should students have homework every day?',
+                    },
                   ],
-                  "level": 3
-                }
+                  level: 3,
+                },
               ],
-              "id": "571bab2d-877c-4395-8102-9cea3477cd37"
+              id: '571bab2d-877c-4395-8102-9cea3477cd37',
             },
             {
-              "plugin": "text",
-              "state": [
+              plugin: 'text',
+              state: [
                 {
-                  "type": "p",
-                  "children": [
+                  type: 'p',
+                  children: [
                     {
-                      "text": "You will write your opinion divided into three tasks:"
-                    }
-                  ]
+                      text: 'You will write your opinion divided into three tasks:',
+                    },
+                  ],
                 },
+                { type: 'p', children: [{ text: '' }] },
                 {
-                  "type": "p",
-                  "children": [
+                  children: [
                     {
-                      "text": ""
-                    }
-                  ]
-                },
-                {
-                  "type": "p",
-                  "children": [
-                    {
-                      "text": "a) Writing the beginning"
-                    }
-                  ]
-                },
-                {
-                  "type": "p",
-                  "children": [
-                    {
-                      "text": "b) Writing the middle"
-                    }
-                  ]
-                },
-                {
-                  "type": "p",
-                  "children": [
-                    {
-                      "text": "c) Writing the end"
-                    }
-                  ]
-                },
-                {
-                  "type": "p",
-                  "children": [
-                    {
-                      "text": ""
-                    }
-                  ]
-                },
-                {
-                  "children": [
-                    {
-                      "children": [
+                      children: [
                         {
-                          "type": "list-item-child",
-                          "children": [
-                            {
-                              "text": "Overall: "
-                            }
-                          ]
+                          type: 'list-item-child',
+                          children: [{ text: 'Writing the beginning' }],
                         },
-                        {
-                          "children": [
-                            {
-                              "children": [
-                                {
-                                  "type": "list-item-child",
-                                  "children": [
-                                    {
-                                      "text": "write between 50-75 words."
-                                    }
-                                  ]
-                                }
-                              ],
-                              "type": "list-item"
-                            },
-                            {
-                              "children": [
-                                {
-                                  "type": "list-item-child",
-                                  "children": [
-                                    {
-                                      "text": "use 3 useful phrases to structure your text."
-                                    }
-                                  ]
-                                }
-                              ],
-                              "type": "list-item"
-                            },
-                            {
-                              "children": [
-                                {
-                                  "type": "list-item-child",
-                                  "children": [
-                                    {
-                                      "text": "use 3-5 linking words."
-                                    }
-                                  ]
-                                }
-                              ],
-                              "type": "list-item"
-                            }
-                          ],
-                          "type": "unordered-list"
-                        }
                       ],
-                      "type": "list-item"
-                    }
+                      type: 'list-item',
+                    },
+                    {
+                      children: [
+                        {
+                          type: 'list-item-child',
+                          children: [{ text: 'Writing the middle' }],
+                        },
+                      ],
+                      type: 'list-item',
+                    },
+                    {
+                      children: [
+                        {
+                          type: 'list-item-child',
+                          children: [{ text: 'Writing the end' }],
+                        },
+                      ],
+                      type: 'list-item',
+                    },
                   ],
-                  "type": "unordered-list"
-                }
+                  type: 'ordered-list',
+                },
+                { type: 'p', children: [{ text: 'Overall: ' }] },
+                {
+                  children: [
+                    {
+                      children: [
+                        {
+                          type: 'list-item-child',
+                          children: [{ text: 'write between 50-75 words.' }],
+                        },
+                      ],
+                      type: 'list-item',
+                    },
+                    {
+                      children: [
+                        {
+                          type: 'list-item-child',
+                          children: [
+                            {
+                              text: 'use 3 useful phrases to structure your text.',
+                            },
+                          ],
+                        },
+                      ],
+                      type: 'list-item',
+                    },
+                    {
+                      children: [
+                        {
+                          type: 'list-item-child',
+                          children: [{ text: 'use 3-5 linking words.' }],
+                        },
+                      ],
+                      type: 'list-item',
+                    },
+                  ],
+                  type: 'unordered-list',
+                },
               ],
-              "id": "fbcc7fe9-48c1-4f3c-bd04-ae0640627ca3"
-            }
+              id: 'fbcc7fe9-48c1-4f3c-bd04-ae0640627ca3',
+            },
           ],
-          "id": "1929a754-da62-45fa-ab49-2279596d3bba"
+          id: '1929a754-da62-45fa-ab49-2279596d3bba',
         },
-        "exercises": [
+        exercises: [
           {
-            "plugin": "exercise",
-            "state": {
-              "content": {
-                "plugin": "rows",
-                "state": [
+            plugin: 'exercise',
+            state: {
+              content: {
+                plugin: 'rows',
+                state: [
                   {
-                    "plugin": "text",
-                    "state": [
+                    plugin: 'text',
+                    state: [
                       {
-                        "type": "p",
-                        "children": [
+                        type: 'p',
+                        children: [
                           {
-                            "text": "Should students have homework every day? - Write the beginning of your opinion on the question above.",
-                            "strong": true
-                          }
-                        ]
-                      }
+                            text: 'Should students have homework every day? - Write the beginning of your opinion on the question above.',
+                            strong: true,
+                          },
+                        ],
+                      },
                     ],
-                    "id": "6530bb51-7a87-48a6-8858-69b48cbf9c7f"
+                    id: '6530bb51-7a87-48a6-8858-69b48cbf9c7f',
                   },
                   {
-                    "plugin": "box",
-                    "state": {
-                      "type": "blank",
-                      "title": {
-                        "plugin": "text",
-                        "state": [
-                          {
-                            "type": "p",
-                            "children": [
-                              {
-                                "text": "Remember"
-                              }
-                            ]
-                          }
+                    plugin: 'box',
+                    state: {
+                      type: 'blank',
+                      title: {
+                        plugin: 'text',
+                        state: [
+                          { type: 'p', children: [{ text: 'Remember' }] },
                         ],
-                        "id": "1f4d4bca-c662-4880-85d9-c3796b2ca558"
+                        id: '1f4d4bca-c662-4880-85d9-c3796b2ca558',
                       },
-                      "anchorId": "",
-                      "content": {
-                        "plugin": "rows",
-                        "state": [
+                      anchorId: '',
+                      content: {
+                        plugin: 'rows',
+                        state: [
                           {
-                            "plugin": "text",
-                            "state": [
+                            plugin: 'text',
+                            state: [
                               {
-                                "children": [
+                                children: [
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "type": "list-item-child",
-                                        "children": [
-                                          {
-                                            "text": "to state your opinion"
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "type": "list-item"
-                                  },
-                                  {
-                                    "children": [
-                                      {
-                                        "children": [
-                                          {
-                                            "text": "to use linking words and useful phrases"
-                                          }
+                                        type: 'list-item-child',
+                                        children: [
+                                          { text: 'to state your opinion' },
                                         ],
-                                        "type": "list-item-child"
-                                      }
+                                      },
                                     ],
-                                    "type": "list-item"
+                                    type: 'list-item',
                                   },
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "type": "list-item-child",
-                                        "children": [
+                                        children: [
                                           {
-                                            "text": "Write 1-3 sentences."
-                                          }
-                                        ]
-                                      }
+                                            text: 'to use linking words and useful phrases',
+                                          },
+                                        ],
+                                        type: 'list-item-child',
+                                      },
                                     ],
-                                    "type": "list-item"
-                                  }
+                                    type: 'list-item',
+                                  },
+                                  {
+                                    children: [
+                                      {
+                                        type: 'list-item-child',
+                                        children: [
+                                          { text: 'Write 1-3 sentences.' },
+                                        ],
+                                      },
+                                    ],
+                                    type: 'list-item',
+                                  },
                                 ],
-                                "type": "unordered-list"
-                              }
+                                type: 'unordered-list',
+                              },
                             ],
-                            "id": "b556931f-a0ff-4d55-9855-5c91c41cbef8"
-                          }
+                            id: 'b556931f-a0ff-4d55-9855-5c91c41cbef8',
+                          },
                         ],
-                        "id": "330e806c-6e2e-445f-9f10-8eec98cfcf93"
-                      }
+                        id: '330e806c-6e2e-445f-9f10-8eec98cfcf93',
+                      },
                     },
-                    "id": "91055bca-f393-4097-aecf-dcef35b9eda2"
-                  }
+                    id: '91055bca-f393-4097-aecf-dcef35b9eda2',
+                  },
                 ],
-                "id": "b9ce0264-b8a7-43f3-8f71-b149f5dae52f"
+                id: 'b9ce0264-b8a7-43f3-8f71-b149f5dae52f',
               },
-              "interactive": {
-                "plugin": "textAreaExercise",
-                "state": {},
-                "id": "9eddeca6-1029-48e4-b25d-4b399340a717"
-              }
+              interactive: {
+                plugin: 'textAreaExercise',
+                state: {
+                  solution:
+                    'Students often have homework every day, but I believe that is too often.',
+                  allowShowSolution: false,
+                  solutionStrategy:
+                    '1. Clearly state what you think about the topic. \n\n2. Add some general information about the topic to make your beginning more interesting.\n\n3. Remember to use useful phrases, for example: "I think", "I believe", "I don’t think", "In my opinion"…',
+                  allowShowSolutionStrategy: true,
+                  evaluationCriteria: 'The beginning contains your opinion.',
+                  allowParagraphFeedback: true,
+                  allowSubmitFeedback: true,
+                  allowAiFeedback: true,
+                },
+                id: '9eddeca6-1029-48e4-b25d-4b399340a717',
+              },
             },
-            "id": "2bb336bd-f7df-489d-a3d7-432607402e48"
+            id: '2bb336bd-f7df-489d-a3d7-432607402e48',
           },
           {
-            "plugin": "exercise",
-            "state": {
-              "content": {
-                "plugin": "rows",
-                "state": [
+            plugin: 'exercise',
+            state: {
+              content: {
+                plugin: 'rows',
+                state: [
                   {
-                    "plugin": "text",
-                    "state": [
+                    plugin: 'text',
+                    state: [
                       {
-                        "type": "p",
-                        "children": [
+                        type: 'p',
+                        children: [
                           {
-                            "text": "Should students have homework every day? - Write the middle of your opinion.",
-                            "strong": true
-                          }
-                        ]
-                      }
+                            text: 'Should students have homework every day? - Write the middle of your opinion.',
+                            strong: true,
+                          },
+                        ],
+                      },
                     ],
-                    "id": "45374f9d-4188-4e41-b981-89ec0f11e881"
+                    id: '45374f9d-4188-4e41-b981-89ec0f11e881',
                   },
                   {
-                    "plugin": "box",
-                    "state": {
-                      "type": "blank",
-                      "title": {
-                        "plugin": "text",
-                        "state": [
-                          {
-                            "type": "p",
-                            "children": [
-                              {
-                                "text": "Remember"
-                              }
-                            ]
-                          }
+                    plugin: 'box',
+                    state: {
+                      type: 'blank',
+                      title: {
+                        plugin: 'text',
+                        state: [
+                          { type: 'p', children: [{ text: 'Remember' }] },
                         ],
-                        "id": "72380058-79f2-485b-b170-10cea788f7a0"
+                        id: '72380058-79f2-485b-b170-10cea788f7a0',
                       },
-                      "anchorId": "",
-                      "content": {
-                        "plugin": "rows",
-                        "state": [
+                      anchorId: '',
+                      content: {
+                        plugin: 'rows',
+                        state: [
                           {
-                            "plugin": "text",
-                            "state": [
+                            plugin: 'text',
+                            state: [
                               {
-                                "children": [
+                                children: [
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "type": "list-item-child",
-                                        "children": [
+                                        type: 'list-item-child',
+                                        children: [
                                           {
-                                            "text": "to give reasons for your opinion"
-                                          }
-                                        ]
-                                      }
+                                            text: 'to give reasons for your opinion',
+                                          },
+                                        ],
+                                      },
                                     ],
-                                    "type": "list-item"
+                                    type: 'list-item',
                                   },
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "children": [
-                                          {
-                                            "text": "to use linking words"
-                                          }
+                                        children: [
+                                          { text: 'to use linking words' },
                                         ],
-                                        "type": "list-item-child"
-                                      }
+                                        type: 'list-item-child',
+                                      },
                                     ],
-                                    "type": "list-item"
+                                    type: 'list-item',
                                   },
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "children": [
-                                          {
-                                            "text": "write in paragraphs"
-                                          }
+                                        children: [
+                                          { text: 'write in paragraphs' },
                                         ],
-                                        "type": "list-item-child"
-                                      }
+                                        type: 'list-item-child',
+                                      },
                                     ],
-                                    "type": "list-item"
-                                  }
+                                    type: 'list-item',
+                                  },
                                 ],
-                                "type": "unordered-list"
-                              }
+                                type: 'unordered-list',
+                              },
                             ],
-                            "id": "ac76c8b0-e078-490d-a0c5-55bc0c8e7ee7"
-                          }
+                            id: 'ac76c8b0-e078-490d-a0c5-55bc0c8e7ee7',
+                          },
                         ],
-                        "id": "db1de561-7e80-4d58-a784-4d0e3fa4894d"
-                      }
+                        id: 'db1de561-7e80-4d58-a784-4d0e3fa4894d',
+                      },
                     },
-                    "id": "0ed772d3-b7ba-4bc5-8370-e353f24904b7"
-                  }
+                    id: '0ed772d3-b7ba-4bc5-8370-e353f24904b7',
+                  },
                 ],
-                "id": "71b148d7-4536-402e-80f1-28405a6bfa4a"
+                id: '71b148d7-4536-402e-80f1-28405a6bfa4a',
               },
-              "interactive": {
-                "plugin": "textAreaExercise",
-                "state": {},
-                "id": "6bfb9e96-50b9-4bb0-8807-7797cd5b9cc9"
-              }
+              interactive: {
+                plugin: 'textAreaExercise',
+                state: {
+                  solution:
+                    'First, students need time to relax after school because it helps them stay healthy. In addition, too much homework is stressful and takes away time for hobbies or family. However, a little homework is important to practice what we learn in class.',
+                  solutionStrategy:
+                    '1. Explain your opinion you stated in task a)\n\n2. Give at least two reasons for your opinion\n\n3. To make your text stronger, you can also add an argument against your opinion.\n\n4. Structure your text in paragraphs.\n\n5. Use useful phrases like "first," "second," or linking words like "in addition," "because," "however" to improve your text.',
+                  allowShowSolutionStrategy: true,
+                  evaluationCriteria: 'The middle explains your opinion.',
+                  allowParagraphFeedback: true,
+                  allowSubmitFeedback: true,
+                  allowAiFeedback: true,
+                },
+                id: '6bfb9e96-50b9-4bb0-8807-7797cd5b9cc9',
+              },
             },
-            "id": "28acf8f6-abe8-4f87-9b95-5e89c32c189b"
+            id: '28acf8f6-abe8-4f87-9b95-5e89c32c189b',
           },
           {
-            "plugin": "exercise",
-            "state": {
-              "content": {
-                "plugin": "rows",
-                "state": [
+            plugin: 'exercise',
+            state: {
+              content: {
+                plugin: 'rows',
+                state: [
                   {
-                    "plugin": "text",
-                    "state": [
+                    plugin: 'text',
+                    state: [
                       {
-                        "type": "p",
-                        "children": [
+                        type: 'p',
+                        children: [
                           {
-                            "text": "Should students have homework every day? - Write the end of your opinion.",
-                            "strong": true
-                          }
-                        ]
-                      }
+                            text: 'Should students have homework every day? - Write the end of your opinion.',
+                            strong: true,
+                          },
+                        ],
+                      },
                     ],
-                    "id": "c1b5f2aa-4df6-4447-abc2-51d8e5a4a951"
+                    id: 'c1b5f2aa-4df6-4447-abc2-51d8e5a4a951',
                   },
                   {
-                    "plugin": "box",
-                    "state": {
-                      "type": "blank",
-                      "title": {
-                        "plugin": "text",
-                        "state": [
-                          {
-                            "type": "p",
-                            "children": [
-                              {
-                                "text": "Remember"
-                              }
-                            ]
-                          }
+                    plugin: 'box',
+                    state: {
+                      type: 'blank',
+                      title: {
+                        plugin: 'text',
+                        state: [
+                          { type: 'p', children: [{ text: 'Remember' }] },
                         ],
-                        "id": "7c385223-d278-4364-b89c-7cb2b93f2840"
+                        id: '7c385223-d278-4364-b89c-7cb2b93f2840',
                       },
-                      "anchorId": "",
-                      "content": {
-                        "plugin": "rows",
-                        "state": [
+                      anchorId: '',
+                      content: {
+                        plugin: 'rows',
+                        state: [
                           {
-                            "plugin": "text",
-                            "state": [
+                            plugin: 'text',
+                            state: [
                               {
-                                "children": [
+                                children: [
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "type": "list-item-child",
-                                        "children": [
-                                          {
-                                            "text": "to sum up your opinion"
-                                          }
-                                        ]
-                                      }
+                                        type: 'list-item-child',
+                                        children: [
+                                          { text: 'to sum up your opinion' },
+                                        ],
+                                      },
                                     ],
-                                    "type": "list-item"
+                                    type: 'list-item',
                                   },
                                   {
-                                    "children": [
+                                    children: [
                                       {
-                                        "type": "list-item-child",
-                                        "children": [
+                                        type: 'list-item-child',
+                                        children: [
                                           {
-                                            "text": "use linking words and useful phrases"
-                                          }
-                                        ]
-                                      }
+                                            text: 'use linking words and useful phrases',
+                                          },
+                                        ],
+                                      },
                                     ],
-                                    "type": "list-item"
-                                  }
+                                    type: 'list-item',
+                                  },
                                 ],
-                                "type": "unordered-list"
-                              }
+                                type: 'unordered-list',
+                              },
                             ],
-                            "id": "935dd16d-dd44-4349-98ed-a84ffc46b2a0"
-                          }
+                            id: '935dd16d-dd44-4349-98ed-a84ffc46b2a0',
+                          },
                         ],
-                        "id": "83a3ef55-2ae3-48ac-b925-d7f421d909d1"
-                      }
+                        id: '83a3ef55-2ae3-48ac-b925-d7f421d909d1',
+                      },
                     },
-                    "id": "d71119e1-28ff-4141-81c5-0199893ab26b"
-                  }
+                    id: 'd71119e1-28ff-4141-81c5-0199893ab26b',
+                  },
                 ],
-                "id": "5947d357-00da-4ce9-8f22-41411b715c28"
+                id: '5947d357-00da-4ce9-8f22-41411b715c28',
               },
-              "interactive": {
-                "plugin": "textAreaExercise",
-                "state": {},
-                "id": "eafb687a-8a62-4c1a-ac7f-43376cd10d9e"
-              }
+              interactive: {
+                plugin: 'textAreaExercise',
+                state: {
+                  solution:
+                    'In conclusion, homework is good, but not every day. I believe it should be balanced.',
+                  solutionStrategy:
+                    '1. Write 1-3 sentences to sum up what you have written before.\n\n2. Repeat your opinion.\n\n3. Write a short explanation for it.\n\n4. Use useful phrases like "to sum up," "in conclusion," "finally" and linking words like "because," "because of," "as," "therefore"',
+                  allowShowSolutionStrategy: true,
+                  allowParagraphFeedback: true,
+                  allowSubmitFeedback: true,
+                  allowAiFeedback: true,
+                },
+                id: 'eafb687a-8a62-4c1a-ac7f-43376cd10d9e',
+              },
             },
-            "id": "15157d38-afb1-41f0-9656-c8cb5721482b"
-          }
-        ]
+            id: '15157d38-afb1-41f0-9656-c8cb5721482b',
+          },
+        ],
       },
-      "id": "cce46646-b3a1-4f1f-a462-af8c41fdc9fa"
+      id: 'cce46646-b3a1-4f1f-a462-af8c41fdc9fa',
     },
     {
-      "plugin": "text",
-      "state": [
-        {
-          "type": "p",
-          "children": [
-            {
-              "text": "",
-              "strong": true
-            }
-          ]
-        },
-        {
-          "type": "p",
-          "children": [
-            {
-              "strong": true,
-              "text": " "
-            }
-          ]
-        }
+      plugin: 'text',
+      state: [
+        { type: 'p', children: [{ text: '', strong: true }] },
+        { type: 'p', children: [{ strong: true, text: ' ' }] },
       ],
-      "id": "95685386-63d5-4e41-9933-f055f4ccd445"
-    }
-  ]
-}`
+      id: '95685386-63d5-4e41-9933-f055f4ccd445',
+    },
+  ],
+}
