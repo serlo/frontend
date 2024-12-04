@@ -103,9 +103,9 @@ The plugins attribute/property accepts an array of plugin types. You can referen
 
 ## Shadow DOM vs. normal DOM
 
-Version 0.10.3 was the last stable version where you can render the Serlo Editor within the Shadow DOM. All future versions will only work in the regular DOM!
+Version 0.10.3 was the last stable version where you can render the Serlo Editor within the Shadow DOM. All future versions will only work in the regular DOM and the editor expects window/document objects to be available! If you are already rendering your whole app within a Shadow Root, you could consider wrapping the Serlo Editor in an iFrame which should allow you to keep having a Shadow Root, while making the global window/document objects available and isolating the Serlo Editor styles from your existing styles completely.
 
-### For versions < 0.10.3
+### For versions <= 0.10.3
 
 We give you the option whether you want to render the web-component within the Shadow DOM or not. Both have their pros and cons. Outside of the Shadow DOM, it's easier to run into style collisions. However, the Serlo Editor within the Shadow DOM is buggy in a lot of places, especially when it comes to focus management.
 By default we are rendering the Serlo Editor within the normal DOM. If you want to render it within the Shadow DOM, you can pass `true` to the `use-shadow-dom` argument.
