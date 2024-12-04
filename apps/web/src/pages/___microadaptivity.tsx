@@ -66,7 +66,7 @@ function Content() {
           {/* To change content width, change both max-w and basis */}
           <main
             id="content"
-            className="mb-[50%] max-w-[min(100%,60rem)] flex-shrink flex-grow basis-[60rem]"
+            className="mb-[50%] max-w-[min(100%,52rem)] flex-shrink flex-grow basis-[52rem]"
           >
             <StickyHeaderLearner />
             <section className="min-h-screen border-4">
