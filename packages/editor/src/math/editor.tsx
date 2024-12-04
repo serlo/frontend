@@ -1,4 +1,3 @@
-import { isShadowRoot } from '@editor/core/hooks/use-shadow-root'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { ToolbarSelect } from '@editor/editor-ui/plugin-toolbar'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
@@ -158,11 +157,9 @@ export function MathEditor(props: MathEditorProps) {
 
   function renderControlsPortal(children: JSX.Element) {
     const root = containerRef.current?.getRootNode()
-
     const isDocument = root instanceof Document
-    const isShadowRootNode = isShadowRoot(root)
     const target =
-      (isShadowRootNode || isDocument
+      (isDocument
         ? root.querySelector<HTMLDivElement>(
             // Either equations and toolbar, or plugin-text and toolbar (for
             // nested math plugins)

@@ -27,7 +27,6 @@ const initialExampleState = {
 class SerloEditorDemo extends LitElement {
   static properties = {
     editing: { type: Boolean },
-    isRenderedInShadowRoot: false,
     editorState: { type: Object },
     selectedPlugin: { type: String },
   }
@@ -39,17 +38,8 @@ class SerloEditorDemo extends LitElement {
     this.selectedPlugin = Plugin.Text
   }
 
-  // Render in light mode. Override this if you want to render the lit component
-  // and the editor within the Shadow DOM.
-  createRenderRoot() {
-    this.isRenderedInShadowRoot = false
-    return this
-  }
-
   getEditor() {
-    return this.isRenderedInShadowRoot
-      ? this.shadowRoot.querySelector('serlo-editor')
-      : this.querySelector('serlo-editor')
+    return this.querySelector('serlo-editor')
   }
 
   writeCurrentEditorState() {
@@ -117,7 +107,6 @@ class SerloEditorDemo extends LitElement {
       </select>
       <div style="margin-top: 70px;">
         <serlo-editor
-          use-shadow-dom=${!this.isRenderedInShadowRoot}
           mode=${this.editing ? 'write' : 'read'}
           initial-state=${JSON.stringify(this.editorState)}
           @state-changed=${this.handleStateChange.bind(this)}
