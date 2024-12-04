@@ -48,6 +48,8 @@ function Content() {
 
   editorRenderers.init(createRenderers())
 
+  const maxContentWidth = '60rem'
+
   return (
     <EditStringsProvider
       value={
@@ -59,15 +61,22 @@ function Content() {
       <EditorMetaContext.Provider
         value={{ editorVariant: 'serlo-org', userId: 'serlo-preview-user' }}
       >
-        <main id="content" className="flex justify-center">
-          <section className="min-h-screen border-4">
-            <div className="mt-[3rem]">
-              <EditorRenderer document={parseDocumentString(previewState)} />
-              {/* HACK: Microadaptivity prototype */}
-              <SubmitButtonAndFeedback />
-            </div>
-          </section>
-        </main>
+        <div className="flex flex-row">
+          <aside className="flex-shrink flex-grow basis-0"></aside>
+          <main
+            id="content"
+            className={`mb-[50%] flex max-w-[min(100%,${maxContentWidth})] flex-shrink flex-grow basis-[${maxContentWidth}] justify-center`}
+          >
+            <section className="min-h-screen border-4">
+              <div className="mt-[3rem]">
+                <EditorRenderer document={parseDocumentString(previewState)} />
+                {/* HACK: Microadaptivity prototype */}
+                <SubmitButtonAndFeedback />
+              </div>
+            </section>
+          </main>
+          <aside className="flex-shrink flex-grow basis-0"></aside>
+        </div>
       </EditorMetaContext.Provider>
     </EditStringsProvider>
   )
