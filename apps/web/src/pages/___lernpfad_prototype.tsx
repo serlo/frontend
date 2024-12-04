@@ -52,7 +52,7 @@ function Content() {
     />
   ) : (
     <>
-      <TransformWrapper initialScale={0.75} minScale={0.75} centerOnInit>
+      <TransformWrapper disablePadding>
         <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
       </TransformWrapper>
       {activeExercise ? (

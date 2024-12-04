@@ -14,60 +14,42 @@ export function Map({
   const [initialZoomDone, setInitialZoomDone] = useState(false)
   const { zoomToElement } = useControls()
 
+  // Zoom to next incomplete exercise animation
   useEffect(() => {
     if (initialZoomDone) return
-    // Find first exercise that's not done yet
+
     const idToZoomTo = Object.keys(exercises).find(
       (key) => exercises[key].done === false
     )
-    // Exit if all exercises are done
     if (!idToZoomTo) return
-    // Zoom to the first exercise that's not done yet
-    const timer = setTimeout(() => {
-      zoomToElement(idToZoomTo, 2)
-      setInitialZoomDone(true)
-    }, 1500)
-    // Clear timeout on onmount
+
+    const timer = setTimeout(() => zoomToElement(idToZoomTo, 2), 1500)
+    setInitialZoomDone(true)
+
     return () => clearTimeout(timer)
   }, [exercises, initialZoomDone, zoomToElement])
 
   return (
     <TransformComponent>
-      <div
-        className={cn(
-          'image-section relative h-screen w-screen',
-          'bg-[url(/_assets/img/prototype/game-board.svg)]',
-          'bg-[length:50%] bg-center bg-no-repeat'
-        )}
-      >
-        <button
-          id="1"
-          className={cn(
-            getExerciseClasses('1'),
-            'left-[502px] top-[233px] h-[69px] w-[79px]'
-          )}
-          onClick={() => onExerciseClick('1')}
-        >
-          1
-        </button>
-
-        <button
-          id="2"
-          className={cn(
-            getExerciseClasses('2'),
-            'left-[502px] top-[411px] h-[69px] w-[79px]'
-          )}
-          onClick={() => onExerciseClick('2')}
-        >
-          2
-        </button>
+      <div className="relative h-screen w-screen bg-gray-200">
+        {Object.keys(exercises).map((id) => (
+          <button
+            key={id}
+            id={id}
+            className={getExerciseClasses(id)}
+            onClick={() => onExerciseClick(id)}
+          >
+            {id}
+          </button>
+        ))}
       </div>
     </TransformComponent>
   )
 
   function getExerciseClasses(id: ExerciseId) {
     return cn(
-      'absolute cursor-pointer',
+      'absolute aspect-square w-[6%] cursor-pointer',
+      `left-[${exercises[id].position.x}%] top-[${exercises[id].position.y}%]`,
       isExerciseDone(id) ? 'bg-editor-primary-300' : 'bg-brand-300'
     )
   }
