@@ -64,21 +64,19 @@ export function FeedbackButton({
     const feedback = await fetchFeedback()
 
     PrototypeStateStore.update((s) => {
-      if (!s.textAreaPlugins[pluginId]) {
-        s.textAreaPlugins[pluginId] = {
-          textAreaBlocks: [createFeedbackBlock(feedback)],
-        }
-      } else {
-        const textAreaBlocks = s.textAreaPlugins[pluginId].textAreaBlocks
-        const index = textAreaBlocks.findIndex((block) => block.id === id)
-        if (textAreaBlocks[index].type === 'text') {
-          textAreaBlocks[index].feedbackPending = false
-        }
-        const nextBlock = textAreaBlocks.at(index + 1)
-        if (!nextBlock || nextBlock.type !== 'feedback') {
-          textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
-          //const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
-        }
+      const textAreaBlocks = s.textAreaPlugins[pluginId].textAreaBlocks
+      const index = textAreaBlocks.findIndex((block) => block.id === id)
+      if (textAreaBlocks[index].type === 'text') {
+        textAreaBlocks[index].feedbackPending = false
+      }
+      const nextBlock = textAreaBlocks.at(index + 1)
+      if (!nextBlock || nextBlock.type !== 'feedback') {
+        textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
+        return
+      }
+      if (nextBlock && feedback && nextBlock.type === 'feedback') {
+        nextBlock.content = feedback.generalFeedback
+        nextBlock.isCorrect = feedback.isCorrect
       }
     })
   }

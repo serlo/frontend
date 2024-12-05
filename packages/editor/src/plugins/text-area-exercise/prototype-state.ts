@@ -27,10 +27,16 @@ export function createFeedbackBlock(
       id: uuid_v4(),
       type: 'feedback',
       content: 'Leider konnte unsere KI kein Feedback geben',
+      isCorrect: false,
     }
   }
 
-  return { id: uuid_v4(), type: 'feedback', content: feedback.generalFeedback }
+  return {
+    id: uuid_v4(),
+    type: 'feedback',
+    content: feedback.generalFeedback,
+    isCorrect: feedback.isCorrect,
+  }
 }
 
 export function createTextBlock(): Text {
