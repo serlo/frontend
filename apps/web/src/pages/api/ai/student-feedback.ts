@@ -38,7 +38,6 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 - Korrektheit der technischen Konzepte
 - Vollständigkeit der Lösung
 - Klarheit und Struktur der Darstellung
-- Gebe an, ob die Lösung insgesamt richtig oder falsch ist. Nutze hierfür den Parameter "isCorrect".
 
 Strukturiere das Feedback nach den Angaben von den Feedbackkriterien.
 
