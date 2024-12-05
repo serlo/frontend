@@ -215,6 +215,8 @@ export const microadaptivityState = {
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
+                  additionalInfoForAi:
+                    'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nAchte auf Fehler in der Reihenfolge von Subjekt, Verb, Objekt.',
                 },
                 id: '9eddeca6-1029-48e4-b25d-4b399340a717',
               },

@@ -12,7 +12,7 @@ Du bist ein erfahrener Lehrer an einer deutschen Mittelschule.
 Deine Aufgabe ist es, einem Schüler oder einer Schülerin Feedback zu einem Lösungsversuch zu geben.
 Du wirst die Aufgabenstellung, die Musterlösung, die Feedbackkriterien und die Lösung des Schülers erhalten.
 
-Hier ist die Aufgabenstellung:
+Hier ist die Aufgabenstellung formatiert als JSON string:
 <aufgabenstellung>
 {{EXERCISE}}
 </aufgabenstellung>
@@ -26,6 +26,11 @@ Hier sind die Feedbackkriterien:
 <feedbackkriterien>
 {{FEEDBACK_CRITERIA}}
 </feedbackkriterien>
+
+Hier sind zusätzliche Infos auf die du achten sollst:
+<addtionalInfos>
+{{ADDITIONAL_INFO_FOR_AI}}
+</addtionalInfos>
 
 Das Feedback soll im JSON-Format gegeben werden. Es soll ein allgemeines Feedback zur gesamten Lösung erhalten.
 
@@ -50,6 +55,7 @@ const bodyType = t.type({
   solution: t.string,
   studentSolution: t.string,
   evaluationCriteria: t.string,
+  additionalInfoForAi: t.string,
 })
 
 export default async function POST(req: NextRequest): Promise<NextResponse> {
@@ -63,9 +69,15 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
       )
     }
 
-    const { exercise, solution, studentSolution, evaluationCriteria } = data
+    const {
+      exercise,
+      solution,
+      studentSolution,
+      evaluationCriteria,
+      additionalInfoForAi,
+    } = data
 
-    if (!exercise || !solution || !evaluationCriteria) {
+    if (!exercise || !solution || !evaluationCriteria || !additionalInfoForAi) {
       return NextResponse.json(
         { error: 'Missing a necessary argument' },
         { status: 400 }
@@ -88,7 +100,8 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
               content: systemPrompt
                 .replace('{{EXERCISE}}', exercise)
                 .replace('{{SOLUTION}}', solution)
-                .replace('{{FEEDBACK_CRITERIA}}', evaluationCriteria),
+                .replace('{{FEEDBACK_CRITERIA}}', evaluationCriteria)
+                .replace('{{ADDITIONAL_INFO_FOR_AI}}', additionalInfoForAi),
             },
             {
               role: 'user',

@@ -18,7 +18,8 @@ export function FeedbackButton({
   const silentmode = PrototypeStateStore.useState((s) => s.silentMode)
   const pluginId = usePluginId()
   // Get text area plugin state values
-  const { solution, evaluationCriteria } = useTextAreaPluginStateValues()
+  const { solution, evaluationCriteria, additionalInfoForAi } =
+    useTextAreaPluginStateValues()
   // Get text area plugin state (incl. set functions)
   const exerciseState = useContext(ExercisePluginStateContext)
   // Get client-side state
@@ -28,20 +29,18 @@ export function FeedbackButton({
 
   async function fetchFeedback() {
     const url = new URL('/api/ai/student-feedback', window.location.href)
-    // Careful: Formatting in exercise content does not work. Only one text plugin without any unformatted works.
-    // TODO: If necessary, build text from slate node structure.
-    // @ts-expect-error Pick text without type checking for now
-    const contentText = exerciseState?.state.content.state[0].state[0]
-      .children[0].text as string
+    // Send the task description as stringified json.
+    const exercise = JSON.stringify(exerciseState?.state.content)
 
     const response = await fetch(url.toString(), {
       method: 'POST',
       body: JSON.stringify({
-        exercise: contentText,
+        exercise: exercise,
         solution: solution ?? 'keine Musterlösung',
         evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
         // Maybe do it per paragraph like in the original prototype?
         studentSolution: blocks.find((block) => block.id === id)?.content || '',
+        additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
       }),
     })
 
