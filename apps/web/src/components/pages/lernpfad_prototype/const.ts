@@ -11,8 +11,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['extra', 'recap_easy', 'recap_hard'],
     dependsOnExercises: null,
     position: {
-      x: 42,
-      y: 28,
+      x: 47,
+      y: 8,
     },
   },
   extra1: {
@@ -23,8 +23,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: null,
     dependsOnExercises: ['intro'],
     position: {
-      x: 52,
-      y: 32,
+      x: 30,
+      y: 3,
     },
   },
   recap_easy: {
@@ -36,7 +36,7 @@ export const initialExercisesData: ExercisesRecord = {
     dependsOnExercises: ['intro'],
     position: {
       x: 35,
-      y: 49,
+      y: 25,
     },
   },
   recap_hard: {
@@ -47,8 +47,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['exercise_1_hard'],
     dependsOnExercises: ['intro'],
     position: {
-      x: 43,
-      y: 76,
+      x: 58,
+      y: 25,
     },
   },
   exercise_1_easy: {
@@ -60,7 +60,7 @@ export const initialExercisesData: ExercisesRecord = {
     dependsOnExercises: ['recap_easy'],
     position: {
       x: 35,
-      y: 72,
+      y: 45,
     },
   },
   exercise_1_hard: {
@@ -71,8 +71,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['exercise_2_hard'],
     dependsOnExercises: ['recap_hard'],
     position: {
-      x: 60,
-      y: 52,
+      x: 58,
+      y: 45,
     },
   },
   exercise_2_easy: {
@@ -83,8 +83,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['rewrite'],
     dependsOnExercises: ['exercise_1_easy'],
     position: {
-      x: 60,
-      y: 72,
+      x: 35,
+      y: 62,
     },
   },
   exercise_2_hard: {
@@ -95,8 +95,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['rewrite'],
     dependsOnExercises: ['exercise_1_hard'],
     position: {
-      x: 60,
-      y: 72,
+      x: 58,
+      y: 62,
     },
   },
   rewrite: {
@@ -108,31 +108,31 @@ export const initialExercisesData: ExercisesRecord = {
     dependsOnExercises: ['exercise_2_easy', 'exercise_2_hard'],
     position: {
       x: 50,
-      y: 82,
+      y: 72,
     },
   },
   extra2: {
-    type: 'exercise', // ?
+    type: 'extra',
     done: false,
     time: 8,
-    title: 'Feedback and Rewriting your opinion',
+    title: 'Knowing & recognising criteria for opinion writing',
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
-      x: 60,
-      y: 92,
+      x: 70,
+      y: 72,
     },
   },
   reflection: {
     type: 'end',
     done: false,
     time: 8,
-    title: 'Feedback and Rewriting your opinion',
+    title: 'Reflection',
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
       x: 50,
-      y: 92,
+      y: 82,
     },
   },
 }

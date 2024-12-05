@@ -43,19 +43,26 @@ const editorContent = {
               plugin: 'text',
               state: [
                 {
-                  type: 'h',
-                  children: [{ text: 'Writing your opinion:' }],
-                  level: 1,
-                },
-                {
-                  type: 'h',
-                  level: 1,
+                  type: 'p',
                   children: [
-                    { text: 'Should students have homework every day?' },
+                    {
+                      strong: true,
+                      text: 'Writing your opinion:',
+                    },
+                  ],
+                },
+                { type: 'p', children: [{ text: '' }] },
+                {
+                  type: 'p',
+                  children: [
+                    {
+                      strong: true,
+                      text: 'Should students have homework every day?',
+                    },
                   ],
                 },
               ],
-              id: '571bab2d-877c-4395-8102-9cea3477cd37',
+              id: '1b689a64-81db-4754-9475-cda1ea01fd0a',
             },
             {
               plugin: 'text',

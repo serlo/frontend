@@ -36,8 +36,6 @@ const editorContent = {
     {
       plugin: 'text',
       state: [
-        { type: 'p', children: [{ text: 'Task: ', strong: true }] },
-        { type: 'p', children: [{ strong: true, text: '' }] },
         {
           type: 'p',
           children: [
