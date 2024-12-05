@@ -19,6 +19,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   return (
     <div className="p-2">
       <ExerciseGroupRenderer
+        isInEditor
         content={<>{content.render()}</>}
         exercises={exercises.map((exercise, index) => {
           return {

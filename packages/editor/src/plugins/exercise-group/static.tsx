@@ -31,6 +31,7 @@ export function ExerciseGroupStaticRenderer(
         <StaticRenderer document={content as unknown as EditorRowsDocument} />
       }
       exercises={renderedExercises}
+      isInEditor={false}
     />
   )
 
