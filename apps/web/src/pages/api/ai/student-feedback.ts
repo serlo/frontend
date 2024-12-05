@@ -98,7 +98,7 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
               ),
             },
           ],
-          temperature: 0,
+          top_p: 0.0001,
           max_tokens: 150,
           response_format: {
             type: 'json_schema',
