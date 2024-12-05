@@ -22,7 +22,7 @@ Hier ist die Musterlösung:
 {{SOLUTION}}
 </musterloesung>
 
-Hier sind die Feddbackkriterien:
+Hier sind die Feedbackkriterien:
 <feedbackkriterien>
 {{FEEDBACK_CRITERIA}}
 </feedbackkriterien>
@@ -37,7 +37,8 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 
 Strukturiere das Feedback nach den Angaben von den Feedbackkriterien.
 
-Denke daran, dass dein Feedback konstruktiv und ermutigend sein soll. Lobe gute Ansätze und richtige Teillösungen. Bei Fehlern erkläre freundlich, was verbessert werden kann und gib Tipps zur Korrektur. Schreibe 1-3 Sätze.`
+Dein Feedback soll kurz, objektiv und prägnant sein. Schreibe 1-3 Sätze.
+Dein Feedback soll auf Deutsch sein, nur Beispiele und Korrekturvorschläge können auf Englisch sein.`
 
 const userPrompt = `Hier ist die Lösung des Schülers:
 <schueler_loesung>
