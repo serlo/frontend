@@ -7,7 +7,6 @@ import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { SubmitButtonAndFeedback } from '@editor/plugins/rows/submit-button-and-feedback'
 import { StickyHeaderLearner } from '@editor/prototype-microadaptivity/sticky-header-learner'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
@@ -76,11 +75,13 @@ function Content() {
             className="mb-[50%] max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
           >
             <StickyHeaderLearner />
-            <section className="min-h-screen border-4">
+            <section className="min-h-screen ">
               <div className="mt-[3rem]">
                 <EditorRenderer document={previewState} />
                 {/* HACK: Microadaptivity prototype */}
-                <SubmitButtonAndFeedback />
+                <div className="w-foll flex flex-col items-end">
+                  <SubmitButtonAndFeedback />
+                </div>
               </div>
             </section>
           </main>

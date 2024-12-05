@@ -52,7 +52,7 @@ export function IndividualHelp() {
         </div>
       </div>
 
-      <div>
+      <div className="flex w-full flex-col gap-3">
         <div className="font-bold">
           Wann sollen die Hilfestellungen verfügbar sein?
         </div>
