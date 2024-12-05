@@ -12,11 +12,13 @@ interface PrototypeState {
     [id: string]: TextAreaPluginState
   }
   silentMode: boolean
+  __is_starting_up: boolean
 }
 
 export const PrototypeStateStore = new Store<PrototypeState>({
   textAreaPlugins: {},
   silentMode: false,
+  __is_starting_up: true,
 })
 
 export function createFeedbackBlock(

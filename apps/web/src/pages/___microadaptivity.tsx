@@ -6,11 +6,12 @@ import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { SubmitButtonAndFeedback } from '@editor/plugins/rows/submit-button-and-feedback'
+import { PrototypeStateStore } from '@editor/plugins/text-area-exercise/prototype-state'
 import { StickyHeaderLearner } from '@editor/prototype-microadaptivity/sticky-header-learner'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { QueryParamProvider } from 'use-query-params'
 
 import { GetAiFeedbackButton } from '../../../../packages/editor/src/prototype-microadaptivity/get-ai-feedback-button'
@@ -43,6 +44,14 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
 
 function Content() {
   const { lang } = useInstanceData()
+
+  useEffect(() => {
+    setTimeout(() => {
+      PrototypeStateStore.update((s) => {
+        s.__is_starting_up = false
+      })
+    }, 1000)
+  }, [])
 
   const [previewState] = useState(microadaptivityState)
 

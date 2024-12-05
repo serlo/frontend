@@ -6,15 +6,19 @@ import { usePluginId } from './use-plugin-id'
 // Where user types text
 export function TextBlock({ id }: Text) {
   const pluginId = usePluginId()
+  const __is_starting_up = PrototypeStateStore.useState(
+    (s) => s.__is_starting_up
+  )
 
   const thisBlock = PrototypeStateStore.getRawState().textAreaPlugins[
     pluginId
   ].textAreaBlocks.find((b) => b.id === id)
 
+  console.log(__is_starting_up)
   return (
     <div className="group flex flex-row">
       <textarea
-        autoFocus
+        autoFocus={!__is_starting_up}
         id={id}
         onChange={(e) => {
           PrototypeStateStore.update((s) => {

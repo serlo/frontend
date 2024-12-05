@@ -5,12 +5,12 @@ import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
+import { PrototypeStateStore } from '@editor/plugins/text-area-exercise/prototype-state'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import NextAdapterPages from 'next-query-params/pages'
 import { mergeDeepRight } from 'ramda'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { QueryParamProvider } from 'use-query-params'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
@@ -45,6 +45,14 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
 
 function Content() {
   const { lang } = useInstanceData()
+
+  useEffect(() => {
+    setTimeout(() => {
+      PrototypeStateStore.update((s) => {
+        s.__is_starting_up = false
+      })
+    }, 1000)
+  }, [])
 
   const [previewState] = useState(microadaptivityState)
 
