@@ -9,7 +9,7 @@ export interface Exercise {
     x: number
     y: number
   }
-  type: 'start' | 'extra' | 'recap' | 'exercise' | 'end'
+  type: 'excursion' | 'recap' | 'feedback' | 'reflection' | 'start' | 'write'
   time?: number
 }
 

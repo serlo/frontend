@@ -8,7 +8,7 @@ export const initialExercisesData: ExercisesRecord = {
     time: 8,
     title: 'Start 🏁',
     type: 'start',
-    nextExercises: ['extra', 'recap_easy', 'recap_hard'],
+    nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
     dependsOnExercises: null,
     position: {
       x: 47,
@@ -16,7 +16,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   extra1: {
-    type: 'extra',
+    type: 'excursion',
     done: false,
     time: 8,
     title: 'Useful phrases & vocabulary',
@@ -52,7 +52,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   exercise_1_easy: {
-    type: 'exercise',
+    type: 'write',
     done: false,
     time: 8,
     title: 'Should students grade their teachers? 🎓',
@@ -64,7 +64,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   exercise_1_hard: {
-    type: 'exercise',
+    type: 'write',
     done: false,
     time: 8,
     title: 'Should students grade their teachers? 🎓',
@@ -76,7 +76,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   exercise_2_easy: {
-    type: 'exercise',
+    type: 'write',
     done: false,
     time: 8,
     title: 'Should students have homework every day? 💦',
@@ -88,7 +88,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   exercise_2_hard: {
-    type: 'exercise',
+    type: 'write',
     done: false,
     time: 8,
     title: 'Should students have homework every day? 💦',
@@ -100,7 +100,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   rewrite: {
-    type: 'exercise', // ?
+    type: 'feedback',
     done: false,
     time: 8,
     title: 'Feedback and Rewriting your opinion',
@@ -112,7 +112,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   extra2: {
-    type: 'extra',
+    type: 'excursion',
     done: false,
     time: 8,
     title: 'Knowing & recognising criteria for opinion writing',
@@ -124,7 +124,7 @@ export const initialExercisesData: ExercisesRecord = {
     },
   },
   reflection: {
-    type: 'end',
+    type: 'reflection',
     done: false,
     time: 8,
     title: 'Reflection',
