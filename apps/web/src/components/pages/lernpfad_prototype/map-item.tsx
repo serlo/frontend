@@ -1,5 +1,19 @@
-import type { ExerciseId, ExercisesRecord } from './types'
+import {
+  faRobot,
+  faUser,
+  faUserGroup,
+  type IconDefinition,
+} from '@fortawesome/free-solid-svg-icons'
+
+import type { ExerciseId, ExerciseLabel, ExercisesRecord } from './types'
+import { FaIcon } from '../../fa-icon'
 import { cn } from '@/helper/cn'
+
+const labelIconsMap: Record<ExerciseLabel, IconDefinition> = {
+  solo: faUser,
+  group: faUserGroup,
+  ai: faRobot,
+}
 
 export function MapItem({
   id,
@@ -31,6 +45,13 @@ export function MapItem({
       <b className="-mt-4 block text-[0.5rem] leading-[0.6rem] text-gray-700">
         {exercise.title}
       </b>
+      <div className="mt-0.25 flex items-center justify-center gap-[1px] text-[0.4rem] text-gray-400">
+        {exercise.labels.map((label) => (
+          <FaIcon key={label} icon={labelIconsMap[label]} />
+        ))}
+        {exercise.labels.length ? <span className="px-1">|</span> : null}
+        {exercise.time} Min
+      </div>
     </button>
   )
 

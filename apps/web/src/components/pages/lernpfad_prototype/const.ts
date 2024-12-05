@@ -4,10 +4,11 @@ export const localStorageKey = 'lernpfad_prototype'
 
 export const initialExercisesData: ExercisesRecord = {
   intro: {
+    type: 'start',
     done: false,
     time: 8,
     title: 'Start 🏁',
-    type: 'start',
+    labels: ['group'],
     nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
     dependsOnExercises: null,
     position: {
@@ -20,6 +21,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Cats or Dogs? 🐱 🐶',
+    labels: ['solo'],
     nextExercises: ['writing_easy'],
     dependsOnExercises: ['intro'],
     position: {
@@ -32,6 +34,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Cats or Dogs? 🐱 🐶',
+    labels: ['solo'],
     nextExercises: ['writing_hard'],
     dependsOnExercises: ['intro'],
     position: {
@@ -44,6 +47,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Writing your opinion',
+    labels: ['solo'],
     nextExercises: ['rewrite'],
     dependsOnExercises: ['recap_easy'],
     position: {
@@ -56,6 +60,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Writing your opinion',
+    labels: ['solo'],
     nextExercises: ['rewrite'],
     dependsOnExercises: ['recap_hard'],
     position: {
@@ -68,6 +73,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Feedback and Rewriting your opinion',
+    labels: ['solo', 'ai'],
     nextExercises: ['reflection', 'extra2'],
     dependsOnExercises: ['writing_easy', 'writing_hard'],
     position: {
@@ -80,6 +86,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Reflection',
+    labels: ['solo', 'ai'],
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
@@ -92,6 +99,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Useful phrases & vocabulary',
+    labels: ['solo'],
     nextExercises: null,
     dependsOnExercises: ['intro'],
     position: {
@@ -104,6 +112,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Knowing & recognising criteria for opinion writing',
+    labels: ['solo'],
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
