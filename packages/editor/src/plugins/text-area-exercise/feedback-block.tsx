@@ -1,10 +1,9 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { cn } from '@editor/utils/cn'
 import {
   faCheck,
   faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons'
-
-import { cn } from '@editor/utils/cn'
 
 import { AnimateChangeInHeight } from './animate-change-in-height'
 import { PrototypeStateStore } from './prototype-state'
