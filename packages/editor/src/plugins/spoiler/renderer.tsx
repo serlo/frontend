@@ -41,7 +41,11 @@ export function SpoilerRenderer({
         )}
       >
         <span className="flex">
-          <span className="inline-block w-4">{isOpen ? '▴ ' : '▾ '} </span>
+          <span
+            className={cn('mr-1 inline-block w-2.5', isOpen && 'rotate-180')}
+          >
+            ▾
+          </span>
           {title}
         </span>
       </button>
