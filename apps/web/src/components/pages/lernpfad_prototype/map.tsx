@@ -44,16 +44,20 @@ export function Map({
           <button
             key={id}
             id={id}
-            className="absolute aspect-square w-[6%] cursor-pointer rounded-full"
+            className="absolute aspect-square w-[9%] cursor-pointer rounded-full"
             style={getExerciseStyle(id)}
             onClick={() => onExerciseClick(id)}
           >
-            {exercises[id].done ? (
-              <img src="/_assets/img/prototype/exercise_done.svg" />
-            ) : (
-              <img src="/_assets/img/prototype/exercise_todo.svg" />
-            )}
-            <b>{exercises[id].title}</b>
+            <div className="p-2">
+              {exercises[id].done ? (
+                <img src="/_assets/img/prototype/exercise_done.svg" />
+              ) : (
+                <img src="/_assets/img/prototype/exercise_todo.svg" />
+              )}
+            </div>
+            <b className="-mt-4 block leading-[1.2rem]">
+              {exercises[id].title}
+            </b>
           </button>
         ))}
       </div>

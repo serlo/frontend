@@ -1,16 +1,15 @@
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
-
 export type ExerciseId = string
 
 export interface Exercise {
   done: boolean
   title: string
-  state?: AnyEditorDocument
   nextExercises: ExerciseId[] | null
   position: {
     x: number
     y: number
   }
+  type: 'start' | 'extra' | 'recap' | 'exercise' | 'end'
+  time?: number
 }
 
 export type ExercisesRecord = Record<ExerciseId, Exercise>
