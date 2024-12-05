@@ -1,6 +1,7 @@
-import type { ExerciseProps } from './types'
+import type { ExerciseProps } from '../types'
+import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
-export function Exercise({
+export function Exercise1({
   id,
   data,
   onBackToMapClick,
@@ -17,6 +18,7 @@ export function Exercise({
 
       <div className="flex h-full flex-col items-center justify-center">
         <h1>{data.title}</h1>
+        <EditorRenderer document={data.state} />
         {data.done ? (
           renderDoneState()
         ) : (
