@@ -4,7 +4,7 @@ import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export function Intro(props: ExerciseProps) {
   return (
-    <ExerciseWrapper {...props}>
+    <ExerciseWrapper {...props} noHeader>
       <EditorRenderer document={editorContent} />
     </ExerciseWrapper>
   )

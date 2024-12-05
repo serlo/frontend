@@ -47,7 +47,7 @@ export function MapItem({
       </b>
       <div className="mt-0.25 flex items-center justify-center gap-[1px] text-[0.4rem] text-gray-400">
         {exercise.labels.map((label) => (
-          <FaIcon key={label} icon={labelIconsMap[label]} />
+          <FaIcon key={label} icon={labelIconsMap[label]} className="ml-0.5" />
         ))}
         {exercise.labels.length && exercise.time ? (
           <span className="px-1">|</span>

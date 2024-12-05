@@ -11,7 +11,8 @@ export function ExerciseWrapper({
   onNextExerciseClick,
   onBackToMapClick,
   children,
-}: ExerciseProps & { children: JSX.Element }) {
+  noHeader,
+}: ExerciseProps & { children: JSX.Element; noHeader?: boolean }) {
   if (id === null) return null
 
   return (
@@ -30,7 +31,7 @@ export function ExerciseWrapper({
         id="content"
         className="mb-[50%] max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
       >
-        <StickyHeaderLearner />
+        {noHeader ? <div>&nbsp;</div> : <StickyHeaderLearner />}
         {children}
       </main>
       <aside className="flex-shrink flex-grow basis-0">
