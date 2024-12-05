@@ -22,13 +22,13 @@ const editorContent1 = {
       plugin: 'text',
       state: [
         {
-          type: 'p',
+          type: 'h',
           children: [
             {
               text: 'Read the given opinion on whether students should grade their teachers and drag and drop the correct answer in each gap.',
-              strong: true,
             },
           ],
+          level: 3,
         },
       ],
       id: '3f940b52-8672-4078-9e6d-f4b100ea2ace',
