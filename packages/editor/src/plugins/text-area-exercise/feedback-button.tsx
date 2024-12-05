@@ -67,6 +67,10 @@ export function FeedbackButton({
       if (!s.textAreaPlugins[pluginId]) {
         s.textAreaPlugins[pluginId] = {
           textAreaBlocks: [createFeedbackBlock(feedback)],
+          // TODO: right?
+          evaluationCriteria: '',
+          solution: '',
+          exercise: ''
         }
       } else {
         const textAreaBlocks = s.textAreaPlugins[pluginId].textAreaBlocks

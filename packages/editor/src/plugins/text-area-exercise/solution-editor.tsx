@@ -2,6 +2,8 @@ import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useContext } from 'react'
 
 import { EditorTextArea } from './editor-text-area'
+import { ExercisePluginStateContext } from './exercise-plugin-state-context'
+import { PrototypeStateStore } from './prototype-state'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
 
 export function Solution() {
@@ -26,7 +28,13 @@ export function Solution() {
         </div>
         <EditorTextArea
           placeholder="Musterlösung"
-          onChange={(e) => solution.set(e.target.value)}
+          onChange={(e) => {
+            solution.set(e.target.value)
+            PrototypeStateStore.update((s) => {
+              s.textAreaPlugins[textAreaPluginStateContext.id].solution =
+                e.target.value
+            })
+          }}
           value={solution.value}
         />
         <div className="flex flex-row items-center gap-3">
@@ -49,7 +57,14 @@ export function Solution() {
         </div>
         <EditorTextArea
           placeholder="Bewertungskriterien"
-          onChange={(e) => evaluationCriteria.set(e.target.value)}
+          onChange={(e) => {
+            evaluationCriteria.set(e.target.value)
+            PrototypeStateStore.update((s) => {
+              s.textAreaPlugins[
+                textAreaPluginStateContext.id
+              ].evaluationCriteria = e.target.value
+            })
+          }}
           value={evaluationCriteria.value}
         />
         <div className="flex flex-row items-center gap-3">
