@@ -6,7 +6,6 @@ export const initialExercisesData: ExercisesRecord = {
   intro: {
     type: 'start',
     done: false,
-    time: 8,
     title: 'Start 🏁',
     labels: ['group'],
     nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
@@ -19,7 +18,7 @@ export const initialExercisesData: ExercisesRecord = {
   recap_easy: {
     type: 'recap',
     done: false,
-    time: 8,
+    time: 10,
     title: 'Cats or Dogs? 🐱 🐶',
     labels: ['solo'],
     nextExercises: ['writing_easy'],
@@ -32,7 +31,7 @@ export const initialExercisesData: ExercisesRecord = {
   recap_hard: {
     type: 'recap',
     done: false,
-    time: 8,
+    time: 10,
     title: 'Cats or Dogs? 🐱 🐶',
     labels: ['solo'],
     nextExercises: ['writing_hard'],
@@ -45,7 +44,7 @@ export const initialExercisesData: ExercisesRecord = {
   writing_easy: {
     type: 'write',
     done: false,
-    time: 8,
+    time: 20,
     title: 'Writing your opinion',
     labels: ['solo'],
     nextExercises: ['rewrite'],
@@ -58,7 +57,7 @@ export const initialExercisesData: ExercisesRecord = {
   writing_hard: {
     type: 'write',
     done: false,
-    time: 8,
+    time: 20,
     title: 'Writing your opinion',
     labels: ['solo'],
     nextExercises: ['rewrite'],
@@ -71,7 +70,7 @@ export const initialExercisesData: ExercisesRecord = {
   rewrite: {
     type: 'feedback',
     done: false,
-    time: 8,
+    time: 10,
     title: 'Feedback and Rewriting your opinion',
     labels: ['solo', 'ai'],
     nextExercises: ['reflection', 'extra2'],
@@ -97,7 +96,7 @@ export const initialExercisesData: ExercisesRecord = {
   extra1: {
     type: 'excursion',
     done: false,
-    time: 8,
+    time: 5,
     title: 'Useful phrases & vocabulary',
     labels: ['solo'],
     nextExercises: null,
@@ -110,7 +109,7 @@ export const initialExercisesData: ExercisesRecord = {
   extra2: {
     type: 'excursion',
     done: false,
-    time: 8,
+    time: 5,
     title: 'Knowing & recognising criteria for opinion writing',
     labels: ['solo'],
     nextExercises: null,

@@ -49,8 +49,10 @@ export function MapItem({
         {exercise.labels.map((label) => (
           <FaIcon key={label} icon={labelIconsMap[label]} />
         ))}
-        {exercise.labels.length ? <span className="px-1">|</span> : null}
-        {exercise.time} Min
+        {exercise.labels.length && exercise.time ? (
+          <span className="px-1">|</span>
+        ) : null}
+        {exercise.time ? `${exercise.time} Min` : null}
       </div>
     </button>
   )

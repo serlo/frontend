@@ -104,6 +104,12 @@ function Content() {
 
   function handleExerciseClick(id: ExerciseId) {
     setActiveExercise(id)
+
+    if (exercises[id].type === 'start') {
+      setIsExerciseShown(true)
+      return
+    }
+
     setIsModalOpen(true)
   }
 

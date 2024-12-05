@@ -5,7 +5,7 @@ export type ExerciseLabel = 'solo' | 'group' | 'ai'
 export interface Exercise {
   type: 'excursion' | 'recap' | 'feedback' | 'reflection' | 'start' | 'write'
   done: boolean
-  time: number
+  time?: number
   title: string
   labels: Array<ExerciseLabel>
   nextExercises: ExerciseId[] | null
