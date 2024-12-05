@@ -25,7 +25,7 @@ export function Blocks() {
   if (!blocks) return <></>
 
   return (
-    <div className="my-5 p-3">
+    <div className="">
       <div className="flex w-full flex-col gap-3 rounded-xl border border-brand bg-brand-50 p-2">
         {blocks.map((block) =>
           block.type === 'text' ? (
