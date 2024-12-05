@@ -15,6 +15,7 @@ export function FeedbackButton({
   id: string
   spinner: boolean
 }) {
+  const silentmode = PrototypeStateStore.useState((s) => s.silentMode)
   const pluginId = usePluginId()
   // Get text area plugin state values
   const { solution, evaluationCriteria } = useTextAreaPluginStateValues()
@@ -82,6 +83,7 @@ export function FeedbackButton({
       }
     })
   }
+  if (silentmode) return null
   return (
     <>
       {spinner ? (
