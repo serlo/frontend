@@ -48,11 +48,12 @@ export function Map({
             style={getExerciseStyle(id)}
             onClick={() => onExerciseClick(id)}
           >
-            {isExerciseDone(id) ? (
+            {exercises[id].done ? (
               <img src="/_assets/img/prototype/exercise_done.svg" />
             ) : (
               <img src="/_assets/img/prototype/exercise_todo.svg" />
             )}
+            <b>{exercises[id].title}</b>
           </button>
         ))}
       </div>
@@ -64,9 +65,5 @@ export function Map({
       left: `${exercises[id].position.x}%`,
       top: `${exercises[id].position.y}%`,
     }
-  }
-
-  function isExerciseDone(id: ExerciseId) {
-    return exercises[id].done === true
   }
 }

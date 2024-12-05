@@ -9,7 +9,7 @@ import {
   initialExercisesData,
   localStorageKey,
 } from '@/components/pages/lernpfad_prototype/const'
-import { Exercise } from '@/components/pages/lernpfad_prototype/exercise'
+import { Exercise } from '@/components/pages/lernpfad_prototype/exercises/exercise'
 import { Exercise1 } from '@/components/pages/lernpfad_prototype/exercises/exercise-1'
 import { Map } from '@/components/pages/lernpfad_prototype/map'
 import { Modal } from '@/components/pages/lernpfad_prototype/modal'
@@ -23,7 +23,7 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
-const exercisesMap: Record<
+const exercisesContentMap: Record<
   ExerciseId,
   (props: ExerciseProps) => React.ReactElement
 > = {
@@ -60,7 +60,7 @@ function Content() {
   editorRenderers.init(createRenderers())
 
   const ExerciseComponent =
-    activeExercise === null ? null : exercisesMap[activeExercise]
+    activeExercise === null ? null : exercisesContentMap[activeExercise]
 
   return isExerciseShown && activeExercise && ExerciseComponent ? (
     <ExerciseComponent

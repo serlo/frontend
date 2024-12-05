@@ -1,11 +1,9 @@
-import type { ExerciseProps } from '../types'
+import { ExerciseProps } from '../types'
 import { BackLink } from './back-link'
 import { DoneState } from './done'
-import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
-export function Exercise1(props: ExerciseProps) {
+export function Exercise(props: ExerciseProps) {
   const { id, data, onSubmitClick } = props
-
   if (id === null) return null
 
   return (
@@ -14,7 +12,6 @@ export function Exercise1(props: ExerciseProps) {
 
       <div className="flex h-full flex-col items-center justify-center">
         <h1>{data.title}</h1>
-        <EditorRenderer document={data.state} />
         {data.done ? (
           <DoneState {...props} />
         ) : (
