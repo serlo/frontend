@@ -12,7 +12,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
     dependsOnExercises: null,
     position: {
-      x: 45,
+      x: 44.5,
       y: 22.5,
     },
   },
