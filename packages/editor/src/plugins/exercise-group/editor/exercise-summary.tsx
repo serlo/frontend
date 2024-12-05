@@ -1,6 +1,6 @@
 import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { FaIcon } from '../../../editor-ui/fa-icon'
 
@@ -10,6 +10,22 @@ interface ExerciseSummaryProps {
 }
 
 export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
+  const [currentExercise, setCurrentExercise] = useState(1)
+
+  const exercises = [
+    { title: 'Interaktive Aufgabe 1' },
+    { title: 'Interaktive Aufgabe 2' },
+    { title: 'Interaktive Aufgabe 3' },
+  ]
+
+  const checkboxes = [
+    'Musterlösung anzeigen',
+    'Bewertungskriterien anzeigen',
+    'Lösungsstrategie anzeigen',
+    'Schreibassistenz zur Verfügung stellen',
+    'adaptive Hilfestellungen und Feedback aktivieren',
+  ]
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Portal>
@@ -33,15 +49,11 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
 
           <div className="space-y-4">
             <div>
-              <p className="mb-1 font-semibold">Interaktive Aufgabe 1</p>
+              <p className="mb-1 font-semibold">
+                {exercises[currentExercise - 1].title}
+              </p>
               <ul className="space-y-3">
-                {[
-                  'Musterlösung anzeigen',
-                  'Bewertungskriterien anzeigen',
-                  'Lösungsstrategie anzeigen',
-                  'Schreibassistenz zur Verfügung stellen',
-                  'adaptive Hilfestellungen und Feedback aktivieren',
-                ].map((item, index) => (
+                {checkboxes.map((item, index) => (
                   <li
                     key={index}
                     className="flex items-center justify-between text-gray-800"
@@ -57,6 +69,21 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                 ))}
               </ul>
             </div>
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="mt-6 flex justify-center space-x-2">
+            {exercises.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentExercise(index + 1)}
+                className={`h-3 w-3 rounded-full ${
+                  currentExercise === index + 1
+                    ? 'bg-blue-500'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+              />
+            ))}
           </div>
 
           <button
