@@ -1,4 +1,4 @@
-import type { ExercisesRecord } from './types'
+import { ExercisesRecord } from './types'
 
 export const localStorageKey = 'lernpfad_prototype'
 
@@ -96,10 +96,21 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Feedback and Rewriting your opinion',
-    nextExercises: ['reflection'],
+    nextExercises: ['reflection', 'extra2'],
     position: {
       x: 50,
       y: 82,
+    },
+  },
+  extra2: {
+    type: 'exercise', // ?
+    done: false,
+    time: 8,
+    title: 'Feedback and Rewriting your opinion',
+    nextExercises: null,
+    position: {
+      x: 60,
+      y: 92,
     },
   },
   reflection: {

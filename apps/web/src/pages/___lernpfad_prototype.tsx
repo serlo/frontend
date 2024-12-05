@@ -4,13 +4,22 @@ import React, { useState } from 'react'
 import { TransformWrapper } from 'react-zoom-pan-pinch'
 import { QueryParamProvider } from 'use-query-params'
 
+import { Extra1 } from '../components/pages/lernpfad_prototype/exercises/extra1'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import {
   initialExercisesData,
   localStorageKey,
 } from '@/components/pages/lernpfad_prototype/const'
-import { Exercise } from '@/components/pages/lernpfad_prototype/exercises/exercise'
-import { Exercise1 } from '@/components/pages/lernpfad_prototype/exercises/exercise-1'
+import { Exercise1Easy } from '@/components/pages/lernpfad_prototype/exercises/exercise1_easy'
+import { Exercise1Hard } from '@/components/pages/lernpfad_prototype/exercises/exercise1_hard'
+import { Exercise2Easy } from '@/components/pages/lernpfad_prototype/exercises/exercise2_easy'
+import { Exercise2Hard } from '@/components/pages/lernpfad_prototype/exercises/exercise2_hard'
+import { Extra2 } from '@/components/pages/lernpfad_prototype/exercises/extra2'
+import { Intro } from '@/components/pages/lernpfad_prototype/exercises/intro'
+import { RecapEasy } from '@/components/pages/lernpfad_prototype/exercises/recap_easy'
+import { RecapHard } from '@/components/pages/lernpfad_prototype/exercises/recap_hard'
+import { Reflection } from '@/components/pages/lernpfad_prototype/exercises/reflection'
+import { Rewrite } from '@/components/pages/lernpfad_prototype/exercises/rewrite'
 import { Map } from '@/components/pages/lernpfad_prototype/map'
 import { Modal } from '@/components/pages/lernpfad_prototype/modal'
 import type {
@@ -27,10 +36,17 @@ const exercisesContentMap: Record<
   ExerciseId,
   (props: ExerciseProps) => React.ReactElement
 > = {
-  '1': (props) => <Exercise1 {...props} />,
-  '2': (props) => <Exercise {...props} />,
-  '3': (props) => <Exercise {...props} />,
-  '4': (props) => <Exercise {...props} />,
+  intro: (props) => <Intro {...props} />,
+  extra1: (props) => <Extra1 {...props} />,
+  recap_easy: (props) => <RecapEasy {...props} />,
+  recap_hard: (props) => <RecapHard {...props} />,
+  exercise_1_easy: (props) => <Exercise1Easy {...props} />,
+  exercise_1_hard: (props) => <Exercise1Hard {...props} />,
+  exercise_2_easy: (props) => <Exercise2Easy {...props} />,
+  exercise_2_hard: (props) => <Exercise2Hard {...props} />,
+  rewrite: (props) => <Rewrite {...props} />,
+  extra2: (props) => <Extra2 {...props} />,
+  reflection: (props) => <Reflection {...props} />,
 }
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
