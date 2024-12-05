@@ -36,29 +36,31 @@ export function ExerciseWrapper({
       <aside className="flex-shrink flex-grow basis-0">
         {/* <GetAiFeedbackButton /> */}
 
-        {data.done ? (
-          <div className="text-center">
-            <p>Exercise done!</p>
-            <div className="align-center flex justify-center gap-2">
-              {data.nextExercises?.map((nextId) => (
-                <button
-                  key={nextId}
-                  className="serlo-button-edit-primary"
-                  onClick={() => onNextExerciseClick(nextId)}
-                >
-                  Go to {nextId}
-                </button>
-              ))}
+        <div className="fixed bottom-10 right-10">
+          {data.done ? (
+            <div className="text-center">
+              <p>Exercise done!</p>
+              <div className="align-center flex justify-center gap-2">
+                {data.nextExercises?.map((nextId) => (
+                  <button
+                    key={nextId}
+                    className="serlo-button-edit-primary"
+                    onClick={() => onNextExerciseClick(nextId)}
+                  >
+                    Go to {nextId}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        ) : (
-          <button
-            className="serlo-button-edit-primary"
-            onClick={() => onSubmitClick(id)}
-          >
-            Submit
-          </button>
-        )}
+          ) : (
+            <button
+              className="serlo-button-edit-primary"
+              onClick={() => onSubmitClick(id)}
+            >
+              Submit
+            </button>
+          )}
+        </div>
       </aside>
     </div>
   )
