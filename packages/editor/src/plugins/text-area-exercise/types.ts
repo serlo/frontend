@@ -4,6 +4,7 @@ export interface Feedback {
   id: string
   type: 'feedback'
   content: string
+  isCorrect: boolean
 }
 export interface Text {
   id: string
