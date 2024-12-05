@@ -78,16 +78,20 @@ function Content() {
   const ExerciseComponent =
     activeExercise === null ? null : exercisesContentMap[activeExercise]
 
-  return isExerciseShown && activeExercise && ExerciseComponent ? (
-    <ExerciseComponent
-      id={activeExercise}
-      data={exercises[activeExercise]}
-      onBackToMapClick={handleBackToMapClick}
-      onSubmitClick={handleExerciseSubmitClick}
-      onNextExerciseClick={handleNextExerciseClick}
-    />
-  ) : (
+  const showExercise = isExerciseShown && activeExercise && ExerciseComponent
+  return (
     <>
+      {showExercise ? (
+        <div className="absolute inset-0 z-10 overflow-y-scroll bg-white">
+          <ExerciseComponent
+            id={activeExercise}
+            data={exercises[activeExercise]}
+            onBackToMapClick={handleBackToMapClick}
+            onSubmitClick={handleExerciseSubmitClick}
+            onNextExerciseClick={handleNextExerciseClick}
+          />
+        </div>
+      ) : null}
       <TransformWrapper disablePadding>
         <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
       </TransformWrapper>
