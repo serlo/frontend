@@ -54,8 +54,8 @@ export const initialExercisesData: ExercisesRecord = {
     title: 'Should students grade their teachers? 🎓',
     nextExercises: ['exercise_2_easy'],
     position: {
-      x: 60,
-      y: 52,
+      x: 35,
+      y: 72,
     },
   },
   exercise_1_hard: {

@@ -40,10 +40,10 @@ const editorContent = {
           type: 'h',
           children: [
             {
-              text: 'Recap: Basic knowledge – Linking words and useful phrases',
+              text: 'Recap: Basic knowledge - Linking words and useful phrases',
             },
           ],
-          level: 1,
+          level: 3,
         },
       ],
       id: '0534c187-f443-43ed-8bab-506cdec535b9',
@@ -514,6 +514,399 @@ const editorContent = {
                             },
                           ],
                         },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          'fd34bcf2-d46e-44d7-b1e4-5e15de7bb90e',
+                                        correctAnswers: [{ answer: 'because' }],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: '1f74dd71-0503-4958-9ad6-19a9b6425ddc',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  { type: 'p', children: [{ text: 'weil' }] },
+                                ],
+                                id: '42e7dacf-61c9-4d7c-b918-c71b234c2e24',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          'dde28e55-3e49-41f6-92fa-96d9fdf43984',
+                                        correctAnswers: [{ answer: 'but' }],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: '9bfcfdbd-04ca-43e5-821b-760e6c12f419',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  { type: 'p', children: [{ text: 'aber' }] },
+                                ],
+                                id: '5ea2028b-8f7e-4e28-81db-24c3a312c0a7',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  { type: 'p', children: [{ text: 'and' }] },
+                                ],
+                                id: '96634a38-bcf8-4290-a7c2-794dad15d1d8',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '34bb9d1d-acf3-4e7f-88d8-d1e947376094',
+                                        correctAnswers: [{ answer: 'und' }],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: 'ef2af68f-2d81-4d18-b394-06efad7b5f0d',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'in addition' }],
+                                  },
+                                ],
+                                id: 'f1155891-35c9-4f3a-a32d-944aa718cdc1',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '443e05ee-c9c5-4c85-8163-c4bbcdbcc2f0',
+                                        correctAnswers: [
+                                          { answer: 'außerdem' },
+                                        ],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: '876aff6c-9048-4e8a-8655-96262c97b0ed',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '923824bb-b849-4104-8632-7a6e5c9f1adf',
+                                        correctAnswers: [
+                                          { answer: 'to sum up' },
+                                        ],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: 'b5cadc11-296c-439e-ae73-2263e619d144',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'zusammenfassend' }],
+                                  },
+                                ],
+                                id: '2de05fa6-21a1-48c2-bd77-ad3d05ffc606',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'I believe' }],
+                                  },
+                                ],
+                                id: '886ab29b-44e8-4cf5-aa5b-535592b11e61',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '402f50ad-544b-4f6a-9f62-928ff6567694',
+                                        correctAnswers: [
+                                          { answer: 'Ich glaube' },
+                                        ],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: '1798cbf5-ade3-4ce6-8be7-7cad5f661668',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'on the other hand' }],
+                                  },
+                                ],
+                                id: '38f331d6-5abf-44d4-9070-6a75d80c0643',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '9ffd30a4-85e4-4e25-9e94-8845edca161b',
+                                        correctAnswers: [
+                                          { answer: 'andererseits' },
+                                        ],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: '2261a32a-2c7e-4015-ab40-6693f15b1d78',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          'b46f9041-aa86-4b19-998a-2e523d2a6961',
+                                        correctAnswers: [{ answer: 'I think' }],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: 'bff4c04b-266f-40d2-a135-c30496c0c8e8',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'Ich denke' }],
+                                  },
+                                ],
+                                id: '6df5b2eb-fe66-4bbc-b8da-4f521433abe7',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'I disagree' }],
+                                  },
+                                ],
+                                id: '344db36b-891a-4583-8d03-4f80721f3fba',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '65741638-e542-4a18-80b7-80a936ceae9f',
+                                        correctAnswers: [
+                                          { answer: 'Ich stimmte nicht zu' },
+                                        ],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: 'e340a83e-a130-4ffb-ad3f-7089dbc8067f',
+                              },
+                            },
+                          ],
+                        },
+                        {
+                          columns: [
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [
+                                      { text: '' },
+                                      {
+                                        type: 'textBlank',
+                                        blankId:
+                                          '82aaa207-4cb2-4933-9256-c323ee08e7d2',
+                                        correctAnswers: [
+                                          { answer: "I don't believe" },
+                                        ],
+                                        acceptMathEquivalents: true,
+                                        children: [{ text: '' }],
+                                      },
+                                      { text: ' ' },
+                                    ],
+                                  },
+                                ],
+                                id: 'ebc33d2b-35d6-4fc8-a46d-38e512c441e5',
+                              },
+                            },
+                            {
+                              content: {
+                                plugin: 'text',
+                                state: [
+                                  {
+                                    type: 'p',
+                                    children: [{ text: 'Ich glaube nicht' }],
+                                  },
+                                ],
+                                id: '0f70c09e-be7b-4dd3-a072-970dd63904ec',
+                              },
+                            },
+                          ],
+                        },
                       ],
                       tableType: 'OnlyColumnHeader',
                     },
@@ -593,6 +986,42 @@ const editorContent = {
                           {
                             type: 'p',
                             children: [{ text: 'second - zweitens' }],
+                          },
+                          { type: 'p', children: [{ text: 'but - aber' }] },
+                          { type: 'p', children: [{ text: 'and - und' }] },
+                          {
+                            type: 'p',
+                            children: [{ text: 'in addition - außerdem' }],
+                          },
+                          {
+                            type: 'p',
+                            children: [{ text: 'to sum up - zusammenfassend' }],
+                          },
+                          {
+                            type: 'p',
+                            children: [{ text: 'I believe - ich glaube' }],
+                          },
+                          {
+                            type: 'p',
+                            children: [
+                              { text: 'on the one hand - einerseits' },
+                            ],
+                          },
+                          {
+                            type: 'p',
+                            children: [{ text: 'I think - ich denke' }],
+                          },
+                          {
+                            type: 'p',
+                            children: [
+                              { text: 'I disagree - ich stimme nicht zu' },
+                            ],
+                          },
+                          {
+                            type: 'p',
+                            children: [
+                              { text: 'I don’t believe - ich glaube nicht' },
+                            ],
                           },
                         ],
                         id: '682f335d-82c3-4d61-a60e-efa35e462536',
