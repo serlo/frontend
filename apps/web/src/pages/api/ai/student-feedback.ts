@@ -37,7 +37,7 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 
 Strukturiere das Feedback nach den Angaben von den Feedbackkriterien.
 
-Denke daran, dass dein Feedback konstruktiv und ermutigend sein soll. Lobe gute Ansätze und richtige Teillösungen. Bei Fehlern erkläre freundlich, was verbessert werden kann und gib Tipps zur Korrektur.`
+Denke daran, dass dein Feedback konstruktiv und ermutigend sein soll. Lobe gute Ansätze und richtige Teillösungen. Bei Fehlern erkläre freundlich, was verbessert werden kann und gib Tipps zur Korrektur. Schreibe 1-3 Sätze.`
 
 const userPrompt = `Hier ist die Lösung des Schülers:
 <schueler_loesung>

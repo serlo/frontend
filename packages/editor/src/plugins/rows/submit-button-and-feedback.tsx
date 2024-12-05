@@ -76,11 +76,11 @@ export function SubmitButtonAndFeedback() {
                       <div className="flex flex-row items-center gap-1 ">
                         <FaIcon
                           icon={faTriangleExclamation}
-                          className="text-purple-400"
+                          className="text-purple-500"
                         />
                         <a
                           href="#feedback-criteria"
-                          className="text-brand-700"
+                          className="underline"
                         >{`${entry.title}`}</a>
                       </div>
                       <div>
@@ -90,7 +90,7 @@ export function SubmitButtonAndFeedback() {
                               <a
                                 key={index}
                                 href={elem.href}
-                                className="text-brand-700"
+                                className="underline"
                               >
                                 {elem.text}
                               </a>

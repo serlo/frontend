@@ -5,7 +5,11 @@ import { Blocks } from './blocks'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 // Schüly Ansicht
-export function TextAreaExerciseRenderer() {
+export function TextAreaExerciseRenderer({
+  showFoldouts = true,
+}: {
+  showFoldouts?: boolean
+}) {
   const { solutionStrategy, allowShowSolutionStrategy } =
     useTextAreaPluginStateValues()
   const [showStrategy, setShowStrategy] = useState(false)
@@ -13,7 +17,7 @@ export function TextAreaExerciseRenderer() {
   return (
     <>
       <Blocks />
-      {allowShowSolutionStrategy ? (
+      {showFoldouts && allowShowSolutionStrategy ? (
         <>
           <button
             className={cn(
