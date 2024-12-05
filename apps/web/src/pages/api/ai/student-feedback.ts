@@ -37,7 +37,7 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 
 Strukturiere das Feedback nach den Angaben von den Feedbackkriterien.
 
-Dein Feedback soll kurz, objektiv und prägnant sein. Schreibe 1-3 Sätze.
+Dein Feedback soll kurz, objektiv und prägnant sein, aber auch informell. Schreibe 1-3 Sätze. Spreche den/die Schüler*in in Du-Form an.
 Dein Feedback soll auf Deutsch sein, nur Beispiele und Korrekturvorschläge können auf Englisch sein.`
 
 const userPrompt = `Hier ist die Lösung des Schülers:
