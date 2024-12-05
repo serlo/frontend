@@ -11,20 +11,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
     dependsOnExercises: null,
     position: {
-      x: 47,
-      y: 8,
-    },
-  },
-  extra1: {
-    type: 'excursion',
-    done: false,
-    time: 8,
-    title: 'Useful phrases & vocabulary',
-    nextExercises: null,
-    dependsOnExercises: ['intro'],
-    position: {
-      x: 30,
-      y: 3,
+      x: 45,
+      y: 22.5,
     },
   },
   recap_easy: {
@@ -35,8 +23,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['exercise_1_easy'],
     dependsOnExercises: ['intro'],
     position: {
-      x: 35,
-      y: 25,
+      x: 32,
+      y: 31.5,
     },
   },
   recap_hard: {
@@ -47,8 +35,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['exercise_1_hard'],
     dependsOnExercises: ['intro'],
     position: {
-      x: 58,
-      y: 25,
+      x: 59,
+      y: 27,
     },
   },
   exercise_1_easy: {
@@ -59,8 +47,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['exercise_2_easy'],
     dependsOnExercises: ['recap_easy'],
     position: {
-      x: 35,
-      y: 45,
+      x: 10,
+      y: 0,
     },
   },
   exercise_1_hard: {
@@ -71,8 +59,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['exercise_2_hard'],
     dependsOnExercises: ['recap_hard'],
     position: {
-      x: 58,
-      y: 45,
+      x: 20,
+      y: 0,
     },
   },
   exercise_2_easy: {
@@ -83,8 +71,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['rewrite'],
     dependsOnExercises: ['exercise_1_easy'],
     position: {
-      x: 35,
-      y: 62,
+      x: 31.5,
+      y: 51,
     },
   },
   exercise_2_hard: {
@@ -95,8 +83,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['rewrite'],
     dependsOnExercises: ['exercise_1_hard'],
     position: {
-      x: 58,
-      y: 62,
+      x: 63.5,
+      y: 46,
     },
   },
   rewrite: {
@@ -107,20 +95,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['reflection', 'extra2'],
     dependsOnExercises: ['exercise_2_easy', 'exercise_2_hard'],
     position: {
-      x: 50,
-      y: 72,
-    },
-  },
-  extra2: {
-    type: 'excursion',
-    done: false,
-    time: 8,
-    title: 'Knowing & recognising criteria for opinion writing',
-    nextExercises: null,
-    dependsOnExercises: ['rewrite'],
-    position: {
-      x: 70,
-      y: 72,
+      x: 48,
+      y: 62,
     },
   },
   reflection: {
@@ -131,8 +107,32 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
-      x: 50,
-      y: 82,
+      x: 46.5,
+      y: 74.5,
+    },
+  },
+  extra1: {
+    type: 'excursion',
+    done: false,
+    time: 8,
+    title: 'Useful phrases & vocabulary',
+    nextExercises: null,
+    dependsOnExercises: ['intro'],
+    position: {
+      x: 30.5,
+      y: 20,
+    },
+  },
+  extra2: {
+    type: 'excursion',
+    done: false,
+    time: 8,
+    title: 'Knowing & recognising criteria for opinion writing',
+    nextExercises: null,
+    dependsOnExercises: ['rewrite'],
+    position: {
+      x: 64,
+      y: 62,
     },
   },
 }

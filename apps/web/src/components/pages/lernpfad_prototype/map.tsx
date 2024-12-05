@@ -38,7 +38,7 @@ export function Map({
         className={cn(
           'relative h-screen w-screen',
           'bg-[url(/_assets/img/prototype/map_full.svg)]',
-          'bg-cover bg-top bg-no-repeat'
+          'bg-[length:auto_100%] bg-top bg-no-repeat'
         )}
       >
         {Object.keys(exercises).map((id) => (

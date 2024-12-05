@@ -19,16 +19,18 @@ export function MapItem({
     <button
       key={id}
       id={id}
-      className="absolute aspect-square w-[9%] cursor-pointer rounded-full"
+      className="absolute w-[87px] cursor-pointer rounded-full"
       style={getExerciseStyle()}
       onClick={() => onClick(id)}
       disabled={isDisabled}
     >
-      <div className={cn('p-2', isDisabled && 'opacity-60 grayscale')}>
+      <div className={cn('px-4 pb-5 pt-2', isDisabled && 'grayscale')}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={getNodeSrc()} />
       </div>
-      <b className="-mt-4 block leading-[1.2rem]">{exercise.title}</b>
+      <b className="-mt-4 block text-[0.5rem] leading-[0.6rem] text-gray-700">
+        {exercise.title}
+      </b>
     </button>
   )
 
