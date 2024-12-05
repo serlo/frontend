@@ -211,12 +211,13 @@ export const microadaptivityState = {
                     '1. Clearly state what you think about the topic. \n\n2. Add some general information about the topic to make your beginning more interesting.\n\n3. Remember to use useful phrases, for example: "I think", "I believe", "I don’t think", "In my opinion"…',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
-                    '- Contains the students opinion and general information.\n\n- Does not contain reasons for the stated opinion.',
+                    'Give general information\nState your opinion\nDo not give reasons for the stated opinion',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
                   additionalInfoForAi:
                     'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nAchte auf Fehler in der Reihenfolge von Subjekt, Verb, Objekt.',
+                  allowShowEvaluationCriteria: true,
                 },
                 id: '9eddeca6-1029-48e4-b25d-4b399340a717',
               },
@@ -322,10 +323,12 @@ export const microadaptivityState = {
                   solutionStrategy:
                     '1. Explain your opinion you stated in task a)\n\n2. Give at least two reasons for your opinion\n\n3. To make your text stronger, you can also add an argument against your opinion.\n\n4. Structure your text in paragraphs.\n\n5. Use useful phrases like "first," "second," or linking words like "in addition," "because," "however" to improve your text.',
                   allowShowSolutionStrategy: true,
-                  evaluationCriteria: 'The middle explains your opinion.',
+                  evaluationCriteria:
+                    'Give reasons for your opinion\nUse linking words\nWrite in paragraphs',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
+                  allowShowEvaluationCriteria: true,
                 },
                 id: '6bfb9e96-50b9-4bb0-8807-7797cd5b9cc9',
               },
@@ -423,6 +426,9 @@ export const microadaptivityState = {
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
+                  allowShowEvaluationCriteria: true,
+                  evaluationCriteria:
+                    'Sum up your opinion\nUse linking words and useful phrases',
                 },
                 id: 'eafb687a-8a62-4c1a-ac7f-43376cd10d9e',
               },
