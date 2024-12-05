@@ -9,7 +9,7 @@ export function TextAreaExerciseStaticRenderer(
 ) {
   return (
     <TextAreaStaticRendererContext.Provider value={state}>
-      <TextAreaExerciseRenderer />
+      <TextAreaExerciseRenderer isInEditor={false} />
     </TextAreaStaticRendererContext.Provider>
   )
 }

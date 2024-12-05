@@ -8,9 +8,9 @@ import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-value
 
 // Schüly Ansicht
 export function TextAreaExerciseRenderer({
-  showFoldouts = true,
+  isInEditor,
 }: {
-  showFoldouts?: boolean
+  isInEditor: boolean
 }) {
   const {
     solutionStrategy,
@@ -22,10 +22,10 @@ export function TextAreaExerciseRenderer({
 
   return (
     <>
-      {allowShowEvaluationCriteria ? (
-        <div className="my-5 whitespace-pre-wrap rounded-xl bg-brand-100 p-3">
+      {!isInEditor && allowShowEvaluationCriteria && evaluationCriteria ? (
+        <div className="my-5 whitespace-pre-wrap rounded-xl bg-brand-100 p-5">
           <div className="mb-3 text-xl font-bold">Remember</div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
             {evaluationCriteria.split('\n').map((elem, index) => (
               <div className="ml-3" key={index}>
                 <FaIcon className="mr-3" icon={faLightbulb} />
@@ -37,7 +37,7 @@ export function TextAreaExerciseRenderer({
       ) : null}
       Write your answer:
       <Blocks />
-      {showFoldouts && allowShowSolutionStrategy ? (
+      {!isInEditor && allowShowSolutionStrategy ? (
         <>
           <button
             className={cn(

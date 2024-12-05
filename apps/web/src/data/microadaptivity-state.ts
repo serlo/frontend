@@ -23,88 +23,78 @@ export const microadaptivityState = {
               id: '571bab2d-877c-4395-8102-9cea3477cd37',
             },
             {
-              plugin: 'text',
-              state: [
-                {
-                  type: 'p',
-                  children: [
-                    {
-                      text: 'You will write your opinion divided into three tasks:',
-                    },
-                  ],
+              plugin: 'box',
+              state: {
+                type: 'blank',
+                title: {
+                  plugin: 'text',
+                  state: [{ type: 'p', children: [{ text: '' }] }],
                 },
-                { type: 'p', children: [{ text: '' }] },
-                {
-                  children: [
+                anchorId: '',
+                content: {
+                  plugin: 'rows',
+                  state: [
                     {
-                      children: [
+                      plugin: 'text',
+                      state: [
                         {
-                          type: 'list-item-child',
-                          children: [{ text: 'Writing the beginning' }],
-                        },
-                      ],
-                      type: 'list-item',
-                    },
-                    {
-                      children: [
-                        {
-                          type: 'list-item-child',
-                          children: [{ text: 'Writing the middle' }],
-                        },
-                      ],
-                      type: 'list-item',
-                    },
-                    {
-                      children: [
-                        {
-                          type: 'list-item-child',
-                          children: [{ text: 'Writing the end' }],
-                        },
-                      ],
-                      type: 'list-item',
-                    },
-                  ],
-                  type: 'ordered-list',
-                },
-                { type: 'p', children: [{ text: 'Overall: ' }] },
-                {
-                  children: [
-                    {
-                      children: [
-                        {
-                          type: 'list-item-child',
-                          children: [{ text: 'write between 50-75 words.' }],
-                        },
-                      ],
-                      type: 'list-item',
-                    },
-                    {
-                      children: [
-                        {
-                          type: 'list-item-child',
+                          type: 'p',
                           children: [
                             {
-                              text: 'use 3 useful phrases to structure your text.',
+                              text: 'You will write your opinion divided into three tasks: A ',
                             },
+                            { text: 'beginning', strong: true },
+                            { text: ', a ' },
+                            { text: 'middle', strong: true },
+                            { text: ' and an ' },
+                            { text: 'end.', strong: true },
                           ],
                         },
-                      ],
-                      type: 'list-item',
-                    },
-                    {
-                      children: [
                         {
-                          type: 'list-item-child',
-                          children: [{ text: 'use 3-5 linking words.' }],
+                          children: [
+                            {
+                              children: [
+                                {
+                                  type: 'list-item-child',
+                                  children: [
+                                    { text: 'write between 50-75 words.' },
+                                  ],
+                                },
+                              ],
+                              type: 'list-item',
+                            },
+                            {
+                              children: [
+                                {
+                                  type: 'list-item-child',
+                                  children: [
+                                    {
+                                      text: 'use 3 useful phrases to structure your text.',
+                                    },
+                                  ],
+                                },
+                              ],
+                              type: 'list-item',
+                            },
+                            {
+                              children: [
+                                {
+                                  type: 'list-item-child',
+                                  children: [
+                                    { text: 'use 3-5 linking words.' },
+                                  ],
+                                },
+                              ],
+                              type: 'list-item',
+                            },
+                          ],
+                          type: 'unordered-list',
                         },
                       ],
-                      type: 'list-item',
                     },
                   ],
-                  type: 'unordered-list',
                 },
-              ],
-              id: 'fbcc7fe9-48c1-4f3c-bd04-ae0640627ca3',
+              },
             },
           ],
           id: '1929a754-da62-45fa-ab49-2279596d3bba',
@@ -123,8 +113,14 @@ export const microadaptivityState = {
                         type: 'p',
                         children: [
                           {
-                            text: 'Should students have homework every day? - Write the beginning of your opinion on the question above.',
+                            text: 'Write the ',
+                          },
+                          {
+                            text: 'beginning',
                             strong: true,
+                          },
+                          {
+                            text: ' of your opinion.',
                           },
                         ],
                       },
@@ -170,8 +166,14 @@ export const microadaptivityState = {
                         type: 'p',
                         children: [
                           {
-                            text: 'Should students have homework every day? - Write the middle of your opinion.',
+                            text: 'Write the ',
+                          },
+                          {
+                            text: 'middle',
                             strong: true,
+                          },
+                          {
+                            text: ' of your opinion.',
                           },
                         ],
                       },
@@ -214,8 +216,14 @@ export const microadaptivityState = {
                         type: 'p',
                         children: [
                           {
-                            text: 'Should students have homework every day? - Write the end of your opinion.',
+                            text: 'Write the ',
+                          },
+                          {
+                            text: 'end',
                             strong: true,
+                          },
+                          {
+                            text: ' of your opinion.',
                           },
                         ],
                       },

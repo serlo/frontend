@@ -16,7 +16,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
   return (
     <TextAreaEditorContext.Provider value={props}>
       <TextAreaExerciseToolbar {...props} />
-      <TextAreaExerciseRenderer showFoldouts={false} />
+      <TextAreaExerciseRenderer isInEditor />
       <AnimateChangeInHeight className={cn('mt-8')}>
         <div
           className={cn(
