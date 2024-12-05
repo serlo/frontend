@@ -16,7 +16,7 @@ const editorContent = {
     {
       plugin: 'text',
       state: [
-        { type: 'h', children: [{ text: 'Think-Pair-Share' }], level: 1 },
+        { type: 'h', children: [{ text: 'Think-Pair-Share' }], level: 3 },
       ],
       id: 'd9fd4a6e-f053-4ef2-af6c-8689065a58fc',
     },

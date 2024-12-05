@@ -18,6 +18,17 @@ const editorContent1 = {
   plugin: 'rows',
   state: [
     {
+      plugin: 'text',
+      state: [
+        {
+          type: 'h',
+          children: [{ text: 'Which animal is better, cats or dogs?' }],
+          level: 3,
+        },
+      ],
+      id: 'd9fd4a6e-f053-4ef2-af6c-8689065a58fc',
+    },
+    {
       plugin: 'exerciseGroup',
       state: {
         content: {
@@ -26,15 +37,6 @@ const editorContent1 = {
             {
               plugin: 'text',
               state: [
-                {
-                  type: 'p',
-                  children: [
-                    {
-                      text: 'Which animal is better, cats or dogs?',
-                      strong: true,
-                    },
-                  ],
-                },
                 { type: 'p', children: [{ strong: true, text: '' }] },
                 {
                   type: 'p',
