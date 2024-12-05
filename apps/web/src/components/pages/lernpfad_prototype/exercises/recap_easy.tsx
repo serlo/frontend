@@ -1,6 +1,6 @@
-import type { ExerciseProps } from '../types.js'
-import { BackLink } from './back-link.jsx'
-import { DoneState } from './done.jsx'
+import type { ExerciseProps } from '../types'
+import { BackLink } from './back-link'
+import { DoneState } from './done'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export function RecapEasy(props: ExerciseProps) {
