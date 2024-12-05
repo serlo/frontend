@@ -84,7 +84,6 @@ function Content() {
             data={exercises[activeExercise]}
             onBackToMapClick={handleBackToMapClick}
             onSubmitClick={handleExerciseSubmitClick}
-            onNextExerciseClick={handleNextExerciseClick}
           />
         </div>
       ) : null}
@@ -93,7 +92,7 @@ function Content() {
       </TransformWrapper>
       {activeExercise ? (
         <Modal
-          title={exercises[activeExercise].title}
+          exercise={exercises[activeExercise]}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           onConfirmClick={handleModalConfirmClick}
@@ -130,10 +129,9 @@ function Content() {
     }
     localStorage.setItem(localStorageKey, JSON.stringify(newExercises))
     setExercises(newExercises)
-    if (exercises[id].nextExercises === null) setIsExerciseShown(false)
-  }
+    // if (exercises[id].nextExercises === null) setIsExerciseShown(false)
 
-  function handleNextExerciseClick(id: ExerciseId) {
-    setActiveExercise(id)
+    setIsExerciseShown(false)
+    setActiveExercise(null)
   }
 }

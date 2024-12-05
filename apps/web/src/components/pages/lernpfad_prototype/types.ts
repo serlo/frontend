@@ -23,5 +23,4 @@ export interface ExerciseProps {
   data: Exercise
   onBackToMapClick: () => void
   onSubmitClick: (id: ExerciseId) => void
-  onNextExerciseClick: (id: ExerciseId) => void
 }

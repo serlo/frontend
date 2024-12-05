@@ -1,4 +1,7 @@
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowLeft,
+  faCircleArrowRight,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { StickyHeaderLearner } from '../sticky-header-learner'
 import type { ExerciseProps } from '../types'
@@ -6,9 +9,7 @@ import { FaIcon } from '@/components/fa-icon'
 
 export function ExerciseWrapper({
   id,
-  data,
   onSubmitClick,
-  onNextExerciseClick,
   onBackToMapClick,
   children,
   noHeader,
@@ -33,35 +34,18 @@ export function ExerciseWrapper({
       >
         {noHeader ? <div>&nbsp;</div> : <StickyHeaderLearner />}
         {children}
+
+        <button
+          className="serlo-button-learner-secondary rounded-lg px-4 py-2 text-2xl"
+          onClick={() => onSubmitClick(id)}
+        >
+          Go on <FaIcon icon={faCircleArrowRight} />
+        </button>
       </main>
       <aside className="flex-shrink flex-grow basis-0">
         {/* <GetAiFeedbackButton /> */}
 
-        <div className="fixed bottom-10 right-10">
-          {data.done ? (
-            <div className="text-center">
-              <p>Exercise done!</p>
-              <div className="align-center flex justify-center gap-2">
-                {data.nextExercises?.map((nextId) => (
-                  <button
-                    key={nextId}
-                    className="serlo-button-edit-primary"
-                    onClick={() => onNextExerciseClick(nextId)}
-                  >
-                    Go to {nextId}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <button
-              className="serlo-button-edit-primary"
-              onClick={() => onSubmitClick(id)}
-            >
-              Submit
-            </button>
-          )}
-        </div>
+        <div className="fixed bottom-10 right-10"></div>
       </aside>
     </div>
   )

@@ -1,14 +1,15 @@
 import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
 
+import { Exercise } from './types'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
 export function Modal({
-  title,
+  exercise,
   isOpen,
   setIsOpen,
   onConfirmClick,
 }: {
-  title: string
+  exercise: Exercise
   isOpen: boolean
   setIsOpen: (value: boolean) => void
   onConfirmClick: () => void
@@ -17,20 +18,27 @@ export function Modal({
     <ModalWithCloseButton
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title={title}
+      title={exercise.title}
       extraCloseButtonClassName="bg-brand-200"
       className="top-[12%] w-[47%] translate-y-0 overflow-y-auto p-5 pt-12"
       extraTitleClassName="border-none"
     >
+      <input
+        className="absolute opacity-0"
+        type="checkbox"
+        id="modal"
+        autoFocus
+      />
       <p className="serlo-p">
         <ul className="serlo-ul ml-0">
+          <li>
+            Du hast <b>{exercise.time} Minuten</b> Zeit.
+          </li>
           <li>
             Diesen Lernschritt kannst du <b>drei Mal</b> vor der entgültigen
             Abgabe <b>bearbeiten</b>.
           </li>
-          <li>
-            Du hast <b>20 Minuten</b> Zeit.
-          </li>
+
           <li>
             Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>
           </li>
