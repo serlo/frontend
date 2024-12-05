@@ -4,6 +4,7 @@ export interface Exercise {
   done: boolean
   title: string
   nextExercises: ExerciseId[] | null
+  dependsOnExercises: ExerciseId[] | null
   position: {
     x: number
     y: number

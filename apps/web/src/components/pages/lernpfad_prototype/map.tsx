@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { TransformComponent, useControls } from 'react-zoom-pan-pinch'
 
+import { MapItem } from './map-item'
 import type { ExerciseId, ExercisesRecord } from './types'
 import { cn } from '@/helper/cn'
 
@@ -41,48 +42,14 @@ export function Map({
         )}
       >
         {Object.keys(exercises).map((id) => (
-          <button
+          <MapItem
             key={id}
             id={id}
-            className="absolute aspect-square w-[9%] cursor-pointer rounded-full"
-            style={getExerciseStyle(id)}
-            onClick={() => onExerciseClick(id)}
-          >
-            <div className={cn('p-2', 'grayscale')}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={getNodeSrc(id)} />
-            </div>
-            <b className="-mt-4 block leading-[1.2rem]">
-              {exercises[id].title}
-            </b>
-          </button>
+            exercises={exercises}
+            onClick={onExerciseClick}
+          />
         ))}
       </div>
     </TransformComponent>
   )
-
-  function getNodeSrc(id: ExerciseId) {
-    if (exercises[id].done) return '/_assets/img/prototype/exercise_done.svg'
-
-    return '/_assets/img/prototype/exercise_done.svg'
-
-    //TODO when assets are ready
-    switch (exercises[id].type) {
-      case 'start':
-        return '/_assets/img/prototype/start.svg'
-      case 'extra':
-        return '/_assets/img/prototype/extra.svg'
-      case 'recap':
-        return '/_assets/img/prototype/recap.svg'
-      case 'exercise':
-        return '/_assets/img/prototype/exercise.svg'
-    }
-  }
-
-  function getExerciseStyle(id: ExerciseId) {
-    return {
-      left: `${exercises[id].position.x}%`,
-      top: `${exercises[id].position.y}%`,
-    }
-  }
 }
