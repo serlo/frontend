@@ -210,7 +210,8 @@ export const microadaptivityState = {
                   solutionStrategy:
                     '1. Clearly state what you think about the topic. \n\n2. Add some general information about the topic to make your beginning more interesting.\n\n3. Remember to use useful phrases, for example: "I think", "I believe", "I don’t think", "In my opinion"…',
                   allowShowSolutionStrategy: true,
-                  evaluationCriteria: 'The beginning contains your opinion.',
+                  evaluationCriteria:
+                    '- Contains the beginning of an opinion\n\n- Contains the students opinion and general information.\n\n- Does not contain reasons for the stated opinion.',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,

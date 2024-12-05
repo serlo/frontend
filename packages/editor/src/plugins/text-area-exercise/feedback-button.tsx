@@ -90,10 +90,10 @@ export function FeedbackButton({
         </button>
       ) : (
         <button
-          className="h-8 w-8 rounded-full bg-brand-200 opacity-0 transition-opacity hover:bg-brand-300 group-focus-within:opacity-100"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-200 opacity-0 transition-opacity hover:bg-purple-300 group-focus-within:opacity-100"
           onClick={() => handleKiButtonClick(pluginId)}
         >
-          <div>🐦</div>
+          <img src="/_assets/img/birdie.svg" className="h-7 w-7" />
         </button>
       )}
     </>

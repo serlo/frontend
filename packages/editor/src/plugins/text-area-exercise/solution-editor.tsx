@@ -28,6 +28,7 @@ export function Solution() {
           placeholder="Musterlösung"
           onChange={(e) => solution.set(e.target.value)}
           value={solution.value}
+          className="my-3"
         />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
@@ -51,6 +52,7 @@ export function Solution() {
           placeholder="Bewertungskriterien"
           onChange={(e) => evaluationCriteria.set(e.target.value)}
           value={evaluationCriteria.value}
+          className="my-3"
         />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">

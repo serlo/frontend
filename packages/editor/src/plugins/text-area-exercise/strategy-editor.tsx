@@ -24,6 +24,7 @@ export function Strategy() {
           placeholder="Lösungsstrategie"
           onChange={(e) => solutionStrategy.set(e.target.value)}
           value={solutionStrategy.value}
+          className="my-3"
         />
         <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">

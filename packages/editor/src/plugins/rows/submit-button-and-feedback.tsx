@@ -58,8 +58,8 @@ export function SubmitButtonAndFeedback() {
             setShowFeedback(true)
           }}
           className={cn(
-            'mb-3 rounded-md bg-brand-100 px-16 pb-4 pt-4 font-bold',
-            'hover:cursor-pointer hover:bg-brand-200'
+            'mb-3 rounded-md bg-brand-600 px-16 pb-4 pt-4 font-bold',
+            'text-white hover:cursor-pointer hover:bg-brand-700'
           )}
         >
           Zur Rückmeldung abschicken ({triesLeft})
