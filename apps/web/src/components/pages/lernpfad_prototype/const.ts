@@ -20,7 +20,7 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Cats or Dogs? 🐱 🐶',
-    nextExercises: ['exercise_1_easy'],
+    nextExercises: ['writing_easy'],
     dependsOnExercises: ['intro'],
     position: {
       x: 32,
@@ -32,56 +32,32 @@ export const initialExercisesData: ExercisesRecord = {
     done: false,
     time: 8,
     title: 'Cats or Dogs? 🐱 🐶',
-    nextExercises: ['exercise_1_hard'],
+    nextExercises: ['writing_hard'],
     dependsOnExercises: ['intro'],
     position: {
       x: 59,
       y: 27,
     },
   },
-  exercise_1_easy: {
+  writing_easy: {
     type: 'write',
     done: false,
     time: 8,
-    title: 'Should students grade their teachers? 🎓',
-    nextExercises: ['exercise_2_easy'],
-    dependsOnExercises: ['recap_easy'],
-    position: {
-      x: 10,
-      y: 0,
-    },
-  },
-  exercise_1_hard: {
-    type: 'write',
-    done: false,
-    time: 8,
-    title: 'Should students grade their teachers? 🎓',
-    nextExercises: ['exercise_2_hard'],
-    dependsOnExercises: ['recap_hard'],
-    position: {
-      x: 20,
-      y: 0,
-    },
-  },
-  exercise_2_easy: {
-    type: 'write',
-    done: false,
-    time: 8,
-    title: 'Should students have homework every day? 💦',
+    title: 'Writing your opinion',
     nextExercises: ['rewrite'],
-    dependsOnExercises: ['exercise_1_easy'],
+    dependsOnExercises: ['recap_easy'],
     position: {
       x: 31.5,
       y: 51,
     },
   },
-  exercise_2_hard: {
+  writing_hard: {
     type: 'write',
     done: false,
     time: 8,
-    title: 'Should students have homework every day? 💦',
+    title: 'Writing your opinion',
     nextExercises: ['rewrite'],
-    dependsOnExercises: ['exercise_1_hard'],
+    dependsOnExercises: ['recap_hard'],
     position: {
       x: 63.5,
       y: 46,
@@ -93,7 +69,7 @@ export const initialExercisesData: ExercisesRecord = {
     time: 8,
     title: 'Feedback and Rewriting your opinion',
     nextExercises: ['reflection', 'extra2'],
-    dependsOnExercises: ['exercise_2_easy', 'exercise_2_hard'],
+    dependsOnExercises: ['writing_easy', 'writing_hard'],
     position: {
       x: 48,
       y: 62,
