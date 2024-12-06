@@ -44,7 +44,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
           <div className="flex flex-col gap-8">
             <div>
               <div>Welchen Titel soll der Lernschritt haben?</div>
-              <EditorTextArea />
+              <EditorTextArea showAiGenerateIcon={false} />
             </div>
 
             <div>
@@ -53,7 +53,11 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
                 Lernschritt?
               </div>
               <div className="w- flex flex-row items-center justify-start gap-3">
-                <EditorTextArea className="w-16" showMicrophoneIcon={false} />
+                <EditorTextArea
+                  className="w-16"
+                  showMicrophoneIcon={false}
+                  showAiGenerateIcon={false}
+                />
                 Minuten
               </div>
               <div className="flex flex-row gap-3">
@@ -77,6 +81,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
                   placeholder="∞"
                   className="w-14"
                   showMicrophoneIcon={false}
+                  showAiGenerateIcon={false}
                 />
               </div>
             </div>
