@@ -23,7 +23,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
         >
           <div
             className={cn(
-              'flex flex-col items-center px-3 py-3',
+              'flex flex-col items-center p-5',
               settingsOpen ? 'bg-editor-primary-100' : ''
             )}
           >
@@ -33,7 +33,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
               className={cn(
                 'mb-3 rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 font-bold',
                 settingsOpen
-                  ? ''
+                  ? 'hidden'
                   : 'hover:cursor-pointer hover:bg-editor-primary-200'
               )}
             >

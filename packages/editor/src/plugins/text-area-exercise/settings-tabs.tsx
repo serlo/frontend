@@ -18,14 +18,14 @@ export function SettingsTabs() {
 
   return (
     <div className="w-full">
-      <div className="flex w-full flex-row flex-wrap items-center justify-center gap-3">
+      <div className="m-5 flex w-full flex-row flex-wrap items-center justify-center gap-8">
         {tabs.map((tab, index) => {
           return (
             <button
               key={tab.name}
               onClick={() => setSelectedTabIndex(index)}
               className={cn(
-                'serlo-button-edit serlo-button-edit-primary mb-2.5 mr-2 max-w-48 rounded-md',
+                'serlo-button-edit mb-2.5 mr-2 max-w-48 rounded-md text-xl',
                 selectedTabIndex === index
                   ? 'serlo-button-edit-primary'
                   : 'serlo-button-edit-secondary'
