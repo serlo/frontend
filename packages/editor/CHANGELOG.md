@@ -1,3 +1,9 @@
+## Changelog for version 0.20.1
+
+- feat(editor-web-component): Expose language prop. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4340
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.0-editor...v0.20.1-editor
+
 ## Changelog for version 0.20.0
 
 - fix(editor): Render visual/latex select in math toolbar. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4334
