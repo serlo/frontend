@@ -17,8 +17,8 @@ export function SettingsTabs() {
   const tabContent = tabs[selectedTabIndex]
 
   return (
-    <>
-      <div className="flex flex-row flex-wrap items-center justify-center gap-3">
+    <div className="w-full">
+      <div className="flex w-full flex-row flex-wrap items-center justify-center gap-3">
         {tabs.map((tab, index) => {
           return (
             <button
@@ -39,6 +39,6 @@ export function SettingsTabs() {
       <div className="flex w-full flex-col gap-8 p-3">
         <tabContent.content />
       </div>
-    </>
+    </div>
   )
 }

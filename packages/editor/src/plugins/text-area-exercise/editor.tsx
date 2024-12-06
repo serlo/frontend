@@ -17,31 +17,32 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
     <TextAreaEditorContext.Provider value={props}>
       <TextAreaExerciseToolbar {...props} />
       <TextAreaExerciseRenderer isInEditor />
-      <AnimateChangeInHeight className={cn('mt-8')}>
-        <div
-          className={cn(
-            'flex flex-col items-center px-3 py-3',
-            settingsOpen ? 'bg-editor-primary-100' : ''
-          )}
+      <div className="mt-8">
+        <AnimateChangeInHeight
+          className={cn(settingsOpen ? 'bg-editor-primary-100' : '')}
         >
-          <button
-            onClick={() => setSettingsOpen(true)}
-            disabled={settingsOpen}
+          <div
             className={cn(
-              'mb-3 rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 font-bold',
-              settingsOpen
-                ? ''
-                : 'hover:cursor-pointer hover:bg-editor-primary-200'
+              'flex flex-col items-center px-3 py-3',
+              settingsOpen ? 'bg-editor-primary-100' : ''
             )}
           >
-            Lösungen und Hilfestellungen hinzufügen
-          </button>
-          {settingsOpen ? <HelpAndFeedbackSettings /> : null}
-        </div>
-      </AnimateChangeInHeight>
-      {/* <button className={cn('serlo-button-edit-primary', 'mr-2')}>
-        Musterlösung hinzufügen
-        </button> */}
+            <button
+              onClick={() => setSettingsOpen(true)}
+              disabled={settingsOpen}
+              className={cn(
+                'mb-3 rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 font-bold',
+                settingsOpen
+                  ? ''
+                  : 'hover:cursor-pointer hover:bg-editor-primary-200'
+              )}
+            >
+              Lösungen und Hilfestellungen hinzufügen
+            </button>
+            {settingsOpen ? <HelpAndFeedbackSettings /> : null}
+          </div>
+        </AnimateChangeInHeight>
+      </div>
     </TextAreaEditorContext.Provider>
   )
 }

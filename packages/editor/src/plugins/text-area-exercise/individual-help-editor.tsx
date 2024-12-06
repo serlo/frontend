@@ -18,8 +18,8 @@ export function IndividualHelpEditor() {
   return (
     <>
       <div>
-        <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">Schreibassistenz zur Verfügung stellen</label>
+        <div className="flex flex-row items-center gap-2">
+          <label className="font-bold">Schreibassistenz</label>
           <SwitchButton
             isOn={allowWritingAssistance.value}
             onClick={() => allowWritingAssistance.set((old) => !old)}
@@ -27,30 +27,16 @@ export function IndividualHelpEditor() {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
-            Individuelle KI-Hilfestellungen aktivieren
-          </label>
+          <label className="font-bold">Individuelle KI-Hilfestellungen</label>
           <SwitchButton
             isOn={allowAiFeedback.value}
             onClick={() => allowAiFeedback.set((old) => !old)}
           />
         </div>
-        <EditorTextArea
-          placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
-          onChange={(e) => additionalInfoForAi.set(e.target.value)}
-          value={additionalInfoForAi.value}
-          className="my-3"
-        />
-      </div>
-
-      <div className="flex w-full flex-col gap-3">
-        <div className="font-bold">
-          Wann sollen die Hilfestellungen verfügbar sein?
-        </div>
-        <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
+        <div className="flex flex-row items-center gap-2">
+          <label className="">
             In jedem Absatz innerhalb der (Teil-) Aufgabe
           </label>
           <SwitchButton
@@ -58,15 +44,23 @@ export function IndividualHelpEditor() {
             onClick={() => allowParagraphFeedback.set((old) => !old)}
           />
         </div>
-        <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
-            Als Rückmeldung nach fertiger Bearbeitung
-          </label>
+        <div className="flex flex-row items-center gap-2">
+          <label className="">Als Rückmeldung nach fertiger Bearbeitung</label>
           <SwitchButton
             isOn={allowSubmitFeedback.value}
             onClick={() => allowSubmitFeedback.set((old) => !old)}
           />
         </div>
+      </div>
+
+      <div>
+        <div className="font-bold">Hinweise an die KI</div>
+        <EditorTextArea
+          placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
+          onChange={(e) => additionalInfoForAi.set(e.target.value)}
+          value={additionalInfoForAi.value}
+          className="my-3"
+        />
       </div>
     </>
   )

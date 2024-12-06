@@ -13,23 +13,19 @@ export function EvaluationCriteriaEditor() {
   return (
     <>
       <div>
-        <div>
-          <div className="flex flex-row items-center gap-5">
-            <TextAreaTitleAndEnableSwitch
-              title="Musterlösung"
-              switchEnabled={allowShowEvaluationCriteria.value}
-              toggleSwitch={() =>
-                allowShowEvaluationCriteria.set((old) => !old)
-              }
-            />
-          </div>
-          <EditorTextArea
-            placeholder="Bewertungskriterien"
-            onChange={(e) => evaluationCriteria.set(e.target.value)}
-            value={evaluationCriteria.value}
-            className="my-3"
+        <div className="flex flex-row items-center gap-5">
+          <TextAreaTitleAndEnableSwitch
+            title="Bewertungskriterien"
+            switchEnabled={allowShowEvaluationCriteria.value}
+            toggleSwitch={() => allowShowEvaluationCriteria.set((old) => !old)}
           />
         </div>
+        <EditorTextArea
+          placeholder="Bewertungskriterien"
+          onChange={(e) => evaluationCriteria.set(e.target.value)}
+          value={evaluationCriteria.value}
+          className="my-3"
+        />
       </div>
     </>
   )

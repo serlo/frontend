@@ -15,7 +15,7 @@ export function TextAreaTitleAndEnableSwitch({
         <b>{title}</b>
       </label>
       <div className="flex flex-row gap-2">
-        <span>Dem Lernenden anzeigen</span>
+        <span>dem Lernenden anzeigen</span>
         <SwitchButton isOn={switchEnabled} onClick={() => toggleSwitch()} />
       </div>
     </div>

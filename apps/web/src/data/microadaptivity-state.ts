@@ -137,10 +137,10 @@ export const microadaptivityState = {
                     'Students often have homework every day, but I believe that is too often.',
                   allowShowSolution: false,
                   solutionStrategy:
-                    'State your opinion\nUse linking words and useful phrases',
+                    'State your opinion\n\nUse linking words and useful phrases',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
-                    'Contains general information and your opinion.\nDoes not give reasons for your stated opinion.\nContains no grammatical and no spelling mistakes.',
+                    'Contains general information and your opinion.\n\nDoes not give reasons for your stated opinion.\n\nContains no grammatical and no spelling mistakes.',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
@@ -189,10 +189,10 @@ export const microadaptivityState = {
                   solution:
                     'First, students need time to relax after school because it helps them stay healthy. In addition, too much homework is stressful and takes away time for hobbies or family. However, a little homework is important to practice what we learn in class.',
                   solutionStrategy:
-                    'Give reasons for your opinion\nWrite in paragraphs\nUse linking words',
+                    'Give reasons for your opinion\n\nWrite in paragraphs\n\nUse linking words',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
-                    'Reasons for opinion are explained clearly.\nContains no grammatical and no spelling mistakes.',
+                    'Reasons for opinion are explained clearly.\n\nContains no grammatical and no spelling mistakes.',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
@@ -241,7 +241,7 @@ export const microadaptivityState = {
                   solution:
                     'In conclusion, homework is good, but not every day. I believe it should be balanced.',
                   solutionStrategy:
-                    'Write 1-3 sentences to sum up what you have written before\nRepeat your opinion',
+                    'Write 1-3 sentences to sum up what you have written before\n\nRepeat your opinion',
                   allowShowSolutionStrategy: true,
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
