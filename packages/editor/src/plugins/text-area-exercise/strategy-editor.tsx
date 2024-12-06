@@ -14,17 +14,16 @@ export function Strategy() {
     <>
       <div>
         <div>
-          <div className="flex flex-row items-center gap-3">
+          <div className="flex flex-row items-center gap-5">
             <label className="mr-5">
               <b>Bewertungskriterien</b>
             </label>
-            <div className="flex flex-row gap-3">
-              <span>( anzeigen</span>
+            <div className="flex flex-row gap-2">
+              <span>anzeigen</span>
               <SwitchButton
                 isOn={allowShowEvaluationCriteria.value}
                 onClick={() => allowShowEvaluationCriteria.set((old) => !old)}
               />
-              <span>)</span>
             </div>
           </div>
           <EditorTextArea

@@ -137,7 +137,7 @@ export const microadaptivityState = {
                     'Students often have homework every day, but I believe that is too often.',
                   allowShowSolution: false,
                   solutionStrategy:
-                    'Clearly state what you think about the topic. \nAdd some general information about the topic to make your beginning more interesting.\nRemember to use useful phrases, for example: "I think", "I believe", "I don’t think", "In my opinion"…',
+                    'State your opinion\nUse linking words and useful phrases',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
                     'Contains general information and your opinion.\nDoes not give reasons for your stated opinion.\nContains no errors in sentence structure.',
@@ -145,7 +145,7 @@ export const microadaptivityState = {
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
                   additionalInfoForAi:
-                    'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nAchte auf Fehler in der Reihenfolge von Subjekt, Verb, Objekt.',
+                    'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nSchlage folgende "useful phrases" vor, wenn keine genutzt wurden: "I think", "I believe", "I don’t think", "In my opinion"…',
                   allowShowEvaluationCriteria: true,
                 },
                 id: '9eddeca6-1029-48e4-b25d-4b399340a717',

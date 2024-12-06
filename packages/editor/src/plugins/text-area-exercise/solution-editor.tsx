@@ -48,7 +48,7 @@ export function Solution() {
       <div>
         <div className="flex flex-row items-center gap-3">
           <label className="mr-5">
-            <b>Lösungsstrategie</b>
+            <b>Lösungshinweise</b>
           </label>
           <div className="flex flex-row gap-3">
             <span>( anzeigen</span>
