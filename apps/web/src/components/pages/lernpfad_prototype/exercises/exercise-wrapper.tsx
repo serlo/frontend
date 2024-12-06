@@ -38,7 +38,7 @@ export function ExerciseWrapper({
       {/* To change content width, change both max-w and basis */}
       <main
         id="content"
-        className="mx-auto mb-[50%] mt-40 max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
+        className="mx-auto mb-40 mt-40 max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
       >
         {children}
 
