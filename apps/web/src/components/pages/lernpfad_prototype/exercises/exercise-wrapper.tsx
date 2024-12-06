@@ -17,22 +17,28 @@ export function ExerciseWrapper({
   if (id === null) return null
 
   return (
-    <div className="flex flex-row">
-      <aside className="relative flex-shrink flex-grow basis-0">
+    <>
+      <header>
         <button
-          className="sticky top-0 flex flex-row items-center gap-3 p-7"
+          className="fixed top-2 z-[51] flex flex-row items-center gap-3 p-7"
           onClick={onBackToMapClick}
         >
           <FaIcon icon={faArrowLeft} />
           <span className="text-lg">Back to Path</span>
         </button>
-      </aside>
+
+        {noHeader ? null : (
+          <div className="fixed top-2 z-50 m-5 w-full">
+            <StickyHeaderLearner />
+          </div>
+        )}
+      </header>
+
       {/* To change content width, change both max-w and basis */}
       <main
         id="content"
-        className="mb-[50%] max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
+        className="mx-auto mb-[50%] mt-40 max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
       >
-        {noHeader ? <div>&nbsp;</div> : <StickyHeaderLearner />}
         {children}
 
         <button
@@ -42,11 +48,6 @@ export function ExerciseWrapper({
           Go on <FaIcon icon={faCircleArrowRight} />
         </button>
       </main>
-      <aside className="flex-shrink flex-grow basis-0">
-        {/* <GetAiFeedbackButton /> */}
-
-        <div className="fixed bottom-10 right-10"></div>
-      </aside>
-    </div>
+    </>
   )
 }

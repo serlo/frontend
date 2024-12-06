@@ -23,7 +23,7 @@ export function StickyHeaderLearner() {
 
   return (
     <>
-      <div className="sticky top-2 z-50 m-5 flex w-full flex-col items-center">
+      <div className="flex w-full flex-col items-center">
         <div className="mb-5 flex flex-row gap-10 rounded-lg bg-brand-100 px-5 py-2 shadow-plugin-focus">
           <div className="flex flex-row items-center">
             {timeVisible && (
