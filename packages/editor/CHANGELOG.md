@@ -1,3 +1,29 @@
+## Changelog for version 0.20.1
+
+- feat(editor-web-component): Expose language prop. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4340
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.0-editor...v0.20.1-editor
+
+## Changelog for version 0.20.0
+
+- fix(editor): Render visual/latex select in math toolbar. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4334
+- refactor(editor-packages): Throw out all mentions of shadow dom. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4333
+- feat(prototype-microadaptivity): simulate feedback block. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4326
+- refactor(web): hide localstorage notice on editor-preview as well. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4325
+- fix(page-editor-preview): hide editor toolbar artifacts. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4323
+- feat(microadaptivity): fetch feedback from AI. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4322
+- Prototype: Microadaptivity - Block data layout for text and feedback blocks. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4321
+- feat(interactive-video): add tool to remove all marks. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4320
+- feat(interactive-video): add plugin icon. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4319
+- fix(input-exercise): use correct icon. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4317
+- refactor(plugin-injection): use open-iframe-resizer. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4315
+- fix(plugin-edusharing): use open-iframe-resizer. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4314
+- feat(plugin-rows): new plugin reorder buttons. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4313
+- Remove support to wikimedia videos due to data privacy reasons. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4312
+- fix(plugin-edusharing): keep overlay but let pointer events pass through. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4309
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.19.2-editor...v0.20.0-editor
+
 ## Changelog for version 0.19.2
 
 - chore: upgrade Slate. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4308
