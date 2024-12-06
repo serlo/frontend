@@ -33,7 +33,7 @@ export function MapItem({
     <button
       key={id}
       id={id}
-      className="absolute w-[87px] cursor-pointer rounded-full"
+      className="absolute w-[75px] cursor-pointer rounded-full"
       style={getExerciseStyle()}
       onClick={() => onClick(id)}
       disabled={isDisabled}

@@ -19,6 +19,7 @@ import { Rewrite } from '@/components/pages/lernpfad_prototype/exercises/rewrite
 import { WritingEasy } from '@/components/pages/lernpfad_prototype/exercises/writing_easy'
 import { WritingHard } from '@/components/pages/lernpfad_prototype/exercises/writing_hard'
 import { Map } from '@/components/pages/lernpfad_prototype/map'
+import { MapNavigation } from '@/components/pages/lernpfad_prototype/map-navigation'
 import { Modal } from '@/components/pages/lernpfad_prototype/modal'
 import type {
   ExerciseId,
@@ -87,9 +88,12 @@ function Content() {
           />
         </div>
       ) : null}
-      <TransformWrapper disablePadding smooth={false}>
-        <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
-      </TransformWrapper>
+      <div className="pt-[100px]">
+        {showExercise ? null : <MapNavigation />}
+        <TransformWrapper disablePadding smooth={false}>
+          <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
+        </TransformWrapper>
+      </div>
       {activeExercise ? (
         <Modal
           exercise={exercises[activeExercise]}

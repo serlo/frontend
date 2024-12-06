@@ -12,8 +12,8 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
     dependsOnExercises: null,
     position: {
-      x: 44.5,
-      y: 22.5,
+      x: 45.5,
+      y: 23,
     },
   },
   recap_easy: {
@@ -25,7 +25,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['writing_easy'],
     dependsOnExercises: ['intro'],
     position: {
-      x: 32,
+      x: 34,
       y: 31.5,
     },
   },
@@ -38,7 +38,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['writing_hard'],
     dependsOnExercises: ['intro'],
     position: {
-      x: 59,
+      x: 58,
       y: 27,
     },
   },
@@ -51,7 +51,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['rewrite'],
     dependsOnExercises: ['recap_easy'],
     position: {
-      x: 31.5,
+      x: 33.5,
       y: 51,
     },
   },
@@ -64,7 +64,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: ['rewrite'],
     dependsOnExercises: ['recap_hard'],
     position: {
-      x: 63.5,
+      x: 61.5,
       y: 46,
     },
   },
@@ -90,7 +90,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
-      x: 46.5,
+      x: 47,
       y: 74.5,
     },
   },
@@ -103,7 +103,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: null,
     dependsOnExercises: ['intro'],
     position: {
-      x: 30.5,
+      x: 33,
       y: 20,
     },
   },
@@ -116,7 +116,7 @@ export const initialExercisesData: ExercisesRecord = {
     nextExercises: null,
     dependsOnExercises: ['rewrite'],
     position: {
-      x: 64,
+      x: 62,
       y: 62,
     },
   },

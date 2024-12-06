@@ -36,12 +36,12 @@ export function Map({
     <TransformComponent>
       <div
         className={cn(
-          'relative h-screen w-screen',
+          'relative h-[calc(100vh_-_100px)] w-screen',
           'bg-[url(/_assets/img/prototype/map_full.svg)]',
           'bg-[length:auto_100%] bg-top bg-no-repeat'
         )}
       >
-        <div className="relative left-1/2  h-screen w-[1194px] max-w-[153vh] -translate-x-1/2">
+        <div className="relative left-1/2  h-[calc(100vh_-_100px)] w-[1194px] max-w-[153vh] -translate-x-1/2">
           {Object.keys(exercises).map((id) => (
             <MapItem
               key={id}
