@@ -9,6 +9,7 @@ import { FaIcon } from '@/components/fa-icon'
 
 export function ExerciseWrapper({
   id,
+  data,
   onSubmitClick,
   onBackToMapClick,
   children,
@@ -29,7 +30,7 @@ export function ExerciseWrapper({
 
         {noHeader ? null : (
           <div className="fixed top-2 z-50 m-5 w-full">
-            <StickyHeaderLearner />
+            <StickyHeaderLearner time={data.time} />
           </div>
         )}
       </header>

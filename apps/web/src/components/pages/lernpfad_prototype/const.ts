@@ -6,6 +6,7 @@ export const initialExercisesData: ExercisesRecord = {
   intro: {
     type: 'start',
     done: false,
+    time: 5,
     title: 'Start',
     labels: ['group'],
     nextExercises: ['extra1', 'recap_easy', 'recap_hard'],

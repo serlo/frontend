@@ -1,8 +1,8 @@
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEffect, useState } from 'react'
 
-export function StickyHeaderLearner() {
-  const [timeLeft, setTimeLeft] = useState(15 * 60) // 15 minutes in seconds
+export function StickyHeaderLearner({ time }: { time?: number }) {
+  const [timeLeft, setTimeLeft] = useState((time ?? 15) * 60)
   const [timeVisible, setTimeVisible] = useState(true)
 
   useEffect(() => {
