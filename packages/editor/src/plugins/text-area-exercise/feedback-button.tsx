@@ -15,9 +15,11 @@ export function FeedbackButton({
   id: string
   spinner: boolean
 }) {
+  const silentmode = PrototypeStateStore.useState((s) => s.silentMode)
   const pluginId = usePluginId()
   // Get text area plugin state values
-  const { solution, evaluationCriteria } = useTextAreaPluginStateValues()
+  const { solution, evaluationCriteria, additionalInfoForAi } =
+    useTextAreaPluginStateValues()
   // Get text area plugin state (incl. set functions)
   const exerciseState = useContext(ExercisePluginStateContext)
   // Get client-side state
@@ -27,20 +29,18 @@ export function FeedbackButton({
 
   async function fetchFeedback() {
     const url = new URL('/api/ai/student-feedback', window.location.href)
-    // Careful: Formatting in exercise content does not work. Only one text plugin without any unformatted works.
-    // TODO: If necessary, build text from slate node structure.
-    // @ts-expect-error Pick text without type checking for now
-    const contentText = exerciseState?.state.content.state[0].state[0]
-      .children[0].text as string
+    // Send the task description as stringified json.
+    const exercise = JSON.stringify(exerciseState?.state.content)
 
     const response = await fetch(url.toString(), {
       method: 'POST',
       body: JSON.stringify({
-        exercise: contentText,
+        exercise: exercise,
         solution: solution ?? 'keine Musterlösung',
         evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
         // Maybe do it per paragraph like in the original prototype?
         studentSolution: blocks.find((block) => block.id === id)?.content || '',
+        additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
       }),
     })
 
@@ -70,7 +70,7 @@ export function FeedbackButton({
           // TODO: right?
           evaluationCriteria: '',
           solution: '',
-          exercise: ''
+          exercise: '',
         }
       } else {
         const textAreaBlocks = s.textAreaPlugins[pluginId].textAreaBlocks
@@ -81,11 +81,16 @@ export function FeedbackButton({
         const nextBlock = textAreaBlocks.at(index + 1)
         if (!nextBlock || nextBlock.type !== 'feedback') {
           textAreaBlocks.splice(index + 1, 0, createFeedbackBlock(feedback))
-          //const endSlice = blocks.slice(index + 1) ?? [createTextBlock()]
+          return
+        }
+        if (nextBlock && feedback && nextBlock.type === 'feedback') {
+          nextBlock.content = feedback.generalFeedback
+          nextBlock.isCorrect = feedback.isCorrect
         }
       }
     })
   }
+  if (silentmode) return null
   return (
     <>
       {spinner ? (
@@ -94,10 +99,10 @@ export function FeedbackButton({
         </button>
       ) : (
         <button
-          className="h-8 w-8 rounded-full bg-brand-200 opacity-0 transition-opacity hover:bg-brand-300 group-focus-within:opacity-100"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-200 opacity-0 transition-opacity hover:bg-purple-300 group-focus-within:opacity-100"
           onClick={() => handleKiButtonClick(pluginId)}
         >
-          <div>🐦</div>
+          <img src="/_assets/img/birdie.svg" className="h-7 w-7" />
         </button>
       )}
     </>

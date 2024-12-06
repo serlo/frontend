@@ -177,6 +177,7 @@ export function EditorRowRenderer({
   const rowPluginType = selectDocumentPluginType(store.getState(), row.id)
 
   const isMultimediaPlugin = rowPluginType === EditorPluginType.Multimedia
+  const isExerciseGroupPlugin = rowPluginType === EditorPluginType.ExerciseGroup
 
   return (
     <>
@@ -199,7 +200,7 @@ export function EditorRowRenderer({
             '[&>.rows-tools]:!-left-1 [&>.rows-tools]:!-top-9'
         )}
       >
-        <RowDragButton drag={drag} />
+        {!isExerciseGroupPlugin && <RowDragButton drag={drag} />}
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >

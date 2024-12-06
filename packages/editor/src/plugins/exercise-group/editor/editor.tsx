@@ -1,15 +1,12 @@
-import { PreferenceContext } from '@editor/core/contexts'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useContext } from 'react'
 
 import { type ExerciseGroupProps } from '..'
 import { IntermediateTask } from './intermediate-task'
 import { ExerciseGroupRenderer } from '../renderer'
+import { FertigStellenButton } from './fertig-stellen-button'
 
 export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   const { content, exercises, intermediateTasks } = state
@@ -19,11 +16,10 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
 
   const lastExerciseIndex = exercises.length - 1
 
-  const preferences = useContext(PreferenceContext)
-
   return (
     <div className="p-2">
       <ExerciseGroupRenderer
+        isInEditor
         content={<>{content.render()}</>}
         exercises={exercises.map((exercise, index) => {
           return {
@@ -68,18 +64,11 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
   )
 
   function renderButtons() {
-    const showIntermediateTaskButton =
-      preferences.get('intermediateTasksExperiment') &&
-      lastExerciseIndex >= 0 &&
-      (intermediateTasks.defined
-        ? !intermediateTasks.find(
-            (task) => task.afterIndex.value === lastExerciseIndex
-          )
-        : true)
-
     return (
       <>
-        <SerloAddButton
+        <FertigStellenButton />
+
+        {/* <SerloAddButton
           text={exGroupStrings.addExercise}
           onClick={() => exercises.insert()}
           className="mb-8 mt-4"
@@ -100,7 +89,7 @@ export function ExeriseGroupEditor({ state }: ExerciseGroupProps) {
             }}
             className="mb-8 mt-4"
           />
-        ) : null}
+        ) : null} */}
       </>
     )
   }

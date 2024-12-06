@@ -59,9 +59,9 @@ export function SubmitButtonAndFeedback() {
           studentSolution: value.textAreaBlocks
             .map((block) => block.content)
             .join(' '),
-          evaluationCriteria: plugins[key].evaluationCriteria as string,
+          evaluationCriteria: plugins[key].evaluationCriteria,
           exercise: exercises[index],
-          solution: plugins[key].solution as string,
+          solution: plugins[key].solution,
         })) as AiFeedback
       })
     )
@@ -79,7 +79,7 @@ export function SubmitButtonAndFeedback() {
                 setShowFeedback(true)
               })
               .catch((e) => {
-                console.log(e)
+                console.error(e)
               })
           }}
           className={cn(

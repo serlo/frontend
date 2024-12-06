@@ -11,20 +11,25 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
 
   return (
     <>
-      <div className="sticky top-2 z-50 m-5 flex w-full flex-col items-center">
-        <div className="mb-5 rounded-lg bg-white p-2 shadow-plugin-focus">
-          Titel des Lernschritts | 20 Minuten Bearbeitungszeit | 3
-          Wiederholungen
-          {allowEdit ? (
-            <button
-              onClick={() => setShowModal(true)}
-              className="mx-2 rounded-md border-gray-500 bg-editor-primary-100 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            >
-              <FaIcon className="" icon={faCog} />
-            </button>
-          ) : null}
+      {showModal ? null : (
+        <div className="sticky top-2 z-50 m-5 flex w-full flex-col items-center">
+          <div className="mb-5 flex flex-row gap-3 rounded-lg bg-white p-2 shadow-plugin-focus">
+            <span>Write an opinion</span>
+            <span>|</span>
+            <span>15 Minuten Bearbeitungszeit</span>
+            <span>|</span>
+            <span>3 Wiederholungen</span>
+            {allowEdit ? (
+              <button
+                onClick={() => setShowModal(true)}
+                className="mx-2 rounded-md border-gray-500 bg-editor-primary-100 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+              >
+                <FaIcon className="" icon={faCog} />
+              </button>
+            ) : null}
+          </div>
         </div>
-      </div>
+      )}
       <EditorModal
         isOpen={showModal}
         setIsOpen={(shouldShow) => {
@@ -32,10 +37,11 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         }}
         title="Lernschritt 8"
         extraTitleClassName="serlo-h3 mt-4"
-        className="top-8 w-[50rem] translate-y-0 leading-8 sm:top-20"
+        extraOverlayClassName="blur"
+        className="top-8 w-[40rem] translate-y-0 sm:top-20"
       >
         <div className="w-full px-[16px]">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-8">
             <div>
               <div>Welchen Titel soll der Lernschritt haben?</div>
               <EditorTextArea />
@@ -78,7 +84,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
             <div className="flex flex-col items-end">
               <button
                 onClick={() => setShowModal(false)}
-                className=" my-8 rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 hover:cursor-pointer hover:bg-editor-primary-200"
+                className="rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 hover:cursor-pointer hover:bg-editor-primary-200"
               >
                 zum Lernmaterial-Editor{' '}
                 <FaIcon className="mx-3" icon={faArrowRight} />

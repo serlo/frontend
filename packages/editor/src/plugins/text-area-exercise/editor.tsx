@@ -16,11 +16,11 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
   return (
     <TextAreaEditorContext.Provider value={props}>
       <TextAreaExerciseToolbar {...props} />
-      <TextAreaExerciseRenderer />
+      <TextAreaExerciseRenderer isInEditor />
       <AnimateChangeInHeight className={cn('mt-8')}>
         <div
           className={cn(
-            'flex flex-col items-center px-3 py-6',
+            'flex flex-col items-center px-3 py-3',
             settingsOpen ? 'bg-editor-primary-100' : ''
           )}
         >
@@ -34,7 +34,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
                 : 'hover:cursor-pointer hover:bg-editor-primary-200'
             )}
           >
-            Hilfe und Feedback hinzufügen
+            Lösungen und Hilfestellungen hinzufügen
           </button>
           {settingsOpen ? <HelpAndFeedbackSettings /> : null}
         </div>

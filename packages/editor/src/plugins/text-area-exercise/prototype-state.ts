@@ -15,11 +15,13 @@ interface PrototypeState {
     [id: string]: TextAreaPluginState
   }
   silentMode: boolean
+  __is_starting_up: boolean
 }
 
 export const PrototypeStateStore = new Store<PrototypeState>({
   textAreaPlugins: {},
   silentMode: false,
+  __is_starting_up: true,
 })
 
 export function createFeedbackBlock(
@@ -30,10 +32,16 @@ export function createFeedbackBlock(
       id: uuid_v4(),
       type: 'feedback',
       content: 'Leider konnte unsere KI kein Feedback geben',
+      isCorrect: false,
     }
   }
 
-  return { id: uuid_v4(), type: 'feedback', content: feedback.generalFeedback }
+  return {
+    id: uuid_v4(),
+    type: 'feedback',
+    content: feedback.generalFeedback,
+    isCorrect: feedback.isCorrect,
+  }
 }
 
 export function createTextBlock(): Text {

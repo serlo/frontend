@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 export function StickyHeaderLearner() {
   const [timeLeft, setTimeLeft] = useState(15 * 60) // 15 minutes in seconds
+  const [timeVisible, setTimeVisible] = useState(true)
   const silentMode = PrototypeStateStore.useState((e) => e.silentMode)
 
   useEffect(() => {
@@ -27,9 +28,16 @@ export function StickyHeaderLearner() {
       <div className="sticky top-2 z-50 m-5 flex w-full flex-col items-center">
         <div className="mb-5 flex flex-row gap-10 rounded-lg bg-brand-100 px-5 py-2 shadow-plugin-focus">
           <div className="flex flex-row items-center">
-            <div className="w-10 font-bold">{formatTime(timeLeft)}</div>
-            <button className="rounded-md bg-brand-200 px-1 hover:bg-brand-300">
-              Zeit ausblenden
+            {timeVisible && (
+              <div className="mr-2 w-10 font-bold">{formatTime(timeLeft)}</div>
+            )}
+            <button
+              className="rounded-md bg-brand-200 px-1 hover:bg-brand-300"
+              onClick={() => {
+                setTimeVisible((x) => !x)
+              }}
+            >
+              Zeit {timeVisible ? 'ausblenden' : 'einblenden'}
             </button>
           </div>
           <div className="flex flex-row items-center gap-2">

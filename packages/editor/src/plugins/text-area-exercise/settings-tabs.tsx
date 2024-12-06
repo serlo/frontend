@@ -6,9 +6,9 @@ import { Solution } from './solution-editor'
 import { Strategy } from './strategy-editor'
 
 const tabs = [
-  { name: 'Musterlösung und Bewertungskriterien', content: Solution },
-  { name: 'Lösungsstrategie', content: Strategy },
-  { name: 'Individuelle Hilfestellungen', content: IndividualHelp },
+  { name: 'Lösung', content: Solution },
+  { name: 'Bewertung', content: Strategy },
+  { name: 'Hilfestellung', content: IndividualHelp },
 ]
 
 export function SettingsTabs() {
@@ -18,7 +18,7 @@ export function SettingsTabs() {
 
   return (
     <>
-      <div className="flex flex-row flex-wrap items-center justify-center">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-3">
         {tabs.map((tab, index) => {
           return (
             <button
@@ -36,7 +36,7 @@ export function SettingsTabs() {
           )
         })}
       </div>
-      <div className="flex w-full flex-col gap-8">
+      <div className="flex w-full flex-col gap-8 p-3">
         <tabContent.content />
       </div>
     </>
