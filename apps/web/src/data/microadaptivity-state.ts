@@ -140,12 +140,12 @@ export const microadaptivityState = {
                     'State your opinion\nUse linking words and useful phrases',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
-                    'Contains general information and your opinion.\nDoes not give reasons for your stated opinion.\nContains no errors in sentence structure.',
+                    'Contains general information and your opinion.\nDoes not give reasons for your stated opinion.\nContains no grammatical and no spelling mistakes.',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
                   additionalInfoForAi:
-                    'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nSchlage folgende "useful phrases" vor, wenn keine genutzt wurden: "I think", "I believe", "I don’t think", "In my opinion"…',
+                    'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nSchlage folgende "useful phrases" vor, wenn keine genutzt wurden: "I think" "I believe" "I don’t think" "In my opinion"…',
                   allowShowEvaluationCriteria: true,
                 },
                 id: '9eddeca6-1029-48e4-b25d-4b399340a717',
@@ -189,14 +189,16 @@ export const microadaptivityState = {
                   solution:
                     'First, students need time to relax after school because it helps them stay healthy. In addition, too much homework is stressful and takes away time for hobbies or family. However, a little homework is important to practice what we learn in class.',
                   solutionStrategy:
-                    '1. Explain your opinion you stated in task a)\n\n2. Give at least two reasons for your opinion\n\n3. To make your text stronger, you can also add an argument against your opinion.\n\n4. Structure your text in paragraphs.\n\n5. Use useful phrases like "first," "second," or linking words like "in addition," "because," "however" to improve your text.',
+                    'Give reasons for your opinion\nWrite in paragraphs\nUse linking words',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
-                    'Give reasons for your opinion\nUse linking words\nWrite in paragraphs',
+                    'Reasons for opinion are explained clearly.\nContains no grammatical and no spelling mistakes.',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
                   allowShowEvaluationCriteria: true,
+                  additionalInfoForAi:
+                    'Achte darauf, dass "linking words" zur Strukturierung genutzt werden. Zum Beispiel "first," "second," "in addition," "because," "however"\n\nAchte darauf, dass Argumente hinreichend begründet werden.',
                 },
                 id: '6bfb9e96-50b9-4bb0-8807-7797cd5b9cc9',
               },
@@ -239,14 +241,16 @@ export const microadaptivityState = {
                   solution:
                     'In conclusion, homework is good, but not every day. I believe it should be balanced.',
                   solutionStrategy:
-                    '1. Write 1-3 sentences to sum up what you have written before.\n\n2. Repeat your opinion.\n\n3. Write a short explanation for it.\n\n4. Use useful phrases like "to sum up," "in conclusion," "finally" and linking words like "because," "because of," "as," "therefore"',
+                    'Write 1-3 sentences to sum up what you have written before\nRepeat your opinion',
                   allowShowSolutionStrategy: true,
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
                   allowShowEvaluationCriteria: true,
                   evaluationCriteria:
-                    'Sum up your opinion\nUse linking words and useful phrases',
+                    'Contains no grammatical and no spelling mistakes.',
+                  additionalInfoForAi:
+                    'Schlage folgende "useful phrases" vor, wenn keine genutzt wurden: "to sum up," "in conclusion," "finally,"\n\nSchlage folgende "linking words" vor, wenn keine genutzt wurden: "because," "because of," "as," "therefore"',
                 },
                 id: 'eafb687a-8a62-4c1a-ac7f-43376cd10d9e',
               },
