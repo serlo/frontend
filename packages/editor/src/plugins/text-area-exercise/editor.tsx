@@ -34,7 +34,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
                 : 'hover:cursor-pointer hover:bg-editor-primary-200'
             )}
           >
-            Hilfe und Feedback hinzufügen
+            Lösungen und Hilfestellungen hinzufügen
           </button>
           {settingsOpen ? <HelpAndFeedbackSettings /> : null}
         </div>

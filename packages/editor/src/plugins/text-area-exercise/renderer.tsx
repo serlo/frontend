@@ -15,18 +15,18 @@ export function TextAreaExerciseRenderer({
   const {
     solutionStrategy,
     allowShowSolutionStrategy,
-    allowShowEvaluationCriteria,
     evaluationCriteria,
+    allowShowEvaluationCriteria,
   } = useTextAreaPluginStateValues()
-  const [showStrategy, setShowStrategy] = useState(false)
+  const [showFeedbackCriteria, setShowStrategy] = useState(false)
 
   return (
     <>
-      {!isInEditor && allowShowEvaluationCriteria && evaluationCriteria ? (
+      {!isInEditor && allowShowSolutionStrategy && solutionStrategy ? (
         <div className="my-5 whitespace-pre-wrap rounded-xl bg-brand-100 p-5">
-          <div className="mb-3 text-xl font-bold">Remember</div>
+          <div className="mb-3 font-bold">Remember</div>
           <div className="flex flex-col gap-2">
-            {evaluationCriteria.split('\n').map((elem, index) => (
+            {solutionStrategy.split('\n').map((elem, index) => (
               <div className="ml-3" key={index}>
                 <FaIcon className="mr-3" icon={faLightbulb} />
                 {elem}
@@ -37,12 +37,12 @@ export function TextAreaExerciseRenderer({
       ) : null}
       Write your answer:
       <Blocks />
-      {!isInEditor && allowShowSolutionStrategy ? (
+      {!isInEditor && allowShowEvaluationCriteria ? (
         <>
           <button
             className={cn(
-              'serlo-button-learner-transparent mb-4 ml-side mr-auto pr-2 text-base hover:bg-brand-100 hover:text-brand-700',
-              showStrategy && 'bg-brand text-white'
+              'serlo-button-learner-transparent my-4 ml-side mr-auto pr-2 text-base hover:bg-brand-100 hover:text-brand-700',
+              showFeedbackCriteria && 'bg-brand text-white'
             )}
             onClick={() => {
               setShowStrategy((previousValue) => !previousValue)
@@ -52,19 +52,23 @@ export function TextAreaExerciseRenderer({
               <span
                 className={cn(
                   'inline-block transition-transform duration-300',
-                  showStrategy && 'translate-y-[1px] rotate-180'
+                  showFeedbackCriteria && 'translate-y-[1px] rotate-180'
                 )}
               >
                 ▾
               </span>
               &nbsp;
             </span>
-            Lösungsstrategie
+            What makes a good answer
           </button>
-          {showStrategy ? (
+          {showFeedbackCriteria ? (
             <div className="serlo-solution-box p-3">
-              <div className="solution whitespace-pre-wrap">
-                {solutionStrategy}
+              <div className="solution flex flex-col gap-2 whitespace-pre-wrap ">
+                {evaluationCriteria.split('\n').map((elem, index) => (
+                  <div className="ml-3" key={index}>
+                    {elem}
+                  </div>
+                ))}
               </div>
             </div>
           ) : null}

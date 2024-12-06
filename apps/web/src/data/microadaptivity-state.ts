@@ -57,7 +57,7 @@ export const microadaptivityState = {
                                 {
                                   type: 'list-item-child',
                                   children: [
-                                    { text: 'write between 50-75 words.' },
+                                    { text: 'Write between 50-75 words.' },
                                   ],
                                 },
                               ],
@@ -69,7 +69,7 @@ export const microadaptivityState = {
                                   type: 'list-item-child',
                                   children: [
                                     {
-                                      text: 'use 3 useful phrases to structure your text.',
+                                      text: 'Use 3 useful phrases to structure your text.',
                                     },
                                   ],
                                 },
@@ -81,7 +81,7 @@ export const microadaptivityState = {
                                 {
                                   type: 'list-item-child',
                                   children: [
-                                    { text: 'use 3-5 linking words.' },
+                                    { text: 'Use 3-5 linking words.' },
                                   ],
                                 },
                               ],
@@ -137,10 +137,10 @@ export const microadaptivityState = {
                     'Students often have homework every day, but I believe that is too often.',
                   allowShowSolution: false,
                   solutionStrategy:
-                    '1. Clearly state what you think about the topic. \n\n2. Add some general information about the topic to make your beginning more interesting.\n\n3. Remember to use useful phrases, for example: "I think", "I believe", "I don’t think", "In my opinion"…',
+                    'Clearly state what you think about the topic. \nAdd some general information about the topic to make your beginning more interesting.\nRemember to use useful phrases, for example: "I think", "I believe", "I don’t think", "In my opinion"…',
                   allowShowSolutionStrategy: true,
                   evaluationCriteria:
-                    'Give general information\nState your opinion\nDo not give reasons for the stated opinion',
+                    'Contains general information and your opinion.\nDoes not give reasons for your stated opinion.\nContains no errors in sentence structure.',
                   allowParagraphFeedback: true,
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,

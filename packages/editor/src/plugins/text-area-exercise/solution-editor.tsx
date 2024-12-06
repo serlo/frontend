@@ -10,19 +10,25 @@ export function Solution() {
 
   const {
     allowShowSolution,
-    allowShowEvaluationCriteria,
     solution,
-    evaluationCriteria,
+    allowShowSolutionStrategy,
+    solutionStrategy,
   } = textAreaPluginStateContext.state
   return (
     <>
       <div>
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">Musterlösung anzeigen</label>
-          <SwitchButton
-            isOn={allowShowSolution.value}
-            onClick={() => allowShowSolution.set((old) => !old)}
-          />
+          <label className="mr-5">
+            <b>Musterlösung</b>
+          </label>
+          <div className="flex flex-row gap-3">
+            <span>( anzeigen</span>
+            <SwitchButton
+              isOn={allowShowSolution.value}
+              onClick={() => allowShowSolution.set((old) => !old)}
+            />
+            <span>)</span>
+          </div>
         </div>
         <EditorTextArea
           placeholder="Musterlösung"
@@ -30,38 +36,43 @@ export function Solution() {
           value={solution.value}
           className="my-3"
         />
-        <div className="flex flex-row items-center gap-3">
+        {/* <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload
           </button>
           <button className="serlo-button-edit serlo-button-edit-primary">
             KI Copilot
           </button>
-        </div>
+        </div> */}
       </div>
-
       <div>
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">Bewertungskriterien anzeigen</label>
-          <SwitchButton
-            isOn={allowShowEvaluationCriteria.value}
-            onClick={() => allowShowEvaluationCriteria.set((old) => !old)}
-          />
+          <label className="mr-5">
+            <b>Lösungsstrategie</b>
+          </label>
+          <div className="flex flex-row gap-3">
+            <span>( anzeigen</span>
+            <SwitchButton
+              isOn={allowShowSolutionStrategy.value}
+              onClick={() => allowShowSolutionStrategy.set((old) => !old)}
+            />
+            <span>)</span>
+          </div>
         </div>
         <EditorTextArea
-          placeholder="Bewertungskriterien"
-          onChange={(e) => evaluationCriteria.set(e.target.value)}
-          value={evaluationCriteria.value}
+          placeholder="Lösungsstrategie"
+          onChange={(e) => solutionStrategy.set(e.target.value)}
+          value={solutionStrategy.value}
           className="my-3"
         />
-        <div className="flex flex-row items-center gap-3">
+        {/* <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload
           </button>
           <button className="serlo-button-edit serlo-button-edit-primary">
             KI Copilot
           </button>
-        </div>
+        </div> */}
       </div>
     </>
   )

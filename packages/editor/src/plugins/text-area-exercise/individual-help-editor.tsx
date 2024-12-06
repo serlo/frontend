@@ -43,14 +43,14 @@ export function IndividualHelp() {
           value={additionalInfoForAi.value}
           className="my-3"
         />
-        <div className="flex flex-row items-center gap-3">
+        {/* <div className="flex flex-row items-center gap-3">
           <button className="serlo-button-edit serlo-button-edit-primary">
             Upload
           </button>
           <button className="serlo-button-edit serlo-button-edit-primary">
             KI Copilot
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex w-full flex-col gap-3">
