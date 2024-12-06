@@ -87,7 +87,7 @@ function Content() {
           />
         </div>
       ) : null}
-      <TransformWrapper disablePadding>
+      <TransformWrapper disablePadding smooth={false}>
         <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
       </TransformWrapper>
       {activeExercise ? (
