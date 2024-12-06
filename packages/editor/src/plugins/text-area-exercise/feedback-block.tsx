@@ -19,7 +19,7 @@ export function FeedbackBlock({ id, content }: Feedback) {
       )}
     >
       <button
-        className="absolute -right-1 -top-3 h-6 w-6 rounded-full bg-blue-200 text-center"
+        className="absolute -top-3 right-[-0.7rem] h-6 w-6 rounded-full bg-blue-200 text-center"
         onClick={() => {
           PrototypeStateStore.update((s) => {
             s.textAreaPlugins[pluginId].textAreaBlocks = s.textAreaPlugins[
