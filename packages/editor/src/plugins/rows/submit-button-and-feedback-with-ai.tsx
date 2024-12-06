@@ -102,7 +102,12 @@ export function SubmitButtonAndFeedback() {
                       </div>
                       {entry.suggestion ? (
                         <div className="flex flex-row gap-1 ">
-                          ⮕ {entry.suggestion}
+                          ⮕{' '}
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: entry.suggestion,
+                            }}
+                          />
                         </div>
                       ) : null}
                     </div>
