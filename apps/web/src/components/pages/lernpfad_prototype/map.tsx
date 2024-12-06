@@ -41,14 +41,16 @@ export function Map({
           'bg-[length:auto_100%] bg-top bg-no-repeat'
         )}
       >
-        {Object.keys(exercises).map((id) => (
-          <MapItem
-            key={id}
-            id={id}
-            exercises={exercises}
-            onClick={onExerciseClick}
-          />
-        ))}
+        <div className="relative left-1/2  h-screen w-[1194px] max-w-[153vh] -translate-x-1/2">
+          {Object.keys(exercises).map((id) => (
+            <MapItem
+              key={id}
+              id={id}
+              exercises={exercises}
+              onClick={onExerciseClick}
+            />
+          ))}
+        </div>
       </div>
     </TransformComponent>
   )
