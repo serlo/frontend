@@ -12,7 +12,7 @@ export function MapNavigation() {
         <span className="text-lg">Back to Dashboard</span>
       </button>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-x-6">
         <h1 className="text-lg font-bold">
           Giving an opinion for or against something
         </h1>
