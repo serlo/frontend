@@ -17,7 +17,9 @@ export function Blocks() {
     if (blocks.length !== 0) return
 
     PrototypeStateStore.update((s) => {
-      s.textAreaPlugins[pluginId] = { textAreaBlocks: [createTextBlock()] }
+      s.textAreaPlugins[pluginId] = {
+        textAreaBlocks: [createTextBlock(), createTextBlock()],
+      }
     })
   })
 
