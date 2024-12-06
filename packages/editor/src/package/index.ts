@@ -1,6 +1,7 @@
 export { SerloEditor, type SerloEditorProps } from './editor'
 export { SerloRenderer, type SerloRendererProps } from './serlo-renderer'
 
+export type { SupportedLanguage } from '@editor/types/language-data'
 export type { BaseEditor } from '@editor/core'
 
 // We need to make a distinction between entires on our menu and technical
