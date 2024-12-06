@@ -39,8 +39,10 @@ export function MapItem({
       disabled={isDisabled}
     >
       <div className={cn('px-4 pb-5 pt-2', isDisabled && 'grayscale')}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={getNodeSrc()} />
+        <div
+          style={{ backgroundImage: `url(${getNodeSrc()})` }}
+          className="h-[38px] w-full bg-contain bg-bottom bg-no-repeat"
+        />
       </div>
       <b className="-mt-4 block text-[0.5rem] leading-[0.6rem] text-gray-700">
         {exercise.title}
