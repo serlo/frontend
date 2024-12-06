@@ -5,6 +5,7 @@ import {
   type BaseEditor,
   defaultPlugins,
   EditorPluginType,
+  type SupportedLanguage,
 } from '@serlo/editor'
 import styles from '@serlo/editor/dist/style.css?raw'
 import React, { Suspense, lazy } from 'react'
@@ -43,6 +44,8 @@ export class EditorWebComponent extends HTMLElement {
 
   private _isProductionEnvironment: boolean = false
 
+  private _language: SupportedLanguage = 'de' as const
+
   constructor() {
     super()
 
@@ -57,6 +60,7 @@ export class EditorWebComponent extends HTMLElement {
       'editor-variant',
       'plugins',
       'is-production-environment',
+      'language',
     ]
   }
 
@@ -75,6 +79,11 @@ export class EditorWebComponent extends HTMLElement {
       this.plugins = JSON.parse(newValue) as EditorPluginType[]
     } else if (name === 'is-production-environment') {
       this.isProductionEnvironment = newValue === 'true'
+    } else if (name === 'language' && oldValue !== newValue) {
+      // Validates the language attribute. Will need to keep this in sync with
+      // the SupportedLanguage type, if we add more language support!
+      const validatedLanguage = newValue === 'en' ? 'en' : 'de'
+      this.language = validatedLanguage
     }
   }
 
@@ -160,6 +169,23 @@ export class EditorWebComponent extends HTMLElement {
     this.mountReactComponent()
   }
 
+  get language(): SupportedLanguage {
+    return this._language
+  }
+
+  set language(value: SupportedLanguage) {
+    if (value !== 'en' && value !== 'de') {
+      throw new Error(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        `Invalid language value: ${value}. Supported values are 'en' or 'de'.`
+      )
+    }
+
+    this._language = value
+    this.setAttribute('language', value)
+    this.mountReactComponent()
+  }
+
   connectedCallback() {
     this.appendChild(this.container)
     this.loadAndApplyStyles()
@@ -218,6 +244,7 @@ export class EditorWebComponent extends HTMLElement {
                   this._currentState = newState
                   this.broadcastNewState(newState)
                 }}
+                language={this.language}
               >
                 {(editor) => {
                   this._history = editor.history
@@ -229,6 +256,7 @@ export class EditorWebComponent extends HTMLElement {
             <SerloRenderer
               state={this.initialState}
               editorVariant={this.editorVariant}
+              language={this.language}
             />
           )}
         </div>
