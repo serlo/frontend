@@ -1,3 +1,4 @@
+import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useContext } from 'react'
@@ -89,9 +90,10 @@ export function FeedbackButton({
         </button>
       ) : (
         <button
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-200 opacity-0 transition-opacity hover:bg-purple-300 group-focus-within:opacity-100"
+          className="serlo-tooltip-trigger flex h-8 w-8 items-center justify-center rounded-full bg-purple-200 opacity-0 transition-opacity hover:bg-purple-300  group-focus-within:opacity-100"
           onClick={() => handleKiButtonClick(pluginId)}
         >
+          <EditorTooltip text="Hole Feedback von der KI" />
           <img src="/_assets/img/birdie.svg" className="h-7 w-7" />
         </button>
       )}
