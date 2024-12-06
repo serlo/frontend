@@ -1,4 +1,5 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import * as confetti from 'canvas-confetti'
 import NextAdapterPages from 'next-query-params/pages'
 import React, { useState } from 'react'
 import { TransformWrapper } from 'react-zoom-pan-pinch'
@@ -132,10 +133,24 @@ function Content() {
       [id]: { ...exercises[id], done: true },
     }
     localStorage.setItem(localStorageKey, JSON.stringify(newExercises))
-    setExercises(newExercises)
-    // if (exercises[id].nextExercises === null) setIsExerciseShown(false)
 
     setIsExerciseShown(false)
     setActiveExercise(null)
+
+    setTimeout(() => {
+      setExercises(newExercises)
+
+      if (id === 'intro') return
+      const element = document.getElementById(id)
+      if (!element) return
+      const rect = element.getBoundingClientRect()
+      const scrollLeft = document.documentElement.scrollLeft
+      const scrollTop = document.documentElement.scrollTop
+
+      const x = (rect.left + scrollLeft + rect.width / 2) / window.innerWidth
+      const y = (rect.top + scrollTop + rect.height / 2) / window.innerHeight
+
+      void confetti.default({ origin: { x, y } })
+    }, 500)
   }
 }
