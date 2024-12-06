@@ -7,15 +7,8 @@ import { AnimateChangeInHeight } from '../text-area-exercise/animate-change-in-h
 
 const aiFeedback = {
   feedbackStart:
-    'Dein Text zeigt, dass du eine klare Meinung hast, und du hast schon gute Ansätze gezeigt, deine Argumente zu formulieren.',
+    'Dein Text zeigt, dass du eine klare Meinung hast. Es gibt eine Struktur mit Anfang, Mitte und Ende, aber einige wichtige Anforderungen wurden nicht erfüllt.',
   feedback: [
-    {
-      title: '"Write between 50-75 words"',
-      feedback: [
-        'Dein Text umfasst ungefähr 40 Wörter und ist damit etwas zu kurz. Versuche, ein paar Sätze hinzuzufügen, um zwischen 50 und 75 Wörtern zu erreichen.',
-      ],
-      isCorrect: false,
-    },
     {
       title: '"Use 3-5 linking words"',
       feedback: [
@@ -26,17 +19,18 @@ const aiFeedback = {
       isCorrect: false,
     },
     {
-      title: 'Language',
+      title: 'Inhalt',
       feedback: [
-        'Achte darauf, dass deine Sätze vollständig und präzise sind. Zum Beispiel könnte ',
+        'Dein Schlusssatz ',
         {
           type: 'link',
-          text: "'Students must time for hobbies'",
-          href: '#students-must-time-for-hobbies',
+          text: "'In conclusion, I think there should be homework every day.'",
+          href: '#jump-to-feedback',
         },
-        " umformuliert werden zu: 'Students need time for hobbies because they are important.'",
+        ' widerspricht deiner Argumentation im Text.',
       ],
-      suggestion: '',
+      suggestion:
+        'Überlege dir, ob du hier klarer ausdrücken möchtest, dass du gegen tägliche Hausaufgaben bist.',
       isCorrect: false,
     },
   ],
@@ -109,13 +103,19 @@ export function SubmitButtonAndFeedback() {
                         {entry.feedback.map((elem, index) => {
                           if (typeof elem === 'object' && 'type' in elem) {
                             return (
-                              <a
+                              <button
+                                onClick={() =>
+                                  scrollToTextAreaContaining(
+                                    elem.text
+                                      .replaceAll("'", '')
+                                      .replaceAll('"', '')
+                                  )
+                                }
                                 key={index}
-                                href={elem.href}
                                 className="underline"
                               >
                                 {elem.text}
-                              </a>
+                              </button>
                             )
                           }
                           return <span key={index}>{elem}</span>
@@ -136,4 +136,16 @@ export function SubmitButtonAndFeedback() {
       </AnimateChangeInHeight>
     </div>
   )
+
+  function scrollToTextAreaContaining(text: string) {
+    // Find the textarea with the target content
+    const targetTextarea = Array.from(
+      document.querySelectorAll('textarea')
+    ).find((textarea) => textarea.value === text)
+
+    // Scroll into view if found
+    if (targetTextarea) {
+      targetTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
 }
