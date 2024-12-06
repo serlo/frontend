@@ -7,32 +7,47 @@ import { AnimateChangeInHeight } from '../text-area-exercise/animate-change-in-h
 import { PrototypeStateStore } from '../text-area-exercise/prototype-state'
 import { AiFeedback } from '../text-area-exercise/types'
 
+export interface FinalFeedback {
+  generalFeedback: string
+  specificFeedbacks: {
+    subject: string
+    suggestion: string
+  }[]
+}
+
 export function SubmitButtonAndFeedback() {
   const [showFeedback, setShowFeedback] = useState(false)
   const [triesLeft, setTriesLeft] = useState(3)
-  const [aiFeedback, setAiFeedback] = useState<AiFeedback[]>([])
+  const [aiFeedback, setAiFeedback] = useState<FinalFeedback | null>()
 
-  async function fetchFeedback({
-    exercise,
-    solution,
-    evaluationCriteria,
-    studentSolution,
-  }: {
-    exercise: string
-    solution: string
-    evaluationCriteria: string
-    studentSolution: string
-  }) {
-    const url = new URL('/api/ai/student-feedback', window.location.href)
+  const plugins = PrototypeStateStore.useState((s) => s.textAreaPlugins)
+
+  async function fetchFeedback() {
+    const url = new URL('/api/ai/final-feedback', window.location.href)
+
+    let studentSolution = ''
+
+    for (const plugin in plugins) {
+      studentSolution +=
+        plugins[plugin].textAreaBlocks.map((block) => block.content).join(' ') +
+        ' '
+    }
+
+    const exercise = `
+    Writing your opinion: Should students have homework every day?
+    You will write your opinion divided into three tasks: A beginning, a middle and an end.
+    - Write between 50-75 words.
+  
+    - Use 3 useful phrases to structure your text.
+  
+    - Use 3-5 linking words.
+    `
 
     const response = await fetch(url.toString(), {
       method: 'POST',
       body: JSON.stringify({
         exercise,
-        solution: solution || 'keine Musterlösung',
-        evaluationCriteria: evaluationCriteria || 'keine Bewertungskriterien',
-        // Maybe do it per paragraph like in the original prototype?
-        studentSolution: studentSolution || '',
+        studentSolution,
       }),
     })
 
@@ -41,30 +56,7 @@ export function SubmitButtonAndFeedback() {
       return null
     }
 
-    return (await response.json()) as AiFeedback
-  }
-
-  const plugins = PrototypeStateStore.useState((s) => s.textAreaPlugins)
-
-  const exercises = [
-    'Should students have homework every day? - Write the beginning of your opinion on the question above.',
-    'Should students have homework every day? - Write the middle of your opinion.',
-    'Should students have homework every day? - Write the end of your opinion.',
-  ]
-
-  async function fetchFeedbacks() {
-    return await Promise.all(
-      Object.entries(plugins).map(async ([key, value], index) => {
-        return (await fetchFeedback({
-          studentSolution: value.textAreaBlocks
-            .map((block) => block.content)
-            .join(' '),
-          evaluationCriteria: plugins[key].evaluationCriteria,
-          exercise: exercises[index],
-          solution: plugins[key].solution,
-        })) as AiFeedback
-      })
-    )
+    return (await response.json()) as FinalFeedback
   }
 
   return (
@@ -73,7 +65,7 @@ export function SubmitButtonAndFeedback() {
         <button
           onClick={() => {
             setTriesLeft((previous) => previous - 1)
-            fetchFeedbacks()
+            fetchFeedback()
               .then((data) => {
                 setAiFeedback(data)
                 setShowFeedback(true)
@@ -94,27 +86,25 @@ export function SubmitButtonAndFeedback() {
             <div className="flex max-w-[50rem] flex-row gap-3 rounded-md bg-purple-200 p-3 shadow-plugin-focus">
               <img src="/_assets/img/birdie.svg" className="max-w-10" />
               <div className="flex flex-col gap-3">
+                <div>{aiFeedback?.generalFeedback}</div>
                 <div className="flex flex-col gap-3">
-                  {aiFeedback.map((entry, index) => (
+                  {aiFeedback?.specificFeedbacks.map((entry, index) => (
                     <div key={index}>
                       <div className="flex flex-row items-center gap-1 ">
                         <FaIcon
                           icon={faTriangleExclamation}
                           className="text-purple-400"
                         />
-                        {/* <a
+                        <a
                           href="#feedback-criteria"
                           className="text-brand-700"
-                        >{`${entry.title}`}</a> */}
+                        >{`${entry.subject}`}</a>
                       </div>
-                      <div>
-                        <span key={index}>{entry.generalFeedback}</span>
-                      </div>
-                      {/* {entry.suggestion ? (
+                      {entry.suggestion ? (
                         <div className="flex flex-row gap-1 ">
                           ⮕ {entry.suggestion}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </div>
                   ))}
                 </div>
