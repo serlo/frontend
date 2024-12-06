@@ -1,10 +1,10 @@
-import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useContext } from 'react'
 
 import { EditorTextArea } from './editor-text-area'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
+import { TextAreaTitleAndEnableSwitch } from './text-area-title-and-enable-switch'
 
-export function Strategy() {
+export function EvaluationCriteriaEditor() {
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
@@ -15,16 +15,13 @@ export function Strategy() {
       <div>
         <div>
           <div className="flex flex-row items-center gap-5">
-            <label className="mr-5">
-              <b>Bewertungskriterien</b>
-            </label>
-            <div className="flex flex-row gap-2">
-              <span>anzeigen</span>
-              <SwitchButton
-                isOn={allowShowEvaluationCriteria.value}
-                onClick={() => allowShowEvaluationCriteria.set((old) => !old)}
-              />
-            </div>
+            <TextAreaTitleAndEnableSwitch
+              title="Musterlösung"
+              switchEnabled={allowShowEvaluationCriteria.value}
+              toggleSwitch={() =>
+                allowShowEvaluationCriteria.set((old) => !old)
+              }
+            />
           </div>
           <EditorTextArea
             placeholder="Bewertungskriterien"
@@ -32,14 +29,6 @@ export function Strategy() {
             value={evaluationCriteria.value}
             className="my-3"
           />
-          {/* <div className="flex flex-row items-center gap-3">
-            <button className="serlo-button-edit serlo-button-edit-primary">
-              Upload
-            </button>
-            <button className="serlo-button-edit serlo-button-edit-primary">
-              KI Copilot
-            </button>
-          </div> */}
         </div>
       </div>
     </>

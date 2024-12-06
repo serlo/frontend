@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { EditorTextArea } from './editor-text-area'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
 
-export function IndividualHelp() {
+export function IndividualHelpEditor() {
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
@@ -43,14 +43,6 @@ export function IndividualHelp() {
           value={additionalInfoForAi.value}
           className="my-3"
         />
-        {/* <div className="flex flex-row items-center gap-3">
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            Upload
-          </button>
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            KI Copilot
-          </button>
-        </div> */}
       </div>
 
       <div className="flex w-full flex-col gap-3">

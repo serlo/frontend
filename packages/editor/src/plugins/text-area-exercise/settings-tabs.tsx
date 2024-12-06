@@ -1,14 +1,14 @@
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
 
-import { IndividualHelp } from './individual-help-editor'
-import { Solution } from './solution-editor'
-import { Strategy } from './strategy-editor'
+import { EvaluationCriteriaEditor } from './evaluation-criteria-editor'
+import { IndividualHelpEditor } from './individual-help-editor'
+import { SolutionEditor } from './solution-editor'
 
 const tabs = [
-  { name: 'Lösung', content: Solution },
-  { name: 'Bewertung', content: Strategy },
-  { name: 'Hilfestellung', content: IndividualHelp },
+  { name: 'Lösung', content: SolutionEditor },
+  { name: 'Bewertung', content: EvaluationCriteriaEditor },
+  { name: 'Hilfestellung', content: IndividualHelpEditor },
 ]
 
 export function SettingsTabs() {
