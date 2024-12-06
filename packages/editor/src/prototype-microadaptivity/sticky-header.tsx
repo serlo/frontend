@@ -35,7 +35,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         setIsOpen={(shouldShow) => {
           setShowModal(shouldShow)
         }}
-        title="Lernschritt 8"
+        title="Lernschritt"
         extraTitleClassName="serlo-h3 mt-4"
         extraOverlayClassName="blur"
         className="top-8 w-[40rem] translate-y-0 sm:top-20"
@@ -73,8 +73,8 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
 
             <div>
               <div>
-                Wie oft darf dieses Lernmaterial vor der finalen Abgabe
-                widerholt werden?
+                Wie oft darf dieser Lernschritt vor der finalen Abgabe widerholt
+                werden?
               </div>
               <div className="flex flex-row items-center justify-start gap-3">
                 <EditorTextArea
