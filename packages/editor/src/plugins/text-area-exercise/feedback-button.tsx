@@ -33,6 +33,9 @@ export function FeedbackButton({
     // Send the task description as stringified json.
     const exercise = JSON.stringify(exerciseState?.state.content)
 
+    const studentSolution =
+      blocks.find((block) => block.id === id)?.content || ''
+
     const response = await fetch(url.toString(), {
       method: 'POST',
       body: JSON.stringify({
@@ -40,7 +43,7 @@ export function FeedbackButton({
         solution: solution ?? 'keine Musterlösung',
         evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
         // Maybe do it per paragraph like in the original prototype?
-        studentSolution: blocks.find((block) => block.id === id)?.content || '',
+        studentSolution: studentSolution,
         additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
       }),
     })
@@ -84,19 +87,17 @@ export function FeedbackButton({
   if (silentmode) return null
   return (
     <>
-      {spinner ? (
-        <button className="h-8 w-8 animate-spin-slow">
-          <FaIcon icon={faSpinner} />
-        </button>
-      ) : (
-        <button
-          className="serlo-tooltip-trigger flex h-8 w-8 items-center justify-center rounded-full bg-purple-200 opacity-0 transition-opacity hover:bg-purple-300  group-focus-within:opacity-100"
-          onClick={() => handleKiButtonClick(pluginId)}
-        >
-          <EditorTooltip text="Hole Feedback von der KI" />
+      <button
+        className="serlo-tooltip-trigger flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-purple-200 opacity-0 transition-opacity hover:bg-purple-300  group-focus-within:opacity-100"
+        onClick={() => handleKiButtonClick(pluginId)}
+      >
+        <EditorTooltip text="Hole Feedback von der KI" />
+        {spinner ? (
+          <FaIcon className="h-7 w-7 animate-spin-slow" icon={faSpinner} />
+        ) : (
           <img src="/_assets/img/birdie.svg" className="h-7 w-7" />
-        </button>
-      )}
+        )}
+      </button>
     </>
   )
 }
