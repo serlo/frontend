@@ -1,6 +1,11 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faLightbulb } from '@fortawesome/free-regular-svg-icons'
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { AnimateChangeInHeight } from '../text-area-exercise/animate-change-in-height'
@@ -41,6 +46,7 @@ export function SubmitButtonAndFeedback() {
   const [triesLeft, setTriesLeft] = useState(3)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [dots, setDots] = useState('')
+  const [feedbackIndex, setFeedbackIndex] = useState(0)
 
   const handleButtonClick = () => {
     setIsSubmitting(true)
@@ -87,47 +93,73 @@ export function SubmitButtonAndFeedback() {
               <div className="flex flex-col gap-3">
                 <div>{aiFeedback.feedbackStart}</div>
                 <div className="flex flex-col gap-3">
-                  {aiFeedback.feedback.map((entry, index) => (
-                    <div key={index}>
-                      <div className="flex flex-row items-center gap-1 ">
-                        <FaIcon
-                          icon={faTriangleExclamation}
-                          className="text-purple-400"
-                        />
-                        <a
-                          href="#feedback-criteria"
-                          className="underline"
-                        >{`${entry.title}`}</a>
-                      </div>
-                      <div>
-                        {entry.feedback.map((elem, index) => {
-                          if (typeof elem === 'object' && 'type' in elem) {
-                            return (
-                              <button
-                                onClick={() =>
-                                  scrollToTextAreaContaining(
-                                    elem.text
-                                      .replaceAll("'", '')
-                                      .replaceAll('"', '')
-                                  )
-                                }
-                                key={index}
-                                className="underline"
-                              >
-                                {elem.text}
-                              </button>
-                            )
-                          }
-                          return <span key={index}>{elem}</span>
-                        })}
-                      </div>
-                      {entry.suggestion ? (
-                        <div className="flex flex-row gap-1 ">
-                          ⮕ {entry.suggestion}
+                  {aiFeedback.feedback.map((entry, index) => {
+                    if (index !== feedbackIndex) return <></>
+                    return (
+                      <div key={index}>
+                        <div className="flex flex-row items-center gap-1 ">
+                          <FaIcon
+                            icon={faTriangleExclamation}
+                            className="mr-1 text-purple-400"
+                          />
+                          <a
+                            href="#feedback-criteria"
+                            className="text-lg font-bold"
+                          >{`${entry.title}`}</a>
                         </div>
-                      ) : null}
-                    </div>
-                  ))}
+                        <div>
+                          {entry.feedback.map((elem, index) => {
+                            if (typeof elem === 'object' && 'type' in elem) {
+                              return (
+                                <button
+                                  onClick={() =>
+                                    scrollToTextAreaContaining(
+                                      elem.text
+                                        .replaceAll("'", '')
+                                        .replaceAll('"', '')
+                                    )
+                                  }
+                                  key={index}
+                                  className="underline"
+                                >
+                                  {elem.text}
+                                </button>
+                              )
+                            }
+                            return <span key={index}>{elem}</span>
+                          })}
+                        </div>
+                        {entry.suggestion ? (
+                          <div className="mt-2 flex flex-row gap-1">
+                            <FaIcon
+                              icon={faLightbulb}
+                              className="mr-1 mt-1 text-purple-400"
+                            />{' '}
+                            {entry.suggestion}
+                          </div>
+                        ) : null}
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className="flex flex-row items-center justify-center gap-3">
+                  <button
+                    onClick={() => setFeedbackIndex((previous) => previous - 1)}
+                    className="h-8 w-8 rounded-full bg-purple-200 hover:bg-purple-300"
+                  >
+                    <FaIcon icon={faArrowLeft} />
+                  </button>
+                  <span>{feedbackIndex + 1} / 2 </span>
+                  {/* <FaIcon
+                    icon={faTriangleExclamation}
+                    className="text-purple-400"
+                  /> */}
+                  <button
+                    onClick={() => setFeedbackIndex((previous) => previous + 1)}
+                    className="h-8 w-8 rounded-full bg-purple-200 hover:bg-purple-300"
+                  >
+                    <FaIcon icon={faArrowRight} />
+                  </button>
                 </div>
               </div>
             </div>
