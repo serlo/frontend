@@ -14,9 +14,9 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
       {showModal ? null : (
         <div className="sticky top-2 z-50 m-5 flex w-full flex-col items-center">
           <div className="mb-5 flex flex-row gap-3 rounded-lg bg-white p-2 shadow-plugin-focus">
-            <span>Write an opinion</span>
+            <span>Writing your opinion</span>
             <span>|</span>
-            <span>15 Minuten Bearbeitungszeit</span>
+            <span>20 Minuten Bearbeitungszeit</span>
             <span>|</span>
             <span>3 Wiederholungen</span>
             {allowEdit ? (

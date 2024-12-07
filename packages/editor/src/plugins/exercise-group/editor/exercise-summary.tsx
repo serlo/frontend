@@ -41,10 +41,10 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
           </button>
 
           <h2 className="mb-1 text-center text-lg font-semibold">
-            Zusammenfassung Lernschritt 'Write an opinion'
+            Zusammenfassung Lernschritt 'Writing your opinion'
           </h2>
           <p className="mb-6 text-center text-sm text-gray-600">
-            15 Minuten Bearbeitungszeit | 3 Wiederholungen
+            20 Minuten Bearbeitungszeit | 3 Wiederholungen
           </p>
 
           <div className="space-y-4">

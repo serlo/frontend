@@ -145,7 +145,7 @@ export const microadaptivityState = {
                   allowSubmitFeedback: true,
                   allowAiFeedback: true,
                   additionalInfoForAi:
-                    'Achte auf typische Übersetzungsfehler aus dem Deutschen zum Beispiel "I find that ...".\n\nSchlage folgende "useful phrases" vor, wenn keine genutzt wurden: "I think" "I believe" "I don’t think" "In my opinion"…',
+                    'Schlage folgende "useful phrases" vor, wenn keine genutzt wurden:\n "I think" "I believe" "I don’t think" "In my opinion"\n\nKommt der Lernende trotz mehrfachen Feedbacks bei den "useful phrases" nicht weiter, schlage vor, einen erneuten Blick in den Lernschritt "Useful phrases & vocabulary" zu werfen.',
                   allowShowEvaluationCriteria: true,
                 },
                 id: '9eddeca6-1029-48e4-b25d-4b399340a717',

@@ -3,7 +3,7 @@ import { PrototypeStateStore } from '@editor/plugins/text-area-exercise/prototyp
 import { useEffect, useState } from 'react'
 
 export function StickyHeaderLearner() {
-  const [timeLeft, setTimeLeft] = useState(15 * 60) // 15 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(20 * 60) // 20 minutes in seconds
   const [timeVisible, setTimeVisible] = useState(true)
   const silentMode = PrototypeStateStore.useState((e) => e.silentMode)
 
