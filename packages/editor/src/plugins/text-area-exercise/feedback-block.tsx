@@ -15,12 +15,12 @@ export function FeedbackBlock({ id, content }: Feedback) {
     <div
       id={id}
       className={cn(
-        'relative m-3 rounded-md bg-purple-200 p-3',
+        'relative m-3 rounded-md bg-purple-100 p-3',
         silentmode && 'hidden'
       )}
     >
       <button
-        className="absolute -top-3 right-[-0.7rem] h-6 w-6 rounded-full bg-blue-200 text-center"
+        className="absolute -top-3 right-[-0.7rem] flex h-6 w-6 items-center justify-center rounded-full bg-purple-200"
         onClick={() => {
           PrototypeStateStore.update((s) => {
             s.textAreaPlugins[pluginId].textAreaBlocks = s.textAreaPlugins[
