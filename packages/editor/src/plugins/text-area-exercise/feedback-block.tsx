@@ -1,6 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faComments } from '@fortawesome/free-regular-svg-icons'
+import { faExclamationCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import { AnimateChangeInHeight } from './animate-change-in-height'
 import { PrototypeStateStore } from './prototype-state'
@@ -37,6 +38,15 @@ export function FeedbackBlock({ id, content }: Feedback) {
           <FaIcon icon={faExclamationTriangle} className="text-purple-400" />
         )}{' '} */}
         {content}
+        <div className="mt-3 flex flex-row justify-end gap-5 text-sm text-gray-600">
+          <button className="hover:underline">
+            <FaIcon icon={faComments} /> Chat
+          </button>
+          <button className="hover:underline">
+            <FaIcon icon={faExclamationCircle} /> Feedback nicht hilfreich oder
+            falsch
+          </button>
+        </div>
       </AnimateChangeInHeight>
     </div>
   )
