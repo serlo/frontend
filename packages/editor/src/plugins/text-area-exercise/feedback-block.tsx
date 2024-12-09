@@ -78,11 +78,11 @@ export function FeedbackBlock({ id, content }: Feedback) {
                 .map((_entry, index) => {
                   return (
                     <button
-                      className="flex flex-row gap-2 rounded-md bg-purple-200 p-2 shadow hover:bg-purple-300"
+                      className="flex flex-row gap-3 rounded-md bg-purple-200 p-3 shadow hover:bg-purple-300"
                       key={index}
                     >
                       <img
-                        className="h-[5.6rem] shadow-inner"
+                        className="h-[5.7rem] rounded-md shadow-inner"
                         src={_entry.linkPreview.image}
                       />
                       <div className="flex flex-col items-center gap-2 ">

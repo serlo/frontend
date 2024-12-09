@@ -90,8 +90,7 @@ const responses: {
           href: 'https://frontend-git-feat-lernpfad-prototype-serlo.vercel.app/___lernpfad_prototype',
           linkPreview: {
             title: 'Useful phrases & vocabulary',
-            image:
-              '_assets/img/meta/microadaptivity-useful-phrases-and-vocabulary.png',
+            image: '_assets/img/lernpfad-element.png',
           },
         },
         {

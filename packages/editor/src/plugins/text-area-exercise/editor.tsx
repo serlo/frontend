@@ -19,7 +19,7 @@ export function TextAreaExerciseEditor(props: TextAreaExerciseProps) {
       <TextAreaExerciseRenderer isInEditor />
       <div className="mt-8">
         <AnimateChangeInHeight
-          className={cn(settingsOpen ? 'bg-editor-primary-100' : '')}
+          className={cn(settingsOpen ? 'rounded-md bg-editor-primary-100' : '')}
         >
           <div
             className={cn(

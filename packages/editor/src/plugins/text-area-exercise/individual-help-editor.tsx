@@ -27,14 +27,18 @@ export function IndividualHelpEditor() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <div className="flex flex-row items-center gap-3">
           <label className="font-bold">
             Individuelle KI-Hilfestellungen und Feedback
           </label>
         </div>
-        <div className="flex flex-row items-center gap-2">
-          <label className="">
+        <div className="flex flex-row items-center gap-3">
+          <img
+            className="w-20"
+            src="/_assets/img/microadaptivity-inline-feedback.svg"
+          />
+          <label className="mr-3 w-36">
             In jedem Absatz innerhalb der (Teil-) Aufgabe
           </label>
           <SwitchButton
@@ -42,8 +46,14 @@ export function IndividualHelpEditor() {
             onClick={() => allowParagraphFeedback.set((old) => !old)}
           />
         </div>
-        <div className="flex flex-row items-center gap-2">
-          <label className="">Als Rückmeldung nach fertiger Bearbeitung</label>
+        <div className="flex flex-row items-center gap-3">
+          <img
+            className="w-20"
+            src="/_assets/img/microadaptivity-end-feedback.svg"
+          />
+          <label className="mr-3 w-36">
+            Als Rückmeldung nach fertiger Bearbeitung
+          </label>
           <SwitchButton
             isOn={allowSubmitFeedback.value}
             onClick={() => allowSubmitFeedback.set((old) => !old)}
