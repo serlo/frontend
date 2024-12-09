@@ -73,7 +73,8 @@ export function Modal({
           <br /> Schön dass du da bist.
         </h3>
         <p className="serlo-p">
-          Heute lernst Du, wie Du Deine persönliche Meinung ausdrückst.
+          Heute lernst du, wie Du deine persönliche Meinung auf Englisch
+          ausdrückst.
         </p>
 
         <ul className="serlo-ul text-lg">

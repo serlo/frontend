@@ -9,7 +9,7 @@ export function MapNavigation() {
         onClick={() => {}}
       >
         <FaIcon icon={faArrowLeft} />
-        <span className="text-lg">Zur Übersicht</span>
+        <span className="text-lg">Mein Profil</span>
       </button>
 
       <div className="flex items-center gap-x-6">

@@ -33,7 +33,7 @@ export const initialMapItemsData: MapItemsRecord = {
     done: false,
     time: 5,
     title: 'Useful phrases & vocabulary',
-    labels: ['solo'],
+    labels: ['solo', 'ai'],
     contentType: 'Übung',
     isMacroadaptive: true,
     nextExercises: null,
