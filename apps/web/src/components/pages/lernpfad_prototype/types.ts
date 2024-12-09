@@ -30,6 +30,7 @@ export interface Exercise {
 export interface Fork {
   type: 'fork'
   done: boolean
+  choice: MapItemId | null
   dependsOn: MapItemId[]
   nextExercises: MapItemId[]
   position: Position

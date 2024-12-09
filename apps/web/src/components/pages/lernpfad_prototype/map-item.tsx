@@ -25,9 +25,21 @@ export function MapItem({
   onClick: (id: MapItemId) => void
 }) {
   const mapItem = mapItems[id]
-  const isDisabled = !!mapItem.dependsOn?.every(
-    (mapItemId) => !mapItems[mapItemId].done
-  )
+  const isDisabled = mapItem.dependsOn?.every((mapItemId) => {
+    const dependencyItem = mapItems[mapItemId]
+    const isDependencyAFork = dependencyItem.type === 'fork'
+    if (
+      isDependencyAFork &&
+      dependencyItem.choice !== null &&
+      mapItems[dependencyItem.choice].type === 'excursion'
+    ) {
+      return !dependencyItem.done
+    }
+    if (isDependencyAFork && mapItem.type !== 'excursion') {
+      return dependencyItem.choice !== id
+    }
+    return !dependencyItem.done
+  })
 
   if (mapItem.type === 'fork') {
     return (
