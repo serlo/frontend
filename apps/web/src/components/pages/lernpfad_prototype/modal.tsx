@@ -36,13 +36,14 @@ export function Modal({
             Diesen Lernschritt kannst du <b>drei Mal</b> vor der entgültigen
             Abgabe <b>bearbeiten</b>.
           </li>
-
           <li>
             Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>.
           </li>
+          <li>
+            <b>Bewertungskriterien</b> stehen zur Verfügung.
+          </li>
         </ul>
       </p>
-      <p className="serlo-p">Bewertungskriterien stehen zur Verfügung.</p>
       <div className="mx-side mb-10 flex justify-end">
         <button
           className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium"
