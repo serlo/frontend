@@ -9,6 +9,7 @@ export function WritingEasy(props: ExerciseProps) {
     <ExerciseWrapper {...props}>
       <>
         <EditorRenderer document={editorContent1} />
+        <div className="h-12" />
         <EditorRenderer document={editorContent2} />
       </>
     </ExerciseWrapper>
@@ -376,23 +377,13 @@ const editorContent2 = {
               plugin: 'text',
               state: [
                 {
-                  type: 'p',
+                  type: 'h',
                   children: [
                     {
-                      strong: true,
-                      text: 'Writing your opinion:',
+                      text: 'Writing your opinion: Should students have homework every day?',
                     },
                   ],
-                },
-                { type: 'p', children: [{ text: '' }] },
-                {
-                  type: 'p',
-                  children: [
-                    {
-                      strong: true,
-                      text: 'Should students have homework every day?',
-                    },
-                  ],
+                  level: 3,
                 },
               ],
               id: '1b689a64-81db-4754-9475-cda1ea01fd0a',
