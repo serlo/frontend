@@ -59,7 +59,7 @@ const responses: {
   },
   {
     studentSolution:
-      'Students often have homework every day. That is too often. ',
+      'Students often have homework every day. That is way too often.',
     aiFeedback: {
       feedback: [
         {
@@ -125,52 +125,49 @@ const responses: {
   },
   // b
   {
-    studentSolution: 'Students must time for hobbies.',
+    studentSolution:
+      'Students need time to relax after school because it helps them stay healthy. Too much homework is stressful and takes away time for hobbies or family.',
     aiFeedback: {
       feedback: [
         {
           type: 'text',
-          text: 'Dein Satz ist ein guter Anfang, aber er ist ',
-        },
-        {
-          type: 'text',
-          bold: true,
-          text: 'grammatikalisch nicht korrekt',
-        },
-        {
-          type: 'text',
-          text: '. Du könntest zum Beispiel sagen: "Students need time for hobbies."',
+          text: 'Deine Argumente sind klar und gut begründet. Versuche, "linking words" wie "in addition" oder "however" zu verwenden, um deine Argumente besser zu strukturieren. Weiter so!',
         },
       ],
       isCorrect: false,
     },
   },
   {
-    studentSolution: 'Students need time for hobbies. They are important.',
+    studentSolution:
+      'However, a little homework is important to practice what we learn in class.',
     aiFeedback: {
       feedback: [
         {
           type: 'text',
-          text: 'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine ',
+          text: 'Dein Satz ist korrekt und ohne Fehler. Die Struktur mit "however" als linking word ist gelungen.',
         },
-        {
-          type: 'text',
-          bold: true,
-          text: 'Meinung',
-        },
-        {
-          type: 'text',
-          text: ' weiter zu ',
-        },
-        {
-          type: 'text',
-          bold: true,
-          text: 'begründen',
-        },
-        {
-          type: 'text',
-          text: ', indem du erklärst, warum Hobbys wichtig sind.',
-        },
+        // {
+        //   type: 'text',
+        //   text: 'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine ',
+        // },
+        // {
+        //   type: 'text',
+        //   bold: true,
+        //   text: 'Meinung',
+        // },
+        // {
+        //   type: 'text',
+        //   text: ' weiter zu ',
+        // },
+        // {
+        //   type: 'text',
+        //   bold: true,
+        //   text: 'begründen',
+        // },
+        // {
+        //   type: 'text',
+        //   text: ', indem du erklärst, warum Hobbys wichtig sind.',
+        // },
       ],
       isCorrect: false,
     },
@@ -204,23 +201,23 @@ export function FeedbackButton({
     const studentSolution =
       blocks.find((block) => block.id === id)?.content || ''
 
-    // const response = await fetch(url.toString(), {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     exercise: exercise,
-    //     solution: solution ?? 'keine Musterlösung',
-    //     evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
-    //     // Maybe do it per paragraph like in the original prototype?
-    //     studentSolution: studentSolution,
-    //     additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
-    //   }),
-    // })
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      body: JSON.stringify({
+        exercise: exercise,
+        solution: solution ?? 'keine Musterlösung',
+        evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
+        // Maybe do it per paragraph like in the original prototype?
+        studentSolution: studentSolution,
+        additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
+      }),
+    })
 
-    // if (!response.ok) {
-    //   throw new Error('Network response was not ok')
-    // }
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
 
-    // await response.json()
+    console.dir(await response.json())
 
     const predefinedResponse = responses.find(
       (entry) => entry.studentSolution === studentSolution
@@ -228,7 +225,6 @@ export function FeedbackButton({
 
     if (!predefinedResponse) throw new Error('Response missing')
 
-    //
     // return (await response.json()) as AiFeedback
     return predefinedResponse.aiFeedback
   }
