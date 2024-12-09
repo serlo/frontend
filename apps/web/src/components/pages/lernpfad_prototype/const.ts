@@ -74,7 +74,7 @@ export const initialMapItemsData: MapItemsRecord = {
     labels: ['solo'],
     contentType: 'Übung',
     nextExercises: ['writing_easy'],
-    dependsOn: ['info'],
+    dependsOn: ['fork2'],
     position: {
       x: 34,
       y: 31.5,
@@ -88,7 +88,7 @@ export const initialMapItemsData: MapItemsRecord = {
     labels: ['solo'],
     contentType: 'Übung',
     nextExercises: ['writing_hard'],
-    dependsOn: ['info'],
+    dependsOn: ['fork2'],
     position: {
       x: 58,
       y: 27,
