@@ -1,7 +1,13 @@
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEffect, useState } from 'react'
 
-export function StickyHeaderLearner({ time }: { time?: number }) {
+export function StickyHeaderLearner({
+  time,
+  helpActive,
+}: {
+  time?: number
+  helpActive?: boolean
+}) {
   const [timeLeft, setTimeLeft] = useState((time ?? 15) * 60)
   const [timeVisible, setTimeVisible] = useState(true)
 
@@ -41,7 +47,7 @@ export function StickyHeaderLearner({ time }: { time?: number }) {
           <div className="flex flex-row items-center gap-2">
             Hilfestellungen einblenden
             <SwitchButton
-              isOn={false}
+              isOn={!!helpActive}
               onClick={() =>
                 // eslint-disable-next-line no-console
                 console.log(
