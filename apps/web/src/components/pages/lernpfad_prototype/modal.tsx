@@ -59,7 +59,7 @@ export function Modal({
             className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium"
             onClick={onConfirmClick}
           >
-            Los geht&apos;s
+            Starten
           </button>
         </div>
       </>
@@ -83,6 +83,9 @@ export function Modal({
           </li>
           <li>
             Gesamtbearbeitungszeit: <b>45 Min</b>
+          </li>
+          <li>
+            Du brauchst <b>Lernpartner*innen</b> (1+) für diesen Lernpfad.
           </li>
         </ul>
         <p className="serlo-p font-bold">Viel Erfolg!</p>
