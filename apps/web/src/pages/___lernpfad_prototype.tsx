@@ -136,7 +136,7 @@ function Content() {
   function handleForkModalClick(forkId: MapItemId, nextExerciseId: MapItemId) {
     const newMapItems = {
       ...mapItems,
-      [forkId]: { ...mapItems[forkId], done: true },
+      [forkId]: { ...mapItems[forkId], done: true, choice: nextExerciseId },
     }
     setMapItems(newMapItems)
     localStorage.setItem(localStorageKey, JSON.stringify(newMapItems))

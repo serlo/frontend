@@ -20,6 +20,7 @@ export const initialMapItemsData: MapItemsRecord = {
   fork1: {
     type: 'fork',
     done: false,
+    choice: null,
     nextExercises: ['extra1', 'info'],
     dependsOn: ['intro'],
     position: {
@@ -59,6 +60,7 @@ export const initialMapItemsData: MapItemsRecord = {
   fork2: {
     type: 'fork',
     done: false,
+    choice: null,
     nextExercises: ['recap_easy', 'recap_hard'],
     dependsOn: ['info'],
     position: {
@@ -140,6 +142,7 @@ export const initialMapItemsData: MapItemsRecord = {
   fork3: {
     type: 'fork',
     done: false,
+    choice: null,
     nextExercises: ['reflection', 'extra2'],
     dependsOn: ['rewrite'],
     position: {
@@ -155,7 +158,7 @@ export const initialMapItemsData: MapItemsRecord = {
     labels: ['solo', 'ai'],
     contentType: 'Methode',
     nextExercises: null,
-    dependsOn: ['rewrite'],
+    dependsOn: ['fork3'],
     position: {
       x: 47,
       y: 74.5,
@@ -169,7 +172,7 @@ export const initialMapItemsData: MapItemsRecord = {
     labels: ['solo'],
     contentType: 'Übung',
     nextExercises: null,
-    dependsOn: ['rewrite'],
+    dependsOn: ['fork3'],
     position: {
       x: 62,
       y: 62,
