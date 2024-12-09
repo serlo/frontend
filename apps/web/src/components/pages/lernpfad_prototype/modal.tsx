@@ -1,5 +1,3 @@
-import { SpoilerRenderer } from '@editor/plugins/spoiler/renderer'
-
 import { Exercise } from './types'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 
@@ -40,25 +38,11 @@ export function Modal({
           </li>
 
           <li>
-            Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>
+            Deine Lehrkraft hat <b>Rückmeldungen aktiviert</b>.
           </li>
         </ul>
       </p>
-      <div className="serlo-p [&>div]:border-0 [&_button]:bg-transparent [&_button]:p-0">
-        <SpoilerRenderer title={<b>Deine Bewertungskriterien</b>}>
-          <ul className="serlo-ul mb-0">
-            <li>
-              Textgestaltung und Sprachfluss (Formulierungen, Stuktur,
-              Verwendung von Konnektoren, eindeutige Bezüge)
-            </li>
-            <li>Wortschatz und Idiomatik</li>
-            <li>
-              Satzbau und Grammatik (Satzmuster und damit einhergehende
-              Verständlichkeit insgesamt)
-            </li>
-          </ul>
-        </SpoilerRenderer>
-      </div>
+      <p className="serlo-p">Bewertungskriterien stehen zur Verfügung.</p>
       <div className="mx-side mb-10 flex justify-end">
         <button
           className="serlo-button-learner-primary rounded-md p-3 text-2xl font-medium"
