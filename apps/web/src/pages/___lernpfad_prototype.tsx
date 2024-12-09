@@ -79,13 +79,10 @@ function Content() {
     activeMapItem === null ? null : exercisesContentMap[activeMapItem]
 
   const shouldShowExercise =
-    isExerciseShown &&
-    activeMapItem &&
-    ExerciseComponent &&
-    mapItems[activeMapItem].type !== 'fork'
+    isExerciseShown && activeMapItem && ExerciseComponent
   return (
     <>
-      {shouldShowExercise ? (
+      {shouldShowExercise && mapItems[activeMapItem].type !== 'fork' ? (
         <div className="absolute inset-0 z-10 overflow-y-scroll bg-white">
           <ExerciseComponent
             id={activeMapItem}
