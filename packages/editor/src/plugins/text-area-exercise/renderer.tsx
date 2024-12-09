@@ -4,6 +4,8 @@ import { faLightbulb } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 
 import { Blocks } from './blocks'
+import { PrototypeStateStore } from './prototype-state'
+import { usePluginId } from './use-plugin-id'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 // Schüly Ansicht
@@ -18,6 +20,7 @@ export function TextAreaExerciseRenderer({
     evaluationCriteria,
     allowShowEvaluationCriteria,
   } = useTextAreaPluginStateValues()
+  const silentMode = PrototypeStateStore.useState((s) => s.silentMode)
   const [showFeedbackCriteria, setShowStrategy] = useState(false)
 
   return (
@@ -40,7 +43,7 @@ export function TextAreaExerciseRenderer({
       ) : null}
       Write your answer:
       <Blocks />
-      {!isInEditor && allowShowEvaluationCriteria ? (
+      {!isInEditor && allowShowEvaluationCriteria && !silentMode ? (
         <>
           <button
             className={cn(

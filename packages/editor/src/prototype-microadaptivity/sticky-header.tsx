@@ -35,7 +35,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         setIsOpen={(shouldShow) => {
           setShowModal(shouldShow)
         }}
-        title="Lernschritt"
+        title="Lernpfad-Schritt"
         extraTitleClassName="serlo-h3 mt-4"
         extraOverlayClassName="blur"
         className="top-8 w-[40rem] translate-y-0 sm:top-20"
@@ -43,14 +43,14 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         <div className="w-full px-[16px]">
           <div className="flex flex-col gap-8">
             <div>
-              <div>Welchen Titel soll der Lernschritt haben?</div>
+              <div>Welchen Titel soll der Lernpfad-Schritt haben?</div>
               <EditorTextArea showAiGenerateIcon={false} />
             </div>
 
             <div>
               <div>
                 Wie viel Bearbeitungszeit haben die Lernenden für diesen
-                Lernschritt?
+                Lernpfad-Schritt?
               </div>
               <div className="w- flex flex-row items-center justify-start gap-3">
                 <EditorTextArea
@@ -61,7 +61,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
                 Minuten
               </div>
               <div className="flex flex-row gap-3">
-                Lernschritt nach Ablaufen der Zeit automatisch schließen?
+                Lernpfad-Schritt nach Ablaufen der Zeit automatisch schließen?
                 <SwitchButton
                   isOn={closeAfterTimeLimit}
                   onClick={() =>
@@ -73,8 +73,8 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
 
             <div>
               <div>
-                Wie oft darf dieser Lernschritt vor der finalen Abgabe widerholt
-                werden?
+                Wie oft darf dieser Lernpfad-Schritt vor der finalen Abgabe
+                widerholt werden?
               </div>
               <div className="flex flex-row items-center justify-start gap-3">
                 <EditorTextArea

@@ -87,7 +87,7 @@ const responses: {
         {
           type: 'link',
           text: 'Lernpfad-Schritt "Useful phrases & vocabulary"',
-          href: '',
+          href: 'https://frontend-git-feat-lernpfad-prototype-serlo.vercel.app/___lernpfad_prototype',
           linkPreview: {
             title: 'Useful phrases & vocabulary',
             image:

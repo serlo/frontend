@@ -29,11 +29,9 @@ export function IndividualHelpEditor() {
 
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center gap-3">
-          <label className="font-bold">Individuelle KI-Hilfestellungen</label>
-          <SwitchButton
-            isOn={allowAiFeedback.value}
-            onClick={() => allowAiFeedback.set((old) => !old)}
-          />
+          <label className="font-bold">
+            Individuelle KI-Hilfestellungen und Feedback
+          </label>
         </div>
         <div className="flex flex-row items-center gap-2">
           <label className="">
@@ -52,16 +50,21 @@ export function IndividualHelpEditor() {
           />
         </div>
       </div>
-
-      <div>
-        <div className="font-bold">Hinweise an die KI</div>
-        <EditorTextArea
-          placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
-          onChange={(e) => additionalInfoForAi.set(e.target.value)}
-          value={additionalInfoForAi.value}
-          className="my-3"
-        />
-      </div>
+      {allowParagraphFeedback.value || allowSubmitFeedback.value ? (
+        <div>
+          <div className="font-bold">Hinweise an die KI</div>
+          <div className="text-gray-500">
+            Beispielsweise Fehlkonzepte oder gängige Fehler, auf die KI eingehen
+            soll.
+          </div>
+          <EditorTextArea
+            placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
+            onChange={(e) => additionalInfoForAi.set(e.target.value)}
+            value={additionalInfoForAi.value}
+            className="my-3"
+          />
+        </div>
+      ) : null}
     </>
   )
 }

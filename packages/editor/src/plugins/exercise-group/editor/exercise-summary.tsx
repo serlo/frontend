@@ -41,7 +41,7 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
           </button>
 
           <h2 className="mb-1 text-center text-lg font-semibold">
-            Zusammenfassung Lernschritt 'Writing your opinion'
+            Zusammenfassung Lernpfad-Schritt 'Writing your opinion'
           </h2>
           <p className="mb-6 text-center text-sm text-gray-600">
             20 Minuten Bearbeitungszeit | 3 Wiederholungen
