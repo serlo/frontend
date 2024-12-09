@@ -49,10 +49,10 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
 
           <div className="space-y-4">
             <div>
-              <p className="mb-1 font-semibold">
-                {exercises[currentExercise - 1].title}
+              <p className="my-2 cursor-pointer bg-editor-primary-100 p-1 font-semibold hover:bg-editor-primary-200">
+                {exercises[0].title}
               </p>
-              <ul className="space-y-3">
+              <ul className="mx-2 space-y-3">
                 {checkboxes.map((item, index) => (
                   <li
                     key={index}
@@ -68,11 +68,17 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                   </li>
                 ))}
               </ul>
+              <p className="my-2 cursor-pointer bg-editor-primary-100 p-1 font-semibold hover:bg-editor-primary-200">
+                {exercises[1].title}
+              </p>
+              <p className="my-2 cursor-pointer bg-editor-primary-100 p-1 font-semibold hover:bg-editor-primary-200">
+                {exercises[2].title}
+              </p>
             </div>
           </div>
 
           {/* Pagination Dots */}
-          <div className="mt-6 flex justify-center space-x-2">
+          {/* <div className="mt-6 flex justify-center space-x-2">
             {exercises.map((_, index) => (
               <button
                 key={index}
@@ -84,7 +90,7 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                 }`}
               />
             ))}
-          </div>
+          </div> */}
 
           <button
             className="ml-auto mr-2 mt-8 flex flex-row items-center justify-center gap-3 rounded-md bg-editor-primary-100 px-16 py-4 pb-4 pt-4 font-bold hover:cursor-pointer hover:bg-editor-primary-200"

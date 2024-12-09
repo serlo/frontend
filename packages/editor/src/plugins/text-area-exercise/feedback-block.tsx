@@ -1,11 +1,13 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
+import { faSpeakap } from '@fortawesome/free-brands-svg-icons'
 import { faComments } from '@fortawesome/free-regular-svg-icons'
 import {
   faArrowUpRightFromSquare,
   faExclamationCircle,
   faTimes,
   faUser,
+  faVolumeHigh,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { AnimateChangeInHeight } from './animate-change-in-height'
@@ -107,6 +109,9 @@ export function FeedbackBlock({ id, content }: Feedback) {
           ) : null}
         </span>
         <div className="mt-3 flex flex-row justify-end gap-5 text-sm text-gray-600">
+          <button className="hover:underline">
+            <FaIcon icon={faVolumeHigh} /> Vorlesen
+          </button>
           <button className="hover:underline">
             <FaIcon icon={faComments} /> Chat
           </button>

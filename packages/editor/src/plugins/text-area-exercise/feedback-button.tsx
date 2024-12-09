@@ -131,7 +131,16 @@ const responses: {
       feedback: [
         {
           type: 'text',
-          text: 'Deine Argumente sind klar und gut begründet. Versuche, "linking words" wie "in addition" oder "however" zu verwenden, um deine Argumente besser zu strukturieren. Weiter so!',
+          text: 'Deine Argumente sind klar und gut begründet. Versuche, ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: '"linking words"',
+        },
+        {
+          type: 'text',
+          text: ' wie "in addition" oder "however" zu verwenden, um deine Argumente besser zu strukturieren. Weiter so!',
         },
       ],
       isCorrect: false,
@@ -146,28 +155,6 @@ const responses: {
           type: 'text',
           text: 'Dein Satz ist korrekt und ohne Fehler. Die Struktur mit "however" als linking word ist gelungen.',
         },
-        // {
-        //   type: 'text',
-        //   text: 'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine ',
-        // },
-        // {
-        //   type: 'text',
-        //   bold: true,
-        //   text: 'Meinung',
-        // },
-        // {
-        //   type: 'text',
-        //   text: ' weiter zu ',
-        // },
-        // {
-        //   type: 'text',
-        //   bold: true,
-        //   text: 'begründen',
-        // },
-        // {
-        //   type: 'text',
-        //   text: ', indem du erklärst, warum Hobbys wichtig sind.',
-        // },
       ],
       isCorrect: false,
     },
@@ -264,7 +251,7 @@ export function FeedbackButton({
         className="serlo-tooltip-trigger flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-purple-100 opacity-0 transition-opacity hover:bg-purple-200  group-focus-within:opacity-100"
         onClick={() => handleKiButtonClick(pluginId)}
       >
-        <EditorTooltip text="Hole Feedback von der KI" />
+        <EditorTooltip text="Feedback von Birdie" />
         {spinner ? (
           <FaIcon className="h-7 w-7 animate-spin-slow" icon={faSpinner} />
         ) : (
