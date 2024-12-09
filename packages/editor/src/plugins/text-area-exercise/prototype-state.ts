@@ -1,7 +1,7 @@
 import { Store } from 'pullstate'
 import { v4 as uuid_v4 } from 'uuid'
 
-import { Block, Text, AiFeedback, Feedback } from './types'
+import { Block, Text, Feedback, FeedbackText, FeedbackLink } from './types'
 
 interface TextAreaPluginState {
   textAreaBlocks: Block[]
@@ -21,14 +21,17 @@ export const PrototypeStateStore = new Store<PrototypeState>({
   __is_starting_up: true,
 })
 
-export function createFeedbackBlock(
-  feedback: AiFeedback | null = null
-): Feedback {
+export function createFeedbackBlock(feedback: {
+  feedback: (FeedbackText | FeedbackLink)[]
+  isCorrect: boolean
+}): Feedback {
   if (!feedback) {
     return {
       id: uuid_v4(),
       type: 'feedback',
-      content: 'Leider konnte unsere KI kein Feedback geben',
+      content: [
+        { type: 'text', text: 'Leider konnte unsere KI kein Feedback geben' },
+      ],
       isCorrect: false,
     }
   }
@@ -36,8 +39,8 @@ export function createFeedbackBlock(
   return {
     id: uuid_v4(),
     type: 'feedback',
-    content: feedback.generalFeedback,
     isCorrect: feedback.isCorrect,
+    content: feedback.feedback,
   }
 }
 

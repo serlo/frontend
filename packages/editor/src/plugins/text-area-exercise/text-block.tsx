@@ -14,7 +14,6 @@ export function TextBlock({ id }: Text) {
     pluginId
   ].textAreaBlocks.find((b) => b.id === id)
 
-  console.log(__is_starting_up)
   return (
     <div className="group flex flex-row">
       <textarea

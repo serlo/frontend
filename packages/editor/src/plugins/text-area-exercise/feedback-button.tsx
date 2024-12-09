@@ -9,13 +9,29 @@ import { AiFeedback } from './types'
 import { usePluginId } from './use-plugin-id'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
-const responses = [
+const responses: {
+  studentSolution: string
+  aiFeedback: AiFeedback
+}[] = [
   // a
   {
     studentSolution: 'Students often have homework every day.',
     aiFeedback: {
-      generalFeedback:
-        'Dein Satz ist ein guter Anfang, um allgemeine Informationen zu geben. Allerdings fehlt noch deine persönliche Meinung.',
+      feedback: [
+        {
+          type: 'text',
+          text: 'Dein Satz ist ein guter Anfang, um allgemeine Informationen zu geben. Allerdings ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: 'fehlt noch deine persönliche Meinung',
+        },
+        {
+          type: 'text',
+          text: '.',
+        },
+      ],
       isCorrect: false,
     },
   },
@@ -23,8 +39,12 @@ const responses = [
     studentSolution:
       'Students often have homework every day. That is too often.',
     aiFeedback: {
-      generalFeedback:
-        'Dein Anfang enthält allgemeine Informationen und deine Meinung, was sehr gut ist. Du könntest jedoch eine der vorgeschlagenen "useful phrases" wie "I think" oder "I believe" verwenden, um deine Meinung klarer zu kennzeichnen. Weiter so!',
+      feedback: [
+        {
+          type: 'text',
+          text: 'Dein Anfang enthält allgemeine Informationen und deine Meinung, was sehr gut ist. Du könntest jedoch eine der vorgeschlagenen "useful phrases" wie "I think" oder "I believe" verwenden, um deine Meinung klarer zu kennzeichnen. Weiter so!',
+        },
+      ],
       isCorrect: false,
     },
   },
@@ -32,8 +52,53 @@ const responses = [
     studentSolution:
       'Students often have homework every day. That is too often. ',
     aiFeedback: {
-      generalFeedback:
-        'Deine Lösung enthält allgemeine Informationen, aber es fehlt eine klare Formulierung deiner Meinung. Versuche, eine der "useful phrases" wie "I think" oder "I believe" zu verwenden, um deine Meinung deutlicher zu machen. Vielleicht schaust du dir nochmal den Lernschritt "Useful phrases & vocabulary" an, um mehr darüber zu erfahren.',
+      feedback: [
+        {
+          type: 'text',
+          text: 'Deine Lösung enthält allgemeine Informationen, aber es ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: 'fehlt eine klare Formulierung deiner Meinung',
+        },
+        {
+          type: 'text',
+          text: '. Versuche, eine der "useful phrases" wie ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: '"I think"',
+        },
+        {
+          type: 'text',
+          text: ' oder ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: '"I believe"',
+        },
+        {
+          type: 'text',
+          text: ' zu verwenden, um deine Meinung deutlicher zu machen. Vielleicht schaust du dir nochmal den ',
+        },
+        {
+          type: 'link',
+          text: 'Lernpfad-Schritt "Useful phrases & vocabulary"',
+          href: '',
+          linkPreview: {
+            title: 'Useful phrases & vocabulary',
+            image:
+              '_assets/img/meta/microadaptivity-useful-phrases-and-vocabulary.png',
+          },
+        },
+        {
+          type: 'text',
+          text: ' an, um mehr darüber zu erfahren.',
+        },
+      ],
       isCorrect: false,
     },
   },
@@ -41,8 +106,12 @@ const responses = [
     studentSolution:
       'Students often have homework every day, but I believe that is too often.',
     aiFeedback: {
-      generalFeedback:
-        'Deine Antwort ist sehr gut gelungen. Du hast sowohl allgemeine Informationen als auch deine Meinung klar ausgedrückt. Weiter so!',
+      feedback: [
+        {
+          type: 'text',
+          text: 'Deine Antwort ist sehr gut gelungen. Du hast sowohl allgemeine Informationen als auch deine Meinung klar ausgedrückt. Weiter so!',
+        },
+      ],
       isCorrect: false,
     },
   },
@@ -50,16 +119,24 @@ const responses = [
   {
     studentSolution: 'Students must time for hobbies.',
     aiFeedback: {
-      generalFeedback:
-        'Dein Satz ist ein guter Anfang, aber er ist grammatikalisch nicht korrekt. Du könntest zum Beispiel sagen: "Students need time for hobbies."',
+      feedback: [
+        {
+          type: 'text',
+          text: 'Dein Satz ist ein guter Anfang, aber er ist grammatikalisch nicht korrekt. Du könntest zum Beispiel sagen: "Students need time for hobbies."',
+        },
+      ],
       isCorrect: false,
     },
   },
   {
     studentSolution: 'Students need time for hobbies. They are important.',
     aiFeedback: {
-      generalFeedback:
-        'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine Meinung weiter zu begründen, indem du erklärst, warum Hobbys wichtig sind.',
+      feedback: [
+        {
+          type: 'text',
+          text: 'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine Meinung weiter zu begründen, indem du erklärst, warum Hobbys wichtig sind.',
+        },
+      ],
       isCorrect: false,
     },
   },
@@ -92,29 +169,33 @@ export function FeedbackButton({
     const studentSolution =
       blocks.find((block) => block.id === id)?.content || ''
 
-    const response = await fetch(url.toString(), {
-      method: 'POST',
-      body: JSON.stringify({
-        exercise: exercise,
-        solution: solution ?? 'keine Musterlösung',
-        evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
-        // Maybe do it per paragraph like in the original prototype?
-        studentSolution: studentSolution,
-        additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
-      }),
-    })
+    // const response = await fetch(url.toString(), {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     exercise: exercise,
+    //     solution: solution ?? 'keine Musterlösung',
+    //     evaluationCriteria: evaluationCriteria ?? 'keine Bewertungskriterien',
+    //     // Maybe do it per paragraph like in the original prototype?
+    //     studentSolution: studentSolution,
+    //     additionalInfoForAi: additionalInfoForAi ?? 'keine zusätzlichen Infos',
+    //   }),
+    // })
 
-    if (!response.ok) {
-      console.error('Network response was not ok', response)
-      return null
-    }
+    // if (!response.ok) {
+    //   throw new Error('Network response was not ok')
+    // }
 
-    await response.json()
+    // await response.json()
+
+    const predefinedResponse = responses.find(
+      (entry) => entry.studentSolution === studentSolution
+    )
+
+    if (!predefinedResponse) throw new Error('Response missing')
 
     //
     // return (await response.json()) as AiFeedback
-    return responses.find((entry) => entry.studentSolution === studentSolution)
-      ?.aiFeedback
+    return predefinedResponse.aiFeedback
   }
 
   async function handleKiButtonClick(pluginId: string) {
@@ -140,7 +221,7 @@ export function FeedbackButton({
         return
       }
       if (nextBlock && feedback && nextBlock.type === 'feedback') {
-        nextBlock.content = feedback.generalFeedback
+        nextBlock.content = feedback.feedback
         nextBlock.isCorrect = feedback.isCorrect
       }
     })
