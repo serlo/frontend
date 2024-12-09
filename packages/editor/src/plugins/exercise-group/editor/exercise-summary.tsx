@@ -49,8 +49,8 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
 
           <div className="space-y-4">
             <div>
-              <p className="my-2 cursor-pointer bg-editor-primary-100 p-1 font-semibold hover:bg-editor-primary-200">
-                {exercises[0].title}
+              <p className="my-2 cursor-pointer rounded-md bg-editor-primary-100 px-2 py-1 font-semibold hover:bg-editor-primary-200">
+                <span className="mr-2">▾</span> {exercises[0].title}
               </p>
               <ul className="mx-2 space-y-3">
                 {checkboxes.map((item, index) => (
@@ -68,10 +68,12 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                   </li>
                 ))}
               </ul>
-              <p className="my-2 cursor-pointer bg-editor-primary-100 p-1 font-semibold hover:bg-editor-primary-200">
+              <p className="my-2 cursor-pointer rounded-md bg-editor-primary-100 px-2 py-1 font-semibold hover:bg-editor-primary-200">
+                <span className="mr-2">▸</span>
                 {exercises[1].title}
               </p>
-              <p className="my-2 cursor-pointer bg-editor-primary-100 p-1 font-semibold hover:bg-editor-primary-200">
+              <p className="my-2 cursor-pointer rounded-md bg-editor-primary-100 px-2 py-1 font-semibold hover:bg-editor-primary-200">
+                <span className="mr-2">▸</span>
                 {exercises[2].title}
               </p>
             </div>

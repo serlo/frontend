@@ -97,7 +97,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
             <div className="flex flex-col items-end">
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 hover:cursor-pointer hover:bg-editor-primary-200"
+                className="rounded-md bg-editor-primary-100 px-16 pb-4 pt-4 font-bold hover:cursor-pointer hover:bg-editor-primary-200"
               >
                 zum Lernmaterial-Editor{' '}
                 <FaIcon className="mx-3" icon={faArrowRight} />
