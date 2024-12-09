@@ -9,7 +9,7 @@ export function MapNavigation() {
         onClick={() => {}}
       >
         <FaIcon icon={faArrowLeft} />
-        <span className="text-lg">Back to Dashboard</span>
+        <span className="text-lg">Zur Übersicht</span>
       </button>
 
       <div className="flex items-center gap-x-6">
@@ -18,7 +18,7 @@ export function MapNavigation() {
         </h1>
         <h2 className="flex items-center gap-1 text-sm text-gray-400">
           <FaIcon icon={faClock} />
-          Time needed: 60 minutes
+          Benötigte Zeit: 60 Minuten
         </h2>
       </div>
 

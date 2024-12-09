@@ -25,7 +25,7 @@ export function ExerciseWrapper({
           onClick={onBackToMapClick}
         >
           <FaIcon icon={faArrowLeft} />
-          <span className="text-lg">Back to Path</span>
+          <span className="text-lg">Zum Lernpfad</span>
         </button>
 
         {noHeader ? null : (
@@ -46,7 +46,7 @@ export function ExerciseWrapper({
           className="serlo-button-learner-secondary rounded-lg px-4 py-2 text-2xl"
           onClick={() => onSubmitClick(id)}
         >
-          Go on <FaIcon icon={faCircleArrowRight} />
+          Weiter <FaIcon icon={faCircleArrowRight} />
         </button>
       </main>
     </>
