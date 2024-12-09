@@ -23,7 +23,7 @@ export function MapNavigation() {
       </div>
 
       <button className="mr-4 flex flex-row items-center gap-3 rounded-md bg-purple-200 px-6 py-3 font-bold hover:cursor-pointer hover:bg-purple-300">
-        Sprich mit Birdie
+        Sprich mit
         <img src="/_assets/img/birdie.svg" className="max-w-6" />
       </button>
     </nav>
