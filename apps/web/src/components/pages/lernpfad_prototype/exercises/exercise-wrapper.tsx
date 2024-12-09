@@ -17,6 +17,8 @@ export function ExerciseWrapper({
 }: ExerciseProps & { children: JSX.Element; noHeader?: boolean }) {
   if (id === null) return null
 
+  const hasAiLabel = data.labels.includes('ai')
+
   return (
     <>
       <header>
@@ -30,10 +32,7 @@ export function ExerciseWrapper({
 
         {noHeader ? null : (
           <div className="fixed top-2 z-50 m-5 w-full">
-            <StickyHeaderLearner
-              time={data.time}
-              helpActive={data.isMacroadaptive}
-            />
+            <StickyHeaderLearner time={data.time} helpActive={hasAiLabel} />
           </div>
         )}
       </header>
@@ -51,7 +50,7 @@ export function ExerciseWrapper({
           Weiter <FaIcon icon={faCircleArrowRight} />
         </button>
       </main>
-      {data.isMacroadaptive ? (
+      {hasAiLabel ? (
         <button className="z-1000 fixed bottom-3 right-7 flex flex-row items-center gap-2 rounded-md bg-purple-100 px-4 py-2 text-sm font-bold hover:cursor-pointer hover:bg-purple-200">
           Sprich mit
           <img src="/_assets/img/birdie.svg" className="max-w-6" />
