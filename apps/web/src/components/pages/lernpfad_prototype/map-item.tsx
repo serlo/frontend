@@ -97,7 +97,11 @@ export function MapItem({
       {mapItem.type === 'start' ? null : (
         <div className="mt-0.25 flex items-center justify-center gap-[1px] text-[0.4rem] text-gray-400">
           {exercise.labels.map((label) => (
-            <FaIcon key={label} icon={labelIconsMap[label]} />
+            <FaIcon
+              className={label === 'ai' ? 'text-[#9b45d8]' : undefined}
+              key={label}
+              icon={labelIconsMap[label]}
+            />
           ))}
           {exercise.labels.length ? <span className="px-0.5">|</span> : null}
           {exercise.contentType}
