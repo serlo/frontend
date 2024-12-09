@@ -49,13 +49,13 @@ export function ForkModal({
         <div className="mx-side">
           <button
             className="serlo-button-learner-primary mr-2 rounded-md p-3 text-xl font-medium"
-            onClick={() => onClick(forkId, nextId)}
+            onClick={() => onClick(forkId, excursionId)}
           >
             Zum Exkurs
           </button>
           <button
             className="serlo-button-learner-primary rounded-md p-3 text-xl font-medium"
-            onClick={() => onClick(forkId, excursionId)}
+            onClick={() => onClick(forkId, nextId)}
           >
             Direkt weiter
           </button>
@@ -67,7 +67,6 @@ export function ForkModal({
   function renderPathFork() {
     const easyId = fork.nextExercises[0]
     const hardId = fork.nextExercises[1]
-    console.log(easyId)
     return (
       <>
         <p className="serlo-p">
