@@ -37,7 +37,7 @@ const exercisesContentMap: Record<
   MapItemId,
   (props: ExerciseProps) => React.ReactElement
 > = {
-  intro: (props) => <Intro {...props} />,
+  intro: () => <></>,
   extra1: (props) => <Extra1 {...props} />,
   info: (props) => <Intro {...props} />,
   recap_easy: (props) => <RecapEasy {...props} />,
@@ -104,6 +104,10 @@ function Content() {
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           onConfirmClick={handleModalConfirmClick}
+          setStartToDone={() => {
+            handleExerciseSubmitClick('intro')
+            setIsModalOpen(false)
+          }}
         />
       ) : activeMapItem && mapItems[activeMapItem].type === 'fork' ? (
         <ForkModal
@@ -120,7 +124,7 @@ function Content() {
   function handleMapItemClick(id: MapItemId) {
     setActiveMapItem(id)
 
-    if (mapItems[id].type === 'start' || mapItems[id].type === 'info') {
+    if (mapItems[id].type === 'info') {
       setIsExerciseShown(true)
       return
     }
