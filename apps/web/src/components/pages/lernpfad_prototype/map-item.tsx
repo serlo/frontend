@@ -5,7 +5,7 @@ import {
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 
-import type { ExerciseId, ExerciseLabel, ExercisesRecord } from './types'
+import type { MapItemId, ExerciseLabel, MapItemsRecord } from './types'
 import { FaIcon } from '../../fa-icon'
 import { cn } from '@/helper/cn'
 
@@ -17,24 +17,45 @@ const labelIconsMap: Record<ExerciseLabel, IconDefinition> = {
 
 export function MapItem({
   id,
-  exercises,
+  mapItems,
   onClick,
 }: {
-  id: ExerciseId
-  exercises: ExercisesRecord
-  onClick: (id: ExerciseId) => void
+  id: MapItemId
+  mapItems: MapItemsRecord
+  onClick: (id: MapItemId) => void
 }) {
-  const exercise = exercises[id]
-  const isDisabled = !!exercise.dependsOnExercises?.every(
-    (exerciseId) => !exercises[exerciseId].done
+  const mapItem = mapItems[id]
+  const isDisabled = !!mapItem.dependsOn?.every(
+    (mapItemId) => !mapItems[mapItemId].done
   )
 
+  if (mapItem.type === 'fork') {
+    return (
+      <button
+        key={id}
+        id={id}
+        className="absolute cursor-pointer"
+        style={getMapItemStyle()}
+        onClick={() => onClick(id)}
+        disabled={isDisabled}
+      >
+        <div className={cn('p-2', isDisabled && 'grayscale')}>
+          <div
+            style={{ backgroundImage: `url(/_assets/img/prototype/fork.svg)` }}
+            className="h-6 w-7 bg-contain bg-bottom bg-no-repeat"
+          />
+        </div>
+      </button>
+    )
+  }
+
+  const exercise = mapItem
   return (
     <button
       key={id}
       id={id}
       className="absolute w-[75px] cursor-pointer rounded-full"
-      style={getExerciseStyle()}
+      style={getMapItemStyle()}
       onClick={() => onClick(id)}
       disabled={isDisabled}
     >
@@ -60,14 +81,15 @@ export function MapItem({
   )
 
   function getNodeSrc() {
-    if (exercise.done) return '/_assets/img/prototype/done.svg'
-    return `/_assets/img/prototype/${exercise.type}.svg`
+    if (mapItem.done) return '/_assets/img/prototype/done.svg'
+    if (mapItem.type === 'info') return '/_assets/img/prototype/start.svg'
+    return `/_assets/img/prototype/${mapItem.type}.svg`
   }
 
-  function getExerciseStyle() {
+  function getMapItemStyle() {
     return {
-      left: `${exercise.position.x}%`,
-      top: `${exercise.position.y}%`,
+      left: `${mapItem.position.x}%`,
+      top: `${mapItem.position.y}%`,
     }
   }
 }

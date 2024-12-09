@@ -8,7 +8,7 @@ import { QueryParamProvider } from 'use-query-params'
 import { Extra1 } from '../components/pages/lernpfad_prototype/exercises/extra1'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import {
-  initialExercisesData,
+  initialMapItemsData,
   localStorageKey,
 } from '@/components/pages/lernpfad_prototype/const'
 import { Extra2 } from '@/components/pages/lernpfad_prototype/exercises/extra2'
@@ -19,13 +19,14 @@ import { Reflection } from '@/components/pages/lernpfad_prototype/exercises/refl
 import { Rewrite } from '@/components/pages/lernpfad_prototype/exercises/rewrite'
 import { WritingEasy } from '@/components/pages/lernpfad_prototype/exercises/writing_easy'
 import { WritingHard } from '@/components/pages/lernpfad_prototype/exercises/writing_hard'
+import { ForkModal } from '@/components/pages/lernpfad_prototype/fork-modal'
 import { Map } from '@/components/pages/lernpfad_prototype/map'
 import { MapNavigation } from '@/components/pages/lernpfad_prototype/map-navigation'
 import { Modal } from '@/components/pages/lernpfad_prototype/modal'
 import type {
-  ExerciseId,
+  MapItemId,
   ExerciseProps,
-  ExercisesRecord,
+  MapItemsRecord,
 } from '@/components/pages/lernpfad_prototype/types'
 import { useLocalStorage } from '@/components/pages/lernpfad_prototype/use-local-storage'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
@@ -33,11 +34,12 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 const exercisesContentMap: Record<
-  ExerciseId,
+  MapItemId,
   (props: ExerciseProps) => React.ReactElement
 > = {
   intro: (props) => <Intro {...props} />,
   extra1: (props) => <Extra1 {...props} />,
+  info: (props) => <Intro {...props} />,
   recap_easy: (props) => <RecapEasy {...props} />,
   recap_hard: (props) => <RecapHard {...props} />,
   writing_easy: (props) => <WritingEasy {...props} />,
@@ -63,53 +65,65 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
 })
 
 function Content() {
-  const [exercises, setExercises] = useLocalStorage<ExercisesRecord>(
+  const [mapItems, setMapItems] = useLocalStorage<MapItemsRecord>(
     localStorageKey,
-    initialExercisesData
+    initialMapItemsData
   )
   const [isExerciseShown, setIsExerciseShown] = useState(false)
-  const [activeExercise, setActiveExercise] = useState<ExerciseId | null>(null)
+  const [activeMapItem, setActiveMapItem] = useState<MapItemId | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   editorRenderers.init(createRenderers())
 
   const ExerciseComponent =
-    activeExercise === null ? null : exercisesContentMap[activeExercise]
+    activeMapItem === null ? null : exercisesContentMap[activeMapItem]
 
-  const showExercise = isExerciseShown && activeExercise && ExerciseComponent
+  const shouldShowExercise =
+    isExerciseShown &&
+    activeMapItem &&
+    ExerciseComponent &&
+    mapItems[activeMapItem].type !== 'fork'
   return (
     <>
-      {showExercise ? (
+      {shouldShowExercise ? (
         <div className="absolute inset-0 z-10 overflow-y-scroll bg-white">
           <ExerciseComponent
-            id={activeExercise}
-            data={exercises[activeExercise]}
+            id={activeMapItem}
+            data={mapItems[activeMapItem]}
             onBackToMapClick={handleBackToMapClick}
             onSubmitClick={handleExerciseSubmitClick}
           />
         </div>
       ) : null}
       <div className="pt-[100px]">
-        {showExercise ? null : <MapNavigation />}
+        {shouldShowExercise ? null : <MapNavigation />}
         <TransformWrapper disablePadding smooth={false}>
-          <Map exercises={exercises} onExerciseClick={handleExerciseClick} />
+          <Map mapItems={mapItems} onMapItemClick={handleMapItemClick} />
         </TransformWrapper>
       </div>
-      {activeExercise ? (
+      {activeMapItem && mapItems[activeMapItem].type !== 'fork' ? (
         <Modal
-          exercise={exercises[activeExercise]}
+          exercise={mapItems[activeMapItem]}
           isOpen={isModalOpen}
           setIsOpen={setIsModalOpen}
           onConfirmClick={handleModalConfirmClick}
+        />
+      ) : activeMapItem && mapItems[activeMapItem].type === 'fork' ? (
+        <ForkModal
+          forkId={activeMapItem}
+          fork={mapItems[activeMapItem]}
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          onClick={handleForkModalClick}
         />
       ) : null}
     </>
   )
 
-  function handleExerciseClick(id: ExerciseId) {
-    setActiveExercise(id)
+  function handleMapItemClick(id: MapItemId) {
+    setActiveMapItem(id)
 
-    if (exercises[id].type === 'start') {
+    if (mapItems[id].type === 'start' || mapItems[id].type === 'info') {
       setIsExerciseShown(true)
       return
     }
@@ -122,23 +136,36 @@ function Content() {
     setIsModalOpen(false)
   }
 
-  function handleBackToMapClick() {
-    setIsExerciseShown(false)
-    setActiveExercise(null)
+  function handleForkModalClick(forkId: MapItemId, nextExerciseId: MapItemId) {
+    const newMapItems = {
+      ...mapItems,
+      [forkId]: { ...mapItems[forkId], done: true },
+    }
+    setMapItems(newMapItems)
+    localStorage.setItem(localStorageKey, JSON.stringify(newMapItems))
+    setActiveMapItem(nextExerciseId)
+    setIsExerciseShown(true)
+    setIsModalOpen(false)
+    // TODO: maybe path locking is needed
   }
 
-  function handleExerciseSubmitClick(id: ExerciseId) {
-    const newExercises = {
-      ...exercises,
-      [id]: { ...exercises[id], done: true },
+  function handleBackToMapClick() {
+    setIsExerciseShown(false)
+    setActiveMapItem(null)
+  }
+
+  function handleExerciseSubmitClick(id: MapItemId) {
+    const newMapItems = {
+      ...mapItems,
+      [id]: { ...mapItems[id], done: true },
     }
-    localStorage.setItem(localStorageKey, JSON.stringify(newExercises))
+    localStorage.setItem(localStorageKey, JSON.stringify(newMapItems))
 
     setIsExerciseShown(false)
-    setActiveExercise(null)
+    setActiveMapItem(null)
 
     setTimeout(() => {
-      setExercises(newExercises)
+      setMapItems(newMapItems)
 
       if (id === 'intro') return
       const element = document.getElementById(id)

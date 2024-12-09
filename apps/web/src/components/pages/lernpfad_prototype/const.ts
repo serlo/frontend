@@ -1,19 +1,69 @@
-import { ExercisesRecord } from './types'
+import { MapItemsRecord } from './types'
 
 export const localStorageKey = 'lernpfad_prototype'
 
-export const initialExercisesData: ExercisesRecord = {
+export const initialMapItemsData: MapItemsRecord = {
   intro: {
     type: 'start',
     done: false,
     time: 5,
     title: 'Start',
     labels: ['group'],
-    nextExercises: ['extra1', 'recap_easy', 'recap_hard'],
-    dependsOnExercises: null,
+    contentType: 'Inhalt',
+    nextExercises: ['extra1', 'info'],
+    dependsOn: null,
     position: {
       x: 45.5,
       y: 23,
+    },
+  },
+  fork1: {
+    type: 'fork',
+    done: false,
+    nextExercises: ['extra1', 'info'],
+    dependsOn: ['intro'],
+    position: {
+      x: 20,
+      y: 0,
+    },
+  },
+  extra1: {
+    type: 'excursion',
+    done: false,
+    time: 5,
+    title: 'Useful phrases & vocabulary',
+    labels: ['solo'],
+    contentType: 'Übung',
+    isMacroadaptive: true,
+    nextExercises: null,
+    dependsOn: ['fork1'],
+    position: {
+      x: 33,
+      y: 20,
+    },
+  },
+  info: {
+    type: 'info',
+    done: false,
+    time: 5,
+    title: 'Information',
+    labels: ['solo'],
+    contentType: 'Inhalt',
+    nextExercises: ['fork2'],
+    dependsOn: ['fork1'],
+    position: {
+      x: 45,
+      y: 35,
+    },
+  },
+  fork2: {
+    type: 'fork',
+    done: false,
+    nextExercises: ['recap_easy', 'recap_hard'],
+    dependsOn: ['info'],
+    position: {
+      x: 40,
+      y: 0,
     },
   },
   recap_easy: {
@@ -22,8 +72,9 @@ export const initialExercisesData: ExercisesRecord = {
     time: 10,
     title: 'Cats or Dogs? 🐱 🐶',
     labels: ['solo'],
+    contentType: 'Übung',
     nextExercises: ['writing_easy'],
-    dependsOnExercises: ['intro'],
+    dependsOn: ['info'],
     position: {
       x: 34,
       y: 31.5,
@@ -35,8 +86,9 @@ export const initialExercisesData: ExercisesRecord = {
     time: 10,
     title: 'Cats or Dogs? 🐱 🐶',
     labels: ['solo'],
+    contentType: 'Übung',
     nextExercises: ['writing_hard'],
-    dependsOnExercises: ['intro'],
+    dependsOn: ['info'],
     position: {
       x: 58,
       y: 27,
@@ -48,8 +100,9 @@ export const initialExercisesData: ExercisesRecord = {
     time: 20,
     title: 'Writing your opinion',
     labels: ['solo'],
+    contentType: 'Übung',
     nextExercises: ['rewrite'],
-    dependsOnExercises: ['recap_easy'],
+    dependsOn: ['recap_easy'],
     position: {
       x: 33.5,
       y: 51,
@@ -61,8 +114,10 @@ export const initialExercisesData: ExercisesRecord = {
     time: 20,
     title: 'Writing your opinion',
     labels: ['solo'],
+    contentType: 'Übung',
+    isMacroadaptive: true,
     nextExercises: ['rewrite'],
-    dependsOnExercises: ['recap_hard'],
+    dependsOn: ['recap_hard'],
     position: {
       x: 61.5,
       y: 46,
@@ -74,11 +129,22 @@ export const initialExercisesData: ExercisesRecord = {
     time: 10,
     title: 'Feedback and Rewriting your opinion',
     labels: ['solo', 'ai'],
-    nextExercises: ['reflection', 'extra2'],
-    dependsOnExercises: ['writing_easy', 'writing_hard'],
+    contentType: 'Methode',
+    nextExercises: ['fork3'],
+    dependsOn: ['writing_easy', 'writing_hard'],
     position: {
       x: 48,
       y: 62,
+    },
+  },
+  fork3: {
+    type: 'fork',
+    done: false,
+    nextExercises: ['reflection', 'extra2'],
+    dependsOn: ['rewrite'],
+    position: {
+      x: 60,
+      y: 0,
     },
   },
   reflection: {
@@ -87,24 +153,12 @@ export const initialExercisesData: ExercisesRecord = {
     time: 8,
     title: 'Reflection',
     labels: ['solo', 'ai'],
+    contentType: 'Methode',
     nextExercises: null,
-    dependsOnExercises: ['rewrite'],
+    dependsOn: ['rewrite'],
     position: {
       x: 47,
       y: 74.5,
-    },
-  },
-  extra1: {
-    type: 'excursion',
-    done: false,
-    time: 5,
-    title: 'Useful phrases & vocabulary',
-    labels: ['solo'],
-    nextExercises: null,
-    dependsOnExercises: ['intro'],
-    position: {
-      x: 33,
-      y: 20,
     },
   },
   extra2: {
@@ -113,8 +167,9 @@ export const initialExercisesData: ExercisesRecord = {
     time: 5,
     title: 'Knowing & recognising criteria for opinion writing',
     labels: ['solo'],
+    contentType: 'Übung',
     nextExercises: null,
-    dependsOnExercises: ['rewrite'],
+    dependsOn: ['rewrite'],
     position: {
       x: 62,
       y: 62,

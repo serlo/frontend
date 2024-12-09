@@ -2,25 +2,25 @@ import { useEffect, useState } from 'react'
 import { TransformComponent, useControls } from 'react-zoom-pan-pinch'
 
 import { MapItem } from './map-item'
-import type { ExerciseId, ExercisesRecord } from './types'
+import type { MapItemId, MapItemsRecord } from './types'
 import { cn } from '@/helper/cn'
 
 export function Map({
-  exercises,
-  onExerciseClick,
+  mapItems,
+  onMapItemClick,
 }: {
-  exercises: ExercisesRecord
-  onExerciseClick: (id: ExerciseId) => void
+  mapItems: MapItemsRecord
+  onMapItemClick: (id: MapItemId) => void
 }) {
   const [initialZoomDone, setInitialZoomDone] = useState(false)
   const { zoomToElement } = useControls()
 
-  // Zoom to next incomplete exercise animation
+  // Zoom to next incomplete map item animation
   useEffect(() => {
     if (initialZoomDone) return
 
-    const idToZoomTo = Object.keys(exercises).find(
-      (key) => exercises[key].done === false
+    const idToZoomTo = Object.keys(mapItems).find(
+      (key) => mapItems[key].done === false
     )
     if (!idToZoomTo) return
 
@@ -30,7 +30,7 @@ export function Map({
     }, 1500)
 
     return () => clearTimeout(timer)
-  }, [exercises, initialZoomDone, zoomToElement])
+  }, [mapItems, initialZoomDone, zoomToElement])
 
   return (
     <TransformComponent>
@@ -42,12 +42,12 @@ export function Map({
         )}
       >
         <div className="relative left-1/2  h-[calc(100vh_-_100px)] w-[1194px] max-w-[153vh] -translate-x-1/2">
-          {Object.keys(exercises).map((id) => (
+          {Object.keys(mapItems).map((id) => (
             <MapItem
               key={id}
               id={id}
-              exercises={exercises}
-              onClick={onExerciseClick}
+              mapItems={mapItems}
+              onClick={onMapItemClick}
             />
           ))}
         </div>
