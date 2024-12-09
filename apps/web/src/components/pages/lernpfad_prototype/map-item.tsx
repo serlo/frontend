@@ -62,6 +62,8 @@ export function MapItem({
   }
 
   const exercise = mapItem
+  const isEnabledMacroadaptiveExercise =
+    exercise.isMacroadaptive && !isDisabled && !exercise.done
   return (
     <button
       key={id}
@@ -71,7 +73,13 @@ export function MapItem({
       onClick={() => onClick(id)}
       disabled={isDisabled}
     >
-      <div className={cn('px-4 pb-5 pt-2', isDisabled && 'grayscale')}>
+      <div
+        className={cn(
+          'px-4 pb-5 pt-2',
+          isDisabled && 'grayscale',
+          isEnabledMacroadaptiveExercise && 'hue-rotate-[74deg]'
+        )}
+      >
         <div
           style={{ backgroundImage: `url(${getNodeSrc()})` }}
           className="h-[38px] w-full bg-contain bg-bottom bg-no-repeat"
