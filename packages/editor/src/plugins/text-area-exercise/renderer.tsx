@@ -4,6 +4,8 @@ import { faLightbulb } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 
 import { Blocks } from './blocks'
+import { PrototypeStateStore } from './prototype-state'
+import { usePluginId } from './use-plugin-id'
 import { useTextAreaPluginStateValues } from './use-text-area-plugin-state-values'
 
 // Schüly Ansicht
@@ -18,6 +20,7 @@ export function TextAreaExerciseRenderer({
     evaluationCriteria,
     allowShowEvaluationCriteria,
   } = useTextAreaPluginStateValues()
+  const silentMode = PrototypeStateStore.useState((s) => s.silentMode)
   const [showFeedbackCriteria, setShowStrategy] = useState(false)
 
   return (
@@ -26,18 +29,21 @@ export function TextAreaExerciseRenderer({
         <div className="my-5 whitespace-pre-wrap rounded-xl bg-brand-100 p-5">
           <div className="mb-3 font-bold">Remember</div>
           <div className="flex flex-col gap-2">
-            {solutionStrategy.split('\n').map((elem, index) => (
-              <div className="ml-3" key={index}>
-                <FaIcon className="mr-3" icon={faLightbulb} />
-                {elem}
-              </div>
-            ))}
+            {solutionStrategy.split('\n').map((elem, index) => {
+              if (!elem) return
+              return (
+                <div className="ml-3" key={index}>
+                  <FaIcon className="mr-3" icon={faLightbulb} />
+                  {elem}
+                </div>
+              )
+            })}
           </div>
         </div>
       ) : null}
       Write your answer:
       <Blocks />
-      {!isInEditor && allowShowEvaluationCriteria ? (
+      {!isInEditor && allowShowEvaluationCriteria && !silentMode ? (
         <>
           <button
             className={cn(

@@ -1,12 +1,12 @@
-import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useContext } from 'react'
 
 import { EditorTextArea } from './editor-text-area'
 import { ExercisePluginStateContext } from './exercise-plugin-state-context'
 import { PrototypeStateStore } from './prototype-state'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
+import { TextAreaTitleAndEnableSwitch } from './text-area-title-and-enable-switch'
 
-export function Solution() {
+export function SolutionEditor() {
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
@@ -20,17 +20,11 @@ export function Solution() {
     <>
       <div>
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
-            <b>Musterlösung</b>
-          </label>
-          <div className="flex flex-row gap-3">
-            <span>( anzeigen</span>
-            <SwitchButton
-              isOn={allowShowSolution.value}
-              onClick={() => allowShowSolution.set((old) => !old)}
-            />
-            <span>)</span>
-          </div>
+          <TextAreaTitleAndEnableSwitch
+            title="Musterlösung"
+            switchEnabled={allowShowSolution.value}
+            toggleSwitch={() => allowShowSolution.set((old) => !old)}
+          />
         </div>
         <EditorTextArea
           placeholder="Musterlösung"
@@ -44,43 +38,21 @@ export function Solution() {
           value={solution.value}
           className="my-3"
         />
-        {/* <div className="flex flex-row items-center gap-3">
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            Upload
-          </button>
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            KI Copilot
-          </button>
-        </div> */}
       </div>
       <div>
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
-            <b>Lösungshinweise</b>
-          </label>
-          <div className="flex flex-row gap-3">
-            <span>( anzeigen</span>
-            <SwitchButton
-              isOn={allowShowSolutionStrategy.value}
-              onClick={() => allowShowSolutionStrategy.set((old) => !old)}
-            />
-            <span>)</span>
-          </div>
+          <TextAreaTitleAndEnableSwitch
+            title="Lösungshinweise"
+            switchEnabled={allowShowSolutionStrategy.value}
+            toggleSwitch={() => allowShowSolutionStrategy.set((old) => !old)}
+          />
         </div>
         <EditorTextArea
-          placeholder="Lösungsstrategie"
+          placeholder="Lösungshinweise"
           onChange={(e) => solutionStrategy.set(e.target.value)}
           value={solutionStrategy.value}
           className="my-3"
         />
-        {/* <div className="flex flex-row items-center gap-3">
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            Upload
-          </button>
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            KI Copilot
-          </button>
-        </div> */}
       </div>
     </>
   )

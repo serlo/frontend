@@ -121,14 +121,14 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
                 title: 'Feedback',
                 type: 'object',
                 properties: {
-                  generalFeedback: {
+                  feedback: {
                     type: 'string',
                   },
                   isCorrect: {
                     type: 'boolean',
                   },
                 },
-                required: ['generalFeedback', 'isCorrect'],
+                required: ['feedback', 'isCorrect'],
               },
               name: '2024-09-22-feedback-schema',
             },

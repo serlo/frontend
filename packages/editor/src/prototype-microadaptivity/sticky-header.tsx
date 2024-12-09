@@ -14,9 +14,9 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
       {showModal ? null : (
         <div className="sticky top-2 z-50 m-5 flex w-full flex-col items-center">
           <div className="mb-5 flex flex-row gap-3 rounded-lg bg-white p-2 shadow-plugin-focus">
-            <span>Write an opinion</span>
+            <span>Writing your opinion</span>
             <span>|</span>
-            <span>15 Minuten Bearbeitungszeit</span>
+            <span>20 Minuten Bearbeitungszeit</span>
             <span>|</span>
             <span>3 Wiederholungen</span>
             {allowEdit ? (
@@ -35,7 +35,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         setIsOpen={(shouldShow) => {
           setShowModal(shouldShow)
         }}
-        title="Lernschritt 8"
+        title="Lernpfad-Schritt"
         extraTitleClassName="serlo-h3 mt-4"
         extraOverlayClassName="blur"
         className="top-8 w-[40rem] translate-y-0 sm:top-20"
@@ -43,21 +43,25 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         <div className="w-full px-[16px]">
           <div className="flex flex-col gap-8">
             <div>
-              <div>Welchen Titel soll der Lernschritt haben?</div>
-              <EditorTextArea />
+              <div>Welchen Titel soll der Lernpfad-Schritt haben?</div>
+              <EditorTextArea showAiGenerateIcon={false} />
             </div>
 
             <div>
               <div>
                 Wie viel Bearbeitungszeit haben die Lernenden für diesen
-                Lernschritt?
+                Lernpfad-Schritt?
               </div>
               <div className="w- flex flex-row items-center justify-start gap-3">
-                <EditorTextArea className="w-16" showMicrophoneIcon={false} />
+                <EditorTextArea
+                  className="w-16"
+                  showMicrophoneIcon={false}
+                  showAiGenerateIcon={false}
+                />
                 Minuten
               </div>
               <div className="flex flex-row gap-3">
-                Lernschritt nach Ablaufen der Zeit automatisch schließen?
+                Lernpfad-Schritt nach Ablaufen der Zeit automatisch schließen?
                 <SwitchButton
                   isOn={closeAfterTimeLimit}
                   onClick={() =>
@@ -69,7 +73,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
 
             <div>
               <div>
-                Wie oft darf dieses Lernmaterial vor der finalen Abgabe
+                Wie oft darf dieser Lernpfad-Schritt vor der finalen Abgabe
                 widerholt werden?
               </div>
               <div className="flex flex-row items-center justify-start gap-3">
@@ -77,6 +81,7 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
                   placeholder="∞"
                   className="w-14"
                   showMicrophoneIcon={false}
+                  showAiGenerateIcon={false}
                 />
               </div>
             </div>

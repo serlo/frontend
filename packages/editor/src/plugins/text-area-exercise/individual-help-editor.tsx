@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { EditorTextArea } from './editor-text-area'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
 
-export function IndividualHelp() {
+export function IndividualHelpEditor() {
   const textAreaPluginStateContext = useContext(TextAreaEditorContext)
   if (!textAreaPluginStateContext) throw new Error('Missing text area context')
 
@@ -18,8 +18,8 @@ export function IndividualHelp() {
   return (
     <>
       <div>
-        <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">Schreibassistenz zur Verfügung stellen</label>
+        <div className="flex flex-row items-center gap-2">
+          <label className="font-bold">Schreibassistenz</label>
           <SwitchButton
             isOn={allowWritingAssistance.value}
             onClick={() => allowWritingAssistance.set((old) => !old)}
@@ -27,38 +27,18 @@ export function IndividualHelp() {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-3">
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
-            Individuelle KI-Hilfestellungen aktivieren
+          <label className="font-bold">
+            Individuelle KI-Hilfestellungen und Feedback
           </label>
-          <SwitchButton
-            isOn={allowAiFeedback.value}
-            onClick={() => allowAiFeedback.set((old) => !old)}
-          />
-        </div>
-        <EditorTextArea
-          placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
-          onChange={(e) => additionalInfoForAi.set(e.target.value)}
-          value={additionalInfoForAi.value}
-          className="my-3"
-        />
-        {/* <div className="flex flex-row items-center gap-3">
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            Upload
-          </button>
-          <button className="serlo-button-edit serlo-button-edit-primary">
-            KI Copilot
-          </button>
-        </div> */}
-      </div>
-
-      <div className="flex w-full flex-col gap-3">
-        <div className="font-bold">
-          Wann sollen die Hilfestellungen verfügbar sein?
         </div>
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
+          <img
+            className="w-[3rem]"
+            src="/_assets/img/microadaptivity-inline-feedback.svg"
+          />
+          <label className=" w-[15rem]">
             In jedem Absatz innerhalb der (Teil-) Aufgabe
           </label>
           <SwitchButton
@@ -67,7 +47,11 @@ export function IndividualHelp() {
           />
         </div>
         <div className="flex flex-row items-center gap-3">
-          <label className="mr-5">
+          <img
+            className="w-[3rem]"
+            src="/_assets/img/microadaptivity-end-feedback.svg"
+          />
+          <label className=" w-[15rem]">
             Als Rückmeldung nach fertiger Bearbeitung
           </label>
           <SwitchButton
@@ -76,6 +60,21 @@ export function IndividualHelp() {
           />
         </div>
       </div>
+      {allowParagraphFeedback.value || allowSubmitFeedback.value ? (
+        <div>
+          <div className="font-bold">Hinweise an die KI</div>
+          <div className="text-gray-500">
+            Beispielsweise Fehlkonzepte oder gängige Fehler, auf die KI eingehen
+            soll.
+          </div>
+          <EditorTextArea
+            placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"
+            onChange={(e) => additionalInfoForAi.set(e.target.value)}
+            value={additionalInfoForAi.value}
+            className="my-3"
+          />
+        </div>
+      ) : null}
     </>
   )
 }

@@ -13,17 +13,17 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
   const [currentExercise, setCurrentExercise] = useState(1)
 
   const exercises = [
-    { title: 'Interaktive Aufgabe 1' },
-    { title: 'Interaktive Aufgabe 2' },
-    { title: 'Interaktive Aufgabe 3' },
+    { title: 'Interaktive Aufgabe (a)' },
+    { title: 'Interaktive Aufgabe (b)' },
+    { title: 'Interaktive Aufgabe (c)' },
   ]
 
   const checkboxes = [
     'Musterlösung anzeigen',
     'Bewertungskriterien anzeigen',
-    'Lösungsstrategie anzeigen',
+    'Lösungshinweise anzeigen',
     'Schreibassistenz zur Verfügung stellen',
-    'adaptive Hilfestellungen und Feedback aktivieren',
+    'Adaptive Hilfestellungen und Feedback aktivieren',
   ]
 
   return (
@@ -41,7 +41,7 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
           </button>
 
           <h2 className="mb-1 text-center text-lg font-semibold">
-            Zusammenfassung Lernschritt 8
+            Zusammenfassung Lernpfad-Schritt 'Writing your opinion'
           </h2>
           <p className="mb-6 text-center text-sm text-gray-600">
             20 Minuten Bearbeitungszeit | 3 Wiederholungen
@@ -87,17 +87,12 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
           </div>
 
           <button
-            className="ml-auto mt-6 flex items-center justify-center space-x-6 rounded bg-blue-500 px-8 py-4 text-white hover:bg-blue-600"
+            className="ml-auto mr-2 mt-8 flex flex-row items-center justify-center gap-3 rounded-md bg-editor-primary-100 px-16 py-4 pb-4 pt-4 font-bold hover:cursor-pointer hover:bg-editor-primary-200"
             onClick={() => setIsOpen(false)}
           >
-            <span className="text-lg font-medium leading-none">
-              Fertigstellen
-            </span>
-            <div className="relative">
-              <FaIcon
-                icon={faCheck}
-                className="absolute left-1/2 top-1/2 size-14 -translate-x-1/2 -translate-y-1/2 text-3xl"
-              />
+            <span className="">Fertigstellen</span>
+            <div className="">
+              <FaIcon icon={faCheck} />
             </div>
           </button>
         </Dialog.Content>

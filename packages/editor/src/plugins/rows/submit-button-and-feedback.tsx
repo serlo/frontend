@@ -1,21 +1,19 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faLightbulb } from '@fortawesome/free-regular-svg-icons'
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { AnimateChangeInHeight } from '../text-area-exercise/animate-change-in-height'
 
 const aiFeedback = {
   feedbackStart:
-    'Dein Text zeigt, dass du eine klare Meinung hast, und du hast schon gute Ansätze gezeigt, deine Argumente zu formulieren.',
+    'Dein Text zeigt, dass du eine klare Meinung hast. Es gibt eine Struktur mit Anfang, Mitte und Ende, aber einige wichtige Anforderungen wurden nicht erfüllt.',
   feedback: [
-    {
-      title: '"Write between 50-75 words"',
-      feedback: [
-        'Dein Text umfasst ungefähr 40 Wörter und ist damit etwas zu kurz. Versuche, ein paar Sätze hinzuzufügen, um zwischen 50 und 75 Wörtern zu erreichen.',
-      ],
-      isCorrect: false,
-    },
     {
       title: '"Use 3-5 linking words"',
       feedback: [
@@ -26,17 +24,18 @@ const aiFeedback = {
       isCorrect: false,
     },
     {
-      title: 'Language',
+      title: 'Inhalt',
       feedback: [
-        'Achte darauf, dass deine Sätze vollständig und präzise sind. Zum Beispiel könnte ',
+        'Dein Schlusssatz ',
         {
           type: 'link',
-          text: "'Students must time for hobbies'",
-          href: '#students-must-time-for-hobbies',
+          text: "'In conclusion, I think there should be homework every day.'",
+          href: '#jump-to-feedback',
         },
-        " umformuliert werden zu: 'Students need time for hobbies because they are important.'",
+        ' widerspricht deiner Argumentation im Text.',
       ],
-      suggestion: '',
+      suggestion:
+        'Überlege dir, ob du hier klarer ausdrücken möchtest, dass du gegen tägliche Hausaufgaben bist.',
       isCorrect: false,
     },
   ],
@@ -47,6 +46,7 @@ export function SubmitButtonAndFeedback() {
   const [triesLeft, setTriesLeft] = useState(3)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [dots, setDots] = useState('')
+  const [feedbackIndex, setFeedbackIndex] = useState(0)
 
   const handleButtonClick = () => {
     setIsSubmitting(true)
@@ -88,46 +88,78 @@ export function SubmitButtonAndFeedback() {
 
         {showFeedback ? (
           <div className="fixed bottom-0 left-0 z-50 flex w-full flex-col items-center p-3">
-            <div className="flex max-w-[50rem] flex-row gap-5 rounded-md bg-purple-200 p-5 shadow-plugin-focus">
+            <div className="flex max-w-[50rem] flex-row gap-5 rounded-md bg-purple-100 p-5 shadow-plugin-focus">
               <img src="/_assets/img/birdie.svg" className="max-w-16" />
               <div className="flex flex-col gap-3">
                 <div>{aiFeedback.feedbackStart}</div>
                 <div className="flex flex-col gap-3">
-                  {aiFeedback.feedback.map((entry, index) => (
-                    <div key={index}>
-                      <div className="flex flex-row items-center gap-1 ">
-                        <FaIcon
-                          icon={faTriangleExclamation}
-                          className="text-purple-500"
-                        />
-                        <a
-                          href="#feedback-criteria"
-                          className="underline"
-                        >{`${entry.title}`}</a>
-                      </div>
-                      <div>
-                        {entry.feedback.map((elem, index) => {
-                          if (typeof elem === 'object' && 'type' in elem) {
-                            return (
-                              <a
-                                key={index}
-                                href={elem.href}
-                                className="underline"
-                              >
-                                {elem.text}
-                              </a>
-                            )
-                          }
-                          return <span key={index}>{elem}</span>
-                        })}
-                      </div>
-                      {entry.suggestion ? (
-                        <div className="flex flex-row gap-1 ">
-                          ⮕ {entry.suggestion}
+                  {aiFeedback.feedback.map((entry, index) => {
+                    if (index !== feedbackIndex) return <></>
+                    return (
+                      <div key={index}>
+                        <div className="flex flex-row items-center gap-1 ">
+                          <FaIcon
+                            icon={faTriangleExclamation}
+                            className="mr-1 text-purple-400"
+                          />
+                          <a
+                            href="#feedback-criteria"
+                            className="text-lg font-bold"
+                          >{`${entry.title}`}</a>
                         </div>
-                      ) : null}
-                    </div>
-                  ))}
+                        <div>
+                          {entry.feedback.map((elem, index) => {
+                            if (typeof elem === 'object' && 'type' in elem) {
+                              return (
+                                <button
+                                  onClick={() =>
+                                    scrollToTextAreaContaining(
+                                      elem.text
+                                        .replaceAll("'", '')
+                                        .replaceAll('"', '')
+                                    )
+                                  }
+                                  key={index}
+                                  className="underline"
+                                >
+                                  {elem.text}
+                                </button>
+                              )
+                            }
+                            return <span key={index}>{elem}</span>
+                          })}
+                        </div>
+                        {entry.suggestion ? (
+                          <div className="mt-2 flex flex-row gap-1">
+                            <FaIcon
+                              icon={faLightbulb}
+                              className="mr-1 mt-1 text-purple-400"
+                            />{' '}
+                            {entry.suggestion}
+                          </div>
+                        ) : null}
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className="flex flex-row items-center justify-center gap-3">
+                  <button
+                    onClick={() => setFeedbackIndex((previous) => previous - 1)}
+                    className="h-8 w-8 rounded-full bg-purple-200 hover:bg-purple-300"
+                  >
+                    <FaIcon icon={faArrowLeft} />
+                  </button>
+                  <span>{feedbackIndex + 1} / 2 </span>
+                  {/* <FaIcon
+                    icon={faTriangleExclamation}
+                    className="text-purple-400"
+                  /> */}
+                  <button
+                    onClick={() => setFeedbackIndex((previous) => previous + 1)}
+                    className="h-8 w-8 rounded-full bg-purple-200 hover:bg-purple-300"
+                  >
+                    <FaIcon icon={faArrowRight} />
+                  </button>
                 </div>
               </div>
             </div>
@@ -136,4 +168,16 @@ export function SubmitButtonAndFeedback() {
       </AnimateChangeInHeight>
     </div>
   )
+
+  function scrollToTextAreaContaining(text: string) {
+    // Find the textarea with the target content
+    const targetTextarea = Array.from(
+      document.querySelectorAll('textarea')
+    ).find((textarea) => textarea.value === text)
+
+    // Scroll into view if found
+    if (targetTextarea) {
+      targetTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
 }

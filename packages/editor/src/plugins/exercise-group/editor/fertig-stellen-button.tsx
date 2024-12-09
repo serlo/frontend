@@ -10,7 +10,7 @@ export function FertigStellenButton() {
   return (
     <div>
       <button
-        className="mb-4 ml-auto mr-2 flex items-center justify-center rounded bg-blue-500 px-8 py-2 text-white "
+        className="mb-4 ml-auto mr-2 flex items-center justify-center rounded-md bg-editor-primary-100 px-16 py-4 pb-4 pt-4 font-bold hover:cursor-pointer hover:bg-editor-primary-200"
         onClick={() => setIsModalOpen(true)}
       >
         Material fertigstellen
