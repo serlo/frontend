@@ -38,45 +38,53 @@ export function StickyHeader({ allowEdit }: { allowEdit: boolean }) {
         title="Lernpfad-Schritt"
         extraTitleClassName="serlo-h3 mt-4"
         extraOverlayClassName="blur"
-        className="top-8 w-[40rem] translate-y-0 sm:top-20"
+        className="top-8 w-[46rem] translate-y-0 sm:top-20"
       >
         <div className="w-full px-[16px]">
           <div className="flex flex-col gap-8">
             <div>
-              <div>Welchen Titel soll der Lernpfad-Schritt haben?</div>
+              <div className="mb-1">
+                Welchen <span className="font-bold">Titel</span> soll der
+                Lernpfad-Schritt haben?
+              </div>
               <EditorTextArea showAiGenerateIcon={false} />
             </div>
 
             <div>
-              <div>
-                Wie viel Bearbeitungszeit haben die Lernenden für diesen
-                Lernpfad-Schritt?
+              <div className="mb-1">
+                Wie viel <span className="font-bold">Bearbeitungszeit</span>{' '}
+                haben die Lernenden für diesen Lernpfad-Schritt?
               </div>
-              <div className="w- flex flex-row items-center justify-start gap-3">
-                <EditorTextArea
-                  className="w-16"
-                  showMicrophoneIcon={false}
-                  showAiGenerateIcon={false}
-                />
-                Minuten
-              </div>
-              <div className="flex flex-row gap-3">
-                Lernpfad-Schritt nach Ablaufen der Zeit automatisch schließen?
-                <SwitchButton
-                  isOn={closeAfterTimeLimit}
-                  onClick={() =>
-                    setCloseAfterTimeLimit((oldValue) => !oldValue)
-                  }
-                />
+              <div className="flex flex-row items-center justify-start gap-8">
+                <div className="flex flex-row items-center ">
+                  <EditorTextArea
+                    className="w-16"
+                    showMicrophoneIcon={false}
+                    showAiGenerateIcon={false}
+                  />
+                  Minuten
+                </div>
+                <span></span>
+                <div className="">
+                  <span className="mr-2">
+                    Nach Ablaufen der Zeit automatisch schließen?
+                  </span>
+                  <SwitchButton
+                    isOn={closeAfterTimeLimit}
+                    onClick={() =>
+                      setCloseAfterTimeLimit((oldValue) => !oldValue)
+                    }
+                  />
+                </div>
               </div>
             </div>
 
             <div>
               <div>
-                Wie oft darf dieser Lernpfad-Schritt vor der finalen Abgabe
-                widerholt werden?
+                Wie viele <span className="font-bold">Wiederholungen</span>{' '}
+                dieses Lernpfad-Schritts sind vor der finalen Abgabe erlaubt?
               </div>
-              <div className="flex flex-row items-center justify-start gap-3">
+              <div className="mt-1 flex flex-row items-center justify-start gap-3">
                 <EditorTextArea
                   placeholder="∞"
                   className="w-14"

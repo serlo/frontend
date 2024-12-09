@@ -2,11 +2,8 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { cn } from '@editor/utils/cn'
 import { faComments } from '@fortawesome/free-regular-svg-icons'
 import {
-  faArrowDown,
-  faArrowsDownToLine,
   faArrowUpRightFromSquare,
   faExclamationCircle,
-  faLink,
   faTimes,
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
