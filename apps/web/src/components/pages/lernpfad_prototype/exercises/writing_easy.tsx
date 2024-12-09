@@ -2,8 +2,6 @@ import type { ExerciseProps } from '../types'
 import { ExerciseWrapper } from './exercise-wrapper'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
-// TODO: How to structure?
-
 export function WritingEasy(props: ExerciseProps) {
   return (
     <ExerciseWrapper {...props}>

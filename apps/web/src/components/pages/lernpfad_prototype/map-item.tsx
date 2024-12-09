@@ -5,6 +5,7 @@ import {
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 
+import { localStorageKey } from './const'
 import type { MapItemId, ExerciseLabel, MapItemsRecord } from './types'
 import { FaIcon } from '../../fa-icon'
 import { cn } from '@/helper/cn'
@@ -71,6 +72,11 @@ export function MapItem({
       className="absolute w-[75px] cursor-pointer rounded-full"
       style={getMapItemStyle()}
       onClick={() => onClick(id)}
+      onContextMenu={() => {
+        if (exercise.title !== 'Reflection') return
+        localStorage.removeItem(localStorageKey)
+        window.location.reload()
+      }}
       disabled={isDisabled}
     >
       <div
