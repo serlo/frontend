@@ -35,10 +35,10 @@ export function IndividualHelpEditor() {
         </div>
         <div className="flex flex-row items-center gap-3">
           <img
-            className="w-20"
+            className="w-[3rem]"
             src="/_assets/img/microadaptivity-inline-feedback.svg"
           />
-          <label className="mr-3 w-36">
+          <label className=" w-[15rem]">
             In jedem Absatz innerhalb der (Teil-) Aufgabe
           </label>
           <SwitchButton
@@ -48,10 +48,10 @@ export function IndividualHelpEditor() {
         </div>
         <div className="flex flex-row items-center gap-3">
           <img
-            className="w-20"
+            className="w-[3rem]"
             src="/_assets/img/microadaptivity-end-feedback.svg"
           />
-          <label className="mr-3 w-36">
+          <label className=" w-[15rem]">
             Als Rückmeldung nach fertiger Bearbeitung
           </label>
           <SwitchButton
