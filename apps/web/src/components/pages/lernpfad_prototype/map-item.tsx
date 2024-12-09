@@ -94,7 +94,6 @@ export function MapItem({
 
   function getNodeSrc() {
     if (mapItem.done) return '/_assets/img/prototype/done.svg'
-    if (mapItem.type === 'info') return '/_assets/img/prototype/start.svg'
     return `/_assets/img/prototype/${mapItem.type}.svg`
   }
 

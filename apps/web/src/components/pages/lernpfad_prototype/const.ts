@@ -13,8 +13,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['extra1', 'info'],
     dependsOn: null,
     position: {
-      x: 45.5,
-      y: 23,
+      x: 47,
+      y: 13,
     },
   },
   fork1: {
@@ -24,8 +24,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['extra1', 'info'],
     dependsOn: ['intro'],
     position: {
-      x: 20,
-      y: 0,
+      x: 48,
+      y: 24,
     },
   },
   extra1: {
@@ -39,7 +39,7 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: null,
     dependsOn: ['fork1'],
     position: {
-      x: 33,
+      x: 37,
       y: 20,
     },
   },
@@ -53,8 +53,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['fork2'],
     dependsOn: ['fork1'],
     position: {
-      x: 45,
-      y: 35,
+      x: 44,
+      y: 28,
     },
   },
   fork2: {
@@ -64,8 +64,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['recap_easy', 'recap_hard'],
     dependsOn: ['info'],
     position: {
-      x: 40,
-      y: 0,
+      x: 46,
+      y: 38.5,
     },
   },
   recap_easy: {
@@ -78,8 +78,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['writing_easy'],
     dependsOn: ['fork2'],
     position: {
-      x: 34,
-      y: 31.5,
+      x: 36.5,
+      y: 43,
     },
   },
   recap_hard: {
@@ -92,8 +92,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['writing_hard'],
     dependsOn: ['fork2'],
     position: {
-      x: 58,
-      y: 27,
+      x: 54.5,
+      y: 39,
     },
   },
   writing_easy: {
@@ -106,8 +106,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['rewrite'],
     dependsOn: ['recap_easy'],
     position: {
-      x: 33.5,
-      y: 51,
+      x: 36,
+      y: 57,
     },
   },
   writing_hard: {
@@ -121,22 +121,22 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['rewrite'],
     dependsOn: ['recap_hard'],
     position: {
-      x: 61.5,
-      y: 46,
+      x: 57,
+      y: 53,
     },
   },
   rewrite: {
     type: 'feedback',
     done: false,
     time: 10,
-    title: 'Feedback and Rewriting your opinion',
+    title: 'Improving your opinion',
     labels: ['solo', 'ai'],
     contentType: 'Methode',
     nextExercises: ['fork3'],
     dependsOn: ['writing_easy', 'writing_hard'],
     position: {
-      x: 48,
-      y: 62,
+      x: 47.5,
+      y: 65,
     },
   },
   fork3: {
@@ -146,8 +146,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: ['reflection', 'extra2'],
     dependsOn: ['rewrite'],
     position: {
-      x: 60,
-      y: 0,
+      x: 47.5,
+      y: 75.5,
     },
   },
   reflection: {
@@ -160,8 +160,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: null,
     dependsOn: ['fork3'],
     position: {
-      x: 47,
-      y: 74.5,
+      x: 46.5,
+      y: 83,
     },
   },
   extra2: {
@@ -174,8 +174,8 @@ export const initialMapItemsData: MapItemsRecord = {
     nextExercises: null,
     dependsOn: ['fork3'],
     position: {
-      x: 62,
-      y: 62,
+      x: 56,
+      y: 71.5,
     },
   },
 }
