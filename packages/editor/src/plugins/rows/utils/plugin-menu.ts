@@ -1,4 +1,5 @@
 import type { EditorProps } from '@editor/core'
+import IconGenerateWithAi from '@editor/editor-ui/assets/plugin-icons/icon-ai-content-generation.svg?raw'
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
@@ -39,6 +40,7 @@ const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
  * If a plugin in not loaded in the current editor instance, it will be filtered out.
  */
 export const pluginMenuType = {
+  GenerateWithAi: 'generateWithAi',
   Text: EditorPluginType.Text,
   Image: EditorPluginType.Image,
   ImageGallery: EditorPluginType.ImageGallery,
@@ -233,6 +235,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
+  [pluginMenuType.GenerateWithAi]: IconGenerateWithAi,
   [pluginMenuType.EdusharingAsset]: IconImage,
 }
 

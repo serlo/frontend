@@ -234,6 +234,10 @@ export const editStrings = {
       changeVideo: 'Video austauschen',
       saveButton: 'Speichern',
     },
+    generateWithAi: {
+      title: 'Inhalt mit KI generieren',
+      description: 'Generiere einen Inhalt mit Hilfe von KI.',
+    },
     multimedia: {
       title: 'Erklärung mit Multimedia-Inhalt',
       description:

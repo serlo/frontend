@@ -42,7 +42,16 @@ const responses: {
       feedback: [
         {
           type: 'text',
-          text: 'Dein Anfang enthält allgemeine Informationen und deine Meinung, was sehr gut ist. Du könntest jedoch eine der vorgeschlagenen "useful phrases" wie "I think" oder "I believe" verwenden, um deine Meinung klarer zu kennzeichnen. Weiter so!',
+          text: 'Dein Anfang enthält allgemeine Informationen und deine Meinung, was sehr gut ist. Du könntest jedoch eine der vorgeschlagenen ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: '"useful phrases"',
+        },
+        {
+          type: 'text',
+          text: ' wie "I think" oder "I believe" verwenden, um deine Meinung klarer zu kennzeichnen. Weiter so!',
         },
       ],
       isCorrect: false,
@@ -121,7 +130,16 @@ const responses: {
       feedback: [
         {
           type: 'text',
-          text: 'Dein Satz ist ein guter Anfang, aber er ist grammatikalisch nicht korrekt. Du könntest zum Beispiel sagen: "Students need time for hobbies."',
+          text: 'Dein Satz ist ein guter Anfang, aber er ist ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: 'grammatikalisch nicht korrekt',
+        },
+        {
+          type: 'text',
+          text: '. Du könntest zum Beispiel sagen: "Students need time for hobbies."',
         },
       ],
       isCorrect: false,
@@ -133,7 +151,25 @@ const responses: {
       feedback: [
         {
           type: 'text',
-          text: 'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine Meinung weiter zu begründen, indem du erklärst, warum Hobbys wichtig sind.',
+          text: 'Du hast einen guten Anfang gemacht, indem du die Wichtigkeit von Hobbys erwähnt hast. Versuche, deine ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: 'Meinung',
+        },
+        {
+          type: 'text',
+          text: ' weiter zu ',
+        },
+        {
+          type: 'text',
+          bold: true,
+          text: 'begründen',
+        },
+        {
+          type: 'text',
+          text: ', indem du erklärst, warum Hobbys wichtig sind.',
         },
       ],
       isCorrect: false,

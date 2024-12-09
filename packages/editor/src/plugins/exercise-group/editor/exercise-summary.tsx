@@ -33,11 +33,11 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
 
         <Dialog.Content className="fixed left-1/2 top-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-12 shadow-lg">
           <button
-            className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-blue-200 hover:bg-blue-300"
+            className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-editor-primary-200 hover:bg-editor-primary-300"
             onClick={() => setIsOpen(false)}
             aria-label="Close"
           >
-            <FaIcon icon={faXmark} className="h-4 text-blue-600" />
+            <FaIcon icon={faXmark} className="text-editor-primary-600 h-4" />
           </button>
 
           <h2 className="mb-1 text-center text-lg font-semibold">
@@ -63,7 +63,7 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                       type="checkbox"
                       checked={index !== 0 && index !== 3}
                       readOnly
-                      className="h-5 w-5 accent-blue-500"
+                      className="h-5 w-5 accent-editor-primary-200"
                     />
                   </li>
                 ))}
@@ -79,7 +79,7 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                 onClick={() => setCurrentExercise(index + 1)}
                 className={`h-3 w-3 rounded-full ${
                   currentExercise === index + 1
-                    ? 'bg-blue-500'
+                    ? 'bg-editor-primary-200'
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
               />
