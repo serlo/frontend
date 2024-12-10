@@ -29,6 +29,7 @@ import {
   FixedInstanceData,
   featureI18nForServerOnly,
 } from '@/helper/feature-i18n-for-server-only'
+import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface FrontendClientBaseProps {
@@ -126,7 +127,9 @@ export function FrontendClientBase({
         </Head>
       ) : null}
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-        <SerloOnlyFeaturesContext.Provider value={{ isSerlo: true }}>
+        <SerloOnlyFeaturesContext.Provider
+          value={{ isSerlo: true, isProduction }}
+        >
           <StaticStringsProvider
             value={
               instanceData.lang === 'de'

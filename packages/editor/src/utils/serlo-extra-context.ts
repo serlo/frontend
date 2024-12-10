@@ -19,6 +19,7 @@ export interface ArticleAddModalProps {
 
 interface SerloOnlyFeaturesData {
   isSerlo?: boolean
+  isProduction?: boolean
   licenses?: LicenseData[]
   ArticleAddModal?: (props: ArticleAddModalProps) => JSX.Element
 }

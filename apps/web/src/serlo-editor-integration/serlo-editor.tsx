@@ -21,6 +21,7 @@ import { createRenderers } from './create-renderers'
 import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
+import { isProduction } from '@/helper/is-production'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
@@ -64,7 +65,12 @@ export function SerloEditor({
         value={{ editorVariant: 'serlo-org', userId: String(auth?.id) }}
       >
         <SerloOnlyFeaturesContext.Provider
-          value={{ isSerlo: true, licenses, ArticleAddModal }}
+          value={{
+            isSerlo: true,
+            licenses,
+            ArticleAddModal,
+            isProduction,
+          }}
         >
           <Editor initialState={initialState}>
             <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
