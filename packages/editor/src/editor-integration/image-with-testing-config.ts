@@ -76,7 +76,7 @@ export const createTestingImagePlugin = (secret: string) => {
 }
 
 function createUploadImageHandler(secret: string) {
-  const readFile = createReadFile(secret)
+  const readAndUploadFile = createReadAndUploadFile(secret)
   return async function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)
     if (!validation.valid) {
@@ -86,7 +86,7 @@ function createUploadImageHandler(secret: string) {
     }
 
     try {
-      const result = await readFile(file)
+      const result = await readAndUploadFile(file)
       return result.dataUrl
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -99,8 +99,8 @@ function createUploadImageHandler(secret: string) {
   }
 }
 
-export function createReadFile(secret: string) {
-  return async function readFile(file: File): Promise<LoadedFile> {
+export function createReadAndUploadFile(secret: string) {
+  return async function readAndUploadFile(file: File): Promise<LoadedFile> {
     if (!secret) {
       throw new Error('Missing secret for image plugin!')
     }
