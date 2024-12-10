@@ -80,62 +80,77 @@ function createUploadImageHandler(secret: string) {
   return async function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)
     if (!validation.valid) {
-      onError(validation.errors)
+      showErrorToast(validation.errors)
       // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       return Promise.reject(validation.errors)
     }
 
-    return (await readFile(file)).dataUrl
+    try {
+      const result = await readFile(file)
+      return result.dataUrl
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Upload failed:', error)
+      const errors = handleErrors([FileErrorCode.UPLOAD_FAILED])
+      showErrorToast(errors)
+      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+      return Promise.reject(errors)
+    }
   }
 }
 
 export function createReadFile(secret: string) {
   return async function readFile(file: File): Promise<LoadedFile> {
-    return new Promise((resolve, reject) => {
-      async function runFetch() {
-        const endpoint = 'https://api.serlo-staging.dev/graphql'
-        const response = await fetch(endpoint, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'X-SERLO-EDITOR-TESTING': secret,
-          },
-          method: 'POST',
-          body: JSON.stringify({
-            query: uploadUrlQuery,
-            variables: {
-              mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
-            },
-          }),
-        })
-        const { data } = (await response.json()) as { data: MediaUploadQuery }
-        const reader = new FileReader()
+    if (!secret) {
+      throw new Error('Missing secret for image plugin!')
+    }
 
-        reader.onload = async function (e: ProgressEvent) {
-          if (!e.target) return
-
-          try {
-            const response = await fetch(data.media.newUpload.uploadUrl, {
-              method: 'PUT',
-              headers: { 'Content-Type': file.type },
-              body: file,
-            })
-
-            if (response.status !== 200) reject()
-            resolve({
-              file,
-              dataUrl: data.media.newUpload.urlAfterUpload,
-            })
-          } catch {
-            reject()
-          }
-        }
-
-        reader.readAsDataURL(file)
-      }
-
-      void runFetch()
+    const endpoint = 'https://api.serlo-staging.dev/graphql'
+    const response = await fetch(endpoint, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-SERLO-EDITOR-TESTING': secret,
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        query: uploadUrlQuery,
+        variables: {
+          mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
+        },
+      }),
     })
+
+    if (!response.ok) {
+      throw new Error(`Failed to get upload URL: ${response.status}`)
+    }
+
+    const { data } = (await response.json()) as { data: MediaUploadQuery }
+
+    if (!data?.media?.newUpload) {
+      // eslint-disable-next-line no-console
+      console.error('Server responded with following invalid data: ', data)
+      throw new Error('Invalid response format from server')
+    }
+
+    const uploadResponse = await fetch(data.media.newUpload.uploadUrl, {
+      method: 'PUT',
+      headers: { 'Content-Type': file.type },
+      body: file,
+    })
+
+    if (!uploadResponse.ok) {
+      throw new Error(`Upload failed with status: ${uploadResponse.status}`)
+    }
+
+    if (!data?.media?.newUpload?.urlAfterUpload) {
+      throw new Error('Invalid response format from server')
+    }
+
+    return {
+      file,
+      dataUrl: data.media.newUpload.urlAfterUpload,
+    }
   }
 }
 
@@ -151,7 +166,7 @@ function handleErrors(errors: FileErrorCode[]): FileError[] {
   }))
 }
 
-function onError(errors: FileError[]): void {
+function showErrorToast(errors: FileError[]): void {
   showToastNotice(errors.map((error) => error.message).join('\n'), 'warning')
 }
 
