@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 import { AnimateChangeInHeight } from '../text-area-exercise/animate-change-in-height'
 import { PrototypeStateStore } from '../text-area-exercise/prototype-state'
-import { AiFeedback } from '../text-area-exercise/types'
 
 export interface FinalFeedback {
   generalFeedback: string

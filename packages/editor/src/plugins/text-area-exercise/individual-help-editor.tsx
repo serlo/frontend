@@ -10,7 +10,6 @@ export function IndividualHelpEditor() {
 
   const {
     allowWritingAssistance,
-    allowAiFeedback,
     allowParagraphFeedback,
     allowSubmitFeedback,
     additionalInfoForAi,
