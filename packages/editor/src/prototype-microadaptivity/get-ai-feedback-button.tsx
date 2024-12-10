@@ -1,7 +1,5 @@
-import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PrototypeStateStore } from '@editor/plugins/text-area-exercise/prototype-state'
 import { cn } from '@editor/utils/cn'
-import { faComment } from '@fortawesome/free-regular-svg-icons'
 
 export function GetAiFeedbackButton() {
   const silentmode = PrototypeStateStore.useState((s) => s.silentMode)

@@ -24,6 +24,9 @@ export function TextBlock({ id }: Text) {
             if (!s.textAreaPlugins[pluginId]) {
               s.textAreaPlugins[pluginId] = {
                 textAreaBlocks: [createTextBlock()],
+                evaluationCriteria: '',
+                solution: '',
+                exercise: '',
               }
             }
             const blocks = s.textAreaPlugins[pluginId].textAreaBlocks

@@ -1,5 +1,4 @@
 import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
-import { AddButton } from '@editor/editor-ui'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'

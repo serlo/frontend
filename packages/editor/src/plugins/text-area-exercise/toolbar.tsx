@@ -1,10 +1,3 @@
-import { NiceDropdown } from '@editor/core/components/nice-dropdown'
-import { EditorModal } from '@editor/editor-ui/editor-modal'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { cn } from '@editor/utils/cn'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
-
 import { type TextAreaExerciseProps } from '.'
 import { InteractiveToolbarPortal } from '../exercise/toolbar/interactive-toolbar-portal'
 

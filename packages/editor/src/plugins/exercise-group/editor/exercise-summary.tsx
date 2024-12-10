@@ -1,6 +1,6 @@
 import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { FaIcon } from '../../../editor-ui/fa-icon'
 
@@ -10,8 +10,6 @@ interface ExerciseSummaryProps {
 }
 
 export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
-  const [currentExercise, setCurrentExercise] = useState(1)
-
   const exercises = [
     { title: 'Interaktive Aufgabe (a)' },
     { title: 'Interaktive Aufgabe (b)' },
@@ -41,7 +39,7 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
           </button>
 
           <h2 className="mb-1 text-center text-lg font-semibold">
-            Zusammenfassung Lernpfad-Schritt 'Writing your opinion'
+            Zusammenfassung Lernpfad-Schritt &apos;Writing your opinion&apos;
           </h2>
           <p className="mb-6 text-center text-sm text-gray-600">
             20 Minuten Bearbeitungszeit | 3 Wiederholungen

@@ -5,6 +5,9 @@ import { Block, Text, Feedback } from './types'
 
 interface TextAreaPluginState {
   textAreaBlocks: Block[]
+  evaluationCriteria: string
+  solution: string
+  exercise: string
 }
 
 interface PrototypeState {

@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 
 import { EditorTextArea } from './editor-text-area'
+import { PrototypeStateStore } from './prototype-state'
 import { TextAreaEditorContext } from './text-area-exercise-props-context'
 import { TextAreaTitleAndEnableSwitch } from './text-area-title-and-enable-switch'
 
@@ -26,7 +27,13 @@ export function SolutionEditor() {
         </div>
         <EditorTextArea
           placeholder="Musterlösung"
-          onChange={(e) => solution.set(e.target.value)}
+          onChange={(e) => {
+            solution.set(e.target.value)
+            PrototypeStateStore.update((s) => {
+              s.textAreaPlugins[textAreaPluginStateContext.id].solution =
+                e.target.value
+            })
+          }}
           value={solution.value}
           className="my-3"
         />
