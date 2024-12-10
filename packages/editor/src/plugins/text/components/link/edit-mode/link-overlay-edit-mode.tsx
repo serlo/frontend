@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import {
   findResults,
   useSerloQuickbarData,
@@ -39,6 +40,8 @@ export function LinkOverlayEditMode({
   const { lang } = editStrings
   const overlayStrings = editStrings.plugins.text.linkOverlay
 
+  const isSerlo = useIsSerlo()
+
   const { quickbarData } = useSerloQuickbarData(noAutocomplete)
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export function LinkOverlayEditMode({
 
     const hasResult = activeIndex < results.length
     const href = hasResult ? `/${results[activeIndex].entry.id}` : query
-    const cleanUrl = getCleanUrl(href, lang)
+    const cleanUrl = getCleanUrl(href, isSerlo, lang)
     const title = hasResult ? results[activeIndex].entry.title : undefined
 
     if (
@@ -98,7 +101,11 @@ export function LinkOverlayEditMode({
 
   return (
     <>
-      <label className="block px-side pt-4">{overlayStrings.inputLabel}</label>
+      <label className="block px-side pt-4">
+        {isSerlo
+          ? overlayStrings.inputLabel
+          : overlayStrings.inputLabelNonSerlo}
+      </label>
       <div className="relative w-[27rem]">
         <EditModeInput
           query={query}
@@ -106,7 +113,11 @@ export function LinkOverlayEditMode({
           setQuery={setQuery}
           shouldFocus={shouldFocus}
           value={value}
-          placeholder={overlayStrings.placeholder}
+          placeholder={
+            isSerlo
+              ? overlayStrings.placeholder
+              : overlayStrings.placeholderNonSerlo
+          }
         />
       </div>
       {query ? (

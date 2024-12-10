@@ -6,6 +6,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { isProduction } from '@/helper/is-production'
 
 /**
  * Allows frontend (and later other) instances to get content of injected entity
@@ -134,6 +135,7 @@ export default async function handler(
   function respondWithContent(content: any) {
     const twoDaysInSeconds = 172800
     res.setHeader('Cache-Control', `maxage=${twoDaysInSeconds}`)
+    if (!isProduction) res.setHeader('Access-Control-Allow-Origin', '*')
     res.status(200).json(content)
   }
 }

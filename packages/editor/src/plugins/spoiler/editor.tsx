@@ -57,7 +57,7 @@ export function SpoilerEditor(props: SpoilerProps) {
   }
 
   return (
-    <>
+    <div className="pl-0.5">
       {renderPluginToolbar()}
       <div
         className={cn(
@@ -65,21 +65,23 @@ export function SpoilerEditor(props: SpoilerProps) {
           // making space for first toolbar, not wysiwyg
           '[&>div>button]:!mb-[17px]',
           // toolbar finetuning
-          `
-            [&_.plugin-toolbar]:rounded-none
-            [&_.rows-child:first-child_.plugin-toolbar:before]:hidden
-          `
+          '[&_.rows-child:first-child_.plugin-toolbar:before]:hidden',
+          // shadow finetuning
+          '-mt-2'
         )}
       >
         <SpoilerRenderer
           title={<div className="grow">{richTitle.render(titleConfig)}</div>}
-          content={content.render({
-            config: { isInlineChildEditor: true },
-          })}
           openOverwrite // should check focused but that's unreliable atm.
-        />
+        >
+          <div className="mx-side">
+            {content.render({
+              config: { isInlineChildEditor: true },
+            })}
+          </div>
+        </SpoilerRenderer>
       </div>
-    </>
+    </div>
   )
 
   function renderPluginToolbar() {
@@ -89,7 +91,7 @@ export function SpoilerEditor(props: SpoilerProps) {
       <PluginToolbar
         pluginType={EditorPluginType.Spoiler}
         pluginControls={<PluginDefaultTools pluginId={id} />}
-        className="!left-[21px] top-[-33px] w-[calc(100%-37px)]"
+        className="top-[-33px]"
       />
     )
   }

@@ -1,4 +1,4 @@
-import IframeResizer from 'iframe-resizer-react'
+import { IframeResizer } from '@open-iframe-resizer/react'
 
 export function SerloInjectionRenderer(props: {
   contentId: string | undefined
@@ -10,8 +10,6 @@ export function SerloInjectionRenderer(props: {
       key={url}
       src={url}
       checkOrigin={false}
-      heightCalculationMethod="lowestElement"
-      sizeHeight
       style={{
         width: '1px',
         minWidth: '100%',

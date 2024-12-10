@@ -1,0 +1,7 @@
+@tailwind utilities;
+
+@layer utilities {
+  .clip-vertical-shadow {
+    clip-path: inset(0 -10px);
+  }
+}

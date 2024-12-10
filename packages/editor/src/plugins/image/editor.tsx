@@ -101,7 +101,7 @@ export function ImageEditor(props: ImageProps) {
 
       <div
         className={cn(
-          'z-[2] [&_img]:min-h-[4rem]',
+          'z-[2] pl-1 [&_img]:min-h-[4rem]',
           hasFocus && showInlineImageUrl ? 'relative' : ''
         )}
         data-qa="plugin-image-editor"

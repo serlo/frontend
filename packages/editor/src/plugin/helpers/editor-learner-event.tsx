@@ -1,4 +1,4 @@
-export interface LearnerEvent {
+export interface LearnerEventData {
   verb: 'opened' | 'attempted' | 'interacted' | 'answered'
   contentType:
     | 'input-exercise'
@@ -10,8 +10,11 @@ export interface LearnerEvent {
     | 'solution'
   correct?: boolean
   value?: object | string | number
+  pluginId?: string // editor id of the plugin that triggered the event
 }
-type Trigger = (data: LearnerEvent) => void
+type Trigger = (data: LearnerEventData) => void
+
+export const editorLearnerEventName = 'editorLearnerEvent'
 
 export const editorLearnerEvent = (function (): {
   init: (triggerIn: Trigger) => void
@@ -28,8 +31,15 @@ export const editorLearnerEvent = (function (): {
     Object.freeze(handleLearnerEvent)
   }
 
-  function trigger(data: LearnerEvent) {
+  function trigger(data: LearnerEventData) {
     handleLearnerEvent?.(data)
+
+    // also trigger as custom js event so other editor plugins can listen to it
+    const customEvent = new CustomEvent(editorLearnerEventName, {
+      detail: { ...data },
+    })
+
+    document.dispatchEvent(customEvent)
   }
 
   return { init, trigger }

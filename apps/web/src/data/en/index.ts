@@ -384,6 +384,7 @@ export const instanceData = {
           'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
         code1070003: 'Save',
         code1070005: 'Submit',
+        code1070009: 'Continue',
         code1080001:
           'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
@@ -400,6 +401,7 @@ export const instanceData = {
           'The provided authentication code is invalid, please try again.',
         code4000010:
           'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4000032: "You inserted less than 8 characters.",
         code4060004:
           'The recovery link is not valid or has already been used. Please try requesting an email again',
         code4070001:

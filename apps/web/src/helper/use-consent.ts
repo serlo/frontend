@@ -1,6 +1,5 @@
 export enum ExternalProvider {
   YouTube = 'YouTube',
-  WikimediaCommons = 'WikimediaCommons',
   Vimeo = 'Vimeo',
   GeoGebra = 'GeoGebra',
   Twingle = 'Twingle',

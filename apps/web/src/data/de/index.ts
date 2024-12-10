@@ -354,6 +354,7 @@ export const instanceData = {
         code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
         code1070003: "Speichern",
         code1070005: "Absenden",
+        code1070009: "Weiter",
         code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
         code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
         code4000001: '%reason%',
@@ -365,6 +366,7 @@ export const instanceData = {
         code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
         code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
         code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
+        code4000032: "Dein Passwort hat weniger als 8 Zeichen.",
         code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
         code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
         code4070005: "Dieser Bestätigungslink ist leider nicht mehr gültig. Bitte versuche eine neue E-Mail anzufordern."

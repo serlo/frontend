@@ -17,7 +17,7 @@ export interface ModalWithCloseButtonProps {
   extraCloseButtonClassName?: string
   extraOverlayClassName?: string
   onEscapeKeyDown?: (event: KeyboardEvent) => void
-  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void
+  onKeyDown?: (event: React.KeyboardEvent) => void
 }
 
 export function ModalWithCloseButton({

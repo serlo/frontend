@@ -27,10 +27,10 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   }, [props.focused, active, setActive])
 
   return (
-    <div className="relative">
+    <div className={cn('relative pl-1', active ? '' : 'pb-[5px]')}>
       <div
         className={cn(
-          'absolute top-0 z-20 h-full w-full',
+          'absolute top-0 z-20 h-[calc(100%_-_5px)] w-[calc(100%_-_0.25rem)]',
           props.focused && 'bg-white bg-opacity-80',
           active && 'hidden'
         )}
