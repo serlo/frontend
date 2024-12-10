@@ -1,0 +1,40 @@
+import { EditorModal } from '@editor/editor-ui/editor-modal'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
+
+export function AiGenerationEditor() {
+  const aiStrings = useEditStrings().plugins.aiGeneration
+
+  return (
+    <EditorModal
+      title={aiStrings.modalTitle}
+      isOpen
+      setIsOpen={() => {}}
+      className="top-8 max-w-xl translate-y-0 sm:top-24"
+      extraTitleClassName="serlo-h3 mt-4"
+    >
+      <textarea
+        className={cn(`ml-side w-[calc(100%-32px)] rounded-xl border-2 border-editor-primary-100
+          bg-editor-primary-100 px-2.5 py-2 text-almost-black
+          focus:border-editor-primary focus:outline-none`)}
+        // value={prompt}
+        rows={5}
+        placeholder={aiStrings.placeholder}
+        // onChange={(e) => setPrompt(e.target.value)}
+        // onKeyDown={(e) => {
+        //   if (e.key === 'Enter') {
+        //     onEnter(prompt)
+        //   }
+        // }}
+      />
+      <button
+        className="serlo-button-edit-primary mx-side mt-4 px-4"
+        // onClick={() => {
+        //   onEnter(prompt)
+        // }}
+      >
+        {aiStrings.buttonText}
+      </button>
+    </EditorModal>
+  )
+}

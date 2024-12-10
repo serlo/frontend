@@ -1,4 +1,5 @@
 export enum EditorPluginType {
+  AiGeneration = 'aiGeneration',
   Anchor = 'anchor',
   Article = 'article',
   Audio = 'audio',

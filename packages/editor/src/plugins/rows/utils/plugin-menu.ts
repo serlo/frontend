@@ -1,4 +1,5 @@
 import type { EditorProps } from '@editor/core'
+import IconAiGeneration from '@editor/editor-ui/assets/plugin-icons/icon-ai-generation.svg?raw'
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
@@ -68,6 +69,7 @@ export const pluginMenuType = {
   ExerciseGroup: EditorPluginType.ExerciseGroup,
 
   EdusharingAsset: EditorPluginType.EdusharingAsset,
+  AiGeneration: EditorPluginType.AiGeneration,
 } as const
 
 export type PluginMenuType =
@@ -234,6 +236,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
   [pluginMenuType.EdusharingAsset]: IconImage,
+  [pluginMenuType.AiGeneration]: IconAiGeneration,
 }
 
 function getIconString(type: PluginMenuType) {

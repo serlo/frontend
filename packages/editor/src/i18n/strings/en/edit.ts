@@ -37,6 +37,13 @@ export const editStrings = {
     },
   },
   plugins: {
+    aiGeneration: {
+      title: 'Create content via AI',
+      modalTitle: 'What should be generated?',
+      placeholder:
+        'Describe what you want to generate. E.g. "Create an explanation for the quadratic formula with an exercise at the end."',
+      buttonText: 'Generate content',
+    },
     anchor: {
       title: 'Anchor',
       description: 'Insert an anchor.',
@@ -553,5 +560,8 @@ export const editStrings = {
     author: 'Author',
     createdAt: 'when?',
     ready: 'Ready to save?',
+  },
+  aiFeatures: {
+    pluginToolReworkWithAi: 'Revise current plugin via AI',
   },
 }

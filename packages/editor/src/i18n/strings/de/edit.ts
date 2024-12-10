@@ -39,6 +39,13 @@ export const editStrings = {
     },
   },
   plugins: {
+    aiGeneration: {
+      title: 'Inhalt per AI generieren',
+      modalTitle: 'Was soll generiert werden?',
+      placeholder:
+        'z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende',
+      buttonText: 'Inhalt generieren',
+    },
     anchor: {
       title: 'Sprungmarke',
       description: 'Füge eine Sprungmarke innerhalb deines Inhalts hinzu.',
@@ -571,5 +578,8 @@ export const editStrings = {
     author: 'Autor*in',
     createdAt: 'Zeitstempel',
     ready: 'Bereit zum Speichern?',
+  },
+  aiFeatures: {
+    pluginToolReworkWithAi: 'Aktuelles Plugin per AI überarbeiten',
   },
 }

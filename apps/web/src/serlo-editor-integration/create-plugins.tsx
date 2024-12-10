@@ -1,4 +1,5 @@
 import type { PluginsWithData } from '@editor/plugin/helpers/editor-plugins'
+import { aiGenerationPlugin } from '@editor/plugins/ai-generation'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
@@ -50,6 +51,7 @@ import { imagePlugin } from '@/serlo-editor-integration/image-with-serlo-config'
 
 export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
   const plugins = [
+    EditorPluginType.AiGeneration,
     EditorPluginType.Anchor,
     EditorPluginType.Article,
     EditorPluginType.Audio,
@@ -124,6 +126,11 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     ...(isProduction
       ? []
       : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
+
+    // TODO: Hide behind experimental flag
+    ...(isProduction
+      ? []
+      : [{ type: EditorPluginType.AiGeneration, plugin: aiGenerationPlugin }]),
     ...(isProduction
       ? []
       : [
