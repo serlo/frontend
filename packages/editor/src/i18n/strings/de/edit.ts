@@ -45,6 +45,7 @@ export const editStrings = {
       placeholder:
         'z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende',
       buttonText: 'Inhalt generieren',
+      menuText: 'Aktuelles Plugin per AI überarbeiten',
     },
     anchor: {
       title: 'Sprungmarke',

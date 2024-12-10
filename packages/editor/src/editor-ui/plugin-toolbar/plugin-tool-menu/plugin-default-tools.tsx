@@ -1,4 +1,5 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { AiChangePluginTool } from '@editor/plugins/ai-generation/plugin-change-tool/ai-change-plugin-tool'
 import {
   insertPluginChildAfter,
   removePluginChild,
@@ -9,8 +10,9 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
@@ -32,6 +34,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
       EditorPluginType.Rows,
     [pluginId, store]
   )
+
+  const serloContext = useContext(SerloOnlyFeaturesContext)
+  const showAiTools = serloContext.isSerlo && !serloContext.isProduction
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)
@@ -78,7 +83,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
     <>
       {hasRowsParent ? (
         <>
+          {showAiTools ? <AiChangePluginTool pluginId={pluginId} /> : null}
           <DropdownButton
+            separatorTop={showAiTools}
             onClick={handleDuplicatePlugin}
             label={pluginStrings.rows.duplicate}
             icon={faClone}

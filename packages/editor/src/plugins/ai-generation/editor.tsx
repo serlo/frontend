@@ -10,17 +10,15 @@ import {
   useAppDispatch,
   useStore,
 } from '@editor/store'
-import { cn } from '@editor/utils/cn'
 import { either as E } from 'fp-ts'
-import { useState } from 'react'
 
-import { AiGenerationPluginProps } from '.'
+import { type AiGenerationPluginProps } from '.'
+import { PromtForm } from './components/promt-form'
 import { StateDecoder } from './decoder'
 import { mocked } from './mocked'
 
 export function AiGenerationEditor(props: AiGenerationPluginProps) {
   const aiStrings = useEditStrings().plugins.aiGeneration
-  const [prompt, setPrompt] = useState('')
 
   const store = useStore()
   const dispatch = useAppDispatch()
@@ -35,12 +33,10 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
     )
   }
 
-  function handleSubmit() {
+  function handleSubmit(prompt: string) {
     console.log(prompt)
 
-    // TODO: fetch, validate etc
-
-    setPrompt('')
+    // TODO: fetch, validate, loading states etc.
 
     const decoded = StateDecoder.decode(mocked)
 
@@ -83,24 +79,7 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
       className="top-8 max-w-xl translate-y-0 sm:top-24"
       extraTitleClassName="serlo-h3 mt-4"
     >
-      <form>
-        <textarea
-          className={cn(`ml-side w-[calc(100%-32px)] rounded-xl border-2 border-editor-primary-100
-          bg-editor-primary-100 px-2.5 py-2 text-almost-black
-          focus:border-editor-primary focus:outline-none`)}
-          value={prompt}
-          rows={5}
-          placeholder={aiStrings.placeholder}
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="serlo-button-edit-primary mx-side mt-4 px-4"
-          onClick={handleSubmit}
-        >
-          {aiStrings.buttonText}
-        </button>
-      </form>
+      <PromtForm onSubmit={handleSubmit} />
     </EditorModal>
   )
 }
