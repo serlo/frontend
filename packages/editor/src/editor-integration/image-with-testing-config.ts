@@ -45,6 +45,10 @@ enum FileErrorCode {
   BAD_EXTENSION,
   FILE_TOO_BIG,
   UPLOAD_FAILED,
+  UNAUTHORIZED,
+  SECRET_MISSING,
+  INVALID_RESPONSE,
+  NETWORK_ERROR,
 }
 
 export interface FileError {
@@ -91,7 +95,12 @@ function createUploadImageHandler(secret: string) {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Upload failed:', error)
-      const errors = handleErrors([FileErrorCode.UPLOAD_FAILED])
+      const errorCode =
+        error instanceof Error
+          ? Number(error.message) || FileErrorCode.UPLOAD_FAILED
+          : FileErrorCode.UPLOAD_FAILED
+
+      const errors = handleErrors([errorCode])
       showErrorToast(errors)
       // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       return Promise.reject(errors)
@@ -99,10 +108,20 @@ function createUploadImageHandler(secret: string) {
   }
 }
 
+interface GraphQlResponse {
+  data: MediaUploadQuery | null
+  errors?: Array<{
+    message: string
+    extensions?: {
+      code?: string
+    }
+  }>
+}
+
 export function createReadAndUploadFile(secret: string) {
   return async function readAndUploadFile(file: File): Promise<LoadedFile> {
     if (!secret) {
-      throw new Error('Missing secret for image plugin!')
+      throw new Error(FileErrorCode.SECRET_MISSING.toString())
     }
 
     const endpoint = 'https://api.serlo-staging.dev/graphql'
@@ -122,18 +141,28 @@ export function createReadAndUploadFile(secret: string) {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to get upload URL: ${response.status}`)
+      throw new Error(FileErrorCode.NETWORK_ERROR.toString())
     }
 
-    const { data } = (await response.json()) as { data: MediaUploadQuery }
+    const { data, errors } = (await response.json()) as GraphQlResponse
+
+    if (errors?.length) {
+      // eslint-disable-next-line no-console
+      console.error('GraphQL errors:', errors)
+      if (errors[0]?.extensions?.code === 'UNAUTHENTICATED') {
+        throw new Error(FileErrorCode.UNAUTHORIZED.toString())
+      }
+      throw new Error(FileErrorCode.UPLOAD_FAILED.toString())
+    }
 
     if (
+      !data ||
       !data?.media?.newUpload?.uploadUrl ||
       !data.media.newUpload.urlAfterUpload
     ) {
       // eslint-disable-next-line no-console
       console.error('Server responded with following invalid data: ', data)
-      throw new Error('Invalid response format from server')
+      throw new Error(FileErrorCode.INVALID_RESPONSE.toString())
     }
 
     const uploadResponse = await fetch(data.media.newUpload.uploadUrl, {
@@ -143,7 +172,7 @@ export function createReadAndUploadFile(secret: string) {
     })
 
     if (!uploadResponse.ok) {
-      throw new Error(`Upload failed with status: ${uploadResponse.status}`)
+      throw new Error(FileErrorCode.UPLOAD_FAILED.toString())
     }
 
     return {
@@ -181,6 +210,14 @@ function errorCodeToMessage(error: FileErrorCode) {
       return 'Filesize is too big'
     case FileErrorCode.UPLOAD_FAILED:
       return 'Error while uploading'
+    case FileErrorCode.UNAUTHORIZED:
+      return 'You are not authorized to upload images. Ensure the testingSecret is correct!'
+    case FileErrorCode.SECRET_MISSING:
+      return 'Missing authentication credentials (testingSecret)!'
+    case FileErrorCode.INVALID_RESPONSE:
+      return 'Server returned invalid data'
+    case FileErrorCode.NETWORK_ERROR:
+      return 'Network error while uploading'
   }
 }
 
