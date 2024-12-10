@@ -33,11 +33,11 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
 
         <Dialog.Content className="fixed left-1/2 top-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-12 shadow-lg">
           <button
-            className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-blue-200 hover:bg-blue-300"
+            className="absolute left-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-editor-primary-200 hover:bg-editor-primary-300"
             onClick={() => setIsOpen(false)}
             aria-label="Close"
           >
-            <FaIcon icon={faXmark} className="h-4 text-blue-600" />
+            <FaIcon icon={faXmark} className="text-editor-primary-600 h-4" />
           </button>
 
           <h2 className="mb-1 text-center text-lg font-semibold">
@@ -49,10 +49,10 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
 
           <div className="space-y-4">
             <div>
-              <p className="mb-1 font-semibold">
-                {exercises[currentExercise - 1].title}
+              <p className="my-2 cursor-pointer rounded-md bg-editor-primary-100 px-2 py-1 font-semibold hover:bg-editor-primary-200">
+                <span className="mr-2">▾</span> {exercises[0].title}
               </p>
-              <ul className="space-y-3">
+              <ul className="mx-2 space-y-3">
                 {checkboxes.map((item, index) => (
                   <li
                     key={index}
@@ -63,28 +63,36 @@ export function ExerciseSummary({ isOpen, setIsOpen }: ExerciseSummaryProps) {
                       type="checkbox"
                       checked={index !== 0 && index !== 3}
                       readOnly
-                      className="h-5 w-5 accent-blue-500"
+                      className="h-5 w-5 accent-editor-primary-200"
                     />
                   </li>
                 ))}
               </ul>
+              <p className="my-2 cursor-pointer rounded-md bg-editor-primary-100 px-2 py-1 font-semibold hover:bg-editor-primary-200">
+                <span className="mr-2">▸</span>
+                {exercises[1].title}
+              </p>
+              <p className="my-2 cursor-pointer rounded-md bg-editor-primary-100 px-2 py-1 font-semibold hover:bg-editor-primary-200">
+                <span className="mr-2">▸</span>
+                {exercises[2].title}
+              </p>
             </div>
           </div>
 
           {/* Pagination Dots */}
-          <div className="mt-6 flex justify-center space-x-2">
+          {/* <div className="mt-6 flex justify-center space-x-2">
             {exercises.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentExercise(index + 1)}
                 className={`h-3 w-3 rounded-full ${
                   currentExercise === index + 1
-                    ? 'bg-blue-500'
+                    ? 'bg-editor-primary-200'
                     : 'bg-gray-300 hover:bg-gray-400'
                 }`}
               />
             ))}
-          </div>
+          </div> */}
 
           <button
             className="ml-auto mr-2 mt-8 flex flex-row items-center justify-center gap-3 rounded-md bg-editor-primary-100 px-16 py-4 pb-4 pt-4 font-bold hover:cursor-pointer hover:bg-editor-primary-200"

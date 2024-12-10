@@ -98,9 +98,13 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     TemplatePluginType.TextExerciseGroup,
     TemplatePluginType.User,
     TemplatePluginType.Video,
+
+    // 'generateWithAi',
   ]
 
   const allPlugins = [
+    // { type: 'generateWithAi', plugin: geoGebraPlugin },
+
     { type: EditorPluginType.Text, plugin: createTextPlugin({}) },
     { type: EditorPluginType.Image, plugin: imagePlugin },
     { type: EditorPluginType.ImageGallery, plugin: createImageGalleryPlugin() },

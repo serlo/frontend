@@ -63,9 +63,9 @@ export function IndividualHelpEditor() {
       {allowParagraphFeedback.value || allowSubmitFeedback.value ? (
         <div>
           <div className="font-bold">Hinweise an die KI</div>
-          <div className="text-gray-500">
-            Beispielsweise Fehlkonzepte oder gängige Fehler, auf die KI eingehen
-            soll.
+          <div className="text-[1rem] text-gray-600">
+            Beispielsweise Fehlkonzepte oder gängige Fehler, auf welche die KI
+            eingehen soll.
           </div>
           <EditorTextArea
             placeholder="Welche Hinweise hast du für die Hilfestellungen der KI?"

@@ -39,6 +39,7 @@ const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
  * If a plugin in not loaded in the current editor instance, it will be filtered out.
  */
 export const pluginMenuType = {
+  // GenerateWithAi: 'generateWithAi',
   Text: EditorPluginType.Text,
   Image: EditorPluginType.Image,
   ImageGallery: EditorPluginType.ImageGallery,
@@ -233,6 +234,7 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
+  // [pluginMenuType.GenerateWithAi]: IconGenerateWithAi,
   [pluginMenuType.EdusharingAsset]: IconImage,
 }
 

@@ -261,13 +261,5 @@ export const microadaptivityState = {
       },
       id: 'cce46646-b3a1-4f1f-a462-af8c41fdc9fa',
     },
-    {
-      plugin: 'text',
-      state: [
-        { type: 'p', children: [{ text: '', strong: true }] },
-        { type: 'p', children: [{ strong: true, text: ' ' }] },
-      ],
-      id: '95685386-63d5-4e41-9933-f055f4ccd445',
-    },
   ],
 }

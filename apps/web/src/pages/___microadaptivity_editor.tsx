@@ -82,7 +82,7 @@ function Content() {
           {/* To change content width, change both max-w and basis */}
           <main
             id="content"
-            className="mb-[50%] max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
+            className="mb-[30%] max-w-[min(100%,50rem)] flex-shrink flex-grow basis-[50rem]"
           >
             <section className="min-h-screen">
               <div className="mt-[3rem]">
