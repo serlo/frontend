@@ -50,7 +50,7 @@ export function EditorRowRenderer({
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
-  const [collectedDragProps, dragPreview] = useDrag({
+  const [collectedDragProps, drag, dragPreview] = useDrag({
     type: 'row',
     item: () => ({
       id: row.id,
@@ -198,7 +198,7 @@ export function EditorRowRenderer({
             '[&>.row-controls]:!-left-1 [&>.row-controls]:!-top-9'
         )}
       >
-        <RowControls rows={rows} index={index} />
+        <RowControls drag={drag} rows={rows} index={index} />
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >

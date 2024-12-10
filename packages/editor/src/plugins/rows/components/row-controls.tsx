@@ -2,15 +2,17 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { StateTypeReturnType } from '@editor/types/internal__plugin-state'
 import { cn } from '@editor/utils/cn'
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
+import type { ConnectDragSource } from 'react-dnd'
 
 import type { RowsPluginState } from '..'
 
 interface RowDragButtonProps {
+  drag: ConnectDragSource
   rows: StateTypeReturnType<RowsPluginState>
   index: number
 }
 
-export function RowControls({ rows, index }: RowDragButtonProps) {
+export function RowControls({ drag, rows, index }: RowDragButtonProps) {
   function handleUpButtonClick() {
     const previousRow = document.getElementById(rows[index - 1].id)
     if (!previousRow) return
@@ -29,6 +31,7 @@ export function RowControls({ rows, index }: RowDragButtonProps) {
 
   return (
     <div
+      ref={drag as unknown as React.LegacyRef<HTMLDivElement>}
       className={cn(
         'row-controls',
         'absolute bottom-14 left-2 top-0 z-[22] flex flex-col justify-center gap-4',
