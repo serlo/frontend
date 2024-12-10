@@ -127,7 +127,10 @@ export function createReadAndUploadFile(secret: string) {
 
     const { data } = (await response.json()) as { data: MediaUploadQuery }
 
-    if (!data?.media?.newUpload) {
+    if (
+      !data?.media?.newUpload?.uploadUrl ||
+      !data.media.newUpload.urlAfterUpload
+    ) {
       // eslint-disable-next-line no-console
       console.error('Server responded with following invalid data: ', data)
       throw new Error('Invalid response format from server')
@@ -141,10 +144,6 @@ export function createReadAndUploadFile(secret: string) {
 
     if (!uploadResponse.ok) {
       throw new Error(`Upload failed with status: ${uploadResponse.status}`)
-    }
-
-    if (!data?.media?.newUpload?.urlAfterUpload) {
-      throw new Error('Invalid response format from server')
     }
 
     return {
