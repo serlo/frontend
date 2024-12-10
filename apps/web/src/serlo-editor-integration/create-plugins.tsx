@@ -99,11 +99,11 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     TemplatePluginType.User,
     TemplatePluginType.Video,
 
-    'generateWithAi',
+    // 'generateWithAi',
   ]
 
   const allPlugins = [
-    { type: 'generateWithAi', plugin: geoGebraPlugin },
+    // { type: 'generateWithAi', plugin: geoGebraPlugin },
 
     { type: EditorPluginType.Text, plugin: createTextPlugin({}) },
     { type: EditorPluginType.Image, plugin: imagePlugin },

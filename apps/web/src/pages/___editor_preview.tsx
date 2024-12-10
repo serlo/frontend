@@ -4,7 +4,6 @@ import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { SubmitButtonAndFeedback } from '@editor/plugins/rows/submit-button-and-feedback'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
@@ -160,8 +159,6 @@ function Content() {
             </h2>
             <div className="mt-[3rem]">
               <EditorRenderer document={parseDocumentString(previewState)} />
-              {/* HACK: Microadaptivity prototype */}
-              <SubmitButtonAndFeedback />
             </div>
           </section>
         </main>

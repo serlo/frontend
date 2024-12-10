@@ -3,8 +3,7 @@ export type Block = Text | Feedback
 export interface Feedback {
   id: string
   type: 'feedback'
-  content: (FeedbackText | FeedbackLink)[]
-  isCorrect: boolean
+  content: string
 }
 export interface Text {
   id: string
@@ -14,8 +13,7 @@ export interface Text {
 }
 
 export interface AiFeedback {
-  isCorrect: boolean
-  feedback: (FeedbackText | FeedbackLink)[]
+  feedback: string
 }
 
 export interface FeedbackText {

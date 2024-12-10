@@ -32,8 +32,6 @@ Hier sind zusätzliche Infos auf die du achten sollst:
 {{ADDITIONAL_INFO_FOR_AI}}
 </addtionalInfos>
 
-Das Feedback soll im JSON-Format gegeben werden. Es soll ein allgemeines Feedback zur gesamten Lösung erhalten.
-
 Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Musterlösung. Achte besonders auf:
 - Korrektheit der technischen Konzepte
 - Vollständigkeit der Lösung
@@ -42,7 +40,12 @@ Analysiere die Lösung des Schülers sorgfältig und vergleiche sie mit der Must
 Strukturiere das Feedback nach den Angaben von den Feedbackkriterien.
 
 Dein Feedback soll kurz, objektiv und prägnant sein, aber auch informell. Schreibe 1-3 Sätze. Spreche den/die Schüler*in in Du-Form an.
-Dein Feedback soll auf Deutsch sein, nur Beispiele und Korrekturvorschläge können auf Englisch sein.`
+Dein Feedback soll auf Deutsch sein, nur Beispiele und Korrekturvorschläge können auf Englisch sein.
+
+Das Feedback soll im JSON-Format gegeben werden. Property 'feedback' enthält den Feedback Text als HTML formatiert. Formatiere wichtige Hinweise als bold und markiere Zitate als Links. Zum Beispiel: 
+{
+  feedback: "<span>Du hast deine Meinung klar ausgedrückt. Du könntest sie allerdings mithilfe von </span><span style="font-weight: bold">Useful phrases</span><span> klarer herausstellen.<span>"
+}`
 
 const userPrompt = `Hier ist die Lösung des Schülers:
 <schueler_loesung>
@@ -124,11 +127,8 @@ export default async function POST(req: NextRequest): Promise<NextResponse> {
                   feedback: {
                     type: 'string',
                   },
-                  isCorrect: {
-                    type: 'boolean',
-                  },
                 },
-                required: ['feedback', 'isCorrect'],
+                required: ['feedback'],
               },
               name: '2024-09-22-feedback-schema',
             },
