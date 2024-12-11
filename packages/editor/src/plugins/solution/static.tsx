@@ -4,11 +4,11 @@ import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
 
 import { SolutionRenderer } from './renderer'
+import { useExerciseId } from '../exercise/context/exercise-id-context'
 import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function StaticSolutionRenderer({
-  id,
   state,
   solutionVisibleOnInit,
   beforeSlot,
@@ -19,6 +19,7 @@ export function StaticSolutionRenderer({
   beforeSlot?: JSX.Element | null
 }) {
   const { prerequisite, strategy, steps } = state
+  const exerciseId = useExerciseId()
 
   const strategyElement = isEmptyTextDocument(strategy) ? null : (
     <StaticRenderer document={strategy} />
@@ -40,7 +41,7 @@ export function StaticSolutionRenderer({
 
   function onSolutionOpen() {
     editorLearnerEvent.trigger?.({
-      pluginId: id,
+      pluginId: exerciseId,
       verb: 'opened',
       contentType: 'solution',
       value: 'open',

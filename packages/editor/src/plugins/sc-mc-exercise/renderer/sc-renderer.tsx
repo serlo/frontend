@@ -2,6 +2,7 @@ import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
+import { useExerciseId } from '@editor/plugins/exercise/context/exercise-id-context'
 import { cn } from '@editor/utils/cn'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
@@ -10,7 +11,6 @@ import { useState } from 'react'
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function ScRenderer({
-  id,
   answers,
   renderExtraAnswerContent,
   isPrintMode,
@@ -18,7 +18,7 @@ export function ScRenderer({
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)
   const exStrings = useStaticStrings().plugins.exercise
-
+  const exerciseId = useExerciseId()
   return (
     <div className="mx-side mb-block">
       <ul className="unstyled-list m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
@@ -37,7 +37,7 @@ export function ScRenderer({
                     setSelected(i)
 
                     editorLearnerEvent.trigger?.({
-                      pluginId: id,
+                      pluginId: exerciseId,
                       verb: 'interacted',
                       value: i,
                       contentType: 'sc-exercise',
@@ -80,7 +80,7 @@ export function ScRenderer({
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({
-              pluginId: id,
+              pluginId: exerciseId,
               verb: 'answered',
               correct: answers[selected ?? 0].isCorrect,
               value: selected,

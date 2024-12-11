@@ -1,3 +1,4 @@
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
@@ -26,6 +27,7 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-handle-learner-event'
 
 export interface EntityProps {
   data: EntityData
@@ -38,6 +40,9 @@ const LenabiCourseFeedback = dynamic(() =>
 )
 
 export function Entity({ data }: EntityProps) {
+  const handleLearnerEvent = useSerloHandleLearnerEvent()
+  editorLearnerEvent.init(handleLearnerEvent)
+
   editorRenderers.init(createRenderers())
 
   const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307521

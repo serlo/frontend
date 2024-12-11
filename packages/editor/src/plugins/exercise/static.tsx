@@ -6,9 +6,10 @@ import { isRowsDocument } from '@editor/types/plugin-type-guards'
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 
+import { ExerciseIdProvider } from './context/exercise-id-context'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
-export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
+export function ExerciseStaticRenderer({ state, id }: EditorExerciseDocument) {
   const { content, interactive, solution, hideInteractiveInitially } = state
   const [interactiveHidden, setInteractiveHidden] = useState(
     hideInteractiveInitially
@@ -22,7 +23,7 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
     isEmptyTextDocument(content.state[0])
 
   return (
-    <>
+    <ExerciseIdProvider value={id ?? ''}>
       {isEmptyContent ? (
         <div className="mt-6"></div>
       ) : (
@@ -41,6 +42,6 @@ export function ExerciseStaticRenderer({ state }: EditorExerciseDocument) {
       )}
 
       <StaticRenderer document={solution} />
-    </>
+    </ExerciseIdProvider>
   )
 }

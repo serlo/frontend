@@ -48,6 +48,7 @@
     "@serlo/katex-styles": "1.0.1",
     "@tippyjs/react": "^4.2.6",
     "@vidstack/react": "next",
+    "@xapi/xapi": "^3.0.1",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.20",
     "canvas-confetti": "^1.9.3",

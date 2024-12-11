@@ -2,6 +2,7 @@ import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
+import { useExerciseId } from '@editor/plugins/exercise/context/exercise-id-context'
 import { cn } from '@editor/utils/cn'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
@@ -10,13 +11,13 @@ import { useState } from 'react'
 import type { ScMcExerciseRendererProps } from './renderer'
 
 export function McRenderer({
-  id,
   answers,
   renderExtraAnswerContent,
 }: ScMcExerciseRendererProps) {
   const [showFeedback, setShowFeedback] = useState(false)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
   const exStrings = useStaticStrings().plugins.exercise
+  const exerciseId = useExerciseId()
 
   const correctCount = answers.filter((answer) => answer.isCorrect).length
   const selectedCount = selectedArray.filter(Boolean).length
@@ -49,7 +50,7 @@ export function McRenderer({
                     setSelectedArray(newArr)
 
                     editorLearnerEvent.trigger?.({
-                      pluginId: id,
+                      pluginId: exerciseId,
                       verb: 'interacted',
                       value: i,
                       contentType: 'mc-exercise',
@@ -91,7 +92,7 @@ export function McRenderer({
           onClick={() => {
             setShowFeedback(true)
             editorLearnerEvent.trigger?.({
-              pluginId: id,
+              pluginId: exerciseId,
               verb: 'answered',
               correct: allCorrect,
               // value: selected,

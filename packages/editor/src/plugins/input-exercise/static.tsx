@@ -4,13 +4,15 @@ import type { Element } from 'slate'
 
 import type { InputExerciseType } from './input-exercise-type'
 import { InputExerciseRenderer } from './renderer'
+import { useExerciseId } from '../exercise/context/exercise-id-context'
 import { StaticSlate } from '../text/static-components/static-slate'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
 export function InputExerciseStaticRenderer({
-  id,
   state,
 }: EditorInputExerciseDocument) {
+  const exerciseId = useExerciseId()
+
   const answers = state.answers.map((answer) => {
     const hasFeedback = !isEmptyTextDocument(answer.feedback)
     const unwrappedFeedback = (answer.feedback.state as Element[])?.[0].children
@@ -29,7 +31,7 @@ export function InputExerciseStaticRenderer({
       answers={answers}
       onEvaluate={(correct: boolean, value: string) => {
         editorLearnerEvent.trigger?.({
-          pluginId: id,
+          pluginId: exerciseId,
           verb: 'answered',
           correct,
           value,

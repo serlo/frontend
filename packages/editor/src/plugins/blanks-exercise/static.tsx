@@ -4,11 +4,13 @@ import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 
 import type { BlanksExerciseMode } from '.'
 import { BlanksExerciseRenderer } from './renderer'
+import { useExerciseId } from '../exercise/context/exercise-id-context'
 
 export function BlanksExerciseStaticRenderer({
-  id,
   state: { text: childPlugin, mode, extraDraggableAnswers },
 }: EditorBlanksExerciseDocument) {
+  const exerciseId = useExerciseId()
+
   return (
     <BlanksExerciseRenderer
       childPlugin={<StaticRenderer document={childPlugin} />}
@@ -18,7 +20,7 @@ export function BlanksExerciseStaticRenderer({
       extraDraggableAnswers={extraDraggableAnswers}
       onEvaluate={(correct: boolean) => {
         editorLearnerEvent.trigger?.({
-          pluginId: id,
+          pluginId: exerciseId,
           verb: 'answered',
           correct,
           contentType: 'blanks-exercise',

@@ -5919,6 +5919,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^8.14.0
     "@typescript-eslint/parser": ^8.14.0
     "@vidstack/react": next
+    "@xapi/xapi": ^3.0.1
     array-move: ^4.0.0
     autoprefixer: ^10.4.20
     canvas-confetti: ^1.9.3
@@ -7156,6 +7157,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xapi/xapi@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@xapi/xapi@npm:3.0.1"
+  dependencies:
+    axios: ^1.6.0
+  checksum: bba4de687628c90815a6cd522d4c241cfa410a5a63c2f5dfedc4b87054cb7e52eb1e21e43a9129ca77fed926491cb8fa531a08492d930879afa35449e7560e83
+  languageName: node
+  linkType: hard
+
 "abab@npm:^2.0.6":
   version: 2.0.6
   resolution: "abab@npm:2.0.6"
@@ -7749,6 +7759,17 @@ __metadata:
   version: 4.10.2
   resolution: "axe-core@npm:4.10.2"
   checksum: 2b9b1c93ea73ea9f206604e4e17bd771d2d835f077bde54517d73028b8865c69b209460e73d5b109968cbdb39ab3d28943efa5695189bd79e16421ce1706719e
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.0":
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: cb8ce291818effda09240cb60f114d5625909b345e10f389a945320e06acf0bc949d0f8422d25720f5dd421362abee302c99f5e97edec4c156c8939814b23d19
   languageName: node
   linkType: hard
 

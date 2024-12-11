@@ -1,4 +1,5 @@
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
+import { useExerciseId } from '@editor/plugins/exercise/context/exercise-id-context'
 import { useEffect } from 'react'
 
 import { EditorH5PDocument } from '.'
@@ -7,6 +8,7 @@ import { H5pStaticRenderer } from './static'
 
 // Special version for serlo.org with exercise submission events
 export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
+  const exerciseId = useExerciseId()
   useEffect(() => {
     const handleSubmissionEvent = (e: Event) => {
       const e_id = (e as CustomEvent).detail as string
@@ -14,7 +16,7 @@ export function H5pSerloStaticRenderer(props: EditorH5PDocument) {
 
       if (e_id === id) {
         editorLearnerEvent.trigger?.({
-          pluginId: props.id,
+          pluginId: exerciseId,
           verb: 'answered',
           correct: e.type === 'h5pExerciseCorrect',
           contentType: 'h5p-exercise',
