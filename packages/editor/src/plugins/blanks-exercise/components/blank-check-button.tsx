@@ -18,7 +18,7 @@ export function BlankCheckButton(props: BlankCheckButtonProps) {
   const isCorrect = [...feedback].every((entry) => entry[1].isCorrect)
 
   return (
-    <div className="mt-2 flex">
+    <div className="mx-side mt-5 flex">
       <button
         className="serlo-button-learner-primary mr-3 h-8"
         onClick={onClick}
