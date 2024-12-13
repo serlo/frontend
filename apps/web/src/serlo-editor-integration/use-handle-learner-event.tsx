@@ -5,7 +5,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useEntityData } from '@/contexts/uuids-context'
 
 const endpoint = 'https://watershedlrs.com/api/organizations/25975/lrs'
-const key = '97c9dcdcc2b2d8' //
+const key = '97c9dcdcc2b2d8'
 const secret = '44ac953d3f72a4'
 const auth = XAPI.toBasicAuth(key, secret)
 const xapi = new XAPI({
