@@ -76,72 +76,65 @@ export function ExerciseEditor(props: ExerciseProps) {
                 />
               </Suspense>
             ) : null}
+            <ExerciseToolbar
+              {...props}
+              previewActive={previewActive}
+              setPreviewActive={setPreviewActive}
+            />
+          </div>
+          <div className="h-10"></div>
+          <div className="mx-side">
+            {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
+            {/* Background: Users often add their blanks-text to the task */}
             <div
               className={cn(
-                'group-focus-within/exercise:block',
-                isFocused ? 'block' : 'hidden'
+                'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
+                '[&_.plugin-rows]:pl-[7px]'
               )}
             >
-              <ExerciseToolbar
-                {...props}
-                previewActive={previewActive}
-                setPreviewActive={setPreviewActive}
-              />
+              {content.render({
+                config: {
+                  textPluginPlaceholder: exStrings.placeholder,
+                },
+              })}
             </div>
-            <div className="h-10"></div>
-            <div className="mx-side">
-              {interactive.defined ? (
-                <>
-                  {/* Special case for the blanks exercise: Until the child plugin is selected we hide the task to avoid confusion */}
-                  {/* Background: Users often add their blanks-text to the task */}
-                  <div
-                    className={cn(
-                      'group-has-[.blanks-child-plugin-selection]/exercise:hidden',
-                      '[&_.plugin-rows]:pl-[7px]'
-                    )}
+            {interactive.defined ? (
+              <>
+                {interactive.render()}
+                {hideInteractiveInitially.defined ? (
+                  <small className="bg-editor-primary-200 p-1">
+                    [{exStrings.hideInteractiveInitially.info}]
+                  </small>
+                ) : null}
+              </>
+            ) : (
+              <InteractiveExercisesSelection interactive={interactive} />
+            )}
+            {solution.defined ? (
+              <div className="-ml-side mt-block">
+                <nav className="flex justify-end">
+                  <button
+                    className="serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger relative top-[31px] z-20 mr-side"
+                    onClick={() => solution.remove()}
                   >
-                    {content.render({
-                      config: {
-                        textPluginPlaceholder: exStrings.placeholder,
-                      },
-                    })}
-                  </div>
-                  {interactive.render()}
-                  {hideInteractiveInitially.defined ? (
-                    <small className="bg-editor-primary-200 p-1">
-                      [{exStrings.hideInteractiveInitially.info}]
-                    </small>
-                  ) : null}
-                </>
-              ) : (
-                <InteractiveExercisesSelection interactive={interactive} />
-              )}
-              {solution.defined ? (
-                <div className="-ml-side mt-block">
-                  <nav className="flex justify-end">
-                    <button
-                      className="serlo-button-round serlo-button-edit-secondary serlo-tooltip-trigger relative top-[31px] z-20 mr-side"
-                      onClick={() => solution.remove()}
-                    >
-                      <EditorTooltip text={exStrings.removeSolution} />
-                      <FaIcon icon={faTrashAlt} />
-                    </button>
-                  </nav>
-                  {solution.render()}
-                </div>
-              ) : (
-                <div
-                  className={cn(
-                    'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
-                    isFocused ? 'block' : 'hidden'
-                  )}
-                >
-                  <AddButton onClick={() => solution.create()}>
-                    {exStrings.createSolution}
-                  </AddButton>
-                </div>
-              )}
-            </div>
+                    <EditorTooltip text={exStrings.removeSolution} />
+                    <FaIcon icon={faTrashAlt} />
+                  </button>
+                </nav>
+                {solution.render()}
+              </div>
+            ) : (
+              <div
+                className={cn(
+                  'mt-12 hidden max-w-[50%] group-focus-within/exercise:block',
+                  isFocused ? 'block' : 'hidden'
+                )}
+              >
+                <AddButton onClick={() => solution.create()}>
+                  {exStrings.createSolution}
+                </AddButton>
+              </div>
+            )}
           </div>
         </div>
       </PreviewProvider>
