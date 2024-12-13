@@ -1,3 +1,4 @@
+import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorRowsDocument } from '@editor/types/editor-plugins'
@@ -27,6 +28,7 @@ import {
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+import { useSerloHandleLearnerEvent } from '@/serlo-editor-integration/use-handle-learner-event'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -42,6 +44,10 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 export function Topic({ data, breadcrumbs }: TopicProps) {
   const { strings } = useInstanceData()
 
+  const handleLearnerEvent = useSerloHandleLearnerEvent()
+  editorLearnerEvent.init(handleLearnerEvent)
+  editorRenderers.init(createRenderers())
+
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
@@ -53,8 +59,6 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
     : undefined
 
   const hasExercises = data.exercisesContent.length > 0
-
-  editorRenderers.init(createRenderers())
 
   return (
     <>
