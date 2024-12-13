@@ -86,7 +86,6 @@ const verbMap = {
 } as const
 
 // https:github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#interaction-types
-//true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other
 const interactionTypeMap = {
   'input-exercise': 'fill-in',
   'sc-exercise': 'choice',
