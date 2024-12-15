@@ -1,3 +1,4 @@
+import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import {
   faFacebookSquare,
   faGoogle,
@@ -8,6 +9,7 @@ import {
   faCopy,
   faDownload,
   faEnvelope,
+  faFileText,
 } from '@fortawesome/free-solid-svg-icons'
 import { QRCodeSVG } from 'qrcode.react'
 import { MouseEvent, useState, useEffect } from 'react'
@@ -34,6 +36,16 @@ interface EntryData {
   href?: string
   download?: string
   onClick?: (event: MouseEvent) => void
+}
+
+function getBase(currentHost: string) {
+  if (currentHost.endsWith('serlo-staging.dev'))
+    return 'https://de.serlo-staging.dev'
+  if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
+
+  return process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://de.serlo.org'
 }
 
 export function ShareModal({
@@ -70,9 +82,47 @@ export function ShareModal({
     }
   }
 
+  async function copyContentToClipboard(text?: string) {
+    try {
+      if (!pathOrId) {
+        throw new Error('No path or entity id provided.')
+      }
+      const base = getBase(window.location.host)
+      const url = `${base}/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
+      const res = await fetch(url)
+      const data = (await res.json()) as string | AnyEditorDocument[]
+      if (!res.ok) {
+        throw new Error(
+          'injection-content API call failed with error: ' + data.toString()
+        )
+      }
+      console.log('bildungsraum-share endpoint data: ', data)
+      await navigator.clipboard.writeText(JSON.stringify(data))
+      showToastNotice(
+        '👌 ' + (text ? text : strings.share.copyContentSuccess),
+        'success'
+      )
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+      showToastNotice(
+        '❌ ' + (text ? text : strings.share.copyContentFailed),
+        'warning'
+      )
+    }
+  }
+
   const shareUrl = `${window.location.protocol}//${window.location.host}/${pathOrId}`
   const urlEncoded = encodeURIComponent(shareUrl)
   const titleEncoded = encodeURIComponent(document.title)
+
+  const contentCopy = [
+    {
+      title: strings.share.copyContent,
+      icon: faFileText,
+      onClick: () => copyContentToClipboard('Content copied to clipboard!'),
+    },
+  ]
 
   const socialShare = [
     {
@@ -146,6 +196,8 @@ export function ShareModal({
         <QRCodeSVG value={shareUrl} fgColor={colors.brand} />
       </div>
       {renderShareInput()}
+      <hr className="mx-side my-4" />
+      {renderButtons(contentCopy)}
       <hr className="mx-side my-4" />
       {renderButtons(lmsData)}
       <hr className="mx-side my-4" />

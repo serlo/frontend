@@ -15,7 +15,7 @@ import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
-import { insertPlugin } from '../utils/insert-plugin'
+import { insertPlugins } from '../utils/insert-plugins'
 import { mathpixPasteHandler } from '../utils/mathpix-paste-handler'
 
 export interface UseEditablePasteHandlerArgs {
@@ -60,44 +60,50 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       mathpixPasteHandler({ event, editor, text })
 
-      let media
+      let pluginsToAdd: Array<{ pluginType: string; state?: unknown }> = []
       // pasting editor document string and insert as plugins
-      if (!media && text.startsWith('{"plugin":"rows"')) {
+      if (!pluginsToAdd.length && text.startsWith('{"plugin":"rows"')) {
         const rowsDocument = JSON.parse(text) as EditorRowsDocument
-        if (rowsDocument.state.length !== 1) return
-        const pluginDocument = rowsDocument.state.at(0)
-        const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
-        if (!pluginDocument || typesOfAncestors === null) return
+        rowsDocument.state.forEach((_, index) => {
+          const pluginDocument = rowsDocument.state.at(index)
+          const typesOfAncestors = selectAncestorPluginTypes(
+            store.getState(),
+            id
+          )
+          if (!pluginDocument || typesOfAncestors === null) return
 
-        if (
-          mayManipulateSiblings &&
-          checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
-        ) {
-          event.preventDefault() // extra prevent for firefox to make it work 🤷
-          media = {
-            pluginType: pluginDocument.plugin,
-            state: pluginDocument.state,
+          if (
+            mayManipulateSiblings &&
+            checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
+          ) {
+            event.preventDefault() // extra prevent for firefox to make it work 🤷
+            pluginsToAdd.push({
+              pluginType: pluginDocument.plugin,
+              state: pluginDocument.state,
+            })
+          } else {
+            event.preventDefault()
+            showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
           }
-        } else {
-          event.preventDefault()
-          showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
-        }
+        })
       }
 
       // Exit if not allowed to manipulate siblings
       if (!mayManipulateSiblings) return
 
       // Iterate through all plugins and try to process clipboard data
-      for (const { plugin, type } of editorPlugins.getAllWithData()) {
-        const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
-        if (state?.state) {
-          media = { state: state.state as unknown, pluginType: type }
-          break
+      if (!pluginsToAdd.length) {
+        for (const { plugin, type } of editorPlugins.getAllWithData()) {
+          const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
+          if (state?.state) {
+            pluginsToAdd = [{ state: state.state as unknown, pluginType: type }]
+            break
+          }
         }
       }
 
       // Exit if no media was processed from clipboard data
-      if (!media) return
+      if (!pluginsToAdd.length) return
 
       // Prevent URL being pasted as text in the text plugin
       event.preventDefault()
@@ -108,13 +114,13 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         return
       }
 
-      // Insert the plugin with appropriate type and state
-      insertPlugin({
+      // Insert the plugins with appropriate type and state
+      insertPlugins({
+        plugins: pluginsToAdd,
         editor,
         id,
-        dispatch,
         getStoreState: () => store.getState(),
-        ...media,
+        dispatch,
       })
     },
     [dispatch, editor, id, textStrings, store]

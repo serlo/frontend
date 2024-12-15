@@ -97,6 +97,9 @@ export const instanceData = {
       copyLink: 'Copy link',
       copySuccess: 'Link copied!',
       copyFailed: 'Error copying link!',
+      copyContent: 'Copy content',
+      copyContentSuccess: 'Content copied!',
+      copyContentFailed: 'Error copying content!',
       close: 'Close',
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions',
@@ -401,7 +404,7 @@ export const instanceData = {
           'The provided authentication code is invalid, please try again.',
         code4000010:
           'Have you already verified your email address?.%break% %verificationLinkText%',
-        code4000032: "You inserted less than 8 characters.",
+        code4000032: 'You inserted less than 8 characters.',
         code4060004:
           'The recovery link is not valid or has already been used. Please try requesting an email again',
         code4070001:
