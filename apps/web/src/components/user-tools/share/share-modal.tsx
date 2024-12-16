@@ -41,6 +41,8 @@ interface EntryData {
 function getBase(currentHost: string) {
   if (currentHost.endsWith('serlo-staging.dev'))
     return 'https://de.serlo-staging.dev'
+  if (currentHost.endsWith('serlo.vercel.app'))
+    return 'https://de.serlo-staging.dev'
   if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
 
   return process.env.NODE_ENV === 'development'
