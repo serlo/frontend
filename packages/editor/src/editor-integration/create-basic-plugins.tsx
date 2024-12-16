@@ -8,6 +8,7 @@ import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
@@ -125,6 +126,10 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
+    },
+    {
+      type: EditorPluginType.InteractiveVideo,
+      plugin: interactiveVideoPlugin,
     },
 
     // Special plugins, never visible in suggestions

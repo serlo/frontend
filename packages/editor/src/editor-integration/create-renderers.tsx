@@ -15,6 +15,7 @@ import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
+import { InteractiveVideoStaticRenderer } from '@editor/plugins/interactive-video/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
@@ -100,6 +101,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.TextAreaExercise,
         renderer: TextAreaExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.InteractiveVideo,
+        renderer: InteractiveVideoStaticRenderer,
       },
       {
         type: EditorPluginType.EdusharingAsset,
