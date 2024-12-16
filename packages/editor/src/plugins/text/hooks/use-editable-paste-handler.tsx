@@ -128,7 +128,6 @@ export const StateDecoder = t.strict({
       plugin: t.union([
         t.literal(EditorPluginType.Article),
         t.literal(EditorPluginType.ArticleIntroduction),
-        t.literal(EditorPluginType.Course),
 
         t.literal(EditorPluginType.Anchor),
         t.literal(EditorPluginType.Audio),
