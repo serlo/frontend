@@ -15,6 +15,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
+import { PathReporter } from 'io-ts/PathReporter'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
@@ -129,6 +130,8 @@ export const StateDecoder = t.strict({
         t.literal(EditorPluginType.Article),
         t.literal(EditorPluginType.ArticleIntroduction),
 
+        t.literal(EditorPluginType.Rows),
+
         t.literal(EditorPluginType.Anchor),
         t.literal(EditorPluginType.Audio),
         t.literal(EditorPluginType.Box),
@@ -163,7 +166,11 @@ export const StateDecoder = t.strict({
 function decodeRowsPlugin(text: string) {
   try {
     const decoded = StateDecoder.decode(JSON.parse(text))
-    if (E.isLeft(decoded)) return throwError()
+    if (E.isLeft(decoded)) {
+      return throwError(
+        `Could not validate data: ${PathReporter.report(decoded).join('\n')}`
+      )
+    }
     return decoded.right
   } catch (error) {
     throwError(error)
