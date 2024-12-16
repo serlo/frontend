@@ -96,7 +96,6 @@ export function ShareModal({
           'injection-content API call failed with error: ' + data.toString()
         )
       }
-      console.log('bildungsraum-share endpoint data: ', data)
       await navigator.clipboard.writeText(JSON.stringify(data))
       showToastNotice('👌 ' + strings.share.copyContentSuccess, 'success')
     } catch (e) {
