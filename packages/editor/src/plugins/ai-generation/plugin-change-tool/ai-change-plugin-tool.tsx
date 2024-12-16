@@ -5,7 +5,7 @@ import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
 import { faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useState } from 'react'
 
-import { PromtForm } from '../components/promt-form'
+import { PromtForm } from '../components/prompt-form'
 import { mockedTextPlugin } from '../mocked'
 
 export function AiChangePluginTool({ pluginId }: { pluginId: string }) {

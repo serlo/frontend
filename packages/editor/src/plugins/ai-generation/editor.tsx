@@ -13,7 +13,7 @@ import {
 import { either as E } from 'fp-ts'
 
 import { type AiGenerationPluginProps } from '.'
-import { PromtForm } from './components/promt-form'
+import { PromtForm } from './components/prompt-form'
 import { StateDecoder } from './decoder'
 import { mocked } from './mocked'
 
