@@ -26,6 +26,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export interface ShareModalProps {
   isOpen: boolean
   setIsOpen: (open: boolean) => void
+  showCopyContent?: boolean
   showPdf?: boolean
   path?: string
 }
@@ -51,6 +52,7 @@ function getBase(currentHost: string) {
 export function ShareModal({
   isOpen,
   setIsOpen,
+  showCopyContent,
   showPdf,
   path,
 }: ShareModalProps) {
@@ -189,8 +191,12 @@ export function ShareModal({
         <QRCodeSVG value={shareUrl} fgColor={colors.brand} />
       </div>
       {renderShareInput()}
-      <hr className="mx-side my-4" />
-      {renderButtons(contentCopy)}
+      {showCopyContent && (
+        <>
+          <hr className="mx-side my-4" />
+          {renderButtons(contentCopy)}
+        </>
+      )}
       <hr className="mx-side my-4" />
       {renderButtons(lmsData)}
       <hr className="mx-side my-4" />

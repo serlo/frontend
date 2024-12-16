@@ -28,6 +28,12 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
       UuidType.Exercise,
     ].includes(data.typename as UuidType)
 
+  const showCopyContent =
+    data &&
+    [UuidType.Article, UuidType.ExerciseGroup, UuidType.Exercise].includes(
+      data.typename as UuidType
+    )
+
   return (
     <>
       <UserToolsItem
@@ -40,6 +46,7 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
         <ShareModal
           isOpen={shareOpen}
           setIsOpen={setShareOpen}
+          showCopyContent={showCopyContent}
           showPdf={showPdf}
         />
       ) : null}
