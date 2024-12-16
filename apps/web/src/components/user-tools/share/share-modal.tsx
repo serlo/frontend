@@ -1,4 +1,3 @@
-import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import {
   faFacebookSquare,
   faGoogle,
@@ -92,7 +91,7 @@ export function ShareModal({
       const base = getBase(window.location.host)
       const url = `${base}/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
       const res = await fetch(url)
-      const data = (await res.json()) as string | AnyEditorDocument[]
+      const data = (await res.json()) as string
       if (!res.ok) {
         throw new Error(
           'injection-content API call failed with error: ' + data.toString()
