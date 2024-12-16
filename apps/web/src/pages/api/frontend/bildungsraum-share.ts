@@ -1,5 +1,8 @@
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorArticleDocument } from '@editor/types/editor-plugins'
+import {
+  EditorArticleDocument,
+  EditorExerciseDocument,
+} from '@editor/types/editor-plugins'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -53,6 +56,16 @@ export default async function handler(
           respondWithContent(articleContent)
           return
         }
+
+        if (uuid.__typename === 'Exercise') {
+          const exercise = parseDocumentString(
+            uuid.currentRevision.content
+          ) as EditorExerciseDocument
+          const rowsDocument = { plugin: 'rows', state: [exercise] }
+          respondWithContent(rowsDocument)
+          return
+        }
+
         return res.status(422).json('unknown entity type')
       })
       .catch((e) => {
