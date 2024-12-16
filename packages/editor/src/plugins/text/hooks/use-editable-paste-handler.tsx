@@ -11,7 +11,10 @@ import {
   useStore,
   selectAncestorPluginTypes,
 } from '@editor/store'
-import type { EditorRowsDocument } from '@editor/types/editor-plugins'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { either as E } from 'fp-ts'
+import * as t from 'io-ts'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
@@ -60,36 +63,17 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       mathpixPasteHandler({ event, editor, text })
 
-      let pluginsToAdd: Array<{ pluginType: string; state?: unknown }> = []
-      // pasting editor document string and insert as plugins
-      if (!pluginsToAdd.length && text.startsWith('{"plugin":"rows"')) {
-        const rowsDocument = JSON.parse(text) as EditorRowsDocument
-        rowsDocument.state.forEach((_, index) => {
-          const pluginDocument = rowsDocument.state.at(index)
-          const typesOfAncestors = selectAncestorPluginTypes(
-            store.getState(),
-            id
-          )
-          if (!pluginDocument || typesOfAncestors === null) return
-
-          if (
-            mayManipulateSiblings &&
-            checkIsAllowedNesting(pluginDocument.plugin, typesOfAncestors)
-          ) {
-            event.preventDefault() // extra prevent for firefox to make it work 🤷
-            pluginsToAdd.push({
-              pluginType: pluginDocument.plugin,
-              state: pluginDocument.state,
-            })
-          } else {
-            event.preventDefault()
-            showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
-          }
-        })
-      }
-
       // Exit if not allowed to manipulate siblings
       if (!mayManipulateSiblings) return
+
+      let pluginsToAdd: Array<{ pluginType: string; state?: unknown }> = []
+
+      // Pasting editor document string and insert as plugins
+      if (!pluginsToAdd.length && text.startsWith('{"plugin":"rows"')) {
+        const rowsDocument = decodeRowsPlugin(text)
+        if (!rowsDocument || !rowsDocument.state.length) return
+        rowsDocument.state.forEach(processPlugin)
+      }
 
       // Iterate through all plugins and try to process clipboard data
       if (!pluginsToAdd.length) {
@@ -102,7 +86,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         }
       }
 
-      // Exit if no media was processed from clipboard data
+      // Exit if no plugin was processed from clipboard data
       if (!pluginsToAdd.length) return
 
       // Prevent URL being pasted as text in the text plugin
@@ -122,7 +106,79 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         getStoreState: () => store.getState(),
         dispatch,
       })
+
+      function processPlugin({ plugin, state }: AnyEditorDocument) {
+        const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+        if (typesOfAncestors === null) return
+        if (checkIsAllowedNesting(plugin, typesOfAncestors)) {
+          pluginsToAdd.push({ pluginType: plugin, state })
+        } else {
+          showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
+        }
+      }
     },
     [dispatch, editor, id, textStrings, store]
+  )
+}
+
+export const StateDecoder = t.strict({
+  plugin: t.literal(EditorPluginType.Rows),
+  state: t.array(
+    t.strict({
+      plugin: t.union([
+        t.literal(EditorPluginType.Article),
+        t.literal(EditorPluginType.ArticleIntroduction),
+        t.literal(EditorPluginType.Course),
+
+        t.literal(EditorPluginType.Anchor),
+        t.literal(EditorPluginType.Audio),
+        t.literal(EditorPluginType.Box),
+        t.literal(EditorPluginType.Equations),
+        t.literal(EditorPluginType.Geogebra),
+        t.literal(EditorPluginType.Highlight),
+        t.literal(EditorPluginType.Image),
+        t.literal(EditorPluginType.ImageGallery),
+        t.literal(EditorPluginType.Injection),
+        t.literal(EditorPluginType.InteractiveVideo),
+        t.literal(EditorPluginType.Multimedia),
+        t.literal(EditorPluginType.SerloInjection),
+        t.literal(EditorPluginType.SerloTable),
+        t.literal(EditorPluginType.Spoiler),
+        t.literal(EditorPluginType.Text),
+        t.literal(EditorPluginType.Video),
+
+        t.literal(EditorPluginType.Exercise),
+        t.literal(EditorPluginType.ExerciseGroup),
+        t.literal(EditorPluginType.BlanksExercise),
+        t.literal(EditorPluginType.DropzoneImage),
+        t.literal(EditorPluginType.InputExercise),
+        t.literal(EditorPluginType.ScMcExercise),
+        t.literal(EditorPluginType.Solution),
+        t.literal(EditorPluginType.TextAreaExercise),
+      ]),
+      state: t.unknown,
+    })
+  ),
+})
+
+function decodeRowsPlugin(text: string) {
+  try {
+    const decoded = StateDecoder.decode(JSON.parse(text))
+    if (E.isLeft(decoded)) return throwError()
+    return decoded.right
+  } catch (error) {
+    throwError(error)
+  }
+}
+
+function throwError(error?: unknown) {
+  showToastNotice(
+    '⚠️ Sorry, something is wrong with the data you pasted.',
+    'warning'
+  )
+  // eslint-disable-next-line no-console
+  console.error(error)
+  throw new Error(
+    'Pasted JSON data is not a valid editor-state or contains unsupported plugins'
   )
 }
