@@ -82,7 +82,7 @@ export function ShareModal({
     }
   }
 
-  async function copyContentToClipboard(text?: string) {
+  async function copyContentToClipboard() {
     try {
       if (!pathOrId) {
         throw new Error('No path or entity id provided.')
@@ -98,17 +98,11 @@ export function ShareModal({
       }
       console.log('bildungsraum-share endpoint data: ', data)
       await navigator.clipboard.writeText(JSON.stringify(data))
-      showToastNotice(
-        '👌 ' + (text ? text : strings.share.copyContentSuccess),
-        'success'
-      )
+      showToastNotice('👌 ' + strings.share.copyContentSuccess, 'success')
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e)
-      showToastNotice(
-        '❌ ' + (text ? text : strings.share.copyContentFailed),
-        'warning'
-      )
+      showToastNotice('❌ ' + strings.share.copyContentFailed, 'warning')
     }
   }
 
@@ -120,7 +114,7 @@ export function ShareModal({
     {
       title: strings.share.copyContent,
       icon: faFileText,
-      onClick: () => copyContentToClipboard('Content copied to clipboard!'),
+      onClick: () => copyContentToClipboard(),
     },
   ]
 
