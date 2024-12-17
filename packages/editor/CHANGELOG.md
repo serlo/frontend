@@ -1,3 +1,14 @@
+## Changelog for version 0.20.2
+
+- feat(editor): add learner event handler to package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4350
+- quickfix: show exercise task again. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4347
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4346
+- refactor(image-plugin): Show better error messages when the image upload fails. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4344
+- fix(plugin-rows): whole plugin drag handle bug. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4343
+- feat(microadaptivity): integrate AI in final feedback. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4338
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.1-editor...v0.20.2-editor
+
 ## Changelog for version 0.20.1
 
 - feat(editor-web-component): Expose language prop. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4340
