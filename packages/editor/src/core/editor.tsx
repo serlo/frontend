@@ -4,6 +4,8 @@ import {
   debouncedStoreToLocalStorage,
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
+import { useWelcomeModal } from '@editor/editor-ui/welcome-modal/use-welcome-modal'
+import { WelcomeModal } from '@editor/editor-ui/welcome-modal/welcome-modal'
 import { getEditorVersion } from '@editor/package/editor-version'
 import { cn } from '@editor/utils/cn'
 import { useState, useMemo } from 'react'
@@ -23,6 +25,7 @@ import { useIsSerlo } from './hooks/use-is-serlo'
 export function Editor(props: EditorProps) {
   const isSerlo = useIsSerlo()
   const [useStored, setUseStored] = useState(false)
+  const welcomeModalProps = useWelcomeModal()
 
   const storedState = getStateFromLocalStorage()
   const initialState =
@@ -52,6 +55,7 @@ export function Editor(props: EditorProps) {
           {/* For non serlo environments, we need to render the toaster
           (already gets rendered in the web project) */}
           {!isSerlo ? <Toaster /> : null}
+          <WelcomeModal {...welcomeModalProps} />
           <div
             className={cn(
               'editor-core mb-24 text-lg leading-cozy',
