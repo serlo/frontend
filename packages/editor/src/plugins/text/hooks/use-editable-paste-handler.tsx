@@ -2,6 +2,10 @@ import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-con
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
+import {
+  listenForUnsupportedPlugins,
+  removeUnsupportedPluginsListener,
+} from '@editor/plugin/helpers/unsupported-plugin-event'
 import { captionPasteHandler } from '@editor/plugins/image/utils/caption-paste-handler'
 import { checkIsAllowedNesting } from '@editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
@@ -12,10 +16,10 @@ import {
   selectAncestorPluginTypes,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
-import { either as E } from 'fp-ts'
+import type { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { fold } from 'fp-ts/lib/Either'
+import { pipe } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
-import { PathReporter } from 'io-ts/PathReporter'
 import { useCallback } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
@@ -41,11 +45,11 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       const text = event.clipboardData.getData('text')
       if (!files.length && !text) return
 
-      // Exit if unable to select document data
+      // Exit if unable to select plugin document data
       const storeState = store.getState()
-      const document = selectDocument(storeState, id)
+      const pluginDocument = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
-      if (!document) return
+      if (!pluginDocument) return
 
       // special case: pasting in image caption
       void captionPasteHandler({
@@ -71,6 +75,7 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
 
       // Pasting editor document string and insert as plugins
       if (!pluginsToAdd.length && text.startsWith('{"plugin":"rows"')) {
+        listenForUnsupportedPlugins(notifyUserOfUnsupportedPlugins)
         const rowsDocument = decodeRowsPlugin(text)
         if (!rowsDocument || !rowsDocument.state.length) return
         rowsDocument.state.forEach(processPlugin)
@@ -108,6 +113,18 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
         dispatch,
       })
 
+      removeUnsupportedPluginsListener(notifyUserOfUnsupportedPlugins)
+
+      function decodeRowsPlugin(input: string) {
+        return pipe(
+          StateDecoder.decode(JSON.parse(input)),
+          fold(
+            (errors) => throwError(errors) ?? null,
+            (decoded) => decoded
+          )
+        )
+      }
+
       function processPlugin({ plugin, state }: AnyEditorDocument) {
         const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
         if (typesOfAncestors === null) return
@@ -117,74 +134,27 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
           showToastNotice(textStrings.pastingPluginNotAllowedHere, 'warning')
         }
       }
+
+      function notifyUserOfUnsupportedPlugins() {
+        showToastNotice(textStrings.unsupportedPluginsPasted, 'warning')
+      }
+
+      function throwError(error: unknown) {
+        showToastNotice(textStrings.invalidDataPasted, 'warning')
+        // eslint-disable-next-line no-console
+        console.error('Pasted JSON data is not a valid editor-state: ', error)
+      }
     },
     [dispatch, editor, id, textStrings, store]
   )
 }
 
-export const StateDecoder = t.strict({
+const StateDecoder = t.strict({
   plugin: t.literal(EditorPluginType.Rows),
   state: t.array(
     t.strict({
-      plugin: t.union([
-        t.literal(EditorPluginType.Article),
-        t.literal(EditorPluginType.ArticleIntroduction),
-
-        t.literal(EditorPluginType.Rows),
-
-        t.literal(EditorPluginType.Anchor),
-        t.literal(EditorPluginType.Audio),
-        t.literal(EditorPluginType.Box),
-        t.literal(EditorPluginType.Equations),
-        t.literal(EditorPluginType.Geogebra),
-        t.literal(EditorPluginType.Highlight),
-        t.literal(EditorPluginType.Image),
-        t.literal(EditorPluginType.ImageGallery),
-        t.literal(EditorPluginType.Injection),
-        t.literal(EditorPluginType.InteractiveVideo),
-        t.literal(EditorPluginType.Multimedia),
-        t.literal(EditorPluginType.SerloInjection),
-        t.literal(EditorPluginType.SerloTable),
-        t.literal(EditorPluginType.Spoiler),
-        t.literal(EditorPluginType.Text),
-        t.literal(EditorPluginType.Video),
-
-        t.literal(EditorPluginType.Exercise),
-        t.literal(EditorPluginType.ExerciseGroup),
-        t.literal(EditorPluginType.BlanksExercise),
-        t.literal(EditorPluginType.DropzoneImage),
-        t.literal(EditorPluginType.InputExercise),
-        t.literal(EditorPluginType.ScMcExercise),
-        t.literal(EditorPluginType.Solution),
-        t.literal(EditorPluginType.TextAreaExercise),
-      ]),
+      plugin: t.string,
       state: t.unknown,
     })
   ),
 })
-
-function decodeRowsPlugin(text: string) {
-  try {
-    const decoded = StateDecoder.decode(JSON.parse(text))
-    if (E.isLeft(decoded)) {
-      return throwError(
-        `Could not validate data: ${PathReporter.report(decoded).join('\n')}`
-      )
-    }
-    return decoded.right
-  } catch (error) {
-    throwError(error)
-  }
-}
-
-function throwError(error?: unknown) {
-  showToastNotice(
-    '⚠️ Sorry, something is wrong with the data you pasted.',
-    'warning'
-  )
-  // eslint-disable-next-line no-console
-  console.error(error)
-  throw new Error(
-    'Pasted JSON data is not a valid editor-state or contains unsupported plugins'
-  )
-}

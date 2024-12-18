@@ -310,6 +310,9 @@ export const editStrings = {
         'Sorry, pasting elements inside of lists is not allowed.',
       pastingPluginNotAllowedHere:
         'Sorry, pasting this plugin here is not allowed.',
+      unsupportedPluginsPasted:
+        'There were unsupported plugins in the data you pasted.',
+      invalidDataPasted: 'Sorry, something is wrong with the data you pasted.',
       linkOverlay: {
         placeholder: 'https://… or /1234',
         placeholderNonSerlo: 'https://',
