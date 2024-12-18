@@ -24,6 +24,8 @@ export function PluginHelp({
 
   if (lang !== 'de' || !data) return null
 
+  const { video, shortExplanation } = data
+
   return (
     <>
       <button
@@ -39,14 +41,29 @@ export function PluginHelp({
         extraTitleClassName="text-lg border-0 -mt-4 mb-3"
         setIsOpen={setShowModal}
       >
-        <div className="max-h-[calc(100vh-2rem)] overflow-y-auto ">
-          {/* TODO: Video */}
-
-          <StaticRenderer document={data.content as AnyEditorDocument} />
-          <StaticRenderer document={data.content as AnyEditorDocument} />
-          <StaticRenderer document={data.content as AnyEditorDocument} />
+        <div className="max-h-[calc(100vh-2rem)] overflow-y-auto pb-12">
+          {renderContent()}
+          {video ? (
+            <video
+              muted
+              loop
+              controls
+              playsInline
+              className="mx-side mb-12 max-w-[calc(100%-32px)] rounded-md border-4 border-brand-200"
+            >
+              <source src={video} type="video/webm" />
+            </video>
+          ) : null}
         </div>
       </EditorModal>
     </>
   )
+
+  function renderContent() {
+    if (!shortExplanation) return null
+    if (typeof shortExplanation === 'string') {
+      return <p className="serlo-p">{shortExplanation}</p>
+    }
+    return <StaticRenderer document={shortExplanation as AnyEditorDocument} />
+  }
 }

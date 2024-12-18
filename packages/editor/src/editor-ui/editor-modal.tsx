@@ -90,7 +90,7 @@ export function EditorModal({
               className={cn(
                 `absolute right-3.5 top-3.5 z-20 inline-flex flow-root h-9 w-9 cursor-pointer
                  items-center justify-center rounded-full border-none
-               leading-tight text-almost-black hover:bg-brand hover:text-white`,
+                 leading-tight text-almost-black hover:bg-brand hover:text-white`,
                 extraCloseButtonClassName
               )}
               data-qa="modal-close-button"
