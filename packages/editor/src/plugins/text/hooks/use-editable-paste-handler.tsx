@@ -45,11 +45,11 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       const text = event.clipboardData.getData('text')
       if (!files.length && !text) return
 
-      // Exit if unable to select plugin document data
+      // Exit if unable to select document data
       const storeState = store.getState()
-      const pluginDocument = selectDocument(storeState, id)
+      const document = selectDocument(storeState, id)
       const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
-      if (!pluginDocument) return
+      if (!document) return
 
       // special case: pasting in image caption
       void captionPasteHandler({
