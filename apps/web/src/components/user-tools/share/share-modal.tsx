@@ -100,11 +100,14 @@ export function ShareModal({
         )
       }
       await navigator.clipboard.writeText(JSON.stringify(data))
-      showToastNotice('👌 ' + strings.share.copyContentSuccess, 'success')
+      showToastNotice('👌 Erfolgreich kopiert', 'success')
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e)
-      showToastNotice('❌ ' + strings.share.copyContentFailed, 'warning')
+      showToastNotice(
+        '❌ Leider gab es ein Problem beim kopieren. Tut uns leid.',
+        'warning'
+      )
     }
   }
 
@@ -114,7 +117,7 @@ export function ShareModal({
 
   const contentCopy = [
     {
-      title: strings.share.copyContent,
+      title: 'Inhalt kopieren',
       icon: faFileText,
       onClick: () => copyContentToClipboard(),
     },
@@ -192,12 +195,6 @@ export function ShareModal({
         <QRCodeSVG value={shareUrl} fgColor={colors.brand} />
       </div>
       {renderShareInput()}
-      {showCopyContent && (
-        <>
-          <hr className="mx-side my-4" />
-          {renderButtons(contentCopy)}
-        </>
-      )}
       <hr className="mx-side my-4" />
       {renderButtons(lmsData)}
       <hr className="mx-side my-4" />
@@ -208,6 +205,23 @@ export function ShareModal({
           {renderButtons(pdfData)}
         </>
       )}
+
+      {showCopyContent ? ( // "de" only
+        <>
+          <hr className="mx-side my-4" />
+          <h3 className="serlo-h3 my-4">Inhalt zum Bearbeiten kopieren</h3>
+          <p className="serlo-p mb-0 text-base">
+            Du kannst den Inhalt in jedem Serlo Editor weiterbearbeiten.
+            <br />
+            Hier auf <b>serlo.org</b> oder in bestimmten LMS-Systemen (z.B.
+            Edusharing).
+            <br />
+            Dazu einfach auf den Button unten klicken, einen Moment warten und
+            dann Inhalt im Editor Textfeld einfügen.
+          </p>
+          {renderButtons(contentCopy)}
+        </>
+      ) : null}
     </ModalWithCloseButton>
   )
 

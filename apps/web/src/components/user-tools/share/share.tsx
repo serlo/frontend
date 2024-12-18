@@ -15,7 +15,7 @@ const ShareModal = dynamic<ShareModalProps>(() =>
 )
 
 export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
-  const { strings } = useInstanceData()
+  const { lang, strings } = useInstanceData()
   const [shareOpen, setShareOpen] = useState(false)
 
   const showPdf =
@@ -29,6 +29,7 @@ export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
     ].includes(data.typename as UuidType)
 
   const showCopyContent =
+    lang === 'de' &&
     data &&
     [UuidType.Article, UuidType.ExerciseGroup, UuidType.Exercise].includes(
       data.typename as UuidType
