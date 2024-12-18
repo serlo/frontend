@@ -69,7 +69,7 @@ export default async function handler(
           return
         }
 
-        return res.status(422).json('unknown entity type')
+        return res.status(422).json('unsupported entity type')
       })
       .catch((e) => {
         return res.status(500).json(`${String(e)} at ${path}`)
@@ -87,28 +87,13 @@ export default async function handler(
 }
 
 const query = gql`
-  query injectionOnlyContent($path: String!) {
+  query shareEditorContent($path: String!) {
     uuid(alias: { path: $path, instance: de }) {
       __typename
-      alias
-      title
 
       ... on AbstractEntity {
-        id
         currentRevision {
           content
-        }
-        licenseId
-      }
-
-      ... on Video {
-        currentRevision {
-          url
-        }
-      }
-      ... on Applet {
-        currentRevision {
-          url
         }
       }
     }
