@@ -58,19 +58,14 @@ export default async function handler(
           return
         }
 
-        if (uuid.__typename === 'Exercise') {
-          const exercise = parseDocumentString(
-            uuid.currentRevision.content
-          ) as EditorExerciseDocument
+        if (
+          uuid.__typename === 'Exercise' ||
+          uuid.__typename === 'ExerciseGroup'
+        ) {
+          const exercise = parseDocumentString(uuid.currentRevision.content) as
+            | EditorExerciseDocument
+            | EditorExerciseGroupDocument
           respondWithContent({ plugin: 'rows', state: [exercise] })
-          return
-        }
-
-        if (uuid.__typename === 'ExerciseGroup') {
-          const exerciseGroup = parseDocumentString(
-            uuid.currentRevision.content
-          ) as EditorExerciseGroupDocument
-          respondWithContent({ plugin: 'rows', state: [exerciseGroup] })
           return
         }
 
