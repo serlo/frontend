@@ -3,14 +3,11 @@ import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
+import { useWelcomeModal } from './use-welcome-modal'
 import { WelcomeModalButton } from './welcome-modal-button'
 
-interface WelcomeModalProps {
-  isOpen: boolean
-  onClose: () => void
-}
-
-export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
+export function WelcomeModal() {
+  const { isOpen, onClose } = useWelcomeModal()
   const [currentStep, setCurrentStep] = useState(1)
 
   function handleNextButtonClick() {
