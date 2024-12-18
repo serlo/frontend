@@ -86,10 +86,8 @@ export function ShareModal({
   }
 
   async function copyContentToClipboard() {
+    if (!pathOrId) return
     try {
-      if (!pathOrId) {
-        throw new Error('No path or entity id provided.')
-      }
       const base = getBase(window.location.host)
       const url = `${base}/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
       const res = await fetch(url)
