@@ -8,7 +8,7 @@ import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
-import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { ShareEditorContentQuery } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 
 /**
@@ -38,7 +38,7 @@ export default async function handler(
       body: JSON.stringify({ query, variables: { path } }),
     })
       .then((res) => res.json())
-      .then((data: { data: InjectionOnlyContentQuery }) => {
+      .then((data: { data: ShareEditorContentQuery }) => {
         if (!data.data?.uuid) {
           return res.status(404).json('not found')
         }
