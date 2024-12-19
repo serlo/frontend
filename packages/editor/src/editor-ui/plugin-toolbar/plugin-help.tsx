@@ -41,7 +41,7 @@ export function PluginHelp({
         extraTitleClassName="text-lg border-0 -mt-4 mb-3"
         setIsOpen={setShowModal}
       >
-        <div className="max-h-[calc(100vh-2rem)] overflow-y-auto pb-7">
+        <div className="max-h-[calc(100vh-6rem)] overflow-y-auto pb-7">
           {renderContent()}
           {video ? (
             <video
