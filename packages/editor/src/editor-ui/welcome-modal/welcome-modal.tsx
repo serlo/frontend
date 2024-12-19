@@ -41,8 +41,8 @@ export function WelcomeModal() {
             </h1>
             <p className="serlo-p">
               Der Serlo Editor hilft Dir,{' '}
-              <b>Texte, Bilder und interaktive Aufgaben</b>
-              direkt zu bearbeiten und sofort sehen, wie sie später aussehen.
+              <b>Texte, Bilder und interaktive Aufgaben</b> direkt zu bearbeiten
+              und sofort sehen, wie sie später aussehen.
             </p>
             <p className="serlo-p">
               So kannst Du Lernmaterialien <b>einfach</b> erstellen,{' '}
@@ -62,7 +62,8 @@ export function WelcomeModal() {
             <p className="serlo-p mb-0 mt-4">
               Weitere <b>Erklärungen und Videos</b> findest du jeweils in der
               Toolbar der einzelnen Plugins. Einfach auf das{' '}
-              <FaIcon icon={faCircleQuestion} /> klicken.
+              <FaIcon icon={faCircleQuestion} />
+              &#8202;-Symbol klicken.
             </p>
           </div>
         </div>
