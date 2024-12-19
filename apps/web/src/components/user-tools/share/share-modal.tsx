@@ -91,11 +91,14 @@ export function ShareModal({
         )
       }
       await navigator.clipboard.writeText(JSON.stringify(data))
-      showToastNotice('👌 ' + strings.share.copyContentSuccess, 'success')
+      showToastNotice('👌 Erfolgreich kopiert', 'success')
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e)
-      showToastNotice('❌ ' + strings.share.copyContentFailed, 'warning')
+      showToastNotice(
+        '❌ Leider gab es ein Problem beim kopieren. Tut uns leid.',
+        'warning'
+      )
     }
   }
 
@@ -105,7 +108,7 @@ export function ShareModal({
 
   const contentCopy = [
     {
-      title: strings.share.copyContent,
+      title: 'Inhalt kopieren',
       icon: faFileText,
       onClick: () => copyContentToClipboard(),
     },
@@ -183,12 +186,6 @@ export function ShareModal({
         <QRCodeSVG value={shareUrl} fgColor={colors.brand} />
       </div>
       {renderShareInput()}
-      {showCopyContent && (
-        <>
-          <hr className="mx-side my-4" />
-          {renderButtons(contentCopy)}
-        </>
-      )}
       <hr className="mx-side my-4" />
       {renderButtons(lmsData)}
       <hr className="mx-side my-4" />
@@ -199,6 +196,24 @@ export function ShareModal({
           {renderButtons(pdfData)}
         </>
       )}
+
+      {showCopyContent ? ( // "de" only
+        <>
+          <hr className="mx-side my-4" />
+          <h3 className="serlo-h3 my-4">Inhalt zum Bearbeiten kopieren</h3>
+          <p className="serlo-p mb-0 text-base">
+            Du kannst diesen Inhalt in jedem Serlo Editor weiterbearbeiten: Hier
+            auf <b>serlo.org</b> und in LMS wie Moodle, Edu-sharing oder
+            itslearning, die den Serlo Editor eingebaut haben.
+            <br />
+            <br />
+            Dazu einfach auf unten auf &bdquo;Inhalt kopieren&ldquo; klicken,
+            einen Moment warten und dann Inhalt im Editor Textfeld Deines LMS
+            einfügen.
+          </p>
+          {renderButtons(contentCopy)}
+        </>
+      ) : null}
     </ModalWithCloseButton>
   )
 
