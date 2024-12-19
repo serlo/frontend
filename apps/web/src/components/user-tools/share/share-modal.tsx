@@ -21,7 +21,6 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface ShareModalProps {
   isOpen: boolean
@@ -39,10 +38,7 @@ interface EntryData {
   onClick?: (event: MouseEvent) => void
 }
 
-const base =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'https://' + serloDomain
+const base = getBase(window.location.host)
 
 export function ShareModal({
   isOpen,
@@ -268,3 +264,13 @@ const shareButton = cn(`
   mx-side mt-1.5 block py-0.5 text-base
   sm:ml-3 sm:mr-0 sm:mt-0 sm:inline
 `)
+
+function getBase(currentHost: string) {
+  if (currentHost.endsWith('serlo-staging.dev'))
+    return 'https://de.serlo-staging.dev'
+  if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
+
+  return process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://de.serlo.org'
+}
