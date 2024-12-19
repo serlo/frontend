@@ -321,6 +321,10 @@ export const editStrings = {
         'Sorry,  Elemente einfügen klappt nicht in Listen.',
       pastingPluginNotAllowedHere:
         'Sorry, dieses Plugin kannst du hier nicht einfügen.',
+      unsupportedPluginsPasted:
+        'Ein paar der Plugins die du eingefügt hast, werden hier nicht unterstützt.',
+      invalidDataPasted:
+        'Sorry, mit den Daten die du einfügen willst stimmt etwas nicht. Das liegt wahrscheinlich an uns.',
       linkOverlay: {
         placeholder: 'Suchbegriff oder "/1234"',
         placeholderNonSerlo: 'Link',

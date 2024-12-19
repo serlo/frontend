@@ -1,4 +1,5 @@
 import { EditorPlugin } from '../internal-plugin'
+import { emitUnsupportedPluginsEvent } from './unsupported-plugin-event'
 
 export interface PluginWithData {
   type: string
@@ -28,9 +29,12 @@ export const editorPlugins = (function () {
   function getByType(pluginType: string) {
     const plugins = getAllWithData()
 
-    const contextPlugin =
-      plugins.find((plugin) => plugin.type === pluginType) ??
-      plugins.find((plugin) => plugin.type === 'unsupported')
+    let contextPlugin = plugins.find((plugin) => plugin.type === pluginType)
+
+    if (contextPlugin === undefined) {
+      emitUnsupportedPluginsEvent()
+      contextPlugin = plugins.find((plugin) => plugin.type === 'unsupported')
+    }
 
     return (contextPlugin?.plugin as EditorPlugin) ?? null
   }
