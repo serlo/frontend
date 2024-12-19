@@ -26,8 +26,10 @@ export const VideoEditor = (props: VideoProps) => {
       {focused && (
         <VideoToolbar
           {...props}
+          showSettingsButtons={couldBeValid}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
+          onChangeVideoButtonClick={() => state.src.set('')}
         />
       )}
       {couldBeValid ? (

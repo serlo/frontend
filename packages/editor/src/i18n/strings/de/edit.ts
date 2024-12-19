@@ -371,6 +371,8 @@ export const editStrings = {
       seoTitle: 'Titel für Suchmaschinen',
       upload: 'Video hochladen',
       placeholderEmpty: 'Youtube, Video oder URL',
+      change: 'Video ändern',
+      settings: 'Einstellungen',
     },
     audio: {
       title: 'Audio',

@@ -359,6 +359,8 @@ export const editStrings = {
       seoTitle: 'Title for search engines',
       upload: 'Upload Video',
       placeholderEmpty: 'Youtube, Video or URL',
+      change: 'Change video',
+      settings: 'Settings',
     },
     audio: {
       title: 'Audio',
