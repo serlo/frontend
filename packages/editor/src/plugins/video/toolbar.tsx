@@ -3,6 +3,7 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { isTempFile } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
@@ -52,7 +53,7 @@ export const VideoToolbar = ({
               <EditorInput
                 autoFocus={showSettingsModal === 'url'}
                 label={`${videoStrings.videoUrl}: `}
-                value={state.src.value}
+                value={isTempFile(state.src.value) ? '' : state.src.value}
                 onChange={(e) => {
                   state.src.set(e.target.value)
                 }}

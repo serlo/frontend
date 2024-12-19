@@ -5,7 +5,7 @@ import { EditorVideoDocument } from '@editor/types/editor-plugins'
 export function VideoStaticRenderer({ state: { src } }: EditorVideoDocument) {
   const { lang } = useStaticStrings()
 
-  const [iframeSrc, type] = parseVideoUrl(src, lang)
+  const [iframeSrc, type] = parseVideoUrl(src as string, lang)
   if (!type || !iframeSrc) return null
 
   return <VideoRenderer src={iframeSrc} type={type} />

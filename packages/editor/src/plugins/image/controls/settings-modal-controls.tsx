@@ -12,6 +12,7 @@ import { LicenseDropdown } from '../components/licence-dropdown'
 export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
   const { alt, src, imageSource, licence } = state
   const imageStrings = useEditStrings().plugins.image
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
 
   const isTemp = isTempFile(src.value)
   const isFailed = isTempFile(src.value) && src.value.failed
@@ -29,8 +30,8 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
           !isTemp
             ? imageStrings.placeholderEmpty
             : isFailed
-              ? imageStrings.placeholderFailed
-              : imageStrings.placeholderUploading
+              ? uploadStrings.placeholderFailed
+              : uploadStrings.placeholderUploading
         }
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         value={isTemp ? '' : src.value.toString()}

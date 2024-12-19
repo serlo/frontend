@@ -1,11 +1,11 @@
 import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
+import { isTempFile } from '@editor/plugin'
 import { useRef, useState } from 'react'
 
 import type { VideoProps } from '.'
+import { VideoSelectionScreen } from './components/video-selection-screen'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
-import { VideoSelectionScreen } from './components/video-selection-screen'
-import { isTempFile } from '@editor/plugin'
 
 export type SettingsModalState = 'url' | 'description' | false
 
@@ -20,7 +20,6 @@ export const VideoEditor = (props: VideoProps) => {
   const couldBeValid = type !== undefined
 
   const urlInputRef = useRef<HTMLInputElement>(null)
-  const [isAButtonFocused, setIsAButtonFocused] = useState(false)
 
   return (
     <>
@@ -41,11 +40,7 @@ export const VideoEditor = (props: VideoProps) => {
           <VideoRenderer src={iframeSrc} type={type} />
         </EmbedWrapper>
       ) : (
-        <VideoSelectionScreen
-          state={state}
-          setIsAButtonFocused={setIsAButtonFocused}
-          urlInputRef={urlInputRef}
-        />
+        <VideoSelectionScreen state={state} urlInputRef={urlInputRef} />
       )}
     </>
   )

@@ -6,32 +6,35 @@ import React, { type RefObject } from 'react'
 
 import type { VideoProps } from '..'
 import { UploadButton } from './upload-button'
+import { parseVideoUrl } from '../renderer'
 
 interface VideoSelectionScreenProps {
   state: VideoProps['state']
   urlInputRef: RefObject<HTMLInputElement>
-  setIsAButtonFocused: (isFocused: boolean) => void
 }
 
 export function VideoSelectionScreen({
   state,
   urlInputRef,
-  setIsAButtonFocused,
 }: VideoSelectionScreenProps) {
   const editorStrings = useEditStrings()
   const { src } = state
 
-  const imageStrings = editorStrings.plugins.image
+  const uploadStrings = editorStrings.edtrIo.fileUpload
+  const videoStrings = editorStrings.plugins.video
 
   const placeholder = !isTempFile(src.value)
-    ? imageStrings.placeholderEmpty
+    ? videoStrings.placeholderEmpty
     : !src.value.failed
-      ? imageStrings.placeholderUploading
-      : imageStrings.placeholderFailed
+      ? uploadStrings.placeholderUploading
+      : uploadStrings.placeholderFailed
 
-  // const imageUrl = src.value as string
-  // const showErrorMessage = imageUrl.length > 5 && !isImageUrl(imageUrl)
-  const showErrorMessage = false
+  const videoUrl = src.value as string
+  const [, type] = parseVideoUrl(
+    isTempFile(state.src.value) ? '' : state.src.value
+  )
+  const couldBeValid = type !== undefined
+  const showErrorMessage = videoUrl.length > 5 && !couldBeValid
 
   return (
     <div
@@ -39,13 +42,9 @@ export function VideoSelectionScreen({
       data-qa="plugin-image-empty-wrapper"
     >
       <div className="mx-auto my-8 w-[60%]">
-        <UploadButton
-          src={src}
-          onFocus={() => setIsAButtonFocused(true)}
-          onBlur={() => setIsAButtonFocused(false)}
-        />
+        <UploadButton src={src} />
         <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
-          {imageStrings.imageUrl}
+          {videoStrings.videoUrl}
         </span>
         <span className="serlo-tooltip-trigger">
           <input
@@ -58,8 +57,6 @@ export function VideoSelectionScreen({
               'w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600',
               showErrorMessage && 'outline outline-1 outline-red-500'
             )}
-            onFocus={() => setIsAButtonFocused(true)}
-            onBlur={() => setIsAButtonFocused(false)}
             data-qa="plugin-image-src"
           />
           {showErrorMessage && (
@@ -68,9 +65,9 @@ export function VideoSelectionScreen({
                 className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500"
                 data-qa="plugin-image-src-error"
               >
-                {imageStrings.invalidImageUrl}
+                {uploadStrings.invalidUrl}
               </span>
-              <EditorTooltip text={imageStrings.invalidImageUrlMessage} />
+              <EditorTooltip text={uploadStrings.invalidUrlMessage} />
             </>
           )}
         </span>

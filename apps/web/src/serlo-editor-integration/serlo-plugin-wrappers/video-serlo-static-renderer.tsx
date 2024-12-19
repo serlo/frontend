@@ -1,3 +1,4 @@
+import { isTempFile } from '@editor/plugin'
 import { parseVideoUrl, VideoType } from '@editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorVideoDocument } from '@editor/types/editor-plugins'
@@ -15,7 +16,7 @@ const PrivacyWrapper = dynamic<PrivacyWrapperProps>(() =>
 
 export function VideoSerloStaticRenderer(props: EditorVideoDocument) {
   const { src } = props.state
-  if (!src) return null
+  if (!src || isTempFile(src)) return null
   const [iframeSrc, type] = parseVideoUrl(src)
 
   if (type === VideoType.SerloAsset) {

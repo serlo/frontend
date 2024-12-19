@@ -1,3 +1,4 @@
+import { isTempFile } from '@editor/plugin/upload'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { isVideoDocument } from '@editor/types/plugin-type-guards'
 import { useState } from 'react'
@@ -26,7 +27,10 @@ export function InteractiveVideoStaticRenderer({
     setShowOverlayContentIndex(index)
   }
 
-  const videoSrc = isVideoDocument(video) ? video.state.src : ''
+  const videoSrc =
+    isVideoDocument(video) && !isTempFile(video.state.src)
+      ? video.state.src
+      : ''
 
   return (
     <InteractiveVideoRenderer

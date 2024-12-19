@@ -18,8 +18,7 @@ export const videoPlugin: EditorPlugin<VideoPluginState> = {
   config: {},
   state: videoState,
   onText(value) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [src, type] = parseVideoUrl(value)
+    const [, type] = parseVideoUrl(value)
     if (type) return { state: { src: value, alt: '' } }
   },
 }

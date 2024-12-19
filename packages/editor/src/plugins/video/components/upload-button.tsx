@@ -19,7 +19,8 @@ interface UploadButtonProps {
 }
 
 export function UploadButton({ src, onFocus, onBlur }: UploadButtonProps) {
-  const imageStrings = useEditStrings().plugins.image
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
+  const videoStrings = useEditStrings().plugins.video
   const isFailed = isTempFile(src.value) && src.value.failed
 
   const upload = useUploadFile()
@@ -63,7 +64,7 @@ export function UploadButton({ src, onFocus, onBlur }: UploadButtonProps) {
           }}
           data-qa="plugin-video-upload"
         />
-        {imageStrings.upload}
+        {videoStrings.upload}
       </label>
 
       {isFailed ? (
@@ -72,7 +73,7 @@ export function UploadButton({ src, onFocus, onBlur }: UploadButtonProps) {
           onClick={() => src.upload((src.value as TempFile).failed!, upload)}
           data-qa="plugin-video-retry"
         >
-          <EditorTooltip text={imageStrings.retry} className="top-10" />
+          <EditorTooltip text={uploadStrings.retry} className="top-10" />
           <FaIcon icon={faRedoAlt} />
         </button>
       ) : null}

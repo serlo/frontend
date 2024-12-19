@@ -1,3 +1,4 @@
+import { isTempFile } from '@editor/plugin/upload'
 import { useAppSelector, selectStaticDocument } from '@editor/store'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { isVideoDocument } from '@editor/types/plugin-type-guards'
@@ -22,7 +23,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
     ? staticDocument.state.video.state.src
     : ''
 
-  const hasVideo = videoSrc.length > 0
+  const hasVideo = !isTempFile(videoSrc) && videoSrc.length > 0
 
   return (
     <>
@@ -42,7 +43,10 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
           staticMarks={staticMarks}
         />
       ) : (
-        <SelectVideoMode videoId={state.video.id} staticVideoSrc={videoSrc} />
+        <SelectVideoMode
+          videoId={state.video.id}
+          staticVideoSrc={isTempFile(videoSrc) ? '' : videoSrc}
+        />
       )}
     </>
   )

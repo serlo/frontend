@@ -63,6 +63,14 @@ export function parseVideoUrl(
   const serloAsset = serloAssetRegex.exec(inputSrc)
   if (serloAsset) return [inputSrc, VideoType.SerloAsset]
 
+  // TODO: update when new asset management is live
+  if (
+    inputSrc.startsWith('https://editor.serlo.dev/media/') &&
+    inputSrc.endsWith('video.webm')
+  ) {
+    return [inputSrc, VideoType.SerloAsset]
+  }
+
   const youtubeRegex =
     /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/
   const youtube = youtubeRegex.exec(inputSrc)
