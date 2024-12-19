@@ -13,7 +13,16 @@ export interface FileError {
   message: string
 }
 const maxFileSize = 2 * 1024 * 1024
-const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
+const allowedExtensions = [
+  'gif',
+  'jpg',
+  'jpeg',
+  'png',
+  'svg',
+  'webp',
+  'webm',
+  'mp4',
+]
 
 export function validateFile(file: File) {
   // TODO: i18n and make error messages actually helpful

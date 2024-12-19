@@ -5,9 +5,10 @@ import {
   type EditorPluginProps,
   object,
   string,
+  upload,
 } from '../../plugin'
 
-const videoState = object({ src: string(), alt: string() })
+const videoState = object({ src: upload(''), alt: string() })
 
 export type VideoProps = EditorPluginProps<VideoPluginState>
 export type VideoPluginState = typeof videoState

@@ -9,11 +9,11 @@ import { handleError, validateFile } from './validate-file'
 
 type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
-export function useUploadFile(oldUploader: UploadHandler<string>) {
+export function useUploadFile(oldUploader?: UploadHandler<string>) {
   const { editorVariant, userId } = useContext(EditorMetaContext)
 
   const uploader = (file: File) => uploadFile({ file, editorVariant, userId })
-  return shouldUseNewUpload() ? uploader : oldUploader
+  return shouldUseNewUpload() ? uploader : (oldUploader ?? uploader)
 }
 
 // while testing

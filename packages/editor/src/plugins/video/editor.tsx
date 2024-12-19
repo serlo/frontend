@@ -1,11 +1,11 @@
 import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import type { VideoProps } from '.'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
+import { VideoSelectionScreen } from './components/video-selection-screen'
+import { isTempFile } from '@editor/plugin'
 
 export type SettingsModalState = 'url' | 'description' | false
 
@@ -13,8 +13,14 @@ export const VideoEditor = (props: VideoProps) => {
   const { focused, state } = props
   const [showSettingsModal, setShowSettingsModal] =
     useState<SettingsModalState>(false)
-  const [iframeSrc, type] = parseVideoUrl(state.src.value)
+
+  const [iframeSrc, type] = parseVideoUrl(
+    isTempFile(state.src.value) ? '' : state.src.value
+  )
   const couldBeValid = type !== undefined
+
+  const urlInputRef = useRef<HTMLInputElement>(null)
+  const [isAButtonFocused, setIsAButtonFocused] = useState(false)
 
   return (
     <>
@@ -35,16 +41,11 @@ export const VideoEditor = (props: VideoProps) => {
           <VideoRenderer src={iframeSrc} type={type} />
         </EmbedWrapper>
       ) : (
-        <div
-          className="cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
-          data-qa="plugin-video-placeholder"
-          onClick={() => setShowSettingsModal('url')}
-        >
-          <FaIcon
-            icon={faPlayCircle}
-            className="text-7xl text-editor-primary-200"
-          />
-        </div>
+        <VideoSelectionScreen
+          state={state}
+          setIsAButtonFocused={setIsAButtonFocused}
+          urlInputRef={urlInputRef}
+        />
       )}
     </>
   )
