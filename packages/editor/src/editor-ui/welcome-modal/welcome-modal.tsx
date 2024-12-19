@@ -68,7 +68,7 @@ export function WelcomeModal() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between px-4">
+      <div className="flex items-center justify-between px-8">
         <div className="flex items-center gap-1">
           {steps.map((step) => (
             <WelcomeModalButton
