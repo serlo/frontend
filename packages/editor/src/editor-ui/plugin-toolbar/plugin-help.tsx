@@ -35,13 +35,13 @@ export function PluginHelp({
         <FaIcon icon={faCircleQuestion} className="mr-2" />
       </button>
       <EditorModal
-        className="top-0 my-4 max-h-[calc(100vh-2rem)] w-[700px] max-w-[95%] translate-y-0 overflow-hidden"
-        title={`Hilfe für das ${pluginTitle}-Plugin`}
+        className="top-0 my-4 max-h-[calc(100vh-2rem)] w-[700px] max-w-[95%] translate-y-0 overflow-hidden pb-0"
+        title={`${pluginTitle}-Plugin Erklärung`}
         isOpen={showModal}
         extraTitleClassName="text-lg border-0 -mt-4 mb-3"
         setIsOpen={setShowModal}
       >
-        <div className="max-h-[calc(100vh-2rem)] overflow-y-auto pb-12">
+        <div className="max-h-[calc(100vh-2rem)] overflow-y-auto pb-7">
           {renderContent()}
           {video ? (
             <video
@@ -49,7 +49,7 @@ export function PluginHelp({
               loop
               controls
               playsInline
-              className="mx-side mb-12 max-w-[calc(100%-32px)] rounded-md border-4 border-brand-200"
+              className="mx-side max-w-[calc(100%-32px)] rounded-md border-4 border-brand-200"
             >
               <source src={video} type="video/webm" />
             </video>
