@@ -38,8 +38,6 @@ interface EntryData {
   onClick?: (event: MouseEvent) => void
 }
 
-const base = getBase(window.location.host)
-
 export function ShareModal({
   isOpen,
   setIsOpen,
@@ -78,7 +76,7 @@ export function ShareModal({
   async function copyContentToClipboard() {
     if (!pathOrId) return
     try {
-      const url = `${base}/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
+      const url = `/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
       const res = await fetch(url)
       const data = (await res.json()) as string
       if (!res.ok) {
@@ -264,13 +262,3 @@ const shareButton = cn(`
   mx-side mt-1.5 block py-0.5 text-base
   sm:ml-3 sm:mr-0 sm:mt-0 sm:inline
 `)
-
-function getBase(currentHost: string) {
-  if (currentHost.endsWith('serlo-staging.dev'))
-    return 'https://de.serlo-staging.dev'
-  if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
-
-  return process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'https://de.serlo.org'
-}
