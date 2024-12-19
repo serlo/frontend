@@ -87,12 +87,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       // Exit if not allowed to manipulate siblings
       if (!mayManipulateSiblings) return
 
-      // Iterate through all plugins and try to process clipboard data
-      for (const { plugin, type } of editorPlugins.getAllWithData()) {
-        const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
-        if (state?.state) {
-          media = { state: state.state as unknown, pluginType: type }
-          break
+      if (!media) {
+        // Iterate through all plugins and try to process clipboard data
+        for (const { plugin, type } of editorPlugins.getAllWithData()) {
+          const state = plugin.onFiles?.(files) ?? (await plugin.onText?.(text))
+          if (state?.state) {
+            media = { state: state.state as unknown, pluginType: type }
+            break
+          }
         }
       }
 
