@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
 import { useEffect, useState } from 'react'
 
-const localStorageKey = 'hasUserSeenWelcomeModal'
+const localStorageKey = 'serlo-editor::hasUserSeenWelcomeModal'
 
 export const useWelcomeModal = () => {
   const [isOpen, setIsOpen] = useState(false)
