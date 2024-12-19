@@ -21,6 +21,7 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface ShareModalProps {
   isOpen: boolean
@@ -38,17 +39,10 @@ interface EntryData {
   onClick?: (event: MouseEvent) => void
 }
 
-function getBase(currentHost: string) {
-  if (currentHost.endsWith('serlo-staging.dev'))
-    return 'https://de.serlo-staging.dev'
-  if (currentHost.endsWith('serlo.vercel.app'))
-    return 'https://de.serlo-staging.dev'
-  if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
-
-  return process.env.NODE_ENV === 'development'
+const base =
+  process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://de.serlo.org'
-}
+    : 'https://' + serloDomain
 
 export function ShareModal({
   isOpen,
@@ -88,7 +82,6 @@ export function ShareModal({
   async function copyContentToClipboard() {
     if (!pathOrId) return
     try {
-      const base = getBase(window.location.host)
       const url = `${base}/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
       const res = await fetch(url)
       const data = (await res.json()) as string
