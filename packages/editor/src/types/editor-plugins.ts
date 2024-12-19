@@ -200,7 +200,7 @@ export interface EditorTextDocument {
 }
 export interface EditorVideoDocument {
   plugin: EditorPluginType.Video
-  state: PrettyStaticState<VideoPluginState>
+  state: PrettyStaticState<VideoPluginState> & { src: string }
   id?: string
 }
 export interface EditorAudioDocument {
