@@ -7,12 +7,9 @@ import { VideoSelectionScreen } from './components/video-selection-screen'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
 
-export type SettingsModalState = 'url' | 'description' | false
-
 export const VideoEditor = (props: VideoProps) => {
   const { focused, state } = props
-  const [showSettingsModal, setShowSettingsModal] =
-    useState<SettingsModalState>(false)
+  const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false)
 
   const [iframeSrc, type] = parseVideoUrl(
     isTempFile(state.src.value) ? '' : state.src.value

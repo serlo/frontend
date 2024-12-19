@@ -6,10 +6,8 @@ import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction } from 'react'
 
 import type { VideoProps } from '.'
-import type { SettingsModalState } from './editor'
 import { EditorInput } from '../../editor-ui'
 
 export const VideoToolbar = ({
@@ -21,8 +19,8 @@ export const VideoToolbar = ({
   onChangeVideoButtonClick,
 }: VideoProps & {
   showSettingsButtons: boolean
-  showSettingsModal: SettingsModalState
-  setShowSettingsModal: Dispatch<SetStateAction<SettingsModalState>>
+  showSettingsModal: boolean
+  setShowSettingsModal: (show: boolean) => void
   onChangeVideoButtonClick: () => void
 }) => {
   const videoStrings = useEditStrings().plugins.video
@@ -45,13 +43,13 @@ export const VideoToolbar = ({
           {videoStrings.change} <FaIcon className="ml-1" icon={faSyncAlt} />
         </button>
         <button
-          onClick={() => setShowSettingsModal('description')}
+          onClick={() => setShowSettingsModal(true)}
           className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
         >
           {videoStrings.settings} <FaIcon icon={faPencilAlt} />
         </button>
         <EditorModal
-          isOpen={!!showSettingsModal}
+          isOpen={showSettingsModal}
           setIsOpen={(open) => {
             if (!open) setShowSettingsModal(false)
           }}
@@ -61,7 +59,7 @@ export const VideoToolbar = ({
         >
           <div className="mx-side mb-3">
             <EditorInput
-              autoFocus={showSettingsModal === 'url'}
+              autoFocus={showSettingsModal}
               label={`${videoStrings.videoUrl}: `}
               value={isTempFile(state.src.value) ? '' : state.src.value}
               onChange={(e) => {
@@ -75,7 +73,6 @@ export const VideoToolbar = ({
           </div>
           <div className="mx-side mb-3">
             <EditorInput
-              autoFocus={showSettingsModal === 'description'}
               label={`${videoStrings.videoDescription}: `}
               value={state.alt.value}
               onChange={(e) => state.alt.set(e.target.value)}
