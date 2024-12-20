@@ -56,7 +56,7 @@ export function Editor(props: EditorProps) {
             className={cn(
               // editor-core resets styles
               'editor-core',
-              'mb-24 font-serlo text-lg leading-cozy',
+              'mb-24 text-lg leading-cozy',
               // some undocumented style hacks
               '[&_h1]:hyphens-auto',
               '[&_a[data-key]]:hyphens-auto',
