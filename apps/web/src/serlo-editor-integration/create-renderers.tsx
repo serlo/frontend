@@ -29,6 +29,7 @@ import type {
   EditorDropzoneImageDocument,
   EditorInteractiveVideoDocument,
 } from '@editor/types/editor-plugins'
+import DOMPurify from 'dompurify'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
@@ -260,9 +261,14 @@ export function createRenderers(): InitRenderersArgs {
         </Lazy>
       ),
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
+      // href can be manipulated by the user and could potentially be abused to inject malicious javascript. We use DOMPurify to validate the href.
+      // Examples:
+      // - 'javascript:doSomethingBad()' -> invalid
+      // - 'https://example.com/' -> valid
+      const isHrefValid = DOMPurify.isValidAttribute('a', 'href', href)
       return (
         <>
-          <Link href={href}>{children}</Link>
+          <Link href={isHrefValid ? href : ''}>{children}</Link>
           <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
         </>
       )
