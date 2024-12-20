@@ -530,6 +530,10 @@ export const editStrings = {
       invalidUrl: 'Error: Invalid or Incomplete URL',
       invalidUrlMessage:
         'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+      noFileSelected: 'Please select a file',
+      badExtension:
+        'Sorry, %ext% is not an accepted file type. Try one of: %allowed%',
+      fileTooBig: 'Sorry, this file is too big. Maximum size is %maxsize% MB',
     },
     settings: 'Settings',
     extendedSettings: 'Extended Settings',

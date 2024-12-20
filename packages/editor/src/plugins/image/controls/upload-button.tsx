@@ -61,7 +61,7 @@ export function UploadButton({
         <input
           type="file"
           multiple={!!config.onMultipleUpload}
-          accept="image/*"
+          accept="image/*,.gif,.jpg,.jpeg,.png,.svg,.webp"
           className="sr-only"
           onChange={({ target }) => {
             if (target.files && target.files.length) {

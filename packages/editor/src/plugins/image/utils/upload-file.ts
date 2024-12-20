@@ -2,7 +2,9 @@ import {
   EditorMetaContext,
   type EditorMeta,
 } from '@editor/core/contexts/editor-meta-context'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { type UploadHandler } from '@editor/plugin'
+import { EditStrings } from '@editor/types/language-data'
 import { useContext } from 'react'
 
 import { handleError, validateFile } from './validate-file'
@@ -11,8 +13,9 @@ type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
 export function useUploadFile(oldUploader?: UploadHandler<string>) {
   const { editorVariant, userId } = useContext(EditorMetaContext)
-
-  const uploader = (file: File) => uploadFile({ file, editorVariant, userId })
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
+  const uploader = (file: File) =>
+    uploadFile({ file, editorVariant, userId, uploadStrings })
   return shouldUseNewUpload() ? uploader : (oldUploader ?? uploader)
 }
 
@@ -38,10 +41,12 @@ async function uploadFile({
   file,
   editorVariant,
   userId,
+  uploadStrings,
 }: UploadMeta & {
   file: File
+  uploadStrings: EditStrings['edtrIo']['fileUpload']
 }) {
-  const validated = validateFile(file)
+  const validated = validateFile(file, uploadStrings)
   if (!validated) return Promise.reject()
 
   const parentHost = getParentHost()

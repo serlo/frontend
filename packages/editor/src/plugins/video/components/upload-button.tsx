@@ -54,11 +54,10 @@ export function UploadButton({ src, onFocus, onBlur }: UploadButtonProps) {
         </span>
         <input
           type="file"
-          accept="video/mp4, video/webm"
+          accept="video/mp4,video/webm,.mp4,.webm"
           className="sr-only"
           onChange={({ target }) => {
             if (target.files && target.files.length) {
-              // const filesArray = Array.from(target.files)
               void src.upload(target.files[0], upload)
             }
           }}
