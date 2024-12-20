@@ -32,10 +32,6 @@ export default {
         '100%': '100% 100%',
       },
       maxWidth: { xs: '300px' },
-      fontFamily: {
-        serlo: 'Karla, sans-serif',
-        handwritten: 'Caveat, sans-serif',
-      },
     },
   },
 }

@@ -21,6 +21,10 @@ const sunflowerColors = {
 export default {
   theme: {
     extend: {
+      fontFamily: {
+        serlo: 'Karla, sans-serif',
+        handwritten: 'Caveat, sans-serif',
+      },
       colors: {
         brand: {
           DEFAULT: brand,
