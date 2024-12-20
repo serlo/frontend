@@ -13,7 +13,7 @@ import {
 import { either as E } from 'fp-ts'
 
 import { type AiGenerationPluginProps } from '.'
-import { PromtForm } from './components/prompt-form'
+import { PromptForm } from './components/prompt-form'
 import { StateDecoder } from './decoder'
 import { mocked } from './mocked'
 
@@ -79,7 +79,7 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
       className="top-8 max-w-xl translate-y-0 sm:top-24"
       extraTitleClassName="serlo-h3 mt-4"
     >
-      <PromtForm onSubmit={handleSubmit} />
+      <PromptForm onSubmit={handleSubmit} />
     </EditorModal>
   )
 }

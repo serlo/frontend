@@ -2,7 +2,7 @@ import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
 
-export function PromtForm({
+export function PromptForm({
   onSubmit,
 }: {
   onSubmit: (prompt: string) => void
