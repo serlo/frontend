@@ -30,7 +30,7 @@ import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exerci
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import DOMPurify from 'dompurify'
+import { sanitizeHref } from '@editor/utils/sanitize-href'
 import { ComponentProps } from 'react'
 
 export function createRenderers(): InitRenderersArgs {
@@ -125,15 +125,10 @@ export function createRenderers(): InitRenderersArgs {
     ],
     mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
-      // href can be manipulated by the user and could potentially be abused to inject malicious javascript. We use DOMPurify to validate the href.
-      // Examples:
-      // - 'javascript:doSomethingBad()' -> invalid
-      // - 'https://example.com/' -> valid
-      const isHrefValid = DOMPurify.isValidAttribute('a', 'href', href)
       return (
         <a
           className="serlo-link cursor-pointer"
-          href={isHrefValid ? href : ''}
+          href={sanitizeHref(href)}
           target="_blank"
           rel="noopener noreferrer"
         >
