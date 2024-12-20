@@ -215,7 +215,6 @@ export const editStrings = {
       removeAllMarks: 'Remove all exercises',
       confirmRemoveAllMarks: 'Are you sure you want to remove all exercises?',
       addOverlayContent: 'Add exercise',
-      addVideo: 'Add a video url (e.g. YouTube) to get started',
       changeVideo: 'Change video',
       saveInfo: 'Changes are continually saved!',
     },

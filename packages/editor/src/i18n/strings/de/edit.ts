@@ -226,7 +226,6 @@ export const editStrings = {
       confirmRemoveAllMarks:
         'Bist du sicher, dass du alle Aufgaben löschen willst?',
       addOverlayContent: 'Aufgabe an aktueller Stelle einfügen',
-      addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
       changeVideo: 'Video austauschen',
       saveInfo: 'Änderungen werden automatisch gespeichert!',
     },

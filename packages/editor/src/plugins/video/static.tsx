@@ -1,6 +1,8 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
-import { parseVideoUrl, VideoRenderer } from '@editor/plugins/video/renderer'
+import { VideoRenderer } from '@editor/plugins/video/renderer'
 import { EditorVideoDocument } from '@editor/types/editor-plugins'
+
+import { parseVideoUrl } from './utils/parse-video-url'
 
 export function VideoStaticRenderer({ state: { src } }: EditorVideoDocument) {
   const { lang } = useStaticStrings()

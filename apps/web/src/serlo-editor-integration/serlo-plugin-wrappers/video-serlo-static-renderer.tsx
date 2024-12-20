@@ -1,5 +1,6 @@
-import { parseVideoUrl, VideoType } from '@editor/plugins/video/renderer'
+import { VideoType } from '@editor/plugins/video/renderer'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
+import { parseVideoUrl } from '@editor/plugins/video/utils/parse-video-url'
 import { EditorVideoDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 

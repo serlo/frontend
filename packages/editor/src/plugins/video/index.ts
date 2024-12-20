@@ -1,5 +1,4 @@
 import { VideoEditor } from './editor'
-import { parseVideoUrl } from './renderer'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,6 +6,7 @@ import {
   string,
   upload,
 } from '../../plugin'
+import { isValidVideoUrl } from './utils/is-valid-video-url'
 
 const videoState = object({ src: upload(''), alt: string() })
 
@@ -18,7 +18,6 @@ export const videoPlugin: EditorPlugin<VideoPluginState> = {
   config: {},
   state: videoState,
   onText(value) {
-    const [, type] = parseVideoUrl(value)
-    if (type) return { state: { src: value, alt: '' } }
+    if (isValidVideoUrl(value)) return { state: { src: value, alt: '' } }
   },
 }

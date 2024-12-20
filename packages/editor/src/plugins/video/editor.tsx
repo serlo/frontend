@@ -4,8 +4,9 @@ import { useRef, useState } from 'react'
 
 import type { VideoProps } from '.'
 import { VideoSelectionScreen } from './components/video-selection-screen'
-import { parseVideoUrl, VideoRenderer } from './renderer'
+import { VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
+import { parseVideoUrl } from './utils/parse-video-url'
 
 export const VideoEditor = (props: VideoProps) => {
   const { focused, state } = props

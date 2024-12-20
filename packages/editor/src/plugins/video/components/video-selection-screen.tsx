@@ -6,7 +6,7 @@ import React, { type RefObject } from 'react'
 
 import type { VideoProps } from '..'
 import { UploadButton } from './upload-button'
-import { parseVideoUrl } from '../renderer'
+import { isValidVideoUrl } from '../utils/is-valid-video-url'
 
 interface VideoSelectionScreenProps {
   state: VideoProps['state']
@@ -30,11 +30,11 @@ export function VideoSelectionScreen({
       : uploadStrings.placeholderFailed
 
   const videoUrl = src.value as string
-  const [, type] = parseVideoUrl(
+
+  const isValid = isValidVideoUrl(
     isTempFile(state.src.value) ? '' : state.src.value
   )
-  const couldBeValid = type !== undefined
-  const showErrorMessage = videoUrl.length > 5 && !couldBeValid
+  const showErrorMessage = videoUrl.length > 5 && !isValid
 
   return (
     <div
