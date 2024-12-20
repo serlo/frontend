@@ -19,6 +19,8 @@ body.ReactModal__Body--open {
   height: 100vh;
 }
 
+/* Everything below is copied from default.css of the web package so that the Editor by default gets to have the same styles as Serlo (Karla)! */
+
 /* fallback for browsers that do not support variable font sizes */
 @supports not (font-variation-settings: normal) {
   /* generated with https://gwfh.mranftl.com/fonts/karla?subsets=latin */
