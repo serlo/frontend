@@ -49,9 +49,7 @@ Scenario('Multimedia plugin toolbar controls', async ({ I }) => {
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
-  I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
-  )
+  I.seeElement(locate('$plugin-video-src').inside('$plugin-multimedia-wrapper'))
 
   I.say('Change the type of the multimedia content to GeoGebra')
   I.click('$plugin-multimedia-settings-button')

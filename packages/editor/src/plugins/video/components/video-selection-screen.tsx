@@ -57,7 +57,7 @@ export function VideoSelectionScreen({
               'w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600',
               showErrorMessage && 'outline outline-1 outline-red-500'
             )}
-            data-qa="plugin-image-src"
+            data-qa="plugin-video-src"
           />
           {showErrorMessage && (
             <>

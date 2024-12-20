@@ -54,9 +54,7 @@ Scenario('Multimedia plugin successful image upload', ({ I }) => {
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
-  I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
-  )
+  I.seeElement(locate('$plugin-video-src').inside('$plugin-multimedia-wrapper'))
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
   I.click('$modal-close-button')
@@ -111,9 +109,7 @@ Scenario('Multimedia plugin valid image URL', ({ I }) => {
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
-  I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
-  )
+  I.seeElement(locate('$plugin-video-src').inside('$plugin-multimedia-wrapper'))
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
   I.click('$modal-close-button')
@@ -148,9 +144,7 @@ Scenario('Multimedia plugin fill in image caption', ({ I }) => {
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Video')
   I.click('$modal-close-button')
-  I.seeElement(
-    locate('$plugin-video-placeholder').inside('$plugin-multimedia-wrapper')
-  )
+  I.seeElement(locate('$plugin-video-src').inside('$plugin-multimedia-wrapper'))
   I.click('$plugin-multimedia-settings-button')
   I.selectOption('$plugin-multimedia-type-select', 'Bild')
   I.click('$modal-close-button')
