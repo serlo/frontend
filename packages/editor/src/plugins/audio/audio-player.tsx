@@ -150,7 +150,7 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
     <div className="flex w-full items-center">
       <button
         onClick={togglePlay}
-        className="border-editor-primary-400 bg-editor-primary-400 flex items-center rounded border p-4 "
+        className="flex items-center rounded border border-editor-primary-400 bg-editor-primary-400 p-4 "
       >
         {/* Pause button (2 vertical, parallel rectangles) */}
         {isPlaying ? (
@@ -166,7 +166,7 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
           />
         )}
       </button>
-      <div className="bg-editor-primary-500 relative mr-2 flex h-12 w-full items-center rounded-r-lg px-2">
+      <div className="relative mr-2 flex h-12 w-full items-center rounded-r-lg bg-editor-primary-500 px-2">
         <audio ref={audioRef} src={audioURL} className="w-full" />
         <div className="relative w-full px-2">
           {/* Background track */}

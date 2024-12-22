@@ -117,7 +117,7 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
 
   return (
     <>
-      <div className="border-editor-primary-500 bg-editor-primary-500 flex flex-row items-center rounded border">
+      <div className="flex flex-row items-center rounded border border-editor-primary-500 bg-editor-primary-500">
         {status === RecordingStatus.UPLOADED && audioURL && (
           <AudioPlayer audioFile={audioURL} />
         )}
@@ -125,7 +125,7 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
         {status === RecordingStatus.IDLE && (
           // Record button: small circle
           <button
-            className="border-editor-primary-400 bg-editor-primary-400 flex items-center rounded border p-4 "
+            className="flex items-center rounded border border-editor-primary-400 bg-editor-primary-400 p-4 "
             onClick={startRecording}
           >
             <div className=" h-4 w-4 rounded-full bg-red-200"></div>
@@ -136,7 +136,7 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
           <>
             <button
               onClick={stopRecording}
-              className="border-editor-primary-400 bg-editor-primary-400 flex items-center rounded border p-4 "
+              className="flex items-center rounded border border-editor-primary-400 bg-editor-primary-400 p-4 "
             >
               <div className="h-4 w-4 rounded border border-red-200 bg-red-200"></div>
             </button>
@@ -151,7 +151,7 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
         {canTrashAudio ? (
           <button
             onClick={deleteAudio}
-            className="serlo-button border-editor-primary-400 ml-4 ml-auto flex items-center rounded border bg-red-200 p-4 transition"
+            className="serlo-button ml-4 ml-auto flex items-center rounded border border-editor-primary-400 bg-red-200 p-4 transition"
           >
             <FaIcon
               icon={faTrash}
