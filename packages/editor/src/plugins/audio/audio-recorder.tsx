@@ -10,14 +10,6 @@ import { FaIcon } from '../../editor-ui/fa-icon'
 import { showToastNotice } from '../../editor-ui/show-toast-notice'
 import { FileState } from '../../plugin/upload'
 
-// function getCurrentDateFormatted() {
-//   const today = new Date()
-//   const dd = String(today.getDate()).padStart(2, '0')
-//   const mm = String(today.getMonth() + 1).padStart(2, '0')
-//   const yyyy = today.getFullYear()
-//   return `${dd}_${mm}_${yyyy}`
-// }
-
 interface AudioRecorderProps {
   source: FileState<string>
   setSource: (value: FileState<string>) => void
