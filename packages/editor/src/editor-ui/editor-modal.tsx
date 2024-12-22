@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { cn } from '@editor/utils/cn'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -32,6 +33,7 @@ export function EditorModal({
 }: EditorModalProps) {
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
 
+  const isSerlo = useIsSerlo()
   const onOpenChange = useCallback(
     (open: boolean) => {
       if (open !== false) {
@@ -70,7 +72,12 @@ export function EditorModal({
             className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
           />
           <Dialog.Content
-            className={cn('serlo-modal', className)}
+            className={cn(
+              'serlo-modal',
+              className,
+              // The moodle navigation bar has a z-index of 1030...
+              isSerlo && 'z-[1040]'
+            )}
             data-modal-state={isOpen ? 'open' : 'closed'}
             aria-describedby={undefined}
             onEscapeKeyDown={onEscapeKeyDown}
@@ -104,8 +111,6 @@ export function EditorModal({
   )
 }
 
-// The moodle navigation bar has a z-index of 1030... We are using 1040 to make
-// sure the modal can be on top and is not cut off
 export const defaultModalOverlayStyles = cn(
-  'fixed bottom-0 left-0 right-0 top-0 z-[1040] bg-white bg-opacity-75'
+  'fixed bottom-0 left-0 right-0 top-0 z-[101] bg-white bg-opacity-75'
 )
