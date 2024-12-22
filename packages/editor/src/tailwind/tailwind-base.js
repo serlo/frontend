@@ -12,6 +12,8 @@ const brandGreen = '#95bc1a'
 const sunflower = '#ffbe5e'
 const sunflowerColors = {
   DEFAULT: sunflower,
+  500: '#ffefda',
+  400: '#ffd8a6',
   300: sunflower,
   200: '#ffdaa3',
   100: '#fff1db',

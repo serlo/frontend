@@ -26,7 +26,6 @@ interface AudioRecorderProps {
 export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
   const [status, setStatus] = useState<RecordingStatus>(RecordingStatus.IDLE)
 
-  // TODO get rid of this and just replace with source and setSource
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [recordTime, setRecordTime] = useState(0)
@@ -73,11 +72,9 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
         const audioBlob = new Blob(recordedChunks.current, {
           type: 'audio/wav',
         })
-        // blobToBase64(audioBlob)
 
         const url = URL.createObjectURL(audioBlob)
 
-        console.log('Audio url:', url)
         setAudioURL(url)
         setSource(url)
         setStatus(RecordingStatus.UPLOADED)
@@ -101,19 +98,6 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
     }
   }
 
-  // const blobToBase64 = (blob: Blob) => {
-  //   const reader = new FileReader()
-  //   const loadEndHandler = function () {
-  //     const base64data = reader.result
-  //     setBase64AudioRecording(base64data as string)
-
-  //     showToastNotice(audioStrings.recordingSuccessfullyUploaded, 'success')
-  //     reader.removeEventListener('loadend', loadEndHandler)
-  //   }
-  //   reader.addEventListener('loadend', loadEndHandler)
-  //   reader.readAsDataURL(blob)
-  // }
-
   const deleteAudio = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current = null
@@ -127,7 +111,6 @@ export function AudioRecorder({ source, setSource }: AudioRecorderProps) {
     setAudioURL(null)
     setRecordTime(0)
     setStatus(RecordingStatus.IDLE)
-    // setBase64AudioRecording('')
   }
 
   const stopRecording = () => {

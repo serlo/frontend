@@ -12,6 +12,8 @@ interface AudioRendererProps {
 export function AudioRenderer({ source }: AudioRendererProps) {
   const { failed: failedString } = useStaticStrings().plugins.audio
 
+  // I guess we can render null here too if the source is missing! This is more
+  // in line how we treat empty image plugins.
   if (!source) {
     return (
       <div className="mx-side text-center print:hidden">

@@ -25,20 +25,11 @@ export const useAudioSurfer = ({ status }: { status: RecordingStatus }) => {
 
     const record = wavesurferRef.current?.registerPlugin(RecordPlugin.create())
 
-    // record.on('record-', function () {
-    //   console.info('Device ready!')
-    // })
-    // record.on('deviceError', function (code) {
-    //   console.warn('Device error: ' + code)
-    // })
-
     // start the visualization while recording!
     if (status === RecordingStatus.RECORDING) {
       record
         .startRecording()
-        .then(() => {
-          console.log('Recording started')
-        })
+        // eslint-disable-next-line no-console
         .catch((err) => void console.error('Error occurred', err))
     }
 

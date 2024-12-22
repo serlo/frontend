@@ -18,13 +18,10 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
   const audioURL =
     audioFile instanceof Blob ? URL.createObjectURL(audioFile) : audioFile
 
-  console.log({ isPlaying, currentTimePlaying, duration })
-
   useEffect(() => {
     const audioElement = audioRef.current
 
     if (!audioElement) {
-      console.warn('AudioRef not attached, event listeners will not register')
       return
     }
 
@@ -34,7 +31,6 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
     // }
 
     const handleMetadataLoad = () => {
-      console.log('HandleMetadataLoad called')
       setCorrectDuration()
     }
 
@@ -66,7 +62,6 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
     }
 
     const handleDurationChange = () => {
-      console.log('HandleDurationChange called', audioElement.duration)
       if (audioElement.duration === Infinity || isNaN(audioElement.duration)) {
         setDuration(0)
       } else {
@@ -93,10 +88,6 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
   }, [])
 
   useEffect(() => {
-    console.log(
-      'Audio File has changed. Resetting duration and current time playing',
-      { audioRef }
-    )
     // Reset states when the audio file changes
     setDuration(0)
     setCurrentTimePlaying(0)
@@ -156,7 +147,7 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
   }
 
   return (
-    <>
+    <div className="flex w-full items-center">
       <button
         onClick={togglePlay}
         className="border-editor-primary-400 bg-editor-primary-400 flex items-center rounded border p-4 "
@@ -175,33 +166,34 @@ export function AudioPlayer({ audioFile }: AudioPlayerProps) {
           />
         )}
       </button>
-      <div className="mx-2 flex w-full">
+      <div className="bg-editor-primary-500 relative mr-2 flex h-12 w-full items-center rounded-r-lg px-2">
         <audio ref={audioRef} src={audioURL} className="w-full" />
-
-        {/* Custom progress bar */}
-        <div className="relative w-full">
-          <div className="absolute  h-0.5 w-full -translate-y-1/2 transform bg-gray-300"></div>
+        <div className="relative w-full px-2">
+          {/* Background track */}
+          <div className="absolute h-1 w-full bg-gray-300"></div>
+          {/* Progress indicator */}
           <div
-            className="absolute  h-1 -translate-y-1/2 transform bg-gray-700"
+            className="absolute h-1 bg-gray-700"
             style={{ width: `${(currentTimePlaying / duration) * 100}%` }}
           />
+          {/* Draggable thumb. TODO Should make this interactive */}
           <div
-            className="absolute  h-2 w-2 -translate-y-1/2 transform rounded-full bg-gray-700"
+            className="absolute h-3 w-3 -translate-y-1/3 transform rounded-full bg-gray-700"
             style={{
               left: `${(currentTimePlaying / duration) * 100}%`,
             }}
           />
-          <div className="absolute bottom-1 left-0  text-xs">
+          {/* Time indicators */}
+          <div className="absolute -bottom-6 left-0 text-xs">
             {formatTime(Math.round(currentTimePlaying))}
           </div>
-          <div className="absolute bottom-1 right-0  text-xs">
-            {/* Only render the number if it's available */}
+          <div className="absolute -bottom-6 right-0 text-xs">
             {!Number.isNaN(duration) &&
               duration !== Infinity &&
               formatTime(Math.round(duration), false)}
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
