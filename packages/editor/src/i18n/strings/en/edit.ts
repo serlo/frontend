@@ -370,8 +370,10 @@ export const editStrings = {
     },
     audio: {
       title: 'Audio',
-      description: 'Link to audio files on Vocaroo',
+      description: 'Record a audio file directly in the browser',
       audioUrl: 'Enter Audio URL',
+      unexpectedErrorWhileRecording: 'Unexpected error while recording',
+      download: 'Download',
     },
     exercise: {
       title: 'Exercise',

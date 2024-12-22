@@ -5851,6 +5851,7 @@ __metadata:
     vite: ^5.4.11
     vite-plugin-dts: 4.3.0
     vite-plugin-svgr: ^4.3.0
+    wavesurfer.js: ^7.8.11
   languageName: unknown
   linkType: soft
 
@@ -19584,6 +19585,13 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
     glob-to-regexp: ^0.4.1
     graceful-fs: ^4.1.2
   checksum: 23d4bc58634dbe13b86093e01c6a68d8096028b664ab7139d58f0c37d962d549a940e98f2f201cecdabd6f9c340338dc73ef8bf094a2249ef582f35183d1a131
+  languageName: node
+  linkType: hard
+
+"wavesurfer.js@npm:^7.8.11":
+  version: 7.8.11
+  resolution: "wavesurfer.js@npm:7.8.11"
+  checksum: 7bac57693b7f998eea9634cadc81f240623d7a2cf9f1512ebb1a07ac0626b17659b3bed5859a35db08dedc3fefacb20344e028a6eca57dce13f895d8d320f3b3
   languageName: node
   linkType: hard
 

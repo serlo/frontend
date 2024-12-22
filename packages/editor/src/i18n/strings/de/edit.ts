@@ -383,8 +383,10 @@ export const editStrings = {
     },
     audio: {
       title: 'Audio',
-      description: 'Audioaufnahmen von Vocaroo einbinden',
+      description: 'Audioaufnahme direkt im Browser',
       audioUrl: 'Audio URL eingeben',
+      unexpectedErrorWhileRecording: 'Unerwarteter Fehler bei der Aufnahme!',
+      download: 'Herunterladen',
     },
     exercise: {
       title: 'Aufgabe',

@@ -1,39 +1,34 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { useState } from 'react'
-
 import type { AudioProps } from '.'
-import { parseAudioUrl, AudioRenderer } from './renderer'
-import { ShowAudioSettingsButton } from './show-audio-settings-button'
+import { AudioRecorder } from './audio-recorder'
+import { AudioRenderer } from './renderer'
 import { AudioToolbar } from './toolbar'
+// import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const AudioEditor = (props: AudioProps) => {
   const { focused, state } = props
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const [src, type] = parseAudioUrl(state.src.value)
-  const couldBeValid = type !== undefined
-  const audioStrings = useEditStrings().plugins.audio
+  const source = state.source.value
+
+  // Can this be false here?
+  const editable = true
+  console.log('AudioEditor rendered with source value (should be a url)', {
+    source,
+  })
+  // const audioStrings = useEditorStrings().plugins.audio
 
   return (
     <>
-      {focused && (
-        <AudioToolbar
-          {...props}
-          showSettingsModal={showSettingsModal}
-          setShowSettingsModal={setShowSettingsModal}
-        />
-      )}
-      {couldBeValid ? (
+      {focused && <AudioToolbar {...props} audioUrl={source as string} />}
+      {source && !editable ? (
         <div>
-          <AudioRenderer src={src} type={type} />
+          <AudioRenderer source={source} />
         </div>
       ) : (
-        <div className="pb-8 pt-8">
-          <ShowAudioSettingsButton
-            openSettings={() => setShowSettingsModal(true)}
-          >
-            {audioStrings.audioUrl}
-          </ShowAudioSettingsButton>
-        </div>
+        // In edit mode, we render the recorder which will also render the audio
+        // player. Maybe we can find a better name for the component.
+        <AudioRecorder
+          source={source}
+          setSource={(value) => state.source.set(value)}
+        />
       )}
     </>
   )

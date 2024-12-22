@@ -4,6 +4,7 @@ import {
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
+import { AudioStaticRenderer } from '@editor/plugins/audio/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
@@ -183,6 +184,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.Video,
         renderer: VideoSerloStaticRenderer,
+      },
+      {
+        type: EditorPluginType.Audio,
+        renderer: AudioStaticRenderer,
       },
       {
         type: EditorPluginType.Anchor,

@@ -3,10 +3,10 @@ import {
   type EditorPlugin,
   type EditorPluginProps,
   object,
-  string,
+  upload,
 } from '../../plugin'
 
-const audioState = object({ src: string() })
+const audioState = object({ source: upload('') })
 
 export type AudioProps = EditorPluginProps<AudioPluginState>
 export type AudioPluginState = typeof audioState
