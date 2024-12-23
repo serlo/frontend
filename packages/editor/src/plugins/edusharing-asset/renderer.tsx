@@ -87,7 +87,7 @@ export function EdusharingAssetRenderer(props: {
 
       const html = buildHtml(htmlSnippet, defineContainerHeight)
 
-      const sanatizedHtml = DOMPurify.sanitize(html, {
+      const sanitizedHtml = DOMPurify.sanitize(html, {
         // We allow <script> and <iframe> elements. Those are part of the html snippet we get from edu-sharing and cannot be removed or the embed will break. <script> elements cannot be manipulated by the user and we can trust them.
         ADD_TAGS: ['script', 'iframe'],
         // Return entire html document including <html>, <body>, ...
@@ -95,7 +95,7 @@ export function EdusharingAssetRenderer(props: {
       })
 
       setEmbedType(embedType)
-      setEmbedHtml(sanatizedHtml)
+      setEmbedHtml(sanitizedHtml)
       setDefineContainerHeight(defineContainerHeight)
     }
 
