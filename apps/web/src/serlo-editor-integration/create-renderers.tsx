@@ -29,6 +29,7 @@ import type {
   EditorDropzoneImageDocument,
   EditorInteractiveVideoDocument,
 } from '@editor/types/editor-plugins'
+import { sanitizeHref } from '@editor/utils/sanitize-href'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
@@ -262,7 +263,7 @@ export function createRenderers(): InitRenderersArgs {
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
       return (
         <>
-          <Link href={href}>{children}</Link>
+          <Link href={sanitizeHref(href)}>{children}</Link>
           <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
         </>
       )

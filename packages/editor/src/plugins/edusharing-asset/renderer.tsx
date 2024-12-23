@@ -1,5 +1,6 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
 import { IframeResizer } from '@open-iframe-resizer/react'
+import DOMPurify from 'dompurify'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
 
@@ -86,8 +87,15 @@ export function EdusharingAssetRenderer(props: {
 
       const html = buildHtml(htmlSnippet, defineContainerHeight)
 
+      const sanitizedHtml = DOMPurify.sanitize(html, {
+        // We allow <script> and <iframe> elements. Those are part of the html snippet we get from edu-sharing and cannot be removed or the embed will break. <script> elements cannot be manipulated by the user and we can trust them.
+        ADD_TAGS: ['script', 'iframe'],
+        // Return entire html document including <html>, <body>, ...
+        WHOLE_DOCUMENT: true,
+      })
+
       setEmbedType(embedType)
-      setEmbedHtml(html)
+      setEmbedHtml(sanitizedHtml)
       setDefineContainerHeight(defineContainerHeight)
     }
 
@@ -297,7 +305,7 @@ export function EdusharingAssetRenderer(props: {
     if (isLearningApp || isPdf) {
       return {
         embedType: isLearningApp ? 'learning-app' : isPdf ? 'pdf' : 'unknown',
-        htmlSnippet: `<iframe style="${cssReset} height: 100%; width: 100%;" src="${iframe.src}"></iframe>`,
+        htmlSnippet: `<iframe style="${cssReset} height: 100%; width: 100%;" src="${iframe.src}" sandbox="allow-scripts"></iframe>`,
         defineContainerHeight: true,
       }
     }
@@ -313,10 +321,6 @@ export function EdusharingAssetRenderer(props: {
   function renderEmbed() {
     if (embedHtml === null) return
 
-    // IframeResizer properties:
-    // - `srcDoc` -> Sets the iframe content
-    // - `checkOrigin={false}` -> Necessary when using srcDoc
-    // - Missing `sandbox` -> Should put no restrictions on what the iframe can do: A) Make iframe send the same cookies as the host. B) Allow it to execute scripts. Both important to be able to fetch video.
     return (
       <div
         className="z-15 max-w-full"
@@ -326,6 +330,8 @@ export function EdusharingAssetRenderer(props: {
         }}
         data-embed-type={embedType}
       >
+        {/* `srcDoc` -> Sets the iframe content */}
+        {/* `sandbox="allow-scripts"` -> Limit iframe access to parent context but allow scripts to execute */}
         {defineContainerHeight ? (
           <iframe
             srcDoc={embedHtml}
@@ -333,12 +339,15 @@ export function EdusharingAssetRenderer(props: {
               width: '100%',
               height: '100%',
             }}
+            sandbox="allow-scripts"
           />
         ) : (
           <MemoizedIframeResizer
+            // Necessary when using srcDoc
             checkOrigin={false}
             srcDoc={embedHtml}
             style={{ width: '100%' }}
+            sandbox="allow-scripts"
           />
         )}
       </div>

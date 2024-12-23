@@ -45,6 +45,10 @@ enum FileErrorCode {
   BAD_EXTENSION,
   FILE_TOO_BIG,
   UPLOAD_FAILED,
+  UNAUTHORIZED,
+  SECRET_MISSING,
+  INVALID_RESPONSE,
+  NETWORK_ERROR,
 }
 
 export interface FileError {
@@ -76,66 +80,105 @@ export const createTestingImagePlugin = (secret: string) => {
 }
 
 function createUploadImageHandler(secret: string) {
-  const readFile = createReadFile(secret)
+  const readAndUploadFile = createReadAndUploadFile(secret)
   return async function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)
     if (!validation.valid) {
-      onError(validation.errors)
+      showErrorToast(validation.errors)
       // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
       return Promise.reject(validation.errors)
     }
 
-    return (await readFile(file)).dataUrl
+    try {
+      const result = await readAndUploadFile(file)
+      return result.dataUrl
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Upload failed:', error)
+      const errorCode =
+        error instanceof Error
+          ? Number(error.message) || FileErrorCode.UPLOAD_FAILED
+          : FileErrorCode.UPLOAD_FAILED
+
+      const errors = handleErrors([errorCode])
+      showErrorToast(errors)
+      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+      return Promise.reject(errors)
+    }
   }
 }
 
-export function createReadFile(secret: string) {
-  return async function readFile(file: File): Promise<LoadedFile> {
-    return new Promise((resolve, reject) => {
-      async function runFetch() {
-        const endpoint = 'https://api.serlo-staging.dev/graphql'
-        const response = await fetch(endpoint, {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'X-SERLO-EDITOR-TESTING': secret,
-          },
-          method: 'POST',
-          body: JSON.stringify({
-            query: uploadUrlQuery,
-            variables: {
-              mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
-            },
-          }),
-        })
-        const { data } = (await response.json()) as { data: MediaUploadQuery }
-        const reader = new FileReader()
+interface GraphQlResponse {
+  data: MediaUploadQuery | null
+  errors?: Array<{
+    message: string
+    extensions?: {
+      code?: string
+    }
+  }>
+}
 
-        reader.onload = async function (e: ProgressEvent) {
-          if (!e.target) return
+export function createReadAndUploadFile(secret: string) {
+  return async function readAndUploadFile(file: File): Promise<LoadedFile> {
+    if (!secret) {
+      throw new Error(FileErrorCode.SECRET_MISSING.toString())
+    }
 
-          try {
-            const response = await fetch(data.media.newUpload.uploadUrl, {
-              method: 'PUT',
-              headers: { 'Content-Type': file.type },
-              body: file,
-            })
-
-            if (response.status !== 200) reject()
-            resolve({
-              file,
-              dataUrl: data.media.newUpload.urlAfterUpload,
-            })
-          } catch {
-            reject()
-          }
-        }
-
-        reader.readAsDataURL(file)
-      }
-
-      void runFetch()
+    const endpoint = 'https://api.serlo-staging.dev/graphql'
+    const response = await fetch(endpoint, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-SERLO-EDITOR-TESTING': secret,
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        query: uploadUrlQuery,
+        variables: {
+          mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
+        },
+      }),
     })
+
+    if (!response.ok) {
+      throw new Error(FileErrorCode.NETWORK_ERROR.toString())
+    }
+
+    const { data, errors } = (await response.json()) as GraphQlResponse
+
+    if (errors?.length) {
+      // eslint-disable-next-line no-console
+      console.error('GraphQL errors:', errors)
+      if (errors[0]?.extensions?.code === 'UNAUTHENTICATED') {
+        throw new Error(FileErrorCode.UNAUTHORIZED.toString())
+      }
+      throw new Error(FileErrorCode.UPLOAD_FAILED.toString())
+    }
+
+    if (
+      !data ||
+      !data?.media?.newUpload?.uploadUrl ||
+      !data.media.newUpload.urlAfterUpload
+    ) {
+      // eslint-disable-next-line no-console
+      console.error('Server responded with following invalid data: ', data)
+      throw new Error(FileErrorCode.INVALID_RESPONSE.toString())
+    }
+
+    const uploadResponse = await fetch(data.media.newUpload.uploadUrl, {
+      method: 'PUT',
+      headers: { 'Content-Type': file.type },
+      body: file,
+    })
+
+    if (!uploadResponse.ok) {
+      throw new Error(FileErrorCode.UPLOAD_FAILED.toString())
+    }
+
+    return {
+      file,
+      dataUrl: data.media.newUpload.urlAfterUpload,
+    }
   }
 }
 
@@ -151,7 +194,7 @@ function handleErrors(errors: FileErrorCode[]): FileError[] {
   }))
 }
 
-function onError(errors: FileError[]): void {
+function showErrorToast(errors: FileError[]): void {
   showToastNotice(errors.map((error) => error.message).join('\n'), 'warning')
 }
 
@@ -167,6 +210,14 @@ function errorCodeToMessage(error: FileErrorCode) {
       return 'Filesize is too big'
     case FileErrorCode.UPLOAD_FAILED:
       return 'Error while uploading'
+    case FileErrorCode.UNAUTHORIZED:
+      return 'You are not authorized to upload images. Ensure the testingSecret is correct!'
+    case FileErrorCode.SECRET_MISSING:
+      return 'Missing authentication credentials (testingSecret)!'
+    case FileErrorCode.INVALID_RESPONSE:
+      return 'Server returned invalid data'
+    case FileErrorCode.NETWORK_ERROR:
+      return 'Network error while uploading'
   }
 }
 

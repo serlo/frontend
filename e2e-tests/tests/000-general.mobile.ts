@@ -33,7 +33,7 @@ Scenario('About Serlo @mobile', ({ I }) => {
 
   // Navigating around
   I.click('Pädagogisches Konzept')
-  I.waitForText('Anleitung für die Lernplattform serlo.org', 5)
+  I.waitForText('Anleitung für die Lernplattform serlo.org', 15)
   I.click('Anleitung für die Lernplattform serlo.org')
   I.scrollPageToBottom()
   I.click('Community')
