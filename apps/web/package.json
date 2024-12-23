@@ -52,7 +52,6 @@
     "autoprefixer": "^10.4.20",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
-    "dompurify": "^3.2.3",
     "fast-xml-parser": "^4.5.0",
     "fp-ts": "^2.16.9",
     "graphiql": "^3.7.2",

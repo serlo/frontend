@@ -50,7 +50,6 @@
     "@open-iframe-resizer/react": "1.2.1",
     "@serlo/katex-styles": "1.0.1",
     "@vidstack/react": "next",
-    "dompurify": "^3.2.3",
     "isomorphic-dompurify": "^2.19.0",
     "lit": "^3.2.1",
     "motion": "^11.11.17",

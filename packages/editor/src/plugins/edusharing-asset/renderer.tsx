@@ -1,7 +1,7 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
 import { IframeResizer } from '@open-iframe-resizer/react'
-import DOMPurify from 'dompurify'
 import * as t from 'io-ts'
+import DOMPurify from 'isomorphic-dompurify'
 import { memo, useEffect, useState } from 'react'
 
 type EmbedType =
