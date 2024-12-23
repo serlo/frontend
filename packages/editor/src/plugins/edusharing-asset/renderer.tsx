@@ -1,5 +1,6 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
 import { IframeResizer } from '@open-iframe-resizer/react'
+import DOMPurify from 'dompurify'
 import * as t from 'io-ts'
 import { memo, useEffect, useState } from 'react'
 
@@ -86,8 +87,15 @@ export function EdusharingAssetRenderer(props: {
 
       const html = buildHtml(htmlSnippet, defineContainerHeight)
 
+      const sanitizedHtml = DOMPurify.sanitize(html, {
+        // We allow <script> and <iframe> elements. Those are part of the html snippet we get from edu-sharing and cannot be removed or the embed will break. <script> elements cannot be manipulated by the user and we can trust them.
+        ADD_TAGS: ['script', 'iframe'],
+        // Return entire html document including <html>, <body>, ...
+        WHOLE_DOCUMENT: true,
+      })
+
       setEmbedType(embedType)
-      setEmbedHtml(html)
+      setEmbedHtml(sanitizedHtml)
       setDefineContainerHeight(defineContainerHeight)
     }
 
