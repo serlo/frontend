@@ -76,7 +76,7 @@ export function EditorModal({
               'serlo-modal',
               className,
               // The moodle navigation bar has a z-index of 1030...
-              isSerlo && 'z-[1040]'
+              !isSerlo && 'z-[1040]'
             )}
             data-modal-state={isOpen ? 'open' : 'closed'}
             aria-describedby={undefined}
