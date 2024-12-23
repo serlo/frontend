@@ -9,6 +9,7 @@ export const defaultPlugins = [
   EditorPluginType.Multimedia,
   EditorPluginType.Spoiler,
   EditorPluginType.Box,
+  EditorPluginType.Canvas,
   EditorPluginType.SerloTable,
   EditorPluginType.Equations,
   EditorPluginType.Geogebra,

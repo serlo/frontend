@@ -6,6 +6,7 @@ import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CanvasStaticRenderer } from '@editor/plugins/canvas/static'
 import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/static'
 import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
@@ -58,6 +59,7 @@ export function createRenderers(): InitRenderersArgs {
         renderer: DropzoneImageStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      { type: EditorPluginType.Canvas, renderer: CanvasStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {

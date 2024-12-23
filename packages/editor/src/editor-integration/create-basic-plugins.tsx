@@ -1,5 +1,6 @@
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { canvasPlugin } from '@editor/plugins/canvas'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
@@ -74,6 +75,10 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.Box,
       plugin: createBoxPlugin(plugins),
+    },
+    {
+      type: EditorPluginType.Canvas,
+      plugin: canvasPlugin,
     },
     {
       type: EditorPluginType.SerloTable,

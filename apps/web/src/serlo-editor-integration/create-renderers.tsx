@@ -5,6 +5,7 @@ import {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CanvasStaticRenderer } from '@editor/plugins/canvas/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
@@ -161,6 +162,7 @@ export function createRenderers(): InitRenderersArgs {
         renderer: DropzoneImageStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
+      { type: EditorPluginType.Canvas, renderer: CanvasStaticRenderer },
       { type: EditorPluginType.Course, renderer: CourseSerloStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {

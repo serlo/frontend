@@ -9,6 +9,7 @@ import {
   faSquareRootVariable,
   faPencilAlt,
   faTarp,
+  // faPalette as canvasIcon,
   faCaretSquareDown,
   faCode,
   faFilm,
@@ -217,6 +218,17 @@ const pluginData = [
     image: 'video.png',
     category: 'basic',
   },
+  // TODO
+  // {
+  //   title: 'Canvas',
+  //   titleDe: 'Canvas',
+  //   icon: canvasIcon,
+  //   description: 'Draw complex shapes and diagrams',
+  //   descriptionDe: 'Zeichne komplexe Formen und Diagrame',
+  //   example: null,
+  //   image: 'canvas.png',
+  //   category: 'basic',
+  // },
   {
     title: 'Code',
     titleDe: 'Code',

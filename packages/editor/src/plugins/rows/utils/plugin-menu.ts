@@ -69,6 +69,7 @@ export const pluginMenuType = {
   Highlight: EditorPluginType.Highlight,
   Spoiler: EditorPluginType.Spoiler,
   Box: EditorPluginType.Box,
+  Canvas: EditorPluginType.Canvas,
   SerloTable: EditorPluginType.SerloTable,
   Equations: EditorPluginType.Equations,
   Geogebra: EditorPluginType.Geogebra,
@@ -237,6 +238,8 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.Multimedia]: IconMultimedia,
   [pluginMenuType.Video]: IconVideo,
   [pluginMenuType.Box]: IconBox,
+  // TODO add Canvas icon
+  [pluginMenuType.Canvas]: IconBox,
   [pluginMenuType.Equations]: IconEquation,
   [pluginMenuType.Geogebra]: IconGeogebra,
   [pluginMenuType.Highlight]: IconHighlight,
@@ -270,6 +273,8 @@ const iconComponentLookup: Record<PluginMenuType, React.ComponentType> = {
   [pluginMenuType.Multimedia]: MultimediaIcon,
   [pluginMenuType.Video]: VideoIcon,
   [pluginMenuType.Box]: BoxIcon,
+  // TODO add Canvas icon
+  [pluginMenuType.Canvas]: BoxIcon,
   [pluginMenuType.Equations]: EquationsIcon,
   [pluginMenuType.Geogebra]: GeogebraIcon,
   [pluginMenuType.Highlight]: HighlightIcon,

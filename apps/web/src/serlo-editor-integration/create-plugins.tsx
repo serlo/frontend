@@ -4,6 +4,7 @@ import { articlePlugin } from '@editor/plugins/article'
 import { audioPlugin } from '@editor/plugins/audio'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { canvasPlugin } from '@editor/plugins/canvas'
 import { coursePlugin } from '@editor/plugins/course'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { equationsPlugin } from '@editor/plugins/equations'
@@ -55,6 +56,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     EditorPluginType.Audio,
     EditorPluginType.ArticleIntroduction,
     EditorPluginType.Box,
+    EditorPluginType.Canvas,
     EditorPluginType.Course,
     EditorPluginType.Equations,
     EditorPluginType.Geogebra,
@@ -115,6 +117,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     },
     { type: EditorPluginType.Spoiler, plugin: createSpoilerPlugin(plugins) },
     { type: EditorPluginType.Box, plugin: createBoxPlugin(plugins) },
+    { type: EditorPluginType.Canvas, plugin: canvasPlugin },
     { type: EditorPluginType.SerloTable, plugin: createSerloTablePlugin() },
     { type: EditorPluginType.Injection, plugin: injectionPlugin },
     { type: EditorPluginType.Equations, plugin: equationsPlugin },

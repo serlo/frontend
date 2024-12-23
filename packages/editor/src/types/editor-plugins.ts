@@ -4,6 +4,7 @@ import type { ArticlePluginState } from '@editor/plugins/article'
 import type { AudioPluginState } from '@editor/plugins/audio'
 import type { BlanksExerciseState } from '@editor/plugins/blanks-exercise'
 import type { BoxPluginState } from '@editor/plugins/box'
+import { CanvasPluginState } from '@editor/plugins/canvas'
 import type { CoursePluginState } from '@editor/plugins/course'
 import type { DropzoneImagePluginState } from '@editor/plugins/dropzone-image'
 import type { EdusharingAssetState } from '@editor/plugins/edusharing-asset'
@@ -201,6 +202,11 @@ export interface EditorTextDocument {
 export interface EditorVideoDocument {
   plugin: EditorPluginType.Video
   state: PrettyStaticState<VideoPluginState>
+  id?: string
+}
+export interface EditorCanvasDocument {
+  plugin: EditorPluginType.Canvas
+  state: PrettyStaticState<CanvasPluginState>
   id?: string
 }
 export interface EditorAudioDocument {

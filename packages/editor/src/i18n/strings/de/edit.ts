@@ -55,6 +55,10 @@ export const editStrings = {
       anchorId: 'Sprungmarke (anchor id)',
       emptyContentWarning: 'Boxen ohne Inhalt werden nicht angezeigt',
     },
+    canvas: {
+      title: 'Canvas',
+      description: 'Erstelle eine Zeichnung oder ein Diagramm.',
+    },
     dropzoneImage: {
       title: 'Interaktives Bild (Ablagezonen)',
       description:

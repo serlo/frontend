@@ -53,6 +53,10 @@ export const editStrings = {
       anchorId: 'Anchor ID',
       emptyContentWarning: 'Boxes without content will not be displayed',
     },
+    canvas: {
+      title: 'Canvas',
+      description: 'Draw complex shapes and diagrams.',
+    },
     dropzoneImage: {
       title: 'Interactive Image (Dropzones)',
       description:
