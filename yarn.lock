@@ -5925,6 +5925,7 @@ __metadata:
     canvas-confetti: ^1.9.3
     clsx: ^2.1.1
     cross-env: ^7.0.3
+    dompurify: ^3.2.3
     dotenv: ^16.4.5
     eslint: ^9.14.0
     eslint-config-next: ^15.0.3

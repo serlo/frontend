@@ -1,5 +1,6 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
 import { cn } from '@editor/utils/cn'
+import DOMPurify from 'dompurify'
 import KaTeX from 'katex'
 // eslint-disable-next-line import/no-unassigned-import
 import 'katex/contrib/mhchem'
@@ -67,10 +68,13 @@ export function StaticMath({ src, inline }: StaticMathProps) {
           },
         })
       : ''
+
+    // Even though we can trust the html created by Katex we sanitize the html as a second guard against XSS.
+    const sanitizedHtml = DOMPurify.sanitize(html)
     return (
       <span
         className="inline-block py-1 [page-break-inside:avoid]"
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
       />
     )
   }
