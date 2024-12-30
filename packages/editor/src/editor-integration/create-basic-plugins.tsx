@@ -1,3 +1,6 @@
+import type { SupportedLanguage } from '@editor/package'
+import { anchorPlugin } from '@editor/plugins/anchor'
+import { articlePlugin } from '@editor/plugins/article'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
@@ -7,13 +10,18 @@ import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
+import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
-import { createMultimediaPlugin } from '@editor/plugins/multimedia'
+import {
+  createArticleIntroduction,
+  createMultimediaPlugin,
+} from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
 import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
+import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
@@ -28,7 +36,8 @@ import { createTestingImagePlugin } from './image-with-testing-config'
 
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
-  testingSecret?: string | null
+  testingSecret?: string | null,
+  language: SupportedLanguage = 'de'
 ) {
   if (plugins.includes(EditorPluginType.Image) && !testingSecret) {
     /* eslint-disable no-console */
@@ -134,6 +143,30 @@ export function createBasicPlugins(
     {
       type: TemplatePluginType.GenericContent,
       plugin: genericContentTypePlugin,
+    },
+    {
+      type: TemplatePluginType.Article,
+      plugin: articleTypePlugin,
+    },
+    {
+      type: EditorPluginType.Article,
+      plugin: articlePlugin,
+    },
+    {
+      type: EditorPluginType.ArticleIntroduction,
+      plugin: createArticleIntroduction(
+        language === 'de'
+          ? 'Fasse das Thema des Artikels kurz zusammen'
+          : 'Write a short introduction'
+      ),
+    },
+    {
+      type: EditorPluginType.Injection,
+      plugin: injectionPlugin,
+    },
+    {
+      type: EditorPluginType.Anchor,
+      plugin: anchorPlugin,
     },
   ]
 

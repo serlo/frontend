@@ -5,18 +5,24 @@ export type { SupportedLanguage } from '@editor/types/language-data'
 export type { BaseEditor } from '@editor/core'
 export type { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
 
-// We need to make a distinction between entires on our menu and technical
-// plugin types Internally we have for example a `scMcExercise` which has a
-// configuration whether it is a single choice or multiple choice exercise.
-// However on the menu there are the two entries `singleChoiceExercise` and
-// `multipleChoiceExercise`. When somebody else uses our editor as a block
-// inside their own editor they would like to have the two entries
-// `singleChoiceExercise` and `multipleChoiceExercise`.
-// Thus we export our menu entries here as plugin.
+/**
+ * We need to make a distinction between entries in our menu and
+ * technical plugin types. For example, internally we have a
+ * `scMcExercise` which has a configuration that defines whether
+ * it is a single choice or a multiple choice exercise. However,
+ * in the menu there are the two entries:  `singleChoiceExercise`
+ * and `multipleChoiceExercise`. When somebody else uses our editor
+ * as a block inside their own editor they would like to have two
+ * entries: `singleChoiceExercise` and `multipleChoiceExercise`.
+ * Thus we export our menu entries here.
+ */
 export { pluginMenuDe, pluginMenuEn } from './plugin-menu-export'
 export { type PluginMenuType as Plugin } from '@editor/plugins/rows/utils/plugin-menu'
 
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-// Exported only so that integrations like serlo-editor-for-edusharing can customize available plugins based on the default plugins
+/**
+ * Exported so that integrations can customize available plugins
+ * based on the default plugins.
+ */
 export { defaultPlugins } from './config'

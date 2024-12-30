@@ -67,7 +67,7 @@ export function SerloEditor(props: SerloEditorProps) {
 
   const { staticStrings, editStrings } = editorData[language]
 
-  const allPlugins = createBasicPlugins(plugins, _testingSecret)
+  const allPlugins = createBasicPlugins(plugins, _testingSecret, language)
   editorPlugins.init(allPlugins)
 
   const basicRenderers = createRenderers()
