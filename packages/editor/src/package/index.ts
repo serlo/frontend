@@ -22,6 +22,11 @@ export { type PluginMenuType as Plugin } from '@editor/plugins/rows/utils/plugin
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 /**
+ * Exported for serlo.org
+ */
+export { TemplatePluginType } from '@editor/types/template-plugin-type'
+
+/**
  * Exported so that integrations can customize available plugins
  * based on the default plugins.
  */

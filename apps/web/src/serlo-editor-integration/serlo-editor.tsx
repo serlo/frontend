@@ -1,9 +1,9 @@
 import {
   defaultPlugins,
   EditorPluginType,
+  TemplatePluginType,
   type SerloEditorProps as EditorProps,
 } from '@editor/package'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import dynamic from 'next/dynamic'
 
