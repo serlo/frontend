@@ -478,6 +478,10 @@ export const instanceData = {
       title: 'Title',
       trashed: 'Trashed…',
     },
+    saveButton: {
+      noChangesWarning: 'Nothing changed so there is no need to save yet',
+      save: 'Save',
+    },
   },
 }
 export const instanceLandingData = {

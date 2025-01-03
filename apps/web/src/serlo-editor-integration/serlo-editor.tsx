@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ExternalRevisionLoader } from './components/external-revision-loader'
-// import { SaveButton } from './components/save-button'
+import { SaveButton } from './components/save-button'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
@@ -28,8 +28,8 @@ export interface SerloEditorProps {
 }
 
 export function SerloEditor({
-  // onSave,
-  // isInTestArea,
+  onSave,
+  isInTestArea,
   initialState,
 }: SerloEditorProps) {
   const { lang, licenses } = useInstanceData()
@@ -57,9 +57,14 @@ export function SerloEditor({
         initialState={initialState}
       >
         {(editor) => {
+          const hasPendingChanges = editor.history.pendingChanges !== 0
           return (
             <>
-              {/* <SaveButton onSave={onSave} isInTestArea={isInTestArea} /> */}
+              <SaveButton
+                onSave={onSave}
+                isChanged={hasPendingChanges}
+                isInTestArea={isInTestArea}
+              />
               {isNewEntity ? (
                 <ExternalRevisionLoader
                   templateType={
