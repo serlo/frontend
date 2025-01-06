@@ -30,7 +30,8 @@
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
-    "dev": "vite",
+    "dev": "npm-run-all --parallel 'vite --port 3000' 'vite --port 3001'",
+    "vite": "vite",
     "build": "vite build",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",
