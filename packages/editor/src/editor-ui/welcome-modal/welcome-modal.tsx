@@ -40,9 +40,9 @@ export function WelcomeModal() {
               <span className="text-brand-600">beim Serlo Editor</span>
             </h1>
             <p className="serlo-p">
-              Der Serlo Editor hilft Dir,{' '}
-              <b>Texte, Bilder und interaktive Aufgaben</b> direkt zu bearbeiten
-              und sofort sehen, wie sie später aussehen.
+              Der Serlo Editor hilft Dir <b>Texte, Bilder</b> und{' '}
+              <b>interaktive Aufgaben</b> direkt zu bearbeiten und sofort zu
+              sehen, wie sie später aussehen.
             </p>
             <p className="serlo-p">
               So kannst Du Lernmaterialien <b>einfach</b> erstellen,{' '}
