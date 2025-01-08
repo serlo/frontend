@@ -30,15 +30,12 @@ export const ExerciseToolbar = ({
 
   const interactiveType = useMemo(() => {
     if (!interactive.defined) return undefined
-    return selectStaticDocument(
-      store.getState(),
-      interactive.id
-    ).plugin
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[interactive])
+    return selectStaticDocument(store.getState(), interactive.id).plugin
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interactive])
 
   function getToolbarTitle() {
-    if(!interactiveType) return getPluginTitle(pluginStrings, 'exercise')
+    if (!interactiveType) return getPluginTitle(pluginStrings, 'exercise')
     return `${getPluginTitle(pluginStrings, 'exercise')}: ${getPluginTitle(pluginStrings, interactiveType)}`
   }
 

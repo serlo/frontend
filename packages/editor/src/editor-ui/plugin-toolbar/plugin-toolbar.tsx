@@ -65,7 +65,10 @@ export function PluginToolbar({
         </div>
 
         {/* Plugin help button & modal */}
-        <PluginHelp pluginType={interactiveExerciseType ?? pluginType} pluginTitle={title} />
+        <PluginHelp
+          pluginType={interactiveExerciseType ?? pluginType}
+          pluginTitle={title}
+        />
 
         {pluginSettings ? (
           <>
