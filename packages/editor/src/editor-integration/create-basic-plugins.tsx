@@ -3,6 +3,7 @@ import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { createBoxPlugin } from '@editor/plugins/box'
+import { coursePlugin } from '@editor/plugins/course'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
@@ -22,6 +23,7 @@ import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
 import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
+import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
@@ -149,8 +151,16 @@ export function createBasicPlugins(
       plugin: articleTypePlugin,
     },
     {
+      type: TemplatePluginType.Course,
+      plugin: courseTypePlugin,
+    },
+    {
       type: EditorPluginType.Article,
       plugin: articlePlugin,
+    },
+    {
+      type: EditorPluginType.Course,
+      plugin: coursePlugin,
     },
     {
       type: EditorPluginType.ArticleIntroduction,

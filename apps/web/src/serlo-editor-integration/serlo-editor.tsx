@@ -50,6 +50,8 @@ export function SerloEditor({
           ...defaultPlugins,
           TemplatePluginType.Article,
           EditorPluginType.Article,
+          TemplatePluginType.Course,
+          EditorPluginType.Course,
           EditorPluginType.ArticleIntroduction,
           EditorPluginType.Injection,
           EditorPluginType.Anchor,
