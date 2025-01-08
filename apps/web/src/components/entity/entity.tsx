@@ -1,9 +1,9 @@
 import { EditorPluginType } from '@editor/package'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
-import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
   faExclamationCircle,
+  faGraduationCap,
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
@@ -57,7 +57,14 @@ export function Entity({ data }: EntityProps) {
   function renderStyledH1() {
     if (!data.title) return null
     if (data.typename === UuidType.Course)
-      return <CourseHeader title={<>{data.title}</>} />
+      return (
+        <>
+          <p className="serlo-p mb-0 mt-10 text-[1rem] font-bold">
+            <FaIcon icon={faGraduationCap} /> {strings.entities.course}
+          </p>
+          <div className="mx-side my-0 text-2xl font-bold">{data.title}</div>
+        </>
+      )
 
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">
