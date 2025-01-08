@@ -1,3 +1,20 @@
+## Changelog for version 0.21.0
+
+- fix(math-renderer): sanitize html from katex. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4379
+- fix(plugin-edusharing): use DomPurify to sanitize embed html from edu-sharing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4376
+- fix(editor): Modal on serlo.org by applying high z-index only in integrations on content instead of overlay. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4373
+- fix(editor): reset styles for moodle. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4372
+- fix(link-renderer): add guard against injecting javascript in link elements through href. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4371
+- refactor(editor): package plugin icons as react components (to remove `dangerouslySetInnerHtml`). Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4370
+- fix(editor): skip other checks if we found editor state in paste. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4366
+- feat(editor): add email to test environment warning message. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4365
+- fix(plugin-edusharing): sandbox iframes to secure parent. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4361
+- fix(editor): Modal in moodle. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4360
+- feat(editor): add iframed demo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4356
+- feat(bildungsraum-share): copy content to clipboard. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4354
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.2-editor...v0.21.0-editor
+
 ## Changelog for version 0.20.2
 
 - feat(editor): add learner event handler to package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4350
