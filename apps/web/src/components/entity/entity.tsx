@@ -1,6 +1,6 @@
+import { EditorPluginType } from '@editor/package'
 import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import {
   faExclamationCircle,
