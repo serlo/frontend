@@ -39,13 +39,13 @@ export const pluginHelpContent = {
     video:
       'https://editor.serlo.dev/media/serlo-org/kcba2owimaun8y8pa739vtbf/video.webm',
     shortExplanation:
-      'Bilder können via Upload, URL oder freie Anbieter wie Pixabay hinzugefügt werden. Sie können durch Angabe von Lizenz, Bildunterschrift und Alt-Text, sowie Autor:in angepasst werden.',
+      'Bilder können via Upload, URL oder freie Anbieter wie Pixabay hinzugefügt werden. Sie können durch Angabe von Lizenz, Bildunterschrift und Alt-Text, sowie Autor*in angepasst werden.',
   },
   inputExercise: {
     video:
       'https://editor.serlo.dev/media/serlo-org/kj9nmsca29c4kkxpnlj45jsd/video.webm',
     shortExplanation:
-      'Aufgabe mit einem Eingabefeld, in das ein Wert oder eine Zeichenfolge eingegeben und validiert werden kann. Autoren können für bestimmte Antworten individuelles Feedback hinzufügen, um beispielsweise Missverständnisse hinter häufigen Fehlern zu erklären.',
+      'Aufgabe mit einem Eingabefeld, in das ein Wert oder eine Zeichenfolge eingegeben und validiert werden kann. Autor*innen können für bestimmte Antworten individuelles Feedback hinzufügen, um beispielsweise Missverständnisse hinter häufigen Fehlern zu erklären.',
   },
   scMcExercise: {
     video:

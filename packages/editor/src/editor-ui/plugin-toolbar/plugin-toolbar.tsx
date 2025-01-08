@@ -1,5 +1,6 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
+import { type InteractivePluginType } from '@editor/plugins/exercise/interactive-plugin-types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
 import { ReactElement } from 'react'
@@ -9,6 +10,7 @@ import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string
+  interactiveExerciseType?: InteractivePluginType | string
   contentControls?: ReactElement
   pluginSettings?: ReactElement
   pluginControls?: ReactElement
@@ -19,6 +21,7 @@ interface PluginToolbarProps {
 
 export function PluginToolbar({
   pluginType,
+  interactiveExerciseType,
   contentControls,
   pluginSettings,
   pluginControls,
@@ -62,7 +65,7 @@ export function PluginToolbar({
         </div>
 
         {/* Plugin help button & modal */}
-        <PluginHelp pluginType={pluginType} pluginTitle={title} />
+        <PluginHelp pluginType={interactiveExerciseType ?? pluginType} pluginTitle={title} />
 
         {pluginSettings ? (
           <>

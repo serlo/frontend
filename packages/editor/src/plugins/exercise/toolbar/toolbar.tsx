@@ -10,6 +10,7 @@ import {
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons'
+import { useMemo } from 'react'
 
 import type { ExerciseProps } from '..'
 
@@ -27,12 +28,17 @@ export const ExerciseToolbar = ({
   const store = useStore()
   const exStrings = pluginStrings.exercise
 
-  function getToolbarTitle() {
+  const interactiveType = useMemo(() => {
     if (!interactive.defined) return undefined
-    const interactiveType = selectStaticDocument(
+    return selectStaticDocument(
       store.getState(),
       interactive.id
     ).plugin
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[interactive])
+
+  function getToolbarTitle() {
+    if(!interactiveType) return getPluginTitle(pluginStrings, 'exercise')
     return `${getPluginTitle(pluginStrings, 'exercise')}: ${getPluginTitle(pluginStrings, interactiveType)}`
   }
 
@@ -49,6 +55,7 @@ export const ExerciseToolbar = ({
   return (
     <PluginToolbar
       pluginType={EditorPluginType.Exercise}
+      interactiveExerciseType={interactiveType}
       pluginTitle={getToolbarTitle()}
       pluginControls={
         <>
