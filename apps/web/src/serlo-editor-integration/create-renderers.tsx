@@ -1,17 +1,3 @@
-import {
-  InitRenderersArgs,
-  LinkRenderer,
-} from '@editor/plugin/helpers/editor-renderer'
-import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
-import { ArticleStaticRenderer } from '@editor/plugins/article/static'
-import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
-import { RowsStaticRenderer } from '@editor/plugins/rows/static'
-import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
-import type { MathElement } from '@editor/plugins/text'
-import { TextStaticRenderer } from '@editor/plugins/text/static'
-import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorBlanksExerciseDocument,
   EditorEquationsDocument,
@@ -28,7 +14,21 @@ import type {
   EditorExerciseGroupDocument,
   EditorDropzoneImageDocument,
   EditorInteractiveVideoDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
+import {
+  InitRenderersArgs,
+  LinkRenderer,
+} from '@editor/plugin/helpers/editor-renderer'
+import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
+import { ArticleStaticRenderer } from '@editor/plugins/article/static'
+import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
+import { RowsStaticRenderer } from '@editor/plugins/rows/static'
+import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
+import type { MathElement } from '@editor/plugins/text'
+import { TextStaticRenderer } from '@editor/plugins/text/static'
+import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { sanitizeHref } from '@editor/utils/sanitize-href'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'

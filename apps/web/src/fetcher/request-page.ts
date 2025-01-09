@@ -1,13 +1,10 @@
+import type { EditorCourseDocument, EditorRowsDocument } from '@editor/package'
 import {
   buildCoursePageUrl,
   getCoursePageIdFromPath,
 } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
-  EditorCourseDocument,
-  EditorRowsDocument,
-} from '@editor/types/editor-plugins'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 

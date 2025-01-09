@@ -1,6 +1,6 @@
+import type { EditorScMcExerciseDocument } from '@editor/package'
 import { ScMcExerciseRendererAnswer } from '@editor/plugins/sc-mc-exercise/renderer/renderer'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
-import { EditorScMcExerciseDocument } from '@editor/types/editor-plugins'
 import { useContext } from 'react'
 
 import { isPrintMode } from '@/components/print-mode'

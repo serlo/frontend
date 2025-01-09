@@ -1,16 +1,13 @@
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
 import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
+import type { AnyEditorDocument, EditorBoxDocument } from '@editor/package'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import type { BoxType } from '@editor/plugins/box/renderer'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { HighlightRenderer } from '@editor/plugins/highlight/renderer'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type {
-  AnyEditorDocument,
-  EditorBoxDocument,
-} from '@editor/types/editor-plugins'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'

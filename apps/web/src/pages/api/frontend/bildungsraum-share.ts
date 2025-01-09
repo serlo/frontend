@@ -1,9 +1,9 @@
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import type {
   EditorArticleDocument,
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
+import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 

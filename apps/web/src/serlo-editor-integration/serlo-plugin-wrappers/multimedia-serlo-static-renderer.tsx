@@ -1,9 +1,9 @@
-import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
+import type {
   EditorImageDocument,
   EditorMultimediaDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
+import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 

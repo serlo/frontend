@@ -1,7 +1,10 @@
-import { isRowsDocument, isTextDocument } from '@editor/package'
+import {
+  isRowsDocument,
+  isTextDocument,
+  type AnyEditorDocument,
+} from '@editor/package'
 import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
 import { getChildrenOfStaticDocument } from '@editor/static-renderer/helper/get-children-of-static-document'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
 
 export function getMetaDescription(
   content?: AnyEditorDocument

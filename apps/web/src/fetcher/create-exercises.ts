@@ -1,8 +1,8 @@
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import {
+import type {
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
+import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 
 import { MainUuidType } from './query-types'
 

@@ -1,3 +1,4 @@
+import type { AnyEditorDocument } from '@editor/package'
 import type { StateType, StateTypeStaticType } from '@editor/plugin'
 import type { AppletTypePluginState } from '@editor/plugins/serlo-template-plugins/applet'
 import type { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
@@ -13,7 +14,6 @@ import type { TaxonomyTypePluginState } from '@editor/plugins/serlo-template-plu
 import type { TextExerciseTypePluginState } from '@editor/plugins/serlo-template-plugins/text-exercise'
 import type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { UuidType } from '@/data-types'

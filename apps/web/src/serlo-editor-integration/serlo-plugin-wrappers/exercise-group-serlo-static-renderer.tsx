@@ -1,5 +1,5 @@
+import type { EditorExerciseGroupDocument } from '@editor/package'
 import { ExerciseGroupStaticRenderer } from '@editor/plugins/exercise-group/static'
-import type { EditorExerciseGroupDocument } from '@editor/types/editor-plugins'
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
 

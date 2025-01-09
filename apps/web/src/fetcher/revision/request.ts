@@ -1,5 +1,5 @@
+import type { EditorExerciseDocument } from '@editor/package'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorExerciseDocument } from '@editor/types/editor-plugins'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 

@@ -26,6 +26,7 @@ export { EditorPluginType } from '@editor/types/editor-plugin-type'
  */
 export * from '@editor/types/plugin-type-guards'
 export * from './static-is-plugin-empty'
+export type * from '@editor/types/editor-plugins'
 
 /**
  * Exported for serlo.org

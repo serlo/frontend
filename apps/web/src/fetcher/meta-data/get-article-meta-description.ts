@@ -2,9 +2,9 @@ import {
   isArticleIntroductionDocument,
   isArticleDocument,
   isEmptyTextDocument,
+  type AnyEditorDocument,
 } from '@editor/package'
 import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
 
 /**
  * special metaDescription for articles extracted from the introduction text

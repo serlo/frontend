@@ -1,6 +1,6 @@
+import type { EditorRowsDocument } from '@editor/package'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { Fragment } from 'react'

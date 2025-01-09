@@ -1,5 +1,5 @@
+import type { EditorRowsDocument } from '@editor/package'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import type { EditorRowsDocument } from '@editor/types/editor-plugins'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
