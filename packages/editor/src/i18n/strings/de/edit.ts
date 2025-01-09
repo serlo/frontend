@@ -450,17 +450,6 @@ export const editStrings = {
         buttonContent: 'Inhalt hinzufügen',
         buttonAddType: '%type% hinzufügen',
         title: 'Weiterführende Inhalte oder Übungsaufgaben hinzufügen',
-        invalidInput: 'Ungültige ID oder URL',
-        fetchError:
-          'Etwas ist schief gelaufen, bitte versuche es später noch einmal',
-        loading: 'Wird geladen …',
-        notFound: 'Inhalt konnte nicht gefunden werden',
-        unsupportedType: 'Sorry, der Typ [%type%] wird hier nicht unterstützt',
-        unsupportedId:
-          'Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)',
-        addFromFolderTitle: 'Aus dem Ordner',
-        placeholder: 'Eine Serlo Id oder URL hier einfügen',
-        exerciseFolderNote: 'Hier kann nur ein Ordner ausgewählt werden',
       },
     },
     course: {

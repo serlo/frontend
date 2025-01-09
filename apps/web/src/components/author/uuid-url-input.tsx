@@ -1,10 +1,10 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import {
   TaxonomyTermType,
@@ -38,13 +38,16 @@ export function UuidUrlInput({
   const { data, error } = useSimpleUuidFetch(maybeUuid)
 
   const { strings } = useInstanceData()
-  const modalStrings = useEditStrings().templatePlugins.article.addModal
+  const loggedInData = useLoggedInData()
+
+  if (!loggedInData) return null
+  const uuidToolStrings = loggedInData.strings.uuidUrlInput
 
   return (
     <div className="my-4 border-t-2 pt-5">
       <input
         className="serlo-input-font-reset w-72 rounded-xl bg-editor-primary-200 p-2 font-bold placeholder-almost-black outline-none placeholder:font-normal focus:bg-editor-primary"
-        placeholder={modalStrings.placeholder}
+        placeholder={uuidToolStrings.placeholder}
         onChange={(event) => {
           if (event.target.value.length === 0) {
             setMaybeUuid(null)
@@ -69,16 +72,16 @@ export function UuidUrlInput({
 
   function renderFeedback() {
     if (maybeUuid === null) return null
-    if (maybeUuid === false) return modalStrings.invalidInput
+    if (maybeUuid === false) return uuidToolStrings.invalidInput
     if (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      return modalStrings.fetchError
+      return uuidToolStrings.fetchError
     }
-    if (!data) return modalStrings.loading
+    if (!data) return uuidToolStrings.loading
 
     const { uuid } = data
-    if (!uuid) return modalStrings.notFound
+    if (!uuid) return uuidToolStrings.notFound
 
     const { __typename: typename, id } = uuid
 
@@ -90,18 +93,21 @@ export function UuidUrlInput({
       Object.hasOwn(uuid, 'type') && uuid.type ? uuid.type : undefined
 
     if (!supportedEntityTypes.includes(typename as UuidWithRevType))
-      return modalStrings.unsupportedType.replace('%type%', typename)
+      return uuidToolStrings.unsupportedType.replace('%type%', typename)
 
     if (taxonomyType && !supportedTaxonomyTypes.includes(taxonomyType))
-      return modalStrings.unsupportedType.replace('%type%', taxonomyType ?? '')
+      return uuidToolStrings.unsupportedType.replace(
+        '%type%',
+        taxonomyType ?? ''
+      )
 
     if (unsupportedIds && unsupportedIds.includes(id))
-      return modalStrings.unsupportedId
+      return uuidToolStrings.unsupportedId
 
-    if (!id) return modalStrings.notFound
+    if (!id) return uuidToolStrings.notFound
 
     if (!typename.includes(UuidType.Exercise) && !title)
-      return modalStrings.notFound
+      return uuidToolStrings.notFound
 
     return (
       <>

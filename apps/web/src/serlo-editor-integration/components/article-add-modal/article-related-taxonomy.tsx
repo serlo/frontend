@@ -1,4 +1,3 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
@@ -6,6 +5,7 @@ import { gql } from 'graphql-request'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useEntityData } from '@/contexts/uuids-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -28,7 +28,10 @@ export function ArticleRelatedTaxonomy({
   const { data, error } = useFetchParentTaxonomy(entityId ?? 0)
 
   const { strings } = useInstanceData()
-  const articleStrings = useEditStrings().templatePlugins.article
+  const loggedInData = useLoggedInData()
+
+  if (!loggedInData) return null
+  const uuidToolStrings = loggedInData.strings.uuidUrlInput
 
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
   if (!dataAndTerm || !entityId) {
@@ -47,7 +50,7 @@ export function ArticleRelatedTaxonomy({
 
   return (
     <div className="mt-5 border-t-2 pt-6">
-      {articleStrings.addModal.addFromFolderTitle}
+      {uuidToolStrings.addFromFolderTitle}
       <a
         className="ml-2 font-bold text-brand"
         target="_blank"
@@ -76,7 +79,7 @@ export function ArticleRelatedTaxonomy({
             ? strings.entities.exerciseFolder
             : strings.categories[getCategoryByTypename(typename)]}
         </b>
-        {isTax ? articleStrings.addModal.exerciseFolderNote : null}
+        {isTax ? uuidToolStrings.exerciseFolderNote : null}
         <ul>{dataArray.map((item) => renderLi(item, typename))}</ul>
       </div>
     )
