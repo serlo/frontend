@@ -703,6 +703,17 @@ export const loggedInData = {
         saveButtonText: 'Save order',
       },
     },
+    uuidUrlInput: {
+      invalidInput: 'Invalid id or url',
+      fetchError: 'Something went wrong, please try later',
+      loading: 'Loading…',
+      notFound: 'Could not find that content',
+      unsupportedType: 'Sorry, type [%type%] is not supported here',
+      unsupportedId: 'Sorry, this ID is not supported here',
+      addFromFolderTitle: 'From the folder',
+      placeholder: 'Paste Serlo ID or URL here',
+      exerciseFolderNote: 'Only one can be selected here',
+    },
     roles: {
       addButton: 'Add as %role%',
     },
