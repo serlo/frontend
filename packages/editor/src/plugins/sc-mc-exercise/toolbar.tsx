@@ -12,8 +12,9 @@ export const ScMcExerciseToolbar = ({
 
   const handleChange = (value: string) => {
     state.isSingleChoice.set(value === 'sc')
-    state.isSingleChoice.value &&
+    if (state.isSingleChoice.value) {
       state.answers.forEach((answer) => answer.isCorrect.set(false))
+    }
   }
 
   return (

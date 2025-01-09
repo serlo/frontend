@@ -1,5 +1,5 @@
+import type { EditorRowsDocument } from '@editor/package'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorRowsDocument } from '@editor/types/editor-plugins'
 
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'

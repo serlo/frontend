@@ -41,8 +41,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     meta_description: metaDescription,
   } = props.state
 
-  props.state.changes
-
   return (
     <>
       <div className="absolute right-0 -mt-10 mr-side flex">

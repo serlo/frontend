@@ -1,10 +1,11 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
-import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { isArticleDocument } from '@editor/types/plugin-type-guards'
+import {
+  EditorPluginType,
+  isArticleDocument,
+  isEmptyArticle,
+} from '@editor/package'
 import {
   faExclamationCircle,
+  faGraduationCap,
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
@@ -24,7 +25,6 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { isProduction } from '@/helper/is-production'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export interface EntityProps {
@@ -38,8 +38,6 @@ const LenabiCourseFeedback = dynamic(() =>
 )
 
 export function Entity({ data }: EntityProps) {
-  editorRenderers.init(createRenderers())
-
   const isLenabiUserJourneyCoursePage = !isProduction && data.id === 307521
 
   const { strings } = useInstanceData()
@@ -61,7 +59,14 @@ export function Entity({ data }: EntityProps) {
   function renderStyledH1() {
     if (!data.title) return null
     if (data.typename === UuidType.Course)
-      return <CourseHeader title={<>{data.title}</>} />
+      return (
+        <>
+          <p className="serlo-p mb-0 mt-10 text-[1rem] font-bold">
+            <FaIcon icon={faGraduationCap} /> {strings.entities.course}
+          </p>
+          <div className="mx-side my-0 text-2xl font-bold">{data.title}</div>
+        </>
+      )
 
     return (
       <h1 className="serlo-h1 mt-12" itemProp="name">

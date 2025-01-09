@@ -1,7 +1,4 @@
-import {
-  getFirstElementOrUndefined,
-  useShadowRoot,
-} from '@editor/core/hooks/use-shadow-root'
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { cn } from '@editor/utils/cn'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -34,12 +31,9 @@ export function EditorModal({
   onEscapeKeyDown,
   onKeyDown,
 }: EditorModalProps) {
-  const shadowRootRef = useRef<HTMLDivElement>(null)
-  const shadowRoot = useShadowRoot(shadowRootRef)
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
 
-  const appElement = getFirstElementOrUndefined(shadowRoot)
-
+  const isSerlo = useIsSerlo()
   const onOpenChange = useCallback(
     (open: boolean) => {
       if (open !== false) {
@@ -67,25 +61,23 @@ export function EditorModal({
       return
     }
 
-    if (shadowRoot) {
-      previouslyFocusedElementRef.current =
-        shadowRoot.activeElement as HTMLElement
-    } else {
-      previouslyFocusedElementRef.current =
-        document.activeElement as HTMLElement
-    }
-  }, [isOpen, shadowRoot])
+    previouslyFocusedElementRef.current = document.activeElement as HTMLElement
+  }, [isOpen])
 
   return (
     <>
-      <div ref={shadowRootRef}></div>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
-        <Dialog.Portal container={appElement}>
+        <Dialog.Portal>
           <Dialog.Overlay
             className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
           />
           <Dialog.Content
-            className={cn('serlo-modal', className)}
+            className={cn(
+              'serlo-modal',
+              className,
+              // The moodle navigation bar has a z-index of 1030...
+              !isSerlo && 'z-[1040]'
+            )}
             data-modal-state={isOpen ? 'open' : 'closed'}
             aria-describedby={undefined}
             onEscapeKeyDown={onEscapeKeyDown}

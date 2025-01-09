@@ -139,7 +139,7 @@ export function Event({
             ),
             comment: (
               <p className="font-normal">
-                &quot;{event.thread.thread.nodes[0].content}&quot;
+                &bdquo;{event.thread.thread.nodes[0].content}&ldquo;
               </p>
             ),
           })

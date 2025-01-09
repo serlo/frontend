@@ -1,6 +1,6 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import type { EditorCourseDocument } from '@editor/package'
 import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
-import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'

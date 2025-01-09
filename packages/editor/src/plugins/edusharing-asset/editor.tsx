@@ -1,10 +1,11 @@
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
+import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { cn } from '@editor/utils/cn'
 import * as t from 'io-ts'
 import { useContext, useEffect, useRef, useState } from 'react'
-import Modal from 'react-modal'
 
 import type { EdusharingAssetProps } from '.'
-import { LtikContext } from './ltik-context'
 import { EdusharingAssetRenderer } from './renderer'
 import { PluginToolbar } from '../../editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
@@ -52,29 +53,48 @@ export function EdusharingAssetEditor({
     return () => window.removeEventListener('message', handleIFrameEvent)
   }, [state.edusharingAsset])
 
-  const ltik = useContext(LtikContext)
+  const { ltik } = useContext(EditorMetaContext)
   if (!ltik) return <p>Error: ltik missing</p>
 
   return (
     <>
       {renderPluginToolbar()}
       {renderModal(ltik)}
-      <EdusharingAssetRenderer
-        nodeId={
-          state.edusharingAsset.defined
-            ? state.edusharingAsset.nodeId.value
-            : undefined
-        }
-        repositoryId={
-          state.edusharingAsset.defined
-            ? state.edusharingAsset.repositoryId.value
-            : undefined
-        }
-        ltik={ltik}
-        contentWidth={contentWidth.defined ? contentWidth.value : undefined}
-      />
+      <div className="relative">
+        <EdusharingAssetRenderer
+          nodeId={
+            state.edusharingAsset.defined
+              ? state.edusharingAsset.nodeId.value
+              : undefined
+          }
+          repositoryId={
+            state.edusharingAsset.defined
+              ? state.edusharingAsset.repositoryId.value
+              : undefined
+          }
+          ltik={ltik}
+          contentWidth={contentWidth.defined ? contentWidth.value : undefined}
+        />
+        {renderOverlay()}
+      </div>
     </>
   )
+
+  // Transparent overlay. If the plugin is ...
+  // ... unfocused -> Clicking it will focus the plugin
+  // ... focused -> Clicking it does nothing and the events are handled in the iframe behind it
+  // Explanation: Content is inside an iframe. Clicking within the iframe does sadly not change the editor focus automatically. Solutions I found are not easy and don't work reliably. So, we require an extra click from the user to be able to interact with the content in the editor.
+  function renderOverlay() {
+    const captureClick = !focused
+    return (
+      <div
+        className={cn(
+          'absolute left-0 top-0 z-[15] h-full w-full',
+          captureClick ? 'pointer-events-auto' : 'pointer-events-none'
+        )}
+      ></div>
+    )
+  }
 
   function renderPluginToolbar() {
     if (!focused) return null
@@ -146,41 +166,21 @@ export function EdusharingAssetEditor({
   }
 
   function renderModal(ltik: string) {
-    if (!modalIsOpen) return
-
-    // See https://reactcommunity.org/react-modal/accessibility/
-    Modal.setAppElement(document.getElementsByTagName('body')[0])
-
     const url = new URL(window.location.origin)
 
     url.pathname = '/edusharing-embed/start'
     url.searchParams.append('ltik', ltik)
 
     return (
-      <Modal
+      <EditorModal
         isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        style={{
-          content: {
-            width: '80%',
-            height: '80vh',
-            top: '50%',
-            left: '50%',
-            bottom: 'auto',
-            right: 'auto',
-            transform: 'translate(-50%, -50%)',
-          },
-          overlay: {
-            zIndex: 100,
-          },
-        }}
+        setIsOpen={() => setModalIsOpen(false)}
+        className="top-[50%] h-full w-full max-w-[95%]"
+        title="Edusharing-Inhalt auswählen"
+        extraTitleClassName="sr-only"
       >
-        <iframe
-          src={url.href}
-          className="edusharing-h-full edusharing-w-full"
-          ref={iframeRef}
-        />
-      </Modal>
+        <iframe src={url.href} className="h-full w-full" ref={iframeRef} />
+      </EditorModal>
     )
   }
 }

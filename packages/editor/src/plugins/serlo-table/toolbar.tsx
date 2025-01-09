@@ -34,7 +34,6 @@ export const SerloTableToolbar = ({ id, state }: SerloTableProps) => {
         />
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
-      className="-mt-1.5"
     />
   )
 }

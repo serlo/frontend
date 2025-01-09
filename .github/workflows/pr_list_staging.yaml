@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: update PR description
-        uses: nefrob/pr-description@v1.1.2
+        uses: nefrob/pr-description@v1.2.0
         with:
           content: "<!-- changes-start -->\n---\n## Changes:\n\n${{ steps.associated-pull-requests.outputs.body-groups }}\n${{ steps.associated-pull-requests.outputs.body-others }}\n<!-- changes-end -->"
           regex: '<!-- changes-start -->.*?<!-- changes-end -->'

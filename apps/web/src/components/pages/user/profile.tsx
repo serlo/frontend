@@ -86,7 +86,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             <ProfileBadges userData={userData} date={date} />
           </div>
           <div className="serlo-p mt-5 w-full text-1.5xl [grid-area:motivation] sm:mt-0">
-            {motivation && <>&quot;{motivation}&quot;</>}
+            {motivation && <>&bdquo;{motivation}&ldquo;</>}
             {isOwnProfile &&
               !isNewlyRegisteredUser &&
               renderEditMotivationLink()}

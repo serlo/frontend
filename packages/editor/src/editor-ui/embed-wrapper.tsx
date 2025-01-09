@@ -48,8 +48,8 @@ export function EmbedWrapper({
     <div
       className={cn(
         `
-        group relative mx-side mb-block block
-        cursor-pointer bg-cover bg-center [contain:content]
+        group relative mb-block block cursor-pointer
+        bg-cover bg-center pl-0.5 [contain:content]
         `,
         className
       )}
@@ -65,7 +65,7 @@ export function EmbedWrapper({
 
     return (
       <div className="w-full">
-        <div className="relative flex aspect-[16/9] w-full justify-center rounded-xl bg-editor-primary-100">
+        <div className="relative flex aspect-[16/9] w-full justify-center rounded-lg bg-editor-primary-100">
           <img
             className="w-full object-contain opacity-50"
             src={previewImageUrl}

@@ -5,7 +5,7 @@ export const editStrings = {
   confirmRouteChange: 'Are you sure you want to leave without saving?',
   noChangesWarning: 'Nothing changed so there is no need to save yet',
   savedContentMightDisappearWarning:
-    '⚠️ This is a test environment. Please do not create content that you want to keep long term here.',
+    '⚠️ This is a test environment. Please do not create content that you want to keep long term here. Questions? vicky@serlo.org',
   addPluginsModal: {
     searchInputPlaceholder: 'Search...',
     basicPluginsTitle: 'Content Elements',
@@ -204,6 +204,28 @@ export const editStrings = {
         "Please use a valid Serlo ID (just numbers). E.g. '/1555'",
       errorLoading: 'Content could not be loaded, please check the id',
     },
+    interactiveVideo: {
+      title: 'Interactive Video',
+      description: 'Create an interactive video with questions and feedback.',
+      editOverlayTitle: 'Edit Exercise',
+      titlePlaceholder: 'Exercise Title',
+      defaultTitle: 'Exercise',
+      autoOpenLabel: 'Automatically open',
+      autoOpenExplanation: 'Content automatically opens when video is at mark',
+      mandatoryLabel: 'Mandatory Exercise',
+      mandatoryExplanation: 'Exercise has to be solved to continue video',
+      forceRewatchLabel: 'Auto Rewatch',
+      forceRewatchExplanation:
+        'If an exercise is answered incorrectly, the video jumps back to the last mark',
+      editMark: 'Edit',
+      removeMark: 'Remove',
+      removeAllMarks: 'Remove all exercises',
+      confirmRemoveAllMarks: 'Are you sure you want to remove all exercises?',
+      addOverlayContent: 'Add exercise',
+      addVideo: 'Add a video url (e.g. YouTube) to get started',
+      changeVideo: 'Change video',
+      saveInfo: 'Changes are continually saved!',
+    },
     multimedia: {
       title: 'Multimedia content associated with text',
       description:
@@ -288,9 +310,14 @@ export const editStrings = {
         'Sorry, pasting elements inside of lists is not allowed.',
       pastingPluginNotAllowedHere:
         'Sorry, pasting this plugin here is not allowed.',
+      unsupportedPluginsPasted:
+        'There were unsupported plugins in the data you pasted.',
+      invalidDataPasted: 'Sorry, something is wrong with the data you pasted.',
       linkOverlay: {
         placeholder: 'https://… or /1234',
+        placeholderNonSerlo: 'https://',
         inputLabel: 'Paste or type a link',
+        inputLabelNonSerlo: 'Insert a link',
         edit: 'Edit Link',
         remove: 'Remove Link',
         customLink: 'Custom Link',
@@ -334,8 +361,7 @@ export const editStrings = {
     },
     video: {
       title: 'Video',
-      description:
-        'Embed videos from e.g. YouTube, Vimeo or Wikimedia Commons.',
+      description: 'Embed videos from e.g. YouTube or Vimeo.',
       videoUrl: 'Video URL',
       videoDescription: 'Description',
       titlePlaceholder: 'Title',
@@ -360,11 +386,10 @@ export const editStrings = {
       changeInteractive: 'Change interactive element',
       confirmRemoveInteractive:
         'Your current changes will be replaced. Are you sure?',
-      createSolution: 'Create solution',
-      removeSolution: 'Remove solution',
-      previewMode: 'Preview',
-      previewIsActiveHint: 'Preview mode is active',
-      previewIsDeactiveHint: 'Here you can edit',
+      createSolution: 'Create proposed solution',
+      removeSolution: 'Remove proposed solution',
+      toLearnersView: 'To Learners View',
+      toEditView: 'To Edit View',
     },
     exerciseGroup: {
       title: 'Exercise Group',

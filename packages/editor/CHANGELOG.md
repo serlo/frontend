@@ -1,3 +1,82 @@
+## Changelog for version 0.20.2
+
+- feat(editor): add learner event handler to package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4350
+- quickfix: show exercise task again. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4347
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4346
+- refactor(image-plugin): Show better error messages when the image upload fails. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4344
+- fix(plugin-rows): whole plugin drag handle bug. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4343
+- feat(microadaptivity): integrate AI in final feedback. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4338
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.1-editor...v0.20.2-editor
+
+## Changelog for version 0.20.1
+
+- feat(editor-web-component): Expose language prop. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4340
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.0-editor...v0.20.1-editor
+
+## Changelog for version 0.20.0
+
+- fix(editor): Render visual/latex select in math toolbar. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4334
+- refactor(editor-packages): Throw out all mentions of shadow dom. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4333
+- feat(prototype-microadaptivity): simulate feedback block. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4326
+- refactor(web): hide localstorage notice on editor-preview as well. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4325
+- fix(page-editor-preview): hide editor toolbar artifacts. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4323
+- feat(microadaptivity): fetch feedback from AI. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4322
+- Prototype: Microadaptivity - Block data layout for text and feedback blocks. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4321
+- feat(interactive-video): add tool to remove all marks. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4320
+- feat(interactive-video): add plugin icon. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4319
+- fix(input-exercise): use correct icon. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4317
+- refactor(plugin-injection): use open-iframe-resizer. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4315
+- fix(plugin-edusharing): use open-iframe-resizer. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4314
+- feat(plugin-rows): new plugin reorder buttons. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4313
+- Remove support to wikimedia videos due to data privacy reasons. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4312
+- fix(plugin-edusharing): keep overlay but let pointer events pass through. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4309
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.19.2-editor...v0.20.0-editor
+
+## Changelog for version 0.19.2
+
+- chore: upgrade Slate. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4308
+- fix(editor): Render toasts in Toaster. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4307
+- feat: plugin hover focus state frame shadow. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4277
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.19.1-editor...v0.19.2-editor
+
+## Changelog for version 0.19.1
+
+- fix(editor): remove fixed size from text area icon. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4303
+- fix(editor): allow state to be undefined/null in `SerloRenderer`. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4302
+- refactor(editor): normalize links only on serlo.org. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4301
+- fix(plugin-edusharing): allow focusing the plugin by clicking on the content. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4298
+- chore: upgrade math packages and graphql-request. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4290
+- fix(link-plugin): Allow absolute serlo urls in integrations. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4289
+- chore: upgrade redux etc. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4288
+- chore: upgrade typescript version, bump target to es2018. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4286
+- chore: upgrade react dom and misc. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4284
+- chore: upgrade prettier. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4283
+- chore: upgrade next & misc packages. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4282
+- Add icon for text area exercise (frei text plugin). Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4276
+- Revert \"chore(deps): bump @radix-ui/react-navigation-menu from 1.1.4 to 1.2.1\". Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4272
+- chore(deps): bump @radix-ui/react-navigation-menu from 1.1.4 to 1.2.1. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4266
+- chore(deps): bump clsx from 2.1.0 to 2.1.1. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4265
+- refactor(editor): remove upload tagging code. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4260
+- refactor(editor): adapt variable name from imgSrc to fileUrl. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4259
+- fix(plugin-edusharing): fix visual errors in embeds. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4258
+- refactor(editor): adapt upload code to changes on server, get parent host for usage in iframe. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4257
+- fix(editor): commit temporary actions to history only after resolving them. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4252
+- feat(editor): add user id to image upload. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4251
+- fix(editor): adapt image proxy rule. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4250
+- chore: migrate eslint to use new config format. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4249
+- Production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4245
+- Deploy: fix(editor): update injection url for production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4244
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4243
+- refactor: move some tailwind theme stuff to frontend. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4240
+- refactor(edusharing-asset): replace react-modal. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4239
+- refactor(editor): add image proxy for privacy (serlo-only). Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4224
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.19.0-editor...v0.19.1-editor
+
 ## Changelog for version 0.19.0
 
 - refactor(editor): remove css injected by js plugin. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4234

@@ -38,7 +38,7 @@ export function useAnswerZones(
     const index = answerZones.findIndex(
       ({ id }) => id.value === currentAnswerZone.id.value
     )
-    index !== -1 && answerZones.remove(index)
+    if (index !== -1) answerZones.remove(index)
     event.preventDefault()
   })
 

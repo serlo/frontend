@@ -40,10 +40,8 @@ export interface AnswerZoneSettings {
   width: number
 }
 
-export interface AnswerData extends StateTypeReturnType<typeof answerData> {}
-
-export interface AnswerZoneState
-  extends StateTypeReturnType<typeof answerZoneState> {}
+export type AnswerData = StateTypeReturnType<typeof answerData>
+export type AnswerZoneState = StateTypeReturnType<typeof answerZoneState>
 
 export enum AnswerType {
   Unset = '',

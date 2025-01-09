@@ -8,8 +8,9 @@ import {
   faCopy,
   faDownload,
   faEnvelope,
+  faFileText,
 } from '@fortawesome/free-solid-svg-icons'
-import QRCode from 'qrcode.react'
+import { QRCodeSVG } from 'qrcode.react'
 import { MouseEvent, useState, useEffect } from 'react'
 
 import { FaIcon, FaIconProps } from '../../fa-icon'
@@ -24,6 +25,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export interface ShareModalProps {
   isOpen: boolean
   setIsOpen: (open: boolean) => void
+  showCopyContent?: boolean
   showPdf?: boolean
   path?: string
 }
@@ -39,6 +41,7 @@ interface EntryData {
 export function ShareModal({
   isOpen,
   setIsOpen,
+  showCopyContent,
   showPdf,
   path,
 }: ShareModalProps) {
@@ -60,9 +63,34 @@ export function ShareModal({
         '👌 ' + (text ? text : strings.share.copySuccess),
         'success'
       )
-    } catch (err) {
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
       showToastNotice(
         '❌ ' + (text ? text : strings.share.copyFailed),
+        'warning'
+      )
+    }
+  }
+
+  async function copyContentToClipboard() {
+    if (!pathOrId) return
+    try {
+      const url = `/api/frontend/bildungsraum-share?href=${encodeURIComponent(pathOrId)}`
+      const res = await fetch(url)
+      const data = (await res.json()) as string
+      if (!res.ok) {
+        throw new Error(
+          'injection-content API call failed with error: ' + data.toString()
+        )
+      }
+      await navigator.clipboard.writeText(JSON.stringify(data))
+      showToastNotice('👌 Erfolgreich kopiert', 'success')
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+      showToastNotice(
+        '❌ Leider gab es ein Problem beim kopieren. Tut uns leid.',
         'warning'
       )
     }
@@ -71,6 +99,14 @@ export function ShareModal({
   const shareUrl = `${window.location.protocol}//${window.location.host}/${pathOrId}`
   const urlEncoded = encodeURIComponent(shareUrl)
   const titleEncoded = encodeURIComponent(document.title)
+
+  const contentCopy = [
+    {
+      title: 'Inhalt kopieren',
+      icon: faFileText,
+      onClick: () => copyContentToClipboard(),
+    },
+  ]
 
   const socialShare = [
     {
@@ -141,7 +177,7 @@ export function ShareModal({
       className="top-1/2"
     >
       <div className="mx-side mb-4 sm:float-right sm:mb-0">
-        <QRCode value={shareUrl} renderAs="svg" fgColor={colors.brand} />
+        <QRCodeSVG value={shareUrl} fgColor={colors.brand} />
       </div>
       {renderShareInput()}
       <hr className="mx-side my-4" />
@@ -154,6 +190,24 @@ export function ShareModal({
           {renderButtons(pdfData)}
         </>
       )}
+
+      {showCopyContent ? ( // "de" only
+        <>
+          <hr className="mx-side my-4" />
+          <h3 className="serlo-h3 my-4">Inhalt zum Bearbeiten kopieren</h3>
+          <p className="serlo-p mb-0 text-base">
+            Du kannst diesen Inhalt in jedem Serlo Editor weiterbearbeiten: Hier
+            auf <b>serlo.org</b> und in LMS wie Moodle, Edu-sharing oder
+            itslearning, die den Serlo Editor eingebaut haben.
+            <br />
+            <br />
+            Dazu einfach auf unten auf &bdquo;Inhalt kopieren&ldquo; klicken,
+            einen Moment warten und dann Inhalt im Editor Textfeld Deines LMS
+            einfügen.
+          </p>
+          {renderButtons(contentCopy)}
+        </>
+      ) : null}
     </ModalWithCloseButton>
   )
 

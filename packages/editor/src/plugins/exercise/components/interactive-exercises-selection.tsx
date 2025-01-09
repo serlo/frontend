@@ -1,7 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { PluginMenuIcon } from '@editor/plugins/rows/components/plugin-menu-icon'
 import {
   getPluginMenuItems,
   type PluginMenuItem,
@@ -27,15 +26,11 @@ export function InteractiveExercisesSelection({
     return getPluginMenuItems(editorStrings)
       .map((menuItem) => {
         if (!isExerciseDocument(menuItem.initialState)) return false
-        const interactive = menuItem.initialState.state.interactive
-        if (!interactive || !editorPlugins.isSupported(interactive.plugin)) {
+        const initialState = menuItem.initialState.state.interactive
+        if (!initialState || !editorPlugins.isSupported(initialState.plugin)) {
           return false
         }
-        const pluginMenuItem = {
-          ...menuItem,
-          initialState: interactive,
-        }
-        return pluginMenuItem
+        return { ...menuItem, initialState }
       })
       .filter(Boolean) as unknown as PluginMenuItem[]
   }, [editorStrings])
@@ -60,7 +55,10 @@ export function InteractiveExercisesSelection({
       <p className="mb-2 text-gray-400">{exStrings.addOptionalInteractiveEx}</p>
       <div className="grid grid-cols-4 items-start gap-2 pb-10">
         {unwrappedMenuItems.map(
-          ({ type, title, icon, description, initialState }, index) => (
+          (
+            { type, title, IconComponent, description, initialState },
+            index
+          ) => (
             <button
               key={type}
               data-qa={`add-exercise-${initialState.plugin}`}
@@ -71,7 +69,7 @@ export function InteractiveExercisesSelection({
                 className={getTooltipClass(index)}
                 text={description}
               />
-              <PluginMenuIcon icon={icon} />
+              <IconComponent />
               <b className="mt-2 block text-sm">{title}</b>
             </button>
           )

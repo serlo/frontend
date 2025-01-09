@@ -7,8 +7,8 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { LayoutChooser } from './layout-chooser'
 import type { PageLayoutPluginProps } from '..'
+import { LayoutChooser } from './layout-chooser'
 
 export const PageLayoutToolbar = ({
   id,

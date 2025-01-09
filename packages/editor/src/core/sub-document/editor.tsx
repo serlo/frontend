@@ -124,6 +124,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const defaultConfig =
       typeof plugin.config === 'function' ? plugin.config() : plugin.config
     const overrideConfig = (pluginProps && pluginProps.config) || {}
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
     const onChange = (
@@ -153,6 +154,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     const isInlineChildEditor =
       Object.hasOwn(config, 'isInlineChildEditor') &&
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       (config.isInlineChildEditor as boolean)
 
     const isTemplatePlugin = document.plugin.startsWith('type-')
@@ -176,6 +178,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           containerRef={containerRef}
           id={id}
           focused={focused}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           config={config}
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state={state}

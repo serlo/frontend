@@ -181,7 +181,7 @@ export function BlanksExerciseRenderer({
       <DndWrapper>
         <div
           className={cn(
-            'mx-side mb-block',
+            'mb-block',
             // Increase Slate line height in the editor
             '[&>div>div>div[data-slate-node="element"]]:leading-[30px]',
             // Increase Slate line height in the renderer

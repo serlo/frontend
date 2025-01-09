@@ -28,6 +28,7 @@ export const entity = {
   meta_description: optional(string()),
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const entityTypeHelper = entityType(entity, {})
 export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
 

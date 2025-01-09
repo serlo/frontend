@@ -15,6 +15,7 @@ export function ImageStaticRenderer({
   const altFallbackString = useStaticStrings().plugins.image.altFallback
   const altOrFallback = getAltOrFallback(altFallbackString, caption, alt)
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const src = String(fileSrc)
   if (!src) return null
 

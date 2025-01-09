@@ -1,9 +1,9 @@
-import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
+import type {
   EditorImageDocument,
   EditorMultimediaDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
+import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
@@ -40,6 +40,7 @@ export function MultimediaSerloStaticRenderer(state: EditorMultimediaDocument) {
         onClose={() => setOpen(false)}
         alt={imageState.alt}
         label={<EditorRenderer document={imageState.caption} />}
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         src={String(imageState.src)}
       />
     )

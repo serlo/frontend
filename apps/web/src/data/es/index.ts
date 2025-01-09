@@ -88,8 +88,8 @@ export const instanceData = {
       button: "Compartir",
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
-      copySuccess: 'Link copied!',
-      copyFailed: 'Error copying link!',
+      copySuccess: "¡Enlace copiado!",
+      copyFailed: "¡Error al copiar enlace!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -344,6 +344,8 @@ export const instanceData = {
         code1010001: "Iniciar sesión",
         code1010002: "Inicia sesión a través de „Mein Bildungsraum“ (programa en Alemania)",
         code1010013: "Continuar con SSO",
+        code1010022: "Ingresar",
+        // Login with password
         code1040001: "Registrarse",
         code1040002: "Inscríbete a través de  „Mein Bildungsraum“ (programa de Alemania)",
         code1040003: "Continuar",
@@ -352,6 +354,7 @@ export const instanceData = {
         code1060002: "Se ha enviado un correo con un enlace de recuperación a la dirección de correo electrónico que proporcionaste. %break% Comprueba tu buzón y haz clic en el enlace que contiene.",
         code1070003: "Guardar",
         code1070005: "Enviar",
+        code1070009: "Continuar",
         code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
         code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
         code4000001: '%reason%',
@@ -363,6 +366,7 @@ export const instanceData = {
         code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",
         code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
+        code4000032: "Has introducido menos de 8 caracteres.",
         code4060004: "El enlace de recuperación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo",
         code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo.",
         code4070005: "Lo sentimos, este enlace de verificación ya no es válido. Por favor, intenta solicitar un correo electrónico de nuevo."

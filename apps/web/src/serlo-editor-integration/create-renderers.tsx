@@ -1,17 +1,3 @@
-import type { StaticMathProps } from '@editor/package'
-import {
-  InitRenderersArgs,
-  LinkRenderer,
-} from '@editor/plugin/helpers/editor-renderer'
-import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
-import { ArticleStaticRenderer } from '@editor/plugins/article/static'
-import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
-import { RowsStaticRenderer } from '@editor/plugins/rows/static'
-import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
-import type { MathElement } from '@editor/plugins/text'
-import { TextStaticRenderer } from '@editor/plugins/text/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type {
   EditorBlanksExerciseDocument,
   EditorEquationsDocument,
@@ -27,7 +13,24 @@ import type {
   EditorSpoilerDocument,
   EditorExerciseGroupDocument,
   EditorDropzoneImageDocument,
-} from '@editor/types/editor-plugins'
+  EditorInteractiveVideoDocument,
+  StaticMathProps,
+} from '@editor/package'
+import {
+  InitRenderersArgs,
+  LinkRenderer,
+} from '@editor/plugin/helpers/editor-renderer'
+import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
+import { ArticleStaticRenderer } from '@editor/plugins/article/static'
+import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
+import { RowsStaticRenderer } from '@editor/plugins/rows/static'
+import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
+import type { MathElement } from '@editor/plugins/text'
+import { TextStaticRenderer } from '@editor/plugins/text/static'
+import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { sanitizeHref } from '@editor/utils/sanitize-href'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
@@ -67,12 +70,16 @@ const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
     (mod) => mod.BlanksExerciseStaticRenderer
   )
 )
+const InteractiveVideoRenderer = dynamic<EditorInteractiveVideoDocument>(() =>
+  import('@editor/plugins/interactive-video/static').then(
+    (mod) => mod.InteractiveVideoStaticRenderer
+  )
+)
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
   )
 )
-
 const DropzoneImageStaticRenderer = dynamic<
   EditorDropzoneImageDocument & { openOverwrite?: boolean; onOpen?: () => void }
 >(() =>
@@ -80,7 +87,6 @@ const DropzoneImageStaticRenderer = dynamic<
     (mod) => mod.DropzoneImageStaticRenderer
   )
 )
-
 const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
   import('@editor/plugins/page-layout/static').then(
     (mod) => mod.PageLayoutStaticRenderer
@@ -101,7 +107,6 @@ const SolutionSerloStaticRenderer = dynamic<EditorSolutionDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/solution-serlo-static-renderer'
   ).then((mod) => mod.SolutionSerloStaticRenderer)
 )
-
 const SerloTableStaticRenderer = dynamic<EditorSerloTableDocument>(() =>
   import('@editor/plugins/serlo-table/static').then(
     (mod) => mod.SerloTableStaticRenderer
@@ -226,6 +231,14 @@ export function createRenderers(): InitRenderersArgs {
         renderer: BlanksExerciseStaticRenderer,
       },
       {
+        type: EditorPluginType.InteractiveVideo,
+        renderer: InteractiveVideoRenderer,
+      },
+      {
+        type: EditorPluginType.TextAreaExercise,
+        renderer: TextAreaExerciseStaticRenderer,
+      },
+      {
         type: EditorPluginType.Solution,
         renderer: SolutionSerloStaticRenderer,
       },
@@ -249,7 +262,7 @@ export function createRenderers(): InitRenderersArgs {
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
       return (
         <>
-          <Link href={href}>{children}</Link>
+          <Link href={sanitizeHref(href)}>{children}</Link>
           <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
         </>
       )

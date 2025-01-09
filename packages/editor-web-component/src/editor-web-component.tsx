@@ -2,9 +2,10 @@
 
 import {
   SerloRenderer,
-  BaseEditor,
+  type BaseEditor,
   defaultPlugins,
   EditorPluginType,
+  type SupportedLanguage,
 } from '@serlo/editor'
 import styles from '@serlo/editor/dist/style.css?raw'
 import React, { Suspense, lazy } from 'react'
@@ -43,15 +44,12 @@ export class EditorWebComponent extends HTMLElement {
 
   private _isProductionEnvironment: boolean = false
 
-  // By default, we are NOT attaching it to the shadow DOM
-  private _useShadowDOM: boolean = false
+  private _language: SupportedLanguage = 'de' as const
 
   constructor() {
     super()
 
     this.container = document.createElement('div')
-
-    // Shadow DOM will be attached in connectedCallback if needed
   }
 
   static get observedAttributes() {
@@ -59,10 +57,10 @@ export class EditorWebComponent extends HTMLElement {
       'initial-state',
       'mode',
       'testing-secret',
-      'use-shadow-dom',
       'editor-variant',
       'plugins',
       'is-production-environment',
+      'language',
     ]
   }
 
@@ -75,14 +73,17 @@ export class EditorWebComponent extends HTMLElement {
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
-    } else if (name === 'use-shadow-dom') {
-      this._useShadowDOM = newValue !== 'false'
     } else if (name === 'editor-variant' && oldValue !== newValue) {
       this.editorVariant = newValue as EditorVariant
     } else if (name === 'plugins' && oldValue !== newValue) {
       this.plugins = JSON.parse(newValue) as EditorPluginType[]
     } else if (name === 'is-production-environment') {
       this.isProductionEnvironment = newValue === 'true'
+    } else if (name === 'language' && oldValue !== newValue) {
+      // Validates the language attribute. Will need to keep this in sync with
+      // the SupportedLanguage type, if we add more language support!
+      const validatedLanguage = newValue === 'en' ? 'en' : 'de'
+      this.language = validatedLanguage
     }
   }
 
@@ -168,14 +169,25 @@ export class EditorWebComponent extends HTMLElement {
     this.mountReactComponent()
   }
 
-  connectedCallback() {
-    if (this._useShadowDOM && !this.shadowRoot) {
-      this.attachShadow({ mode: 'open' })
-      this.shadowRoot!.appendChild(this.container)
-    } else if (!this._useShadowDOM) {
-      this.appendChild(this.container)
+  get language(): SupportedLanguage {
+    return this._language
+  }
+
+  set language(value: SupportedLanguage) {
+    if (value !== 'en' && value !== 'de') {
+      throw new Error(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        `Invalid language value: ${value}. Supported values are 'en' or 'de'.`
+      )
     }
 
+    this._language = value
+    this.setAttribute('language', value)
+    this.mountReactComponent()
+  }
+
+  connectedCallback() {
+    this.appendChild(this.container)
     this.loadAndApplyStyles()
 
     if (!this.reactRoot) {
@@ -188,11 +200,7 @@ export class EditorWebComponent extends HTMLElement {
   loadAndApplyStyles() {
     const styleEl = document.createElement('style')
     styleEl.textContent = styles
-    if (this._useShadowDOM) {
-      this.shadowRoot!.appendChild(styleEl)
-    } else {
-      this.appendChild(styleEl)
-    }
+    this.appendChild(styleEl)
   }
 
   broadcastNewState(newState: unknown): void {
@@ -206,7 +214,6 @@ export class EditorWebComponent extends HTMLElement {
     const initialStateAttr = this.getAttribute('initial-state')
     const testingSecretAttr = this.getAttribute('testing-secret')
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
       : exampleInitialState
@@ -237,6 +244,7 @@ export class EditorWebComponent extends HTMLElement {
                   this._currentState = newState
                   this.broadcastNewState(newState)
                 }}
+                language={this.language}
               >
                 {(editor) => {
                   this._history = editor.history
@@ -248,6 +256,7 @@ export class EditorWebComponent extends HTMLElement {
             <SerloRenderer
               state={this.initialState}
               editorVariant={this.editorVariant}
+              language={this.language}
             />
           )}
         </div>

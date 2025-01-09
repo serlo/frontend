@@ -1,28 +1,35 @@
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
+import {
+  editorLearnerEvent,
+  LearnerEventData,
+} from '@editor/plugin/helpers/editor-learner-event'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { LtikContext } from '@editor/plugins/edusharing-asset/ltik-context'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { SupportedLanguage } from '@editor/types/language-data'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
 import { getEditorVersion } from './editor-version'
-import { migrate, EditorVariant } from './storage-format'
+import { migrate, EditorVariant, createEmptyDocument } from './storage-format'
 
 export interface SerloRendererProps {
   language?: SupportedLanguage
   state: unknown
   _ltik?: string
   editorVariant: EditorVariant
+  handleLearnerEvent?: (data: LearnerEventData) => void
 }
 
 export function SerloRenderer(props: SerloRendererProps) {
-  const { language, _ltik, state, editorVariant } = {
+  const { language, _ltik, editorVariant } = {
     ...defaultSerloEditorProps,
     ...props,
   }
+
+  const state = !props.state ? createEmptyDocument(editorVariant) : props.state
 
   // Side note: Migrated state will not be persisted since we cannot save in
   // static renderer view
@@ -34,17 +41,21 @@ export function SerloRenderer(props: SerloRendererProps) {
   const basicRenderers = createRenderers()
   editorRenderers.init(basicRenderers)
 
+  if (props.handleLearnerEvent) {
+    editorLearnerEvent.init(props.handleLearnerEvent)
+  }
+
   return (
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
-        <LtikContext.Provider value={_ltik}>
+        <EditorMetaContext.Provider value={{ editorVariant, ltik: _ltik }}>
           <div
             className="serlo-content-with-spacing-fixes"
             data-editor-version={getEditorVersion()}
           >
             <StaticRenderer document={migratedState.document} />
           </div>
-        </LtikContext.Provider>
+        </EditorMetaContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>
   )

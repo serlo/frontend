@@ -1,10 +1,10 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { isImageDocument } from '@editor/types/plugin-type-guards'
+import { EditorPluginType } from '@editor/package'
 import { faListUl } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
+import { ProxyImage } from './proxy-image'
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
 import { Link } from '@/components/content/link'
@@ -14,7 +14,6 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
@@ -28,8 +27,6 @@ export function SubjectLandingTopicOverview({
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
-  editorRenderers.init(createRenderers())
 
   const { extraTerms, allTopicsTaxonomyId } = deSubjectLandingData[subject]
 
@@ -94,8 +91,8 @@ export function SubjectLandingTopicOverview({
 
           const firstRow = term.description?.state[0]
           const src =
-            firstRow && isImageDocument(firstRow)
-              ? String(firstRow.state.src)
+            firstRow && firstRow.plugin === EditorPluginType.Image
+              ? String((firstRow.state as { src: string }).src)
               : undefined
 
           const isExtraTerm = Object.hasOwn(term, 'href')
@@ -103,7 +100,7 @@ export function SubjectLandingTopicOverview({
           const buttonClass = cn(
             `
               m-2 flex min-h-[4rem] w-auto
-              items-center rounded-xl p-2 text-left text-left font-bold
+              items-center rounded-xl p-2 text-left font-bold
               text-brand shadow-menu transition-colors hover:bg-brand/5
             `,
             isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : ''
@@ -146,8 +143,7 @@ export function SubjectLandingTopicOverview({
                       alt={`Illustration: ${term.title}`}
                     />
                   ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={src} className="h-12 w-12 object-cover" />
+                    <ProxyImage src={src} className="h-12 w-12 object-cover" />
                   )
                 ) : null}
               </div>

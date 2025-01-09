@@ -1,4 +1,5 @@
 import { EditorInput } from '@editor/editor-ui'
+import type { AnyEditorDocument } from '@editor/package'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -7,7 +8,6 @@ import {
   PrettyStaticState,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { type AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
 import { H5pRenderer, parseH5pUrl } from './renderer'
@@ -85,6 +85,8 @@ function H5pEditor({ state }: H5pProps) {
           setDownloadUrl(json.downloadPath)
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
         // e.g. invalid id
         setError(
           'H5P-Inhalt konnte nicht geladen werden, prüfe nochmal die URL'
@@ -128,7 +130,7 @@ function H5pEditor({ state }: H5pProps) {
                 Registriere dich mit deiner E-Mail-Adresse und melde dich an.
               </li>
               <li>
-                Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines
+                Klicke auf &bdquo;Neuen Inhalt erstellen&ldquo; und wähle eines
                 der folgenden Inhaltstypen:
                 <ul className="serlo-ul">
                   {Object.values(availableH5pExercises).map((exercise) => (
@@ -138,7 +140,7 @@ function H5pEditor({ state }: H5pProps) {
               </li>
               <li>
                 Erstelle deinen Inhalt, speichere ihn und klicke dann auf
-                &quot;Inhalt bereitstellen&quot;.
+                &bdquo;Inhalt bereitstellen&ldquo;.
               </li>
               <li>Füge die Verknüpfung zur Bereitstellung hier ein:</li>
             </ul>

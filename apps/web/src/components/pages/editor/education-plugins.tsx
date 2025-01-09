@@ -210,10 +210,9 @@ const pluginData = [
     title: 'Video',
     titleDe: 'Video',
     icon: faFilm,
-    description:
-      'Embed videos directly from YouTube, Vimeo or Wikimedia Commons in your content.',
+    description: 'Embed videos directly from YouTube or Vimeo in your content.',
     descriptionDe:
-      'Du kannst Videos direkt von YouTube, Vimeo oder Wikimedia Commons in deinen Inhalt einbetten.',
+      'Du kannst Videos direkt von YouTube oder Vimeo in deinen Inhalt einbetten.',
     example: null,
     image: 'video.png',
     category: 'basic',

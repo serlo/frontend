@@ -1,7 +1,4 @@
-import {
-  isEmptyCustomText,
-  isEmptyDescendant,
-} from '@editor/plugins/text/utils/static-is-empty'
+import { isEmptyCustomText, isEmptyDescendant } from '@editor/package'
 
 const text = { text: 'abc123' }
 const emptyText = { text: '' }

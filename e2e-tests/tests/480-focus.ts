@@ -68,24 +68,18 @@ Scenario('focus plugins with tab key', async ({ I }) => {
   createNewEditorEntity(I, 'article')
   I.waitForElement('h1 > input:focus', 5)
 
-  I.say('focus on image plugin inside of introduction multimedia plugin')
-  // TODO: Double tab is a quick fix, focus / toolbar visibility needs to be improved in image ,
-  //       specifically with ImageSelectionScreen component
+  I.say('focus on text plugin inside of introduction multimedia plugin')
   I.pressKey('Tab')
+  I.see('Text', '$plugin-type-indicator')
+
+  I.say('focus on image plugin inside of introduction multimedia plugin')
   I.pressKey('Tab')
   I.see('Bild', '$plugin-type-indicator')
   I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
 
-  I.say('focus on text plugin inside of introduction multimedia plugin')
-  // TODO: Triple tab is a quick fix, its not clear that the tab order is correct for a good UX
-  I.pressKey('Tab')
-  I.pressKey('Tab')
-  I.pressKey('Tab')
-
-  I.see('Text', '$plugin-type-indicator')
-  I.see('Erklärung mit Multimedia-Inhalt', '$plugin-multimedia-parent-button')
-
   I.say('focus on text plugin under introduction multimedia plugin')
+  I.pressKey('Tab')
+  I.pressKey('Tab')
   I.pressKey('Tab')
   I.pressKey('Tab')
   I.see('Text', '$plugin-type-indicator')

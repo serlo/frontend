@@ -42,6 +42,7 @@ class ErrorBoundary extends Component<{
     errorInfo: { componentStack: string }
   ) {
     if (typeof this.context === 'function') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       this.context(error, errorInfo)
     }
     // eslint-disable-next-line no-console

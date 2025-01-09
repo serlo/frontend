@@ -1,7 +1,7 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
-import DOMPurify from 'dompurify'
-import IframeResizer from 'iframe-resizer-react'
+import { IframeResizer } from '@open-iframe-resizer/react'
 import * as t from 'io-ts'
+import DOMPurify from 'isomorphic-dompurify'
 import { memo, useEffect, useState } from 'react'
 
 type EmbedType =
@@ -31,6 +31,11 @@ const EmbedJson = t.type({
     ]),
   }),
 })
+
+const iframeResizerHtml =
+  '<script type="module" src="https://cdn.jsdelivr.net/npm/@open-iframe-resizer/core@1.2.1/dist/index.min.js"></script>'
+
+const cssReset = 'padding: 0; margin: 0; border: 0;'
 
 export function EdusharingAssetRenderer(props: {
   nodeId?: string
@@ -77,11 +82,17 @@ export function EdusharingAssetRenderer(props: {
       }
 
       // HTML snipped returned by edu-sharing cannot be used as it is.
-      const { embedType, html, defineContainerHeight } =
+      const { embedType, htmlSnippet, defineContainerHeight } =
         getEmbedHtml(responseJson)
 
-      // Prevent common XSS methods
-      const sanitizedHtml = DOMPurify.sanitize(html)
+      const html = buildHtml(htmlSnippet, defineContainerHeight)
+
+      const sanitizedHtml = DOMPurify.sanitize(html, {
+        // We allow <script> and <iframe> elements. Those are part of the html snippet we get from edu-sharing and cannot be removed or the embed will break. <script> elements cannot be manipulated by the user and we can trust them.
+        ADD_TAGS: ['script', 'iframe'],
+        // Return entire html document including <html>, <body>, ...
+        WHOLE_DOCUMENT: true,
+      })
 
       setEmbedType(embedType)
       setEmbedHtml(sanitizedHtml)
@@ -92,22 +103,37 @@ export function EdusharingAssetRenderer(props: {
   }, [nodeId, repositoryId, ltik])
 
   return (
-    <figure className="w-full">
+    <figure className="relative z-[15] w-full">
       <div className="mx-side">
         {embedHtml ? (
           renderEmbed()
         ) : (
-          <div className="flex justify-center">
-            <EdusharingIcon />
+          <div className="flex aspect-[16/9] w-full items-center justify-center">
+            <EdusharingIcon style={{ width: '5rem', height: '5rem' }} />
           </div>
         )}
       </div>
     </figure>
   )
 
+  function buildHtml(htmlSnippet: string, defineContainerHeight: boolean) {
+    // Hack: height: 97% -> Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
+    // Hack: overflow-y: hidden -> Sometimes after setting the correct iframe height the vertical scroll bar does not disappear.
+    return `
+      <html style="${cssReset}${defineContainerHeight ? 'height: 97%;' : 'overflow-y: hidden;'}">
+        <head>
+          ${defineContainerHeight ? '' : iframeResizerHtml}
+        </head>
+        <body style="${cssReset}${defineContainerHeight ? 'height: 100%;' : ''}">
+          ${htmlSnippet}
+        </body>
+      </html> 
+    `
+  }
+
   function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): {
     embedType: EmbedType
-    html: string
+    htmlSnippet: string
     defineContainerHeight: boolean
   } {
     let { detailsSnippet } = content
@@ -135,14 +161,14 @@ export function EdusharingAssetRenderer(props: {
       if (!linkElement) {
         return {
           embedType: 'unknown',
-          html: '<div>Fehler beim Einbinden des Inhalts</div>',
+          htmlSnippet: '<div>Fehler beim Einbinden des Inhalts</div>',
           defineContainerHeight: false,
         }
       }
 
       return {
         embedType: isLink ? 'link' : isBrockhaus ? 'brockhaus' : 'unknown',
-        html: `<a class="serlo-link" target="_blank" rel="noopener noreferrer" href="${
+        htmlSnippet: `<a class="serlo-link" target="_blank" rel="noopener noreferrer" href="${
           linkElement.href
         }">${
           linkElement.innerText ? linkElement.innerText : linkElement.href
@@ -190,7 +216,7 @@ export function EdusharingAssetRenderer(props: {
 
       return {
         embedType: 'pixabay',
-        html: imageSnippet + emptyStringOrJumpToSource,
+        htmlSnippet: imageSnippet + emptyStringOrJumpToSource,
         defineContainerHeight: false,
       }
     }
@@ -201,7 +227,7 @@ export function EdusharingAssetRenderer(props: {
       const imageSnippet = buildImageSnippet(image)
       return {
         embedType: 'image',
-        html: imageSnippet,
+        htmlSnippet: imageSnippet,
         defineContainerHeight: false,
       }
     }
@@ -216,7 +242,7 @@ export function EdusharingAssetRenderer(props: {
         .replace('height="0"', '')
       return {
         embedType: 'file',
-        html: detailsSnippet,
+        htmlSnippet: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -233,7 +259,7 @@ export function EdusharingAssetRenderer(props: {
 
       return {
         embedType: 'audio',
-        html: appendIframeResizer(detailsSnippet),
+        htmlSnippet: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -256,7 +282,7 @@ export function EdusharingAssetRenderer(props: {
         `
       return {
         embedType: 'video',
-        html: appendIframeResizer(detailsSnippet),
+        htmlSnippet: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -268,38 +294,18 @@ export function EdusharingAssetRenderer(props: {
     if (isH5P) {
       return {
         embedType: 'h5p',
-        html: appendIframeResizer(detailsSnippet),
+        htmlSnippet: detailsSnippet,
         defineContainerHeight: false,
       }
     }
 
+    // Learning apps & PDFs
     const isPdf = iframe?.id === 'docFrame'
-    if (isPdf) {
-      // Do not adjust height based on container size
-      iframe.style.height = 'auto'
+    const isLearningApp = iframe && detailsSnippet.includes('learningapps.org/')
+    if (isLearningApp || isPdf) {
       return {
-        embedType: 'pdf',
-        html: htmlDocument.body.innerHTML,
-        defineContainerHeight: true,
-      }
-    }
-
-    // Learning apps
-    if (detailsSnippet.includes('learningapps.org/')) {
-      const iframeHtmlElement = htmlDocument.querySelector('iframe')
-      if (!iframeHtmlElement) {
-        return {
-          embedType: 'unknown',
-          html: 'Error. Please contact support. Details: Could not find iframe in learningapp embed html.',
-          defineContainerHeight: false,
-        }
-      }
-      const iframeHtml = iframeHtmlElement.outerHTML
-        .replace('width="95%"', 'width="100%"')
-        .replace('height: 80vh', '')
-      return {
-        embedType: 'learning-app',
-        html: iframeHtml,
+        embedType: isLearningApp ? 'learning-app' : isPdf ? 'pdf' : 'unknown',
+        htmlSnippet: `<iframe style="${cssReset} height: 100%; width: 100%;" src="${iframe.src}" sandbox="allow-scripts"></iframe>`,
         defineContainerHeight: true,
       }
     }
@@ -307,7 +313,7 @@ export function EdusharingAssetRenderer(props: {
     // Backup when content type could not be determined above
     return {
       embedType: 'unknown',
-      html: appendIframeResizer(detailsSnippet),
+      htmlSnippet: detailsSnippet,
       defineContainerHeight: false,
     }
   }
@@ -315,32 +321,33 @@ export function EdusharingAssetRenderer(props: {
   function renderEmbed() {
     if (embedHtml === null) return
 
-    // IframeResizer properties:
-    // - `heightCalculationMethod="lowestElement"` -> Documentation says its the most accurate (however worse performance than others)
-    // - `srcDoc` -> Sets the iframe content
-    // - `checkOrigin={false}` -> Necessary when using srcDoc
-    // - `style={{ width: '1px', minWidth: '100%' }}` -> Makes Iframe have width 100% and take as much height as it needs. Recommended by documentation.
-    // - Missing `sandbox` -> Should put no restrictions on what the iframe can do: A) Make iframe send the same cookies as the host. B) Allow it to execute scripts. Both important to be able to fetch video.
     return (
       <div
-        className="max-w-full"
+        className="z-15 max-w-full"
         style={{
           width: contentWidth ? contentWidth : '100%',
           aspectRatio: defineContainerHeight ? '16/9' : undefined,
         }}
         data-embed-type={embedType}
       >
+        {/* `srcDoc` -> Sets the iframe content */}
+        {/* `sandbox="allow-scripts"` -> Limit iframe access to parent context but allow scripts to execute */}
         {defineContainerHeight ? (
           <iframe
             srcDoc={embedHtml}
-            style={{ width: '100%', height: '100%' }}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+            sandbox="allow-scripts"
           />
         ) : (
           <MemoizedIframeResizer
-            heightCalculationMethod="lowestElement"
+            // Necessary when using srcDoc
             checkOrigin={false}
             srcDoc={embedHtml}
-            style={{ width: '1px', minWidth: '100%' }}
+            style={{ width: '100%' }}
+            sandbox="allow-scripts"
           />
         )}
       </div>
@@ -369,20 +376,7 @@ function getImageOrUndefined(
 }
 
 function buildImageSnippet(image: HTMLImageElement): string {
-  return `
-    <img style="width: 100%; object-fit: contain;" src="${image.getAttribute(
-      'src'
-    )}" alt="${image.getAttribute('alt')}" title="${image.getAttribute(
-      'title'
-    )}" />
-  `
-}
-
-function appendIframeResizer(htmlSnippet: string) {
-  return (
-    htmlSnippet +
-    '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js"></script>'
-  )
+  return `<img style="width: 100%; object-fit: contain;" src="${image.getAttribute('src')}" alt="${image.getAttribute('alt')}" title="${image.getAttribute('title')}">`
 }
 
 // Only re-render if `srcDoc` prop changed. We do not want to re-render the Iframe every time when EdusharingAssetRenderer is re-rendered because the state within the iframe is lost.

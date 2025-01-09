@@ -1,4 +1,3 @@
-/* eslint-disable import/no-internal-modules */
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
 import c from 'react-syntax-highlighter/dist/cjs/languages/prism/c'
@@ -36,7 +35,7 @@ export function HighlightRenderer({
 }: HighlightRendererProps) {
   // SyntaxHighlighter has own styles on pre, so wrap in div to use own classes
   return (
-    <div className="mx-side mb-block mt-1 overflow-auto rounded-xl border-3 border-brand-150 pt-[0.8rem]">
+    <div className="mx-side overflow-auto rounded-xl border-3 border-brand-150 pt-[0.8rem]">
       <SyntaxHighlighter
         language={language.toLowerCase()}
         showLineNumbers={showLineNumbers}

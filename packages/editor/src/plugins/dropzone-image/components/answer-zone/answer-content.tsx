@@ -1,3 +1,4 @@
+import { EditorImage } from '@editor/plugins/image/components/editor-image'
 import { StaticSlate } from '@editor/plugins/text/static-components/static-slate'
 import { cn } from '@editor/utils/cn'
 import React from 'react'
@@ -14,7 +15,7 @@ export function AnswerContent(props: AnswerContentProps) {
 
   if (url) {
     return (
-      <img
+      <EditorImage
         data-qa="plugin-dropzone-image-answer-content-image"
         src={url}
         className={cn('h-full w-full object-contain', className)}

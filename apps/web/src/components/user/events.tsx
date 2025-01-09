@@ -95,8 +95,8 @@ function useEventsFetch(
       actorUsername,
       objectId,
       instance,
-      first: oldest ? undefined : amount ?? 20,
-      last: oldest ? amount ?? 20 : undefined,
+      first: oldest ? undefined : (amount ?? 20),
+      last: oldest ? (amount ?? 20) : undefined,
     },
     config: {
       refreshInterval: 10 * 60 * 1000, //10min

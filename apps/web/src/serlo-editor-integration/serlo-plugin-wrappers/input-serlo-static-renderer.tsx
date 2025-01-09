@@ -1,5 +1,5 @@
+import type { EditorInputExerciseDocument } from '@editor/package'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
-import { EditorInputExerciseDocument } from '@editor/types/editor-plugins'
 import { useContext } from 'react'
 
 import { RevisionViewContext } from '@/contexts/revision-view-context'

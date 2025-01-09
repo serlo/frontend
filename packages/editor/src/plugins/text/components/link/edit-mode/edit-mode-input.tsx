@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -22,6 +23,7 @@ export function EditModeInput({
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { lang } = useEditStrings()
+  const isSerlo = useIsSerlo()
 
   useEffect(() => {
     if (!shouldFocus) return
@@ -31,7 +33,7 @@ export function EditModeInput({
     })
 
     return () => {
-      timeout && clearTimeout(timeout)
+      if (timeout) clearTimeout(timeout)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
@@ -40,7 +42,7 @@ export function EditModeInput({
     // cleanup pasted links
     setTimeout(() => {
       const inputUrl = (e.target as HTMLInputElement).value
-      const cleanUrl = getCleanUrl(inputUrl, lang)
+      const cleanUrl = getCleanUrl(inputUrl, isSerlo, lang)
       if (cleanUrl !== inputUrl) setQuery(cleanUrl)
     })
   }

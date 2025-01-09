@@ -1,53 +1,55 @@
 import { cn } from '@editor/utils/cn'
 
 export interface MultimediaRendererProps {
-  mediaWidth: number // 25 | 50 | 75 | 100 Percent
   media: JSX.Element
   explanation: JSX.Element
+  mediaWidth: number // 25 | 50 Percent
+  extraMediaClasses?: string
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
-  extraImageClass?: string
 }
 
 export function MultimediaRenderer({
-  mediaWidth,
   media,
   explanation,
+  mediaWidth,
+  extraMediaClasses,
   onClick,
-  extraImageClass,
 }: MultimediaRendererProps) {
-  const widthClass = getWidthClass()
+  const widthClasses = getWidthClasses()
 
   return (
-    <div className="flex flex-col-reverse rounded-xl mobile:block">
+    <div className={cn('flex rounded-xl', widthClasses.wrapper)}>
+      <div
+        className={cn(
+          'explanation-wrapper',
+          '[&_div.my-block:last-child]:mb-0 [&_div.my-block]:mt-0',
+          widthClasses.explanation
+        )}
+      >
+        {explanation}
+      </div>
       <div
         onClick={onClick}
         className={cn(
-          'media-wrapper relative z-10 mobile:float-right mobile:-mb-1 mobile:ml-2',
-          widthClass,
-          extraImageClass,
-          'mt-8 mobileExt:mt-0'
+          'media-wrapper relative',
+          widthClasses.media,
+          extraMediaClasses
         )}
       >
         {media}
       </div>
-      {/* 1px margin fixes mistery bug in firefox */}
-      <div className="explanation-wrapper ml-[1px] pt-0 [&_div.my-block:last-child]:mb-0 [&_div.my-block]:mt-0">
-        {explanation}
-      </div>
-      <div className="clear-both" />
     </div>
   )
 
-  function getWidthClass() {
+  function getWidthClasses() {
     const width = Math.round(mediaWidth / 25) * 25
-    return width === 25
-      ? 'mobile:w-1/4'
-      : width === 50
-        ? 'mobile:w-2/4'
-        : width === 75
-          ? 'mobile:w-3/4'
-          : width === 100
-            ? 'mobile:w-full'
-            : 'mobile:w-2/4'
+    return {
+      wrapper:
+        width === 25
+          ? 'multimedia-renderer-wrapper-quarter'
+          : 'multimedia-renderer-wrapper-half',
+      explanation: width === 25 ? 'mobile:basis-3/4' : 'mobile:basis-2/4',
+      media: width === 25 ? 'mobile:basis-1/4' : 'mobile:basis-2/4',
+    }
   }
 }

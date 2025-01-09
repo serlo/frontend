@@ -57,8 +57,7 @@ export function Message({
         ? (typedContext.reason as string)
         : ''
     const searchString = reason + text
-    if (searchString.includes('password length'))
-      return strings.auth.passwordTooShort
+
     if (searchString.includes('passwords are limited to a maximum length'))
       return strings.auth.passwordTooLong
     if (searchString.includes('does not match pattern'))
