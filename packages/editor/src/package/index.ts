@@ -25,6 +25,7 @@ export { EditorPluginType } from '@editor/types/editor-plugin-type'
  * Exported for serlo.org
  */
 export { TemplatePluginType } from '@editor/types/template-plugin-type'
+export { SerloOnlyFeaturesContext } from '@editor/core/contexts/serlo-only-features-context'
 
 /**
  * Exported so that integrations can customize available plugins

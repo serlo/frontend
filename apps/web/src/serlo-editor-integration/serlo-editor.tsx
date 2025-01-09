@@ -2,9 +2,9 @@ import {
   defaultPlugins,
   EditorPluginType,
   TemplatePluginType,
+  SerloOnlyFeaturesContext,
   type SerloEditorProps as EditorProps,
 } from '@editor/package'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import dynamic from 'next/dynamic'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
@@ -38,9 +38,7 @@ export function SerloEditor({
   const isNewEntity = !(initialState as { state?: { id?: string } }).state?.id
 
   return (
-    <SerloOnlyFeaturesContext.Provider
-      value={{ isSerlo: true, licenses, ArticleAddModal }}
-    >
+    <SerloOnlyFeaturesContext.Provider value={{ licenses, ArticleAddModal }}>
       <Editor
         language={lang === 'de' ? 'de' : 'en'}
         editorVariant="serlo-org"

@@ -1,6 +1,6 @@
+import { ArticleAddModalProps } from '@editor/core/contexts/serlo-only-features-context'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { ArticleAddModalProps } from '@editor/utils/serlo-extra-context'
 import { useState } from 'react'
 
 import { ArticleRelatedExercises } from './article-related-exercises'

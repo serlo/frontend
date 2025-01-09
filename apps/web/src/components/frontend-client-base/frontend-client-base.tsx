@@ -1,7 +1,6 @@
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { staticStrings as staticStringsDe } from '@editor/i18n/strings/de/static'
 import { staticStrings as staticStringsEn } from '@editor/i18n/strings/en/static'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import type { AuthorizationPayload } from '@serlo/authorization'
 import Head from 'next/head'
 import { Router, useRouter } from 'next/router'
@@ -126,39 +125,37 @@ export function FrontendClientBase({
         </Head>
       ) : null}
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-        <SerloOnlyFeaturesContext.Provider value={{ isSerlo: true }}>
-          <StaticStringsProvider
-            value={
-              instanceData.lang === 'de'
-                ? mergeDeepRight(staticStringsEn, staticStringsDe)
-                : staticStringsEn
-            }
-          >
-            <LoggedInDataProvider value={loggedInData}>
-              <UuidsProvider value={serloEntityData ?? null}>
-                <Toaster />
+        <StaticStringsProvider
+          value={
+            instanceData.lang === 'de'
+              ? mergeDeepRight(staticStringsEn, staticStringsDe)
+              : staticStringsEn
+          }
+        >
+          <LoggedInDataProvider value={loggedInData}>
+            <UuidsProvider value={serloEntityData ?? null}>
+              <Toaster />
+              <ConditionalWrap
+                condition={!noHeaderFooter}
+                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+              >
                 <ConditionalWrap
-                  condition={!noHeaderFooter}
-                  wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                  condition={!noContainers}
+                  wrapper={(kids) => (
+                    <div className="relative">
+                      <MaxWidthDiv showNav={showNav}>
+                        <main id="content">{kids}</main>
+                      </MaxWidthDiv>
+                    </div>
+                  )}
                 >
-                  <ConditionalWrap
-                    condition={!noContainers}
-                    wrapper={(kids) => (
-                      <div className="relative">
-                        <MaxWidthDiv showNav={showNav}>
-                          <main id="content">{kids}</main>
-                        </MaxWidthDiv>
-                      </div>
-                    )}
-                  >
-                    {children}
-                  </ConditionalWrap>
-                  <MaintenanceBanner />
+                  {children}
                 </ConditionalWrap>
-              </UuidsProvider>
-            </LoggedInDataProvider>
-          </StaticStringsProvider>
-        </SerloOnlyFeaturesContext.Provider>
+                <MaintenanceBanner />
+              </ConditionalWrap>
+            </UuidsProvider>
+          </LoggedInDataProvider>
+        </StaticStringsProvider>
       </AuthProvider>
     </InstanceDataProvider>
   )
