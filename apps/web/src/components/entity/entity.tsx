@@ -1,5 +1,8 @@
-import { EditorPluginType, isArticleDocument } from '@editor/package'
-import { isEmptyArticle } from '@editor/plugins/article/utils/static-is-empty'
+import {
+  EditorPluginType,
+  isArticleDocument,
+  isEmptyArticle,
+} from '@editor/package'
 import {
   faExclamationCircle,
   faGraduationCap,
