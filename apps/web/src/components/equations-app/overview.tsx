@@ -1,4 +1,4 @@
-import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
+import type { StaticMathProps } from '@editor/package'
 import { faCheck, faPlay } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 
@@ -12,9 +12,7 @@ interface OverviewProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@editor/plugins/text/static-components/static-math').then(
-    (mod) => mod.StaticMath
-  )
+  import('@editor/package').then((mod) => mod.StaticMath)
 )
 
 export function Overview({ selectLevel, solved }: OverviewProps) {

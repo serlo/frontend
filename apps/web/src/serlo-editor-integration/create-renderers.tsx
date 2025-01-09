@@ -14,6 +14,7 @@ import type {
   EditorExerciseGroupDocument,
   EditorDropzoneImageDocument,
   EditorInteractiveVideoDocument,
+  StaticMathProps,
 } from '@editor/package'
 import {
   InitRenderersArgs,
@@ -122,10 +123,8 @@ const HighlightStaticRenderer = dynamic<EditorHighlightDocument>(() =>
     (mod) => mod.HighlightStaticRenderer
   )
 )
-const StaticMath = dynamic<MathElement>(() =>
-  import('@editor/plugins/text/static-components/static-math').then(
-    (mod) => mod.StaticMath
-  )
+const StaticMath = dynamic<StaticMathProps>(() =>
+  import('@editor/package').then((mod) => mod.StaticMath)
 )
 
 export function createRenderers(): InitRenderersArgs {
