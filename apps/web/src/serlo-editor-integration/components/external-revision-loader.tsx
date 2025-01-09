@@ -1,4 +1,3 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
@@ -13,6 +12,7 @@ import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { SimpleTooltip } from '@/components/simple-tooltip'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import type {
@@ -79,7 +79,7 @@ export function ExternalRevisionLoader<T>({
     <div className="-mb-8 mr-6 mt-4 flex justify-end">
       <span onClick={() => setShowRevisions(true)}>
         <button className="serlo-button-edit-secondary serlo-tooltip-trigger">
-          <EditorTooltip
+          <SimpleTooltip
             text={editorStrings.edtrIo.importOther}
             className="-left-40"
           />
