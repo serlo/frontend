@@ -36,8 +36,9 @@ export function WelcomeModal() {
         >
           <div {...slideProps}>
             <h1 className="serlo-h1">
-              Herzlich Willkommen! <br />
-              <span className="text-brand-600">beim Serlo Editor</span>
+              Herzlich Willkommen
+              <br />
+              <span className="text-brand-600">beim Serlo Editor!</span>
             </h1>
             <p className="serlo-p">
               Der Serlo Editor hilft Dir <b>Texte, Bilder</b> und{' '}
