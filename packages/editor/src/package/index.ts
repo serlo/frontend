@@ -18,3 +18,12 @@ export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 // Exported only so that integrations like serlo-editor-for-edusharing can customize available plugins based on the default plugins
 export { defaultPlugins } from './config'
+
+/** StaticMath is a simple component that renders a math formula.
+ * it's used in the Editor and is exported here in case you want to
+ * render pretty LaTeX without the whole editor.
+ * It's relatively big so load it dynamically if you can. */
+export {
+  StaticMath,
+  type StaticMathProps,
+} from '@editor/plugins/text/static-components/static-math'
