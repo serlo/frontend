@@ -22,6 +22,11 @@ export { type PluginMenuType as Plugin } from '@editor/plugins/rows/utils/plugin
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 /**
+ * Plugin state helpers and types
+ */
+export * from '@editor/types/plugin-type-guards'
+
+/**
  * Exported for serlo.org
  */
 export { TemplatePluginType } from '@editor/types/template-plugin-type'

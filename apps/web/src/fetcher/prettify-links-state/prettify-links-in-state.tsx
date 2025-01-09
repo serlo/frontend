@@ -1,10 +1,10 @@
-import { getChildrenOfStaticDocument } from '@editor/static-renderer/helper/get-children-of-static-document'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import {
   isImageDocument,
   isSolutionDocument,
   isTextDocument,
-} from '@editor/types/plugin-type-guards'
+} from '@editor/package'
+import { getChildrenOfStaticDocument } from '@editor/static-renderer/helper/get-children-of-static-document'
+import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import request from 'graphql-request'
 import type { Descendant } from 'slate'
 

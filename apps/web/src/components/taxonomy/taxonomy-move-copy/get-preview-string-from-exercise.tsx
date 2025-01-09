@@ -1,3 +1,4 @@
+import { isMultimediaDocument, isRowsDocument } from '@editor/package'
 import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
 import {
   AnyEditorDocument,
@@ -5,10 +6,6 @@ import {
   EditorExerciseGroupDocument,
   EditorRowsDocument,
 } from '@editor/types/editor-plugins'
-import {
-  isMultimediaDocument,
-  isRowsDocument,
-} from '@editor/types/plugin-type-guards'
 
 import { InstanceData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
