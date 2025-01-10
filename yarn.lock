@@ -5723,7 +5723,7 @@ __metadata:
     "@eslint/eslintrc": ^3.1.0
     "@eslint/js": ^9.14.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/editor": 0.20.2
+    "@serlo/editor": 0.21.0
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.3.1
@@ -5747,21 +5747,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.20.2":
-  version: 0.20.2
-  resolution: "@serlo/editor@npm:0.20.2"
+"@serlo/editor@npm:0.21.0":
+  version: 0.21.0
+  resolution: "@serlo/editor@npm:0.21.0"
   dependencies:
     "@open-iframe-resizer/react": 1.2.1
     "@serlo/katex-styles": 1.0.1
     "@vidstack/react": next
-    dompurify: ^3.2.0
+    isomorphic-dompurify: ^2.19.0
     lit: ^3.2.1
     motion: ^11.11.17
     react: ^18.2.0
     react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-resizable: ^3.0.5
-  checksum: ee16329563bfdd8101af9904a73cad14658cf97a37be55ad302ab226c8cd910073a13d7b1731f26b5d46a2b7157ed0dac9251540c3d038b259fc9e3eaa751011
+  checksum: 1a83e878b32e80047ebc5710df78b66a431a3356474386a874b8ab3c64b7b86ed675f9c53ca219da7f483b3187d78d5b09d99fda876f040c814f248a04732936
   languageName: node
   linkType: hard
 
@@ -5798,7 +5798,6 @@ __metadata:
     "@vitejs/plugin-react": ^4.3.3
     autoprefixer: ^10.4.20
     clsx: ^2.1.1
-    dompurify: ^3.2.3
     eslint: ^9.14.0
     eslint-config-next: ^15.0.3
     eslint-config-prettier: ^9.1.0
@@ -9463,13 +9462,6 @@ __metadata:
   dependencies:
     domelementtype: ^2.3.0
   checksum: 0f58f4a6af63e6f3a4320aa446d28b5790a009018707bce2859dcb1d21144c7876482b5188395a188dfa974238c019e0a1e610d2fc269a12b2c192ea2b0b131c
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "dompurify@npm:3.2.0"
-  checksum: 54bd8e113474c1444dbabae5ea404e0d4a1bf042004070bcda2de3ea6c209f8c40686aebf60caff144bdae84175784504a42d7ac7f484fd6932d7bc4a53bf378
   languageName: node
   linkType: hard
 
