@@ -2,27 +2,22 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { scrollIfNeeded } from '@editor/utils/scroll'
 import {
   faArrowCircleRight,
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
 import { MouseEvent } from 'react'
 
-import { type DummyNextRouter } from './static'
-
 export function CourseFooter({
   activePageIndex: index,
   pages,
   onOverviewButtonClick,
   pageUrls,
-  router,
 }: {
   activePageIndex: number
   pages: EditorCourseDocument['state']['pages']
   onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
   pageUrls?: string[]
-  router: DummyNextRouter
 }) {
   const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
     location.href = '#course-overview'
@@ -38,10 +33,7 @@ export function CourseFooter({
   const courseStrings = useStaticStrings().plugins.course
 
   function navigate(toPath: string, newIndex: number) {
-    void router.push(toPath, undefined, { shallow: true })
-    scrollIfNeeded(document.querySelector('#course-title'))
-
-    void router.push(toPath, undefined, { shallow: true })
+    window.location.pathname = toPath
     setTimeout(() => {
       document.title = pages[newIndex].title
     }, 100)

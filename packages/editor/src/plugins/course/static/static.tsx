@@ -1,33 +1,31 @@
+import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { SerloOnlyFeaturesContext } from '@editor/package'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useState, MouseEvent } from 'react'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
 
-export interface DummyNextRouter {
-  asPath: string
-  push(
-    url: string,
-    as?: undefined,
-    options?: { shallow: boolean }
-  ): Promise<boolean>
-}
-
 export function CourseStaticRenderer({
   state,
   serloContext,
-  router,
-  isRevisionView,
-}: EditorCourseDocument & {
-  router: DummyNextRouter
-  isRevisionView?: boolean
-}) {
+}: EditorCourseDocument) {
   const { pages } = state
 
-  const routerCourseId = getCoursePageIdFromPath(router.asPath)
+  const courseStrings = useStaticStrings().plugins.course
+  const { isRevisionView } = useContext(SerloOnlyFeaturesContext)
+
+  let asPath = ''
+  if (typeof window !== 'undefined') {
+    asPath =
+      window.location.pathname + window.location.search + window.location.hash
+  }
+  const routerCourseId = getCoursePageIdFromPath(asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
   // load nav opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
@@ -55,13 +53,18 @@ export function CourseStaticRenderer({
 
   return (
     <>
+      {pages.length ? null : (
+        <div className="my-12 rounded-2xl bg-orange-200 p-4 font-bold">
+          <FaIcon icon={faExclamationCircle} />
+          {courseStrings.noPagesWarning}
+        </div>
+      )}
       <CourseNavigation
         {...state}
         activePageId={activePage?.id}
         courseNavOpen={courseNavOpen}
         setCourseNavOpen={setCourseNavOpen}
         pageUrls={pageUrls}
-        router={router}
       />
 
       {pages.length ? (
@@ -73,7 +76,6 @@ export function CourseStaticRenderer({
             onOverviewButtonClick={openCourseNav}
             activePageIndex={activePageIndex}
             pageUrls={serloContext?.coursePageUrls}
-            router={router}
           />
         </>
       ) : null}
