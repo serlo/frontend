@@ -30,7 +30,7 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
         documents: store.getState().documents,
       }) as { plugin: EditorPluginType.Rows; state: DocumentState[] }
 
-      const response = await fetch('http://localhost:3000/ai/change-content', {
+      const response = await fetch('https://editor.serlo.dev/ai/change-content', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -64,7 +64,7 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
       dispatch(
         runReplaceDocumentSaga({
           id: pluginId,
-          pluginType: responseData.plugin, // no rows
+          pluginType: responseData.plugin, // TODO: change backend to not receive rows plungin
           state: responseData.state,
         })
       )
