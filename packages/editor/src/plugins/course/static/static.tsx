@@ -1,6 +1,6 @@
+import { SerloOnlyFeaturesContext } from '@editor/core/contexts/serlo-only-features-context'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
-import { SerloOnlyFeaturesContext } from '@editor/package'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
