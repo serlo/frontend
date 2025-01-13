@@ -34,8 +34,7 @@ export function ExamsInfoBox({ examsFolderId }: { examsFolderId: number }) {
           id="exams-info-box"
           className={cn(
             'serlo-box relative mb-6 pb-2 pt-3',
-            'rounded-lg border-3 border-brand-200 bg-white',
-            '[&>div.my-block]:first:mt-3.5 [&>div.my-block]:last:mb-3.5'
+            'rounded-lg border-3 border-brand-200 bg-white'
           )}
         >
           <>
