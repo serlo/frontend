@@ -15,6 +15,7 @@ import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
+import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
@@ -107,6 +108,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.EdusharingAsset,
         renderer: EdusharingAssetStaticRenderer,
+      },
+      {
+        type: EditorPluginType.Injection,
+        renderer: InjectionStaticRenderer,
       },
       {
         type: EditorPluginType.SerloInjection,
