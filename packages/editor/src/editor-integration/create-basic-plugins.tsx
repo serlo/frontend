@@ -25,6 +25,7 @@ import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
+import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
@@ -153,6 +154,10 @@ export function createBasicPlugins(
     {
       type: TemplatePluginType.Course,
       plugin: courseTypePlugin,
+    },
+    {
+      type: TemplatePluginType.User,
+      plugin: userTypePlugin,
     },
     {
       type: EditorPluginType.Article,
