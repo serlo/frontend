@@ -1,17 +1,15 @@
-import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
-import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
-import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import type { AnyEditorDocument, EditorBoxDocument } from '@editor/package'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import type { BoxType } from '@editor/plugins/box/renderer'
-import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { HighlightRenderer } from '@editor/plugins/highlight/renderer'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import {
+  defaultPlugins,
+  SerloRenderer,
+  parseDocumentString,
+  EditorPluginType,
+  TemplatePluginType,
+  type AnyEditorDocument,
+  type EditorBoxDocument,
+} from '@editor/package'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
-import { mergeDeepRight } from 'ramda'
 import { useEffect, useState } from 'react'
 import { debounce } from 'ts-debounce'
 
@@ -20,14 +18,16 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
-import { createPlugins } from '@/serlo-editor-integration/create-plugins'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
-const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
-  ssr: false,
-})
+const Editor = dynamic(
+  () => import('@editor/package').then((mod) => mod.SerloEditor),
+  {
+    ssr: false,
+  }
+)
 
-function createBoxExample(title: string, content: string, type: BoxType) {
+function createBoxExample(title: string, content: string, type: string) {
   return {
     plugin: EditorPluginType.Box,
     state: {
@@ -59,24 +59,32 @@ export const BoxExample = (
   <>
     <ExampleWithEditSwitch
       className="mt-10"
-      title="Editable Example"
+      title="Editable Note Example"
       startInEdit
       stateString={JSON.stringify(
         createBoxExample('A Box', 'This box is of the type "Note"', 'note')
       )}
     />
-    <BoxStaticRenderer
-      {...createBoxExample(
-        'Another Box',
-        'This box is of the type "Attention"',
-        'attention'
+    <ExampleWithEditSwitch
+      className="mt-10"
+      title="Editable Attention Example"
+      stateString={JSON.stringify(
+        createBoxExample(
+          'Another Box',
+          'This box is of the type "Attention"',
+          'attention'
+        )
       )}
     />
-    <BoxStaticRenderer
-      {...createBoxExample(
-        'Yet another Box',
-        'This box is of the type "Quote"',
-        'quote'
+    <ExampleWithEditSwitch
+      className="mt-10"
+      title="Editable Quote Example"
+      stateString={JSON.stringify(
+        createBoxExample(
+          'Yet another Box',
+          'This box is of the type "Quote"',
+          'quote'
+        )
       )}
     />
   </>
@@ -124,53 +132,58 @@ function ExampleWithEditSwitch({
     40
   )
 
-  editorPlugins.init(createPlugins({ lang }))
   return (
-    <EditStringsProvider
-      value={
-        lang === 'de'
-          ? mergeDeepRight(editStringsEn, editStringsDe)
-          : editStringsEn
-      }
-    >
-      <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
-        <div className="ml-4 flex">
-          {title ? (
-            <h1 className="ml-4 mr-2 text-xl font-bold">{title}</h1>
-          ) : null}
+    <div className={cn('example-with-switch-wrapper', isEdit && 'edit')}>
+      <div className="ml-4 flex">
+        {title ? (
+          <h1 className="ml-4 mr-2 text-xl font-bold">{title}</h1>
+        ) : null}
 
-          <button
-            onClick={() => setIsEdit(!isEdit)}
-            className="serlo-button-learner-secondary !px-4 text-base"
-          >
-            {isEdit ? (
-              <>
-                <FaIcon icon={faEye} /> Show Student-View
-              </>
-            ) : (
-              <>
-                <FaIcon icon={faPencilAlt} /> Show Edit-View
-              </>
-            )}
-          </button>
-        </div>
-        {isEdit ? (
-          <div className={cn('mt-12', className)}>
-            <Editor
-              initialState={exampleState}
-              onChange={({ changed, getDocument }) => {
-                if (!changed) return
-                void debouncedSetState(getDocument())
-              }}
-            />
-          </div>
-        ) : (
-          <div className="pt-4">
-            <EditorRenderer document={exampleState} />
-          </div>
-        )}
+        <button
+          onClick={() => setIsEdit(!isEdit)}
+          className="serlo-button-learner-secondary !px-4 text-base"
+        >
+          {isEdit ? (
+            <>
+              <FaIcon icon={faEye} /> Show Student-View
+            </>
+          ) : (
+            <>
+              <FaIcon icon={faPencilAlt} /> Show Edit-View
+            </>
+          )}
+        </button>
       </div>
-    </EditStringsProvider>
+      {isEdit ? (
+        <div className={cn('mt-12', className)}>
+          <Editor
+            language={lang === 'de' ? 'de' : 'en'}
+            editorVariant="serlo-org"
+            _testingSecret="VJN8pHhqVj8RtO+TfY2/Ka1JN4JdH/oSOAdPHz5a"
+            plugins={[
+              ...defaultPlugins,
+              TemplatePluginType.Article,
+              EditorPluginType.Article,
+              TemplatePluginType.Course,
+              EditorPluginType.Course,
+              EditorPluginType.ArticleIntroduction,
+              EditorPluginType.Injection,
+              EditorPluginType.Anchor,
+            ]}
+            initialState={exampleState}
+            onChange={(state) => {
+              void debouncedSetState(state.document)
+            }}
+          >
+            {({ element }) => element}
+          </Editor>
+        </div>
+      ) : (
+        <div className="pt-4">
+          <SerloRenderer state={exampleState} editorVariant="serlo-org" />
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -264,23 +277,9 @@ export const MCExample = (
 )
 
 export const HighlightExample = (
-  <HighlightRenderer
-    code={`// global variable: read & write from everywhere
-var cookieAmount = 100
-
-// local variable: read & write from everywhere only in current code block
-// (only in the "feed" function)
-function feed(){
-  let cookieAmount = 20
-}
-
-// constant: local variable that can only be read after initialization
-// this will always be 5
-const cookieSize = 5`}
-    language="javascript"
-    showLineNumbers
-  />
+  <ExampleWithEditSwitch stateString='{"plugin":"rows","state":[{"plugin":"highlight","state":{"code":"// global variable: read & write from everywhere\nvar cookieAmount = 100\n\n// local variable: read & write from everywhere only in current code block\n// (only in the \"feed\" function)\nfunction feed(){\n  let cookieAmount = 20\n}\n\n// constant: local variable that can only be read after initialization\n// this will always be 5\nconst cookieSize = 5","language":"javascript","showLineNumbers":true},"id":"47a26f49-8726-4fa7-b390-c96cdd002ebe"}]}' />
 )
+
 export const SpoilerExample = (
   <ExampleWithEditSwitch stateString='{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"23+19= 23 +(17+2)=(23+17)+2=40+2=42","inline":true,"children":[{"text":""}]},{"text":""}]}],"id":"bf806213-a61e-448d-8778-5a37807cd037"},{"plugin":"spoiler","state":{"richTitle":{"plugin":"text","state":[{"type":"p","children":[{"text":"There are also other ways to split the summands:"}]}],"id":"c9e6206f-0486-4f9b-8a5c-7d300d23e433"},"content":{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":""},{"type":"math","src":"23+19=(21+2)+19=(21+19)+2=40+2=42","inline":true,"children":[{"text":""}]},{"text":""}]}],"id":"9186dda2-b71e-4512-8194-c70e4c111622"}],"id":"e452d8cb-330a-495a-a968-192e9e6fb6ce"}},"id":"46c20fab-f1b0-4837-a6d5-389395cc9cf9"}]}' />
 )

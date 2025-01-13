@@ -1,5 +1,4 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType } from '@editor/package'
 import dynamic from 'next/dynamic'
 
 import { EditorContact } from '../editor-contact'
@@ -13,7 +12,6 @@ import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 
 const EducationPlugins = dynamic(() =>
@@ -24,8 +22,6 @@ const h2Class =
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 
 export function EditorPresentationDe() {
-  editorRenderers.init(createRenderers())
-
   const title =
     'Serlo Editor: Intuitive Erstellung von digitalen Lernressourcen'
   return (
