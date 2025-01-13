@@ -2,7 +2,7 @@ import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { isTextDocument } from '@editor/types/plugin-type-guards'
 import type { Descendant } from 'slate'
 
-export function extractDescendant(node: Descendant): string {
+function extractDescendant(node: Descendant): string {
   if (Object.hasOwn(node, 'type') && Object.hasOwn(node, 'children')) {
     return node.children.map(extractDescendant).join(' ')
   }
