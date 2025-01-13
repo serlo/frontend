@@ -84,7 +84,7 @@ export function LandingDE({ data }: LandingDEProps) {
             Serlo.
           </p>
           <Link
-            className="serlo-new-landing-button serlo-button-with-wings inline"
+            className="serlo-new-landing-button serlo-button-with-wings inline !text-white"
             href="/serlo"
           >
             Mehr über uns
