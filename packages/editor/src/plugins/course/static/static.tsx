@@ -1,10 +1,7 @@
 import { SerloOnlyFeaturesContext } from '@editor/core/contexts/serlo-only-features-context'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
@@ -17,7 +14,6 @@ export function CourseStaticRenderer({
 }: EditorCourseDocument) {
   const { pages } = state
 
-  const courseStrings = useStaticStrings().plugins.course
   const { isRevisionView } = useContext(SerloOnlyFeaturesContext)
 
   let asPath = ''
@@ -53,12 +49,6 @@ export function CourseStaticRenderer({
 
   return (
     <>
-      {pages.length ? null : (
-        <div className="my-12 rounded-2xl bg-orange-200 p-4 font-bold">
-          <FaIcon icon={faExclamationCircle} />
-          {courseStrings.noPagesWarning}
-        </div>
-      )}
       <CourseNavigation
         {...state}
         activePageId={activePage?.id}

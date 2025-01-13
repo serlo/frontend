@@ -1,6 +1,7 @@
 import {
   EditorPluginType,
   isArticleDocument,
+  isCourseDocument,
   isEmptyArticle,
 } from '@editor/package'
 import {
@@ -43,7 +44,7 @@ export function Entity({ data }: EntityProps) {
   const { strings } = useInstanceData()
   return wrapWithSchema(
     <>
-      {renderNotices()}
+      {renderNotices(data.content)}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-[25vh]" key={data.id}>
@@ -144,7 +145,7 @@ export function Entity({ data }: EntityProps) {
     )
   }
 
-  function renderNotices() {
+  function renderNotices(document: EntityData['content']) {
     if (data.trashed)
       return (
         <InfoPanel icon={faTrash} doNotIndex>
@@ -177,6 +178,19 @@ export function Entity({ data }: EntityProps) {
           {replacePlaceholders(strings.content.unrevisedNotice, {
             link,
           })}
+        </InfoPanel>
+      )
+    }
+
+    const isCourse =
+      document &&
+      !Array.isArray(document) &&
+      document.plugin === EditorPluginType.Course &&
+      isCourseDocument(document)
+    if (isCourse && !document.state.pages.length) {
+      return (
+        <InfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+          {strings.content.courseNoPagesWarning}
         </InfoPanel>
       )
     }

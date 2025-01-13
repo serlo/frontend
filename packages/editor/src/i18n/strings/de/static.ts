@@ -40,8 +40,6 @@ export const staticStrings = {
       pages: 'Kursübersicht',
       next: 'Weiter',
       back: 'Zurück',
-      noPagesWarning:
-        'Leider gibt es für diesen Kurs noch keine akzeptierten Seiten.',
       noRevisionForPage: 'Ungegeprüfte Seite',
     },
     exercise: {
