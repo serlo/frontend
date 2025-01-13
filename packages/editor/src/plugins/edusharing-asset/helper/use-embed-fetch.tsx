@@ -24,6 +24,7 @@ const EmbedJson = t.type({
 })
 
 type EmbedType =
+  | 'error'
   | 'unknown'
   | 'audio'
   | 'brockhaus'
@@ -38,8 +39,9 @@ type EmbedType =
 
 export interface EmbedData {
   type: EmbedType
-  html: string | null
-  defineContainerHeight: boolean
+  html?: string
+  component?: JSX.Element
+  defineContainerHeight?: boolean
 }
 
 export function useEmbedFetch({
@@ -53,7 +55,6 @@ export function useEmbedFetch({
 }) {
   const [embedData, setEmbedData] = useState<EmbedData>({
     type: 'unknown',
-    html: null,
     defineContainerHeight: false,
   })
 
@@ -79,6 +80,10 @@ export function useEmbedFetch({
           'Der Edu-sharing server konnte nicht erreicht werden. Bitte versuche es später noch einmal.',
           'warning'
         )
+        setEmbedData({
+          type: 'error',
+          defineContainerHeight: false,
+        })
         return
       }
 
@@ -95,6 +100,10 @@ export function useEmbedFetch({
           'Der Inhalt konnte nicht eingebunden werden. Bitte wende dich an den Support.',
           'warning'
         )
+        setEmbedData({
+          type: 'error',
+          defineContainerHeight: false,
+        })
         return
       }
 
@@ -152,22 +161,20 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
     const linkElement = htmlDocument.querySelector<HTMLLinkElement>(
       '.edusharing_rendering_content_footer a'
     )
-    if (!linkElement) {
-      return {
-        type: 'unknown',
-        html: '<div>Fehler beim Einbinden des Inhalts</div>',
-        defineContainerHeight: false,
-      }
-    }
+    if (!linkElement) return { type: 'error' }
 
     return {
       type: isLink ? 'link' : isBrockhaus ? 'brockhaus' : 'unknown',
-      html: `<a class="serlo-link" target="_blank" rel="noopener noreferrer" href="${
-        linkElement.href
-      }">${
-        linkElement.innerText ? linkElement.innerText : linkElement.href
-      }</a>`,
-      defineContainerHeight: false,
+      component: (
+        <a
+          className="serlo-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={linkElement.href}
+        >
+          {linkElement.innerText ? linkElement.innerText : linkElement.href}
+        </a>
+      ),
     }
   }
 
@@ -211,7 +218,6 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
     return {
       type: 'pixabay',
       html: imageSnippet + emptyStringOrJumpToSource,
-      defineContainerHeight: false,
     }
   }
 
@@ -222,7 +228,6 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
     return {
       type: 'image',
       html: imageSnippet,
-      defineContainerHeight: false,
     }
   }
 
@@ -237,7 +242,6 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
     return {
       type: 'file',
       html: detailsSnippet,
-      defineContainerHeight: false,
     }
   }
 
@@ -250,11 +254,7 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
       'function get_resource(authstring)'
     )
 
-    return {
-      type: 'audio',
-      html: detailsSnippet,
-      defineContainerHeight: false,
-    }
+    return { type: 'audio', html: detailsSnippet }
   }
 
   // Video
@@ -273,24 +273,14 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
         }
         </style>
         `
-    return {
-      type: 'video',
-      html: detailsSnippet,
-      defineContainerHeight: false,
-    }
+    return { type: 'video', html: detailsSnippet }
   }
 
   const iframe = htmlDocument.querySelector('iframe')
 
   // H5P
   const isH5P = iframe && content.node.mediatype === 'file-h5p'
-  if (isH5P) {
-    return {
-      type: 'h5p',
-      html: detailsSnippet,
-      defineContainerHeight: false,
-    }
-  }
+  if (isH5P) return { type: 'h5p', html: detailsSnippet }
 
   // Learning apps & PDFs
   const isPdf = iframe?.id === 'docFrame'
@@ -303,15 +293,11 @@ function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
     }
   }
 
-  // Backup when content type could not be determined above
-  return {
-    type: 'unknown',
-    html: detailsSnippet,
-    defineContainerHeight: false,
-  }
+  // if we don't know the embed, we consider that an error (hidden in renderer)
+  return { type: 'error', html: detailsSnippet }
 }
 
-function buildHtml(html: string, defineContainerHeight: boolean) {
+function buildHtml(html: string, defineContainerHeight?: boolean) {
   // Hack: height: 97% -> Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
   // Hack: overflow-y: hidden -> Sometimes after setting the correct iframe height the vertical scroll bar does not disappear.
   return `
