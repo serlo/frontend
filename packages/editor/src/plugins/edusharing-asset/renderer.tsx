@@ -1,4 +1,5 @@
 import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { IframeResizer } from '@open-iframe-resizer/react'
 import * as t from 'io-ts'
 import DOMPurify from 'isomorphic-dompurify'
@@ -32,6 +33,12 @@ const EmbedJson = t.type({
   }),
 })
 
+interface EmbedData {
+  type: EmbedType
+  html: string | null
+  defineContainerHeight: boolean
+}
+
 const iframeResizerHtml =
   '<script type="module" src="https://cdn.jsdelivr.net/npm/@open-iframe-resizer/core@1.2.1/dist/index.min.js"></script>'
 
@@ -45,10 +52,11 @@ export function EdusharingAssetRenderer(props: {
 }) {
   const { nodeId, repositoryId, ltik, contentWidth } = props
 
-  const [embedHtml, setEmbedHtml] = useState<string | null>(null)
-  const [defineContainerHeight, setDefineContainerHeight] =
-    useState<boolean>(false)
-  const [embedType, setEmbedType] = useState<EmbedType>('unknown')
+  const [embedData, setEmbedData] = useState<EmbedData>({
+    type: 'unknown',
+    html: null,
+    defineContainerHeight: false,
+  })
 
   useEffect(() => {
     async function fetchEmbedHtml() {
@@ -64,8 +72,13 @@ export function EdusharingAssetRenderer(props: {
       })
 
       if (!response.ok) {
-        setEmbedHtml(
+        // eslint-disable-next-line no-console
+        console.error(
           `Request to /lit/get-embed-html failed. Status code ${response.status}.`
+        )
+        showToastNotice(
+          'Der Edu-sharing server konnte nicht erreicht werden. Bitte versuche es später noch einmal.',
+          'warning'
         )
         return
       }
@@ -75,17 +88,25 @@ export function EdusharingAssetRenderer(props: {
       if (!EmbedJson.is(responseJson)) {
         // eslint-disable-next-line no-console
         console.log(JSON.stringify(responseJson))
-        setEmbedHtml(
-          'Request to /lit/get-embed-html failed. Response json was malformed. Json was logged to console.'
+        // eslint-disable-next-line no-console
+        console.error(
+          'Request to /lit/get-embed-html failed. Response json was malformed.'
+        )
+        showToastNotice(
+          'Der Inhalt konnte nicht eingebunden werden. Bitte wende dich an den Support.',
+          'warning'
         )
         return
       }
 
       // HTML snipped returned by edu-sharing cannot be used as it is.
-      const { embedType, htmlSnippet, defineContainerHeight } =
-        getEmbedHtml(responseJson)
+      const {
+        type,
+        html: htmlSnippet,
+        defineContainerHeight,
+      } = getEmbedHtml(responseJson)
 
-      const html = buildHtml(htmlSnippet, defineContainerHeight)
+      const html = buildHtml(htmlSnippet ?? '', defineContainerHeight)
 
       const sanitizedHtml = DOMPurify.sanitize(html, {
         // We allow <script> and <iframe> elements. Those are part of the html snippet we get from edu-sharing and cannot be removed or the embed will break. <script> elements cannot be manipulated by the user and we can trust them.
@@ -94,9 +115,11 @@ export function EdusharingAssetRenderer(props: {
         WHOLE_DOCUMENT: true,
       })
 
-      setEmbedType(embedType)
-      setEmbedHtml(sanitizedHtml)
-      setDefineContainerHeight(defineContainerHeight)
+      setEmbedData({
+        type,
+        html: sanitizedHtml,
+        defineContainerHeight,
+      })
     }
 
     void fetchEmbedHtml()
@@ -105,7 +128,7 @@ export function EdusharingAssetRenderer(props: {
   return (
     <figure className="relative z-[15] w-full">
       <div className="mx-side">
-        {embedHtml ? (
+        {embedData.html ? (
           renderEmbed()
         ) : (
           <div className="flex aspect-[16/9] w-full items-center justify-center">
@@ -116,7 +139,7 @@ export function EdusharingAssetRenderer(props: {
     </figure>
   )
 
-  function buildHtml(htmlSnippet: string, defineContainerHeight: boolean) {
+  function buildHtml(html: string, defineContainerHeight: boolean) {
     // Hack: height: 97% -> Some learning apps size themselves to be a little bit too tall and a scroll bar appears -> 97% height to prevent this
     // Hack: overflow-y: hidden -> Sometimes after setting the correct iframe height the vertical scroll bar does not disappear.
     return `
@@ -125,17 +148,13 @@ export function EdusharingAssetRenderer(props: {
           ${defineContainerHeight ? '' : iframeResizerHtml}
         </head>
         <body style="${cssReset}${defineContainerHeight ? 'height: 100%;' : ''}">
-          ${htmlSnippet}
+          ${html}
         </body>
       </html> 
     `
   }
 
-  function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): {
-    embedType: EmbedType
-    htmlSnippet: string
-    defineContainerHeight: boolean
-  } {
+  function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
     let { detailsSnippet } = content
 
     // Remove all min-width
@@ -160,15 +179,15 @@ export function EdusharingAssetRenderer(props: {
       )
       if (!linkElement) {
         return {
-          embedType: 'unknown',
-          htmlSnippet: '<div>Fehler beim Einbinden des Inhalts</div>',
+          type: 'unknown',
+          html: '<div>Fehler beim Einbinden des Inhalts</div>',
           defineContainerHeight: false,
         }
       }
 
       return {
-        embedType: isLink ? 'link' : isBrockhaus ? 'brockhaus' : 'unknown',
-        htmlSnippet: `<a class="serlo-link" target="_blank" rel="noopener noreferrer" href="${
+        type: isLink ? 'link' : isBrockhaus ? 'brockhaus' : 'unknown',
+        html: `<a class="serlo-link" target="_blank" rel="noopener noreferrer" href="${
           linkElement.href
         }">${
           linkElement.innerText ? linkElement.innerText : linkElement.href
@@ -215,8 +234,8 @@ export function EdusharingAssetRenderer(props: {
         : ''
 
       return {
-        embedType: 'pixabay',
-        htmlSnippet: imageSnippet + emptyStringOrJumpToSource,
+        type: 'pixabay',
+        html: imageSnippet + emptyStringOrJumpToSource,
         defineContainerHeight: false,
       }
     }
@@ -226,8 +245,8 @@ export function EdusharingAssetRenderer(props: {
       // Create completely new <img> element because patching the existing one is more work/error-prone
       const imageSnippet = buildImageSnippet(image)
       return {
-        embedType: 'image',
-        htmlSnippet: imageSnippet,
+        type: 'image',
+        html: imageSnippet,
         defineContainerHeight: false,
       }
     }
@@ -241,8 +260,8 @@ export function EdusharingAssetRenderer(props: {
         .replace('width="0"', '')
         .replace('height="0"', '')
       return {
-        embedType: 'file',
-        htmlSnippet: detailsSnippet,
+        type: 'file',
+        html: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -258,8 +277,8 @@ export function EdusharingAssetRenderer(props: {
       )
 
       return {
-        embedType: 'audio',
-        htmlSnippet: detailsSnippet,
+        type: 'audio',
+        html: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -281,8 +300,8 @@ export function EdusharingAssetRenderer(props: {
         </style>
         `
       return {
-        embedType: 'video',
-        htmlSnippet: detailsSnippet,
+        type: 'video',
+        html: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -293,8 +312,8 @@ export function EdusharingAssetRenderer(props: {
     const isH5P = iframe && content.node.mediatype === 'file-h5p'
     if (isH5P) {
       return {
-        embedType: 'h5p',
-        htmlSnippet: detailsSnippet,
+        type: 'h5p',
+        html: detailsSnippet,
         defineContainerHeight: false,
       }
     }
@@ -304,48 +323,45 @@ export function EdusharingAssetRenderer(props: {
     const isLearningApp = iframe && detailsSnippet.includes('learningapps.org/')
     if (isLearningApp || isPdf) {
       return {
-        embedType: isLearningApp ? 'learning-app' : isPdf ? 'pdf' : 'unknown',
-        htmlSnippet: `<iframe style="${cssReset} height: 100%; width: 100%;" src="${iframe.src}" sandbox="allow-scripts"></iframe>`,
+        type: isLearningApp ? 'learning-app' : isPdf ? 'pdf' : 'unknown',
+        html: `<iframe style="${cssReset} height: 100%; width: 100%;" src="${iframe.src}" sandbox="allow-scripts"></iframe>`,
         defineContainerHeight: true,
       }
     }
 
     // Backup when content type could not be determined above
     return {
-      embedType: 'unknown',
-      htmlSnippet: detailsSnippet,
+      type: 'unknown',
+      html: detailsSnippet,
       defineContainerHeight: false,
     }
   }
 
   function renderEmbed() {
-    if (embedHtml === null) return
+    if (embedData.html === null) return
 
     return (
       <div
         className="z-15 max-w-full"
         style={{
           width: contentWidth ? contentWidth : '100%',
-          aspectRatio: defineContainerHeight ? '16/9' : undefined,
+          aspectRatio: embedData.defineContainerHeight ? '16/9' : undefined,
         }}
-        data-embed-type={embedType}
+        data-embed-type={embedData.type}
       >
         {/* `srcDoc` -> Sets the iframe content */}
         {/* `sandbox="allow-scripts"` -> Limit iframe access to parent context but allow scripts to execute */}
-        {defineContainerHeight ? (
+        {embedData.defineContainerHeight ? (
           <iframe
-            srcDoc={embedHtml}
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
+            srcDoc={embedData.html}
+            style={{ width: '100%', height: '100%' }}
             sandbox="allow-scripts"
           />
         ) : (
           <MemoizedIframeResizer
             // Necessary when using srcDoc
             checkOrigin={false}
-            srcDoc={embedHtml}
+            srcDoc={embedData.html}
             style={{ width: '100%' }}
             sandbox="allow-scripts"
           />
