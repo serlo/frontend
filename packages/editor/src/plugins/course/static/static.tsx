@@ -1,33 +1,27 @@
+import { SerloOnlyFeaturesContext } from '@editor/core/contexts/serlo-only-features-context'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useState, MouseEvent } from 'react'
+import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
 import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
 
-export interface DummyNextRouter {
-  asPath: string
-  push(
-    url: string,
-    as?: undefined,
-    options?: { shallow: boolean }
-  ): Promise<boolean>
-}
-
 export function CourseStaticRenderer({
   state,
   serloContext,
-  router,
-  isRevisionView,
-}: EditorCourseDocument & {
-  router: DummyNextRouter
-  isRevisionView?: boolean
-}) {
+}: EditorCourseDocument) {
   const { pages } = state
 
-  const routerCourseId = getCoursePageIdFromPath(router.asPath)
+  const { isRevisionView } = useContext(SerloOnlyFeaturesContext)
+
+  let asPath = ''
+  if (typeof window !== 'undefined') {
+    asPath =
+      window.location.pathname + window.location.search + window.location.hash
+  }
+  const routerCourseId = getCoursePageIdFromPath(asPath)
   const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
   // load nav opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
@@ -61,7 +55,6 @@ export function CourseStaticRenderer({
         courseNavOpen={courseNavOpen}
         setCourseNavOpen={setCourseNavOpen}
         pageUrls={pageUrls}
-        router={router}
       />
 
       {pages.length ? (
@@ -73,7 +66,6 @@ export function CourseStaticRenderer({
             onOverviewButtonClick={openCourseNav}
             activePageIndex={activePageIndex}
             pageUrls={serloContext?.coursePageUrls}
-            router={router}
           />
         </>
       ) : null}

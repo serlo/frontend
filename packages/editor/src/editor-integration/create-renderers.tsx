@@ -6,6 +6,7 @@ import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/static'
 import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
@@ -38,6 +39,7 @@ export function createRenderers(): InitRenderersArgs {
     pluginRenderers: [
       // plugins
       { type: EditorPluginType.Article, renderer: ArticleStaticRenderer },
+      { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
       { type: EditorPluginType.Image, renderer: ImageStaticRenderer },

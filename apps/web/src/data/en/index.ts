@@ -137,6 +137,8 @@ export const instanceData = {
       picture: 'Picture',
       previewImage: 'Preview Image',
       task: 'Task',
+      courseNoPagesWarning:
+        'Sorry there seem to be no reviewed pages in this course yet.',
     },
     consent: {
       title: 'Consent for external Content',
