@@ -1,10 +1,8 @@
-import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
 import { LoadingSpinner } from '@editor/editor-ui/loading-spinner'
 import { IframeResizer } from '@open-iframe-resizer/react'
 import { memo } from 'react'
 
 import { useEmbedFetch } from './helper/use-embed-fetch'
-import { BoxRenderer } from '../box/renderer'
 
 export function EdusharingAssetRenderer(props: {
   nodeId?: string
@@ -28,17 +26,11 @@ export function EdusharingAssetRenderer(props: {
   return (
     <figure className="relative z-[15] w-full">
       <div className="mx-side">
-        <BoxRenderer boxType="blank" title="" anchorId={nodeId ?? ''}>
-          {isLoading ? (
-            <LoadingSpinner noText />
-          ) : embedData.component ? (
-            embedData.component
-          ) : embedData.html ? (
-            (renderEmbed() ?? <></>)
-          ) : (
-            <EdusharingIcon style={{ width: '5rem', height: '5rem' }} />
-          )}
-        </BoxRenderer>
+        {isLoading ? (
+          <LoadingSpinner noText />
+        ) : (
+          (embedData.component ?? renderEmbed())
+        )}
       </div>
     </figure>
   )

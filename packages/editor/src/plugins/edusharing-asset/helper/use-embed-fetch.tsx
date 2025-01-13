@@ -3,6 +3,8 @@ import * as t from 'io-ts'
 import DOMPurify from 'isomorphic-dompurify'
 import { useEffect, useState } from 'react'
 
+import { BoxRenderer } from '../../box/renderer'
+
 const iframeResizerHtml =
   '<script type="module" src="https://cdn.jsdelivr.net/npm/@open-iframe-resizer/core@1.2.1/dist/index.min.js"></script>'
 
@@ -20,6 +22,10 @@ const EmbedJson = t.type({
         }),
       }),
     ]),
+    name: t.union([t.undefined, t.null, t.string]),
+    iconURL: t.union([t.undefined, t.null, t.string]),
+    downloadUrl: t.union([t.undefined, t.null, t.string]),
+    content: t.union([t.undefined, t.null, t.type({ url: t.string })]),
   }),
 })
 
@@ -36,6 +42,7 @@ type EmbedType =
   | 'pdf'
   | 'pixabay'
   | 'video'
+  | 'word'
 
 export interface EmbedData {
   type: EmbedType
@@ -111,8 +118,9 @@ export function useEmbedFetch({
       const {
         type,
         html: htmlSnippet,
+        component,
         defineContainerHeight,
-      } = getEmbedHtml(responseJson)
+      } = getEmbedHtml(responseJson, nodeId)
 
       const html = buildHtml(htmlSnippet ?? '', defineContainerHeight)
 
@@ -128,6 +136,7 @@ export function useEmbedFetch({
       setEmbedData({
         type,
         html: sanitizedHtml,
+        component,
         defineContainerHeight,
       })
     }
@@ -138,7 +147,56 @@ export function useEmbedFetch({
   return { embedData }
 }
 
-function getEmbedHtml(content: t.TypeOf<typeof EmbedJson>): EmbedData {
+function getEmbedHtml(
+  content: t.TypeOf<typeof EmbedJson>,
+  nodeId?: string
+): EmbedData {
+  const isWord = content.node.mediatype === 'file-word'
+  if (isWord) {
+    console.log(content.node)
+
+    const { iconURL, downloadUrl, name } = content.node
+    const contentUrl = content.node.content?.url
+
+    if (!iconURL || !name || !downloadUrl) return { type: 'error' }
+
+    return {
+      type: 'word',
+      component: (
+        <BoxRenderer
+          boxType="blank"
+          title={
+            <>
+              <img
+                src={iconURL}
+                alt="Word-File icon"
+                className="-mt-1 inline-block h-4 w-4 opacity-50"
+              />{' '}
+              Word-Datei: {name}
+            </>
+          }
+          anchorId={nodeId ?? ''}
+        >
+          <>
+            <div className="mx-side my-3 flex gap-2">
+              <a
+                href={contentUrl}
+                target="_blank"
+                className="serlo-button-learner-primary"
+                rel="noreferrer"
+              >
+                Dokument anzeigen
+              </a>
+              <a href={downloadUrl} className="serlo-button-learner-secondary">
+                Datei herunterladen
+              </a>
+            </div>
+          </>
+        </BoxRenderer>
+      ),
+    }
+  }
+
   let { detailsSnippet } = content
 
   // Remove all min-width

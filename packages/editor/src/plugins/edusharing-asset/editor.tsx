@@ -1,4 +1,5 @@
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
+import EdusharingIcon from '@editor/editor-ui/assets/edusharing.svg'
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
@@ -35,13 +36,11 @@ export function EdusharingAssetEditor({
           repositoryId: data.repositoryId,
         }
 
-        if (state.edusharingAsset.defined === false) {
-          state.edusharingAsset.create(newEdusharingAsset)
+        if (edusharingAsset.defined === false) {
+          edusharingAsset.create(newEdusharingAsset)
         } else {
-          state.edusharingAsset.nodeId.set(newEdusharingAsset.nodeId)
-          state.edusharingAsset.repositoryId.set(
-            newEdusharingAsset.repositoryId
-          )
+          edusharingAsset.nodeId.set(newEdusharingAsset.nodeId)
+          edusharingAsset.repositoryId.set(newEdusharingAsset.repositoryId)
         }
 
         setModalIsOpen(false)
@@ -51,7 +50,7 @@ export function EdusharingAssetEditor({
     window.addEventListener('message', handleIFrameEvent)
 
     return () => window.removeEventListener('message', handleIFrameEvent)
-  }, [state.edusharingAsset])
+  }, [edusharingAsset])
 
   const { ltik } = useContext(EditorMetaContext)
   if (!ltik) return <p>Error: ltik missing</p>
@@ -60,21 +59,26 @@ export function EdusharingAssetEditor({
     <>
       {renderPluginToolbar()}
       {renderModal(ltik)}
+
       <div className="relative">
-        <EdusharingAssetRenderer
-          nodeId={
-            state.edusharingAsset.defined
-              ? state.edusharingAsset.nodeId.value
-              : undefined
-          }
-          repositoryId={
-            state.edusharingAsset.defined
-              ? state.edusharingAsset.repositoryId.value
-              : undefined
-          }
-          ltik={ltik}
-          contentWidth={contentWidth.defined ? contentWidth.value : undefined}
-        />
+        {edusharingAsset.defined ? (
+          <EdusharingAssetRenderer
+            nodeId={
+              state.edusharingAsset.defined
+                ? state.edusharingAsset.nodeId.value
+                : undefined
+            }
+            repositoryId={
+              state.edusharingAsset.defined
+                ? state.edusharingAsset.repositoryId.value
+                : undefined
+            }
+            ltik={ltik}
+            contentWidth={contentWidth.defined ? contentWidth.value : undefined}
+          />
+        ) : (
+          <EdusharingIcon style={{ width: '5rem', height: '5rem' }} />
+        )}
         {renderOverlay()}
       </div>
     </>
