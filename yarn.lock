@@ -5723,7 +5723,7 @@ __metadata:
     "@eslint/eslintrc": ^3.1.0
     "@eslint/js": ^9.14.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/editor": 0.21.0
+    "@serlo/editor": 0.21.1
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.3.1
@@ -5747,9 +5747,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.21.0":
-  version: 0.21.0
-  resolution: "@serlo/editor@npm:0.21.0"
+"@serlo/editor@npm:0.21.1":
+  version: 0.21.1
+  resolution: "@serlo/editor@npm:0.21.1"
   dependencies:
     "@open-iframe-resizer/react": 1.2.1
     "@serlo/katex-styles": 1.0.1
@@ -5761,7 +5761,7 @@ __metadata:
     react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-resizable: ^3.0.5
-  checksum: 1a83e878b32e80047ebc5710df78b66a431a3356474386a874b8ab3c64b7b86ed675f9c53ca219da7f483b3187d78d5b09d99fda876f040c814f248a04732936
+  checksum: 34102b3accbb907a5daaa323f2d3df465767e5698d9e32eef22c22c3b36239e3afb164fcde7889728cc1bfe0cb00b80cd24b232c49308c06452bb6c903b02afa
   languageName: node
   linkType: hard
 
