@@ -1,8 +1,4 @@
 import type { EditorCourseDocument, EditorRowsDocument } from '@editor/package'
-import {
-  buildCoursePageUrl,
-  getCoursePageIdFromPath,
-} from '@editor/plugins/course/helper/get-course-id-from-path'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AuthorizationPayload } from '@serlo/authorization'
@@ -28,6 +24,10 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import {
+  buildCoursePageUrl,
+  getCoursePageIdFromPath,
+} from '@/helper/get-course-id-from-path'
 
 // ALWAYS start requestPath with slash
 export async function requestPage(

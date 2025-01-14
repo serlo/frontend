@@ -6,7 +6,6 @@ import { useState, MouseEvent, useContext } from 'react'
 
 import { CourseFooter } from './course-footer'
 import { CourseNavigation } from './course-navigation'
-import { getCoursePageIdFromPath } from '../helper/get-course-id-from-path'
 
 export function CourseStaticRenderer({
   state,
@@ -16,13 +15,7 @@ export function CourseStaticRenderer({
 
   const { isRevisionView } = useContext(SerloOnlyFeaturesContext)
 
-  let asPath = ''
-  if (typeof window !== 'undefined') {
-    asPath =
-      window.location.pathname + window.location.search + window.location.hash
-  }
-  const routerCourseId = getCoursePageIdFromPath(asPath)
-  const queryPageId = routerCourseId ?? serloContext?.activeCoursePageId
+  const queryPageId = serloContext?.activeCoursePageId
   // load nav opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
     pages.length < 4 || (isRevisionView ?? false)
