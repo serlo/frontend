@@ -155,7 +155,13 @@ function ExampleWithEditSwitch({
         </button>
       </div>
       {isEdit ? (
-        <div className={cn('mt-12', className)}>
+        <div
+          className={cn(
+            'mt-12',
+            '[&_div.local-storage-notice]:hidden [&_div.test-environment-warning]:hidden',
+            className
+          )}
+        >
           <Editor
             language={lang === 'de' ? 'de' : 'en'}
             editorVariant="serlo-org"
@@ -277,7 +283,7 @@ export const MCExample = (
 )
 
 export const HighlightExample = (
-  <ExampleWithEditSwitch stateString='{"plugin":"rows","state":[{"plugin":"highlight","state":{"code":"// global variable: read & write from everywhere\nvar cookieAmount = 100\n\n// local variable: read & write from everywhere only in current code block\n// (only in the \"feed\" function)\nfunction feed(){\n  let cookieAmount = 20\n}\n\n// constant: local variable that can only be read after initialization\n// this will always be 5\nconst cookieSize = 5","language":"javascript","showLineNumbers":true},"id":"47a26f49-8726-4fa7-b390-c96cdd002ebe"}]}' />
+  <ExampleWithEditSwitch stateString='{"plugin":"highlight","state":{"code":"// global variable: read & write from everywhere\nvar cookieAmount = 100\n\n// local variable: read & write from everywhere only in current code block\n// (only in the \"feed\" function)\nfunction feed(){\n  let cookieAmount = 20\n}\n\n// constant: local variable that can only be read after initialization\n// this will always be 5\nconst cookieSize = 5","language":"javascript","showLineNumbers":true}}' />
 )
 
 export const SpoilerExample = (

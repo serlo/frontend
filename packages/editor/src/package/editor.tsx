@@ -106,7 +106,7 @@ export function SerloEditor(props: SerloEditorProps) {
 
   function renderTestEnvironmentWarning() {
     return (
-      <div className="bg-editor-primary-100 px-1.5 py-0.5 text-sm">
+      <div className="test-environment-warning bg-editor-primary-100 px-1.5 py-0.5 text-sm">
         {editStrings.savedContentMightDisappearWarning}
       </div>
     )
