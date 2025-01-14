@@ -36,6 +36,7 @@ export function OverlayContentModal({
         ref={titleRef}
         onBlur={(e) => {
           // hack to prevent the exercise from stealing focus when loading
+          // it seems it's being blured more than once and "> 2" worked well in testing
           if (refocusedCount.current > 2) return
           setTimeout(() => e.target.focus())
           refocusedCount.current++
