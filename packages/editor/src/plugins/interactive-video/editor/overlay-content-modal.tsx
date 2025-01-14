@@ -18,6 +18,7 @@ export function OverlayContentModal({
   const pluginStrings = useEditStrings().plugins.interactiveVideo
 
   const titleRef = useRef<HTMLInputElement>(null)
+  const refocusedCount = useRef<number>(0)
 
   return (
     <EditorModal
@@ -33,6 +34,12 @@ export function OverlayContentModal({
       </div>
       <input
         ref={titleRef}
+        onBlur={(e) => {
+          // hack to prevent the exercise from stealing focus when loading
+          if (refocusedCount.current > 2) return
+          setTimeout(() => e.target.focus())
+          refocusedCount.current++
+        }}
         value={title.value}
         onChange={(e) => title.set(e.target.value)}
         className={cn(
