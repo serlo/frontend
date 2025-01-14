@@ -2,9 +2,6 @@ export type EditStrings = typeof editStrings
 
 export const editStrings = {
   lang: 'de',
-  confirmRouteChange:
-    'Willst du wirklich die Seite verlassen ohne zu speichern?',
-  noChangesWarning: 'Bisher hast du nichts geändert',
   savedContentMightDisappearWarning:
     '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst. Fragen? vicky@serlo.org',
   addPluginsModal: {

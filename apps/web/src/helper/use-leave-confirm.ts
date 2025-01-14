@@ -1,7 +1,8 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useCallback, useEffect } from 'react'
+
+import { useInstanceData } from '@/contexts/instance-context'
 
 // we use this hash to make sure we don't block redirects after an successful save
 export const successHash = '#success'
@@ -9,13 +10,13 @@ export const successHash = '#success'
 // needed because of https://github.com/vercel/next.js/issues/2476
 export function useLeaveConfirm(protect: boolean) {
   const router = useRouter()
-  const editStrings = useEditStrings()
+  const strings = useInstanceData().strings.saveButton
 
   const onRouteChangeStart = useCallback(
     (targetUrl?: string) => {
       if (targetUrl && targetUrl.includes(successHash)) return
       if (protect) {
-        if (window.confirm(editStrings.confirmRouteChange)) {
+        if (window.confirm(strings.confirmRouteChange)) {
           return true
         }
         nProgress.done()
@@ -25,7 +26,7 @@ export function useLeaveConfirm(protect: boolean) {
         throw new Error("Abort route change by user's confirmation.")
       }
     },
-    [protect, editStrings.confirmRouteChange, router.asPath]
+    [protect, strings.confirmRouteChange, router.asPath]
   )
 
   useEffect(() => {

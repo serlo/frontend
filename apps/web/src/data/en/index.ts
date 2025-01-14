@@ -483,6 +483,7 @@ export const instanceData = {
     saveButton: {
       noChangesWarning: 'Nothing changed so there is no need to save yet',
       save: 'Save',
+      confirmRouteChange: 'Are you sure you want to leave without saving?',
     },
   },
 }
