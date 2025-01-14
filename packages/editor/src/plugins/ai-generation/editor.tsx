@@ -15,7 +15,6 @@ import { either as E } from 'fp-ts'
 import { type AiGenerationPluginProps } from '.'
 import { PromptForm } from './components/prompt-form'
 import { StateDecoder } from './decoder'
-import { mocked } from './mocked'
 
 export function AiGenerationEditor(props: AiGenerationPluginProps) {
   const aiStrings = useEditStrings().plugins.aiGeneration
@@ -33,12 +32,25 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
     )
   }
 
-  function handleSubmit(prompt: string) {
-    console.log(prompt)
+  async function handleSubmit(prompt: string) {
+    const response = await fetch(
+      'https://editor.serlo.dev/ai/generate-content',
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          before: '',
+          after: '',
+        }),
+      }
+    )
 
-    // TODO: fetch, validate, loading states etc.
+    const responseData = (await response.json()) as unknown
 
-    const decoded = StateDecoder.decode(mocked)
+    const decoded = StateDecoder.decode(responseData)
 
     if (E.isLeft(decoded)) return throwError()
 
