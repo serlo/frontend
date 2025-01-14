@@ -1,5 +1,8 @@
-import type { EditorCourseDocument, EditorRowsDocument } from '@editor/package'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import {
+  EditorPluginType,
+  type EditorCourseDocument,
+  type EditorRowsDocument,
+} from '@editor/package'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
