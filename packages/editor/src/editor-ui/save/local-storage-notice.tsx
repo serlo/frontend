@@ -26,7 +26,7 @@ export function LocalStorageNotice({
   if (!stored) return null
 
   return (
-    <div className="m-side mt-12 rounded-2xl bg-editor-primary-50 p-side">
+    <div className="local-storage-notice m-side mt-12 rounded-2xl bg-editor-primary-50 p-side">
       <>
         {storageStrings[useStored ? 'restoreInitial' : 'found']}
         <br />
