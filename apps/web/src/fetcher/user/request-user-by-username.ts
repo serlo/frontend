@@ -1,5 +1,4 @@
 import type { EditorRowsDocument } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -8,6 +7,7 @@ import { User } from '../query-types'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 export async function requestUserByUsername(
   username: string

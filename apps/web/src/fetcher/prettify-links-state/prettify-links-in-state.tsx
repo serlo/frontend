@@ -4,12 +4,12 @@ import {
   isTextDocument,
   type AnyEditorDocument,
 } from '@editor/package'
-import { getChildrenOfStaticDocument } from '@editor/static-renderer/helper/get-children-of-static-document'
 import request from 'graphql-request'
 import type { Descendant } from 'slate'
 
 import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
+import { getChildrenOfStaticDocument } from '@/helper/get-children-of-static-document'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 export interface IdsQueryReturn {

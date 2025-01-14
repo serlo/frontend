@@ -2,13 +2,13 @@ import {
   EditorPluginType,
   type EditorExerciseGroupDocument,
 } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 /**
  * Allows frontend (and later other) instances to get content of injected entity

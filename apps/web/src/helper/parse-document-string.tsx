@@ -1,5 +1,4 @@
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { EditorPluginType, type AnyEditorDocument } from '@editor/package'
 
 const fallback = { plugin: EditorPluginType.Rows }
 /**

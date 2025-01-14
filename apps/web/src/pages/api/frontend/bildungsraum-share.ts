@@ -3,13 +3,13 @@ import type {
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
 } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
 import { ShareEditorContentQuery } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 /**
  * Allows frontend to copy Serlo content to the clipboard.

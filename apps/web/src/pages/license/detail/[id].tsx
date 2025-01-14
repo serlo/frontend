@@ -1,11 +1,11 @@
 import type { EditorRowsDocument } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { LicenseDetail } from '@/components/pages/license-detail'
 import { licensesContent } from '@/data/licenses/licenses-content'
 import { LicenseDetailProps } from '@/data-types'
+import { parseDocumentString } from '@/helper/parse-document-string'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<LicenseDetailProps>(({ pageData }) => (

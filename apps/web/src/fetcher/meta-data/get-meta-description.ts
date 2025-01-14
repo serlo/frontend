@@ -4,7 +4,8 @@ import {
   type AnyEditorDocument,
 } from '@editor/package'
 import { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
-import { getChildrenOfStaticDocument } from '@editor/static-renderer/helper/get-children-of-static-document'
+
+import { getChildrenOfStaticDocument } from '@/helper/get-children-of-static-document'
 
 export function getMetaDescription(
   content?: AnyEditorDocument

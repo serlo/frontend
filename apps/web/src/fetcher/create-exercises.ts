@@ -2,9 +2,9 @@ import type {
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
 } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 
 import { MainUuidType } from './query-types'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' }>,

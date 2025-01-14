@@ -1,4 +1,3 @@
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import {
   isArticleIntroductionDocument,
   isArticleDocument,
@@ -9,7 +8,8 @@ import {
   isRowsDocument,
   isSolutionDocument,
   isCourseDocument,
-} from '@editor/types/plugin-type-guards'
+  type AnyEditorDocument,
+} from '@editor/package'
 
 /**
  * Helper for static renderer that returns the direct children of the supplied document.

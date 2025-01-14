@@ -1,5 +1,4 @@
 import type { EditorCourseDocument, EditorRowsDocument } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
@@ -28,6 +27,7 @@ import {
   buildCoursePageUrl,
   getCoursePageIdFromPath,
 } from '@/helper/get-course-id-from-path'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 // ALWAYS start requestPath with slash
 export async function requestPage(

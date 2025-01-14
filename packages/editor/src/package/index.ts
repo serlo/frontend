@@ -26,7 +26,6 @@ export { EditorPluginType } from '@editor/types/editor-plugin-type'
  */
 export * from '@editor/types/plugin-type-guards'
 export * from './static-is-plugin-empty'
-export * from '@editor/static-renderer/helper/parse-document-string'
 export type * from '@editor/types/editor-plugins'
 
 /**

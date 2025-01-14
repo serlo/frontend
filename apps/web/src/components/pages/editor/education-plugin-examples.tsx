@@ -1,7 +1,6 @@
 import {
   defaultPlugins,
   SerloRenderer,
-  parseDocumentString,
   EditorPluginType,
   TemplatePluginType,
   type AnyEditorDocument,
@@ -18,6 +17,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
+import { parseDocumentString } from '@/helper/parse-document-string'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 const Editor = dynamic(
