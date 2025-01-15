@@ -1,20 +1,21 @@
-import type { AnyEditorDocument } from '@editor/package'
-import type { StateType, StateTypeStaticType } from '@editor/plugin'
-import type { AppletTypePluginState } from '@editor/plugins/serlo-template-plugins/applet'
-import type { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
 import {
+  EditorPluginType,
+  TemplatePluginType,
+  type AnyEditorDocument,
+  type StateType,
+  type StateTypeStaticType,
+  type AppletTypePluginState,
+  type ArticleTypePluginState,
   type Entity,
   type Uuid,
-} from '@editor/plugins/serlo-template-plugins/common/common'
-import type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course'
-import type { EventTypePluginState } from '@editor/plugins/serlo-template-plugins/event'
-import type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
-import type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
-import type { TaxonomyTypePluginState } from '@editor/plugins/serlo-template-plugins/taxonomy'
-import type { TextExerciseTypePluginState } from '@editor/plugins/serlo-template-plugins/text-exercise'
-import type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugins/video'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
+  type CourseTypePluginState,
+  type EventTypePluginState,
+  type TextExerciseGroupTypePluginState,
+  type PageTypePluginState,
+  type TaxonomyTypePluginState,
+  type TextExerciseTypePluginState,
+  type VideoTypePluginState,
+} from '@editor/package'
 
 import { UuidType } from '@/data-types'
 import type { MainUuidType } from '@/fetcher/query-types'

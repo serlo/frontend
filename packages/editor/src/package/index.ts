@@ -28,12 +28,26 @@ export * from '@editor/types/plugin-type-guards'
 export * from './static-is-plugin-empty'
 export { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
 export type * from '@editor/types/editor-plugins'
+export type * from '@editor/plugin/internal-plugin-state'
 
 /**
  * Exported for serlo.org
  */
 export { TemplatePluginType } from '@editor/types/template-plugin-type'
 export { SerloOnlyFeaturesContext } from '@editor/core/contexts/serlo-only-features-context'
+export type { AppletTypePluginState } from '@editor/plugins/serlo-template-plugins/applet'
+export type { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
+export type {
+  Entity,
+  Uuid,
+} from '@editor/plugins/serlo-template-plugins/common/common'
+export type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course'
+export type { EventTypePluginState } from '@editor/plugins/serlo-template-plugins/event'
+export type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
+export type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
+export type { TaxonomyTypePluginState } from '@editor/plugins/serlo-template-plugins/taxonomy'
+export type { TextExerciseTypePluginState } from '@editor/plugins/serlo-template-plugins/text-exercise'
+export type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugins/video'
 
 /**
  * Exported so that integrations can customize available plugins
