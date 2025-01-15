@@ -17,6 +17,7 @@ import {
   createArticleIntroduction,
   createMultimediaPlugin,
 } from '@editor/plugins/multimedia'
+import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
@@ -25,6 +26,7 @@ import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
+import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
 import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
@@ -156,6 +158,10 @@ export function createBasicPlugins(
       plugin: courseTypePlugin,
     },
     {
+      type: TemplatePluginType.Page,
+      plugin: pageTypePlugin,
+    },
+    {
       type: TemplatePluginType.User,
       plugin: userTypePlugin,
     },
@@ -174,6 +180,10 @@ export function createBasicPlugins(
           ? 'Fasse das Thema des Artikels kurz zusammen'
           : 'Write a short introduction'
       ),
+    },
+    {
+      type: EditorPluginType.PageLayout,
+      plugin: pageLayoutPlugin,
     },
     {
       type: EditorPluginType.Injection,

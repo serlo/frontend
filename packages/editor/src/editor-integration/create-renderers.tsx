@@ -18,6 +18,7 @@ import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static
 import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
 import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
+import { PageLayoutStaticRenderer } from '@editor/plugins/page-layout/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
 import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
@@ -116,6 +117,10 @@ export function createRenderers(): InitRenderersArgs {
       {
         type: EditorPluginType.SerloInjection,
         renderer: SerloInjectionStaticRenderer,
+      },
+      {
+        type: EditorPluginType.PageLayout,
+        renderer: PageLayoutStaticRenderer,
       },
       {
         type: EditorPluginType.Unsupported,
