@@ -30,16 +30,19 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
         documents: store.getState().documents,
       }) as { plugin: EditorPluginType.Rows; state: DocumentState[] }
 
-      const response = await fetch('https://editor.serlo.dev/ai/change-content', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt,
-          content: JSON.stringify(document),
-        }),
-      })
+      const response = await fetch(
+        'https://editor.serlo.dev/ai/change-content',
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt,
+            content: JSON.stringify(document),
+          }),
+        }
+      )
 
       const responseData = (await response.json()) as unknown
 
