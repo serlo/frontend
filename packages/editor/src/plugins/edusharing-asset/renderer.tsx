@@ -48,12 +48,11 @@ export function EdusharingAssetRenderer(props: {
         data-embed-type={embedData.type}
       >
         {/* `srcDoc` -> Sets the iframe content */}
-        {/* `sandbox="allow-scripts"` -> Limit iframe access to parent context but allow scripts to execute */}
+        {/* No attribute 'sandbox' because it broke H5P embeds. */}
         {embedData.defineContainerHeight ? (
           <iframe
             srcDoc={embedData.html}
             style={{ width: '100%', height: '100%' }}
-            sandbox="allow-scripts"
           />
         ) : (
           <MemoizedIframeResizer
@@ -61,7 +60,6 @@ export function EdusharingAssetRenderer(props: {
             checkOrigin={false}
             srcDoc={embedData.html}
             style={{ width: '100%' }}
-            sandbox="allow-scripts"
           />
         )}
       </div>
