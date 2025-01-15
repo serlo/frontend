@@ -1,5 +1,6 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { EditorPluginType, SerloEditor, SerloRenderer } from '@editor/package'
+import { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
@@ -90,6 +91,10 @@ export function Preview() {
           <SerloRenderer
             state={parseDocumentString(previewState)}
             editorVariant="unknown"
+            handleLearnerEvent={(data: LearnerEventData) => {
+              // eslint-disable-next-line no-console
+              console.log(data)
+            }}
           />
         </div>
       </section>

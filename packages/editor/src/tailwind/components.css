@@ -145,14 +145,14 @@
       @apply font-sans text-base tracking-slightestly-tighter;
       @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
     }
+  }
 
-    .serlo-tooltip-trigger {
-      @apply relative;
+  .serlo-tooltip-trigger {
+    @apply relative;
 
-      &:hover > .serlo-tooltip,
-      &:focus > .serlo-tooltip {
-        @apply not-sr-only absolute z-[23] pb-[0.7rem] opacity-90;
-      }
+    &:hover > .serlo-tooltip,
+    &:focus > .serlo-tooltip {
+      @apply not-sr-only absolute z-[23] pb-[0.7rem] opacity-90;
     }
   }
 

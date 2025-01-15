@@ -2,6 +2,10 @@ import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { createRenderers } from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
+import {
+  editorLearnerEvent,
+  LearnerEventData,
+} from '@editor/plugin/helpers/editor-learner-event'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { SupportedLanguage } from '@editor/types/language-data'
@@ -16,6 +20,7 @@ export interface SerloRendererProps {
   state: unknown
   _ltik?: string
   editorVariant: EditorVariant
+  handleLearnerEvent?: (data: LearnerEventData) => void
 }
 
 export function SerloRenderer(props: SerloRendererProps) {
@@ -35,6 +40,10 @@ export function SerloRenderer(props: SerloRendererProps) {
 
   const basicRenderers = createRenderers()
   editorRenderers.init(basicRenderers)
+
+  if (props.handleLearnerEvent) {
+    editorLearnerEvent.init(props.handleLearnerEvent)
+  }
 
   return (
     <StaticStringsProvider value={staticStrings}>

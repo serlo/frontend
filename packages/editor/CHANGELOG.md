@@ -1,3 +1,45 @@
+## Changelog for version 0.21.1
+
+- fix(moodle): prevent style collision in moodle. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4396
+- fix(interactive-video): fix focus bug when creating new exercise. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4395
+- refactor: remove direct Editor imports from Editor presentation. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4393
+- fix(interactive-video): bugfixes/improvements. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4392
+- refactor: remove Next router from Course. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4391
+- fix: update eu logo, add text. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4387
+- refactor: static math in package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4385
+- refactor(web): move strings for uuid-url-input to frontend. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4384
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4378
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.0-editor...v0.21.1-editor
+
+## Changelog for version 0.21.0
+
+- fix(math-renderer): sanitize html from katex. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4379
+- fix(plugin-edusharing): use DomPurify to sanitize embed html from edu-sharing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4376
+- fix(editor): Modal on serlo.org by applying high z-index only in integrations on content instead of overlay. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4373
+- fix(editor): reset styles for moodle. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4372
+- fix(link-renderer): add guard against injecting javascript in link elements through href. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4371
+- refactor(editor): package plugin icons as react components (to remove `dangerouslySetInnerHtml`). Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4370
+- fix(editor): skip other checks if we found editor state in paste. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4366
+- feat(editor): add email to test environment warning message. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4365
+- fix(plugin-edusharing): sandbox iframes to secure parent. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4361
+- fix(editor): Modal in moodle. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4360
+- feat(editor): add iframed demo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4356
+- feat(bildungsraum-share): copy content to clipboard. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4354
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.2-editor...v0.21.0-editor
+
+## Changelog for version 0.20.2
+
+- feat(editor): add learner event handler to package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4350
+- quickfix: show exercise task again. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4347
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4346
+- refactor(image-plugin): Show better error messages when the image upload fails. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4344
+- fix(plugin-rows): whole plugin drag handle bug. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4343
+- feat(microadaptivity): integrate AI in final feedback. Thank you [@hugotiburtino](https://github.com/hugotiburtino) in https://github.com/serlo/frontend/pull/4338
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.1-editor...v0.20.2-editor
+
 ## Changelog for version 0.20.1
 
 - feat(editor-web-component): Expose language prop. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4340

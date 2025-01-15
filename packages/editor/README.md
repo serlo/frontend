@@ -84,7 +84,13 @@ See below for the current API specification.
 - **Long-Term Support**: Unsure
 - **Needs Change?**: Unsure
 
-### `SerloEditor` component props
+#### 7. `type LearnerEventData`
+
+- **Why Exported/How Used**: This is how the `SerloRenderer` provides the details of a learners interaction to `handleLearnerEvent` (see below).
+- **Long-Term Support**: Unsure
+- **Needs Change?**: Unsure
+
+### `SerloEditor` component props (`SerloEditorProps`)
 
 - **`children`**: When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` render prop as the argument to the `children` function. This `editor` object provides:
 
@@ -106,6 +112,12 @@ See below for the current API specification.
 - **`_testingSecret` (optional)**: Required to use Image plugin in testing. A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
+
+### `SerloRenderer` component props (`SerloRendererProps`)
+
+- For `language`, `state`, `_ltik` and `editorVariant` please see props for `SerloEditor` above.
+
+- **`handleLearnerEvent` (optional)**: Function that receives details about the learners interaction in the form of `LearnerEventData`. Provide if you want to connect the editor to you LRS (Learning Record Store) or similar. [In our wiki you can find more details and a xAPI example](https://github.com/serlo/documentation/wiki/Learner-Events-and-xAPI).
 
 ### `pluginMenuEn` / `pluginMenuDe` constant and `Plugin` enum
 

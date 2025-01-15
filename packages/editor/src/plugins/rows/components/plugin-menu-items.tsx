@@ -3,8 +3,6 @@ import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import type { PluginMenuItem } from '@editor/plugins/rows/utils/plugin-menu'
 import { cn } from '@editor/utils/cn'
 
-import { PluginMenuIcon } from './plugin-menu-icon'
-
 function getTooltipPosition(index: number) {
   return index % 5 === 0 ? 'right' : index % 5 === 4 ? 'left' : undefined
 }
@@ -54,7 +52,8 @@ export function PluginMenuItems({
 
   function renderListItems(options: PluginMenuItem[], offset: number) {
     return options.map((pluginMenuItem, index) => {
-      const { type, initialState, title, icon, description } = pluginMenuItem
+      const { type, initialState, title, IconComponent, description } =
+        pluginMenuItem
       const currentIndex = index + offset
       const selected = currentIndex === focusedItemIndex
       const tooltipPosition = getTooltipPosition(index)
@@ -78,7 +77,7 @@ export function PluginMenuItems({
             )}
           >
             <EditorTooltip className={tooltipClassName} text={description} />
-            <PluginMenuIcon icon={icon} />
+            <IconComponent />
             <b className="mt-2 block text-sm">{title}</b>
           </button>
         </li>

@@ -1,27 +1,51 @@
 import type { EditorProps } from '@editor/core'
+import { AiGenerationIcon } from '@editor/editor-ui/assets/plugin-icons/icon-ai-generation'
 import IconAiGeneration from '@editor/editor-ui/assets/plugin-icons/icon-ai-generation.svg?raw'
+import { AudioIcon } from '@editor/editor-ui/assets/plugin-icons/icon-audio'
 import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
+import { BlanksDndIcon } from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
+import { BlanksTypingIcon } from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
+import { BoxIcon } from '@editor/editor-ui/assets/plugin-icons/icon-box'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg?raw'
+import { DropzonesIcon } from '@editor/editor-ui/assets/plugin-icons/icon-dropzones'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg?raw'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg?raw'
+import { EquationsIcon } from '@editor/editor-ui/assets/plugin-icons/icon-equations'
+import { FallbackIcon } from '@editor/editor-ui/assets/plugin-icons/icon-fallback'
 import IconFallback from '@editor/editor-ui/assets/plugin-icons/icon-fallback.svg?raw'
+import { GeogebraIcon } from '@editor/editor-ui/assets/plugin-icons/icon-geogebra'
 import IconGeogebra from '@editor/editor-ui/assets/plugin-icons/icon-geogebra.svg?raw'
+import { H5PIcon } from '@editor/editor-ui/assets/plugin-icons/icon-h5p'
 import IconH5p from '@editor/editor-ui/assets/plugin-icons/icon-h5p.svg?raw'
+import { HighlightIcon } from '@editor/editor-ui/assets/plugin-icons/icon-highlight'
 import IconHighlight from '@editor/editor-ui/assets/plugin-icons/icon-highlight.svg?raw'
+import { ImageIcon } from '@editor/editor-ui/assets/plugin-icons/icon-image'
 import IconImage from '@editor/editor-ui/assets/plugin-icons/icon-image.svg?raw'
+import { InjectionIcon } from '@editor/editor-ui/assets/plugin-icons/icon-injection'
 import IconInjection from '@editor/editor-ui/assets/plugin-icons/icon-injection.svg?raw'
+import { InputExerciseIcon } from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise'
 import IconInputExercise from '@editor/editor-ui/assets/plugin-icons/icon-input-exercise.svg?raw'
+import { InteractiveVideoIcon } from '@editor/editor-ui/assets/plugin-icons/icon-interactive-video'
 import IconInteractiveVideo from '@editor/editor-ui/assets/plugin-icons/icon-interactive-video.svg?raw'
+import { MCExerciseIcon } from '@editor/editor-ui/assets/plugin-icons/icon-mc-exercise'
 import IconMcExercise from '@editor/editor-ui/assets/plugin-icons/icon-mc-exercise.svg?raw'
+import { MultimediaIcon } from '@editor/editor-ui/assets/plugin-icons/icon-multimedia'
 import IconMultimedia from '@editor/editor-ui/assets/plugin-icons/icon-multimedia.svg?raw'
+import { SCExerciseIcon } from '@editor/editor-ui/assets/plugin-icons/icon-sc-exercise'
 import IconScExercise from '@editor/editor-ui/assets/plugin-icons/icon-sc-exercise.svg?raw'
+import { SpoilerIcon } from '@editor/editor-ui/assets/plugin-icons/icon-spoiler'
 import IconSpoiler from '@editor/editor-ui/assets/plugin-icons/icon-spoiler.svg?raw'
+import { TableIcon } from '@editor/editor-ui/assets/plugin-icons/icon-table'
 import IconTable from '@editor/editor-ui/assets/plugin-icons/icon-table.svg?raw'
+import { TextIcon } from '@editor/editor-ui/assets/plugin-icons/icon-text'
+import { TextAreaIcon } from '@editor/editor-ui/assets/plugin-icons/icon-text-area'
 import IconTextArea from '@editor/editor-ui/assets/plugin-icons/icon-text-area.svg?raw'
 import IconText from '@editor/editor-ui/assets/plugin-icons/icon-text.svg?raw'
+import { VideoIcon } from '@editor/editor-ui/assets/plugin-icons/icon-video'
 import IconVideo from '@editor/editor-ui/assets/plugin-icons/icon-video.svg?raw'
+import { ImageGalleryIcon } from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery'
 import IconImageGallery from '@editor/editor-ui/assets/plugin-icons/image-gallery/icon-image-gallery.svg?raw'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
@@ -92,8 +116,9 @@ function getPluginMenuItem(editStrings: EditStrings, type: PluginMenuType) {
   const [initialState, unwrappedPlugin] = getInitialState(type)
   const strings = getTitleAndDescription(type, unwrappedPlugin, editStrings)
   const icon = getIconString(type)
+  const IconComponent = getIconComponent(type)
 
-  return { type, icon, initialState, ...strings }
+  return { type, icon, IconComponent, initialState, ...strings }
 }
 
 export interface PluginMenuItem {
@@ -101,6 +126,7 @@ export interface PluginMenuItem {
   title: string
   description: string
   initialState: EditorProps['initialState']
+  IconComponent: React.ComponentType
   // until we use the editor package in the frontend (only having vite for building)
   // icons should be strings but are loaded as () => JSX.Element in the frontend (webpack)
   icon: string | (() => JSX.Element)
@@ -241,6 +267,40 @@ const iconLookup: Record<PluginMenuType, string> = {
 
 function getIconString(type: PluginMenuType) {
   return iconLookup[type]
+}
+
+const iconComponentLookup: Record<PluginMenuType, React.ComponentType> = {
+  [pluginMenuType.Text]: TextIcon,
+  [pluginMenuType.Multimedia]: MultimediaIcon,
+  [pluginMenuType.Video]: VideoIcon,
+  [pluginMenuType.Box]: BoxIcon,
+  [pluginMenuType.Equations]: EquationsIcon,
+  [pluginMenuType.Geogebra]: GeogebraIcon,
+  [pluginMenuType.Highlight]: HighlightIcon,
+  [pluginMenuType.Image]: ImageIcon,
+  [pluginMenuType.ImageGallery]: ImageGalleryIcon,
+  [pluginMenuType.Injection]: InjectionIcon,
+  [pluginMenuType.SerloTable]: TableIcon,
+  [pluginMenuType.Spoiler]: SpoilerIcon,
+  [pluginMenuType.DropzoneImage]: DropzonesIcon,
+  [pluginMenuType.SingleChoiceExercise]: SCExerciseIcon,
+  [pluginMenuType.MultipleChoiceExercise]: MCExerciseIcon,
+  [pluginMenuType.InputExercise]: InputExerciseIcon,
+  [pluginMenuType.TextAreaExercise]: TextAreaIcon,
+  [pluginMenuType.BlanksExercise]: BlanksTypingIcon,
+  [pluginMenuType.BlanksExerciseDragAndDrop]: BlanksDndIcon,
+  [pluginMenuType.H5p]: H5PIcon,
+  [pluginMenuType.ExerciseGroup]: FallbackIcon,
+  [pluginMenuType.InteractiveVideo]: InteractiveVideoIcon,
+  [pluginMenuType.Audio]: AudioIcon,
+  [pluginMenuType.PageLayout]: FallbackIcon,
+  [pluginMenuType.PagePartners]: FallbackIcon,
+  [pluginMenuType.EdusharingAsset]: ImageIcon,
+  [pluginMenuType.AiGeneration]: AiGenerationIcon,
+}
+
+function getIconComponent(type: PluginMenuType) {
+  return iconComponentLookup[type]
 }
 
 export function filterPluginMenuItemsBySearchString(
