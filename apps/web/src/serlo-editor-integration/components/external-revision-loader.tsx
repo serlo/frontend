@@ -1,5 +1,4 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
@@ -8,6 +7,7 @@ import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { useCallback, useState } from 'react'
 
+import { AddButton } from './add-button'
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
@@ -108,7 +108,7 @@ export function ExternalRevisionLoader<T>({
                 _title: string,
                 _taxType?: unknown
               ) => (
-                <SerloAddButton
+                <AddButton
                   text={editorStrings.edtrIo.importOtherButton}
                   onClick={() => fetchRevisionDataByUuid(id)}
                 />

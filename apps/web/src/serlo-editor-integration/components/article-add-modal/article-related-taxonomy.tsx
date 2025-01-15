@@ -1,7 +1,7 @@
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 
+import { AddButton } from '../add-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -119,7 +119,7 @@ export function ArticleRelatedTaxonomy({
             <FaIcon icon={faSearch} />
           </button>
         ) : null}
-        <SerloAddButton
+        <AddButton
           text=""
           className="invisible ml-2 max-h-8 self-center whitespace-nowrap group-focus-within:visible group-hover:visible"
           onClick={() => {

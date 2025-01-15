@@ -1,9 +1,9 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { gql } from 'graphql-request'
 
+import { AddButton } from '../add-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -82,7 +82,7 @@ export function ArticleRelatedExercises({
           plugin={EditorPluginType.Injection}
           state={`/${id}`}
         />
-        <SerloAddButton
+        <AddButton
           text={articleStrings.addModal.buttonAddType.replace(
             '%type%',
             getTranslatedType(strings, __typename)
