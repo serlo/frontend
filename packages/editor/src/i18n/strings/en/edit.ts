@@ -448,15 +448,9 @@ export const editStrings = {
       sourceUrl: 'Optional URL',
       moreInFolder: 'You can find more exercises in the following folder',
       addModal: {
-        introText:
-          'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
-        introText2:
-          'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
         buttonEx: 'Add exercises',
         buttonExFolder: 'Select exercise folder',
         buttonContent: 'Add content',
-        buttonAddType: 'Add %type%',
-        title: 'Add related Content or Exercises',
       },
     },
     course: {

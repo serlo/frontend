@@ -1,6 +1,5 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { EditorPluginType } from '@editor/package'
 import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { gql } from 'graphql-request'
 
 import { AddButton } from '../add-button'
@@ -32,7 +31,6 @@ export function ArticleRelatedExercises({
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
   const { strings } = useInstanceData()
-  const articleStrings = useEditStrings().templatePlugins.article
 
   const errorReturn = <p>Sorry, something went wrong.</p>
 
@@ -83,7 +81,7 @@ export function ArticleRelatedExercises({
           state={`/${id}`}
         />
         <AddButton
-          text={articleStrings.addModal.buttonAddType.replace(
+          text={strings.articleAddModal.buttonAddType.replace(
             '%type%',
             getTranslatedType(strings, __typename)
           )}

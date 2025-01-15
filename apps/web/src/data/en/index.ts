@@ -507,6 +507,14 @@ export const instanceData = {
       changes: 'Describe your changes to the content',
       confirmRouteChange: 'Are you sure you want to leave without saving?',
     },
+    articleAddModal: {
+      introText:
+        'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+      introText2:
+        'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+      buttonAddType: 'Add %type%',
+      title: 'Add related Content or Exercises',
+    },
   },
 }
 export const instanceLandingData = {

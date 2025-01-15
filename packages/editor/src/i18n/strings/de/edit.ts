@@ -463,15 +463,9 @@ export const editStrings = {
       moreInFolder:
         'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner',
       addModal: {
-        introText:
-          'Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.',
-        introText2:
-          'Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.',
         buttonEx: 'Aufgaben hinzufügen',
         buttonExFolder: 'Aufgabenordner auswählen',
         buttonContent: 'Inhalt hinzufügen',
-        buttonAddType: '%type% hinzufügen',
-        title: 'Weiterführende Inhalte oder Übungsaufgaben hinzufügen',
       },
     },
     course: {

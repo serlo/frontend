@@ -1,6 +1,4 @@
-import { ArticleAddModalProps } from '@editor/core/contexts/serlo-only-features-context'
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType, type ArticleAddModalProps } from '@editor/package'
 import { useState } from 'react'
 
 import { ArticleRelatedExercises } from './article-related-exercises'
@@ -22,7 +20,6 @@ export function ArticleAddModal({
   )
 
   const { strings } = useInstanceData()
-  const articleStrings = useEditStrings().templatePlugins.article
 
   const { exercises, exerciseFolder, relatedContent } = data
 
@@ -80,12 +77,12 @@ export function ArticleAddModal({
       isOpen={open}
       setIsOpen={setModalOpen}
       className="top-8 max-h-[90vh] w-auto translate-y-0 overflow-y-scroll"
-      title={articleStrings.addModal.title}
+      title={strings.articleAddModal.title}
       extraTitleClassName="serlo-h3 mb-4 mt-5"
     >
       <div className="mx-side">
         <p>
-          {replacePlaceholders(articleStrings.addModal.introText, {
+          {replacePlaceholders(strings.articleAddModal.introText, {
             break: <br />,
             exercises: strings.categories.exercises,
             exerciseFolder: strings.entities.exerciseFolder,
@@ -94,7 +91,7 @@ export function ArticleAddModal({
             videos: strings.categories.videos,
           })}
         </p>
-        <p className="mt-4">{articleStrings.addModal.introText2}</p>
+        <p className="mt-4">{strings.articleAddModal.introText2}</p>
         <ArticleRelatedMagicInput
           addEntry={addEntry}
           showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
