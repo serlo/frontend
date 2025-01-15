@@ -1,4 +1,4 @@
-import { PagePartnersRenderer } from '@editor/plugins/page-partners/renderer'
+import Image from 'next/image'
 
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
@@ -118,7 +118,14 @@ export function LandingDE({ data }: LandingDEProps) {
           >
             Partner und Förderer
           </h3>
-          <PagePartnersRenderer />
+          <div className="mx-side mt-auto flex max-w-5xl justify-center pb-20 sm:mx-auto">
+            <Image
+              src="/_assets/img/donations/partners.png"
+              alt="Partner und Förderer Logos"
+              width="840"
+              height="260"
+            />
+          </div>
           <Link
             className={cn(`
               serlo-button-with-eyebrows mx-auto mt-12 hidden
