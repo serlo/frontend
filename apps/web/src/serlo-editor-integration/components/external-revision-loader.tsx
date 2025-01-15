@@ -1,7 +1,6 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import { TemplatePluginType } from '@editor/package'
 import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
@@ -48,7 +47,6 @@ export function ExternalRevisionLoader<T>({
   const [showRevisions, setShowRevisions] = useState(false)
 
   const { strings } = useInstanceData()
-  const editorStrings = useEditStrings()
 
   const dispatch = useAppDispatch()
   const handleReplace = useCallback(
@@ -80,7 +78,7 @@ export function ExternalRevisionLoader<T>({
       <span onClick={() => setShowRevisions(true)}>
         <button className="serlo-button-edit-secondary serlo-tooltip-trigger">
           <SimpleTooltip
-            text={editorStrings.edtrIo.importOther}
+            text={strings.externalRevisions.importOther}
             className="-left-40"
           />
           <FaIcon icon={faFileImport} className="text-md" />
@@ -90,15 +88,15 @@ export function ExternalRevisionLoader<T>({
       <ModalWithCloseButton
         isOpen={showRevisions}
         setIsOpen={setShowRevisions}
-        title={editorStrings.edtrIo.importOther}
+        title={strings.externalRevisions.importOther}
         className="max-h-[80vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto pt-0"
       >
         <>
           <p className="serlo-p">
-            {editorStrings.edtrIo.importOtherExplanation}
+            {strings.externalRevisions.importOtherExplanation}
             <br />
             <br />
-            <b>{editorStrings.edtrIo.importOtherWarning}</b>
+            <b>{strings.externalRevisions.importOtherWarning}</b>
           </p>
           <div className="mx-side">
             <UuidUrlInput
@@ -109,7 +107,7 @@ export function ExternalRevisionLoader<T>({
                 _taxType?: unknown
               ) => (
                 <AddButton
-                  text={editorStrings.edtrIo.importOtherButton}
+                  text={strings.externalRevisions.importOtherButton}
                   onClick={() => fetchRevisionDataByUuid(id)}
                 />
               )}

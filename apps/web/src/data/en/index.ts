@@ -244,6 +244,14 @@ export const instanceData = {
       importedContentNote: 'This revision includes imported content',
       importedContentIdentifier: 'Content imported from',
     },
+    externalRevisions: {
+      importOther: 'Import content from other entity',
+      importOtherExplanation:
+        "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
+      importOtherWarning:
+        'Warning: This overwrites everything that is already present in this editor!',
+      importOtherButton: 'Import content',
+    },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
       defaultMessage: 'So sorry, we ran into a problem loading this content.',
