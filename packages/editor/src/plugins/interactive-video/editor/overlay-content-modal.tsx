@@ -14,7 +14,7 @@ export function OverlayContentModal({
   mark: InteractiveVideoProps['state']['marks'][number]
   onClose: () => void
 }) {
-  const { title, autoOpen, mandatory, forceRewatch, child } = mark
+  const { title, autoOpen, mandatory, child } = mark
   const pluginStrings = useEditStrings().plugins.interactiveVideo
 
   const titleRef = useRef<HTMLInputElement>(null)
@@ -73,15 +73,6 @@ export function OverlayContentModal({
             }}
           />{' '}
           {pluginStrings.mandatoryLabel}
-        </label>
-
-        <label className="serlo-tooltip-trigger cursor-pointer">
-          <EditorTooltip text={pluginStrings.forceRewatchExplanation} />
-          <SwitchButton
-            isOn={forceRewatch.value}
-            onClick={() => forceRewatch.set(!forceRewatch.value)}
-          />{' '}
-          {pluginStrings.forceRewatchLabel}
         </label>
       </div>
       <div className="mx-side mt-16">{child.render()}</div>
