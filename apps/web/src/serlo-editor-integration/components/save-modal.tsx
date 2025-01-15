@@ -53,7 +53,6 @@ export function SaveModal({
 
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
-  const maySave = licenseAccepted && changesFilled
   const isNoEntity = serializedRoot
     ? [
         TemplatePluginType.User,
@@ -61,8 +60,9 @@ export function SaveModal({
         TemplatePluginType.Taxonomy,
       ].includes(serializedRoot.plugin as TemplatePluginType)
     : false
+  const maySave = isNoEntity || (licenseAccepted && changesFilled)
   const needsNoReview = isInTestArea || isNoEntity
-  const isOnlyText = needsNoReview && !licenseId && !changes
+  const isOnlyText = isNoEntity || (needsNoReview && !licenseId && !changes)
 
   const showChanges = serializedRoot ? !isNoEntity : true
 
