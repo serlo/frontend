@@ -244,11 +244,6 @@ export const editStrings = {
       title: 'Experimental State-Paste Plugin',
       description: 'only on staging',
     },
-    pagePartners: {
-      title: 'Partner List',
-      description:
-        'Only for partner page (List of partner logos like on de.serlo.org/)',
-    },
     rows: {
       title: 'Rows',
       description: 'Rows plugin holds other plugins',

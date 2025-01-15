@@ -254,11 +254,6 @@ export const editStrings = {
       title: '(experiment) Editor State einfügen',
       description: 'nur in staging',
     },
-    pagePartners: {
-      title: 'Partner Liste',
-      description:
-        'Nur für die Partnerseite (Liste der Partnerlogos wie auf de.serlo.org)',
-    },
     rows: {
       title: 'Zeilen',
       description: 'Rows plugin holds other plugins',
