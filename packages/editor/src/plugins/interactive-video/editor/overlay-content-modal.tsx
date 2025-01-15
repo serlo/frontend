@@ -3,7 +3,7 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { type InteractiveVideoProps } from '..'
 
@@ -16,9 +16,12 @@ export function OverlayContentModal({
 }) {
   const { title, autoOpen, mandatory, child } = mark
   const pluginStrings = useEditStrings().plugins.interactiveVideo
-
   const titleRef = useRef<HTMLInputElement>(null)
-  const refocusedCount = useRef<number>(0)
+
+  // since there is no reliable way of keeping the input in focus
+  // we instead make sure it is blurred when the modal opens
+  // this way the focus wont move while the user is typing
+  useEffect(() => titleRef.current?.blur(), [])
 
   return (
     <EditorModal
@@ -34,13 +37,6 @@ export function OverlayContentModal({
       </div>
       <input
         ref={titleRef}
-        onBlur={(e) => {
-          // hack to prevent the exercise from stealing focus when loading
-          // it seems it's being blured more than once and "> 2" worked well in testing
-          if (refocusedCount.current > 2) return
-          setTimeout(() => e.target.focus())
-          refocusedCount.current++
-        }}
         value={title.value}
         onChange={(e) => title.set(e.target.value)}
         className={cn(
