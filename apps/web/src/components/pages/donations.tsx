@@ -1,4 +1,3 @@
-import { PagePartnersRenderer } from '@editor/plugins/page-partners/renderer'
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import Image from 'next/image'
 
@@ -177,15 +176,18 @@ export function Donations() {
       </div>
 
       <footer>
-        <div
-          className={cn(`
-            -mb-20 -mt-28 bg-brand-100 p-7 px-side pt-28 text-center text-white
-          `)}
-        >
+        <div className="-mt-28 bg-brand-100 p-7 px-side pt-28 text-center text-white">
           <h3 className="mx-auto mb-8 text-lg font-bold text-almost-black">
             Partner und Förderer
           </h3>
-          <PagePartnersRenderer />
+          <div className="mx-side mt-auto flex max-w-5xl justify-center sm:mx-auto">
+            <Image
+              src="/_assets/img/donations/partners.png"
+              alt="Partner und Förderer Logos"
+              width="840"
+              height="260"
+            />
+          </div>
         </div>
         <div className="text-md mb-[3.5rem] bg-white py-8 text-center text-brand ">
           <a className="hover:underline" href="/datenschutz" target="_blank">
