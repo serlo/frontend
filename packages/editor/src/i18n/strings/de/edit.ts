@@ -217,13 +217,13 @@ export const editStrings = {
       defaultTitle: 'Aufgabe',
       autoOpenLabel: 'Automatisch öffnen',
       autoOpenExplanation:
-        'Der Inhalt öffnet wird automatisch angezeigt, wenn das Video dort ankommt',
+        'Die Aufgabe wird automatisch geöffnet, wenn das Video dort ankommt',
       mandatoryLabel: 'Verpflichtende Aufgabe',
       mandatoryExplanation:
         'Die Aufgabe muss richtig beantwortet werden, um das Video weiter abzuspielen',
       forceRewatchLabel: 'Auto-Wiederholung',
       forceRewatchExplanation:
-        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lerner per Button den letzten Abschnitt noch mal anschauen',
+        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lernende per Button den letzten Abschnitt noch mal anschauen',
       editMark: 'Bearbeiten',
       removeMark: 'Löschen',
       removeAllMarks: 'Alle Aufgaben löschen',

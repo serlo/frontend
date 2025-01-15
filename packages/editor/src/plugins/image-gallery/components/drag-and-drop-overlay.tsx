@@ -36,7 +36,7 @@ export function DragAndDropOverlay({
       ref={ref}
       onClick={onClick}
       className={cn(
-        'absolute inset-0 bg-white active:bg-opacity-60',
+        'absolute inset-0 bg-[#fefefe] active:bg-opacity-60',
         isDragging
           ? 'cursor-grabbing bg-opacity-20'
           : 'cursor-grab bg-opacity-0'

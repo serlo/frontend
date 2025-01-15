@@ -48,6 +48,7 @@ export function MarkOverlay({
   function closeOverlay() {
     if (!player) return
     close()
+    player.currentTime = player.currentTime + 0.01
     setTimeout(() => player.$el?.focus())
   }
 

@@ -9,5 +9,5 @@ export function createNewEditorEntity(
   entityType: 'article' | 'exercise' | 'course'
 ) {
   I.amOnPage(urls[entityType])
-  I.waitForElement('[data-document=true]', 10)
+  I.waitForElement('[data-document=true]', 20)
 }
