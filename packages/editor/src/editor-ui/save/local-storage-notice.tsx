@@ -56,7 +56,7 @@ export function getStateFromLocalStorage() {
   return parsedData[window.location.pathname]
 }
 
-export function storeStateToLocalStorage(state: StateOrNull) {
+function storeStateToLocalStorage(state: StateOrNull) {
   // eslint-disable-next-line no-console
   console.log('editor: saving state in browser localstorage')
 

@@ -71,6 +71,7 @@ export function SerloEditor({
               <SaveButton
                 onSave={onSave}
                 isChanged={hasPendingChanges}
+                selectRootDocument={editor.selectRootDocument}
                 isInTestArea={isInTestArea}
               />
               {isNewEntity ? (

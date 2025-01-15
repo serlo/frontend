@@ -1,3 +1,4 @@
+import type { AnyEditorDocument } from '@editor/package'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -12,10 +13,12 @@ import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 export function SaveButton({
   onSave,
   isChanged,
+  selectRootDocument,
   isInTestArea,
 }: {
   onSave: SerloEditorProps['onSave']
   isChanged: boolean
+  selectRootDocument: () => AnyEditorDocument
   isInTestArea?: boolean
 }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false)
@@ -42,6 +45,7 @@ export function SaveButton({
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         onSave={onSave}
+        selectRootDocument={selectRootDocument}
         isInTestArea={isInTestArea}
       />
     </div>,

@@ -517,18 +517,8 @@ export const editStrings = {
     extendedSettings: 'Extended Settings',
     close: 'Close',
     save: 'Save',
-    saveWithReview: 'Save and get review',
     cancel: 'Cancel',
     saving: 'Saving…',
-    missingChanges: 'You need to fill out the changes you made',
-    missingLicenseTerms: 'You need to accept the license terms',
-    missingChangesAndLicenseTerms:
-      'You need to fill out the changes you made and accept the license terms',
-    errorSaving: 'An error occurred during saving.',
-    saveLocallyAndRefresh:
-      'You can store the revision locally, refresh the page and try to save again.',
-    revisionSaved: 'Revision saved',
-    saveRevision: 'Save revision',
     changes: 'Describe your changes to the content',
     current: 'Current',
     author: 'Author',

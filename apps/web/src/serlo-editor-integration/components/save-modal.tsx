@@ -1,10 +1,5 @@
-import { LocalStorageButton } from '@editor/editor-ui/save/local-storage-button'
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { selectStaticDocument, useStore } from '@editor/store'
-import { ROOT } from '@editor/store/root/constants'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { TemplatePluginType, type AnyEditorDocument } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { isEmpty } from 'ramda'
 import { useEffect, useState } from 'react'
 
 import type { SerloEditorProps } from '../serlo-editor'
@@ -17,28 +12,27 @@ import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
+import { LocalStorageButton } from '@/serlo-editor-integration/components/local-storage-button'
 
 export function SaveModal({
   open,
   setOpen,
   onSave,
+  selectRootDocument,
   isInTestArea,
 }: {
   open: boolean
   setOpen: (arg0: boolean) => void
   onSave: SerloEditorProps['onSave']
+  selectRootDocument: () => AnyEditorDocument
   isInTestArea?: boolean
 }) {
-  const store = useStore()
-  // can be empty before first change
-  const serializedRoot = isEmpty(store.getState().documents)
-    ? undefined
-    : selectStaticDocument(store.getState(), ROOT)
+  const serializedRoot = selectRootDocument()
   const serializedRootState =
     serializedRoot?.state as SupportedTypesSerializedState
 
-  const licenseId = serializedRootState?.licenseId
-  const changes = serializedRootState?.changes
+  const licenseId = serializedRootState.licenseId
+  const changes = serializedRootState.changes
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
@@ -49,7 +43,7 @@ export function SaveModal({
   const [changesText, setChangesText] = useState(changes ?? '')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
-  const { licenses } = useInstanceData()
+  const { licenses, strings } = useInstanceData()
 
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
@@ -78,7 +72,6 @@ export function SaveModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
-  const edtrIoStrings = useEditStrings().edtrIo
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
 
@@ -86,7 +79,7 @@ export function SaveModal({
     <ModalWithCloseButton
       isOpen={open}
       setIsOpen={setOpen}
-      title={edtrIoStrings.save}
+      title={strings.saveButton.save}
       className={cn(
         !isOnlyText &&
           'top-8 max-h-full w-[900px] -translate-x-1/2 translate-y-0 overflow-y-auto pb-20'
@@ -95,7 +88,7 @@ export function SaveModal({
       <div className="mx-side">
         {renderChanges()}
         {renderLicense()}
-        {isOnlyText ? edtrIoStrings.ready : null}
+        {isOnlyText ? strings.saveButton.ready : null}
         <hr className="mb-8 mt-8" />
         {renderAlert()}
         {renderModalButtons()}
@@ -110,7 +103,7 @@ export function SaveModal({
           className="serlo-button-transparent"
           onClick={() => setOpen(false)}
         >
-          {edtrIoStrings.cancel}
+          {strings.saveButton.cancel}
         </button>
         <button
           onClick={() => {
@@ -132,10 +125,10 @@ export function SaveModal({
           title={getSaveHint()}
         >
           {pending
-            ? edtrIoStrings.saving
+            ? strings.saveButton.saving
             : needsNoReview
-              ? edtrIoStrings.save
-              : edtrIoStrings.saveWithReview}
+              ? strings.saveButton.save
+              : strings.saveButton.saveWithReview}
         </button>
       </div>
     )
@@ -144,11 +137,11 @@ export function SaveModal({
   function getSaveHint() {
     if (maySave) return undefined
     if (licenseAccepted && !changesFilled) {
-      return edtrIoStrings.missingChanges
+      return strings.saveButton.missingChanges
     } else if (!licenseAccepted && changesFilled) {
-      return edtrIoStrings.missingLicenseTerms
+      return strings.saveButton.missingLicenseTerms
     } else {
-      return edtrIoStrings.missingChangesAndLicenseTerms
+      return strings.saveButton.missingChangesAndLicenseTerms
     }
   }
 
@@ -156,10 +149,13 @@ export function SaveModal({
     if (!hasError) return null
     return (
       <InfoPanel type="warning" icon={faExclamationCircle}>
-        {edtrIoStrings.errorSaving}
+        {strings.saveButton.errorSaving}
         <br />
-        {edtrIoStrings.saveLocallyAndRefresh}
-        <LocalStorageButton open={open} />
+        {strings.saveButton.saveLocallyAndRefresh}
+        <LocalStorageButton
+          open={open}
+          selectRootDocument={selectRootDocument}
+        />
       </InfoPanel>
     )
   }
@@ -173,7 +169,7 @@ export function SaveModal({
           highlightMissingFields && !changesFilled && 'bg-red-100'
         )}
       >
-        {edtrIoStrings.changes}{' '}
+        {strings.saveButton.changes}{' '}
         <span className="font-bold text-red-500">*</span>
         <textarea
           autoFocus

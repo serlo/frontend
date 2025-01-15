@@ -533,18 +533,8 @@ export const editStrings = {
     extendedSettings: 'Erweiterte Einstellungen',
     close: 'Schließen',
     save: 'Speichern',
-    saveWithReview: 'Speichern und reviewen lassen',
     cancel: 'Abbrechen',
     saving: 'Speichert…',
-    missingChanges: 'Du musst zuerst die Änderungen ausfüllen.',
-    missingLicenseTerms: 'Du musst zuerst die Lizenzbedingungen akzeptieren.',
-    missingChangesAndLicenseTerms:
-      'Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.',
-    errorSaving: 'Es trat ein Fehler beim Speichern auf.',
-    saveLocallyAndRefresh:
-      'Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.',
-    revisionSaved: 'Bearbeitung gespeichert',
-    saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
     current: 'Aktuell',
     author: 'Autor*in',

@@ -206,6 +206,8 @@ export const instanceData = {
       hasChanges: 'There have been changes in this area',
       positionForGrouped: 'This %exercise% is part of %title%.',
       helpLink: 'Revision Help',
+      revisionSaved: 'Revision saved',
+      saveRevision: 'Save revision',
     },
     revisionHistory: {
       changes: 'Changes',
@@ -491,6 +493,18 @@ export const instanceData = {
     saveButton: {
       noChangesWarning: 'Nothing changed so there is no need to save yet',
       save: 'Save',
+      saveWithReview: 'Save and get review',
+      ready: 'Ready to save?',
+      cancel: 'Cancel',
+      saving: 'Saving…',
+      missingChanges: 'You need to fill out the changes you made',
+      missingLicenseTerms: 'You need to accept the license terms',
+      missingChangesAndLicenseTerms:
+        'You need to fill out the changes you made and accept the license terms',
+      errorSaving: 'An error occurred during saving.',
+      saveLocallyAndRefresh:
+        'You can store the revision locally, refresh the page and try to save again.',
+      changes: 'Describe your changes to the content',
       confirmRouteChange: 'Are you sure you want to leave without saving?',
     },
   },
