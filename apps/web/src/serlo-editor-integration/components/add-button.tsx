@@ -1,6 +1,6 @@
-import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
+import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'
 
 interface AddButtonProps {
