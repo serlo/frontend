@@ -10,11 +10,13 @@ import {
   useAppDispatch,
   useStore,
 } from '@editor/store'
+import { isRowsDocument } from '@editor/types/plugin-type-guards'
 import { either as E } from 'fp-ts'
 
 import { type AiGenerationPluginProps } from '.'
 import { PromptForm } from './components/prompt-form'
 import { StateDecoder } from './decoder'
+import { extractTextAndLatex } from './helper/extract-text-and-latex'
 
 export function AiGenerationEditor(props: AiGenerationPluginProps) {
   const aiStrings = useEditStrings().plugins.aiGeneration
@@ -34,18 +36,37 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
 
   async function handleSubmit(prompt: string) {
     const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
+    const rowsDocument = parentPlugin
+      ? selectStaticDocument(store.getState(), parentPlugin.id)
+      : undefined
+
     // for now make sure we only use it in rows plugin until we provide a list of allowed plugins
-    if (
-      parentPlugin === null ||
-      selectStaticDocument(store.getState(), parentPlugin.id)?.plugin !==
-        EditorPluginType.Rows
-    ) {
+    if (!parentPlugin || !rowsDocument || !isRowsDocument(rowsDocument)) {
       const msg = 'Ai generation can only be used inside a rows plugin!'
       showToastNotice(msg)
       // eslint-disable-next-line no-console
       console.error(msg)
       return
     }
+
+    const index = rowsDocument.state.findIndex(({ id }) => id === props.id)
+
+    const beforeDocument = {
+      plugin: EditorPluginType.Rows,
+      state: rowsDocument.state.slice(0, index),
+    }
+
+    const afterDocument = {
+      plugin: EditorPluginType.Rows,
+      state: rowsDocument.state.slice(index),
+    }
+
+    const before = extractTextAndLatex(beforeDocument)
+    const after = extractTextAndLatex(afterDocument)
+
+    // for debug
+    console.log({ before })
+    console.log({ after })
 
     const response = await fetch(
       'https://editor.serlo.dev/ai/generate-content',
@@ -56,8 +77,8 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
         },
         body: JSON.stringify({
           prompt,
-          before: '',
-          after: '',
+          before,
+          after,
         }),
       }
     )
