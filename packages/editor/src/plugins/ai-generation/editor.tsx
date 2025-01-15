@@ -33,6 +33,20 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
   }
 
   async function handleSubmit(prompt: string) {
+    const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
+    // for now make sure we only use it in rows plugin until we provide a list of allowed plugins
+    if (
+      parentPlugin === null ||
+      selectStaticDocument(store.getState(), parentPlugin.id)?.plugin !==
+        EditorPluginType.Rows
+    ) {
+      const msg = 'Ai generation can only be used inside a rows plugin!'
+      showToastNotice(msg)
+      // eslint-disable-next-line no-console
+      console.error(msg)
+      return
+    }
+
     const response = await fetch(
       'https://editor.serlo.dev/ai/generate-content',
       {
@@ -55,21 +69,6 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
     if (E.isLeft(decoded)) return throwError()
 
     const content = decoded.right
-
-    const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
-
-    // for now make sure we only use it in rows plugin until we provide a list of allowed plugins
-    if (
-      parentPlugin === null ||
-      selectStaticDocument(store.getState(), parentPlugin.id)?.plugin !==
-        EditorPluginType.Rows
-    ) {
-      const msg = 'Ai generation can only be used inside a rows plugin!'
-      showToastNotice(msg)
-      // eslint-disable-next-line no-console
-      console.error(msg)
-      return
-    }
 
     for (const document of content.state) {
       dispatch(
