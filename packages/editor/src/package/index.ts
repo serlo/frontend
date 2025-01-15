@@ -26,6 +26,7 @@ export { EditorPluginType } from '@editor/types/editor-plugin-type'
  */
 export * from '@editor/types/plugin-type-guards'
 export * from './static-is-plugin-empty'
+export { extractStringFromTextDocument } from '@editor/plugins/text/utils/static-extract-text'
 export type * from '@editor/types/editor-plugins'
 
 /**
