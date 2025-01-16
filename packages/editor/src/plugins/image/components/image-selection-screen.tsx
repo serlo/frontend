@@ -46,27 +46,25 @@ export function ImageSelectionScreen({
     config.onMultipleUpload?.([])
   }
 
-  const showPixabayButton = !disableFileUpload
-
   return (
     <div
       className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
       data-qa="plugin-image-empty-wrapper"
     >
       <div className="mx-auto my-8 w-[60%]">
-        <UploadButton
-          config={config}
-          src={src}
-          onFocus={() => setIsAButtonFocused(true)}
-          onBlur={() => setIsAButtonFocused(false)}
-        />
-        {showPixabayButton && (
-          <PixabaySearch
+        {disableFileUpload ? null : (
+          <UploadButton
+            config={config}
+            src={src}
             onFocus={() => setIsAButtonFocused(true)}
             onBlur={() => setIsAButtonFocused(false)}
-            onSelectImage={onSelectPixabayImage}
           />
         )}
+        <PixabaySearch
+          onFocus={() => setIsAButtonFocused(true)}
+          onBlur={() => setIsAButtonFocused(false)}
+          onSelectImage={onSelectPixabayImage}
+        />
         <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
           {imageStrings.imageUrl}
         </span>
