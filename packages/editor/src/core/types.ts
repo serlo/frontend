@@ -28,6 +28,7 @@ export interface BaseEditor {
   i18n: LanguageData
   history: HistoryData
   selectRootDocument: () => AnyEditorDocument
+  dispatchReplaceRootDocument: (pluginType: string, state: unknown) => void
 }
 
 export type GetDocument = () => DocumentState | null

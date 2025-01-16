@@ -10,6 +10,7 @@ import {
   persistHistory,
   undo,
   redo,
+  runReplaceDocumentSaga,
   selectPendingChanges,
   selectHasUndoActions,
   selectHasRedoActions,
@@ -45,6 +46,12 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
   const selectRootDocument = useCallback(() => {
     return selectStaticDocument(store.getState(), ROOT)
   }, [store])
+  const dispatchReplaceRootDocument = useCallback(
+    (pluginType: string, state: unknown) => {
+      dispatch(runReplaceDocumentSaga({ id: ROOT, pluginType, state }))
+    },
+    [dispatch]
+  )
 
   const editor = <SubDocument id={ROOT} />
 
@@ -72,5 +79,6 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
       dispatchPersistHistory,
     },
     selectRootDocument,
+    dispatchReplaceRootDocument,
   })
 }
