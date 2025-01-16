@@ -3,7 +3,7 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { type InteractiveVideoProps } from '..'
 
@@ -17,11 +17,15 @@ export function OverlayContentModal({
   const { title, autoOpen, mandatory, child } = mark
   const pluginStrings = useEditStrings().plugins.interactiveVideo
   const titleRef = useRef<HTMLInputElement>(null)
+  const [mounted, setMounted] = useState(false)
 
   // since there is no reliable way of keeping the input in focus
   // we instead make sure it is blurred when the modal opens
   // this way the focus wont move while the user is typing
-  useEffect(() => titleRef.current?.blur(), [])
+  useEffect(() => {
+    titleRef.current?.blur()
+    setMounted(true)
+  }, [mounted])
 
   return (
     <EditorModal
