@@ -13,6 +13,7 @@ import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import {
   createArticleIntroduction,
   createMultimediaPlugin,
@@ -27,6 +28,7 @@ import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/articl
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
+import { taxonomyTypePlugin } from '@editor/plugins/serlo-template-plugins/taxonomy'
 import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
@@ -76,6 +78,10 @@ export function createBasicPlugins(
     {
       type: EditorPluginType.Video,
       plugin: videoPlugin,
+    },
+    {
+      type: EditorPluginType.InteractiveVideo,
+      plugin: interactiveVideoPlugin,
     },
     {
       type: EditorPluginType.Spoiler,
@@ -160,6 +166,10 @@ export function createBasicPlugins(
     {
       type: TemplatePluginType.Page,
       plugin: pageTypePlugin,
+    },
+    {
+      type: TemplatePluginType.Taxonomy,
+      plugin: taxonomyTypePlugin,
     },
     {
       type: TemplatePluginType.User,

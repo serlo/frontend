@@ -57,10 +57,12 @@ export function SerloEditor({
           EditorPluginType.Course,
           TemplatePluginType.Page,
           EditorPluginType.PageLayout,
+          TemplatePluginType.Taxonomy,
           TemplatePluginType.User,
           EditorPluginType.ArticleIntroduction,
           EditorPluginType.Injection,
           EditorPluginType.Anchor,
+          EditorPluginType.InteractiveVideo,
         ]}
         initialState={initialState}
       >
