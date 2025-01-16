@@ -82,8 +82,6 @@ export default async function handler(
 
   const nodeResult = (await nodeResponse.json()) as unknown
 
-  console.log(nodeResult)
-
   if (!NodeData.is(nodeResult)) {
     res.status(500).json({ message: 'Failed to get node: ' + id })
     return
