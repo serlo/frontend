@@ -7,14 +7,16 @@ const AccessTokenResponse = t.type({
   access_token: t.string,
 })
 
+// partial
 const NodeData = t.type({
   id: t.string,
   title: t.string,
   description: t.string,
   externalId: t.string,
   sourceId: t.string,
-  url: t.string,
+  url: t.any,
   isAiGenerated: t.boolean,
+  metadata: t.type({ Amb: t.any, Tags: t.any, SerloEditorContent: t.string }),
 })
 
 export default async function handler(
@@ -80,6 +82,8 @@ export default async function handler(
 
   const nodeResult = (await nodeResponse.json()) as unknown
 
+  console.log(nodeResult)
+
   if (!NodeData.is(nodeResult)) {
     res.status(500).json({ message: 'Failed to get node: ' + id })
     return
@@ -91,8 +95,8 @@ export default async function handler(
     description: nodeResult.description,
     externalId: nodeResult.externalId,
     sourceId: nodeResult.sourceId,
-    url: nodeResult.url,
     isAiGenerated: nodeResult.isAiGenerated,
+    editorState: nodeResult.metadata.SerloEditorContent,
   })
 }
 

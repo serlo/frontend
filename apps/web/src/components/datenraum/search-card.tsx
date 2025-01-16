@@ -1,6 +1,7 @@
 'use client'
 
 import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import { useQuery } from '@tanstack/react-query'
 import { ImportIcon, NewspaperIcon, SquareCheckBigIcon } from 'lucide-react'
 import { useRouter } from 'next/router'
@@ -45,8 +46,17 @@ async function fetchContent({ queryKey }: { queryKey: string[] }) {
   const fetchUrl = `/api/datenraum/node?id=${id}`
   try {
     const result = await fetch(fetchUrl)
-    const stateString = (await result.json()) as AnyEditorDocument[]
-    return stateString
+    const stateObject = (await result.json()) as { editorState: string }
+
+    const editorState = JSON.parse(
+      JSON.parse(decodeURIComponent(stateObject.editorState)) as string
+    ) as AnyEditorDocument
+
+    if (isArticleDocument(editorState)) {
+      return editorState.state.content
+    }
+    // TODO: check for exercise later
+    return editorState
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching content:', error)
