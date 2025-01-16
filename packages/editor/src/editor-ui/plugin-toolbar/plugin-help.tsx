@@ -24,7 +24,8 @@ export function PluginHelp({
 
   if (lang !== 'de' || !data) return null
 
-  const { video, shortExplanation } = data
+  const video = Object.hasOwn(data, 'video') ? data.video : undefined
+  const { shortExplanation } = data
 
   return (
     <>
