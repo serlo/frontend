@@ -81,7 +81,7 @@ export function ShareModal({
       const data = (await res.json()) as string
       if (!res.ok) {
         throw new Error(
-          'injection-content API call failed with error: ' + data.toString()
+          'bildungsraum-share API call failed with error: ' + data.toString()
         )
       }
       await navigator.clipboard.writeText(JSON.stringify(data))
