@@ -95,20 +95,7 @@ function isEditorInDOM(editor: Editor) {
   try {
     // Get DOMNode of the whole editor
     const domNode = ReactEditor.toDOMNode(editor, editor)
-    if (document.body.contains(domNode)) {
-      return true
-    }
-
-    // Fallback to checking if it's in the Shadow DOM
-    let rootNode = domNode.getRootNode() as ShadowRoot | Document
-    while (rootNode instanceof ShadowRoot) {
-      if (rootNode.host.contains(domNode)) {
-        return true
-      }
-      rootNode = rootNode.host.getRootNode() as ShadowRoot | Document
-    }
-
-    return false
+    return document.body.contains(domNode)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn('Error checking if editor is in DOM. Not mounted!', error)

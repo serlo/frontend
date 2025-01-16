@@ -3,6 +3,21 @@
 @import './components.css';
 @import './utilities.css';
 
+/*
+* Reset all styles outside of the editor (trying to prevent style collisions)
+*/
+@layer base {
+  .editor-core {
+    all: initial;
+    display: block;
+
+    /* Reapply Tailwind's base styles who also get reset */
+    @apply text-base antialiased;
+    @apply m-0 border-0 p-0;
+    @apply font-sans leading-normal;
+  }
+}
+
 /* stop body from scrolling when a modal is open */
 body.ReactModal__Body--open {
   overflow: hidden;

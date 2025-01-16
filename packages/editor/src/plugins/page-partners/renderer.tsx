@@ -22,9 +22,9 @@ const partners = [
     padding: 10,
   },
   {
-    name: 'Europäische Union',
+    name: 'Europäische Kommission',
     logo: '/_assets/img/landing/partners/logo_eu.svg',
-    padding: 22,
+    padding: 0,
   },
   {
     name: 'Deloitte',

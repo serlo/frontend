@@ -20,7 +20,7 @@ export function SlateOverlay(props: SlateOverlayProps) {
     // select the correct anchor
     const timeout = setTimeout(() => {
       if (!wrapper.current) return
-      const anchorRect = getAnchorRect(editor, anchor, wrapper.current)
+      const anchorRect = getAnchorRect(editor, anchor)
       const parentRect = wrapper.current
         .closest('.rows-editor-renderer-container')
         ?.getBoundingClientRect()
@@ -57,13 +57,11 @@ export function SlateOverlay(props: SlateOverlayProps) {
   )
 }
 
-// If provided an anchor element, returns its size and position (DOMRect). Also
-// checks the Shadow DOM, otherwise retrieves the native DOM selection, and
-// yields a DOMRect based on it.
+// If provided an anchor element, returns its size and position (DOMRect). Otherwise
+// retrieves the native DOM selection, and yields a DOMRect based on it.
 function getAnchorRect(
   editor: ReactEditor,
-  anchor: CustomElement | undefined,
-  wrapper: HTMLDivElement
+  anchor: CustomElement | undefined
 ): DOMRect | null {
   if (anchor) {
     return (
@@ -71,33 +69,10 @@ function getAnchorRect(
     )
   }
 
-  const shadowRect = getRectWithinShadowDom(wrapper)
-  if (shadowRect) return shadowRect
-
   const nativeDomSelection = window.getSelection()
   if (nativeDomSelection && nativeDomSelection.rangeCount > 0) {
     return nativeDomSelection.getRangeAt(0).getBoundingClientRect()
   }
 
   return null
-}
-
-function getRectWithinShadowDom(wrapper: HTMLDivElement): DOMRect | null {
-  const rootNode = wrapper.getRootNode() as ShadowRoot | Document
-
-  if (!(rootNode instanceof ShadowRoot)) return null
-
-  const activeElement = rootNode.activeElement as HTMLElement
-  if (activeElement) {
-    const rect = activeElement.getBoundingClientRect()
-    return new DOMRect(rect.left, rect.top, rect.width, rect.height)
-  }
-
-  const shadowHostRect = rootNode.host.getBoundingClientRect()
-  return new DOMRect(
-    shadowHostRect.left,
-    shadowHostRect.top,
-    shadowHostRect.width,
-    shadowHostRect.height
-  )
 }

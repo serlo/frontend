@@ -1,3 +1,4 @@
+import { sanitizeHref } from '@editor/utils/sanitize-href'
 import { createElement, useCallback } from 'react'
 import { RenderElementProps, RenderLeafProps } from 'slate-react'
 
@@ -29,7 +30,7 @@ export const useSlateRenderHandlers = ({
       if (element.type === 'a') {
         return (
           <a
-            href={element.href}
+            href={sanitizeHref(element.href)}
             className="serlo-link cursor-pointer"
             {...attributes}
           >

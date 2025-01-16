@@ -1,10 +1,8 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { SwitchButton } from '@editor/editor-ui/switch-button'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useRef } from 'react'
 
 import { type InteractiveVideoProps } from '..'
@@ -20,6 +18,7 @@ export function OverlayContentModal({
   const pluginStrings = useEditStrings().plugins.interactiveVideo
 
   const titleRef = useRef<HTMLInputElement>(null)
+  const refocusedCount = useRef<number>(0)
 
   return (
     <EditorModal
@@ -27,17 +26,21 @@ export function OverlayContentModal({
       setIsOpen={onClose}
       className="bottom-24 top-side h-auto w-full max-w-4xl translate-y-0 overflow-x-auto"
       title={pluginStrings.editOverlayTitle}
-      extraTitleClassName="text-sm font-bold !border-0 mb-1 -mt-2"
-      extraCloseButtonClassName="sr-only"
+      extraTitleClassName="text-sm font-bold !border-0 mb-4 -mt-2.5"
+      extraCloseButtonClassName="mt-0.5"
     >
-      <button
-        className="serlo-button-edit-primary absolute right-7 top-[56px]"
-        onClick={onClose}
-      >
-        {pluginStrings.saveButton} <FaIcon icon={faCheck} />
-      </button>
+      <div className="absolute right-16 top-6 text-sm italic text-gray-600">
+        {pluginStrings.saveInfo}
+      </div>
       <input
         ref={titleRef}
+        onBlur={(e) => {
+          // hack to prevent the exercise from stealing focus when loading
+          // it seems it's being blured more than once and "> 2" worked well in testing
+          if (refocusedCount.current > 2) return
+          setTimeout(() => e.target.focus())
+          refocusedCount.current++
+        }}
         value={title.value}
         onChange={(e) => title.set(e.target.value)}
         className={cn(

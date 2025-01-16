@@ -1,20 +1,19 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { getPluginTitle } from '@editor/plugin/helpers/get-plugin-title'
+import { type InteractivePluginType } from '@editor/plugins/exercise/interactive-plugin-types'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { ReactElement } from 'react'
 
-import { EditorTooltip } from '../editor-tooltip'
-import { FaIcon } from '../fa-icon'
+import { PluginHelp } from './plugin-help'
 import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string
+  interactiveExerciseType?: InteractivePluginType | string
   contentControls?: ReactElement
   pluginSettings?: ReactElement
   pluginControls?: ReactElement
-  pluginTooltipText?: string
   pluginTitle?: string
   className?: string
   noWhiteShadow?: true
@@ -22,15 +21,17 @@ interface PluginToolbarProps {
 
 export function PluginToolbar({
   pluginType,
+  interactiveExerciseType,
   contentControls,
   pluginSettings,
   pluginControls,
   pluginTitle,
-  pluginTooltipText,
   className,
   noWhiteShadow,
 }: PluginToolbarProps) {
   const pluginStrings = useEditStrings().plugins
+
+  const title = pluginTitle ?? getPluginTitle(pluginStrings, pluginType)
 
   return (
     <div
@@ -60,15 +61,14 @@ export function PluginToolbar({
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
         <div className="mx-4 text-sm font-bold" data-qa="plugin-type-indicator">
-          {pluginTitle ?? getPluginTitle(pluginStrings, pluginType)}
+          {title}
         </div>
 
-        {pluginTooltipText ? (
-          <span className="serlo-tooltip-trigger ml-[-8px]">
-            <EditorTooltip text={pluginTooltipText} />
-            <FaIcon icon={faCircleQuestion} className="mr-2" />
-          </span>
-        ) : null}
+        {/* Plugin help button & modal */}
+        <PluginHelp
+          pluginType={interactiveExerciseType ?? pluginType}
+          pluginTitle={title}
+        />
 
         {pluginSettings ? (
           <>

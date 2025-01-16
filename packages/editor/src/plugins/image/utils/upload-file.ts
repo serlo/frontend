@@ -60,16 +60,31 @@ async function uploadFile({
     handleError(errorMessage)
   })
 
-  const data = (await result?.json()) as {
+  if (result && !result.ok) {
+    const error = new Error('Failed to get signed URL')
+    handleError(error.message)
+    return Promise.reject(error)
+  }
+
+  const data = (await result?.json().catch(() => null)) as {
     signedUrl: string
     fileUrl: string
+  } | null
+  if (!data) {
+    const error = new Error('Failed to get signed URL')
+    handleError(error.message)
+
+    return Promise.reject(error)
   }
-  if (!data) return Promise.reject(new Error('Could not get signed URL'))
 
   const { signedUrl, fileUrl } = data
 
   const success = await uploadToBucket({ file, signedUrl })
-  if (!success) return Promise.reject(new Error('Could not upload file'))
+  if (!success) {
+    const error = new Error('Failed to upload file')
+    handleError(error.message)
+    return Promise.reject(error)
+  }
   return Promise.resolve(fileUrl)
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor",
-  "version": "0.19.2",
+  "version": "0.21.1",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -51,8 +51,9 @@
     "@serlo/frontend": "workspace:^",
     "@serlo/katex-styles": "1.0.1",
     "@vidstack/react": "next",
-    "dompurify": "^3.2.0",
+    "isomorphic-dompurify": "^2.19.0",
     "lit": "^3.2.1",
+    "motion": "^11.11.17",
     "react": "^18.2.0",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
