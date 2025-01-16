@@ -8,6 +8,7 @@ import {
 } from '@editor/plugin/helpers/editor-learner-event'
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import type { SupportedLanguage } from '@editor/types/language-data'
 
 import { defaultSerloEditorProps } from './config'
@@ -20,6 +21,7 @@ export interface SerloRendererProps {
   state: unknown
   _ltik?: string
   editorVariant: EditorVariant
+  skipMigration?: boolean
   handleLearnerEvent?: (data: LearnerEventData) => void
 }
 
@@ -33,7 +35,9 @@ export function SerloRenderer(props: SerloRendererProps) {
 
   // Side note: Migrated state will not be persisted since we cannot save in
   // static renderer view
-  const { migratedState } = migrate(state, editorVariant)
+  const { migratedState } = props.skipMigration
+    ? { migratedState: { document: state as AnyEditorDocument } }
+    : migrate(state, editorVariant)
 
   // if we load the editStrings here as well, we might as well merge them
   const { staticStrings, editStrings } = editorData[language]
