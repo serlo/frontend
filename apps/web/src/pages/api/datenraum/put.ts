@@ -7,31 +7,6 @@ const AccessTokenResponse = t.type({
   access_token: t.string,
 })
 
-const SearchResponse = t.type({
-  _embedded: t.type({
-    nodes: t.array(t.unknown),
-  }),
-})
-
-const SearchNode = t.type({
-  title: t.string,
-  description: t.string,
-  metadata: t.type({ Amb: t.type({ id: t.string, type: t.array(t.string) }) }),
-  id: t.string,
-  // nodeClass: t.string,
-  // nodeSubClass: ?,
-  // url: t.string,
-  // isAiGenerated: t.boolean,
-  // externalId: t.string,
-  // sourceId: t.string,
-  // highlightTitle: t.string,
-  // highlightDescription: t.string,
-  // matchedTitleTokens: t.array(t.string),
-  // matchedDescriptionTokens: t.array(t.string),
-  // taxonomyTitles: t.array(t.string),
-  // …
-})
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -49,9 +24,20 @@ export default async function handler(
     return
   }
 
-  const { q: query } = req.query
+  const { id, serloId, editorState, title, description } = req.query
 
-  if (!query || Array.isArray(query)) {
+  if (
+    !id ||
+    !serloId ||
+    !editorState ||
+    !title ||
+    !description ||
+    Array.isArray(id) ||
+    Array.isArray(serloId) ||
+    Array.isArray(editorState) ||
+    Array.isArray(title) ||
+    Array.isArray(description)
+  ) {
     res.status(400).json({
       message: 'Query parameter missing or multiple parameter are passed to it',
     })
@@ -81,34 +67,48 @@ export default async function handler(
 
   const { access_token: accessToken } = accessTokenResponseJson
 
-  const searchResponse = await fetch(
-    `https://test.k3s-mbr.uni-potsdam.de/datenraum/api/search/nodes?search=${encodeURIComponent(query)}&offset=0&limit=30`,
-    {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+  // let's go
+
+  const inputData = {
+    '@context': [
+      'https://w3id.org/kim/amb/context.jsonld',
+      {
+        '@language': 'de',
+        content: '@json',
       },
+    ],
+    id: `https://serlo.org/${serloId}`,
+    name: title,
+    description: description,
+    inLanguage: ['de'],
+    type: ['LearningResource', 'Article'],
+    content: editorState,
+  }
+
+  const putResponse = await fetch(
+    `https://test.k3s-mbr.uni-potsdam.de/datenraum/api/core/nodes-v2/${encodeURIComponent(id)}?MetadataFormat=Serlo`,
+    {
+      method: 'PUT',
+      headers: {
+        Accept: '*/*',
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputData),
     }
   )
 
-  const searchResults = (await searchResponse.json()) as unknown
-
-  if (!SearchResponse.is(searchResults)) {
-    res.status(500).json({ message: 'Failed to get search results' })
-    return
-  }
-
-  const nodes = searchResults._embedded.nodes.filter(SearchNode.is)
-
-  res.json(
-    nodes.map(({ title, description, metadata, id }) => {
-      const url = metadata.Amb.id
-      const _type = metadata.Amb.type[1]
-      const type = _type === 'Quiz' ? 'Exercise' : 'Article'
-
-      return { title, description, url, type, id }
-    })
+  // eslint-disable-next-line no-console
+  console.log(putResponse.status, putResponse.statusText)
+  // eslint-disable-next-line no-console
+  console.log(
+    putResponse.headers.get('location'),
+    putResponse.headers.get('Location')
   )
+
+  if (!putResponse.ok)
+    return res.status(500).json({ message: 'Failed to put node' })
+  return res.status(200)
 }
 
 export const config = { api: { externalResolver: true } }

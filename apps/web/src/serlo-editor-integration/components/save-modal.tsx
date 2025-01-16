@@ -1,4 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { selectStaticDocument, useStore } from '@editor/store'
+import { ROOT } from '@editor/store/root/constants'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
@@ -22,6 +24,10 @@ export function SaveModal({
   onSave: SerloEditorProps['onSave']
   isInTestArea?: boolean
 }) {
+  const store = useStore()
+  // can be empty before first change
+  const serializedRoot = selectStaticDocument(store.getState(), ROOT)
+
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
 
@@ -53,13 +59,31 @@ export function SaveModal({
     </ModalWithCloseButton>
   )
 
-  function handleLicenseClick() {
-    showToastNotice(
-      'Danke! Inhalt im Datenraum veröffentlicht 🎉',
-      'success',
-      3000
-    )
-    setOpen(false)
+  async function handleLicenseClick() {
+    if (!serializedRoot) return
+    const exampleSourceID = '06dca4d1-19f3-4fcc-a9d0-de39971f87bc'
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const fetchUrl = `/api/datenraum/put?id=${exampleSourceID}&title=serlo-put-test2&description=test&serloId=${48682}&editorState=${encodeURIComponent(JSON.stringify(serializedRoot.state.content))}`
+    try {
+      const result = await fetch(fetchUrl)
+      if (!result.ok) throw new Error('Failed to put node')
+
+      showToastNotice(
+        'Danke! Inhalt im Datenraum veröffentlicht 🎉',
+        'success',
+        3000
+      )
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error saving content:', error)
+      showToastNotice(
+        'Saving did not work 😢 Please try again later.',
+        'warning',
+        3000
+      )
+    } finally {
+      setOpen(false)
+    }
   }
 
   function renderLicenseCards() {
@@ -77,7 +101,7 @@ export function SaveModal({
         <Card
           key={title}
           className="cursor-pointer bg-sky-50"
-          onClick={handleLicenseClick}
+          onClick={() => handleLicenseClick()}
         >
           <CardHeader>
             <CardTitle className="flex justify-between text-lg">
