@@ -7,16 +7,14 @@ const AccessTokenResponse = t.type({
   access_token: t.string,
 })
 
-const SearchResponse = t.type({
-  _embedded: t.type({
-    nodes: t.array(t.unknown),
-  }),
-})
-
-const SearchNode = t.type({
+const NodeData = t.type({
+  id: t.string,
   title: t.string,
   description: t.string,
-  metadata: t.type({ Amb: t.type({ id: t.string, type: t.array(t.string) }) }),
+  externalId: t.string,
+  sourceId: t.string,
+  url: t.string,
+  isAiGenerated: t.boolean,
 })
 
 export default async function handler(
@@ -36,9 +34,9 @@ export default async function handler(
     return
   }
 
-  const { q: query } = req.query
+  const { id } = req.query
 
-  if (!query || Array.isArray(query)) {
+  if (!id || Array.isArray(id)) {
     res.status(400).json({
       message: 'Query parameter missing or multiple parameter are passed to it',
     })
@@ -49,10 +47,7 @@ export default async function handler(
     'https://keycloak-test.k3s-mbr.uni-potsdam.de/realms/datenraum/protocol/openid-connect/token',
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        // Authorization: `Basic ${btoa(`${cliendId}:${clientSecret}`)}`,
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `client_id=demo&username=${username}&password=${password}&grant_type=password`,
     }
   )
@@ -71,8 +66,10 @@ export default async function handler(
 
   const { access_token: accessToken } = accessTokenResponseJson
 
-  const searchResponse = await fetch(
-    `https://test.k3s-mbr.uni-potsdam.de/datenraum/api/search/nodes?search=${encodeURIComponent(query)}&offset=0&limit=30`,
+  // let's go
+
+  const nodeResponse = await fetch(
+    `https://test.k3s-mbr.uni-potsdam.de/datenraum/api/core/nodes/${encodeURIComponent(id)}?includeRelatedNodes=false`,
     {
       headers: {
         Accept: 'application/json',
@@ -81,24 +78,22 @@ export default async function handler(
     }
   )
 
-  const searchResults = (await searchResponse.json()) as unknown
+  const nodeResult = (await nodeResponse.json()) as unknown
 
-  if (!SearchResponse.is(searchResults)) {
-    res.status(500).json({ message: 'Failed to get search results' })
+  if (!NodeData.is(nodeResult)) {
+    res.status(500).json({ message: 'Failed to get node: ' + id })
     return
   }
 
-  const nodes = searchResults._embedded.nodes.filter(SearchNode.is)
-
-  res.json(
-    nodes.map(({ title, description, metadata }) => {
-      const url = metadata.Amb.id
-      const _type = metadata.Amb.type[1]
-      const type = _type === 'Quiz' ? 'Exercise' : 'Article'
-
-      return { title, description, url, type }
-    })
-  )
+  return res.json({
+    id: nodeResult.id,
+    title: nodeResult.title,
+    description: nodeResult.description,
+    externalId: nodeResult.externalId,
+    sourceId: nodeResult.sourceId,
+    url: nodeResult.url,
+    isAiGenerated: nodeResult.isAiGenerated,
+  })
 }
 
 export const config = {

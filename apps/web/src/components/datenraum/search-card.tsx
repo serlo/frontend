@@ -31,6 +31,7 @@ export const typeTitleMap = {
 } as const
 
 export interface LearningResource {
+  id: string
   url: string
   title: string
   description: string
@@ -39,11 +40,9 @@ export interface LearningResource {
 
 async function fetchContent({ queryKey }: { queryKey: string[] }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_key, url] = queryKey
+  const [_key, id] = queryKey
 
-  const id = url.replace('https://serlo.org/', '')
-
-  const fetchUrl = `/api/frontend/injection-content?href=${id}`
+  const fetchUrl = `/api/datenraum/node?id=${id}`
   try {
     const result = await fetch(fetchUrl)
     const stateString = (await result.json()) as AnyEditorDocument[]
@@ -64,14 +63,14 @@ export default function SearchCard({
 }) {
   const router = useRouter()
 
-  const id = entry.url.replace('https://serlo.org/', '')
+  const serloId = entry.url.replace('https://serlo.org/', '')
 
   const IconComponent = iconMap[entry.type]
 
   const [enabled, setEnabled] = useState(false)
 
   const { data } = useQuery({
-    queryKey: ['contentState', entry.url],
+    queryKey: ['contentState', entry.id],
     queryFn: fetchContent,
     enabled,
   })
@@ -123,7 +122,8 @@ export default function SearchCard({
           className="mt-3 w-full bg-sky-300 font-bold text-stone-800 hover:bg-orange-200"
           onClick={() => {
             if (onImport) onImport(data)
-            else void router.push(`/entity/repository/add-revision/${id}`)
+            // TODO: this approach will not work any more now =/
+            else void router.push(`/entity/repository/add-revision/${serloId}`)
           }}
         >
           <ImportIcon /> Importieren

@@ -5,7 +5,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { DogIcon } from 'lucide-react'
 import { useState } from 'react'
 
-import SearchCard, { typeTitleMap } from './search-card'
+import SearchCard, { LearningResource, typeTitleMap } from './search-card'
 import { FaIcon } from '../fa-icon'
 import { Card, CardHeader, CardTitle } from '../ui/card'
 import {
@@ -17,13 +17,6 @@ import {
 } from '../ui/select'
 import { Input } from '@/components/ui/input'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
-
-export interface LearningResource {
-  url: string
-  title: string
-  description: string
-  type: 'Article' | 'Exercise'
-}
 
 export function SearchModal({
   noNew,
@@ -129,7 +122,7 @@ export function SearchModal({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_key, query] = queryKey
 
-    const response = await fetch(`/api/search-datenraum?q=${query}`)
+    const response = await fetch(`/api/datenraum/search?q=${query}`)
 
     if (!response.ok) {
       // eslint-disable-next-line no-console
