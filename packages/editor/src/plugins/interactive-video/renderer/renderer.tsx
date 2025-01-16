@@ -47,7 +47,7 @@ export function InteractiveVideoRenderer({
         src={videoSrc}
         playsInline
         className="[&_.vds-chapter-title]:opacity-0"
-        load={isEditMode ? 'eager' : 'play'}
+        load={isEditMode ? 'visible' : 'play'}
         aspectRatio="16:9"
         onMediaPlayRequest={(nativeEvent) => {
           const allowed = checkSeekAndPlay?.(nativeEvent.target)
