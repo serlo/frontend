@@ -37,7 +37,7 @@ export function PluginHelp({
       </button>
       <EditorModal
         className="top-0 my-4 max-h-[calc(100vh-2rem)] w-[700px] max-w-[95%] translate-y-0 overflow-hidden pb-0"
-        title={`${pluginTitle}-Plugin Erklärung`}
+        title={`${pluginTitle}-Plugin`}
         isOpen={showModal}
         extraTitleClassName="text-lg border-0 -mt-4 mb-3"
         setIsOpen={setShowModal}

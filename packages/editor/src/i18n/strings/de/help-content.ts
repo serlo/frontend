@@ -7,7 +7,7 @@ export const pluginHelpContent = {
   },
   multimedia: {
     shortExplanation:
-      'Autor*innen können einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung einfügen. Das Einfügen unterschiedlicher Elemente in Multimedia ist möglich. Du kannst einen veranschaulichenden Multimedia-Inhalt mit zugehöriger Text-Erklärung erstellen. Unter den Einstellungen lässt sich die Art de Multimedia-Elements ändern.',
+      'Du kannst einen veranschaulichenden Multimedia-Inhalt mit zugehöriger Text-Erklärung erstellen. Unter den Einstellungen lässt sich die Art des Multimedia-Elements ändern.',
   },
   highlight: {
     video:
@@ -102,6 +102,6 @@ export const pluginHelpContent = {
   },
   interactiveVideo: {
     shortExplanation:
-      'Beim interaktiven Video kannst du, an frei wählbaren Stellen interaktive Aufgaben direkt in das eingebettete Video einzubinden. Zur Auswahl stehen verschiedene Aufgabentypen wie Single-Choice, Multiple-Choice, Eingabefelder oder Lückentexte. Du kannst auch festlegen, ob die Aufgaben verpflichtend beantwortet werden müssen oder optional sind.',
+      'Beim interaktiven Video kannst du an frei wählbaren Stellen interaktive Aufgaben direkt in das eingebettete Video einzubinden. Zur Auswahl stehen verschiedene Aufgabentypen wie Single-Choice, Multiple-Choice, Eingabefelder oder Lückentexte. Du kannst auch festlegen, ob die Aufgaben verpflichtend beantwortet werden müssen oder optional sind.',
   },
 }
