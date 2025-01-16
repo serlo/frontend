@@ -24,12 +24,14 @@ export function InteractiveVideoRenderer({
   videoSrc,
   marks,
   tools,
+  isEditMode,
   checkSeekAndPlay,
   learnerInteractions,
 }: {
   videoSrc: string
   marks: EditorInteractiveVideoDocument['state']['marks']
   tools?: JSX.Element
+  isEditMode?: boolean
   checkSeekAndPlay?: (target: EventTarget | null, seekTime?: number) => void
   onPlay?: (nativeEvent: MediaPlayEvent) => void
   learnerInteractions?: LearnerInteractions
@@ -45,7 +47,7 @@ export function InteractiveVideoRenderer({
         src={videoSrc}
         playsInline
         className="[&_.vds-chapter-title]:opacity-0"
-        load="play"
+        load={isEditMode ? 'eager' : 'play'}
         aspectRatio="16:9"
         onMediaPlayRequest={(nativeEvent) => {
           const allowed = checkSeekAndPlay?.(nativeEvent.target)
