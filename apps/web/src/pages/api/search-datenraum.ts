@@ -28,10 +28,10 @@ export default async function handler(
     return
   }
 
-  const cliendId = process.env.DATENRAUM_CLIENT_ID
-  const clientSecret = process.env.DATENRAUM_CLIENT_SECRET
+  const username = process.env.DATENRAUM_USERNAME
+  const password = process.env.DATENRAUM_PASSWORD
 
-  if (!cliendId || !clientSecret) {
+  if (!username || !password) {
     res.status(500).json({ message: 'Datenraum credentials not set' })
     return
   }
@@ -46,14 +46,14 @@ export default async function handler(
   }
 
   const accessTokenResponse = await fetch(
-    'https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/token',
+    'https://keycloak-test.k3s-mbr.uni-potsdam.de/realms/datenraum/protocol/openid-connect/token',
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${btoa(`${cliendId}:${clientSecret}`)}`,
+        // Authorization: `Basic ${btoa(`${cliendId}:${clientSecret}`)}`,
       },
-      body: 'grant_type=client_credentials',
+      body: `client_id=demo&username=${username}&password=${password}&grant_type=password`,
     }
   )
 
@@ -72,7 +72,7 @@ export default async function handler(
   const { access_token: accessToken } = accessTokenResponseJson
 
   const searchResponse = await fetch(
-    `https://dam.demo.meinbildungsraum.de/datenraum/api/core/nodes?search=${encodeURIComponent(query)}&offset=0&limit=30`,
+    `https://test.k3s-mbr.uni-potsdam.de/datenraum/api/search/nodes?search=${encodeURIComponent(query)}&offset=0&limit=30`,
     {
       headers: {
         Accept: 'application/json',

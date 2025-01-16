@@ -294,6 +294,7 @@ const iconComponentLookup: Record<PluginMenuType, React.ComponentType> = {
   [pluginMenuType.PageLayout]: FallbackIcon,
   [pluginMenuType.PagePartners]: FallbackIcon,
   [pluginMenuType.EdusharingAsset]: ImageIcon,
+  [pluginMenuType.DatenraumIntegration]: FallbackIcon,
 }
 
 function getIconComponent(type: PluginMenuType) {
