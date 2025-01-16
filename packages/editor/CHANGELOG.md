@@ -1,3 +1,13 @@
+## Changelog for version 0.21.2
+
+- fix(editor-package): make testing secret optional & enable image (and related) plugins even if testing secret is missing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4405
+- feat(ai-generation): add extraction of context. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4403
+- fix(plugin-edusharing): make H5P embeds work again. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4401
+- feat(edusharing-asset): embed word as box. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4394
+- feat(editor): add simple plugin help buttons. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4364
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.1-editor...v0.21.2-editor
+
 ## Changelog for version 0.21.1
 
 - fix(moodle): prevent style collision in moodle. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4396
