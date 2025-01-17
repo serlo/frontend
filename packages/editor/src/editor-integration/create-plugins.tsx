@@ -28,9 +28,11 @@ import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/st
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
+import { textExerciseGroupTypePlugin } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
 import { taxonomyTypePlugin } from '@editor/plugins/serlo-template-plugins/taxonomy'
+import { textExerciseTypePlugin } from '@editor/plugins/serlo-template-plugins/text-exercise'
 import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
@@ -153,59 +155,67 @@ export function createPlugins(
       type: TemplatePluginType.GenericContent,
       plugin: genericContentTypePlugin,
     },
-    {
-      type: TemplatePluginType.Article,
-      plugin: articleTypePlugin,
-    },
-    {
-      type: TemplatePluginType.Course,
-      plugin: courseTypePlugin,
-    },
-    {
-      type: TemplatePluginType.Page,
-      plugin: pageTypePlugin,
-    },
-    {
-      type: TemplatePluginType.Taxonomy,
-      plugin: taxonomyTypePlugin,
-    },
-    {
-      type: TemplatePluginType.User,
-      plugin: userTypePlugin,
-    },
-    {
-      type: EditorPluginType.Article,
-      plugin: articlePlugin,
-    },
-    {
-      type: EditorPluginType.Course,
-      plugin: coursePlugin,
-    },
-    {
-      type: EditorPluginType.ArticleIntroduction,
-      plugin: createArticleIntroduction(
-        language === 'de'
-          ? 'Fasse das Thema des Artikels kurz zusammen'
-          : 'Write a short introduction'
-      ),
-    },
-    {
-      type: EditorPluginType.PageLayout,
-      plugin: pageLayoutPlugin,
-    },
-    {
-      type: EditorPluginType.Injection,
-      plugin: injectionPlugin,
-    },
-    {
-      type: EditorPluginType.Anchor,
-      plugin: anchorPlugin,
-    },
     ...(extraSerloPlugins
       ? [
           {
             type: EditorPluginType.H5p,
             plugin: extraSerloPlugins.h5p,
+          },
+          {
+            type: TemplatePluginType.Article,
+            plugin: articleTypePlugin,
+          },
+          {
+            type: TemplatePluginType.Course,
+            plugin: courseTypePlugin,
+          },
+          {
+            type: TemplatePluginType.Page,
+            plugin: pageTypePlugin,
+          },
+          {
+            type: TemplatePluginType.Taxonomy,
+            plugin: taxonomyTypePlugin,
+          },
+          {
+            type: TemplatePluginType.TextExercise,
+            plugin: textExerciseTypePlugin,
+          },
+          {
+            type: TemplatePluginType.TextExerciseGroup,
+            plugin: textExerciseGroupTypePlugin,
+          },
+          {
+            type: TemplatePluginType.User,
+            plugin: userTypePlugin,
+          },
+          {
+            type: EditorPluginType.Article,
+            plugin: articlePlugin,
+          },
+          {
+            type: EditorPluginType.Course,
+            plugin: coursePlugin,
+          },
+          {
+            type: EditorPluginType.ArticleIntroduction,
+            plugin: createArticleIntroduction(
+              language === 'de'
+                ? 'Fasse das Thema des Artikels kurz zusammen'
+                : 'Write a short introduction'
+            ),
+          },
+          {
+            type: EditorPluginType.PageLayout,
+            plugin: pageLayoutPlugin,
+          },
+          {
+            type: EditorPluginType.Injection,
+            plugin: injectionPlugin,
+          },
+          {
+            type: EditorPluginType.Anchor,
+            plugin: anchorPlugin,
           },
         ]
       : []),

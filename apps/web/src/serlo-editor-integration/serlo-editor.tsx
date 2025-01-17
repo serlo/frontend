@@ -60,6 +60,8 @@ export function SerloEditor({
           TemplatePluginType.Page,
           EditorPluginType.PageLayout,
           TemplatePluginType.Taxonomy,
+          TemplatePluginType.TextExercise,
+          TemplatePluginType.TextExerciseGroup,
           TemplatePluginType.User,
           EditorPluginType.ArticleIntroduction,
           EditorPluginType.Injection,
