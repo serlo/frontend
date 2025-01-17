@@ -7,12 +7,10 @@ import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
-import { DropzoneImageStaticRenderer } from '@editor/plugins/dropzone-image/static'
 import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
 import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
 import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
 import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
-import { HighlightStaticRenderer } from '@editor/plugins/highlight/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
@@ -29,13 +27,32 @@ import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
-import { StaticMath } from '@editor/plugins/text/static-components/static-math'
 import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { sanitizeHref } from '@editor/utils/sanitize-href'
-import { ComponentProps } from 'react'
+import { ComponentProps, lazy } from 'react'
+
+const StaticMath = lazy(() =>
+  import('@editor/plugins/text/static-components/static-math').then(
+    (module) => ({
+      default: module.StaticMath,
+    })
+  )
+)
+
+const HighlightStaticRenderer = lazy(() =>
+  import('@editor/plugins/highlight/static').then((module) => ({
+    default: module.HighlightStaticRenderer,
+  }))
+)
+
+const DropzoneImageStaticRenderer = lazy(() =>
+  import('@editor/plugins/dropzone-image/static').then((module) => ({
+    default: module.DropzoneImageStaticRenderer,
+  }))
+)
 
 export function createRenderers(): InitRenderersArgs {
   return {
