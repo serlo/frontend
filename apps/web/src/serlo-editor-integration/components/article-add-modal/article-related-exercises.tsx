@@ -1,5 +1,4 @@
-import { EditorPluginType } from '@editor/package'
-import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
+import { EditorPluginType, SerloRenderer } from '@editor/package'
 import { gql } from 'graphql-request'
 
 import { AddButton } from '../add-button'
@@ -76,9 +75,9 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <InjectionStaticRenderer
-          plugin={EditorPluginType.Injection}
-          state={`/${id}`}
+        <SerloRenderer
+          editorVariant="serlo-org"
+          state={{ plugin: EditorPluginType.Injection, state: `/${id}` }}
         />
         <AddButton
           text={strings.articleAddModal.buttonAddType.replace(
