@@ -7,6 +7,14 @@ const AccessTokenResponse = t.type({
   access_token: t.string,
 })
 
+const PutInputSchema = t.type({
+  id: t.string,
+  title: t.string,
+  description: t.string,
+  serloId: t.number,
+  editorState: t.unknown,
+})
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -24,25 +32,12 @@ export default async function handler(
     return
   }
 
-  const { id, serloId, editorState, title, description } = req.query
-
-  if (
-    !id ||
-    !serloId ||
-    !editorState ||
-    !title ||
-    !description ||
-    Array.isArray(id) ||
-    Array.isArray(serloId) ||
-    Array.isArray(editorState) ||
-    Array.isArray(title) ||
-    Array.isArray(description)
-  ) {
-    res.status(400).json({
-      message: 'Query parameter missing or multiple parameter are passed to it',
-    })
+  if (!PutInputSchema.is(req.body)) {
+    res.status(400).json({ message: 'invalid input data' })
     return
   }
+
+  const { id, title, description, serloId, editorState } = req.body
 
   const accessTokenResponse = await fetch(
     'https://keycloak-test.k3s-mbr.uni-potsdam.de/realms/datenraum/protocol/openid-connect/token',

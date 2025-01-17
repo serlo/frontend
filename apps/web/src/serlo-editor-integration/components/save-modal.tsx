@@ -62,10 +62,24 @@ export function SaveModal({
   async function handleLicenseClick() {
     if (!serializedRoot) return
     const exampleSourceID = '06dca4d1-19f3-4fcc-a9d0-de39971f87bc'
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const fetchUrl = `/api/datenraum/put?id=${exampleSourceID}&title=serlo-put-test2&description=test&serloId=${48682}&editorState=${encodeURIComponent(JSON.stringify(serializedRoot.state.content))}`
+
     try {
-      const result = await fetch(fetchUrl)
+      const result = await fetch('/api/datenraum/put', {
+        method: 'POST',
+        headers: {
+          // Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: exampleSourceID,
+          title: 'serlo-put-test-3',
+          description: 'test',
+          serloId: 48682,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          editorState: JSON.stringify(serializedRoot.state.content),
+        }),
+      })
+
       if (!result.ok) throw new Error('Failed to put node')
 
       showToastNotice(
