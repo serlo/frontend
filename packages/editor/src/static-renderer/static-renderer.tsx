@@ -1,5 +1,5 @@
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
 
@@ -34,5 +34,9 @@ export function StaticRenderer({
 
   const Renderer = editorRenderers.getByType(document.plugin)
 
-  return Renderer ? <Renderer {...document} /> : null
+  return Renderer ? (
+    <Suspense>
+      <Renderer {...document} />
+    </Suspense>
+  ) : null
 }
