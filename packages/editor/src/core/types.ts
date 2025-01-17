@@ -28,6 +28,8 @@ export interface BaseEditor {
   i18n: LanguageData
   history: HistoryData
   selectRootDocument: () => AnyEditorDocument
+  /** @deprecated Only temporarily exported for serlo.org. */
+  dispatchReplaceRootDocument: (pluginType: string, state: unknown) => void
 }
 
 export type GetDocument = () => DocumentState | null

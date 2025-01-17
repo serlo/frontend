@@ -1,6 +1,4 @@
-import { TemplatePluginType } from '@editor/package'
-import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
-import { ROOT } from '@editor/store/root/constants'
+import { type BaseEditor, TemplatePluginType } from '@editor/package'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
@@ -41,25 +39,20 @@ const pluginsWithContentLoaders = Object.keys(templateTypeToUuidType)
 
 export function ExternalRevisionLoader<T>({
   templateType,
+  dispatchReplaceRootDocument,
 }: {
   templateType: TemplatePluginType
+  dispatchReplaceRootDocument: BaseEditor['dispatchReplaceRootDocument']
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 
   const { strings } = useInstanceData()
 
-  const dispatch = useAppDispatch()
   const handleReplace = useCallback(
     (newState: unknown) => {
-      dispatch(
-        runReplaceDocumentSaga({
-          id: ROOT,
-          pluginType: templateType,
-          state: newState,
-        })
-      )
+      dispatchReplaceRootDocument(templateType, newState)
     },
-    [dispatch, templateType]
+    [dispatchReplaceRootDocument, templateType]
   )
 
   if (!pluginsWithContentLoaders.includes(templateType)) return null

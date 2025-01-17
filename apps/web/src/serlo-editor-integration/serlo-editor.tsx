@@ -81,6 +81,9 @@ export function SerloEditor({
                   templateType={
                     (initialState as { plugin: TemplatePluginType }).plugin
                   }
+                  dispatchReplaceRootDocument={
+                    editor.dispatchReplaceRootDocument
+                  }
                 />
               ) : null}
               {editor.element}
