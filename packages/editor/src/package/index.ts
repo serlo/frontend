@@ -35,6 +35,11 @@ export type * from '@editor/plugin/internal-plugin-state'
  */
 export { TemplatePluginType } from '@editor/types/template-plugin-type'
 export * from '@editor/core/contexts/serlo-only-features-context'
+export {
+  type PreferenceName,
+  getWithoutContext,
+  setWithoutContext,
+} from '@editor/core/contexts/preference-context'
 export type { AppletTypePluginState } from '@editor/plugins/serlo-template-plugins/applet'
 export type { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
 export type {
