@@ -12,6 +12,7 @@
   },
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
