@@ -1,5 +1,4 @@
-import type { EditorImageDocument } from '@editor/package'
-import { ImageStaticRenderer } from '@editor/plugins/image/static'
+import { type EditorImageDocument, ImageStaticRenderer } from '@editor/package'
 import { useRouter } from 'next/router'
 
 import { ExtraInfoIfRevisionView } from '../extra-info-if-revision-view'

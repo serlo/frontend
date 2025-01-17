@@ -1,4 +1,4 @@
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
+import { editorLearnerEvent } from '@editor/package'
 import { useEffect } from 'react'
 
 import { EditorH5PDocument } from '.'

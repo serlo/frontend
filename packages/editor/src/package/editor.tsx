@@ -1,8 +1,14 @@
 import { Editor, type EditorProps } from '@editor/core'
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { type GetDocument } from '@editor/core/types'
-import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
-import { createRenderers } from '@editor/editor-integration/create-renderers'
+import {
+  createPlugins,
+  type ExtraSerloPlugins,
+} from '@editor/editor-integration/create-plugins'
+import {
+  createRenderers,
+  type ExtraSerloRenderers,
+} from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
@@ -36,6 +42,10 @@ export interface SerloEditorProps {
   userId?: string
   _testingSecret?: string | null
   _ltik?: string
+  /** @deprecated Only temporarily allowed for serlo.org. */
+  extraSerloPlugins?: ExtraSerloPlugins
+  /** @deprecated Only temporarily allowed for serlo.org. */
+  extraSerloRenderers?: ExtraSerloRenderers
 }
 
 /** For exporting the editor */
@@ -50,6 +60,8 @@ export function SerloEditor(props: SerloEditorProps) {
     userId,
     _testingSecret,
     _ltik,
+    extraSerloPlugins,
+    extraSerloRenderers,
   } = {
     ...defaultSerloEditorProps,
     ...props,
@@ -67,10 +79,15 @@ export function SerloEditor(props: SerloEditorProps) {
 
   const { staticStrings, editStrings } = editorData[language]
 
-  const allPlugins = createBasicPlugins(plugins, _testingSecret, language)
+  const allPlugins = createPlugins(
+    plugins,
+    _testingSecret,
+    language,
+    extraSerloPlugins
+  )
   editorPlugins.init(allPlugins)
 
-  const basicRenderers = createRenderers()
+  const basicRenderers = createRenderers(extraSerloRenderers)
   editorRenderers.init(basicRenderers)
 
   return (

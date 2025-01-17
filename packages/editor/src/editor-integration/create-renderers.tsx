@@ -37,7 +37,23 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { sanitizeHref } from '@editor/utils/sanitize-href'
 import { ComponentProps } from 'react'
 
-export function createRenderers(): InitRenderersArgs {
+export interface ExtraSerloRenderers {
+  audio: React.ComponentType<any>
+  exerciseGroup: React.ComponentType<any>
+  exercise: React.ComponentType<any>
+  geogebra: React.ComponentType<any>
+  h5p: React.ComponentType<any>
+  image: React.ComponentType<any>
+  input: React.ComponentType<any>
+  multimedia: React.ComponentType<any>
+  scMc: React.ComponentType<any>
+  solution: React.ComponentType<any>
+  video: React.ComponentType<any>
+}
+
+export function createRenderers(
+  extraSerloRenderers?: ExtraSerloRenderers
+): InitRenderersArgs {
   return {
     pluginRenderers: [
       // plugins
@@ -45,14 +61,21 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
       { type: EditorPluginType.Rows, renderer: RowsStaticRenderer },
       { type: EditorPluginType.Text, renderer: TextStaticRenderer },
-      { type: EditorPluginType.Image, renderer: ImageStaticRenderer },
+      {
+        type: EditorPluginType.Image,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.image
+          : ImageStaticRenderer,
+      },
       {
         type: EditorPluginType.ImageGallery,
         renderer: ImageGalleryStaticRenderer,
       },
       {
         type: EditorPluginType.Multimedia,
-        renderer: MultimediaStaticRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.multimedia
+          : MultimediaStaticRenderer,
       },
       {
         type: EditorPluginType.Spoiler,
@@ -67,11 +90,15 @@ export function createRenderers(): InitRenderersArgs {
       { type: EditorPluginType.Equations, renderer: EquationsStaticRenderer },
       {
         type: EditorPluginType.Geogebra,
-        renderer: GeogebraStaticRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.geogebra
+          : GeogebraStaticRenderer,
       },
       {
         type: EditorPluginType.Video,
-        renderer: VideoStaticRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.video
+          : VideoStaticRenderer,
       },
       {
         type: EditorPluginType.InteractiveVideo,
@@ -85,11 +112,15 @@ export function createRenderers(): InitRenderersArgs {
       // exercises
       {
         type: EditorPluginType.Exercise,
-        renderer: ExerciseStaticRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.exercise
+          : ExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.Solution,
-        renderer: StaticSolutionRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.solution
+          : StaticSolutionRenderer,
       },
       {
         type: EditorPluginType.Highlight,
@@ -97,11 +128,15 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.InputExercise,
-        renderer: InputExerciseStaticRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.input
+          : InputExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.ScMcExercise,
-        renderer: ScMcExerciseStaticRenderer,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.scMc
+          : ScMcExerciseStaticRenderer,
       },
       {
         type: EditorPluginType.BlanksExercise,
@@ -139,6 +174,22 @@ export function createRenderers(): InitRenderersArgs {
         type: TemplatePluginType.GenericContent,
         renderer: GenericContentTypeStaticRenderer,
       },
+      ...(extraSerloRenderers
+        ? [
+            {
+              type: EditorPluginType.Audio,
+              renderer: extraSerloRenderers.audio,
+            },
+            {
+              type: EditorPluginType.ExerciseGroup,
+              renderer: extraSerloRenderers.exerciseGroup,
+            },
+            {
+              type: EditorPluginType.H5p,
+              renderer: extraSerloRenderers.h5p,
+            },
+          ]
+        : []),
     ],
     mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
