@@ -77,6 +77,5 @@ export default defineConfig({
       rollupTypes: true,
     }),
     svgr({ include: '**/*.svg' }),
-    treeShakeable(),
   ],
 })
