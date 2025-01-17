@@ -1,3 +1,27 @@
+## Changelog for version 0.21.2
+
+- fix(editor-package): make testing secret optional & enable image (and related) plugins even if testing secret is missing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4405
+- feat(ai-generation): add extraction of context. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4403
+- fix(plugin-edusharing): make H5P embeds work again. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4401
+- feat(edusharing-asset): embed word as box. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4394
+- feat(editor): add simple plugin help buttons. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4364
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.1-editor...v0.21.2-editor
+
+## Changelog for version 0.21.1
+
+- fix(moodle): prevent style collision in moodle. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4396
+- fix(interactive-video): fix focus bug when creating new exercise. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4395
+- refactor: remove direct Editor imports from Editor presentation. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4393
+- fix(interactive-video): bugfixes/improvements. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4392
+- refactor: remove Next router from Course. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4391
+- fix: update eu logo, add text. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4387
+- refactor: static math in package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4385
+- refactor(web): move strings for uuid-url-input to frontend. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4384
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4378
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.0-editor...v0.21.1-editor
+
 ## Changelog for version 0.21.0
 
 - fix(math-renderer): sanitize html from katex. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4379
