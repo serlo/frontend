@@ -1,9 +1,10 @@
 export { SerloEditor, type SerloEditorProps } from './editor'
 export { SerloRenderer, type SerloRendererProps } from './serlo-renderer'
 
-export type { SupportedLanguage } from '@editor/types/language-data'
 export type { BaseEditor } from '@editor/core'
+export type { SupportedLanguage } from '@editor/types/language-data'
 export type { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
+export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 /**
  * We need to make a distinction between entries in our menu and
@@ -19,8 +20,6 @@ export type { LearnerEventData } from '@editor/plugin/helpers/editor-learner-eve
 export { pluginMenuDe, pluginMenuEn } from './plugin-menu-export'
 export { type PluginMenuType as Plugin } from '@editor/plugins/rows/utils/plugin-menu'
 
-export { EditorPluginType } from '@editor/types/editor-plugin-type'
-
 /**
  * Plugin state helpers and types
  */
@@ -30,6 +29,21 @@ export { extractStringFromTextDocument } from '@editor/plugins/text/utils/static
 export type * from '@editor/types/editor-plugins'
 export type * from '@editor/plugin/internal-plugin-state'
 export type * from '@editor/plugin/internal-plugin'
+
+/**
+ * Exported so that integrations can customize available plugins
+ * based on the default plugins.
+ */
+export { defaultPlugins } from './config'
+
+/** StaticMath is a simple component that renders a math formula.
+ * it's used in the Editor and is exported here in case you want to
+ * render pretty LaTeX without the whole editor.
+ * It's relatively big so load it dynamically if you can. */
+export {
+  StaticMath,
+  type StaticMathProps,
+} from '@editor/plugins/text/static-components/static-math'
 
 /**
  * Exported for serlo.org
@@ -98,18 +112,3 @@ export type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins
 export type { TaxonomyTypePluginState } from '@editor/plugins/serlo-template-plugins/taxonomy'
 export type { TextExerciseTypePluginState } from '@editor/plugins/serlo-template-plugins/text-exercise'
 export type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugins/video'
-
-/**
- * Exported so that integrations can customize available plugins
- * based on the default plugins.
- */
-export { defaultPlugins } from './config'
-
-/** StaticMath is a simple component that renders a math formula.
- * it's used in the Editor and is exported here in case you want to
- * render pretty LaTeX without the whole editor.
- * It's relatively big so load it dynamically if you can. */
-export {
-  StaticMath,
-  type StaticMathProps,
-} from '@editor/plugins/text/static-components/static-math'
