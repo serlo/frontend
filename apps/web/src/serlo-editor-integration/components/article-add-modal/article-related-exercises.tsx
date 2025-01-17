@@ -1,7 +1,7 @@
+import { EditorPluginType, SerloRenderer } from '@editor/package'
 import { gql } from 'graphql-request'
 
 import { AddButton } from '../add-button'
-import { ArticleRelatedExercisesRenderer } from './article-related-exercises-renderer'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -75,7 +75,10 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <ArticleRelatedExercisesRenderer href={`/${id}`} />
+        <SerloRenderer
+          editorVariant="serlo-org"
+          state={{ plugin: EditorPluginType.Injection, state: `/${id}` }}
+        />
         <AddButton
           text={strings.articleAddModal.buttonAddType.replace(
             '%type%',
