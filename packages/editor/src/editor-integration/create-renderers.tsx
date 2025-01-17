@@ -4,26 +4,11 @@ import type {
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
-import { BlanksExerciseStaticRenderer } from '@editor/plugins/blanks-exercise/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
-import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
-import { EdusharingAssetStaticRenderer } from '@editor/plugins/edusharing-asset/static'
-import { EquationsStaticRenderer } from '@editor/plugins/equations/static'
-import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
-import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
-import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
-import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
-import { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
-import { InteractiveVideoStaticRenderer } from '@editor/plugins/interactive-video/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
-import { PageLayoutStaticRenderer } from '@editor/plugins/page-layout/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
-import { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/static'
-import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
-import { SerloTableStaticRenderer } from '@editor/plugins/serlo-table/static'
 import { GenericContentTypeStaticRenderer } from '@editor/plugins/serlo-template-plugins/generic-content/static'
-import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
 import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
@@ -51,6 +36,94 @@ const HighlightStaticRenderer = lazy(() =>
 const DropzoneImageStaticRenderer = lazy(() =>
   import('@editor/plugins/dropzone-image/static').then((module) => ({
     default: module.DropzoneImageStaticRenderer,
+  }))
+)
+
+const EquationsStaticRenderer = lazy(() =>
+  import('@editor/plugins/equations/static').then((module) => ({
+    default: module.EquationsStaticRenderer,
+  }))
+)
+
+const ExerciseStaticRenderer = lazy(() =>
+  import('@editor/plugins/exercise/static').then((module) => ({
+    default: module.ExerciseStaticRenderer,
+  }))
+)
+
+const InputExerciseStaticRenderer = lazy(() =>
+  import('@editor/plugins/input-exercise/static').then((module) => ({
+    default: module.InputExerciseStaticRenderer,
+  }))
+)
+
+const BlanksExerciseStaticRenderer = lazy(() =>
+  import('@editor/plugins/blanks-exercise/static').then((module) => ({
+    default: module.BlanksExerciseStaticRenderer,
+  }))
+)
+
+const InteractiveVideoStaticRenderer = lazy(() =>
+  import('@editor/plugins/interactive-video/static').then((module) => ({
+    default: module.InteractiveVideoStaticRenderer,
+  }))
+)
+
+const PageLayoutStaticRenderer = lazy(() =>
+  import('@editor/plugins/page-layout/static').then((module) => ({
+    default: module.PageLayoutStaticRenderer,
+  }))
+)
+
+const ScMcExerciseStaticRenderer = lazy(() =>
+  import('@editor/plugins/sc-mc-exercise/static').then((module) => ({
+    default: module.ScMcExerciseStaticRenderer,
+  }))
+)
+const StaticSolutionRenderer = lazy(() =>
+  import('@editor/plugins/solution/static').then((module) => ({
+    default: module.StaticSolutionRenderer,
+  }))
+)
+
+const SerloTableStaticRenderer = lazy(() =>
+  import('@editor/plugins/serlo-table/static').then((module) => ({
+    default: module.SerloTableStaticRenderer,
+  }))
+)
+
+const InjectionStaticRenderer = lazy(() =>
+  import('@editor/plugins/injection/static').then((module) => ({
+    default: module.InjectionStaticRenderer,
+  }))
+)
+
+const SerloInjectionStaticRenderer = lazy(() =>
+  import('@editor/plugins/serlo-injection/static').then((module) => ({
+    default: module.SerloInjectionStaticRenderer,
+  }))
+)
+
+const ImageGalleryStaticRenderer = lazy(() =>
+  import('@editor/plugins/image-gallery/static').then((module) => ({
+    default: module.ImageGalleryStaticRenderer,
+  }))
+)
+
+const CourseStaticRenderer = lazy(() =>
+  import('@editor/plugins/course/static/static').then((module) => ({
+    default: module.CourseStaticRenderer,
+  }))
+)
+const EdusharingAssetStaticRenderer = lazy(() =>
+  import('@editor/plugins/edusharing-asset/static').then((module) => ({
+    default: module.EdusharingAssetStaticRenderer,
+  }))
+)
+
+const GeogebraStaticRenderer = lazy(() =>
+  import('@editor/plugins/geogebra/static').then((module) => ({
+    default: module.GeogebraStaticRenderer,
   }))
 )
 
