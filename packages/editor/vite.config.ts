@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import replace from '@rollup/plugin-replace'
+import treeShakeable from 'rollup-plugin-tree-shakeable'
 
 // https://vitejs.dev/guide/build.html#library-mode
 
@@ -76,5 +77,6 @@ export default defineConfig({
       rollupTypes: true,
     }),
     svgr({ include: '**/*.svg' }),
+    treeShakeable(),
   ],
 })
