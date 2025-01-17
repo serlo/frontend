@@ -1,5 +1,8 @@
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
-import { createRenderers } from '@editor/editor-integration/create-renderers'
+import {
+  createRenderers,
+  type ExtraSerloRenderers,
+} from '@editor/editor-integration/create-renderers'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import {
@@ -21,10 +24,12 @@ export interface SerloRendererProps {
   _ltik?: string
   editorVariant: EditorVariant
   handleLearnerEvent?: (data: LearnerEventData) => void
+  /** @deprecated Only temporarily allowed for serlo.org. */
+  extraSerloRenderers?: ExtraSerloRenderers
 }
 
 export function SerloRenderer(props: SerloRendererProps) {
-  const { language, _ltik, editorVariant } = {
+  const { language, _ltik, editorVariant, extraSerloRenderers } = {
     ...defaultSerloEditorProps,
     ...props,
   }
@@ -38,7 +43,7 @@ export function SerloRenderer(props: SerloRendererProps) {
   // if we load the editStrings here as well, we might as well merge them
   const { staticStrings, editStrings } = editorData[language]
 
-  const basicRenderers = createRenderers()
+  const basicRenderers = createRenderers(extraSerloRenderers)
   editorRenderers.init(basicRenderers)
 
   if (props.handleLearnerEvent) {

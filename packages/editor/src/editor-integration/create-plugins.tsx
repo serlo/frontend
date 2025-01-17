@@ -1,4 +1,5 @@
 import type { SupportedLanguage } from '@editor/package'
+import type { EditorPlugin, StringStateType } from '@editor/plugin'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
@@ -10,6 +11,7 @@ import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
+import type { ImagePluginConfig, ImagePluginState } from '@editor/plugins/image'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
@@ -41,10 +43,16 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
 
-export function createBasicPlugins(
+export interface ExtraSerloPlugins {
+  h5p: EditorPlugin<StringStateType>
+  image: EditorPlugin<ImagePluginState, ImagePluginConfig>
+}
+
+export function createPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
   testingSecret?: string | null,
-  language: SupportedLanguage = 'de'
+  language: SupportedLanguage = 'de',
+  extraSerloPlugins?: ExtraSerloPlugins
 ) {
   const allPlugins = [
     {
@@ -53,7 +61,9 @@ export function createBasicPlugins(
     },
     {
       type: EditorPluginType.Image,
-      plugin: createTestingImagePlugin(testingSecret),
+      plugin: extraSerloPlugins
+        ? extraSerloPlugins.image
+        : createTestingImagePlugin(testingSecret),
     },
     {
       type: EditorPluginType.ImageGallery,
@@ -191,6 +201,14 @@ export function createBasicPlugins(
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
     },
+    ...(extraSerloPlugins
+      ? [
+          {
+            type: EditorPluginType.H5p,
+            plugin: extraSerloPlugins.h5p,
+          },
+        ]
+      : []),
   ]
 
   return allPlugins.filter(({ type }) => plugins.includes(type))

@@ -1,5 +1,7 @@
-import type { EditorSolutionDocument } from '@editor/package'
-import { StaticSolutionRenderer } from '@editor/plugins/solution/static'
+import {
+  type EditorSolutionDocument,
+  StaticSolutionRenderer,
+} from '@editor/package'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'

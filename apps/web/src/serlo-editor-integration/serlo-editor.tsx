@@ -11,6 +11,8 @@ import { useContext } from 'react'
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ExternalRevisionLoader } from './components/external-revision-loader'
 import { SaveButton } from './components/save-button'
+import { extraSerloPlugins } from './extra-serlo-plugins'
+import { extraSerloRenderers } from './extra-serlo-renderers'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
@@ -63,8 +65,12 @@ export function SerloEditor({
           EditorPluginType.Injection,
           EditorPluginType.Anchor,
           EditorPluginType.InteractiveVideo,
+          EditorPluginType.Audio,
+          EditorPluginType.H5p,
         ]}
         initialState={initialState}
+        extraSerloPlugins={extraSerloPlugins}
+        extraSerloRenderers={extraSerloRenderers}
       >
         {(editor) => {
           const hasPendingChanges = editor.history.pendingChanges !== 0
