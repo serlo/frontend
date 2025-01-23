@@ -3,6 +3,7 @@ import '@vidstack/react/player/styles/default/theme.css'
 // eslint-disable-next-line import/no-unassigned-import
 import '@vidstack/react/player/styles/default/layouts/video.css'
 
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import {
@@ -40,6 +41,8 @@ export function InteractiveVideoRenderer({
   const exerciseString = plugins.exercise.title
   const cues = createCues(marks, exerciseString)
 
+  const isSerlo = useIsSerlo()
+
   return (
     <div className="mx-side">
       <MediaPlayer
@@ -47,7 +50,8 @@ export function InteractiveVideoRenderer({
         src={videoSrc}
         playsInline
         className="[&_.vds-chapter-title]:opacity-0"
-        load={isEditMode ? 'visible' : 'play'}
+        load={isSerlo ? 'eager' : isEditMode ? 'visible' : 'play'}
+        autoPlay={isSerlo ? true : false} // autoplay after wrapper
         aspectRatio="16:9"
         onMediaPlayRequest={(nativeEvent) => {
           const allowed = checkSeekAndPlay?.(nativeEvent.target)
