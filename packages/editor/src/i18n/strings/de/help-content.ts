@@ -58,7 +58,7 @@ export const pluginHelpContent = {
   },
   video: {
     shortExplanation:
-      'Mithilfe von Video-Einbettungen kann das Lernmaterial diverser gestalten werden. Du kannst Videos nicht direkt hochladen, sondern via Link ein (z.B. über YouTube, Vimeo, Wikimedia Commons o.ä.)',
+      'Mithilfe von Video-Einbettungen kann das Lernmaterial abwechslungsreicher gestalten werden. Du kannst Videos nicht direkt hochladen, sondern via Link ein (z.B. über YouTube, Vimeo, Wikimedia Commons o.ä.)',
   },
   injection: {
     shortExplanation:
@@ -78,7 +78,7 @@ export const pluginHelpContent = {
     video:
       'https://editor.serlo.dev/media/serlo-org/cp82zbdfqgz37fxyoew3czbn/video.webm',
     shortExplanation:
-      'Single- und Multiple-Choice-Übungen bieten verschiedene Antwortmöglichkeiten. Für jede Antwort kannst Du den Lernenden individuelles Feedback geben, um beispielsweise Missverständnisse hinter häufigen Fehlern zu erklären. Bei Single-Choice ist genau eine Antwort richtig. Bei Multiple-Choice können keine oder mehrere Antworten richtig sein.',
+      'Single- und Multiple-Choice-Übungen bieten verschiedene Antwortmöglichkeiten. Für jede Antwort kannst Du den Lernenden individuelles Feedback geben, um beispielsweise Missverständnisse hinter häufigen Fehlern zu erklären. Bei Single-Choice ist genau eine Antwort richtig. Bei Multiple-Choice können keine, eine oder mehrere Antworten richtig sein.',
   },
   dropzoneImage: {
     video:
@@ -88,13 +88,13 @@ export const pluginHelpContent = {
   },
   h5p: {
     shortExplanation:
-      'Du kannst eine H5P-Aufgabe einbinden, die auf Lumi liegt. Gib dafür die URL oder ID des Inhalts in das Eingabefeld ein und klicke auf “Einfügen”. Folgende H5P-Aufgaben werden unterstützt: Drag and Drop, Fill in the Blanks, Drag the Words, Find the Hotspot, Image pairing, Bildauswahl (Image Choice), Hotspots in Bild suchen (mehrere) (Find Multiple Hotspots), Memory, Flashcards, Mark The Words',
+      'Du kannst eine H5P-Aufgabe einbinden, die auf Lumi liegt. Gib dafür die URL oder ID des Inhalts in das Eingabefeld ein und klicke auf “Einfügen”. Folgende H5P-Aufgaben werden unterstützt: Drag and Drop, Fill in the Blanks, Drag the Words, Find the Hotspot, Image Pairing, Bildauswahl (Image Choice), Hotspots in Bild suchen (mehrere) (Find Multiple Hotspots), Memory, Flashcards, Mark The Words',
   },
   blanksExercise: {
     video:
       'https://editor.serlo.dev/media/serlo-org/bn80f3bpl0vmixs1izpq3oc4/video.webm',
     shortExplanation:
-      'Lückentext-Übungen ermöglichen es den Studierenden, eine eigene Antwort an vorgesehenen Stellen einzugeben. Lehrkräfte können selbst einstellen, welche Antworten akzeptiert werden. Lückentext-Aufgaben können so konfiguriert werden, dass Antworten per Drag & Drop durch die Schüler*innen ausgewählt werden. Autoren können der Liste zusätzliche falsche Antworten hinzufügen, um die Übung herausfordernder zu gestalten. Bei Lückentext-Aufgaben kann man einstellen, ob Lernende ihre Antworten an die vorgesehenen Stellen eintippen sollen, oder per Drag & Drop die Lücken füllen sollen. Du kannst wählen, ob die Lernenden Lücken in einem Text oder einer Tabelle füllen sollen.',
+      'Lückentext-Übungen ermöglichen es den Lernenden, eine eigene Antwort an vorgesehenen Stellen einzugeben. Man kann einstellen, ob Lernende ihre Antworten an die vorgesehenen Stellen eintippen sollen, oder per Drag & Drop die Lücken füllen sollen. Du kannst wählen, ob die Lernenden Lücken in einem Text oder einer Tabelle füllen sollen.',
   },
   textAreaExercise: {
     shortExplanation:
