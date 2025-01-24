@@ -120,7 +120,9 @@ function BatchLicenseTool() {
       }
       if (!Object.hasOwn(node, 'children') || !node.children) return
 
-      node.children.nodes.forEach((node) => extractIds(node))
+      node.children.nodes.forEach((node) =>
+        extractIds(node as GetAllEntityIdsInTaxonomyQuery['uuid'])
+      )
     }
 
     extractIds(result.uuid)
@@ -145,8 +147,7 @@ function BatchLicenseTool() {
     <div className="bg-brand-100 p-4">
       <div className="flex max-w-md flex-col gap-3 rounded bg-white px-8 pb-8 pt-6 shadow-md">
         <label htmlFor="parent-taxonomy-uuid">
-          Get all uuids of entities inside this TaxonomyTerm and it&apos;s
-          children
+          Get all entities inside a TaxonomyTerm and it&apos;s children:
         </label>
         <input
           id="parent-taxonomy-uuid"
@@ -159,7 +160,9 @@ function BatchLicenseTool() {
           onPaste={(e) => handleIdInput(e.clipboardData.getData('text'))}
         />
 
+        <label htmlFor="entities-list">Looks about right?</label>
         <textarea
+          id="entities-list"
           readOnly
           className="focus:shadow-outline mt-3 min-h-56 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
           value={allEntities
