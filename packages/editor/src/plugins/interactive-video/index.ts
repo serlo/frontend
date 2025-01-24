@@ -25,7 +25,6 @@ const interactiveVideoState = object({
       startTime: number(),
       autoOpen: boolean(true), // open modal without interaction
       mandatory: boolean(false), // has to be successfully completed to continue video
-      forceRewatch: boolean(false), // after a failed exercise the learners jump back to the last mark
     })
   ),
 })

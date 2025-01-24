@@ -69,11 +69,12 @@ const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
     (mod) => mod.BlanksExerciseStaticRenderer
   )
 )
-const InteractiveVideoRenderer = dynamic<EditorInteractiveVideoDocument>(() =>
-  import('@editor/plugins/interactive-video/static').then(
-    (mod) => mod.InteractiveVideoStaticRenderer
+const InteractiveVideoSerloStaticRenderer =
+  dynamic<EditorInteractiveVideoDocument>(() =>
+    import(
+      '@/serlo-editor-integration/serlo-plugin-wrappers/interactive-video-serlo-static-renderer'
+    ).then((mod) => mod.InteractiveVideoSerloStaticRenderer)
   )
-)
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
@@ -233,7 +234,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.InteractiveVideo,
-        renderer: InteractiveVideoRenderer,
+        renderer: InteractiveVideoSerloStaticRenderer,
       },
       {
         type: EditorPluginType.TextAreaExercise,
