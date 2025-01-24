@@ -132,6 +132,11 @@ export const examsFoldersNW: ExamsFolders = {
     displayTitle: 'MSA | Zentrale Prüfungen (ZAP)',
     schoolType: 'alle',
   },
+  eesa: {
+    id: 311010,
+    displayTitle: 'EESA | Zentrale Prüfungen (ZAP)',
+    schoolType: 'alle',
+  },
 }
 
 export const examsFoldersBE: ExamsFolders = {
@@ -160,9 +165,14 @@ export const examsFoldersBB: ExamsFolders = {
   },
 }
 export const examsFoldersSH: ExamsFolders = {
-  alle: {
+  msa: {
     id: 308610,
     displayTitle: 'Mittlerer Schulabschluss (MSA)',
+    schoolType: 'alle',
+  },
+  esa: {
+    id: 313804,
+    displayTitle: 'Erster allgemeinbildender Schulabschluss (ESA)',
     schoolType: 'alle',
   },
 }
@@ -262,6 +272,16 @@ export const extraMetaTags = {
     title: 'Mathe MSA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
     metaDescription:
       'Mathe lernen für den Mittleren Schulabschluss (MSA) mit den originalen Prüfungsaufgaben und Lösungen aus Schleswig-Holstein. Mit Serlo schaffst du das!',
+  },
+  313804: {
+    title: 'Mathe ESA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
+    metaDescription:
+      'Mathe lernen für den Ersten allgemeinbildenden Schulabschluss (ESA) mit den originalen Prüfungsaufgaben und Lösungen aus Schleswig-Holstein. Mit Serlo schaffst du das!',
+  },
+  311010: {
+    title: 'Mathe EESA – Zentrale Prüfungen (ZAP) | NRW',
+    metaDescription:
+      'Deine Vorbereitung für den erweiterten ersten Schulabschluss in der zentralen Prüfung (ZAP) in Nordrhein-Westfalen (vormals HSA10): Mathe lernen mit originalen Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
   },
 } as const
 
