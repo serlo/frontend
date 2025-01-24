@@ -6,6 +6,8 @@ export const pluginHelpContent = {
       'Mithilfe der Box lassen sich Inhalt durch einen farblichen Rahmen und Icon besondere Bedeutung verleihen. Es existiert eine didaktische Vorauswahl an Box-Typen: Beispiel, Zitat, Vorgehen, Vorsicht, Merksatz, Beachte, Definition, Satz, Beweis.',
   },
   multimedia: {
+    video:
+      'https://editor.serlo.dev/media/serlo-org/e9y9a0hlp8h0qpa6t75wx5v4/video.webm',
     shortExplanation:
       'Du kannst einen veranschaulichenden Multimedia-Inhalt mit zugehöriger Text-Erklärung erstellen. Unter den Einstellungen lässt sich die Art des Multimedia-Elements ändern.',
   },
@@ -33,11 +35,6 @@ export const pluginHelpContent = {
     shortExplanation:
       'Bilder können via Upload, URL oder freie Anbieter wie Pixabay hinzugefügt werden. Du kannst Lizenz, Bildunterschrift und Alternativ-Text, sowie Autor*in angeben.',
   },
-  //   video:
-  //     'https://editor.serlo.dev/media/serlo-org/g04q5hmoe0ujijuof9mr0226/video.webm',
-  //   shortExplanation:
-  //     'Single-Choice-Übungen bieten verschiedene Antwortmöglichkeiten, von denen nur eine richtig ist. Für jede Antwort können die Autoren den Lernenden individuelles Feedback geben, um beispielsweise Missverständnisse hinter häufigen Fehlern zu erklären.',
-  // },
   spoiler: {
     video:
       'https://editor.serlo.dev/media/serlo-org/ljxl3wv6rld9bmkv5q82hew8/video.webm',
@@ -57,14 +54,20 @@ export const pluginHelpContent = {
       'Inline Text bearbeiten inklusive Schriftfarbe, Schriftstil, Überschriften, Verlinkungen, Listen, mathematische Formeln, Code-Umgebung',
   },
   video: {
+    video:
+      'https://editor.serlo.dev/media/serlo-org/o0s7ajmdwa8hpli892g1dl76/video.webm',
     shortExplanation:
       'Mithilfe von Video-Einbettungen kann das Lernmaterial abwechslungsreicher gestalten werden. Du kannst Videos nicht direkt hochladen, sondern via Link ein (z.B. über YouTube, Vimeo, Wikimedia Commons o.ä.)',
   },
   injection: {
+    video:
+      'https://editor.serlo.dev/media/serlo-org/uqyaw77skox9kgbpdkvhpvee/video.webm',
     shortExplanation:
       'Bereits existierende Inhalte von serlo.org können durch ihre ID eingebettet werden. So kannst du z.B. schon vorhandene Übungsaufgaben in deinem Inhalt nutzen. ',
   },
   imageGallery: {
+    video:
+      'https://editor.serlo.dev/media/serlo-org/jidbx1sbg4usfme5999vw2dy/video.webm',
     shortExplanation:
       'In der Bilder-Galerie können mehrere Bilder organisiert dargestellt werden. Die Bilder können via Upload, URL oder durch Suche der frei lizenzierten Bilder hinzugefügt werden. Durch Drag & Drop kannst du die Reihenfolge der Bilder ändern.',
   },
@@ -101,6 +104,8 @@ export const pluginHelpContent = {
       'Freitext-Aufgaben bieten Lernenden die Möglichkeit, ausführliche Antworten in einem längeren Absatz zu verfassen.',
   },
   interactiveVideo: {
+    video:
+      'https://editor.serlo.dev/media/serlo-org/gsm6himoxtt6wievfhkgg7z4/video.webm',
     shortExplanation:
       'Beim interaktiven Video kannst du an frei wählbaren Stellen interaktive Aufgaben direkt in das eingebettete Video einzubinden. Zur Auswahl stehen verschiedene Aufgabentypen wie Single-Choice, Multiple-Choice, Eingabefelder oder Lückentexte. Du kannst auch festlegen, ob die Aufgaben verpflichtend beantwortet werden müssen oder optional sind.',
   },
