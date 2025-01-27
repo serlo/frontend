@@ -3,15 +3,9 @@
 - fix(editor-help): content fixes, more videos. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4423
 - chore(deps): bump katex from 0.16.11 to 0.16.21. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4421
 - chore(deps-dev): bump vite from 5.4.11 to 5.4.12. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4420
-- refactor: enable Serlo-specific plugins (and renderers) in Editor. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4417
-- feat(editor-package): try loading renderers dynamically. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4416
-- fix(editor-package): add sideEffects:false to allow tree shaking. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4415
-- refactor: Editor package exports for \_\_\_experiments page. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4413
 - feat(interactive-video): add basic privacy wrapper for serlo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4411
-- refactor: export dispatchReplaceRootDocument from package. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4410
 - fix(editor-help): small corrections. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4408
 - fix(interactive-video): another focus approach, remove rewind toggle. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4400
-- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4390
 
 **Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.2-editor...v0.21.3-editor
 
