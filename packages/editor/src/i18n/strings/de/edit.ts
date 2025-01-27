@@ -6,7 +6,7 @@ export const editStrings = {
     'Willst du wirklich die Seite verlassen ohne zu speichern?',
   noChangesWarning: 'Bisher hast du nichts geändert',
   savedContentMightDisappearWarning:
-    '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst.',
+    '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst. Fragen? vicky@serlo.org',
   addPluginsModal: {
     searchInputPlaceholder: 'Suche...',
     basicPluginsTitle: 'Inhalte',
@@ -220,13 +220,10 @@ export const editStrings = {
       defaultTitle: 'Aufgabe',
       autoOpenLabel: 'Automatisch öffnen',
       autoOpenExplanation:
-        'Der Inhalt öffnet wird automatisch angezeigt, wenn das Video dort ankommt',
+        'Die Aufgabe wird automatisch geöffnet, wenn das Video dort ankommt',
       mandatoryLabel: 'Verpflichtende Aufgabe',
       mandatoryExplanation:
         'Die Aufgabe muss richtig beantwortet werden, um das Video weiter abzuspielen',
-      forceRewatchLabel: 'Auto-Wiederholung',
-      forceRewatchExplanation:
-        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lerner per Button den letzten Abschnitt noch mal anschauen',
       editMark: 'Bearbeiten',
       removeMark: 'Löschen',
       removeAllMarks: 'Alle Aufgaben löschen',
@@ -321,6 +318,10 @@ export const editStrings = {
         'Sorry,  Elemente einfügen klappt nicht in Listen.',
       pastingPluginNotAllowedHere:
         'Sorry, dieses Plugin kannst du hier nicht einfügen.',
+      unsupportedPluginsPasted:
+        'Ein paar der Plugins die du eingefügt hast, werden hier nicht unterstützt.',
+      invalidDataPasted:
+        'Sorry, mit den Daten die du einfügen willst stimmt etwas nicht. Das liegt wahrscheinlich an uns.',
       linkOverlay: {
         placeholder: 'Suchbegriff oder "/1234"',
         placeholderNonSerlo: 'Link',

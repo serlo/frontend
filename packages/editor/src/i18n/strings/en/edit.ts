@@ -5,7 +5,7 @@ export const editStrings = {
   confirmRouteChange: 'Are you sure you want to leave without saving?',
   noChangesWarning: 'Nothing changed so there is no need to save yet',
   savedContentMightDisappearWarning:
-    '⚠️ This is a test environment. Please do not create content that you want to keep long term here.',
+    '⚠️ This is a test environment. Please do not create content that you want to keep long term here. Questions? vicky@serlo.org',
   addPluginsModal: {
     searchInputPlaceholder: 'Search...',
     basicPluginsTitle: 'Content Elements',
@@ -214,9 +214,6 @@ export const editStrings = {
       autoOpenExplanation: 'Content automatically opens when video is at mark',
       mandatoryLabel: 'Mandatory Exercise',
       mandatoryExplanation: 'Exercise has to be solved to continue video',
-      forceRewatchLabel: 'Auto Rewatch',
-      forceRewatchExplanation:
-        'If an exercise is answered incorrectly, the video jumps back to the last mark',
       editMark: 'Edit',
       removeMark: 'Remove',
       removeAllMarks: 'Remove all exercises',
@@ -310,6 +307,9 @@ export const editStrings = {
         'Sorry, pasting elements inside of lists is not allowed.',
       pastingPluginNotAllowedHere:
         'Sorry, pasting this plugin here is not allowed.',
+      unsupportedPluginsPasted:
+        'There were unsupported plugins in the data you pasted.',
+      invalidDataPasted: 'Sorry, something is wrong with the data you pasted.',
       linkOverlay: {
         placeholder: 'https://… or /1234',
         placeholderNonSerlo: 'https://',

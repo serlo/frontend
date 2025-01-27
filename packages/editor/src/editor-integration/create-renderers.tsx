@@ -31,6 +31,7 @@ import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exerci
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { sanitizeHref } from '@editor/utils/sanitize-href'
 import { ComponentProps } from 'react'
 
 export function createRenderers(): InitRenderersArgs {
@@ -132,7 +133,7 @@ export function createRenderers(): InitRenderersArgs {
       return (
         <a
           className="serlo-link cursor-pointer"
-          href={href}
+          href={sanitizeHref(href)}
           target="_blank"
           rel="noopener noreferrer"
         >

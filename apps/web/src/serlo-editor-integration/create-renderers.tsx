@@ -29,6 +29,7 @@ import type {
   EditorDropzoneImageDocument,
   EditorInteractiveVideoDocument,
 } from '@editor/types/editor-plugins'
+import { sanitizeHref } from '@editor/utils/sanitize-href'
 import dynamic from 'next/dynamic'
 import { ComponentProps } from 'react'
 
@@ -68,11 +69,12 @@ const BlanksExerciseStaticRenderer = dynamic<EditorBlanksExerciseDocument>(() =>
     (mod) => mod.BlanksExerciseStaticRenderer
   )
 )
-const InteractiveVideoRenderer = dynamic<EditorInteractiveVideoDocument>(() =>
-  import('@editor/plugins/interactive-video/static').then(
-    (mod) => mod.InteractiveVideoStaticRenderer
+const InteractiveVideoSerloStaticRenderer =
+  dynamic<EditorInteractiveVideoDocument>(() =>
+    import(
+      '@/serlo-editor-integration/serlo-plugin-wrappers/interactive-video-serlo-static-renderer'
+    ).then((mod) => mod.InteractiveVideoSerloStaticRenderer)
   )
-)
 const InjectionStaticRenderer = dynamic<EditorInjectionDocument>(() =>
   import('@editor/plugins/injection/static').then(
     (mod) => mod.InjectionStaticRenderer
@@ -232,7 +234,7 @@ export function createRenderers(): InitRenderersArgs {
       },
       {
         type: EditorPluginType.InteractiveVideo,
-        renderer: InteractiveVideoRenderer,
+        renderer: InteractiveVideoSerloStaticRenderer,
       },
       {
         type: EditorPluginType.TextAreaExercise,
@@ -262,7 +264,7 @@ export function createRenderers(): InitRenderersArgs {
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
       return (
         <>
-          <Link href={href}>{children}</Link>
+          <Link href={sanitizeHref(href)}>{children}</Link>
           <ExtraInfoIfRevisionView>{href}</ExtraInfoIfRevisionView>
         </>
       )

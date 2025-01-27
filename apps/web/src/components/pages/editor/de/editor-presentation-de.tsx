@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 
 import { EditorContact } from '../editor-contact'
 import { EditorFeatures } from '../editor-features'
-import { EditorPartnerList, partners } from '../editor-partner-list'
+import { EditorPartnerList } from '../editor-partner-list'
 import { EditorRoadmap } from '../editor-roadmap'
 import { EditorTeam, teamDataVicky } from '../editor-team'
 import { Lazy } from '@/components/content/lazy'
@@ -33,7 +33,6 @@ export function EditorPresentationDe() {
       <HeadTags data={{ title }} />
       <header className="px-side pb-8 pt-6 lg:px-side-lg">
         <Logo />
-        {renderSupporterLogos()}
       </header>
 
       <div
@@ -90,6 +89,8 @@ export function EditorPresentationDe() {
             </div>
           </div>
         </section>
+
+        {renderSupporterLogos()}
 
         <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 !pt-16">
           <div className="mx-auto mt-2 max-w-4xl px-4 pb-16 text-center text-xl sm:flex sm:gap-1">
@@ -277,34 +278,30 @@ export function EditorPresentationDe() {
   }
 
   function renderSupporterLogos() {
-    const { padding, logo, name } = partners[0]
-
-    const euLogo = {
-      name: 'European Union',
-      logo: '/_assets/img/editor/partners/logo_eu.svg',
-      padding: 2,
+    const bmbfLogo = {
+      name: 'Bundesministerium für Bildung und Forschung',
+      logo: '/_assets/img/editor/partners/logo_bmbf.svg',
     }
+    const euLogo = {
+      name: 'Europäische Kommission',
+      logo: '/_assets/img/editor/partners/logo_eu.svg',
+    }
+
     return (
-      <div className="hidden sm:absolute sm:right-8 sm:top-5 sm:block sm:w-32">
+      <div className="mb-5 px-side sm:absolute sm:right-1 sm:top-5 sm:block sm:w-52 md:-top-28 md:text-right">
+        <b>Gefördert durch</b>
+        <br />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className="sm:ml-auto"
-          style={{
-            paddingTop: `${padding}px`,
-            paddingBottom: `${padding}px`,
-          }}
-          src={logo}
-          alt={`Logo von ${name}`}
+          className="inline-block h-auto w-44 sm:ml-auto sm:w-52 md:-mr-4 md:block"
+          src={bmbfLogo.logo}
+          alt="Logo des Bundesministerium für Bildung und Forschung"
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className="sm:-mt-8 sm:ml-auto"
-          style={{
-            paddingTop: `3px`,
-            paddingBottom: `3px`,
-          }}
+          className="inline-block h-auto w-32 sm:ml-auto"
           src={euLogo.logo}
-          alt={`Logo von ${euLogo.name}`}
+          alt="Logo der Europäischen Kommission"
         />
       </div>
     )

@@ -58,7 +58,8 @@ export function parseVideoUrl(
       `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
       VideoType.Vimeo,
     ]
-  const serloAssetRegex = /^(https?:\/\/)?(.*?assets\.serlo\.org\/)(.+)/
+  const serloAssetRegex =
+    /^(https:\/\/assets\.serlo\.org\/wikimedia\/)(.+)(webm)$/
   const serloAsset = serloAssetRegex.exec(inputSrc)
   if (serloAsset) return [inputSrc, VideoType.SerloAsset]
 

@@ -22,13 +22,14 @@ export function SelectVideoMode({
   const [videoSrc, setVideoSrc] = useState(staticVideoSrc)
 
   useEffect(() => {
-    const [parsedUrl, type] = parseVideoUrl(videoSrc)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, type] = parseVideoUrl(videoSrc)
     if (type === undefined) return
 
     dispatch(
       runChangeDocumentSaga({
         id: videoId,
-        state: { initial: (curr) => ({ ...(curr as object), src: parsedUrl }) },
+        state: { initial: (curr) => ({ ...(curr as object), src: videoSrc }) },
       })
     )
   }, [videoSrc, videoId, dispatch])

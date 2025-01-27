@@ -31,31 +31,19 @@ export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
   testingSecret?: string | null
 ) {
-  if (plugins.includes(EditorPluginType.Image) && !testingSecret) {
-    /* eslint-disable no-console */
-    console.log(
-      'The image plugin needs the `testingSecret` but it is missing. Image plugin was disabled. Either provide it or deactivate the image plugin in the editor API.'
-    )
-    plugins = plugins.filter((plugin) => plugin !== EditorPluginType.Image)
-  }
-
   const allPlugins = [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
     },
-    ...(testingSecret
-      ? [
-          {
-            type: EditorPluginType.Image,
-            plugin: createTestingImagePlugin(testingSecret),
-          },
-          {
-            type: EditorPluginType.ImageGallery,
-            plugin: createImageGalleryPlugin(),
-          },
-        ]
-      : []),
+    {
+      type: EditorPluginType.Image,
+      plugin: createTestingImagePlugin(testingSecret),
+    },
+    {
+      type: EditorPluginType.ImageGallery,
+      plugin: createImageGalleryPlugin(),
+    },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),
