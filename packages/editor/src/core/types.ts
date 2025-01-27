@@ -27,8 +27,14 @@ export interface BaseEditor {
   element: ReactNode
   i18n: LanguageData
   history: HistoryData
+  /**
+   * @deprecated
+   * Used for selecting Editor state from the Redux store
+   * in the current way that entities are saved on serlo.org.
+   * Could be replaced with the `onChange` Editor method.
+   */
   selectRootDocument: () => AnyEditorDocument
-  /** @deprecated Only temporarily exported for serlo.org. */
+  /** @deprecated Only temporarily provided for serlo.org. */
   dispatchReplaceRootDocument: (pluginType: string, state: unknown) => void
 }
 
