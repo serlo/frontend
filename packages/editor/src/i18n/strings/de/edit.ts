@@ -40,9 +40,10 @@ export const editStrings = {
   },
   plugins: {
     datenraumIntegration: {
-      title: 'Datenraum Inhalte',
+      title: 'Freie Inhalte (Datenraum)',
       description: 'Importiere und Editiere Inhalte aus dem Datenraum',
     },
+
     anchor: {
       title: 'Sprungmarke',
       description: 'Füge eine Sprungmarke innerhalb deines Inhalts hinzu.',
@@ -386,8 +387,8 @@ export const editStrings = {
       seoTitle: 'Titel für Suchmaschinen',
     },
     audio: {
-      title: 'Audio',
-      description: 'Audioaufnahmen von Vocaroo einbinden',
+      title: 'Meine Inhalte',
+      description: 'Wähle aus deinen bestehenden Inhalten',
       audioUrl: 'Audio URL eingeben',
     },
     exercise: {

@@ -49,11 +49,11 @@ async function fetchContent({ queryKey }: { queryKey: string[] }) {
     const stateObject = (await result.json()) as { editorState: string }
 
     const editorState = JSON.parse(
-      JSON.parse(decodeURIComponent(stateObject.editorState)) as string
+      JSON.parse(stateObject.editorState) as string
     ) as AnyEditorDocument
 
     if (isArticleDocument(editorState)) {
-      return editorState.state.content
+      return editorState
     }
     // TODO: check for exercise later
     return editorState

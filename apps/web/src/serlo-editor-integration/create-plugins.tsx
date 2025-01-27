@@ -111,7 +111,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
       plugin: createMultimediaPlugin([
         EditorPluginType.Image,
         EditorPluginType.Video,
-        ...(isProduction ? [] : [EditorPluginType.Audio]),
+        EditorPluginType.Audio,
         EditorPluginType.Geogebra,
       ]),
     },
@@ -123,10 +123,7 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     { type: EditorPluginType.Geogebra, plugin: geoGebraPlugin },
     { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
     { type: EditorPluginType.Video, plugin: videoPlugin },
-    ...(isProduction
-      ? []
-      : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
-
+    { type: EditorPluginType.Audio, plugin: audioPlugin },
     {
       type: EditorPluginType.DatenraumIntegration,
       plugin: datenraumIntegrationPlugin,

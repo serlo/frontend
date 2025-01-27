@@ -84,30 +84,49 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
     })
   }, [allowedPlugins, menuItems])
 
-  const { basicOptions, interactiveOptions, firstOption, isEmpty } =
-    useMemo(() => {
-      const filteredBySearchString = filterPluginMenuItemsBySearchString(
-        allowedMenuItems,
-        searchString
-      )
+  const {
+    mockOptions,
+    basicOptions,
+    interactiveOptions,
+    firstOption,
+    isEmpty,
+  } = useMemo(() => {
+    const filteredBySearchString = filterPluginMenuItemsBySearchString(
+      allowedMenuItems,
+      searchString
+    )
+    const mockOptions = filteredBySearchString.filter(
+      ({ initialState }) =>
+        initialState.plugin === EditorPluginType.DatenraumIntegration ||
+        initialState.plugin === EditorPluginType.Audio
+    )
 
-      const basicOptions = filteredBySearchString.filter(
-        ({ initialState }) =>
-          initialState.plugin !== EditorPluginType.Exercise &&
-          initialState.plugin !== EditorPluginType.InteractiveVideo
-      )
+    const basicOptions = filteredBySearchString.filter(
+      ({ initialState }) =>
+        initialState.plugin !== EditorPluginType.Exercise &&
+        initialState.plugin !== EditorPluginType.InteractiveVideo &&
+        initialState.plugin !== EditorPluginType.DatenraumIntegration &&
+        initialState.plugin !== EditorPluginType.Audio
+    )
 
-      const interactiveOptions = filteredBySearchString.filter(
-        ({ initialState }) =>
-          initialState.plugin === EditorPluginType.Exercise ||
-          initialState.plugin === EditorPluginType.InteractiveVideo
-      )
+    const interactiveOptions = filteredBySearchString.filter(
+      ({ initialState }) =>
+        initialState.plugin === EditorPluginType.Exercise ||
+        initialState.plugin === EditorPluginType.InteractiveVideo
+    )
 
-      const firstOption = basicOptions.at(0) ?? interactiveOptions.at(0)
-      const isEmpty = firstOption === undefined
+    const firstOption =
+      mockOptions.at(0) ?? basicOptions.at(0) ?? interactiveOptions.at(0)
+    const isEmpty = firstOption === undefined
 
-      return { basicOptions, interactiveOptions, firstOption, isEmpty }
-    }, [allowedMenuItems, searchString])
+    return {
+      mockOptions,
+      basicOptions,
+      interactiveOptions,
+      firstOption,
+      isEmpty,
+    }
+  }, [allowedMenuItems, searchString])
 
   const handleModalClose = (isOpen: boolean) => {
     if (isOpen === false) {
@@ -199,6 +218,7 @@ export function PluginMenuModal({ onInsertPlugin }: PluginMenuModalProps) {
         </div>
       ) : (
         <PluginMenuItems
+          mockOptions={mockOptions}
           basicOptions={basicOptions}
           interactiveOptions={interactiveOptions}
           focusedItemIndex={focusedItemIndex}

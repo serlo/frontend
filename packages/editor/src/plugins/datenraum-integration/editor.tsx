@@ -23,7 +23,7 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
       defaultOpen={showSearch}
       onOpenChange={setShowSearch}
     >
-      <DialogContent className="top-[45%] w-[900px] max-w-[90vw]">
+      <DialogContent className="top-[48%] max-h-[90vh] w-[900px] max-w-[90vw]">
         <div className="px-3">
           <SearchModal noNew onImport={handleImport} />
         </div>
@@ -34,7 +34,8 @@ export function DatenraumIntegrationEditor(props: DatenraumIntegrationProps) {
   function handleImport(state?: unknown) {
     const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
 
-    if (!parentPlugin) return null
+    if (!parentPlugin || !state) return null
+    console.log(state)
 
     dispatch(
       insertPluginChildBefore({

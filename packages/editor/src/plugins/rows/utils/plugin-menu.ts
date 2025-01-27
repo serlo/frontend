@@ -1,12 +1,12 @@
 import type { EditorProps } from '@editor/core'
-import { AudioIcon } from '@editor/editor-ui/assets/plugin-icons/icon-audio'
-import IconAudio from '@editor/editor-ui/assets/plugin-icons/icon-audio.svg?raw'
 import { BlanksDndIcon } from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd'
 import IconBlanksDragAndDrop from '@editor/editor-ui/assets/plugin-icons/icon-blanks-dnd.svg?raw'
 import { BlanksTypingIcon } from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing'
 import IconBlanksTyping from '@editor/editor-ui/assets/plugin-icons/icon-blanks-typing.svg?raw'
 import { BoxIcon } from '@editor/editor-ui/assets/plugin-icons/icon-box'
 import IconBox from '@editor/editor-ui/assets/plugin-icons/icon-box.svg?raw'
+import { DatenraumIcon } from '@editor/editor-ui/assets/plugin-icons/icon-datenraum'
+import IconDatenraum from '@editor/editor-ui/assets/plugin-icons/icon-datenraum.svg?raw'
 import { DropzonesIcon } from '@editor/editor-ui/assets/plugin-icons/icon-dropzones'
 import IconDropzones from '@editor/editor-ui/assets/plugin-icons/icon-dropzones.svg?raw'
 import IconEquation from '@editor/editor-ui/assets/plugin-icons/icon-equation.svg?raw'
@@ -62,10 +62,11 @@ const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
  * If a plugin in not loaded in the current editor instance, it will be filtered out.
  */
 export const pluginMenuType = {
+  DatenraumIntegration: EditorPluginType.DatenraumIntegration,
+  MeineInhalte: EditorPluginType.Audio,
   Text: EditorPluginType.Text,
   Image: EditorPluginType.Image,
   ImageGallery: EditorPluginType.ImageGallery,
-  DatenraumIntegration: EditorPluginType.DatenraumIntegration,
   Video: EditorPluginType.Video,
   Highlight: EditorPluginType.Highlight,
   Spoiler: EditorPluginType.Spoiler,
@@ -77,7 +78,6 @@ export const pluginMenuType = {
   Multimedia: EditorPluginType.Multimedia,
 
   InteractiveVideo: EditorPluginType.InteractiveVideo,
-  Audio: EditorPluginType.Audio,
   PageLayout: EditorPluginType.PageLayout,
   PagePartners: EditorPluginType.PagePartners,
 
@@ -243,7 +243,8 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.Highlight]: IconHighlight,
   [pluginMenuType.Image]: IconImage,
   [pluginMenuType.ImageGallery]: IconImageGallery,
-  [pluginMenuType.DatenraumIntegration]: IconFallback,
+  [pluginMenuType.DatenraumIntegration]: IconDatenraum,
+  [pluginMenuType.MeineInhalte]: IconFallback,
   [pluginMenuType.Injection]: IconInjection,
   [pluginMenuType.SerloTable]: IconTable,
   [pluginMenuType.Spoiler]: IconSpoiler,
@@ -257,7 +258,6 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.H5p]: IconH5p,
   [pluginMenuType.ExerciseGroup]: IconFallback,
   [pluginMenuType.InteractiveVideo]: IconInteractiveVideo,
-  [pluginMenuType.Audio]: IconAudio,
   [pluginMenuType.PageLayout]: IconFallback,
   [pluginMenuType.PagePartners]: IconFallback,
   [pluginMenuType.EdusharingAsset]: IconImage,
@@ -290,11 +290,11 @@ const iconComponentLookup: Record<PluginMenuType, React.ComponentType> = {
   [pluginMenuType.H5p]: H5PIcon,
   [pluginMenuType.ExerciseGroup]: FallbackIcon,
   [pluginMenuType.InteractiveVideo]: InteractiveVideoIcon,
-  [pluginMenuType.Audio]: AudioIcon,
   [pluginMenuType.PageLayout]: FallbackIcon,
   [pluginMenuType.PagePartners]: FallbackIcon,
   [pluginMenuType.EdusharingAsset]: ImageIcon,
-  [pluginMenuType.DatenraumIntegration]: FallbackIcon,
+  [pluginMenuType.DatenraumIntegration]: DatenraumIcon,
+  [pluginMenuType.MeineInhalte]: FallbackIcon,
 }
 
 function getIconComponent(type: PluginMenuType) {

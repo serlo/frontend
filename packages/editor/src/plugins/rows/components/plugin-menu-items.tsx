@@ -8,6 +8,7 @@ function getTooltipPosition(index: number) {
 }
 
 export function PluginMenuItems({
+  mockOptions,
   basicOptions,
   interactiveOptions,
   focusedItemIndex,
@@ -15,6 +16,7 @@ export function PluginMenuItems({
   itemRefs,
   onInsertPlugin,
 }: {
+  mockOptions: PluginMenuItem[]
   basicOptions: PluginMenuItem[]
   interactiveOptions: PluginMenuItem[]
   focusedItemIndex: number | null
@@ -26,13 +28,23 @@ export function PluginMenuItems({
 
   return (
     <>
+      {mockOptions.length ? (
+        <>
+          <h3 className="pl-6 pt-4 text-lg font-bold text-almost-black">
+            Bestehende Inhalte
+          </h3>
+          <ul className="grid grid-cols-5 gap-4 p-4">
+            {renderListItems(mockOptions, 0)}
+          </ul>
+        </>
+      ) : null}
       {basicOptions.length ? (
         <>
           <h3 className="pl-6 pt-4 text-lg font-bold text-almost-black">
             {editorStrings.addPluginsModal.basicPluginsTitle}
           </h3>
           <ul className="grid grid-cols-5 gap-4 p-4">
-            {renderListItems(basicOptions, 0)}
+            {renderListItems(basicOptions, mockOptions.length)}
           </ul>
         </>
       ) : null}
@@ -43,7 +55,10 @@ export function PluginMenuItems({
             {editorStrings.addPluginsModal.interactivePluginsTitle}
           </h3>
           <ul className="grid grid-cols-5 gap-4 p-4">
-            {renderListItems(interactiveOptions, basicOptions.length)}
+            {renderListItems(
+              interactiveOptions,
+              mockOptions.length + basicOptions.length
+            )}
           </ul>
         </>
       ) : null}

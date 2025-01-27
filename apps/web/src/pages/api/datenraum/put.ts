@@ -103,7 +103,7 @@ export default async function handler(
 
   if (!putResponse.ok)
     return res.status(500).json({ message: 'Failed to put node' })
-  return res.status(200)
+  return res.status(200).json(undefined)
 }
 
 export const config = { api: { externalResolver: true } }
