@@ -40,6 +40,7 @@ export interface SerloEditorProps {
   editorVariant: EditorVariant
   isProductionEnvironment?: boolean
   userId?: string
+  styleReset?: boolean
   _testingSecret?: string | null
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
@@ -58,6 +59,7 @@ export function SerloEditor(props: SerloEditorProps) {
     plugins,
     isProductionEnvironment,
     userId,
+    styleReset,
     _testingSecret,
     _ltik,
     extraSerloPlugins,
@@ -97,12 +99,14 @@ export function SerloEditor(props: SerloEditorProps) {
           value={{ editorVariant, userId, ltik: _ltik }}
         >
           {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
-          <Editor
-            initialState={migratedState.document}
-            onChange={handleDocumentChange}
-          >
-            {children}
-          </Editor>
+          <div className={styleReset ? 'serlo-editor-style-reset' : ''}>
+            <Editor
+              initialState={migratedState.document}
+              onChange={handleDocumentChange}
+            >
+              {children}
+            </Editor>
+          </div>
         </EditorMetaContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>
