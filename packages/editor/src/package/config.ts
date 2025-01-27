@@ -18,6 +18,7 @@ export const defaultPlugins = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.BlanksExercise,
   EditorPluginType.DropzoneImage,
+  EditorPluginType.InteractiveVideo,
   EditorPluginType.Solution,
   EditorPluginType.Rows,
   EditorPluginType.TextAreaExercise,

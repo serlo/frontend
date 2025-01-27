@@ -212,9 +212,6 @@ export const editStrings = {
       autoOpenExplanation: 'Content automatically opens when video is at mark',
       mandatoryLabel: 'Mandatory Exercise',
       mandatoryExplanation: 'Exercise has to be solved to continue video',
-      forceRewatchLabel: 'Auto Rewatch',
-      forceRewatchExplanation:
-        'If an exercise is answered incorrectly, the video jumps back to the last mark',
       editMark: 'Edit',
       removeMark: 'Remove',
       removeAllMarks: 'Remove all exercises',

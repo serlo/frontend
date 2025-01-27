@@ -191,10 +191,6 @@ export function createRenderers(
           : VideoStaticRenderer,
       },
       {
-        type: EditorPluginType.InteractiveVideo,
-        renderer: InteractiveVideoStaticRenderer,
-      },
-      {
         type: EditorPluginType.Anchor,
         renderer: AnchorStaticRenderer,
       },
@@ -235,6 +231,10 @@ export function createRenderers(
       {
         type: EditorPluginType.TextAreaExercise,
         renderer: TextAreaExerciseStaticRenderer,
+      },
+      {
+        type: EditorPluginType.InteractiveVideo,
+        renderer: InteractiveVideoStaticRenderer,
       },
       {
         type: EditorPluginType.EdusharingAsset,

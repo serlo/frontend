@@ -78,15 +78,6 @@ export const teamData: TeamDataEntry[] = [
       'https://assets.serlo.org/16618150-a09a-11ed-95de-a79d3d5d7bc4/image.jpg',
   },
   {
-    firstName: 'Mikey',
-    lastName: 'Stengel',
-    position: 'Software',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/20711390-d20e-11ed-a343-eba572d2a65c/image.png',
-  },
-  {
     firstName: 'Botho',
     lastName: 'Willer',
     position: 'Design | Software',

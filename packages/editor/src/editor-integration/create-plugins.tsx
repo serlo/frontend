@@ -50,6 +50,17 @@ export interface ExtraSerloPlugins {
   image: EditorPlugin<ImagePluginState, ImagePluginConfig>
 }
 
+function isLocalOrDev() {
+  if (typeof window === 'undefined') return false
+  const host = window.location.hostname
+
+  return (
+    process.env.NODE_ENV === 'development' ||
+    host === 'editor.serlo.dev' ||
+    host === 'localhost'
+  )
+}
+
 export function createPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
   testingSecret?: string | null,
@@ -78,10 +89,6 @@ export function createPlugins(
     {
       type: EditorPluginType.Video,
       plugin: videoPlugin,
-    },
-    {
-      type: EditorPluginType.InteractiveVideo,
-      plugin: interactiveVideoPlugin,
     },
     {
       type: EditorPluginType.Spoiler,
@@ -146,6 +153,14 @@ export function createPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
+    ...(isLocalOrDev()
+      ? [
+          {
+            type: EditorPluginType.InteractiveVideo,
+            plugin: interactiveVideoPlugin,
+          },
+        ]
+      : []),
 
     // Special plugins, never visible in suggestions
     // ===================================================

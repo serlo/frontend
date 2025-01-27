@@ -1,3 +1,14 @@
+## Changelog for version 0.21.3
+
+- fix(editor-help): content fixes, more videos. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4423
+- chore(deps): bump katex from 0.16.11 to 0.16.21. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4421
+- chore(deps-dev): bump vite from 5.4.11 to 5.4.12. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4420
+- feat(interactive-video): add basic privacy wrapper for serlo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4411
+- fix(editor-help): small corrections. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4408
+- fix(interactive-video): another focus approach, remove rewind toggle. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4400
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.2-editor...v0.21.3-editor
+
 ## Changelog for version 0.21.2
 
 - fix(editor-package): make testing secret optional & enable image (and related) plugins even if testing secret is missing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4405

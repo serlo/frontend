@@ -221,9 +221,6 @@ export const editStrings = {
       mandatoryLabel: 'Verpflichtende Aufgabe',
       mandatoryExplanation:
         'Die Aufgabe muss richtig beantwortet werden, um das Video weiter abzuspielen',
-      forceRewatchLabel: 'Auto-Wiederholung',
-      forceRewatchExplanation:
-        'Wenn die Aufgabe falsch beantwortet wurde, kann der Lernende per Button den letzten Abschnitt noch mal anschauen',
       editMark: 'Bearbeiten',
       removeMark: 'Löschen',
       removeAllMarks: 'Alle Aufgaben löschen',
