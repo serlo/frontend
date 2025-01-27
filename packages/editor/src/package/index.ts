@@ -86,6 +86,8 @@ export { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
 export { ImageStaticRenderer } from '@editor/plugins/image/static'
 // Exported for InputExercise Serlo static renderer
 export { InputExerciseStaticRenderer } from '@editor/plugins/input-exercise/static'
+// Exported for Interactive Video Serlo static renderer
+export { InteractiveVideoStaticRenderer } from '@editor/plugins/interactive-video/static'
 // Exported for Multimedia Serlo static renderer
 export { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 // Exported for ScMcExercise Serlo static renderer
