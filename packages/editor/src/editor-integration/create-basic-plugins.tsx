@@ -8,6 +8,7 @@ import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
@@ -25,6 +26,17 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
+
+function isLocalOrDev() {
+  if (typeof window === 'undefined') return false
+  const host = window.location.hostname
+
+  return (
+    process.env.NODE_ENV === 'development' ||
+    host === 'editor.serlo.dev' ||
+    host === 'localhost'
+  )
+}
 
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
@@ -114,6 +126,14 @@ export function createBasicPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
+    ...(isLocalOrDev()
+      ? [
+          {
+            type: EditorPluginType.InteractiveVideo,
+            plugin: interactiveVideoPlugin,
+          },
+        ]
+      : []),
 
     // Special plugins, never visible in suggestions
     // ===================================================
