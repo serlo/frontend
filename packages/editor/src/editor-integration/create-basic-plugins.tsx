@@ -27,6 +27,17 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
 
+function isLocalOrDev() {
+  if (typeof window === 'undefined') return false
+  const host = window.location.hostname
+
+  return (
+    process.env.NODE_ENV === 'development' ||
+    host === 'editor.serlo.dev' ||
+    host === 'localhost'
+  )
+}
+
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
   testingSecret?: string | null
@@ -115,10 +126,14 @@ export function createBasicPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
-    {
-      type: EditorPluginType.InteractiveVideo,
-      plugin: interactiveVideoPlugin,
-    },
+    ...(isLocalOrDev()
+      ? [
+          {
+            type: EditorPluginType.InteractiveVideo,
+            plugin: interactiveVideoPlugin,
+          },
+        ]
+      : []),
 
     // Special plugins, never visible in suggestions
     // ===================================================
