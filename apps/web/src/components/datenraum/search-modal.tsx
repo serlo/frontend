@@ -18,6 +18,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 
+const ownQuery = 'datenraum-test serlo-put'
+
 export function SearchModal({
   noNew,
   onImport,
@@ -32,6 +34,12 @@ export function SearchModal({
     queryKey: ['datenraumSearch', query],
     queryFn: search,
     enabled: query.length > 0,
+  })
+
+  const { data: ownData, isFetching: isOwnFetching } = useQuery({
+    queryKey: ['datenraumSearch', ownQuery],
+    queryFn: search,
+    enabled: true,
   })
 
   const [typeFilterValue, setTypeFilterValue] = useState<
@@ -58,12 +66,16 @@ export function SearchModal({
         </>
       )}
 
-      <h1 className="mb-8 text-3xl font-bold">Suche im Datenraum</h1>
+      <h1 className="mb-1.5 text-3xl font-bold">Bestehende Inhalte</h1>
+      <p className="mb-6 ml-0.5 opacity-60">
+        Über den <b>Datenraum</b> kannst du auf über 20.000 freie Inhalte von
+        Kolleg*innen zurückgreifen.
+      </p>
       <div className="mb-8 flex gap-4 space-y-4">
         <Input
           className="py-0"
           type="text"
-          placeholder="Suchbergriff eingeben..."
+          placeholder="Suchbegriff eingeben..."
           value={liveQuery}
           onChange={(e) => setLiveQuery(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -88,7 +100,7 @@ export function SearchModal({
       {isFetching ? (
         <DogIcon className="mt-12 h-12 w-12 animate-spin text-sky-300" />
       ) : data?.length ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid max-h-[62vh] grid-cols-1 gap-6 overflow-scroll sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredResults?.map((entry) => (
             <SearchCard key={entry.url} entry={entry} onImport={onImport} />
           ))}
@@ -96,6 +108,23 @@ export function SearchModal({
       ) : query.length && data ? (
         'Keine Ergebnisse gefunden'
       ) : null}
+
+      {noNew ? null : (
+        <>
+          <h1 className="mb-4 mt-24 text-3xl font-bold">Meine Inhalte</h1>
+          {isOwnFetching ? (
+            <DogIcon className="mt-12 h-12 w-12 animate-spin text-sky-300" />
+          ) : ownData?.length ? (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {ownData?.map((entry) => (
+                <SearchCard key={entry.url} entry={entry} onImport={onImport} />
+              ))}
+            </div>
+          ) : data ? (
+            'Bisher keine eigenen Inhalte'
+          ) : null}
+        </>
+      )}
     </div>
   )
 
