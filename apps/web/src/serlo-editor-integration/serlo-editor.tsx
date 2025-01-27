@@ -71,6 +71,7 @@ export function SerloEditor({
           EditorPluginType.H5p,
         ]}
         initialState={initialState}
+        styleReset={false}
         extraSerloPlugins={extraSerloPlugins}
         extraSerloRenderers={extraSerloRenderers}
       >

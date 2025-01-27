@@ -31,4 +31,5 @@ export const defaultSerloEditorProps = {
   onChange: undefined,
   language: 'de' as SupportedLanguage,
   isProductionEnvironment: false,
+  styleReset: true,
 }
