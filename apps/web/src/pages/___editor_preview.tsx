@@ -70,6 +70,7 @@ function Content() {
         editorVariant="serlo-org"
         userId="serlo-preview-user"
         initialState={parseDocumentString(previewState)}
+        styleReset={false}
         onChange={(newState) => {
           const stringifiedNewState = JSON.stringify(newState.document)
           if (stringifiedNewState === previewState) return

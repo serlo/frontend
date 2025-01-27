@@ -176,6 +176,7 @@ function ExampleWithEditSwitch({
               EditorPluginType.Injection,
               EditorPluginType.Anchor,
             ]}
+            styleReset={false}
             initialState={exampleState}
             onChange={(state) => {
               void debouncedSetState(state.document)
