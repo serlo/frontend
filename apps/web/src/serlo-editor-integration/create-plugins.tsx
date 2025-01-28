@@ -124,14 +124,6 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     ...(isProduction
       ? []
       : [{ type: EditorPluginType.Audio, plugin: audioPlugin }]),
-    ...(isProduction
-      ? []
-      : [
-          {
-            type: EditorPluginType.InteractiveVideo,
-            plugin: interactiveVideoPlugin,
-          },
-        ]),
     { type: EditorPluginType.Anchor, plugin: anchorPlugin },
     { type: EditorPluginType.PageLayout, plugin: pageLayoutPlugin },
     { type: EditorPluginType.PagePartners, plugin: pagePartnersPlugin },
@@ -139,6 +131,10 @@ export function createPlugins({ lang }: { lang: Instance }): PluginsWithData {
     // Exercises etc.
     // ===================================================
 
+    {
+      type: EditorPluginType.InteractiveVideo,
+      plugin: interactiveVideoPlugin,
+    },
     { type: EditorPluginType.ExerciseGroup, plugin: exerciseGroupPlugin },
     { type: EditorPluginType.Exercise, plugin: exercisePlugin },
     { type: EditorPluginType.Solution, plugin: solutionPlugin },

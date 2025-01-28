@@ -62,7 +62,7 @@
     "isomorphic-dompurify": "^2.19.0",
     "js-cookie": "^3.0.5",
     "json-diff": "^1.0.6",
-    "katex": "^0.16.11",
+    "katex": "^0.16.21",
     "mathjs": "^13.2.2",
     "mathlive": "^0.101.1",
     "next": "^14.2.18",

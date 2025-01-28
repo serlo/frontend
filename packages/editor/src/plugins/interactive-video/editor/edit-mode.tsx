@@ -47,6 +47,7 @@ export function EditMode({
   return (
     <>
       <InteractiveVideoRenderer
+        isEditMode
         videoSrc={videoSrc}
         marks={staticMarks}
         learnerInteractions={previewActive ? learnerInteractions : undefined}
