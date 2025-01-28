@@ -127,7 +127,8 @@ export const instanceData = {
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: "படம்",
       previewImage: 'Preview Image',
-      task: "பணி"
+      task: "பணி",
+      courseNoPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.'
     },
     consent: {
       title: 'Consent for external Content',
@@ -191,7 +192,9 @@ export const instanceData = {
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
       positionForGrouped: 'This %exercise% is part of %title%.',
-      helpLink: 'Revision Help'
+      helpLink: 'Revision Help',
+      revisionSaved: 'Revision saved',
+      saveRevision: "மீட்டலை புதுப்பித்தல் "
     },
     revisionHistory: {
       changes: "மாற்றங்கள்",
@@ -224,6 +227,12 @@ export const instanceData = {
       importedContentText: 'imported',
       importedContentNote: 'This revision includes imported content',
       importedContentIdentifier: 'Content imported from'
+    },
+    externalRevisions: {
+      importOther: 'Import content from other entity',
+      importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
+      importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+      importOtherButton: 'Import content'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -428,6 +437,27 @@ export const instanceData = {
     bin: {
       title: "தலைப்பு",
       trashed: 'Trashed…'
+    },
+    saveButton: {
+      noChangesWarning: 'Nothing changed so there is no need to save yet',
+      save: "சேமி",
+      saveWithReview: 'Save and get review',
+      ready: "சேமிக்கத் தயாரா?",
+      cancel: "ரத்து செய்",
+      saving: 'Saving…',
+      missingChanges: 'You need to fill out the changes you made',
+      missingLicenseTerms: 'You need to accept the license terms',
+      missingChangesAndLicenseTerms: 'You need to fill out the changes you made and accept the license terms',
+      errorSaving: 'An error occurred during saving.',
+      saveLocallyAndRefresh: 'You can store the revision locally, refresh the page and try to save again.',
+      changes: 'Describe your changes to the content',
+      confirmRouteChange: 'Are you sure you want to leave without saving?'
+    },
+    articleAddModal: {
+      introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+      introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+      buttonAddType: "இணைக்குக %type%",
+      title: 'Add related Content or Exercises'
     }
   }
 };
@@ -625,6 +655,17 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    uuidUrlInput: {
+      invalidInput: 'Invalid id or url',
+      fetchError: 'Something went wrong, please try later',
+      loading: "ஏற்றுகிறது...",
+      notFound: 'Could not find that content',
+      unsupportedType: 'Sorry, type [%type%] is not supported here',
+      unsupportedId: 'Sorry, this ID is not supported here',
+      addFromFolderTitle: 'From the folder',
+      placeholder: 'Paste Serlo ID or URL here',
+      exerciseFolderNote: 'Only one can be selected here'
     },
     roles: {
       addButton: 'Add as %role%'
