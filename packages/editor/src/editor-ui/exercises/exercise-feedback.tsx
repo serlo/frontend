@@ -6,12 +6,25 @@ export interface SolutionFeedbackProps {
   missedSome?: boolean
 }
 
+const fallbackEmojis = ['🐸', '🦓', '🐹', '🦊', '🐶']
+
 export function ExerciseFeedback(props: SolutionFeedbackProps) {
   const { children, correct, missedSome } = props
 
   const exStrings = useStaticStrings().plugins.exercise
-  const fallbackString =
-    exStrings[correct ? 'correct' : missedSome ? 'missedSome' : 'wrong']
+
+  function getFallbackString() {
+    if (correct) return exStrings.feedback.correct
+    if (missedSome) return exStrings.feedback.missedSome
+    const randomIndex = Math.floor(Math.random() * 6)
+    return exStrings.feedback[
+      ('incorrect' + randomIndex) as keyof typeof exStrings.feedback
+    ]
+  }
+  const fallbackString = getFallbackString()
+  const emoji = correct
+    ? '🎉'
+    : fallbackEmojis[Math.floor(Math.random() * fallbackEmojis.length)]
 
   return (
     <div className="ml-3 mt-1 flex text-lg animate-in fade-in">
@@ -21,12 +34,12 @@ export function ExerciseFeedback(props: SolutionFeedbackProps) {
           correct ? 'correct' : 'incorrect'
         }`}
       >
-        {correct ? '🎉' : '✋'}
+        {emoji}
       </span>{' '}
       <div className="serlo-p mb-0 ml-1">
         {children ? (
           <>
-            {missedSome && exStrings.missedSome} {children}
+            {missedSome && exStrings.feedback.missedSome} {children}
           </>
         ) : (
           fallbackString
