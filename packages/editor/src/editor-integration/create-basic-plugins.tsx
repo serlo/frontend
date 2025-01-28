@@ -8,6 +8,7 @@ import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import { createMultimediaPlugin } from '@editor/plugins/multimedia'
 import { createRowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
@@ -26,35 +27,34 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 import { createTestingImagePlugin } from './image-with-testing-config'
 
+function isLocalOrDev() {
+  if (typeof window === 'undefined') return false
+  const host = window.location.hostname
+
+  return (
+    process.env.NODE_ENV === 'development' ||
+    host === 'editor.serlo.dev' ||
+    host === 'localhost'
+  )
+}
+
 export function createBasicPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
   testingSecret?: string | null
 ) {
-  if (plugins.includes(EditorPluginType.Image) && !testingSecret) {
-    /* eslint-disable no-console */
-    console.log(
-      'The image plugin needs the `testingSecret` but it is missing. Image plugin was disabled. Either provide it or deactivate the image plugin in the editor API.'
-    )
-    plugins = plugins.filter((plugin) => plugin !== EditorPluginType.Image)
-  }
-
   const allPlugins = [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({}),
     },
-    ...(testingSecret
-      ? [
-          {
-            type: EditorPluginType.Image,
-            plugin: createTestingImagePlugin(testingSecret),
-          },
-          {
-            type: EditorPluginType.ImageGallery,
-            plugin: createImageGalleryPlugin(),
-          },
-        ]
-      : []),
+    {
+      type: EditorPluginType.Image,
+      plugin: createTestingImagePlugin(testingSecret),
+    },
+    {
+      type: EditorPluginType.ImageGallery,
+      plugin: createImageGalleryPlugin(),
+    },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(plugins),
@@ -126,6 +126,14 @@ export function createBasicPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
+    ...(isLocalOrDev()
+      ? [
+          {
+            type: EditorPluginType.InteractiveVideo,
+            plugin: interactiveVideoPlugin,
+          },
+        ]
+      : []),
 
     // Special plugins, never visible in suggestions
     // ===================================================

@@ -1,8 +1,10 @@
+import { EditorPluginType } from '@editor/package'
 import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import type {
-  EditorArticleDocument,
+  EditorArticleIntroductionDocument,
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
+  EditorRowsDocument,
 } from '@editor/types/editor-plugins'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -50,11 +52,28 @@ export default async function handler(
         }
 
         if (uuid.__typename === 'Article') {
-          const articleDocument = parseDocumentString(
-            uuid.currentRevision.content
-          ) as EditorArticleDocument
-          const articleContent = articleDocument.state.content
-          respondWithContent(articleContent)
+          const { introduction, content } = (
+            parseDocumentString(uuid.currentRevision.content) as {
+              state: {
+                introduction: EditorArticleIntroductionDocument
+                content: EditorRowsDocument
+              }
+            }
+          ).state
+          const articleIntroductionAsMultimediaPlugin = {
+            plugin: EditorPluginType.Multimedia,
+            state: {
+              ...introduction.state,
+              explanation: {
+                plugin: EditorPluginType.Rows,
+                state: [introduction.state.explanation],
+              },
+            },
+          }
+          respondWithContent({
+            plugin: EditorPluginType.Rows,
+            state: [articleIntroductionAsMultimediaPlugin, ...content.state],
+          })
           return
         }
 

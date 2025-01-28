@@ -90,9 +90,7 @@ export function PrivacyWrapper({
 
   function renderPlaceholder() {
     if (placeholder) return placeholder
-    const buttonLabel = replacePlaceholders(strings.embed[type], {
-      provider: provider,
-    })
+    const buttonLabel = replacePlaceholders(strings.embed[type], { provider })
 
     const previewImageUrl = isTwingle
       ? '/_assets/img/donations-form.png'

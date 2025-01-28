@@ -75,6 +75,7 @@ export const codes = {
   // 4000014: 'You have no backup recovery codes set up.',
   // 4000015: 'This account does not exist or has no security key set up.',
   // 4000016: 'The backup recovery code is not valid.',
+  //4000031: "The password can not be used because it is too similar to the identifier."
   // 4010001: 'The login flow expired 0.02 minutes ago, please try again.',
   // 4010002:
   //   'Could not find a strategy to log you in with. Did you fill out the form correctly?',

@@ -109,7 +109,7 @@ See below for the current API specification.
 
 - **`editorVariant`**: The variant (integration) of the Serlo editor. For example `edusharing` or `serlo-org`. The editor adds this information to the `StorageFormat` that will be saved. Might become useful for example if we need to apply a migration only to one variant of the editor.
 
-- **`_testingSecret` (optional)**: Required to use Image plugin in testing. A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
+- **`_testingSecret` (optional)**: A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
 

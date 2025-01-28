@@ -5723,7 +5723,7 @@ __metadata:
     "@eslint/eslintrc": ^3.1.0
     "@eslint/js": ^9.14.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/editor": 0.21.1
+    "@serlo/editor": 0.21.2
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.3.1
@@ -5742,14 +5742,14 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.6.8
     react: ^18.2.0
     react-dom: ^18.3.1
-    vite: ^5.4.11
+    vite: ^5.4.12
     vite-plugin-dts: 4.3.0
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.21.1":
-  version: 0.21.1
-  resolution: "@serlo/editor@npm:0.21.1"
+"@serlo/editor@npm:0.21.2":
+  version: 0.21.2
+  resolution: "@serlo/editor@npm:0.21.2"
   dependencies:
     "@open-iframe-resizer/react": 1.2.1
     "@serlo/katex-styles": 1.0.1
@@ -5761,7 +5761,7 @@ __metadata:
     react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-resizable: ^3.0.5
-  checksum: 34102b3accbb907a5daaa323f2d3df465767e5698d9e32eef22c22c3b36239e3afb164fcde7889728cc1bfe0cb00b80cd24b232c49308c06452bb6c903b02afa
+  checksum: 9b10c923b4e63656f148223f5c88387c7cb8688c2f4482b6b0e80af7bfe951ad2bf833cfa01df3b4f667172ff20db3ff34faa9cdf06bab8e848b972d71bbc785
   languageName: node
   linkType: hard
 
@@ -5811,7 +5811,7 @@ __metadata:
     isomorphic-dompurify: ^2.19.0
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
-    katex: ^0.16.11
+    katex: ^0.16.21
     lit: ^3.2.1
     mathjs: ^13.2.2
     motion: ^11.11.17
@@ -5848,7 +5848,7 @@ __metadata:
     ts-key-enum: ^2.0.13
     typescript: ^5.6.3
     uuid: ^11.0.3
-    vite: ^5.4.11
+    vite: ^5.4.12
     vite-plugin-dts: 4.3.0
     vite-plugin-svgr: ^4.3.0
   languageName: unknown
@@ -5944,7 +5944,7 @@ __metadata:
     jest: ^29.7.0
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
-    katex: ^0.16.11
+    katex: ^0.16.21
     mathjs: ^13.2.2
     mathlive: ^0.101.1
     micromark: ^4.0.1
@@ -13404,14 +13404,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.16.11":
-  version: 0.16.11
-  resolution: "katex@npm:0.16.11"
+"katex@npm:^0.16.21":
+  version: 0.16.21
+  resolution: "katex@npm:0.16.21"
   dependencies:
     commander: ^8.3.0
   bin:
     katex: cli.js
-  checksum: 49d9340705f4922ee22aacedad45664971449e5ca65e42a70228961336c8d4746c37c3c719bcc2114b6ad21182800c7d3d8bea28fe6f951fc45fe7e8322ea3bd
+  checksum: 14180322a4e8fe9e4227a08b7d86fde9ee445859ff534e6a540b85eb5022b39ea2be70082776cce8c59b891c247fce3d1c1a090ea7821e005fd8b7bfee714936
   languageName: node
   linkType: hard
 
@@ -19479,9 +19479,9 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.11":
-  version: 5.4.11
-  resolution: "vite@npm:5.4.11"
+"vite@npm:^5.4.12":
+  version: 5.4.14
+  resolution: "vite@npm:5.4.14"
   dependencies:
     esbuild: ^0.21.3
     fsevents: ~2.3.3
@@ -19518,7 +19518,7 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 8c5b31d17487b69c40a30419dc0ade9f33360eb6893dbfa33a90980271bd74d35ae550b5cbb2a9e640f0df41ea36fd1bb4f222c98f6d02e607080f20832e69e8
+  checksum: 7360661da0415809454ff8809b6666e868ffc3e5ccfbd5fc17425341546cdc3dd3d37c68fcd6ed7305252aaecd0d251ede3745b57aaebd00b8aececc30b6697b
   languageName: node
   linkType: hard
 
