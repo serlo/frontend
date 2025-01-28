@@ -401,6 +401,8 @@ export const instanceData = {
           'The provided authentication code is invalid, please try again.',
         code4000010:
           'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4000031:
+          'This password can not be used because it is too similar to the username.',
         code4000032: 'You inserted less than 8 characters.',
         code4060004:
           'The recovery link is not valid or has already been used. Please try requesting an email again',
