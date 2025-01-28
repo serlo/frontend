@@ -21,12 +21,15 @@ export function FooterNavNew() {
         </p>
         <div className="mx-auto max-w-[190px] md:mx-0">
           <Link
-            className="serlo-new-landing-button max-w-xs md:mx-0"
+            className="serlo-new-landing-button max-w-xs !text-white md:mx-0"
             href="/mitmachen"
           >
             Mitmachen
           </Link>
-          <Link className="serlo-new-landing-button md:mx-0" href="/spenden">
+          <Link
+            className="serlo-new-landing-button !text-white md:mx-0"
+            href="/spenden"
+          >
             Spenden
           </Link>
         </div>

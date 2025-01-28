@@ -1,6 +1,9 @@
-import { parseVideoUrl, VideoType } from '@editor/plugins/video/renderer'
-import { VideoStaticRenderer } from '@editor/plugins/video/static'
-import { EditorVideoDocument } from '@editor/types/editor-plugins'
+import {
+  type EditorVideoDocument,
+  parseVideoUrl,
+  VideoType,
+  VideoStaticRenderer,
+} from '@editor/package'
 import dynamic from 'next/dynamic'
 
 import { Lazy } from '@/components/content/lazy'

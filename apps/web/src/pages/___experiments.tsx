@@ -1,8 +1,8 @@
 import {
-  PreferenceName,
+  type PreferenceName,
   getWithoutContext,
   setWithoutContext,
-} from '@editor/core/contexts'
+} from '@editor/package'
 import { useState } from 'react'
 
 import { cn } from '@/helper/cn'

@@ -1,4 +1,4 @@
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { TemplatePluginType } from '@editor/package'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'

@@ -1,13 +1,8 @@
 import {
-  buildCoursePageUrl,
-  getCoursePageIdFromPath,
-} from '@editor/plugins/course/helper/get-course-id-from-path'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
-  EditorCourseDocument,
-  EditorRowsDocument,
-} from '@editor/types/editor-plugins'
+  EditorPluginType,
+  type EditorCourseDocument,
+  type EditorRowsDocument,
+} from '@editor/package'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -31,6 +26,11 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import {
+  buildCoursePageUrl,
+  getCoursePageIdFromPath,
+} from '@/helper/get-course-id-from-path'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 // ALWAYS start requestPath with slash
 export async function requestPage(

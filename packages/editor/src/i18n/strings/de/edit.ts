@@ -2,9 +2,6 @@ export type EditStrings = typeof editStrings
 
 export const editStrings = {
   lang: 'de',
-  confirmRouteChange:
-    'Willst du wirklich die Seite verlassen ohne zu speichern?',
-  noChangesWarning: 'Bisher hast du nichts geändert',
   savedContentMightDisappearWarning:
     '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst. Fragen? vicky@serlo.org',
   addPluginsModal: {
@@ -254,11 +251,6 @@ export const editStrings = {
       title: '(experiment) Editor State einfügen',
       description: 'nur in staging',
     },
-    pagePartners: {
-      title: 'Partner Liste',
-      description:
-        'Nur für die Partnerseite (Liste der Partnerlogos wie auf de.serlo.org)',
-    },
     rows: {
       title: 'Zeilen',
       description: 'Rows plugin holds other plugins',
@@ -468,26 +460,9 @@ export const editStrings = {
       moreInFolder:
         'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner',
       addModal: {
-        introText:
-          'Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.',
-        introText2:
-          'Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.',
         buttonEx: 'Aufgaben hinzufügen',
         buttonExFolder: 'Aufgabenordner auswählen',
         buttonContent: 'Inhalt hinzufügen',
-        buttonAddType: '%type% hinzufügen',
-        title: 'Weiterführende Inhalte oder Übungsaufgaben hinzufügen',
-        invalidInput: 'Ungültige ID oder URL',
-        fetchError:
-          'Etwas ist schief gelaufen, bitte versuche es später noch einmal',
-        loading: 'Wird geladen …',
-        notFound: 'Inhalt konnte nicht gefunden werden',
-        unsupportedType: 'Sorry, der Typ [%type%] wird hier nicht unterstützt',
-        unsupportedId:
-          'Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)',
-        addFromFolderTitle: 'Aus dem Ordner',
-        placeholder: 'Eine Serlo Id oder URL hier einfügen',
-        exerciseFolderNote: 'Hier kann nur ein Ordner ausgewählt werden',
       },
     },
     course: {
@@ -549,25 +524,9 @@ export const editStrings = {
     extendedSettings: 'Erweiterte Einstellungen',
     close: 'Schließen',
     save: 'Speichern',
-    saveWithReview: 'Speichern und reviewen lassen',
     cancel: 'Abbrechen',
     saving: 'Speichert…',
-    missingChanges: 'Du musst zuerst die Änderungen ausfüllen.',
-    missingLicenseTerms: 'Du musst zuerst die Lizenzbedingungen akzeptieren.',
-    missingChangesAndLicenseTerms:
-      'Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.',
-    errorSaving: 'Es trat ein Fehler beim Speichern auf.',
-    saveLocallyAndRefresh:
-      'Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.',
-    revisionSaved: 'Bearbeitung gespeichert',
-    saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
-    importOther: 'Aus einem anderen Inhalt importieren',
-    importOtherExplanation:
-      'Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)',
-    importOtherWarning:
-      'Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.',
-    importOtherButton: 'Inhalte Importieren',
     current: 'Aktuell',
     author: 'Autor*in',
     createdAt: 'Zeitstempel',

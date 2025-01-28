@@ -1,5 +1,3 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
 import { User } from '@serlo/authorization'
 import { gql } from 'graphql-request'
 import { NextPage } from 'next'
@@ -17,9 +15,9 @@ import { UserPage } from '@/data-types'
 import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
 import { sharedUserFragments } from '@/fetcher/user/query-by-username'
 import { isMac } from '@/helper/client-detection'
+import { parseDocumentString } from '@/helper/parse-document-string'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetchAuthed } from '@/mutations/helper/use-mutation-fetch'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 const ContentPage: NextPage = () => {
@@ -51,7 +49,6 @@ const BotHunt = () => {
   const mutationFetch = useMutationFetchAuthed()
   const [removedIds, setRemovedIds] = useState<number[]>([])
   const manualInputRef = useRef<HTMLInputElement>(null)
-  editorRenderers.init(createRenderers())
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = usePotentialSpamUsersFetch()

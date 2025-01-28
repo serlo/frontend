@@ -1,8 +1,8 @@
-import { ExerciseStaticRenderer } from '@editor/plugins/exercise/static'
-import type {
-  EditorExerciseDocument,
-  EditorSolutionDocument,
-} from '@editor/types/editor-plugins'
+import {
+  ExerciseStaticRenderer,
+  type EditorExerciseDocument,
+  type EditorSolutionDocument,
+} from '@editor/package'
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
 

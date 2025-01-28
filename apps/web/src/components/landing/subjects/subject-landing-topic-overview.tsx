@@ -1,11 +1,10 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { EditorImage } from '@editor/plugins/image/components/editor-image'
-import { isImageDocument } from '@editor/types/plugin-type-guards'
+import { EditorPluginType } from '@editor/package'
 import { faListUl } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
+import { ProxyImage } from './proxy-image'
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
 import { Link } from '@/components/content/link'
@@ -15,7 +14,6 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import type { TaxonomySubTerm } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
@@ -29,8 +27,6 @@ export function SubjectLandingTopicOverview({
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const topicContainer = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
-  editorRenderers.init(createRenderers())
 
   const { extraTerms, allTopicsTaxonomyId } = deSubjectLandingData[subject]
 
@@ -95,9 +91,8 @@ export function SubjectLandingTopicOverview({
 
           const firstRow = term.description?.state[0]
           const src =
-            firstRow && isImageDocument(firstRow)
-              ? // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                String(firstRow.state.src)
+            firstRow && firstRow.plugin === EditorPluginType.Image
+              ? String((firstRow.state as { src: string }).src)
               : undefined
 
           const isExtraTerm = Object.hasOwn(term, 'href')
@@ -148,7 +143,7 @@ export function SubjectLandingTopicOverview({
                       alt={`Illustration: ${term.title}`}
                     />
                   ) : (
-                    <EditorImage src={src} className="h-12 w-12 object-cover" />
+                    <ProxyImage src={src} className="h-12 w-12 object-cover" />
                   )
                 ) : null}
               </div>
