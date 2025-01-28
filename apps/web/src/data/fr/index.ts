@@ -127,7 +127,8 @@ export const instanceData = {
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: "Image",
       previewImage: "Aperçu de l'image",
-      task: "Tâche"
+      task: "Tâche",
+      courseNoPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.'
     },
     consent: {
       title: "Consentement pour le contenu externe",
@@ -191,7 +192,9 @@ export const instanceData = {
       parentFallbackLink: "Au contenu parent",
       hasChanges: "Il y a eu des changements de ce contenu",
       positionForGrouped: 'This %exercise% is part of %title%.',
-      helpLink: "Aide pour les réviseurs"
+      helpLink: "Aide pour les réviseurs",
+      revisionSaved: "Révision sauvegardée",
+      saveRevision: "Sauvegarder la révision"
     },
     revisionHistory: {
       changes: "Modifications",
@@ -224,6 +227,12 @@ export const instanceData = {
       importedContentText: 'imported',
       importedContentNote: 'This revision includes imported content',
       importedContentIdentifier: 'Content imported from'
+    },
+    externalRevisions: {
+      importOther: 'Import content from other entity',
+      importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
+      importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+      importOtherButton: 'Import content'
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -428,6 +437,27 @@ export const instanceData = {
     bin: {
       title: "Titre",
       trashed: 'Trashed…'
+    },
+    saveButton: {
+      noChangesWarning: 'Nothing changed so there is no need to save yet',
+      save: "Sauvegarder",
+      saveWithReview: 'Save and get review',
+      ready: 'Ready to save?',
+      cancel: "Annuler",
+      saving: "Sauvegarde…",
+      missingChanges: "Tu dois remplir les modifications que tu as apportées",
+      missingLicenseTerms: "Tu dois accepter les conditions de licence",
+      missingChangesAndLicenseTerms: "Tu dois remplir les modifications que tu as apportées et accepter les conditions de licence",
+      errorSaving: "Une erreur s'est produite au cours de la sauvegarde!",
+      saveLocallyAndRefresh: "Tu peux sauvegarder la révision localement, actualiser la page et essayer de sauvegarder à nouveau.",
+      changes: 'Describe your changes to the content',
+      confirmRouteChange: 'Are you sure you want to leave without saving?'
+    },
+    articleAddModal: {
+      introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+      introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+      buttonAddType: "Ajouter %type%",
+      title: 'Add related Content or Exercises'
     }
   }
 };
@@ -625,6 +655,17 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    uuidUrlInput: {
+      invalidInput: 'Invalid id or url',
+      fetchError: 'Something went wrong, please try later',
+      loading: 'Loading…',
+      notFound: 'Could not find that content',
+      unsupportedType: 'Sorry, type [%type%] is not supported here',
+      unsupportedId: 'Sorry, this ID is not supported here',
+      addFromFolderTitle: 'From the folder',
+      placeholder: 'Paste Serlo ID or URL here',
+      exerciseFolderNote: 'Only one can be selected here'
     },
     roles: {
       addButton: 'Add as %role%'

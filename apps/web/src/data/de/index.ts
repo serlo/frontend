@@ -127,7 +127,8 @@ export const instanceData = {
       emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
       picture: "Bild",
       previewImage: "Vorschaubild",
-      task: "Aufgabenstellung"
+      task: "Aufgabenstellung",
+      courseNoPagesWarning: "Leider gibt es für diesen Kurs noch keine akzeptierten Seiten."
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -191,7 +192,9 @@ export const instanceData = {
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
       positionForGrouped: "Diese %exercise% ist Teil von %title%.",
-      helpLink: "Reviewer-Hilfe"
+      helpLink: "Reviewer-Hilfe",
+      revisionSaved: "Bearbeitung gespeichert",
+      saveRevision: "Bearbeitung zwischenspeichern"
     },
     revisionHistory: {
       changes: "Änderungen",
@@ -224,6 +227,12 @@ export const instanceData = {
       importedContentText: "importiert",
       importedContentNote: "Diese Bearbeitung enthält importierte Inhalte",
       importedContentIdentifier: "Inhalt importiert von"
+    },
+    externalRevisions: {
+      importOther: "Aus einem anderen Inhalt importieren",
+      importOtherExplanation: "Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)",
+      importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
+      importOtherButton: "Inhalte Importieren"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -428,6 +437,27 @@ export const instanceData = {
     bin: {
       title: "Titel",
       trashed: "Gelöscht…"
+    },
+    saveButton: {
+      noChangesWarning: "Bisher hast du nichts geändert",
+      save: "Speichern",
+      saveWithReview: "Speichern und reviewen lassen",
+      ready: "Bereit zum Speichern?",
+      cancel: "Abbrechen",
+      saving: "Speichert…",
+      missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
+      missingLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren.",
+      missingChangesAndLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.",
+      errorSaving: "Es trat ein Fehler beim Speichern auf.",
+      saveLocallyAndRefresh: "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
+      changes: "Beschreibe deine Änderungen am Inhalt",
+      confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?"
+    },
+    articleAddModal: {
+      introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+      introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
+      buttonAddType: "%type% hinzufügen",
+      title: "Weiterführende Inhalte oder Übungsaufgaben hinzufügen"
     }
   }
 };
@@ -625,6 +655,17 @@ export const loggedInData = {
         title: "Inhalte sortieren",
         saveButtonText: "Reihenfolge speichern"
       }
+    },
+    uuidUrlInput: {
+      invalidInput: "Ungültige ID oder URL",
+      fetchError: "Etwas ist schief gelaufen, bitte versuche es später noch einmal",
+      loading: "Wird geladen …",
+      notFound: "Inhalt konnte nicht gefunden werden",
+      unsupportedType: "Sorry, der Typ [%type%] wird hier nicht unterstützt",
+      unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
+      addFromFolderTitle: "Aus dem Ordner",
+      placeholder: "Eine Serlo Id oder URL hier einfügen",
+      exerciseFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
     },
     roles: {
       addButton: "Als %role% hinzufügen"
