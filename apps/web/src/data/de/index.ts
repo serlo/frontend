@@ -366,6 +366,7 @@ export const instanceData = {
         code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
         code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
         code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
+        code4000031: "Dieses Passwort kann nicht verwendet werden, da es deinem Benutzernamen zu ähnlich ist.",
         code4000032: "Dein Passwort hat weniger als 8 Zeichen.",
         code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
         code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
