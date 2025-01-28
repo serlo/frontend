@@ -2,15 +2,17 @@ import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
 export interface SolutionFeedbackProps {
   correct: boolean
-  children?: React.ReactNode
   missedSome?: boolean
+  customFeedback?: React.ReactNode
 }
 
 const fallbackEmojis = ['🐸', '🦓', '🐹', '🦊', '🐶']
 
-export function ExerciseFeedback(props: SolutionFeedbackProps) {
-  const { children, correct, missedSome } = props
-
+export function ExerciseFeedback({
+  correct,
+  missedSome,
+  customFeedback,
+}: SolutionFeedbackProps) {
   const exStrings = useStaticStrings().plugins.exercise
 
   function getFallbackString() {
@@ -37,9 +39,9 @@ export function ExerciseFeedback(props: SolutionFeedbackProps) {
         {emoji}
       </span>{' '}
       <div className="serlo-p mb-0 ml-1">
-        {children ? (
+        {customFeedback ? (
           <>
-            {missedSome && exStrings.feedback.missedSome} {children}
+            {missedSome && exStrings.feedback.missedSome} {customFeedback}
           </>
         ) : (
           fallbackString

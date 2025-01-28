@@ -22,7 +22,7 @@ interface InputExersiseRendererProps {
 
 export interface FeedbackData {
   correct: boolean
-  message: JSX.Element | null
+  customFeedback: JSX.Element | null
 }
 
 export function InputExerciseRenderer({
@@ -46,13 +46,11 @@ export function InputExerciseRenderer({
     const answer = getMatchingAnswer(answers, value, type, mathjs.evaluate)
     const hasCorrectAnswer = !!answer?.isCorrect
 
-    const customFeedbackNode = answer?.feedback ?? null
-
     onEvaluate(hasCorrectAnswer, value)
 
     setFeedback({
       correct: hasCorrectAnswer,
-      message: customFeedbackNode ?? null,
+      customFeedback: answer?.feedback ?? null,
     })
   }
 
@@ -91,9 +89,10 @@ export function InputExerciseRenderer({
           {exStrings.check}
         </button>
         {feedback && value ? (
-          <ExerciseFeedback correct={feedback.correct}>
-            {feedback.message}
-          </ExerciseFeedback>
+          <ExerciseFeedback
+            correct={feedback.correct}
+            customFeedback={feedback.customFeedback}
+          />
         ) : null}
       </div>
     </div>
