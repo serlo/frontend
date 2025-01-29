@@ -144,6 +144,7 @@ Scenario(
     createNewEditorEntity(I, 'exercise')
 
     I.click(BlanksExerciseButton)
+    I.waitForElement('$plugin-blanks-child-text-button', 20)
     I.click('$plugin-blanks-child-text-button')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
