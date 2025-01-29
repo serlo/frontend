@@ -61,7 +61,7 @@ export function InteractiveExercisesSelection({
           ) => (
             <button
               key={type}
-              data-qa={`add-exercise-${initialState.plugin}`}
+              data-qa={`add-exercise-${type}`}
               onClick={() => handleOnClick(initialState)}
               className="serlo-tooltip-trigger w-32 rounded-md p-1 hover:shadow-xl focus:shadow-xl"
             >

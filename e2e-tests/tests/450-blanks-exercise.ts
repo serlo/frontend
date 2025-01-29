@@ -10,15 +10,10 @@ const BlanksExerciseButton = '$add-exercise-blanksExercise'
 
 const initialTextPluginCount = 1
 
-function selectBlanksExercise(I: CodeceptJS.I) {
-  I.click(BlanksExerciseButton)
-  I.waitForElement('$plugin-blanks-child-text-button', 20)
-}
-
 Scenario('Create and remove fill in the blanks exercise', async ({ I }) => {
   createNewEditorEntity(I, 'exercise')
 
-  selectBlanksExercise(I)
+  I.click(BlanksExerciseButton)
   I.see('Aufgabe: Lückentext')
   I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
@@ -37,7 +32,7 @@ Scenario(
   async ({ I }) => {
     createNewEditorEntity(I, 'exercise')
 
-    selectBlanksExercise(I)
+    I.click(BlanksExerciseButton)
     I.click('$plugin-blanks-child-text-button')
     I.see('Aufgabe: Lückentext')
 
@@ -50,7 +45,7 @@ Scenario(
 Scenario('Create and remove blanks through toolbar', async ({ I }) => {
   createNewEditorEntity(I, 'exercise')
 
-  selectBlanksExercise(I)
+  I.click(BlanksExerciseButton)
   I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
@@ -76,7 +71,7 @@ Scenario('Create and remove blanks through toolbar', async ({ I }) => {
 Scenario('Create a blank blank and type in it', async ({ I }) => {
   createNewEditorEntity(I, 'exercise')
 
-  selectBlanksExercise(I)
+  I.click(BlanksExerciseButton)
   I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
@@ -95,7 +90,7 @@ Scenario('Create a blank blank and type in it', async ({ I }) => {
 Scenario('Create and delete blanks with backspace/del', async ({ I }) => {
   createNewEditorEntity(I, 'exercise')
 
-  selectBlanksExercise(I)
+  I.click(BlanksExerciseButton)
   I.click('$plugin-blanks-child-text-button')
   I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
@@ -122,7 +117,7 @@ Scenario.todo(
   async ({ I }) => {
     createNewEditorEntity(I, 'exercise')
 
-    selectBlanksExercise(I)
+    I.click(BlanksExerciseButton)
     I.click('$plugin-blanks-child-text-button')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
@@ -148,7 +143,7 @@ Scenario(
   async ({ I }) => {
     createNewEditorEntity(I, 'exercise')
 
-    selectBlanksExercise(I)
+    I.click(BlanksExerciseButton)
     I.click('$plugin-blanks-child-text-button')
     I.seeNumberOfElements('$plugin-text-editor', initialTextPluginCount + 1)
 
