@@ -1,7 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
-import { EditorArticleDocument } from '@editor/types/editor-plugins'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
