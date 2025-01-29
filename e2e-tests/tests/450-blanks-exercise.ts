@@ -10,8 +10,17 @@ const BlanksExerciseButton = '$add-exercise-blanksExercise'
 
 const initialTextPluginCount = 1
 
-function selectBlanksExercise(I: CodeceptJS.I) {
+async function selectBlanksExercise(I: CodeceptJS.I) {
   I.click(BlanksExerciseButton)
+
+  let isVisible = await I.grabNumberOfVisibleElements(
+    '$plugin-blanks-child-text-button'
+  )
+
+  if (isVisible === 0) {
+    I.click(BlanksExerciseButton)
+  }
+
   I.waitForElement('$plugin-blanks-child-text-button', 20)
 }
 
