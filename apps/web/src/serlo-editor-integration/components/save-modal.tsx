@@ -1,6 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
+import { EditorArticleDocument } from '@editor/types/editor-plugins'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
@@ -9,6 +10,7 @@ import {
   faCreativeCommonsZero,
 } from '@fortawesome/free-brands-svg-icons'
 
+import { AbstractSerializedState } from '../convert-editor-response-to-state'
 import type { SerloEditorProps } from '../serlo-editor'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
@@ -63,6 +65,9 @@ export function SaveModal({
     if (!serializedRoot) return
     const exampleSourceID = '06dca4d1-19f3-4fcc-a9d0-de39971f87bc'
 
+    const { id, title, content } =
+      serializedRoot.state as AbstractSerializedState
+
     try {
       const result = await fetch('/api/datenraum/put', {
         method: 'POST',
@@ -72,11 +77,10 @@ export function SaveModal({
         },
         body: JSON.stringify({
           id: exampleSourceID,
-          title: 'serlo-put-test-3',
+          title: title + ' (datenraum-test)',
           description: 'test',
-          serloId: 48682,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          editorState: JSON.stringify(serializedRoot.state.content),
+          serloId: parseInt(`99${id}`),
+          editorState: JSON.stringify(content),
         }),
       })
 
