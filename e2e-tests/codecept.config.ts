@@ -11,9 +11,6 @@ exports.config = {
   helpers: {
     Playwright: {
       url: frontendUrl,
-      // restart: 'keep',
-      // keepBrowserState: true,
-      // keepCookies: true,
       show: !isCI,
       waitForTimeout: 30_000,
       ...(isCI && isChromium
