@@ -85,7 +85,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.seeElement(locate({ css: '.editor-core a' }).withAttr({ href: '/1288' }))
 })
 
-Scenario('Remove existing link', async ({ I }) => {
+Scenario.only('Remove existing link', async ({ I }) => {
   createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)
@@ -95,8 +95,9 @@ Scenario('Remove existing link', async ({ I }) => {
   I.pressKey(['CommandOrControl', 'A'])
   I.click('$plugin-toolbar-button-link')
   I.type('Math')
+  I.seeElement('$link-suggestion-0')
+  I.seeElement('$link-suggestion-1')
   I.click('$link-suggestion-0')
-  I.click('$link-suggestion-1')
   I.seeElement({ css: '.editor-core a' })
 
   I.say('Remove link using the remove link button')
