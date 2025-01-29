@@ -158,13 +158,23 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
   I.pressKey('s')
   I.pressKey('t')
 
+  let tabs = await I.grabNumberOfOpenTabs()
+  console.log('Number of open tabs:', tabs)
+
   I.seeInField('$entity-title-input', 'Treibhausgase-Test')
 
   I.openNewTab()
   I.wait(2)
+
+  let tabs1 = await I.grabNumberOfOpenTabs()
+  console.log('Number of open tabs:', tabs1)
+
   I.closeCurrentTab()
 
   I.wait(2)
+
+  let tabs2 = await I.grabNumberOfOpenTabs()
+  console.log('Number of open tabs:', tabs2)
 
   I.seeInField('$entity-title-input', 'Treibhausgase-Test')
 })
