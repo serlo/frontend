@@ -153,8 +153,6 @@ function getEmbedHtml(
 ): EmbedData {
   const isWord = content.node.mediatype === 'file-word'
   if (isWord) {
-    console.log(content.node)
-
     const { iconURL, downloadUrl, name } = content.node
     const contentUrl = content.node.content?.url
 

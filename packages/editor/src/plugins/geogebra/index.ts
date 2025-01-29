@@ -1,7 +1,6 @@
 import { GeogebraEditor } from './editor'
 import { type EditorPlugin, type EditorPluginProps, string } from '../../plugin'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const geogebraState = string()
 
 export type GeogebraPluginState = typeof geogebraState
