@@ -11,10 +11,11 @@ import {
 import { getStaticDocument } from '@editor/store/documents/helpers'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons'
-import * as t from 'io-ts'
+import { either as E } from 'fp-ts'
 import { useCallback, useState } from 'react'
 
 import { PromptForm } from '../components/prompt-form'
+import { StateDecoder } from '../decoder'
 
 export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
   const pluginStrings = useEditStrings().plugins
@@ -45,15 +46,8 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
       )
 
       const responseData = (await response.json()) as unknown
-
-      if (
-        !t
-          .type({
-            plugin: t.string,
-            state: t.unknown,
-          })
-          .is(responseData)
-      ) {
+      const decoded = StateDecoder.decode(responseData)
+      if (E.isLeft(decoded)) {
         showToastNotice(
           '⚠️ Sorry, something is wrong with the data.',
           'warning'
@@ -62,13 +56,14 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
           'JSON input data is not a valid editor-state or contains unsupported plugins'
         throw new Error(errorMessage)
       }
+      const content = decoded.right
 
       setModalOpen(false)
       dispatch(
         runReplaceDocumentSaga({
           id: pluginId,
-          pluginType: responseData.plugin, // TODO: change backend to not receive rows plungin
-          state: responseData.state,
+          pluginType: content.plugin,
+          state: content.state,
         })
       )
     },
