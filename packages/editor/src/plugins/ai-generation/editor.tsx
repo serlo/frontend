@@ -1,7 +1,6 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { EditorPluginType } from '@editor/package'
 import {
   insertPluginChildBefore,
   removePluginChild,
@@ -10,6 +9,7 @@ import {
   useAppDispatch,
   useStore,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
 import { either as E } from 'fp-ts'
 
