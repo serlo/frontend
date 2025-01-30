@@ -1,9 +1,9 @@
 import {
+  type EditorAudioDocument,
   AudioRenderer,
   getVocarooUrl,
   parseAudioUrl,
-} from '@editor/plugins/audio/renderer'
-import { EditorAudioDocument } from '@editor/types/editor-plugins'
+} from '@editor/package'
 import dynamic from 'next/dynamic'
 
 import { Lazy } from '@/components/content/lazy'

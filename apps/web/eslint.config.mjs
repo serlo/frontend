@@ -27,5 +27,19 @@ export default [
         project: true,
       },
     },
+    rules: {
+      // Show an error for all direct imports from the Editor,
+      // in order to prevent coupling of the codebases.
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            '@editor/*',
+            // Make an exception for Editor package exports.
+            '!@editor/package',
+          ],
+        },
+      ],
+    },
   },
 ]

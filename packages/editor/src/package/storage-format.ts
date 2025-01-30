@@ -104,7 +104,8 @@ export function createEmptyDocument(
     id: uuid_v4(),
     type: documentType,
     variant: editorVariant,
-    domainOrigin: window.location.origin,
+    domainOrigin:
+      typeof window !== 'undefined' ? window.location.origin : 'server',
     version: currentVersion,
     editorVersion: getEditorVersion(),
     dateModified: getCurrentDatetime(),

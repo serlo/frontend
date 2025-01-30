@@ -1,6 +1,6 @@
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+import { AddButton } from '../add-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -55,7 +55,7 @@ export function ArticleRelatedMagicInput({
             <FaIcon icon={faSearch} />
           </button>
         ) : null}
-        <SerloAddButton text="" onClick={() => addEntry(id, typename, title)} />
+        <AddButton text="" onClick={() => addEntry(id, typename, title)} />
       </>
     )
   }

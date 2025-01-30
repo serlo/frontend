@@ -1,14 +1,15 @@
-import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
-  EditorImageDocument,
-  EditorMultimediaDocument,
-} from '@editor/types/editor-plugins'
+  EditorPluginType,
+  type EditorTextDocument,
+  MultimediaStaticRenderer,
+  TextStaticRenderer,
+  type EditorImageDocument,
+  type EditorMultimediaDocument,
+} from '@editor/package'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { LightBoxProps } from '@/components/content/light-box'
-import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
   import('@/components/content/light-box').then((mod) => mod.LightBox)
@@ -39,7 +40,12 @@ export function MultimediaSerloStaticRenderer(state: EditorMultimediaDocument) {
       <LightBox
         onClose={() => setOpen(false)}
         alt={imageState.alt}
-        label={<EditorRenderer document={imageState.caption} />}
+        label={
+          <TextStaticRenderer
+            plugin={EditorPluginType.Text}
+            state={(imageState.caption as EditorTextDocument).state}
+          />
+        }
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         src={String(imageState.src)}
       />

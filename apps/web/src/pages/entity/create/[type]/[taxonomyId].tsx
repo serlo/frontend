@@ -1,4 +1,4 @@
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { TemplatePluginType } from '@editor/package'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 

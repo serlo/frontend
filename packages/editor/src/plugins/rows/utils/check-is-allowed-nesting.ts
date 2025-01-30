@@ -18,18 +18,6 @@ export function checkIsAllowedNesting(
 
   const rootPluginType = typesOfAncestors.at(0)
 
-  // page specific plugins should only be allowed inside a page
-  // only for serlo.org
-  if (
-    [EditorPluginType.PageLayout, EditorPluginType.PagePartners].includes(
-      pluginType as EditorPluginType
-    )
-  ) {
-    if (rootPluginType !== TemplatePluginType.Page) {
-      return false
-    }
-  }
-
   if (pluginType === EditorPluginType.Exercise) {
     // Restrict Exercise->Exercise nesting
     if (

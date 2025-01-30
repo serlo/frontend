@@ -95,9 +95,10 @@ export function ScRenderer({
               : exStrings.chooseOption}
         </button>
         {showFeedback && selected !== undefined && answers[selected] ? (
-          <ExerciseFeedback correct={answers[selected].isCorrect}>
-            {answers[selected].feedback}
-          </ExerciseFeedback>
+          <ExerciseFeedback
+            correct={answers[selected].isCorrect}
+            customFeedback={answers[selected].feedback}
+          />
         ) : null}
       </div>
     </div>

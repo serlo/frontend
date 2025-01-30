@@ -7,7 +7,7 @@
 * Reset all styles outside of the editor (trying to prevent style collisions)
 */
 @layer base {
-  .editor-core {
+  .serlo-editor-style-reset {
     all: initial;
     display: block;
 

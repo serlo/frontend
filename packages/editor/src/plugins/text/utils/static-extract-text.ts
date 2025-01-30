@@ -4,7 +4,7 @@ import type { Descendant } from 'slate'
 
 import { MathElement } from '../types/text-editor'
 
-export function extractDescendant(node: Descendant): string {
+function extractDescendant(node: Descendant): string {
   if (Object.hasOwn(node, 'type') && Object.hasOwn(node, 'children')) {
     return node.children.map(extractDescendant).join(' ')
   }

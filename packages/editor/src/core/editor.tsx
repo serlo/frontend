@@ -54,9 +54,7 @@ export function Editor(props: EditorProps) {
           {!isSerlo ? <Toaster /> : null}
           <div
             className={cn(
-              // editor-core resets styles
-              'editor-core',
-              'mb-24 text-lg leading-cozy',
+              'editor-core mb-24 text-lg leading-cozy',
               // some undocumented style hacks
               '[&_h1]:hyphens-auto',
               '[&_a[data-key]]:hyphens-auto',
