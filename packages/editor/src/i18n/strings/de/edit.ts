@@ -184,6 +184,8 @@ export const editStrings = {
       searching: 'Suche nach Bildern ...',
       loadingImage: 'Bilder werden heruntergeladen ...',
       noImagesFound: 'Keine Bilder gefunden',
+      pixabayUploadFailed:
+        'Sorry, das Bild konnte grade nicht hochgeladen werden.',
     },
     imageGallery: {
       title: 'Bilder Galerie',
