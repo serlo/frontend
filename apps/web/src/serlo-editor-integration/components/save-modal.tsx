@@ -1,13 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
-import {
-  faCreativeCommons,
-  faCreativeCommonsBy,
-  faCreativeCommonsPd,
-  faCreativeCommonsSa,
-  faCreativeCommonsZero,
-} from '@fortawesome/free-brands-svg-icons'
+import { faDove } from '@fortawesome/free-solid-svg-icons'
 
 import { AbstractSerializedState } from '../convert-editor-response-to-state'
 import type { SerloEditorProps } from '../serlo-editor'
@@ -46,21 +40,30 @@ export function SaveModal({
 
         <hr className="my-6" />
 
-        <h2 className="text-2xl font-bold">Im Datenraum veröffentlichen</h2>
+        <h2 className="text-2xl font-bold">Für andere Lehrkräfte freigeben?</h2>
         <p className="mb-2 mt-2 text-lg">
-          Möchtest du den Inhalt für andere Lehrkräfte freigeben?
+          Wenn du den Inhalt im Datenraum unter der{' '}
+          <a href="#" className="serlo-link">
+            freien Lizenz CC-BY-SA 4.0
+          </a>{' '}
+          veröffentlichst, können andere Lehrkräfte ihn nutzen und
+          weiterentwickeln.
         </p>
 
-        <p className="mb-2 mt-4 text-lg font-bold">Wähle eine Lizenz:</p>
-
-        <div className="mb-20 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {renderLicenseCards()}
-        </div>
+        <Card className="mt-3 flex max-w-48 cursor-pointer flex-col justify-between bg-sky-50">
+          <button onClick={handleShareClick}>
+            <CardHeader className="flex flex-row items-center gap-2">
+              <CardTitle className="text-lg">
+                <FaIcon icon={faDove} /> Teilen
+              </CardTitle>
+            </CardHeader>
+          </button>
+        </Card>
       </div>
     </ModalWithCloseButton>
   )
 
-  async function handleLicenseClick() {
+  async function handleShareClick() {
     if (!serializedRoot) return
     const exampleSourceID = '06dca4d1-19f3-4fcc-a9d0-de39971f87bc'
 
@@ -86,9 +89,9 @@ export function SaveModal({
       if (!result.ok) throw new Error('Failed to put node')
 
       showToastNotice(
-        'Danke! Inhalt im Datenraum veröffentlicht 🎉',
+        'Danke! Dein Inhalt steht jetzt für Andere bereit  🎉',
         'success',
-        3000
+        5000
       )
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -101,40 +104,5 @@ export function SaveModal({
     } finally {
       setOpen(false)
     }
-  }
-
-  function renderLicenseCards() {
-    const opts = [
-      { title: 'CC-0', icons: [faCreativeCommonsZero] },
-      { title: 'Public Domain Mark', icons: [faCreativeCommonsPd] },
-      { title: 'CC-BY 4.0', icons: [faCreativeCommons, faCreativeCommonsBy] },
-      {
-        title: 'CC-BY-SA 4.0',
-        icons: [faCreativeCommons, faCreativeCommonsBy, faCreativeCommonsSa],
-      },
-    ]
-    return opts.map(({ title, icons }) => {
-      return (
-        <Card
-          key={title}
-          className="cursor-pointer bg-sky-50"
-          onClick={() => handleLicenseClick()}
-        >
-          <CardHeader>
-            <CardTitle className="flex justify-between text-lg">
-              <span>{title}</span>
-              <span>
-                {icons.map((icon, i) => (
-                  <span key={i}>
-                    {' '}
-                    <FaIcon icon={icon} className="text-sky-300" />
-                  </span>
-                ))}
-              </span>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      )
-    })
   }
 }
