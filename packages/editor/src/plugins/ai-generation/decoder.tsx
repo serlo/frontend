@@ -24,6 +24,7 @@ export const StateDecoder = t.strict({
         t.literal(EditorPluginType.Image),
         t.literal(EditorPluginType.Text),
         t.literal(EditorPluginType.Equations),
+        t.literal(EditorPluginType.Exercise),
       ]),
       state: t.unknown,
     })
