@@ -1,3 +1,7 @@
+import {
+  useIsNextjsProduction,
+  useIsSerlo,
+} from '@editor/core/hooks/use-is-serlo'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { AiChangePluginTool } from '@editor/plugins/ai-generation/plugin-change-tool/ai-change-plugin-tool'
 import {
@@ -10,9 +14,8 @@ import {
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
@@ -35,8 +38,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
     [pluginId, store]
   )
 
-  const serloContext = useContext(SerloOnlyFeaturesContext)
-  const showAiTools = serloContext.isSerlo && !serloContext.isProduction
+  const isSerlo = useIsSerlo()
+  const isSerloProduction = useIsNextjsProduction()
+  const showAiTools = isSerlo && !isSerloProduction
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectChildTreeOfParent(store.getState(), pluginId)
