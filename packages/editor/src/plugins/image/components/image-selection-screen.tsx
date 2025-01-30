@@ -1,4 +1,5 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
+import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
@@ -8,6 +9,7 @@ import type { ImageProps } from '..'
 import { PixabaySearch } from './pixabay-search/pixabay-search'
 import { UploadButton } from '../controls/upload-button'
 import { isImageUrl } from '../utils/check-image-url'
+import { useUploadFile } from '../utils/upload-file'
 
 interface ImageSelectionScreenProps {
   config: ImageProps['config']
@@ -24,6 +26,7 @@ export function ImageSelectionScreen({
 }: ImageSelectionScreenProps) {
   const editorStrings = useEditStrings()
   const { src, licence } = state
+  const upload = useUploadFile(config.upload)
 
   const imageStrings = editorStrings.plugins.image
   const disableFileUpload = config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
@@ -37,13 +40,29 @@ export function ImageSelectionScreen({
   const imageUrl = src.value as string
   const showErrorMessage = imageUrl.length > 5 && !isImageUrl(imageUrl)
 
-  const onSelectPixabayImage = (imageUrl: string) => {
-    state.src.set(imageUrl)
+  function onSelectPixabayImage(pixabayUrl: string) {
+    // get file extension from url
+    const filesArray = pixabayUrl.split('.')
+    const fileExtension = filesArray[filesArray.length - 1].split('?')[0]
 
-    if (!licence.defined) licence.create('Pixabay')
-    else licence.set('Pixabay')
+    try {
+      // pixbay supports cors so we can directly fetch the image
+      void fetch(pixabayUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], 'image.' + fileExtension, blob)
+          void src.upload(file, upload).then(() => {
+            if (!licence.defined) licence.create('Pixabay')
+            else licence.set('Pixabay')
 
-    config.onMultipleUpload?.([])
+            config.onMultipleUpload?.([])
+          })
+        })
+    } catch (error) {
+      showToastNotice(imageStrings.pixabayUploadFailed, 'warning')
+      // eslint-disable-next-line no-console
+      console.log(error)
+    }
   }
 
   return (
