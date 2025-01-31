@@ -50,7 +50,6 @@ export function SerloEditor({
         language={lang === 'de' ? 'de' : 'en'}
         editorVariant="serlo-org"
         userId={String(auth?.id)}
-        _testingSecret="VJN8pHhqVj8RtO+TfY2/Ka1JN4JdH/oSOAdPHz5a"
         plugins={[
           ...defaultPlugins,
           TemplatePluginType.Article,

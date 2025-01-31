@@ -16,6 +16,8 @@ import { parseDocumentString } from '@/helper/parse-document-string'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+import { extraSerloPlugins } from '@/serlo-editor-integration/extra-serlo-plugins'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 const Editor = dynamic(
   () => import('@editor/package').then((mod) => mod.SerloEditor),
@@ -76,6 +78,8 @@ function Content() {
           if (stringifiedNewState === previewState) return
           void debouncedSetState(stringifiedNewState)
         }}
+        extraSerloPlugins={extraSerloPlugins}
+        extraSerloRenderers={extraSerloRenderers}
       >
         {({ element }) => element}
       </Editor>
