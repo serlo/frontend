@@ -180,6 +180,7 @@ export const editStrings = {
       searching: 'Searching for images ...',
       loadingImage: 'Downloading image ...',
       noImagesFound: 'No images found',
+      pixabayUploadFailed: 'Sorry, the image could not be uploaded right now',
     },
     imageGallery: {
       title: 'Image Gallery',
