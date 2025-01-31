@@ -3,6 +3,7 @@ import type { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 export const defaultPlugins = [
+  EditorPluginType.AiGeneration,
   EditorPluginType.Text,
   EditorPluginType.Image,
   EditorPluginType.Video,
