@@ -19,6 +19,8 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { cn } from '@/helper/cn'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+import { extraSerloPlugins } from '@/serlo-editor-integration/extra-serlo-plugins'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 const Editor = dynamic(
   () => import('@editor/package').then((mod) => mod.SerloEditor),
@@ -165,7 +167,6 @@ function ExampleWithEditSwitch({
           <Editor
             language={lang === 'de' ? 'de' : 'en'}
             editorVariant="serlo-org"
-            _testingSecret="VJN8pHhqVj8RtO+TfY2/Ka1JN4JdH/oSOAdPHz5a"
             plugins={[
               ...defaultPlugins,
               TemplatePluginType.Article,
@@ -181,6 +182,8 @@ function ExampleWithEditSwitch({
             onChange={(state) => {
               void debouncedSetState(state.document)
             }}
+            extraSerloPlugins={extraSerloPlugins}
+            extraSerloRenderers={extraSerloRenderers}
           >
             {({ element }) => element}
           </Editor>
