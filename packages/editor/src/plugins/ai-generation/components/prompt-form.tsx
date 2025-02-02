@@ -1,3 +1,5 @@
+import ExerciseGenerationLoadingSparkles from '@/assets-webkit/img/sparkles.svg'
+
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
@@ -9,8 +11,11 @@ export function PromptForm({
 }) {
   const aiStrings = useEditStrings().plugins.aiGeneration
   const [prompt, setPrompt] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  return (
+  return isLoading ? (
+    <ExerciseGenerationLoadingSparkles className="animate-pulse" />
+  ) : (
     <form>
       <textarea
         className={cn(`ml-side w-[calc(100%-32px)] rounded-xl border-2 border-editor-primary-100
@@ -28,6 +33,7 @@ export function PromptForm({
           e.preventDefault()
           onSubmit(prompt)
           setPrompt('')
+          setIsLoading(true)
         }}
       >
         {aiStrings.buttonText}
