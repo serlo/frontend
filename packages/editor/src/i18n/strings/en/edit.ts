@@ -351,7 +351,7 @@ export const editStrings = {
       url: 'URL',
       seoTitle: 'Title for search engines',
       upload: 'Upload Video',
-      placeholderEmpty: 'Youtube, Video or URL',
+      placeholderEmpty: 'YouTube or Serlo URL',
       change: 'Change video',
       settings: 'Settings',
     },
