@@ -4,25 +4,6 @@ export function parseVideoUrl(
   inputSrc: string,
   lang?: string
 ): [string, VideoType | undefined] {
-  const videoRegex = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/
-  const vimeo = videoRegex.exec(inputSrc)
-  if (vimeo)
-    return [
-      `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
-      VideoType.Vimeo,
-    ]
-
-  if (
-    inputSrc.startsWith('https://assets.serlo.org/wikimedia/') ||
-    inputSrc.startsWith('https://editor.serlo.dev/media/') ||
-    inputSrc.startsWith('https://editor.serlo-staging.dev/media/') ||
-    inputSrc.startsWith('https://editor.serlo.org/media/')
-  ) {
-    if (inputSrc.endsWith('video.webm') || inputSrc.endsWith('video.mp4')) {
-      return [inputSrc, VideoType.SerloAsset]
-    }
-  }
-
   const youtubeRegex =
     /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/
   const youtube = youtubeRegex.exec(inputSrc)
@@ -36,5 +17,25 @@ export function parseVideoUrl(
     }${isNaN(timestamp) ? '' : `&start=${timestamp}`}`
     return [iframeSrc, VideoType.YouTube]
   }
+
+  if (
+    inputSrc.startsWith('https://assets.serlo.org/wikimedia/') ||
+    inputSrc.startsWith('https://editor.serlo.dev/media/') ||
+    inputSrc.startsWith('https://editor.serlo-staging.dev/media/') ||
+    inputSrc.startsWith('https://editor.serlo.org/media/')
+  ) {
+    if (inputSrc.endsWith('video.webm') || inputSrc.endsWith('video.mp4')) {
+      return [inputSrc, VideoType.SerloAsset]
+    }
+  }
+
+  const videoRegex = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/
+  const vimeo = videoRegex.exec(inputSrc)
+  if (vimeo)
+    return [
+      `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
+      VideoType.Vimeo,
+    ]
+
   return [inputSrc, undefined]
 }
