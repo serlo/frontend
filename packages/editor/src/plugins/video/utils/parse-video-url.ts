@@ -11,17 +11,16 @@ export function parseVideoUrl(
       `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
       VideoType.Vimeo,
     ]
-  const serloAssetRegex =
-    /^(https:\/\/assets\.serlo\.org\/wikimedia\/)(.+)(webm)$/
-  const serloAsset = serloAssetRegex.exec(inputSrc)
-  if (serloAsset) return [inputSrc, VideoType.SerloAsset]
 
-  // TODO: update when new asset management is live
   if (
-    inputSrc.startsWith('https://editor.serlo.dev/media/') &&
-    inputSrc.endsWith('video.webm')
+    inputSrc.startsWith('https://assets.serlo.org/wikimedia/') ||
+    inputSrc.startsWith('https://editor.serlo.dev/media/') ||
+    inputSrc.startsWith('https://editor.serlo-staging.dev/media/') ||
+    inputSrc.startsWith('https://editor.serlo.org/media/')
   ) {
-    return [inputSrc, VideoType.SerloAsset]
+    if (inputSrc.endsWith('video.webm') || inputSrc.endsWith('video.mp4')) {
+      return [inputSrc, VideoType.SerloAsset]
+    }
   }
 
   const youtubeRegex =
