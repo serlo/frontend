@@ -25,6 +25,7 @@ export function UploadButton({
   onFocus,
   onBlur,
 }: UploadButtonProps) {
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
   const imageStrings = useEditStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 
@@ -60,7 +61,7 @@ export function UploadButton({
         <input
           type="file"
           multiple={!!config.onMultipleUpload}
-          accept="image/*"
+          accept="image/*,.gif,.jpg,.jpeg,.png,.svg,.webp"
           className="sr-only"
           onChange={({ target }) => {
             if (target.files && target.files.length) {
@@ -87,7 +88,7 @@ export function UploadButton({
           onClick={() => src.upload((src.value as TempFile).failed!, upload)}
           data-qa="plugin-image-retry"
         >
-          <EditorTooltip text={imageStrings.retry} className="top-10" />
+          <EditorTooltip text={uploadStrings.retry} className="top-10" />
           <FaIcon icon={faRedoAlt} />
         </button>
       ) : null}

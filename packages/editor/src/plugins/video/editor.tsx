@@ -1,28 +1,33 @@
 import { EmbedWrapper } from '@editor/editor-ui/embed-wrapper'
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { isTempFile } from '@editor/plugin'
+import { useRef, useState } from 'react'
 
 import type { VideoProps } from '.'
-import { parseVideoUrl, VideoRenderer } from './renderer'
+import { VideoSelectionScreen } from './components/video-selection-screen'
+import { VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
-
-export type SettingsModalState = 'url' | 'description' | false
+import { parseVideoUrl } from './utils/parse-video-url'
 
 export const VideoEditor = (props: VideoProps) => {
   const { focused, state } = props
-  const [showSettingsModal, setShowSettingsModal] =
-    useState<SettingsModalState>(false)
-  const [iframeSrc, type] = parseVideoUrl(state.src.value)
+  const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false)
+
+  const [iframeSrc, type] = parseVideoUrl(
+    isTempFile(state.src.value) ? '' : state.src.value
+  )
   const couldBeValid = type !== undefined
+
+  const urlInputRef = useRef<HTMLInputElement>(null)
 
   return (
     <>
       {focused && (
         <VideoToolbar
           {...props}
+          showSettingsButtons={couldBeValid}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
+          onChangeVideoButtonClick={() => state.src.set('')}
         />
       )}
       {couldBeValid ? (
@@ -35,16 +40,11 @@ export const VideoEditor = (props: VideoProps) => {
           <VideoRenderer src={iframeSrc} type={type} />
         </EmbedWrapper>
       ) : (
-        <div
-          className="cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
-          data-qa="plugin-video-placeholder"
-          onClick={() => setShowSettingsModal('url')}
-        >
-          <FaIcon
-            icon={faPlayCircle}
-            className="text-7xl text-editor-primary-200"
-          />
-        </div>
+        <VideoSelectionScreen
+          pluginId={props.id}
+          state={state}
+          urlInputRef={urlInputRef}
+        />
       )}
     </>
   )

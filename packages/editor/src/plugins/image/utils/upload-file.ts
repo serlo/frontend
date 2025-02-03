@@ -3,20 +3,22 @@ import {
   type EditorMeta,
 } from '@editor/core/contexts/editor-meta-context'
 import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { type UploadHandler } from '@editor/plugin'
+import { EditStrings } from '@editor/types/language-data'
 import { useContext } from 'react'
 
 import { handleError, validateFile } from './validate-file'
 
 type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
-export function useUploadFile(oldUploader: UploadHandler<string>) {
+export function useUploadFile(oldUploader?: UploadHandler<string>) {
   const { editorVariant, userId } = useContext(EditorMetaContext)
   const isSerlo = useIsSerlo()
-
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
   const uploader = (file: File) =>
-    uploadFile({ file, editorVariant, userId, isSerlo })
-  return shouldUseNewUpload(isSerlo) ? uploader : oldUploader
+    uploadFile({ file, editorVariant, userId, isSerlo, uploadStrings })
+  return shouldUseNewUpload(isSerlo) ? uploader : oldUploader!
 }
 
 function shouldUseNewUpload(isSerlo: boolean) {
@@ -37,15 +39,17 @@ function shouldUseNewUpload(isSerlo: boolean) {
 }
 
 async function uploadFile({
+  isSerlo,
   file,
   editorVariant,
   userId,
-  isSerlo,
+  uploadStrings,
 }: UploadMeta & {
   file: File
+  uploadStrings: EditStrings['edtrIo']['fileUpload']
   isSerlo: boolean
 }) {
-  const validated = validateFile(file)
+  const validated = validateFile(file, uploadStrings)
   if (!validated) return Promise.reject()
 
   const parentHost = getParentHost()
