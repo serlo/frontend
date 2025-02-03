@@ -14,8 +14,11 @@ export function PromptForm({
   const [isLoading, setIsLoading] = useState(false)
 
   return isLoading ? (
-    <div className="animate-pulse">
-      <Sparkles />
+    <div className="mx-side flex animate-pulse items-center gap-4 text-xl">
+      <div className="h-12 w-12 ">
+        <Sparkles />
+      </div>
+      {aiStrings.generating}
     </div>
   ) : (
     <form>

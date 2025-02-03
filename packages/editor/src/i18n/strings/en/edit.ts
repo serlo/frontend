@@ -42,6 +42,7 @@ export const editStrings = {
         'Describe what you want to generate. E.g. "Create an explanation for the quadratic formula with an exercise at the end."',
       buttonText: 'Generate content',
       menuText: 'Revise current plugin via AI',
+      generating: 'Generating content...',
     },
     anchor: {
       title: 'Anchor',

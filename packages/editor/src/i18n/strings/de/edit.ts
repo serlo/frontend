@@ -43,6 +43,7 @@ export const editStrings = {
         'z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende',
       buttonText: 'Inhalt generieren',
       menuText: 'Aktuelles Plugin per AI überarbeiten',
+      generating: 'Generiere Inhalt…',
     },
     anchor: {
       title: 'Sprungmarke',
