@@ -37,13 +37,17 @@ export const editStrings = {
   },
   plugins: {
     aiGeneration: {
-      title: 'Inhalt per AI generieren',
+      title: 'Inhalt per AI generieren (Test)',
       modalTitle: 'Was soll generiert werden?',
+      modalChangeTitle: 'Was soll geändert werden?',
       placeholder:
         'z.B. "Wiederhole den Satz des Pythagoras mit einer interaktiven Verständnisfrage am Ende',
+      changePlaceholder:
+        'Beschreibe, was du ändern möchtest. Beispiel: "Überarbeite und kürze die Erklärung"',
       buttonText: 'Inhalt generieren',
+      changeButtonText: 'Inhalt überarbeiten',
       menuText: 'Aktuelles Plugin per AI überarbeiten',
-      generating: 'Generiere Inhalt…',
+      generating: 'Inhalt wird bearbeitet…',
     },
     anchor: {
       title: 'Sprungmarke',
@@ -542,6 +546,6 @@ export const editStrings = {
     ready: 'Bereit zum Speichern?',
   },
   aiFeatures: {
-    pluginToolReworkWithAi: 'Aktuelles Plugin per AI überarbeiten',
+    pluginToolReworkWithAi: 'Aktuelles Plugin per AI überarbeiten (Test)',
   },
 }

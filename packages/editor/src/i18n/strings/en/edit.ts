@@ -36,13 +36,17 @@ export const editStrings = {
   },
   plugins: {
     aiGeneration: {
-      title: 'Create content via AI',
+      title: 'Create content via AI (Test)',
       modalTitle: 'What should be generated?',
+      modalChangeTitle: 'What should be changed?',
       placeholder:
         'Describe what you want to generate. E.g. "Create an explanation for the quadratic formula with an exercise at the end."',
+      changePlaceholder:
+        'Describe what you want to change. E.g. "Revise and shorten the explanation"',
       buttonText: 'Generate content',
+      changeButtonText: 'Change content',
       menuText: 'Revise current plugin via AI',
-      generating: 'Generating content...',
+      generating: 'Working on content...',
     },
     anchor: {
       title: 'Anchor',
@@ -526,6 +530,6 @@ export const editStrings = {
     ready: 'Ready to save?',
   },
   aiFeatures: {
-    pluginToolReworkWithAi: 'Revise current plugin via AI',
+    pluginToolReworkWithAi: 'Revise current plugin via AI (Test)',
   },
 }

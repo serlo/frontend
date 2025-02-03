@@ -5,8 +5,10 @@ import { useState } from 'react'
 import { Sparkles } from './sparkles'
 
 export function PromptForm({
+  type,
   onSubmit,
 }: {
+  type: 'generation' | 'change'
   onSubmit: (prompt: string) => void
 }) {
   const aiStrings = useEditStrings().plugins.aiGeneration
@@ -28,7 +30,11 @@ export function PromptForm({
           focus:border-editor-primary focus:outline-none`)}
         value={prompt}
         rows={5}
-        placeholder={aiStrings.placeholder}
+        placeholder={
+          type === 'generation'
+            ? aiStrings.placeholder
+            : aiStrings.changePlaceholder
+        }
         onChange={(e) => setPrompt(e.target.value)}
       />
       <button
@@ -41,7 +47,9 @@ export function PromptForm({
           setIsLoading(true)
         }}
       >
-        {aiStrings.buttonText}
+        {type === 'generation'
+          ? aiStrings.buttonText
+          : aiStrings.changeButtonText}
       </button>
     </form>
   )

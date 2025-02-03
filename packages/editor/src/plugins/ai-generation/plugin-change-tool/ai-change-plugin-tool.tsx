@@ -79,11 +79,11 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
         dataQa="duplicate-plugin-button"
       />
       <EditorModal
-        title={pluginStrings.aiGeneration.modalTitle}
+        title={pluginStrings.aiGeneration.modalChangeTitle}
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
       >
-        <PromptForm onSubmit={handleSubmit} />
+        <PromptForm type="change" onSubmit={handleSubmit} />
       </EditorModal>
     </>
   )

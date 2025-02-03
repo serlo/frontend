@@ -128,7 +128,7 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
       className="top-8 max-w-xl translate-y-0 sm:top-24"
       extraTitleClassName="serlo-h3 mt-4"
     >
-      <PromptForm onSubmit={handleSubmit} />
+      <PromptForm type="generation" onSubmit={handleSubmit} />
     </EditorModal>
   )
 }
