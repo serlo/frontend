@@ -40,7 +40,11 @@ export const VideoEditor = (props: VideoProps) => {
           <VideoRenderer src={iframeSrc} type={type} />
         </EmbedWrapper>
       ) : (
-        <VideoSelectionScreen state={state} urlInputRef={urlInputRef} />
+        <VideoSelectionScreen
+          pluginId={props.id}
+          state={state}
+          urlInputRef={urlInputRef}
+        />
       )}
     </>
   )

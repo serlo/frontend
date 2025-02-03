@@ -11,11 +11,13 @@ import { isValidVideoUrl } from '../utils/is-valid-video-url'
 interface VideoSelectionScreenProps {
   state: VideoProps['state']
   urlInputRef: RefObject<HTMLInputElement>
+  pluginId: string
 }
 
 export function VideoSelectionScreen({
   state,
   urlInputRef,
+  pluginId,
 }: VideoSelectionScreenProps) {
   const editorStrings = useEditStrings()
   const { src } = state
@@ -29,7 +31,7 @@ export function VideoSelectionScreen({
       ? uploadStrings.placeholderUploading
       : uploadStrings.placeholderFailed
 
-  const videoUrl = src.value as string
+  const videoUrl = src.value
 
   const isValid = isValidVideoUrl(
     isTempFile(state.src.value) ? '' : state.src.value
@@ -42,12 +44,15 @@ export function VideoSelectionScreen({
       data-qa="plugin-image-empty-wrapper"
     >
       <div className="mx-auto my-8 w-[60%]">
-        <UploadButton src={src} />
-        <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
+        <label
+          htmlFor={'videoInput' + pluginId}
+          className="mb-1 flex w-full justify-center text-base font-bold text-almost-black"
+        >
           {videoStrings.videoUrl}
-        </span>
-        <span className="serlo-tooltip-trigger">
+        </label>
+        <div className="serlo-tooltip-trigger mb-8">
           <input
+            id={'videoInput' + pluginId}
             ref={urlInputRef}
             placeholder={placeholder}
             value={!isTempFile(src.value) ? src.value : ''}
@@ -70,7 +75,12 @@ export function VideoSelectionScreen({
               <EditorTooltip text={uploadStrings.invalidUrlMessage} />
             </>
           )}
-        </span>
+        </div>
+
+        <UploadButton src={src} />
+        <small className="-mt-3 mb-4 block text-center text-sm text-gray-600">
+          (webm | mp4 | max. 16MB)
+        </small>
       </div>
     </div>
   )
