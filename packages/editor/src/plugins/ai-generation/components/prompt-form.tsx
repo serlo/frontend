@@ -2,7 +2,7 @@ import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
 
-import ExerciseGenerationLoadingSparkles from '@/assets-webkit/img/sparkles.svg'
+import { Sparkles } from './sparkles'
 
 export function PromptForm({
   onSubmit,
@@ -14,7 +14,9 @@ export function PromptForm({
   const [isLoading, setIsLoading] = useState(false)
 
   return isLoading ? (
-    <ExerciseGenerationLoadingSparkles className="animate-pulse" />
+    <div className="animate-pulse">
+      <Sparkles />
+    </div>
   ) : (
     <form>
       <textarea
