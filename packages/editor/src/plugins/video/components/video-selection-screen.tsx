@@ -33,10 +33,8 @@ export function VideoSelectionScreen({
 
   const videoUrl = src.value
 
-  const isValid = isValidVideoUrl(
-    isTempFile(state.src.value) ? '' : state.src.value
-  )
-  const showErrorMessage = videoUrl.length > 5 && !isValid
+  const isValid = isValidVideoUrl(isTempFile(videoUrl) ? '' : videoUrl)
+  const showErrorMessage = (videoUrl as string).length > 5 && !isValid
 
   return (
     <div
