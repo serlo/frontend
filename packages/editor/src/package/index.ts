@@ -96,7 +96,8 @@ export { ScMcExerciseStaticRenderer } from '@editor/plugins/sc-mc-exercise/stati
 // Exported for Solution Serlo static renderer
 export { StaticSolutionRenderer } from '@editor/plugins/solution/static'
 // Exported for Video Serlo static renderer
-export { parseVideoUrl, VideoType } from '@editor/plugins/video/renderer'
+export { VideoType } from '@editor/plugins/video/renderer'
+export { parseVideoUrl } from '@editor/plugins/video/utils/parse-video-url'
 export { VideoStaticRenderer } from '@editor/plugins/video/static'
 // Exported for image-with-serlo-config plugin wrapper
 export { createImagePlugin } from '@editor/plugins/image'
