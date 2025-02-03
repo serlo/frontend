@@ -6,7 +6,8 @@ export interface SolutionFeedbackProps {
   customFeedback?: React.ReactNode
 }
 
-const fallbackEmojis = ['🐸', '🦓', '🐹', '🦊', '🐶']
+const correctEmojis = ['🥳', '🤩', '😎']
+const incorrectEmojis = ['🐸', '🐼', '🐹', '🦊', '🐶']
 
 export function ExerciseFeedback({
   correct,
@@ -25,8 +26,8 @@ export function ExerciseFeedback({
   }
   const fallbackString = getFallbackString()
   const emoji = correct
-    ? '🎉'
-    : fallbackEmojis[Math.floor(Math.random() * fallbackEmojis.length)]
+    ? correctEmojis[Math.floor(Math.random() * correctEmojis.length)]
+    : incorrectEmojis[Math.floor(Math.random() * incorrectEmojis.length)]
 
   return (
     <div className="ml-3 mt-1 flex text-lg animate-in fade-in">
