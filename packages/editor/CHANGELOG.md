@@ -1,5 +1,10 @@
 ## Changelog for version 0.21.3
 
+- refactor: enable Serlo-specific plugins (and renderers) in Editor. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4417
+- feat(editor-package): try loading renderers dynamically. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4416
+- fix(editor-package): add sideEffects:false to allow tree shaking. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4415
+- refactor: Editor package exports for \_\_\_experiments page. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4413
+- refactor: export dispatchReplaceRootDocument from package. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4410
 - fix(editor-help): content fixes, more videos. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4423
 - chore(deps): bump katex from 0.16.11 to 0.16.21. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4421
 - chore(deps-dev): bump vite from 5.4.11 to 5.4.12. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4420
