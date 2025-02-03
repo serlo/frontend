@@ -1,9 +1,9 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from '../link'
 import { FaIcon } from '@/components/fa-icon'
+import { SimpleTooltip } from '@/components/simple-tooltip'
 import { useInstanceData } from '@/contexts/instance-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
@@ -63,16 +63,16 @@ export function ExerciseLicenseNotice({
   return (
     <>
       <Link
-        className={cn(`
-          serlo-button-learner-transparent serlo-tooltip-trigger w-[33px] text-[18px] text-base font-normal hover:no-underline
-        `)}
+        className={cn(
+          `serlo-button-learner-transparent serlo-tooltip-trigger w-[33px] text-[18px] text-base font-normal hover:no-underline`
+        )}
         href={licenseHref}
         noExternalIcon
       >
         <>
-          <EditorTooltip
+          <SimpleTooltip
             text={tooltipTitle}
-            hotkeys={tooltipExplanation}
+            subtext={tooltipExplanation}
             className="right-0 top-10"
           />
           <span className="relative -ml-[1px] inline-block h-5 w-5 align-sub text-xl">

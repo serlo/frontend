@@ -1,4 +1,4 @@
-import { isSolutionDocument } from '@editor/types/plugin-type-guards'
+import { isSolutionDocument } from '@editor/package'
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import { arrayMoveImmutable } from 'array-move'

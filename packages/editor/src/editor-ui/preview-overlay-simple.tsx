@@ -16,7 +16,7 @@ export function PreviewOverlaySimple({
       <div
         className={cn(
           'absolute top-0 z-20 h-full w-full',
-          previewActive ? 'hidden' : 'bg-white bg-opacity-80',
+          previewActive ? 'hidden' : 'bg-[#fefefe] bg-opacity-80',
           fullOpacity ? 'bg-opacity-0' : ''
         )}
       />

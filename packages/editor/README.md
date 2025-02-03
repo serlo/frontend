@@ -48,49 +48,67 @@ See below for the current API specification.
 
 ## Current Editor package API
 
-### 1. `SerloEditor`, `type SerloEditorProps`
+### `SerloEditor`, `type SerloEditorProps`
 
 - **Why Exported/How Used**: `SerloEditor` is the core component of the `@serlo/editor` package, providing the main editor functionality. It's exported to allow users to embed the editor into their applications.
 - **Long-Term Support**: Will stay
 - **Needs Change?**: No
 
-#### 2. `SerloRenderer`, `type SerloRendererProps`
+### `SerloRenderer`, `type SerloRendererProps`
 
 - **Why Exported/How Used**: `SerloRenderer` is a component provided by the `@serlo/editor` for rendering content in a non-editable format. This is particularly useful for displaying the content to users who are not currently editing or are not allowed to edit.
 - **Long-Term Support**: Will stay
 - **Needs Change?**: No
 
-#### 3. `type BaseEditor`
+### `type BaseEditor`
 
 - **Why Exported/How Used**: This type describes the `editor` render prop provided by the `SerloEditor` component.
 - **Long-Term Support**: Will stay unless a better solution is found
 - **Needs Change?**: Unclear
 
-#### 4. `EditorPluginType`
+### `type SupportedLanguage`
 
-- **Why Exported/How Used**: Can be used in the `SerloEditor` prop `plugins` to enable / disable plugins. Currently only used in `serlo-editor-for-edusharing` because we don't use the default plugins there.
-- **Long-Term Support**: Might stay. But should be used only in exceptional cases.
-- **Needs Change?**: Unclear
+- **Why Exported/How Used**: A union type that provides strings for supported languages.
+- **Long-Term Support**: Will stay.
+- **Needs Change?**: New languages will be added to it in the future.
 
-#### 5. `type EditorVariant`
-
-- **Why Exported/How Used**: The variant of the Serlo editor. For example `serlo-editor-for-edusharing` or `serlo.org`. The editor adds this information to the `StorageFormat` that will be saved. Might become useful for example if we need to apply a migration only to one variant of the editor.
-- **Long-Term Support**: Unsure
-- **Needs Change?**: Unsure
-
-#### 6. `defaultPlugins`
-
-- **Why Exported/How Used**: List of plugins that are active per default. Can be used in the `SerloEditor` prop `plugins` to enable / disable plugins. Currently only used in `serlo-editor-for-edusharing` because we modify the default plugins there.
-- **Long-Term Support**: Unsure
-- **Needs Change?**: Unsure
-
-#### 7. `type LearnerEventData`
+### `type LearnerEventData`
 
 - **Why Exported/How Used**: This is how the `SerloRenderer` provides the details of a learners interaction to `handleLearnerEvent` (see below).
 - **Long-Term Support**: Unsure
 - **Needs Change?**: Unsure
 
-### `SerloEditor` component props (`SerloEditorProps`)
+### `EditorPluginType`
+
+- **Why Exported/How Used**: Can be used in the `SerloEditor` prop `plugins` to enable / disable plugins.
+- **Long-Term Support**: Yes.
+- **Needs Change?**: No.
+
+### Plugin menu items and types
+
+- **Why Exported/How Used**: Used to construct a custom plugin menu.
+- **Long-Term Support**: Yes.
+- **Needs Change?**: No.
+
+### Plugin state helpers and types
+
+- **Why Exported/How Used**: Plugin-specific types and type guards for type safety. Helpers for checking if a plugin is empty. A util for extracting a string from Text plugin document. Plugin constructor types.
+- **Long-Term Support**: Yes.
+- **Needs Change?**: No.
+
+### `defaultPlugins`
+
+- **Why Exported/How Used**: List of plugins that are active per default. Can be used in the `SerloEditor` prop `plugins` to enable / disable plugins. Currently only used in `serlo-editor-for-edusharing` because we modify the default plugins there.
+- **Long-Term Support**: Unsure
+- **Needs Change?**: Unsure
+
+### `StaticMath`, `type StaticMathProps`
+
+- **Why Exported/How Used**: StaticMath is a simple component that renders a math formula. It's used in the Editor and is exported here in case you want to render pretty LaTeX without the whole editor. It's relatively big so load it dynamically if you can.
+- **Long-Term Support**: Yes
+- **Needs Change?**: No
+
+## `SerloEditor` component props (`SerloEditorProps`)
 
 - **`children`**: When passed in a function as the `children` prop, the `SerloEditor` component provides an `editor` render prop as the argument to the `children` function. This `editor` object provides:
 
@@ -109,7 +127,7 @@ See below for the current API specification.
 
 - **`editorVariant`**: The variant (integration) of the Serlo editor. For example `edusharing` or `serlo-org`. The editor adds this information to the `StorageFormat` that will be saved. Might become useful for example if we need to apply a migration only to one variant of the editor.
 
-- **`_testingSecret` (optional)**: Required to use Image plugin in testing. A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
+- **`_testingSecret` (optional)**: A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
 

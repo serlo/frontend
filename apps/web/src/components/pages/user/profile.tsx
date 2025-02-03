@@ -1,4 +1,4 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { SerloRenderer } from '@editor/package'
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
 import { NextPage } from 'next'
@@ -22,8 +22,6 @@ import { UserPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
 
 export interface ProfileProps {
   userData: UserPage['userData']
@@ -33,8 +31,6 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   const { strings, lang } = useInstanceData()
   const auth = useAuthentication()
   const canDo = useCanDo()
-
-  editorRenderers.init(createRenderers())
 
   const {
     id,
@@ -86,7 +82,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             <ProfileBadges userData={userData} date={date} />
           </div>
           <div className="serlo-p mt-5 w-full text-1.5xl [grid-area:motivation] sm:mt-0">
-            {motivation && <>&quot;{motivation}&quot;</>}
+            {motivation && <>&bdquo;{motivation}&ldquo;</>}
             {isOwnProfile &&
               !isNewlyRegisteredUser &&
               renderEditMotivationLink()}
@@ -152,7 +148,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {strings.profiles.lockedDescriptionText}
           </InfoPanel>
         ) : (
-          <EditorRenderer document={description} />
+          <SerloRenderer state={description} editorVariant="serlo-org" />
         )}
       </section>
     )

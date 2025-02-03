@@ -47,9 +47,11 @@ export function EditMode({
   return (
     <>
       <InteractiveVideoRenderer
+        isEditMode
         videoSrc={videoSrc}
         marks={staticMarks}
         learnerInteractions={previewActive ? learnerInteractions : undefined}
+        checkSeekAndPlay={previewActive ? checkSeekAndPlay : undefined}
         tools={
           previewActive ? (
             <MarkOverlay
@@ -68,7 +70,6 @@ export function EditMode({
             />
           )
         }
-        checkSeekAndPlay={checkSeekAndPlay}
       />
       {showOverlayContentIndex === null || previewActive ? null : (
         <OverlayContentModal

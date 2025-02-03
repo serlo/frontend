@@ -1,4 +1,4 @@
-import { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
+import type { LearnerEventData } from '@editor/package'
 
 export function useSerloHandleLearnerEvent() {
   function handleLearnerEvent(data: LearnerEventData) {

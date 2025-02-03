@@ -1,5 +1,5 @@
-import { PagePartnersRenderer } from '@editor/plugins/page-partners/renderer'
 import clsx from 'clsx'
+import Image from 'next/image'
 import { SetStateAction, useState } from 'react'
 
 import { endpointEnmeshed } from '@/api/endpoint'
@@ -124,7 +124,14 @@ export function DataWallet() {
         <h2 className="pb-12 pt-16 text-center font-bold">
           Partner und Unterstützer
         </h2>
-        <PagePartnersRenderer />
+        <div className="mx-side mt-auto flex max-w-5xl justify-center pb-20 sm:mx-auto">
+          <Image
+            src="/_assets/img/wallet/partners.png"
+            alt="Partner und Förderer Logos"
+            width="834"
+            height="260"
+          />
+        </div>
         <nav>
           <a
             href="https://de.serlo.org/serlo"

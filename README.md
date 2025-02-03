@@ -108,7 +108,7 @@ Creates a build of the frontend, shows summary of build artefacts and creates in
 yarn test
 ```
 
-Runs jest tests.
+Runs editor unit tests (vitest).
 
 ```
 yarn codegen

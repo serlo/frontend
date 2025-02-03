@@ -1,5 +1,4 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType } from '@editor/package'
 import dynamic from 'next/dynamic'
 
 import { EditorPresentationDe } from './de/editor-presentation-de'
@@ -16,7 +15,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 import { VideoSerloStaticRenderer } from '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
 
 const EducationPlugins = dynamic(() =>
@@ -32,8 +30,6 @@ export function EditorPresentation() {
   if (lang === Instance.De) {
     return <EditorPresentationDe />
   }
-
-  editorRenderers.init(createRenderers())
 
   const title = 'Serlo Editor: Seamless Creation of Digital Learning Resources'
   return (

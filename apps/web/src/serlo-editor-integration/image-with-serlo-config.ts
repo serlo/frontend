@@ -1,5 +1,8 @@
-import { LoadedFile, UploadValidator } from '@editor/plugin'
-import { createImagePlugin } from '@editor/plugins/image'
+import {
+  createImagePlugin,
+  type LoadedFile,
+  type UploadValidator,
+} from '@editor/package'
 import { gql } from 'graphql-request'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
@@ -57,6 +60,7 @@ const validateFile: UploadValidator<FileError[]> = (file) => {
 export const imagePlugin = createImagePlugin({
   upload: createUploadImageHandler(),
   validate: validateFile,
+  disableFileUpload: false,
 })
 
 function createUploadImageHandler() {

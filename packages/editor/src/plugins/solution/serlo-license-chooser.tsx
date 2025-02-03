@@ -1,9 +1,9 @@
+import { SerloOnlyFeaturesContext } from '@editor/core/contexts/serlo-only-features-context'
 import { EditorModal } from '@editor/editor-ui/editor-modal'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { useContext, useState } from 'react'
 

@@ -1,4 +1,3 @@
-import { BoxRenderer } from '@editor/plugins/box/renderer'
 import type { GetStaticProps } from 'next'
 
 import type { LegalData } from './legal'
@@ -6,6 +5,7 @@ import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { fetchAndConvertLegalMarkdown } from '@/fetcher/fetch-and-convert-legal-markdown'
+import { cn } from '@/helper/cn'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 type PrivacyPageData = LegalData & { lastChange: string }
@@ -41,18 +41,18 @@ function Content({ contentHtml, isGerman, lastChange }: PrivacyPageData) {
         </Link>
       </p>
 
-      <BoxRenderer
-        boxType="blank"
-        title={
-          <b>
-            💁{' '}
-            {isGerman
-              ? 'Einwilligungen für externe Inhalte'
-              : 'Consent for external content'}
-          </b>
-        }
-        anchorId=""
+      <figure
+        className={cn(
+          'serlo-box relative mb-6 pb-2 pt-[2px]',
+          'rounded-lg border-3 border-brand-200'
+        )}
       >
+        <figcaption className="px-side pt-2.5 text-lg font-bold">
+          💁{' '}
+          {isGerman
+            ? 'Einwilligungen für externe Inhalte'
+            : 'Consent for external content'}
+        </figcaption>
         <p className="serlo-p mt-6">
           {isGerman
             ? 'Deine Einwilligungen kannst Du'
@@ -61,7 +61,7 @@ function Content({ contentHtml, isGerman, lastChange }: PrivacyPageData) {
             {isGerman ? 'hier überprüfen und zurückrufen' : 'here'}.
           </Link>
         </p>
-      </BoxRenderer>
+      </figure>
       <div
         className="serlo-prose-hacks"
         dangerouslySetInnerHTML={{ __html: contentHtml }}

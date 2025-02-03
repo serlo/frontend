@@ -151,6 +151,8 @@ Scenario('Sort exercise folder', async ({ I }) => {
 
 Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
   editExistingEntity(I, 74888)
+  I.closeOtherTabs()
+
   I.click('$entity-title-input')
   I.pressKey('-')
   I.pressKey('T')
@@ -162,6 +164,7 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
 
   I.openNewTab()
   I.wait(2)
+
   I.closeCurrentTab()
 
   I.wait(2)

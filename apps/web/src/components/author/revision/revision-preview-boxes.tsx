@@ -1,4 +1,4 @@
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType } from '@editor/package'
 import { type ReactNode } from 'react'
 
 import { DisplayModes } from './display-modes'

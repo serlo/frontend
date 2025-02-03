@@ -2,10 +2,8 @@ export type EditStrings = typeof editStrings
 
 export const editStrings = {
   lang: 'en',
-  confirmRouteChange: 'Are you sure you want to leave without saving?',
-  noChangesWarning: 'Nothing changed so there is no need to save yet',
   savedContentMightDisappearWarning:
-    '⚠️ This is a test environment. Please do not create content that you want to keep long term here.',
+    '⚠️ This is a test environment. Please do not create content that you want to keep long term here. Questions? vicky@serlo.org',
   addPluginsModal: {
     searchInputPlaceholder: 'Search...',
     basicPluginsTitle: 'Content Elements',
@@ -173,6 +171,7 @@ export const editStrings = {
       searching: 'Searching for images ...',
       loadingImage: 'Downloading image ...',
       noImagesFound: 'No images found',
+      pixabayUploadFailed: 'Sorry, the image could not be uploaded right now',
     },
     imageGallery: {
       title: 'Image Gallery',
@@ -207,9 +206,6 @@ export const editStrings = {
       autoOpenExplanation: 'Content automatically opens when video is at mark',
       mandatoryLabel: 'Mandatory Exercise',
       mandatoryExplanation: 'Exercise has to be solved to continue video',
-      forceRewatchLabel: 'Auto Rewatch',
-      forceRewatchExplanation:
-        'If an exercise is answered incorrectly, the video jumps back to the last mark',
       editMark: 'Edit',
       removeMark: 'Remove',
       removeAllMarks: 'Remove all exercises',
@@ -237,11 +233,6 @@ export const editStrings = {
     pasteHack: {
       title: 'Experimental State-Paste Plugin',
       description: 'only on staging',
-    },
-    pagePartners: {
-      title: 'Partner List',
-      description:
-        'Only for partner page (List of partner logos like on de.serlo.org/)',
     },
     rows: {
       title: 'Rows',
@@ -302,6 +293,9 @@ export const editStrings = {
         'Sorry, pasting elements inside of lists is not allowed.',
       pastingPluginNotAllowedHere:
         'Sorry, pasting this plugin here is not allowed.',
+      unsupportedPluginsPasted:
+        'There were unsupported plugins in the data you pasted.',
+      invalidDataPasted: 'Sorry, something is wrong with the data you pasted.',
       linkOverlay: {
         placeholder: 'https://… or /1234',
         placeholderNonSerlo: 'https://',
@@ -448,24 +442,9 @@ export const editStrings = {
       sourceUrl: 'Optional URL',
       moreInFolder: 'You can find more exercises in the following folder',
       addModal: {
-        introText:
-          'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
-        introText2:
-          'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
         buttonEx: 'Add exercises',
         buttonExFolder: 'Select exercise folder',
         buttonContent: 'Add content',
-        buttonAddType: 'Add %type%',
-        title: 'Add related Content or Exercises',
-        invalidInput: 'Invalid id or url',
-        fetchError: 'Something went wrong, please try later',
-        loading: 'Loading…',
-        notFound: 'Could not find that content',
-        unsupportedType: 'Sorry, type [%type%] is not supported here',
-        unsupportedId: 'Sorry, this ID is not supported here',
-        addFromFolderTitle: 'From the folder',
-        placeholder: 'Paste Serlo ID or URL here',
-        exerciseFolderNote: 'Only one can be selected here',
       },
     },
     course: {
@@ -539,25 +518,9 @@ export const editStrings = {
     extendedSettings: 'Extended Settings',
     close: 'Close',
     save: 'Save',
-    saveWithReview: 'Save and get review',
     cancel: 'Cancel',
     saving: 'Saving…',
-    missingChanges: 'You need to fill out the changes you made',
-    missingLicenseTerms: 'You need to accept the license terms',
-    missingChangesAndLicenseTerms:
-      'You need to fill out the changes you made and accept the license terms',
-    errorSaving: 'An error occurred during saving.',
-    saveLocallyAndRefresh:
-      'You can store the revision locally, refresh the page and try to save again.',
-    revisionSaved: 'Revision saved',
-    saveRevision: 'Save revision',
     changes: 'Describe your changes to the content',
-    importOther: 'Import content from other entity',
-    importOtherExplanation:
-      "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
-    importOtherWarning:
-      'Warning: This overwrites everything that is already present in this editor!',
-    importOtherButton: 'Import content',
     current: 'Current',
     author: 'Author',
     createdAt: 'when?',
