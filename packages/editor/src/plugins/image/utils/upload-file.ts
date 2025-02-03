@@ -19,9 +19,9 @@ export function useUploadFile(oldUploader: UploadHandler<string>) {
   return shouldUseNewUpload(isSerlo) ? uploader : oldUploader
 }
 
-// while testing
 function shouldUseNewUpload(isSerlo: boolean) {
   if (isSerlo) return true
+  // while testing
   if (typeof window === 'undefined') return false
   const host = window.location.hostname
   const isDevOrPreviewOrStaging =
