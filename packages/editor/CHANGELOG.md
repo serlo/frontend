@@ -1,3 +1,14 @@
+## Changelog for version 0.21.4
+
+- Production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4444
+- hot-deploy: fix(plugin-image): upload pixabay images to our bucket. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4441
+- fix(plugin-image): upload pixabay images to our bucket. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4440
+- e2e: fixes after editor package in web. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4437
+- feat(exercise): add nicer fallback feedback (random). Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4434
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4419
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.3-editor...v0.21.4-editor
+
 ## Changelog for version 0.21.3
 
 - fix(editor-help): content fixes, more videos. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4423
