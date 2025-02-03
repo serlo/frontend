@@ -1,8 +1,8 @@
-import ExerciseGenerationLoadingSparkles from '@/assets-webkit/img/sparkles.svg'
-
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { useState } from 'react'
+
+import ExerciseGenerationLoadingSparkles from '@/assets-webkit/img/sparkles.svg'
 
 export function PromptForm({
   onSubmit,
