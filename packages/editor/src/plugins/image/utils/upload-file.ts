@@ -18,7 +18,7 @@ export function useUploadFile(oldUploader?: UploadHandler<string>) {
   const uploadStrings = useEditStrings().edtrIo.fileUpload
   const uploader = (file: File) =>
     uploadFile({ file, editorVariant, userId, isSerlo, uploadStrings })
-  return shouldUseNewUpload(isSerlo) ? uploader : oldUploader
+  return shouldUseNewUpload(isSerlo) ? uploader : oldUploader!
 }
 
 function shouldUseNewUpload(isSerlo: boolean) {

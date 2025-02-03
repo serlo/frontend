@@ -26,6 +26,7 @@ export function UploadButton({ src, onFocus, onBlur }: UploadButtonProps) {
   const upload = useUploadFile()
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)
+  if (!upload) return null
 
   return (
     <>
@@ -65,6 +66,9 @@ export function UploadButton({ src, onFocus, onBlur }: UploadButtonProps) {
         />
         {videoStrings.upload}
       </label>
+      <small className="-mt-3 mb-4 block text-center text-sm text-gray-600">
+        (webm | mp4 | max. 16MB)
+      </small>
 
       {isFailed ? (
         <button

@@ -76,9 +76,6 @@ export function VideoSelectionScreen({
         </div>
 
         <UploadButton src={src} />
-        <small className="-mt-3 mb-4 block text-center text-sm text-gray-600">
-          (webm | mp4 | max. 16MB)
-        </small>
       </div>
     </div>
   )
