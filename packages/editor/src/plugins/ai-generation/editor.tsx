@@ -103,11 +103,28 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
     dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
   }
 
+  // instead of closing the modal, we just remove the plugin since it makes no sense without content
+  function handleClose() {
+    const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
+    if (!parentPlugin) return
+    // make sure partent rows plugin has at least one child
+    if (parentPlugin.children?.length === 1) {
+      dispatch(
+        insertPluginChildBefore({
+          parent: parentPlugin.id,
+          sibling: props.id,
+          document: { plugin: EditorPluginType.Text },
+        })
+      )
+    }
+    dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
+  }
+
   return (
     <EditorModal
       title={aiStrings.modalTitle}
       isOpen
-      setIsOpen={() => {}}
+      setIsOpen={handleClose}
       className="top-8 max-w-xl translate-y-0 sm:top-24"
       extraTitleClassName="serlo-h3 mt-4"
     >
