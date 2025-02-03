@@ -1,19 +1,28 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Sparkles } from './sparkles'
 
 export function PromptForm({
+  initialPrompt,
   type,
   onSubmit,
 }: {
+  initialPrompt?: string
   type: 'generation' | 'change'
   onSubmit: (prompt: string) => void
 }) {
   const aiStrings = useEditStrings().plugins.aiGeneration
   const [prompt, setPrompt] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (initialPrompt && initialPrompt.length > 0) {
+      setPrompt(initialPrompt)
+      setIsLoading(false)
+    }
+  }, [initialPrompt])
 
   return isLoading ? (
     <div className="mx-side flex animate-pulse items-center gap-4 text-xl">

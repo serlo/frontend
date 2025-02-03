@@ -12,6 +12,7 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isRowsDocument } from '@editor/types/plugin-type-guards'
 import { either as E } from 'fp-ts'
+import { useState } from 'react'
 
 import { type AiGenerationPluginProps } from '.'
 import { PromptForm } from './components/prompt-form'
@@ -21,18 +22,10 @@ import { extractTextAndLatex } from './helper/extract-text-and-latex'
 export function AiGenerationEditor(props: AiGenerationPluginProps) {
   const aiStrings = useEditStrings().plugins.aiGeneration
 
+  const [initialPrompt, setInitialPrompt] = useState('')
+
   const store = useStore()
   const dispatch = useAppDispatch()
-
-  // TODO: i18n
-  function throwError(error?: unknown) {
-    showToastNotice('⚠️ Sorry, something is wrong with the data.', 'warning')
-    // eslint-disable-next-line no-console
-    console.error(error)
-    throw new Error(
-      'JSON input data is not a valid editor-state or contains unsupported plugins'
-    )
-  }
 
   async function handleSubmit(prompt: string) {
     const parentPlugin = selectChildTreeOfParent(store.getState(), props.id)
@@ -86,10 +79,20 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
     const responseData = (await response.json()) as unknown
 
     const decoded = StateDecoder.decode(responseData)
+    console.log(responseData)
 
-    if (E.isLeft(decoded)) return throwError()
+    if (E.isLeft(decoded)) {
+      showToastNotice(
+        'Sorry, die AI hat eine ungültige Antwort gegeben 🤔 … vielleicht versuchst du es noch mal?',
+        'warning'
+      )
+      setInitialPrompt(prompt)
+      return
+    }
 
     const content = decoded.right
+
+    console.log(content)
 
     for (const document of content.state) {
       dispatch(
@@ -128,7 +131,11 @@ export function AiGenerationEditor(props: AiGenerationPluginProps) {
       className="top-8 max-w-xl translate-y-0 sm:top-24"
       extraTitleClassName="serlo-h3 mt-4"
     >
-      <PromptForm type="generation" onSubmit={handleSubmit} />
+      <PromptForm
+        initialPrompt={initialPrompt}
+        type="generation"
+        onSubmit={handleSubmit}
+      />
     </EditorModal>
   )
 }

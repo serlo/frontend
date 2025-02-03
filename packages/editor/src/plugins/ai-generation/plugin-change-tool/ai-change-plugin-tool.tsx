@@ -20,6 +20,8 @@ import { StateDecoder } from '../decoder'
 export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
   const pluginStrings = useEditStrings().plugins
 
+  const [initialPrompt, setInitialPrompt] = useState('')
+
   const [modalOpen, setModalOpen] = useState(false)
   const dispatch = useAppDispatch()
   const store = useStore()
@@ -49,12 +51,11 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
       const decoded = StateDecoder.decode(responseData)
       if (E.isLeft(decoded)) {
         showToastNotice(
-          '⚠️ Sorry, something is wrong with the data.',
+          'Sorry, die AI hat eine ungültige Antwort gegeben 🤔 … vielleicht versuchst du es noch mal?',
           'warning'
         )
-        const errorMessage =
-          'JSON input data is not a valid editor-state or contains unsupported plugins'
-        throw new Error(errorMessage)
+        setInitialPrompt(prompt)
+        return
       }
       const content = decoded.right
 
@@ -83,7 +84,11 @@ export function AiChangePluginTool({ pluginId }: { pluginId: string }) {
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
       >
-        <PromptForm type="change" onSubmit={handleSubmit} />
+        <PromptForm
+          initialPrompt={initialPrompt}
+          type="change"
+          onSubmit={handleSubmit}
+        />
       </EditorModal>
     </>
   )
