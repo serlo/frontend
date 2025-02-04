@@ -1,4 +1,5 @@
-import { SerloEditor } from '@editor/package/editor'
+// eslint-disable-next-line no-restricted-imports
+import { SerloEditor } from '@editor/package'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 

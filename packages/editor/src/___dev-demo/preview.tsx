@@ -1,8 +1,7 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
-import { SerloEditor } from '@editor/package/editor'
-import { SerloRenderer } from '@editor/package/serlo-renderer'
+// eslint-disable-next-line no-restricted-imports
+import { EditorPluginType, SerloEditor, SerloRenderer } from '@editor/package'
 import { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 import { debounce } from 'ts-debounce'
