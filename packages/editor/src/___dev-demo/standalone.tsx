@@ -1,4 +1,4 @@
-import { SerloEditor } from '@editor/package'
+import { SerloEditor } from '@editor/package/editor'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
