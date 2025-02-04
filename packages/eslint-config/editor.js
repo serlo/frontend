@@ -53,6 +53,7 @@ module.exports = {
   rules: {
     // eslint
     'no-duplicate-imports': 'error',
+    'no-restricted-imports': ['error', '@editor/package'],
     'no-console': 'warn',
     'no-warning-comments': 'warn',
     eqeqeq: ['error', 'always'],
