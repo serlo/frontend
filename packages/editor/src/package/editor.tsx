@@ -98,7 +98,7 @@ export function SerloEditor(props: SerloEditorProps) {
         <EditorMetaContext.Provider
           value={{ editorVariant, userId, ltik: _ltik }}
         >
-          {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
+          {renderTestEnvironmentWarning()}
           <div className={styleReset ? 'serlo-editor-style-reset' : ''}>
             <Editor
               initialState={migratedState.document}
@@ -126,8 +126,9 @@ export function SerloEditor(props: SerloEditorProps) {
   }
 
   function renderTestEnvironmentWarning() {
+    if (isProductionEnvironment) return null
     return (
-      <div className="test-environment-warning bg-editor-primary-100 px-1.5 py-0.5 text-sm">
+      <div className="test-environment-warning my-3 bg-editor-primary-100 px-1.5 py-0.5 text-sm">
         {editStrings.savedContentMightDisappearWarning}
       </div>
     )
