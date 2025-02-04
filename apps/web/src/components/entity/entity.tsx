@@ -48,7 +48,7 @@ export function Entity({ data }: EntityProps) {
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-[25vh]" key={data.id}>
-        {data.content && renderContent(data.content)}
+        {data.content && !data.isUnrevised && renderContent(data.content)}
         {isLenabiUserJourneyCoursePage ? <LenabiCourseFeedback /> : null}
       </div>
       <HSpace amount={20} />
