@@ -55,7 +55,6 @@ function isLocalOrDevOrStaging() {
   const host = window.location.hostname
 
   return (
-    process.env.NODE_ENV === 'staging' ||
     process.env.NODE_ENV === 'development' ||
     host === 'de.serlo-staging.dev' ||
     host === 'editor.serlo.dev' ||
