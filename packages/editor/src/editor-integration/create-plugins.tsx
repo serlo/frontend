@@ -50,7 +50,9 @@ export interface ExtraSerloPlugins {
   image: EditorPlugin<ImagePluginState, ImagePluginConfig>
 }
 
-function isLocalOrDev() {
+function isLocalOrDevOrStaging() {
+  if (process.env.NEXT_PUBLIC_ENV === 'staging') return true
+
   if (typeof window === 'undefined') return false
   const host = window.location.hostname
 
@@ -153,7 +155,7 @@ export function createPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
-    ...(isLocalOrDev()
+    ...(isLocalOrDevOrStaging()
       ? [
           {
             type: EditorPluginType.InteractiveVideo,
