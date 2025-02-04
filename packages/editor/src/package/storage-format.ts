@@ -37,6 +37,13 @@ type Migration = (
   state: OldStorageFormat | StorageFormat
 ) => OldStorageFormat | StorageFormat
 
+const OldSerloFormatType = t.partial({
+  plugin: t.string,
+  state: t.unknown,
+  id: t.string,
+  serloContext: t.unknown,
+})
+
 const OldStorageFormatType_0 = t.type({
   type: t.literal(documentType),
   variant: EditorVariantType,
@@ -134,6 +141,24 @@ export function migrate(
   migratedState: StorageFormat
   stateChanged: boolean
 } {
+  // Temporary, until https://linear.app/serlo/issue/EDTR-98/ is done
+  if (OldSerloFormatType.is(stateBeforeMigration)) {
+    return {
+      migratedState: {
+        id: '',
+        type: documentType,
+        variant: 'serlo-org',
+        version: 0,
+        dateModified: getCurrentDatetime(),
+        document: deepCopy(stateBeforeMigration) as EditorState,
+        editorVersion: getEditorVersion(),
+        domainOrigin:
+          typeof window !== 'undefined' ? window.location.origin : 'server',
+      },
+      stateChanged: false,
+    }
+  }
+
   if (
     !OldStorageFormatType_0.is(stateBeforeMigration) &&
     !OldStorageFormatType_1.is(stateBeforeMigration) &&
