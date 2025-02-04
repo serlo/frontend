@@ -1,4 +1,5 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+// eslint-disable-next-line no-restricted-imports
 import { EditorPluginType, SerloEditor, SerloRenderer } from '@editor/package'
 import { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
