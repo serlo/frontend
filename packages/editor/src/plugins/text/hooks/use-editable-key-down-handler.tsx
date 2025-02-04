@@ -1,6 +1,5 @@
 import { useFormattingOptions } from '@editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@editor/editor-ui/plugin-toolbar/text-controls/utils/list'
-import { EditorPluginType } from '@editor/package'
 import {
   PluginMenuContext,
   PluginMenuActionTypes,
@@ -14,6 +13,7 @@ import {
   useAppDispatch,
   selectParentPluginType,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import isHotkey from 'is-hotkey'
 import { useCallback, useContext } from 'react'
 import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
