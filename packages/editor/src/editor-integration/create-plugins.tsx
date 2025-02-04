@@ -51,15 +51,10 @@ export interface ExtraSerloPlugins {
 }
 
 function isLocalOrDevOrStaging() {
+  if (process.env.NODE_ENV === 'development') return true
   if (typeof window === 'undefined') return false
   const host = window.location.hostname
-
-  return (
-    process.env.NODE_ENV === 'development' ||
-    host === 'de.serlo-staging.dev' ||
-    host === 'editor.serlo.dev' ||
-    host === 'localhost'
-  )
+  return host === 'editor.serlo.dev' || host === 'localhost'
 }
 
 export function createPlugins(
