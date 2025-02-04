@@ -11,7 +11,9 @@ import {
   selectChildTreeOfParent,
   useStore,
   useAppDispatch,
+  selectParentPluginType,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import isHotkey from 'is-hotkey'
 import { useCallback, useContext } from 'react'
 import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
@@ -59,9 +61,15 @@ export const useEditableKeydownHandler = (
           const { path } = selection.focus
           const node = Node.get(editor, path)
 
+          const parentType = selectParentPluginType(store.getState(), id)
           const parent = selectChildTreeOfParent(store.getState(), id)
 
-          if (Object.hasOwn(node, 'text') && node.text.length === 0 && parent) {
+          if (
+            parentType === EditorPluginType.Rows &&
+            Object.hasOwn(node, 'text') &&
+            node.text.length === 0 &&
+            parent
+          ) {
             const currentIndex = parent.children?.findIndex(
               (child) => child.id === id
             )
