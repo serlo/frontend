@@ -50,12 +50,14 @@ export interface ExtraSerloPlugins {
   image: EditorPlugin<ImagePluginState, ImagePluginConfig>
 }
 
-function isLocalOrDev() {
+function isLocalOrDevOrStaging() {
   if (typeof window === 'undefined') return false
   const host = window.location.hostname
 
   return (
+    process.env.NODE_ENV === 'staging' ||
     process.env.NODE_ENV === 'development' ||
+    host === 'de.serlo-staging.dev' ||
     host === 'editor.serlo.dev' ||
     host === 'localhost'
   )
@@ -153,7 +155,7 @@ export function createPlugins(
       type: EditorPluginType.DropzoneImage,
       plugin: createDropzoneImagePlugin(),
     },
-    ...(isLocalOrDev()
+    ...(isLocalOrDevOrStaging()
       ? [
           {
             type: EditorPluginType.InteractiveVideo,
