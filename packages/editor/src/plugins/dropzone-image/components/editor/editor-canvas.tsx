@@ -114,10 +114,10 @@ export function EditorCanvas({
   return (
     <div
       ref={drop}
-      className={cn(`
-        relative mx-auto box-content max-w-full overflow-auto overflow-hidden
-        rounded-lg border border-almost-black bg-cover bg-center bg-no-repeat
-      `)}
+      className={cn(
+        'relative mx-auto box-content max-w-full overflow-hidden',
+        'rounded-lg border border-almost-black bg-cover bg-center bg-no-repeat'
+      )}
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
         width: canvasWidth,
