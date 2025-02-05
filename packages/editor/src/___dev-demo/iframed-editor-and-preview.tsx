@@ -17,10 +17,10 @@ createRoot(document.getElementById('root')!).render(
       allow-storage-access-by-user-activation
     `}
     allow={`
-      clipboard-read https://editor.serlo.org https://staging.editor.serlo.org https://dev.editor.serlo.org https://editor.serlo-staging.dev;
-      clipboard-write https://editor.serlo.org https://staging.editor.serlo.org https://dev.editor.serlo.org https://editor.serlo-staging.dev;
-      fullscreen https://editor.serlo.org https://staging.editor.serlo.org https://dev.editor.serlo.org https://editor.serlo-staging.dev;
-      autoplay https://editor.serlo.org https://staging.editor.serlo.org https://dev.editor.serlo.org https://editor.serlo-staging.dev
+      clipboard-read *;
+      clipboard-write *;
+      fullscreen *;
+      autoplay *
     `}
   ></iframe>
 )
