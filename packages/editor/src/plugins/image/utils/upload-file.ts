@@ -29,7 +29,8 @@ function shouldUseNewUpload(isSerlo: boolean) {
   const isDevOrPreviewOrStaging =
     host === 'localhost' ||
     process.env.NODE_ENV === 'development' ||
-    host.endsWith('serlo.dev')
+    host === 'editor.serlo.dev' ||
+    host === 'editor.serlo-staging.dev'
 
   if (isDevOrPreviewOrStaging) {
     // eslint-disable-next-line no-console
