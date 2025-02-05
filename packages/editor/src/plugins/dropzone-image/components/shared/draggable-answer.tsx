@@ -1,6 +1,9 @@
 import { cn } from '@editor/utils/cn'
+import { useEffect, useMemo } from 'react'
 import { useDrag } from 'react-dnd'
+import { getEmptyImage } from 'react-dnd-html5-backend'
 
+import { DraggableAnswerPreview } from './draggable-answer-preview'
 import type { PossibleAnswerType } from '../../types'
 import { AnswerContent } from '../answer-zone/answer-content'
 
@@ -14,6 +17,9 @@ interface DraggableAnswerProps {
   hasEnoughDroppedAnswers?: boolean
 }
 
+export type DragItem = PossibleAnswerType &
+  Pick<DraggableAnswerProps, 'originDropzoneId'>
+
 export function DraggableAnswer(props: DraggableAnswerProps) {
   const {
     answer,
@@ -26,35 +32,47 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
   } = props
   const { id, imageUrl, text } = answer
 
-  const [, dragRef] = useDrag({
+  const dragItem = useMemo<DragItem>(
+    () => ({ id, originDropzoneId, imageUrl, text }),
+    [id, imageUrl, originDropzoneId, text]
+  )
+
+  const [, dragRef, preview] = useDrag({
     type: dragType,
-    item: { id, originDropzoneId, imageUrl, text },
+    item: dragItem,
   })
 
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true })
+  }, [preview])
+
   return (
-    <span
-      className={cn(
-        'flex max-h-full cursor-grab items-center justify-center',
-        getSize(imageUrl, isOnlyDroppedAnswer),
-        getBorder(imageUrl, isCorrect, isOnlyDroppedAnswer)
-      )}
-      ref={dragRef}
-    >
-      <AnswerContent
-        url={imageUrl}
-        text={text}
+    <div className="relative inline-block">
+      <span
         className={cn(
-          'bg-brand-50',
-          getAnswerBorder(
-            imageUrl,
-            isCorrect,
-            isAnswerCorrect,
-            isOnlyDroppedAnswer,
-            hasEnoughDroppedAnswers
-          )
+          'flex max-h-full cursor-grab items-center justify-center',
+          getSize(imageUrl, isOnlyDroppedAnswer),
+          getBorder(imageUrl, isCorrect, isOnlyDroppedAnswer)
         )}
-      />
-    </span>
+        ref={dragRef}
+      >
+        <AnswerContent
+          url={imageUrl}
+          text={text}
+          className={cn(
+            'bg-brand-50',
+            getAnswerBorder(
+              imageUrl,
+              isCorrect,
+              isAnswerCorrect,
+              isOnlyDroppedAnswer,
+              hasEnoughDroppedAnswers
+            )
+          )}
+        />
+      </span>
+      <DraggableAnswerPreview id={id} />
+    </div>
   )
 }
 
