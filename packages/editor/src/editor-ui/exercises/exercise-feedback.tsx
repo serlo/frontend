@@ -1,4 +1,5 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { useMemo } from 'react'
 
 export interface SolutionFeedbackProps {
   correct: boolean
@@ -16,18 +17,19 @@ export function ExerciseFeedback({
 }: SolutionFeedbackProps) {
   const exStrings = useStaticStrings().plugins.exercise
 
-  function getFallbackString() {
+  const fallbackString = useMemo(() => {
     if (correct) return exStrings.feedback.correct
     if (missedSome) return exStrings.feedback.missedSome
     const randomIndex = Math.floor(Math.random() * 6)
     return exStrings.feedback[
       ('incorrect' + randomIndex) as keyof typeof exStrings.feedback
     ]
-  }
-  const fallbackString = getFallbackString()
-  const emoji = correct
-    ? correctEmojis[Math.floor(Math.random() * correctEmojis.length)]
-    : incorrectEmojis[Math.floor(Math.random() * incorrectEmojis.length)]
+  }, [correct, exStrings, missedSome])
+  const emoji = useMemo(() => {
+    return correct
+      ? correctEmojis[Math.floor(Math.random() * correctEmojis.length)]
+      : incorrectEmojis[Math.floor(Math.random() * incorrectEmojis.length)]
+  }, [correct])
 
   return (
     <div className="ml-3 mt-1 flex text-lg animate-in fade-in">
