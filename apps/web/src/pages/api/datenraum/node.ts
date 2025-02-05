@@ -16,7 +16,7 @@ const NodeData = t.type({
   sourceId: t.string,
   url: t.any,
   isAiGenerated: t.boolean,
-  metadata: t.type({ Amb: t.any, Tags: t.any, SerloEditorContent: t.string }),
+  metadata: t.type({ Amb: t.any, Tags: t.any, SerloEditorContent: t.unknown }),
 })
 
 export default async function handler(

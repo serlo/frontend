@@ -46,11 +46,11 @@ async function fetchContent({ queryKey }: { queryKey: string[] }) {
   const fetchUrl = `/api/datenraum/node?id=${id}`
   try {
     const result = await fetch(fetchUrl)
-    const stateObject = (await result.json()) as { editorState: string }
+    const stateObject = (await result.json()) as {
+      editorState: AnyEditorDocument
+    }
 
-    const editorState = JSON.parse(
-      JSON.parse(stateObject.editorState) as string
-    ) as AnyEditorDocument
+    const editorState = stateObject.editorState
 
     if (isArticleDocument(editorState)) {
       return editorState
