@@ -50,7 +50,7 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
     <div className="relative inline-block">
       <span
         className={cn(
-          'flex max-h-full cursor-grab items-center justify-center',
+          'flex max-h-full cursor-grab select-none items-center justify-center',
           getSize(imageUrl, isOnlyDroppedAnswer),
           getBorder(imageUrl, isCorrect, isOnlyDroppedAnswer)
         )}
