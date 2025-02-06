@@ -39,12 +39,14 @@ export function AddRevision({
   )
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       showToastNotice(
         'Erfolgreich importiert, viel Erfolg beim Bearbeiten!',
         'success'
       )
     }, 600)
+
+    return () => clearTimeout(timer)
   }, [])
 
   const setEntityMutation = useSetEntityMutation()
