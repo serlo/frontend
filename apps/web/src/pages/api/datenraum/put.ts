@@ -12,7 +12,7 @@ const PutInputSchema = t.type({
   title: t.string,
   description: t.string,
   serloId: t.number,
-  editorState: t.unknown,
+  editorState: t.string,
 })
 
 export default async function handler(
@@ -77,7 +77,7 @@ export default async function handler(
     description: description,
     inLanguage: ['de'],
     type: ['LearningResource', 'Article'],
-    content: editorState,
+    content: JSON.parse(editorState),
   }
 
   const putResponse = await fetch(

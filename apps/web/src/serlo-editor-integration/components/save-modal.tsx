@@ -82,7 +82,7 @@ export function SaveModal({
           title: title + ' (datenraum-test)',
           description: 'test',
           serloId: parseInt(`99${id}`),
-          editorState: JSON.stringify(content),
+          editorState: content,
         }),
       })
 
