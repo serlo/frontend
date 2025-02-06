@@ -74,18 +74,20 @@ export function ImageSelectionScreen({
     >
       <div className="mx-auto my-8 w-[60%]">
         {disableFileUpload ? null : (
-          <UploadButton
-            config={config}
-            src={src}
-            onFocus={() => setIsAButtonFocused(true)}
-            onBlur={() => setIsAButtonFocused(false)}
-          />
+          <>
+            <UploadButton
+              config={config}
+              src={src}
+              onFocus={() => setIsAButtonFocused(true)}
+              onBlur={() => setIsAButtonFocused(false)}
+            />
+            <PixabaySearch
+              onFocus={() => setIsAButtonFocused(true)}
+              onBlur={() => setIsAButtonFocused(false)}
+              onSelectImage={onSelectPixabayImage}
+            />
+          </>
         )}
-        <PixabaySearch
-          onFocus={() => setIsAButtonFocused(true)}
-          onBlur={() => setIsAButtonFocused(false)}
-          onSelectImage={onSelectPixabayImage}
-        />
         <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
           {imageStrings.imageUrl}
         </span>
