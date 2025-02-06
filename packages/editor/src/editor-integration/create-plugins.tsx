@@ -59,6 +59,7 @@ function isLocalOrDevOrStaging() {
   return (
     process.env.NODE_ENV === 'development' ||
     host === 'editor.serlo.dev' ||
+    host === 'editor.serlo-staging.dev' ||
     host === 'localhost'
   )
 }

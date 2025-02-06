@@ -1,3 +1,18 @@
+## Changelog for version 0.22.1
+
+- fix(plugin-interactive-video): actually use saved learner interactions. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4459
+- fix(exercise-feedback): memoize randomized feedback. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4458
+- fix(plugin-interactive-video): disable autoplay. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4455
+- fix(blanks-exercise): consistent BlankDraggableAnswer preview positioning. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4454
+- fix(plugin-interactive-video): solve 'stuck when playing video' in edu-sharing preview.. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4453
+- fix(editor): restrict @editor/package imports to avoid dep cycle. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4452
+- fix(editor): fixing some minor things. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4449
+- fix(editor): enable interactive video on staging. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4448
+- fix: allow pixabay cdn without image proxy. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4447
+- feat(plugin-video): allow video upload via new infra. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4368
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.0-editor...v0.22.1-editor
+
 ## Changelog for version 0.22.0
 
 - refactor: enable Serlo-specific plugins (and renderers) in Editor. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4417
