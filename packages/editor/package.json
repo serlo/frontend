@@ -31,8 +31,7 @@
   "scripts": {
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
-    "dev": "echo 'Demo page ready under \n\nhttp://localhost:3000/\n\nDo not open the demo page on port 3001!' && npm-run-all --parallel 'vite --port 3000' 'vite --port 3001'",
-    "vite": "vite",
+    "dev": "vite",
     "build": "vite build",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",
