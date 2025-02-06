@@ -112,6 +112,11 @@ export function SearchModal({
       {noNew ? null : (
         <>
           <h1 className="mb-4 mt-24 text-3xl font-bold">Meine Inhalte</h1>
+          <p className="mb-6 ml-0.5 opacity-60">
+            Hinweis: Es kann einige Minuten dauern, bis neu hinzugefügte Inhalte
+            angezeigt werden. Im Rahmen des Prototypen werden neue Inhalte in
+            der Nacht gelöscht.
+          </p>
           {isOwnFetching ? (
             <DogIcon className="mt-12 h-12 w-12 animate-spin text-sky-300" />
           ) : ownData?.length ? (
