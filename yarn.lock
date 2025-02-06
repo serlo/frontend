@@ -6088,6 +6088,7 @@ __metadata:
     "@serlo/typescript-config": "workspace:*"
     cross-env: ^7.0.3
     dotenv-cli: ^7.4.2
+    eslint-config-turbo: ^2.4.0
     postcss-import: ^16.1.0
     prettier: ^3.3.3
     prettier-plugin-packagejson: ^2.5.3
@@ -9639,6 +9640,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:16.0.3":
+  version: 16.0.3
+  resolution: "dotenv@npm:16.0.3"
+  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
+  languageName: node
+  linkType: hard
+
 "dotenv@npm:^16.0.0, dotenv@npm:^16.3.0":
   version: 16.3.1
   resolution: "dotenv@npm:16.3.1"
@@ -10235,6 +10243,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-turbo@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "eslint-config-turbo@npm:2.4.0"
+  dependencies:
+    eslint-plugin-turbo: 2.4.0
+  peerDependencies:
+    eslint: ">6.6.0"
+    turbo: ">2.0.0"
+  checksum: e97478ea5991548ec2329a75b000a2748666835d9778ec29b2d23091be1cac43d125daaf488c679ec9bcd74a9af4aaeec5563232bd191aefb8dc62d09c5d6542
+  languageName: node
+  linkType: hard
+
 "eslint-import-resolver-node@npm:^0.3.6, eslint-import-resolver-node@npm:^0.3.9":
   version: 0.3.9
   resolution: "eslint-import-resolver-node@npm:0.3.9"
@@ -10401,6 +10421,18 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
   checksum: 7f5203afee7fbe3702b27fdd2b9a3c0ccbbb47d0672f58311b9d8a08dea819c9da4a87c15e8bd508f2562f327a9d29ee8bd9cd189bf758d8dc903de5648b0bfa
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-turbo@npm:2.4.0":
+  version: 2.4.0
+  resolution: "eslint-plugin-turbo@npm:2.4.0"
+  dependencies:
+    dotenv: 16.0.3
+  peerDependencies:
+    eslint: ">6.6.0"
+    turbo: ">2.0.0"
+  checksum: 92b7e3415f5dab17664fe48f6ff20f6585213fb1d2db12171b1811ddf91c0d8bde08709c85d4810276c7ac62c5140bdc82e8e21fb0ccdf32648fb4945db8ccf6
   languageName: node
   linkType: hard
 
