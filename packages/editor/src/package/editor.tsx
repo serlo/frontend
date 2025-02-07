@@ -18,6 +18,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { getCurrentDatetime } from '@editor/utils/get-current-datetime'
+import { useMemo } from 'react'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
@@ -74,7 +75,9 @@ export function SerloEditor(props: SerloEditorProps) {
     ? createEmptyDocument(editorVariant)
     : props.initialState
 
-  const { migratedState, stateChanged } = migrate(initialState, editorVariant)
+  const { migratedState, stateChanged } = useMemo(() => {
+    return migrate(initialState, editorVariant)
+  }, [editorVariant, initialState])
 
   if (onChange && stateChanged) {
     onChange(migratedState)

@@ -1,6 +1,6 @@
-import { TemplatePluginType, type AnyEditorDocument } from '@editor/package'
+import { type StorageFormat, TemplatePluginType } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { type MutableRefObject, useEffect, useState } from 'react'
 
 import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
@@ -18,25 +18,25 @@ export function SaveModal({
   open,
   setOpen,
   onSave,
-  selectRootDocument,
+  editorState,
   isInTestArea,
 }: {
   open: boolean
   setOpen: (arg0: boolean) => void
   onSave: SerloEditorProps['onSave']
-  selectRootDocument: () => AnyEditorDocument
+  editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
 }) {
-  const serializedRoot = selectRootDocument()
-  const serializedRootState =
-    serializedRoot?.state as SupportedTypesSerializedState
+  const editorDocument = editorState.current.document
+  const editorDocumentState =
+    editorDocument?.state as SupportedTypesSerializedState
 
-  const licenseId = serializedRootState.licenseId
-  const changes = serializedRootState.changes
+  const licenseId = editorDocumentState.licenseId
+  const changes = editorDocumentState.changes
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
-    serializedRootState,
+    editorDocumentState,
     onSave
   )
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
@@ -47,18 +47,18 @@ export function SaveModal({
 
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !changes || changesText
-  const isNoEntity = serializedRoot
+  const isNoEntity = editorDocument
     ? [
         TemplatePluginType.User,
         TemplatePluginType.Page,
         TemplatePluginType.Taxonomy,
-      ].includes(serializedRoot.plugin as TemplatePluginType)
+      ].includes(editorDocument.plugin as TemplatePluginType)
     : false
   const maySave = isNoEntity || (licenseAccepted && changesFilled)
   const needsNoReview = isInTestArea || isNoEntity
   const isOnlyText = isNoEntity || (needsNoReview && !licenseId && !changes)
 
-  const showChanges = serializedRoot ? !isNoEntity : true
+  const showChanges = editorDocument ? !isNoEntity : true
 
   useEffect(() => {
     if (!fireSave) return
@@ -152,10 +152,7 @@ export function SaveModal({
         {strings.saveButton.errorSaving}
         <br />
         {strings.saveButton.saveLocallyAndRefresh}
-        <LocalStorageButton
-          open={open}
-          selectRootDocument={selectRootDocument}
-        />
+        <LocalStorageButton open={open} editorState={editorState} />
       </InfoPanel>
     )
   }

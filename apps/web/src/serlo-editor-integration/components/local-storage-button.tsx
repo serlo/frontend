@@ -1,5 +1,5 @@
-import type { AnyEditorDocument } from '@editor/package'
-import { useEffect, useState } from 'react'
+import type { AnyEditorDocument, StorageFormat } from '@editor/package'
+import { type MutableRefObject, useEffect, useState } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -12,10 +12,10 @@ const storeKey = 'serlo-editor'
 
 export function LocalStorageButton({
   open,
-  selectRootDocument,
+  editorState,
 }: {
   open: boolean
-  selectRootDocument: () => AnyEditorDocument
+  editorState: MutableRefObject<StorageFormat>
 }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
   const strings = useInstanceData().strings
@@ -29,7 +29,7 @@ export function LocalStorageButton({
     <button
       className="serlo-button-edit-primary mt-3"
       onClick={() => {
-        const staticRoot = selectRootDocument()
+        const staticRoot = editorState.current.document
         storeStateToLocalStorage(staticRoot)
         setSavedToLocalstorage(true)
       }}

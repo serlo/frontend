@@ -1,4 +1,4 @@
-import { Component, useCallback } from 'react'
+import { Component, memo, useCallback } from 'react'
 
 import { SubDocumentEditor } from './editor'
 import { undo, useAppDispatch } from '../../store'
@@ -13,7 +13,7 @@ import type { PluginProps } from '../../types/internal__plugin-state'
  * @param props.pluginProps.config - Optional overwrites for plugin configuration
  * @param props - {@link SubDocumentProps}
  */
-export const SubDocument = (props: SubDocumentProps) => {
+export const SubDocument = memo(function SubDocument(props: SubDocumentProps) {
   const dispatch = useAppDispatch()
   const undoMemo = useCallback(() => {
     void dispatch(undo())
@@ -24,7 +24,7 @@ export const SubDocument = (props: SubDocumentProps) => {
       <SubDocumentEditor {...props} />
     </ErrorBoundary>
   )
-}
+})
 // this uses ErrorBoundary functionality that is only available in class components since react 17
 class ErrorBoundary extends Component<{
   undo: () => void

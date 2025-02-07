@@ -6,7 +6,7 @@ import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-m
 
 export function useHandleSave(
   visible: boolean,
-  serializedRootState: SupportedTypesSerializedState,
+  editorDocumentState: SupportedTypesSerializedState,
   onSave: SerloEditorProps['onSave']
 ) {
   const [pending, setPending] = useState(false)
@@ -22,7 +22,7 @@ export function useHandleSave(
   const handleSave = (changes?: string) => {
     setPending(true)
 
-    onSave({ ...serializedRootState, changes })
+    onSave({ ...editorDocumentState, changes })
       .then(() => {
         setTimeout(() => {
           storeStateToLocalStorage(null)

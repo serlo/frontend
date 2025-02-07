@@ -3,10 +3,10 @@ import {
   EditorPluginType,
   TemplatePluginType,
   SerloOnlyFeaturesContext,
-  type SerloEditorProps as EditorProps,
+  type StorageFormat,
 } from '@editor/package'
 import dynamic from 'next/dynamic'
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ExternalRevisionLoader } from './components/external-revision-loader'
@@ -25,10 +25,30 @@ const Editor = dynamic(
   }
 )
 
+const plugins = [
+  ...defaultPlugins,
+  TemplatePluginType.Article,
+  EditorPluginType.Article,
+  TemplatePluginType.Course,
+  EditorPluginType.Course,
+  TemplatePluginType.Page,
+  EditorPluginType.PageLayout,
+  TemplatePluginType.Taxonomy,
+  TemplatePluginType.TextExercise,
+  TemplatePluginType.TextExerciseGroup,
+  TemplatePluginType.User,
+  EditorPluginType.ArticleIntroduction,
+  EditorPluginType.Injection,
+  EditorPluginType.Anchor,
+  EditorPluginType.InteractiveVideo,
+  EditorPluginType.Audio,
+  EditorPluginType.H5p,
+]
+
 export interface SerloEditorProps {
   isInTestArea?: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
-  initialState: EditorProps['initialState']
+  initialState: StorageFormat
 }
 
 export function SerloEditor({
@@ -36,6 +56,9 @@ export function SerloEditor({
   isInTestArea,
   initialState,
 }: SerloEditorProps) {
+  // No need to rerender on Editor change, therefore `useRef`
+  const editorState = useRef(initialState)
+
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
 
@@ -50,29 +73,14 @@ export function SerloEditor({
         language={lang === 'de' ? 'de' : 'en'}
         editorVariant="serlo-org"
         userId={String(auth?.id)}
-        plugins={[
-          ...defaultPlugins,
-          TemplatePluginType.Article,
-          EditorPluginType.Article,
-          TemplatePluginType.Course,
-          EditorPluginType.Course,
-          TemplatePluginType.Page,
-          EditorPluginType.PageLayout,
-          TemplatePluginType.Taxonomy,
-          TemplatePluginType.TextExercise,
-          TemplatePluginType.TextExerciseGroup,
-          TemplatePluginType.User,
-          EditorPluginType.ArticleIntroduction,
-          EditorPluginType.Injection,
-          EditorPluginType.Anchor,
-          EditorPluginType.InteractiveVideo,
-          EditorPluginType.Audio,
-          EditorPluginType.H5p,
-        ]}
+        plugins={plugins}
         initialState={initialState}
         styleReset={false}
         extraSerloPlugins={extraSerloPlugins}
         extraSerloRenderers={extraSerloRenderers}
+        onChange={(state) => {
+          editorState.current = state
+        }}
       >
         {(editor) => {
           const hasPendingChanges = editor.history.pendingChanges !== 0
@@ -81,13 +89,13 @@ export function SerloEditor({
               <SaveButton
                 onSave={onSave}
                 isChanged={hasPendingChanges}
-                selectRootDocument={editor.selectRootDocument}
+                editorState={editorState}
                 isInTestArea={isInTestArea}
               />
               {isNewEntity ? (
                 <ExternalRevisionLoader
                   templateType={
-                    (initialState as { plugin: TemplatePluginType }).plugin
+                    initialState.document.plugin as TemplatePluginType
                   }
                   dispatchReplaceRootDocument={
                     editor.dispatchReplaceRootDocument
