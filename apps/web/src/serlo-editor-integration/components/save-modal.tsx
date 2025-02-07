@@ -83,7 +83,8 @@ export function SaveModal({
         body: JSON.stringify({
           id: exampleSourceID,
           title: title + ' (datenraum-test)',
-          description: 'test',
+          description:
+            'Neuer Inhalt vom Prototypen "Serlo Editor <> Datenraum".',
           serloId: randomId,
           editorState: content,
         }),
