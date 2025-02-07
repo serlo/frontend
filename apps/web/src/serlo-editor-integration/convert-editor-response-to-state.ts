@@ -2,13 +2,11 @@ import {
   EditorPluginType,
   TemplatePluginType,
   type AnyEditorDocument,
-  type StateType,
-  type StateTypeStaticType,
   type Entity,
   type Uuid,
-  type TaxonomyTypePluginState,
   type StorageFormat,
 } from '@editor/package'
+import { createEmptyDocument } from '@editor/package/storage-format'
 import * as R from 'ramda'
 
 import { UuidType } from '@/data-types'
@@ -99,7 +97,7 @@ export function convertEditorResponseToState(
   function convertAbstractEntity(
     entityType: EntityType,
     uuid: Extract<MainUuidType, { __typename: string }>
-  ): Partial<StorageFormat> {
+  ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
     // TODO: Temporarily mock editorMetadata, remove after migration run
@@ -108,7 +106,7 @@ export function convertEditorResponseToState(
     function wrapInMockEditorMetadata(content: string): string {
       const parsedContent = parseStaticString(content)
       return JSON.stringify({
-        id: 'mock-id',
+        id: '',
         type: 'https://serlo.org/editor',
         variant: 'serlo-org',
         domainOrigin: 'serlo.org',
@@ -122,7 +120,10 @@ export function convertEditorResponseToState(
       })
     }
 
-    const { editorMetadata, templateContent } = unwrapEditorContent()
+    const { editorMetadata, templateContent } = unwrapEditorContent(
+      entityType,
+      tempContent
+    )
 
     if (uuid.__typename === UuidType.Video) {
       return {
@@ -151,76 +152,88 @@ export function convertEditorResponseToState(
         },
       },
     }
-
-    function unwrapEditorContent() {
-      const convertedContent = parseEditorData(tempContent)
-
-      const editorMetadata = convertedContent
-        ? R.omit(['document'], convertedContent)
-        : {}
-
-      const editorContent = convertedContent?.document as
-        | AnyEditorDocument
-        | undefined
-
-      let templateContent
-      if (
-        entityType !== 'Article' ||
-        editorContent?.plugin === EditorPluginType.Article
-      ) {
-        templateContent = serializeStaticDocument(editorContent)
-      } else {
-        // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
-        templateContent = serializeStaticDocument({
-          plugin: EditorPluginType.Article,
-          state: {
-            introduction: { plugin: EditorPluginType.ArticleIntroduction },
-            content: editorContent,
-            exercises: [],
-            exerciseFolder: { id: '', title: '' },
-            relatedContent: {
-              articles: [],
-              courses: [],
-              videos: [],
-            },
-            sources: [],
-          },
-        })
-      }
-
-      return { editorMetadata, templateContent }
-    }
   }
 
   function convertTaxonomy(
     entityType: MainUuidType['__typename'],
     uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
-  ): StaticDocument<TaxonomyTypePluginState> {
+  ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
+
+    const { editorMetadata } = unwrapEditorContent(entityType)
+
     return {
-      plugin: TemplatePluginType.Taxonomy,
-      state: {
-        id: uuid.id,
-        parent: uuid.parent?.id ?? 0,
-        position: uuid.weight,
-        term: {
-          name: uuid.name,
+      ...editorMetadata,
+      document: {
+        plugin: TemplatePluginType.Taxonomy,
+        state: {
+          id: uuid.id,
+          parent: uuid.parent?.id ?? 0,
+          position: uuid.weight,
+          term: {
+            name: uuid.name,
+          },
+          description: serializeStaticDocument(
+            parseStaticString(uuid.description ?? '')
+          ),
         },
-        description: serializeStaticDocument(
-          parseStaticString(uuid.description ?? '')
-        ),
       },
     }
   }
 }
 
+function unwrapEditorContent(
+  entityType: MainUuidType['__typename'],
+  content?: string
+) {
+  const convertedContent = parseEditorData(content)
+
+  const editorMetadata = convertedContent
+    ? R.omit(['document'], convertedContent)
+    : R.omit(['document'], createEmptyDocument('serlo-org'))
+
+  const editorContent = convertedContent?.document as
+    | AnyEditorDocument
+    | undefined
+
+  let templateContent
+  if (
+    entityType !== 'Article' ||
+    editorContent?.plugin === EditorPluginType.Article
+  ) {
+    templateContent = serializeStaticDocument(editorContent)
+  } else {
+    // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
+    templateContent = serializeStaticDocument({
+      plugin: EditorPluginType.Article,
+      state: {
+        introduction: { plugin: EditorPluginType.ArticleIntroduction },
+        content: editorContent,
+        exercises: [],
+        exerciseFolder: { id: '', title: '' },
+        relatedContent: {
+          articles: [],
+          courses: [],
+          videos: [],
+        },
+        sources: [],
+      },
+    })
+  }
+
+  return { editorMetadata, templateContent }
+}
+
 export function convertUserByDescription(description?: string | null) {
   return {
-    plugin: TemplatePluginType.User,
-    state: {
-      description: serializeStaticDocument(
-        parseStaticString(description ?? '')
-      ),
+    ...createEmptyDocument('serlo-org'),
+    document: {
+      plugin: TemplatePluginType.User,
+      state: {
+        description: serializeStaticDocument(
+          parseStaticString(description ?? '')
+        ),
+      },
     },
   }
 }
@@ -253,18 +266,12 @@ export interface UserSerializedState extends Uuid {
   description: SerializedStaticState
 }
 
-interface StaticDocument<T extends StateType> {
-  plugin: string
-  state?: StateTypeStaticType<T>
-  id?: string
-}
-
 export type ConvertResponseError =
   | { error: 'type-unsupported' }
   | { error: 'failure' }
 
 type SerializedStaticState = string | undefined
-type DeserializedStaticResult = Partial<StorageFormat> | ConvertResponseError
+type DeserializedStaticResult = StorageFormat | ConvertResponseError
 
 export function isError(
   result: DeserializedStaticResult

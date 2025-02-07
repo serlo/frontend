@@ -1,3 +1,4 @@
+import { createEmptyDocument } from '@editor/package'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
@@ -24,10 +25,13 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
               type={UuidType.TaxonomyTerm}
               id={parent}
               initialState={{
-                plugin: 'type-taxonomy',
-                state: {
-                  term: { name: '' },
-                  description: '{"plugin":"rows"}',
+                ...createEmptyDocument('serlo-org'),
+                document: {
+                  plugin: 'type-taxonomy',
+                  state: {
+                    term: { name: '' },
+                    description: '{"plugin":"rows"}',
+                  },
                 },
               }}
               errorType="none"
