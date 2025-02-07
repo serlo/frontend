@@ -9,6 +9,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useRouter } from 'next/router'
 
 export function SaveModal({
   open,
@@ -19,6 +20,7 @@ export function SaveModal({
   onSave: SerloEditorProps['onSave']
   isInTestArea?: boolean
 }) {
+  const router = useRouter()
   const store = useStore()
   // can be empty before first change
   const serializedRoot = selectStaticDocument(store.getState(), ROOT)
@@ -88,11 +90,18 @@ export function SaveModal({
 
       if (!result.ok) throw new Error('Failed to put node')
 
+      window.onbeforeunload = null
+
       showToastNotice(
         'Danke! Dein Inhalt steht jetzt für Andere bereit  🎉',
         'success',
-        5000
+        2500
       )
+
+      setTimeout(() => {
+        console.log('pushing to /datenraum-demo')
+        void router.push('/datenraum-demo')
+      }, 2500)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error saving content:', error)

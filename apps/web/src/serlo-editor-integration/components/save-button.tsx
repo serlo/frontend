@@ -8,7 +8,6 @@ import { createPortal } from 'react-dom'
 
 import { SaveModal } from './save-modal'
 import type { SerloEditorProps } from '../serlo-editor'
-import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 export function SaveButton({
   onSave,
@@ -26,8 +25,6 @@ export function SaveButton({
     isChanged
       ? setSaveModalOpen(true)
       : showToastNotice('👀 ' + editStrings.noChangesWarning)
-
-  useLeaveConfirm(isChanged)
 
   if (typeof window === 'undefined') return null
   const target =
