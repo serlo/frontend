@@ -142,7 +142,7 @@ export function ExternalRevisionLoader<T>({
               : uuid.id
 
           handleReplace({
-            ...(converted.state as T),
+            ...((converted.document || {}).state as T),
             revision: 0,
             id: 0,
             meta_title: '',

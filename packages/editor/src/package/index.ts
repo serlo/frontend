@@ -29,6 +29,7 @@ export { extractStringFromTextDocument } from '@editor/plugins/text/utils/static
 export type * from '@editor/types/editor-plugins'
 export type * from '@editor/plugin/internal-plugin-state'
 export type * from '@editor/plugin/internal-plugin'
+export type { StorageFormat } from './storage-format'
 
 /**
  * Exported so that integrations can customize available plugins

@@ -4,18 +4,12 @@ import {
   type AnyEditorDocument,
   type StateType,
   type StateTypeStaticType,
-  type AppletTypePluginState,
-  type ArticleTypePluginState,
   type Entity,
   type Uuid,
-  type CourseTypePluginState,
-  type EventTypePluginState,
-  type TextExerciseGroupTypePluginState,
-  type PageTypePluginState,
   type TaxonomyTypePluginState,
-  type TextExerciseTypePluginState,
-  type VideoTypePluginState,
+  type StorageFormat,
 } from '@editor/package'
+import * as R from 'ramda'
 
 import { UuidType } from '@/data-types'
 import type { MainUuidType } from '@/fetcher/query-types'
@@ -105,56 +99,96 @@ export function convertEditorResponseToState(
   function convertAbstractEntity(
     entityType: EntityType,
     uuid: Extract<MainUuidType, { __typename: string }>
-  ):
-    | StaticDocument<ArticleTypePluginState>
-    | StaticDocument<AppletTypePluginState>
-    | StaticDocument<CourseTypePluginState>
-    | StaticDocument<EventTypePluginState>
-    | StaticDocument<TextExerciseTypePluginState>
-    | StaticDocument<TextExerciseGroupTypePluginState>
-    | StaticDocument<PageTypePluginState>
-    | StaticDocument<VideoTypePluginState> {
+  ): Partial<StorageFormat> {
     stack.push({ id: uuid.id, type: entityType })
 
-    const description =
-      uuid.__typename === UuidType.Video ? getContent() : undefined
+    // TODO: Temporarily mock editorMetadata, remove after migration run
+    const tempContent = wrapInMockEditorMetadata(content)
+
+    function wrapInMockEditorMetadata(content: string): string {
+      const parsedContent = parseStaticString(content)
+      return JSON.stringify({
+        id: 'mock-id',
+        type: 'https://serlo.org/editor',
+        variant: 'serlo-org',
+        domainOrigin: 'serlo.org',
+        version: 2,
+        editorVersion: '0.22.0',
+        dateModified: new Date().toISOString(),
+        document: parsedContent ?? {
+          plugin: EditorPluginType.Rows,
+          state: {},
+        },
+      })
+    }
+
+    const { editorMetadata, templateContent } = unwrapEditorContent()
+
+    if (uuid.__typename === UuidType.Video) {
+      return {
+        ...editorMetadata,
+        document: {
+          plugin: TemplatePluginType.Video,
+          state: {
+            ...entityFields,
+            content: url ? url : templateContent,
+            description: templateContent,
+            ...(url ? { url } : {}),
+          },
+        },
+      }
+    }
 
     return {
-      // simpler than other typehacks, not really Article
-      plugin: TemplatePluginType[uuid.__typename as 'Article'],
-      state: {
-        ...entityFields,
-        content: uuid.__typename === 'Video' && url ? url : getContent(),
-        ...(description ? { description } : {}),
-        ...(url ? { url } : {}),
+      ...editorMetadata,
+      document: {
+        // simpler than other typehacks, not really Article
+        plugin: TemplatePluginType[uuid.__typename as 'Article'],
+        state: {
+          ...entityFields,
+          content: templateContent,
+          ...(url ? { url } : {}),
+        },
       },
     }
 
-    function getContent() {
-      if (entityType !== 'Article')
-        return serializeStaticDocument(parseStaticString(content))
+    function unwrapEditorContent() {
+      const convertedContent = parseEditorData(tempContent)
 
-      const convertedContent = parseStaticString(content)
+      const editorMetadata = convertedContent
+        ? R.omit(['document'], convertedContent)
+        : {}
 
-      if (convertedContent?.plugin === EditorPluginType.Article) {
-        return serializeStaticDocument(convertedContent)
-      }
-      // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
-      return serializeStaticDocument({
-        plugin: EditorPluginType.Article,
-        state: {
-          introduction: { plugin: EditorPluginType.ArticleIntroduction },
-          content: convertedContent,
-          exercises: [],
-          exerciseFolder: { id: '', title: '' },
-          relatedContent: {
-            articles: [],
-            courses: [],
-            videos: [],
+      const editorContent = convertedContent?.document as
+        | AnyEditorDocument
+        | undefined
+
+      let templateContent
+      if (
+        entityType !== 'Article' ||
+        editorContent?.plugin === EditorPluginType.Article
+      ) {
+        templateContent = serializeStaticDocument(editorContent)
+      } else {
+        // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
+        templateContent = serializeStaticDocument({
+          plugin: EditorPluginType.Article,
+          state: {
+            introduction: { plugin: EditorPluginType.ArticleIntroduction },
+            content: editorContent,
+            exercises: [],
+            exerciseFolder: { id: '', title: '' },
+            relatedContent: {
+              articles: [],
+              courses: [],
+              videos: [],
+            },
+            sources: [],
           },
-          sources: [],
-        },
-      })
+        })
+      }
+
+      return { editorMetadata, templateContent }
     }
   }
 
@@ -230,9 +264,7 @@ export type ConvertResponseError =
   | { error: 'failure' }
 
 type SerializedStaticState = string | undefined
-type DeserializedStaticResult =
-  | StaticDocument<StateType<unknown>>
-  | ConvertResponseError
+type DeserializedStaticResult = Partial<StorageFormat> | ConvertResponseError
 
 export function isError(
   result: DeserializedStaticResult
@@ -256,6 +288,18 @@ function parseStaticString(
   if (!content) return undefined
   try {
     return JSON.parse(content) as AnyEditorDocument
+  } catch {
+    // No valid JSON, so we return nothing
+    return undefined
+  }
+}
+
+function parseEditorData(
+  content: SerializedStaticState
+): StorageFormat | undefined {
+  if (!content) return undefined
+  try {
+    return JSON.parse(content) as StorageFormat
   } catch {
     // No valid JSON, so we return nothing
     return undefined
