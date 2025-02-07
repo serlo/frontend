@@ -18,7 +18,7 @@ export interface EditorProps {
     plugin: string
     state?: unknown
   }
-  onChange?: OnEditorChange
+  onChange: OnEditorChange
 }
 
 export type EditorRenderProps = ReactNode | ((editor: BaseEditor) => ReactNode)
@@ -40,8 +40,10 @@ export interface BaseEditor {
 
 export type GetDocument = () => DocumentState | null
 
-export type OnEditorChange = (payload: {
+export interface OnEditorChangePayload {
   /** False if the user undos all changes and arrives back at the initial state */
   changed: boolean
   getDocument: GetDocument
-}) => void
+}
+
+export type OnEditorChange = (payload: OnEditorChangePayload) => void

@@ -1,6 +1,6 @@
 import { Editor, type EditorProps } from '@editor/core'
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
-import { type GetDocument } from '@editor/core/types'
+import type { OnEditorChangePayload } from '@editor/core/types'
 import {
   createPlugins,
   type ExtraSerloPlugins,
@@ -9,6 +9,7 @@ import {
   createRenderers,
   type ExtraSerloRenderers,
 } from '@editor/editor-integration/create-renderers'
+import { debouncedStoreToLocalStorage } from '@editor/editor-ui/save/local-storage-notice'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
@@ -112,17 +113,24 @@ export function SerloEditor(props: SerloEditorProps) {
     </StaticStringsProvider>
   )
 
-  // Parameter `changed` is ignored. Even if it is false, we still want to call onChange.
-  function handleDocumentChange({ getDocument }: { getDocument: GetDocument }) {
-    if (!onChange) return
+  function handleDocumentChange({
+    changed,
+    getDocument,
+  }: OnEditorChangePayload) {
     const document = getDocument()
     if (!document) return
-    onChange({
+
+    const stateToSave = {
       ...migratedState,
       dateModified: getCurrentDatetime(),
       editorVersion: getEditorVersion(),
       document,
-    })
+    }
+
+    const isSerlo = editorVariant === 'serlo-org'
+    if (changed && isSerlo) void debouncedStoreToLocalStorage(stateToSave)
+
+    if (onChange) onChange(stateToSave)
   }
 
   function renderTestEnvironmentWarning() {

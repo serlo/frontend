@@ -1,7 +1,6 @@
 import { EditorToolbar } from '@editor/editor-ui/editor-toolbar/editor-toolbar'
 import {
   LocalStorageNotice,
-  debouncedStoreToLocalStorage,
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
 import { getEditorVersion } from '@editor/package/editor-version'
@@ -26,7 +25,7 @@ export function Editor(props: EditorProps) {
 
   const storedState = getStateFromLocalStorage()
   const initialState =
-    useStored && storedState ? storedState : props.initialState
+    useStored && storedState ? storedState.document : props.initialState
 
   // New store for every editor instance
   const store = useMemo(() => createStore(), [])
@@ -67,10 +66,8 @@ export function Editor(props: EditorProps) {
             <InnerDocument
               {...props}
               initialState={initialState}
-              onChange={({ changed, getDocument }) => {
-                props.onChange?.({ changed, getDocument })
-                if (!changed || !isSerlo) return
-                void debouncedStoreToLocalStorage(getDocument())
+              onChange={(state) => {
+                props.onChange(state)
               }}
             />
           </div>
