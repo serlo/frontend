@@ -1,9 +1,13 @@
 import { isTempFile } from '@editor/plugin/upload'
-import { useAppSelector, selectStaticDocument, focus } from '@editor/store'
+import {
+  useAppSelector,
+  selectStaticDocument,
+  focus,
+  useAppDispatch,
+} from '@editor/store'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { isVideoDocument } from '@editor/types/plugin-type-guards'
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { type InteractiveVideoProps } from '.'
 import { EditMode } from './editor/edit-mode'
@@ -15,7 +19,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   const [previewActive, setPreviewActive] = useState(false)
 
   const mounted = useRef(false)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const staticDocument = useAppSelector(
     (storeState) =>
