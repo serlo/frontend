@@ -69,8 +69,9 @@ export function SaveModal({
     if (!serializedRoot) return
     const exampleSourceID = '06dca4d1-19f3-4fcc-a9d0-de39971f87bc'
 
-    const { id, title, content } =
-      serializedRoot.state as AbstractSerializedState
+    const { title, content } = serializedRoot.state as AbstractSerializedState
+
+    const randomId = Math.floor(Math.random() * 10000000000) + 10000000000
 
     try {
       const result = await fetch('/api/datenraum/put', {
@@ -83,7 +84,7 @@ export function SaveModal({
           id: exampleSourceID,
           title: title + ' (datenraum-test)',
           description: 'test',
-          serloId: parseInt(`99${id}`),
+          serloId: randomId,
           editorState: content,
         }),
       })
