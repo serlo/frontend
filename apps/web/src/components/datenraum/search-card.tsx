@@ -73,8 +73,6 @@ export default function SearchCard({
 }) {
   const router = useRouter()
 
-  const serloId = entry.url.replace('https://serlo.org/', '')
-
   const IconComponent = iconMap[entry.type]
 
   const [enabled, setEnabled] = useState(false)
@@ -133,7 +131,7 @@ export default function SearchCard({
           onClick={() => {
             if (onImport) onImport(data)
             // TODO: this approach will not work any more now =/
-            else void router.push(`/entity/repository/add-revision/${serloId}`)
+            else void router.push(`/entity/repository/add-revision/${entry.id}`)
           }}
         >
           <ImportIcon /> Importieren

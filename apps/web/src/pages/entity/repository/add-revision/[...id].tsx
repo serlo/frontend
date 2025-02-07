@@ -1,3 +1,5 @@
+import * as t from 'io-ts'
+
 import type { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
@@ -7,6 +9,11 @@ import { AddRevision } from '@/components/pages/add-revision'
 import { EditorPageData, fetchEditorData } from '@/fetcher/fetch-editor-data'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { loadEditorState } from '@/pages/api/datenraum/node'
+import { UuidType } from '@/data-types'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
+
+const Plugin = t.type({ plugin: t.string })
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
   return (
@@ -32,12 +39,41 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
 export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
   context
 ) => {
-  const result = await fetchEditorData(
-    context.locale!,
-    context.params?.id as string[] | undefined
-  )
+  const id = context.params?.id?.[0]
 
-  if (result.errorType === 'failed-fetch') return { notFound: true }
+  if (!id) return { notFound: true }
 
-  return { props: result }
+  const result = await loadEditorState(id)
+
+  if (!result.success) return { notFound: true }
+
+  const node = result.node
+  const content = node.metadata.SerloEditorContent
+
+  if (!Plugin.is(content)) return { notFound: true }
+
+  const uuidType = (() => {
+    if (content.plugin === 'article') return UuidType.Article
+    if (content.plugin === 'course') return UuidType.Course
+    if (content.plugin === 'exercise') return UuidType.Exercise
+    if (content.plugin === 'exerciseGroup') return UuidType.ExerciseGroup
+
+    return null
+  })()
+
+  if (!uuidType) return { notFound: true }
+
+  const randomIntId = Math.floor(Math.random() * 10000000000) + 10000000000
+
+  return {
+    props: {
+      initialState: {
+        plugin: TemplatePluginType[uuidType],
+        state: { content: JSON.stringify(content), title: node.title },
+      },
+      type: uuidType,
+      errorType: 'none',
+      id: randomIntId,
+    },
+  }
 }

@@ -28,14 +28,6 @@ export default async function handler(
     return
   }
 
-  const username = process.env.DATENRAUM_USERNAME
-  const password = process.env.DATENRAUM_PASSWORD
-
-  if (!username || !password) {
-    res.status(500).json({ message: 'Datenraum credentials not set' })
-    return
-  }
-
   const { id } = req.query
 
   if (!id || Array.isArray(id)) {
@@ -43,6 +35,39 @@ export default async function handler(
       message: 'Query parameter missing or multiple parameter are passed to it',
     })
     return
+  }
+
+  const result = await loadEditorState(id)
+
+  if (!result.success) {
+    res.status(500).json({ message: result.message })
+    return
+  }
+
+  const nodeResult = result.node
+
+  return res.json({
+    id: nodeResult.id,
+    title: nodeResult.title,
+    description: nodeResult.description,
+    externalId: nodeResult.externalId,
+    sourceId: nodeResult.sourceId,
+    isAiGenerated: nodeResult.isAiGenerated,
+    editorState: nodeResult.metadata.SerloEditorContent,
+  })
+}
+
+export async function loadEditorState(
+  id: string
+): Promise<
+  | { success: true; node: t.TypeOf<typeof NodeData> }
+  | { success: false; message: string }
+> {
+  const username = process.env.DATENRAUM_USERNAME
+  const password = process.env.DATENRAUM_PASSWORD
+
+  if (!username || !password) {
+    return { success: false, message: 'Datenraum credentials not set' }
   }
 
   const accessTokenResponse = await fetch(
@@ -55,15 +80,13 @@ export default async function handler(
   )
 
   if (!accessTokenResponse.ok) {
-    res.status(500).json({ message: 'Failed to get access token' })
-    return
+    return { success: false, message: 'Failed to get access token' }
   }
 
   const accessTokenResponseJson = (await accessTokenResponse.json()) as unknown
 
   if (!AccessTokenResponse.is(accessTokenResponseJson)) {
-    res.status(500).json({ message: 'Access token missing' })
-    return
+    return { success: false, message: 'Access token missing' }
   }
 
   const { access_token: accessToken } = accessTokenResponseJson
@@ -80,22 +103,13 @@ export default async function handler(
     }
   )
 
-  const nodeResult = (await nodeResponse.json()) as unknown
+  const node = (await nodeResponse.json()) as unknown
 
-  if (!NodeData.is(nodeResult)) {
-    res.status(500).json({ message: 'Failed to get node: ' + id })
-    return
+  if (!NodeData.is(node)) {
+    return { success: false, message: 'Failed to get node: ' + id }
   }
 
-  return res.json({
-    id: nodeResult.id,
-    title: nodeResult.title,
-    description: nodeResult.description,
-    externalId: nodeResult.externalId,
-    sourceId: nodeResult.sourceId,
-    isAiGenerated: nodeResult.isAiGenerated,
-    editorState: nodeResult.metadata.SerloEditorContent,
-  })
+  return { success: true, node }
 }
 
 export const config = { api: { externalResolver: true } }
