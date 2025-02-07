@@ -15,7 +15,6 @@ import {
   selectHasUndoActions,
   selectHasRedoActions,
   selectDocuments,
-  selectStaticDocument,
   useStore,
 } from '../store'
 import { ROOT } from '../store/root/constants'
@@ -43,9 +42,6 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
     void dispatch(persistHistory(documents))
   }, [dispatch, store])
 
-  const selectRootDocument = useCallback(() => {
-    return selectStaticDocument(store.getState(), ROOT)
-  }, [store])
   const dispatchReplaceRootDocument = useCallback(
     (pluginType: string, state: unknown) => {
       dispatch(runReplaceDocumentSaga({ id: ROOT, pluginType, state }))
@@ -78,7 +74,6 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
       dispatchRedo,
       dispatchPersistHistory,
     },
-    selectRootDocument,
     dispatchReplaceRootDocument,
   })
 }

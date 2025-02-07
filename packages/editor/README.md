@@ -115,7 +115,6 @@ See below for the current API specification.
   - `element` - a React node for rendering the editor
   - `i18n` - for customizing translation strings
   - `history` - for persisting, undo, redo
-  - `selectRootDocument` - a function for selecting the current state
 
 - **`plugins` (optional)**: List of plugins that should be active. If undefined, the `defaultPlugins` will be used. Only use this if you need to filter out some plugins. Upon first render, the object will be frozen and you can't dynamically change the plugins anymore! Ensure to do any filtering before you render the Serlo Editor.
 
