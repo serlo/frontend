@@ -1,12 +1,6 @@
 export function DatenraumIcon() {
   return (
-    <svg
-      width="94"
-      height="60"
-      viewBox="0 0 94 60"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 94 60" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_12650_2811)">
         <rect width="94" height="60" fill="white" />
         <rect x="-0.5" width="94.5" height="60" rx="4.2" fill="#FFF5E9" />
