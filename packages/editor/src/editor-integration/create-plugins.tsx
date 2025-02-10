@@ -8,6 +8,7 @@ import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
+import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import type { ImagePluginConfig, ImagePluginState } from '@editor/plugins/image'
@@ -131,6 +132,10 @@ export function createPlugins(
     {
       type: EditorPluginType.Exercise,
       plugin: exercisePlugin,
+    },
+    {
+      type: EditorPluginType.ExerciseGroup,
+      plugin: exerciseGroupPlugin,
     },
     {
       type: EditorPluginType.Solution,

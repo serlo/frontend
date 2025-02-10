@@ -66,6 +66,7 @@ export function SerloEditor({
           EditorPluginType.ArticleIntroduction,
           EditorPluginType.Injection,
           EditorPluginType.Anchor,
+          EditorPluginType.ExerciseGroup,
           EditorPluginType.InteractiveVideo,
           EditorPluginType.Audio,
           EditorPluginType.H5p,
