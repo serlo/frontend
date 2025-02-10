@@ -12,7 +12,6 @@ import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
-import { LocalStorageButton } from '@/serlo-editor-integration/components/local-storage-button'
 
 export function SaveModal({
   open,
@@ -150,12 +149,6 @@ export function SaveModal({
     return (
       <InfoPanel type="warning" icon={faExclamationCircle}>
         {strings.saveButton.errorSaving}
-        <br />
-        {strings.saveButton.saveLocallyAndRefresh}
-        <LocalStorageButton
-          open={open}
-          selectRootDocument={selectRootDocument}
-        />
       </InfoPanel>
     )
   }
