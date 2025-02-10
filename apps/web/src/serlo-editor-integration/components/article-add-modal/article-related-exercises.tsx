@@ -12,6 +12,7 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
@@ -78,6 +79,7 @@ export function ArticleRelatedExercises({
         <SerloRenderer
           editorVariant="serlo-org"
           state={{ plugin: EditorPluginType.Injection, state: `/${id}` }}
+          extraSerloRenderers={extraSerloRenderers}
         />
         <AddButton
           text={strings.articleAddModal.buttonAddType.replace(
