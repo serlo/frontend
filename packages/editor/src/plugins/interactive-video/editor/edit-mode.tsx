@@ -1,7 +1,6 @@
-import { focus } from '@editor/store'
+import { focus, useAppDispatch } from '@editor/store'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { type InteractiveVideoProps } from '..'
 import { MarksList } from './marks-list'
@@ -26,7 +25,7 @@ export function EditMode({
   previewActive: boolean
 }) {
   const { marks } = state
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const learnerInteractions = useLearnerInteractions()
   const checkSeekAndPlay = useCheckSeekAndPlay({
