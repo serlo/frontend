@@ -22,6 +22,7 @@ import { UserPage } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { isProduction } from '@/helper/is-production'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 export interface ProfileProps {
   userData: UserPage['userData']
@@ -148,7 +149,11 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             {strings.profiles.lockedDescriptionText}
           </InfoPanel>
         ) : (
-          <SerloRenderer state={description} editorVariant="serlo-org" />
+          <SerloRenderer
+            state={description}
+            editorVariant="serlo-org"
+            extraSerloRenderers={extraSerloRenderers}
+          />
         )}
       </section>
     )
