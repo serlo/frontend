@@ -192,9 +192,7 @@ export const instanceData = {
       parentFallbackLink: "Zum übergeordneten Inhalt",
       hasChanges: "In diesem Bereich hat es Änderungen gegeben",
       positionForGrouped: "Diese %exercise% ist Teil von %title%.",
-      helpLink: "Reviewer-Hilfe",
-      revisionSaved: "Bearbeitung gespeichert",
-      saveRevision: "Bearbeitung zwischenspeichern"
+      helpLink: "Reviewer-Hilfe"
     },
     revisionHistory: {
       changes: "Änderungen",
@@ -448,8 +446,7 @@ export const instanceData = {
       missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
       missingLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren.",
       missingChangesAndLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.",
-      errorSaving: "Es trat ein Fehler beim Speichern auf.",
-      saveLocallyAndRefresh: "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
+      errorSaving: "Beim Speichern ist ein Fehler aufgetreten, aber deine Arbeit ist lokal gespeichert. Überprüfe, ob du immer noch eingeloggt bist und probier's noch mal 🤞.",
       changes: "Beschreibe deine Änderungen am Inhalt",
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?"
     },

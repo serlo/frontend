@@ -192,9 +192,7 @@ export const instanceData = {
       parentFallbackLink: 'To parent content',
       hasChanges: 'There have been changes in this area',
       positionForGrouped: 'This %exercise% is part of %title%.',
-      helpLink: 'Revision Help',
-      revisionSaved: 'Revision saved',
-      saveRevision: 'Save revision'
+      helpLink: 'Revision Help'
     },
     revisionHistory: {
       changes: "परिवर्तन",
@@ -448,8 +446,7 @@ export const instanceData = {
       missingChanges: 'You need to fill out the changes you made',
       missingLicenseTerms: 'You need to accept the license terms',
       missingChangesAndLicenseTerms: 'You need to fill out the changes you made and accept the license terms',
-      errorSaving: 'An error occurred during saving.',
-      saveLocallyAndRefresh: 'You can store the revision locally, refresh the page and try to save again.',
+      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
       changes: 'Describe your changes to the content',
       confirmRouteChange: 'Are you sure you want to leave without saving?'
     },

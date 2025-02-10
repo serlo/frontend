@@ -192,9 +192,7 @@ export const instanceData = {
       parentFallbackLink: "Al contenido principal",
       hasChanges: "Ha habido cambios en esta área",
       positionForGrouped: "Este/a %exercise% es parte de %title%.",
-      helpLink: "Ayuda de revisión",
-      revisionSaved: "Revisión guardada",
-      saveRevision: "Guardar revisión"
+      helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
       changes: "Cambios",
@@ -375,7 +373,7 @@ export const instanceData = {
         code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",
         code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
-        code4000031: 'This password can not be used because it is too similar to the username.',
+        code4000031: "Esta contraseña no se puede utilizar porque es demasiado similar al nombre de usuario.",
         code4000032: "Has introducido menos de 8 caracteres.",
         code4060004: "El enlace de recuperación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo",
         code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo.",
@@ -448,8 +446,7 @@ export const instanceData = {
       missingChanges: "Tienes que indicar los cambios que has hecho",
       missingLicenseTerms: "Necesitas aceptar los términos de la licencia",
       missingChangesAndLicenseTerms: "Necesitas indicar los cambios que has realizado y aceptar los términos de la licencia",
-      errorSaving: "Se ha producido un error al guardar.",
-      saveLocallyAndRefresh: "Puedes guardar la revisión localmente, actualiza la página e intenta guardar de nuevo.",
+      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
       changes: "Describe tus cambios en el contenido",
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?"
     },

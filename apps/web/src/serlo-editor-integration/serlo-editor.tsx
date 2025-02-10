@@ -16,6 +16,7 @@ import { extraSerloRenderers } from './extra-serlo-renderers'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { isProduction } from '@/helper/is-production'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 const Editor = dynamic(
@@ -78,6 +79,7 @@ export function SerloEditor({
         editorVariant="serlo-org"
         userId={String(auth?.id)}
         plugins={plugins}
+        isProductionEnvironment={isProduction}
         initialState={initialState}
         styleReset={false}
         extraSerloPlugins={extraSerloPlugins}
