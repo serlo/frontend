@@ -501,7 +501,8 @@ export const instanceData = {
       missingLicenseTerms: 'You need to accept the license terms',
       missingChangesAndLicenseTerms:
         'You need to fill out the changes you made and accept the license terms',
-      errorSaving: 'An error occurred during saving.',
+      errorSaving:
+        'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
       changes: 'Describe your changes to the content',
       confirmRouteChange: 'Are you sure you want to leave without saving?',
     },
