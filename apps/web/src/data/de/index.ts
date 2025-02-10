@@ -446,7 +446,7 @@ export const instanceData = {
       missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
       missingLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren.",
       missingChangesAndLicenseTerms: "Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.",
-      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
+      errorSaving: "Beim Speichern ist ein Fehler aufgetreten, aber deine Arbeit ist lokal gespeichert. Überprüfe, ob du immer noch eingeloggt bist und probier's noch mal 🤞.",
       changes: "Beschreibe deine Änderungen am Inhalt",
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?"
     },
