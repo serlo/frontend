@@ -336,16 +336,19 @@ export async function requestPage(
       entityData: {
         ...sharedEntityData,
         typename: UuidType.Video,
-        content: [
-          {
-            plugin: EditorPluginType.Video,
-            state: {
-              src: uuid.currentRevision?.url ?? '',
-              alt: uuid.currentRevision?.title ?? '',
+        content: {
+          plugin: EditorPluginType.Rows,
+          state: [
+            {
+              plugin: EditorPluginType.Video,
+              state: {
+                src: uuid.currentRevision?.url ?? '',
+                alt: uuid.currentRevision?.title ?? '',
+              },
             },
-          },
-          ...(content ? [content] : []),
-        ],
+            ...(content ? [content] : []),
+          ],
+        },
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -367,13 +370,16 @@ export async function requestPage(
       entityData: {
         typename: UuidType.Applet,
         ...sharedEntityData,
-        content: [
-          {
-            plugin: EditorPluginType.Geogebra,
-            state: uuid.currentRevision?.url ?? '',
-          },
-          ...(content ? [content] : []),
-        ],
+        content: {
+          plugin: EditorPluginType.Rows,
+          state: [
+            {
+              plugin: EditorPluginType.Geogebra,
+              state: uuid.currentRevision?.url ?? '',
+            },
+            ...(content ? [content] : []),
+          ],
+        },
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },

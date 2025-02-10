@@ -56,6 +56,8 @@ export function SerloEditor({
           TemplatePluginType.Article,
           EditorPluginType.Article,
           TemplatePluginType.Course,
+          TemplatePluginType.Applet,
+          TemplatePluginType.Video,
           EditorPluginType.Course,
           TemplatePluginType.Page,
           EditorPluginType.PageLayout,
