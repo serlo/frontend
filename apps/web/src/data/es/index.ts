@@ -192,9 +192,7 @@ export const instanceData = {
       parentFallbackLink: "Al contenido principal",
       hasChanges: "Ha habido cambios en esta área",
       positionForGrouped: "Este/a %exercise% es parte de %title%.",
-      helpLink: "Ayuda de revisión",
-      revisionSaved: "Revisión guardada",
-      saveRevision: "Guardar revisión"
+      helpLink: "Ayuda de revisión"
     },
     revisionHistory: {
       changes: "Cambios",
@@ -448,8 +446,7 @@ export const instanceData = {
       missingChanges: "Tienes que indicar los cambios que has hecho",
       missingLicenseTerms: "Necesitas aceptar los términos de la licencia",
       missingChangesAndLicenseTerms: "Necesitas indicar los cambios que has realizado y aceptar los términos de la licencia",
-      errorSaving: "Se ha producido un error al guardar.",
-      saveLocallyAndRefresh: "Puedes guardar la revisión localmente, actualiza la página e intenta guardar de nuevo.",
+      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
       changes: "Describe tus cambios en el contenido",
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?"
     },
