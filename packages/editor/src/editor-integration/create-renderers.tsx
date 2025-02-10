@@ -5,6 +5,7 @@ import type {
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { ExerciseGroupStaticRenderer } from '@editor/plugins/exercise-group/static'
 import { ImageStaticRenderer } from '@editor/plugins/image/static'
 import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
@@ -203,6 +204,12 @@ export function createRenderers(
           : ExerciseStaticRenderer,
       },
       {
+        type: EditorPluginType.ExerciseGroup,
+        renderer: extraSerloRenderers
+          ? extraSerloRenderers.exerciseGroup
+          : ExerciseGroupStaticRenderer,
+      },
+      {
         type: EditorPluginType.Solution,
         renderer: extraSerloRenderers
           ? extraSerloRenderers.solution
@@ -269,10 +276,6 @@ export function createRenderers(
             {
               type: EditorPluginType.Audio,
               renderer: extraSerloRenderers.audio,
-            },
-            {
-              type: EditorPluginType.ExerciseGroup,
-              renderer: extraSerloRenderers.exerciseGroup,
             },
             {
               type: EditorPluginType.H5p,
