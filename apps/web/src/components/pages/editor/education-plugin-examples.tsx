@@ -190,7 +190,11 @@ function ExampleWithEditSwitch({
         </div>
       ) : (
         <div className="pt-4">
-          <SerloRenderer state={exampleState} editorVariant="serlo-org" />
+          <SerloRenderer
+            state={exampleState}
+            editorVariant="serlo-org"
+            extraSerloRenderers={extraSerloRenderers}
+          />
         </div>
       )}
     </div>

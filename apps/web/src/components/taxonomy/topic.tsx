@@ -23,6 +23,7 @@ import {
   UuidType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -153,6 +154,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
                   <SerloRenderer
                     state={exerciseOrGroup}
                     editorVariant="serlo-org"
+                    extraSerloRenderers={extraSerloRenderers}
                   />
                 </ExerciseContext.Provider>
               </UuidsProvider>
