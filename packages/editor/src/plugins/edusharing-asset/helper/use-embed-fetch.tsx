@@ -209,18 +209,17 @@ function getEmbedHtml(
   const parser = new DOMParser()
   const htmlDocument = parser.parseFromString(detailsSnippet, 'text/html')
 
-  const isBrockhaus =
-    content.node.remote?.repository.repositoryType === 'BROCKHAUS'
+  // Link & Brockhaus
   // Both 'link' and 'learning-app' have mediatype:'link' so we need to check if 'remote' is falsy as well
   const isLink = content.node.mediatype === 'link' && !content.node.remote
-  if (isLink || isBrockhaus) {
+  if (isLink) {
     const linkElement = htmlDocument.querySelector<HTMLLinkElement>(
       '.edusharing_rendering_content_footer a'
     )
     if (!linkElement) return { type: 'error' }
 
     return {
-      type: isLink ? 'link' : isBrockhaus ? 'brockhaus' : 'unknown',
+      type: 'link',
       component: (
         <a
           className="serlo-link"
