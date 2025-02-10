@@ -25,7 +25,6 @@ export function InteractiveVideoRenderer({
   videoSrc,
   marks,
   tools,
-  isEditMode,
   checkSeekAndPlay,
   learnerInteractions,
 }: {
@@ -50,8 +49,8 @@ export function InteractiveVideoRenderer({
         src={videoSrc}
         playsInline
         className="[&_.vds-chapter-title]:opacity-0"
-        load={isSerlo ? 'eager' : isEditMode ? 'visible' : 'play'}
-        autoPlay={isSerlo ? true : false} // autoplay after wrapper
+        load={isSerlo ? 'eager' : 'visible'}
+        autoPlay={false}
         aspectRatio="16:9"
         onMediaPlayRequest={(nativeEvent) => {
           const allowed = checkSeekAndPlay?.(nativeEvent.target)

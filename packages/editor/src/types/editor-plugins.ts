@@ -19,7 +19,6 @@ import type { InputExercisePluginState } from '@editor/plugins/input-exercise'
 import type { InteractiveVideoPluginState } from '@editor/plugins/interactive-video'
 import type { MultimediaPluginState } from '@editor/plugins/multimedia'
 import type { PageLayoutPluginState } from '@editor/plugins/page-layout'
-import type { PagePartnersPluginState } from '@editor/plugins/page-partners'
 import type { RowsPluginState } from '@editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@editor/plugins/sc-mc-exercise'
 import type { SerloInjectionPluginState } from '@editor/plugins/serlo-injection'
@@ -200,7 +199,7 @@ export interface EditorTextDocument {
 }
 export interface EditorVideoDocument {
   plugin: EditorPluginType.Video
-  state: PrettyStaticState<VideoPluginState>
+  state: PrettyStaticState<VideoPluginState> & { src: string }
   id?: string
 }
 export interface EditorAudioDocument {
@@ -211,11 +210,6 @@ export interface EditorAudioDocument {
 export interface EditorPageLayoutDocument {
   plugin: EditorPluginType.PageLayout
   state: PrettyStaticState<PageLayoutPluginState>
-  id?: string
-}
-export interface EditorPagePartnersDocument {
-  plugin: EditorPluginType.PagePartners
-  state: PrettyStaticState<PagePartnersPluginState>
   id?: string
 }
 
@@ -282,7 +276,6 @@ export type SupportedEditorDocument =
   | EditorEquationsDocument
   | EditorExerciseDocument
   | EditorPageLayoutDocument
-  | EditorPagePartnersDocument
   | EditorEdusharingAssetDocument
   | EditorSerloInjectionDocument
 

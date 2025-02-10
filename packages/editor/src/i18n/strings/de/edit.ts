@@ -2,9 +2,6 @@ export type EditStrings = typeof editStrings
 
 export const editStrings = {
   lang: 'de',
-  confirmRouteChange:
-    'Willst du wirklich die Seite verlassen ohne zu speichern?',
-  noChangesWarning: 'Bisher hast du nichts geändert',
   savedContentMightDisappearWarning:
     '⚠️ Dies ist eine Testumgebung. Bitte erstelle hier noch keine Inhalte, die du langfristig behalten willst. Fragen? vicky@serlo.org',
   addPluginsModal: {
@@ -156,17 +153,10 @@ export const editStrings = {
       imageSource: 'Bildquelle',
       imageSourceHelpText:
         'Füge hier weitere Informationen wie den Urheber dieses Bildes hinzu.',
-      invalidImageUrl: 'Fehler: Ungültige oder unvollständige URL',
-      invalidImageUrlMessage:
-        'Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit "http://" oder "https://" beginnen.',
       search: 'Suche',
       searchOnline: 'Online nach lizenzfreien Bildern suchen',
       placeholderSource: 'Quelle (optional)',
       placeholderEmpty: 'https://example.com/image.png',
-      placeholderUploading: 'Wird hochgeladen …',
-      placeholderFailed: 'Hochladen fehlgeschlagen',
-      retry: 'Erneut versuchen',
-      failedUpload: 'Hochladen fehlgeschlagen',
       captionPlaceholder: 'Bildunterschrift (optional)',
       href: 'Link',
       hrefPlaceholder: 'Bild verlinken',
@@ -232,7 +222,6 @@ export const editStrings = {
       confirmRemoveAllMarks:
         'Bist du sicher, dass du alle Aufgaben löschen willst?',
       addOverlayContent: 'Aufgabe an aktueller Stelle einfügen',
-      addVideo: 'Füge ein Video hinzu (z.B. YouTube)',
       changeVideo: 'Video austauschen',
       saveInfo: 'Änderungen werden automatisch gespeichert!',
     },
@@ -255,11 +244,6 @@ export const editStrings = {
     pasteHack: {
       title: '(experiment) Editor State einfügen',
       description: 'nur in staging',
-    },
-    pagePartners: {
-      title: 'Partner Liste',
-      description:
-        'Nur für die Partnerseite (Liste der Partnerlogos wie auf de.serlo.org)',
     },
     rows: {
       title: 'Zeilen',
@@ -379,6 +363,10 @@ export const editStrings = {
       titlePlaceholder: 'Titel',
       url: 'URL',
       seoTitle: 'Titel für Suchmaschinen',
+      upload: 'Video hochladen',
+      placeholderEmpty: 'YouTube- oder Serlo-URL',
+      change: 'Video ändern',
+      settings: 'Einstellungen',
     },
     audio: {
       title: 'Audio',
@@ -470,26 +458,9 @@ export const editStrings = {
       moreInFolder:
         'Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner',
       addModal: {
-        introText:
-          'Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.',
-        introText2:
-          'Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.',
         buttonEx: 'Aufgaben hinzufügen',
         buttonExFolder: 'Aufgabenordner auswählen',
         buttonContent: 'Inhalt hinzufügen',
-        buttonAddType: '%type% hinzufügen',
-        title: 'Weiterführende Inhalte oder Übungsaufgaben hinzufügen',
-        invalidInput: 'Ungültige ID oder URL',
-        fetchError:
-          'Etwas ist schief gelaufen, bitte versuche es später noch einmal',
-        loading: 'Wird geladen …',
-        notFound: 'Inhalt konnte nicht gefunden werden',
-        unsupportedType: 'Sorry, der Typ [%type%] wird hier nicht unterstützt',
-        unsupportedId:
-          'Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)',
-        addFromFolderTitle: 'Aus dem Ordner',
-        placeholder: 'Eine Serlo Id oder URL hier einfügen',
-        exerciseFolderNote: 'Hier kann nur ein Ordner ausgewählt werden',
       },
     },
     course: {
@@ -547,29 +518,27 @@ export const editStrings = {
       confirmRestore:
         'Sicher, dass du deine Änderugen unwiderruflich löschen möchtest?',
     },
+    fileUpload: {
+      placeholderUploading: 'Wird hochgeladen …',
+      placeholderFailed: 'Hochladen fehlgeschlagen',
+      retry: 'Erneut versuchen',
+      failedUpload: 'Hochladen fehlgeschlagen',
+      invalidUrl: 'Fehler: Ungültige oder unvollständige URL',
+      invalidUrlMessage:
+        'Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit "http://" oder "https://" beginnen.',
+      noFileSelected: 'Bitte wähle eine Datei aus',
+      badExtension:
+        "Sorry, %ext% ist leider nicht erlaubt. Versuch's mit diesen Typen: %allowed%",
+      fileTooBig:
+        "Sorry, diese Datei ist zu groß. Versuch's weniger als %maxsize% MB",
+    },
     settings: 'Einstellungen',
     extendedSettings: 'Erweiterte Einstellungen',
     close: 'Schließen',
     save: 'Speichern',
-    saveWithReview: 'Speichern und reviewen lassen',
     cancel: 'Abbrechen',
     saving: 'Speichert…',
-    missingChanges: 'Du musst zuerst die Änderungen ausfüllen.',
-    missingLicenseTerms: 'Du musst zuerst die Lizenzbedingungen akzeptieren.',
-    missingChangesAndLicenseTerms:
-      'Du musst zuerst die Lizenzbedingungen akzeptieren und die Änderungen ausfüllen.',
-    errorSaving: 'Es trat ein Fehler beim Speichern auf.',
-    saveLocallyAndRefresh:
-      'Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.',
-    revisionSaved: 'Bearbeitung gespeichert',
-    saveRevision: 'Bearbeitung zwischenspeichern',
     changes: 'Beschreibe deine Änderungen am Inhalt',
-    importOther: 'Aus einem anderen Inhalt importieren',
-    importOtherExplanation:
-      'Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)',
-    importOtherWarning:
-      'Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.',
-    importOtherButton: 'Inhalte Importieren',
     current: 'Aktuell',
     author: 'Autor*in',
     createdAt: 'Zeitstempel',

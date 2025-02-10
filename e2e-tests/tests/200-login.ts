@@ -22,7 +22,9 @@ Scenario('Login', ({ I }) => {
   I.wait(1)
 })
 
-Scenario('Logout', ({ I }) => {
+Scenario('Logout', ({ I, login }) => {
+  login('admin')
+
   I.amOnPage('/')
 
   // The asterix is mistaken as css selector sometimes, so remove it

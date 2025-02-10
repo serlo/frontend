@@ -1,5 +1,4 @@
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorRowsDocument } from '@editor/types/editor-plugins'
+import type { EditorRowsDocument } from '@editor/package'
 
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
@@ -9,6 +8,7 @@ import {
   TaxonomySubTerm,
   UuidType,
 } from '@/data-types'
+import { parseDocumentString } from '@/helper/parse-document-string'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 type TaxonomyTerm = Extract<

@@ -1,16 +1,25 @@
-import { useAppSelector, selectStaticDocument } from '@editor/store'
+import { isTempFile } from '@editor/plugin/upload'
+import {
+  useAppSelector,
+  selectStaticDocument,
+  focus,
+  useAppDispatch,
+} from '@editor/store'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { isVideoDocument } from '@editor/types/plugin-type-guards'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { type InteractiveVideoProps } from '.'
 import { EditMode } from './editor/edit-mode'
-import { SelectVideoMode } from './editor/select-video-mode'
 import { InteractiveVideoToolbar } from './toolbar'
+import { isValidVideoUrl } from '../video/utils/is-valid-video-url'
 
 export function InteractiveVideoEditor(props: InteractiveVideoProps) {
   const { focused, state, id } = props
   const [previewActive, setPreviewActive] = useState(false)
+
+  const mounted = useRef(false)
+  const dispatch = useAppDispatch()
 
   const staticDocument = useAppSelector(
     (storeState) =>
@@ -22,7 +31,17 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
     ? staticDocument.state.video.state.src
     : ''
 
-  const hasVideo = videoSrc.length > 0
+  const hasVideo = !isTempFile(videoSrc) && isValidVideoUrl(videoSrc)
+
+  // refocus after adding a video (but not on first mount)
+  useEffect(() => {
+    if (!mounted.current) {
+      if (!hasVideo) mounted.current = true
+      return
+    }
+    if (!hasVideo) return
+    dispatch(focus(id))
+  }, [hasVideo, dispatch, id])
 
   return (
     <>
@@ -42,7 +61,7 @@ export function InteractiveVideoEditor(props: InteractiveVideoProps) {
           staticMarks={staticMarks}
         />
       ) : (
-        <SelectVideoMode videoId={state.video.id} staticVideoSrc={videoSrc} />
+        state.video.render()
       )}
     </>
   )

@@ -38,7 +38,7 @@ export function InteractiveAnswer({
   return (
     <div className="relative mb-2.5 flex items-center border-t-2 border-editor-primary">
       <div className="mr-2.5 w-[10%] text-center font-bold">
-        {exStrings.correct}?
+        {exStrings.feedback.correct}?
         <button className="p-2" onClick={handleChange}>
           <FaIcon icon={icon} className="mt-0.5 text-xl text-brand" />
         </button>
@@ -58,7 +58,7 @@ export function InteractiveAnswer({
         </button>
         <div className="mt-1.5 py-2.5 pl-5">
           <label className="ml-side block text-sm font-bold">
-            {exStrings.feedback}
+            {exStrings.feedback.title}
           </label>
           <div className="ml-0.5">{feedback}</div>
         </div>

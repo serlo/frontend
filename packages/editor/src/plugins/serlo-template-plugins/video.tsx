@@ -2,6 +2,7 @@ import {
   type EditorPlugin,
   type EditorPluginProps,
   string,
+  upload,
 } from '@editor/plugin'
 import { videoPlugin } from '@editor/plugins/video'
 
@@ -11,7 +12,7 @@ import { EntityTitleInput } from './common/entity-title-input'
 export const videoTypeState = entityType(
   {
     ...entity,
-    content: string(),
+    content: upload(''),
     title: string(),
     description: editorContent(),
   },

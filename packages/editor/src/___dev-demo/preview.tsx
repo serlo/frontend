@@ -1,20 +1,21 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
+// eslint-disable-next-line no-restricted-imports
 import { EditorPluginType, SerloEditor, SerloRenderer } from '@editor/package'
 import { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
+import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import { useMemo, useState } from 'react'
 import { debounce } from 'ts-debounce'
 
-const emptyState = JSON.stringify({ plugin: EditorPluginType.Rows })
+const emptyState = { plugin: EditorPluginType.Rows }
 
 export function Preview() {
-  const [previewState, setPreviewState] = useState(emptyState)
+  const [previewState, setPreviewState] =
+    useState<AnyEditorDocument>(emptyState)
 
   const isNotEmpty = previewState !== emptyState
 
   const debouncedSetState = debounce(
-    (state?: string | null) => setPreviewState(state ?? emptyState),
+    (state: AnyEditorDocument) => setPreviewState(state ?? emptyState),
     40
   )
 
@@ -22,11 +23,10 @@ export function Preview() {
     () => {
       return (
         <SerloEditor
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          initialState={JSON.parse(previewState)}
+          initialState={previewState}
           editorVariant="unknown"
           onChange={(newState) => {
-            void debouncedSetState(JSON.stringify(newState.document))
+            void debouncedSetState(newState.document)
           }}
         >
           {(editor) => <div>{editor.element}</div>}
@@ -54,7 +54,7 @@ export function Preview() {
                   const jsonObject = JSON.parse(
                     cleanJsonString
                   ) as AnyEditorDocument
-                  setPreviewState(JSON.stringify(jsonObject))
+                  setPreviewState(jsonObject)
                 } catch (error) {
                   // eslint-disable-next-line no-console
                   console.error('Error parsing JSON:', error)
@@ -67,7 +67,7 @@ export function Preview() {
             {' | '}
             <button
               onClick={() => {
-                void navigator.clipboard.writeText(previewState)
+                void navigator.clipboard.writeText(JSON.stringify(previewState))
                 showToastNotice('state copied to clipboard', 'success')
               }}
               className="mt-0.5 text-sm"
@@ -89,7 +89,7 @@ export function Preview() {
         <h2 className="mx-side mb-12 font-bold text-editor-primary">Preview</h2>
         <div className="mt-[3rem]">
           <SerloRenderer
-            state={parseDocumentString(previewState)}
+            state={previewState}
             editorVariant="unknown"
             handleLearnerEvent={(data: LearnerEventData) => {
               // eslint-disable-next-line no-console

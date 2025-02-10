@@ -3,7 +3,7 @@ import type {
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
   EditorRowsDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
 import { type AuthorizationPayload } from '@serlo/authorization'
 import { type CSSProperties, type FunctionComponent } from 'react'
 

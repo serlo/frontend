@@ -25,17 +25,19 @@ export function ImageSelectionScreen({
   setIsAButtonFocused,
 }: ImageSelectionScreenProps) {
   const editorStrings = useEditStrings()
+  const uploadStrings = editorStrings.edtrIo.fileUpload
+  const imageStrings = editorStrings.plugins.image
+
   const { src, licence } = state
   const upload = useUploadFile(config.upload)
 
-  const imageStrings = editorStrings.plugins.image
   const disableFileUpload = config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
 
   const placeholder = !isTempFile(src.value)
     ? imageStrings.placeholderEmpty
     : !src.value.failed
-      ? imageStrings.placeholderUploading
-      : imageStrings.placeholderFailed
+      ? uploadStrings.placeholderUploading
+      : uploadStrings.placeholderFailed
 
   const imageUrl = src.value as string
   const showErrorMessage = imageUrl.length > 5 && !isImageUrl(imageUrl)
@@ -72,18 +74,20 @@ export function ImageSelectionScreen({
     >
       <div className="mx-auto my-8 w-[60%]">
         {disableFileUpload ? null : (
-          <UploadButton
-            config={config}
-            src={src}
-            onFocus={() => setIsAButtonFocused(true)}
-            onBlur={() => setIsAButtonFocused(false)}
-          />
+          <>
+            <UploadButton
+              config={config}
+              src={src}
+              onFocus={() => setIsAButtonFocused(true)}
+              onBlur={() => setIsAButtonFocused(false)}
+            />
+            <PixabaySearch
+              onFocus={() => setIsAButtonFocused(true)}
+              onBlur={() => setIsAButtonFocused(false)}
+              onSelectImage={onSelectPixabayImage}
+            />
+          </>
         )}
-        <PixabaySearch
-          onFocus={() => setIsAButtonFocused(true)}
-          onBlur={() => setIsAButtonFocused(false)}
-          onSelectImage={onSelectPixabayImage}
-        />
         <span className="mb-1 flex w-full justify-center font-medium text-almost-black">
           {imageStrings.imageUrl}
         </span>
@@ -115,9 +119,9 @@ export function ImageSelectionScreen({
                 className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500"
                 data-qa="plugin-image-src-error"
               >
-                {imageStrings.invalidImageUrl}
+                {uploadStrings.invalidUrl}
               </span>
-              <EditorTooltip text={imageStrings.invalidImageUrlMessage} />
+              <EditorTooltip text={uploadStrings.invalidUrlMessage} />
             </>
           )}
         </span>

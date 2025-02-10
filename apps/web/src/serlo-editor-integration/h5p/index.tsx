@@ -1,13 +1,13 @@
-import { EditorInput } from '@editor/editor-ui'
 import {
+  EditorInput,
+  EditorPluginType,
+  type AnyEditorDocument,
   type EditorPlugin,
   type EditorPluginProps,
   type StringStateType,
   string,
-  PrettyStaticState,
-} from '@editor/plugin'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { type AnyEditorDocument } from '@editor/types/editor-plugins'
+  type PrettyStaticState,
+} from '@editor/package'
 import { useEffect, useState } from 'react'
 
 import { H5pRenderer, parseH5pUrl } from './renderer'

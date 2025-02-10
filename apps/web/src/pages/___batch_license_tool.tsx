@@ -1,4 +1,3 @@
-import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { GraphQLClient, gql } from 'graphql-request'
 import { NextPage } from 'next'
 import { useState } from 'react'
@@ -8,6 +7,7 @@ import { FrontendClientBase } from '@/components/frontend-client-base/frontend-c
 import { useInstanceData } from '@/contexts/instance-context'
 import { GetAllEntityIdsInTaxonomyQuery } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useMutationFetchAuthed } from '@/mutations/helper/use-mutation-fetch'
 
 const ContentPage: NextPage = () => {

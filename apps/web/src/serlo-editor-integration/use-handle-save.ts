@@ -1,4 +1,3 @@
-import { storeStateToLocalStorage } from '@editor/editor-ui/save/local-storage-notice'
 import { useEffect, useState } from 'react'
 
 import type { SerloEditorProps } from './serlo-editor'
@@ -25,7 +24,6 @@ export function useHandleSave(
     onSave({ ...serializedRootState, changes })
       .then(() => {
         setTimeout(() => {
-          storeStateToLocalStorage(null)
           setPending(false)
           setHasError(false)
         }, 200)

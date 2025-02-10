@@ -4,7 +4,7 @@ import {
 } from '@editor/plugin/helpers/editor-learner-event'
 import { EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { isExerciseDocument } from '@editor/types/plugin-type-guards'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export type LearnerInteractions = Map<
   string,
@@ -20,8 +20,8 @@ export function useLearnerInteractions() {
   const empty = new Map()
   const [interactions, setInteractions] = useState<LearnerInteractions>(empty)
 
-  useEffect(() => {
-    function handleExerciseEvents(e: Event) {
+  const handleExerciseEvents = useCallback(
+    (e: Event) => {
       const { verb, pluginId, correct } = (e as CustomEvent<LearnerEventData>)
         .detail
       if (verb !== 'answered' || !pluginId) return
@@ -33,14 +33,16 @@ export function useLearnerInteractions() {
       const updated = new Map(interactions)
       updated.set(pluginId, entry)
       setInteractions(updated)
-    }
+    },
+    [interactions]
+  )
+
+  useEffect(() => {
     document.addEventListener(editorLearnerEventName, handleExerciseEvents)
     return () => {
       document.removeEventListener(editorLearnerEventName, handleExerciseEvents)
     }
-    // only change on mount and unmount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleExerciseEvents])
 
   return interactions
 }

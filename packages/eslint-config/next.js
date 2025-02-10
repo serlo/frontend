@@ -17,7 +17,6 @@ module.exports = {
   },
   env: {
     node: true,
-    jest: true, //!
   },
   plugins: ['@typescript-eslint', 'import', 'react-hooks'],
   settings: {
@@ -40,7 +39,6 @@ module.exports = {
     'node_modules/',
     'tailwind.config.js',
     'next.config.js',
-    'jest.config.js',
     'prettier.config.js',
   ],
   overrides: [
