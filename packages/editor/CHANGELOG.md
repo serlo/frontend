@@ -1,3 +1,11 @@
+## Changelog for version 0.22.2
+
+- fix(plugin-edusharing): handle new format of brockhaus embeds. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4468
+- chore(interactive-video): use useAppDispatch instead of useDispatch. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4466
+- chore: simulate cross-origin iframe in editor demo page. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4460
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.1-editor...v0.22.2-editor
+
 ## Changelog for version 0.22.1
 
 - fix(plugin-interactive-video): actually use saved learner interactions. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4459
