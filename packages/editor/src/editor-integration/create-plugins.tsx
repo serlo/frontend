@@ -8,6 +8,7 @@ import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
+import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
 import { createHighlightPlugin } from '@editor/plugins/highlight'
 import type { ImagePluginConfig, ImagePluginState } from '@editor/plugins/image'
@@ -25,14 +26,17 @@ import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
 import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
 import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
+import { appletTypePlugin } from '@editor/plugins/serlo-template-plugins/applet'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
+import { eventTypePlugin } from '@editor/plugins/serlo-template-plugins/event'
 import { textExerciseGroupTypePlugin } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
 import { genericContentTypePlugin } from '@editor/plugins/serlo-template-plugins/generic-content'
 import { pageTypePlugin } from '@editor/plugins/serlo-template-plugins/page'
 import { taxonomyTypePlugin } from '@editor/plugins/serlo-template-plugins/taxonomy'
 import { textExerciseTypePlugin } from '@editor/plugins/serlo-template-plugins/text-exercise'
 import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
+import { videoTypePlugin } from '@editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
@@ -180,12 +184,20 @@ export function createPlugins(
             plugin: extraSerloPlugins.h5p,
           },
           {
+            type: TemplatePluginType.Applet,
+            plugin: appletTypePlugin,
+          },
+          {
             type: TemplatePluginType.Article,
             plugin: articleTypePlugin,
           },
           {
             type: TemplatePluginType.Course,
             plugin: courseTypePlugin,
+          },
+          {
+            type: TemplatePluginType.Event,
+            plugin: eventTypePlugin,
           },
           {
             type: TemplatePluginType.Page,
@@ -208,6 +220,10 @@ export function createPlugins(
             plugin: userTypePlugin,
           },
           {
+            type: TemplatePluginType.Video,
+            plugin: videoTypePlugin,
+          },
+          {
             type: EditorPluginType.Article,
             plugin: articlePlugin,
           },
@@ -222,6 +238,10 @@ export function createPlugins(
                 ? 'Fasse das Thema des Artikels kurz zusammen'
                 : 'Write a short introduction'
             ),
+          },
+          {
+            type: EditorPluginType.ExerciseGroup,
+            plugin: exerciseGroupPlugin,
           },
           {
             type: EditorPluginType.PageLayout,
