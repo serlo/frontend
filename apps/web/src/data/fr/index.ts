@@ -192,9 +192,7 @@ export const instanceData = {
       parentFallbackLink: "Au contenu parent",
       hasChanges: "Il y a eu des changements de ce contenu",
       positionForGrouped: 'This %exercise% is part of %title%.',
-      helpLink: "Aide pour les réviseurs",
-      revisionSaved: "Révision sauvegardée",
-      saveRevision: "Sauvegarder la révision"
+      helpLink: "Aide pour les réviseurs"
     },
     revisionHistory: {
       changes: "Modifications",
@@ -448,8 +446,7 @@ export const instanceData = {
       missingChanges: "Tu dois remplir les modifications que tu as apportées",
       missingLicenseTerms: "Tu dois accepter les conditions de licence",
       missingChangesAndLicenseTerms: "Tu dois remplir les modifications que tu as apportées et accepter les conditions de licence",
-      errorSaving: "Une erreur s'est produite au cours de la sauvegarde!",
-      saveLocallyAndRefresh: "Tu peux sauvegarder la révision localement, actualiser la page et essayer de sauvegarder à nouveau.",
+      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
       changes: 'Describe your changes to the content',
       confirmRouteChange: 'Are you sure you want to leave without saving?'
     },
