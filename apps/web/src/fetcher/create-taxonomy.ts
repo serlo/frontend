@@ -10,6 +10,7 @@ import {
 } from '@/data-types'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],
@@ -24,10 +25,20 @@ type TaxonomyTermChildrenLevel2 = Extract<
 >['children']['nodes'][0]
 
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
-  const children = uuid.children.nodes.filter(isActive)
+  const { templateContent: description } = unwrapEditorContent(
+    UuidType.TaxonomyTerm,
+    uuid.description ?? ''
+  )
+  const children = uuid.children.nodes.filter(isActive).map((child) => {
+    const { templateContent: childDescription } = unwrapEditorContent(
+      UuidType.TaxonomyTerm,
+      (child as TaxonomyTerm).description ?? ''
+    )
+    return { ...child, description: childDescription }
+  })
   return {
-    description: uuid.description
-      ? (parseDocumentString(uuid.description) as EditorRowsDocument)
+    description: description
+      ? (parseDocumentString(description) as EditorRowsDocument)
       : undefined,
     title: uuid.name,
     id: uuid.id,

@@ -162,7 +162,7 @@ export function convertEditorResponseToState(
   }
 }
 
-function unwrapEditorContent(
+export function unwrapEditorContent(
   entityType: MainUuidType['__typename'],
   content?: string
 ) {
