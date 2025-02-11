@@ -112,17 +112,6 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderContent(document: EntityData['content']) {
-    // TODO: Temporarily mock editorMetadata, remove after migration run
-    const tempDocument = {
-      id: '',
-      type: 'https://serlo.org/editor',
-      variant: 'serlo-org',
-      domainOrigin: 'serlo.org',
-      version: 2,
-      editorVersion: '0.22.0',
-      dateModified: new Date().toISOString(),
-      document,
-    }
     const isExercise =
       document &&
       !Array.isArray(document) &&
@@ -134,10 +123,10 @@ export function Entity({ data }: EntityProps) {
           isInExerciseGroup: false,
         }}
       >
-        <EditorRenderer document={tempDocument} />
+        <EditorRenderer document={document} />
       </ExerciseContext.Provider>
     ) : (
-      <EditorRenderer document={tempDocument} />
+      <EditorRenderer document={document} />
     )
 
     if (data.schemaData?.setContentAsSection) {

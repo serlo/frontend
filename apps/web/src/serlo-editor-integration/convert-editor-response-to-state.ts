@@ -100,29 +100,9 @@ export function convertEditorResponseToState(
   ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
-    // TODO: Temporarily mock editorMetadata, remove after migration run
-    const tempContent = wrapInMockEditorMetadata(content)
-
-    function wrapInMockEditorMetadata(content: string): string {
-      const parsedContent = parseStaticString(content)
-      return JSON.stringify({
-        id: '',
-        type: 'https://serlo.org/editor',
-        variant: 'serlo-org',
-        domainOrigin: 'serlo.org',
-        version: 2,
-        editorVersion: '0.22.0',
-        dateModified: new Date().toISOString(),
-        document: parsedContent ?? {
-          plugin: EditorPluginType.Rows,
-          state: {},
-        },
-      })
-    }
-
     const { editorMetadata, templateContent } = unwrapEditorContent(
       entityType,
-      tempContent
+      content
     )
 
     if (uuid.__typename === UuidType.Video) {
