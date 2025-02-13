@@ -10,7 +10,6 @@ import {
 } from '@/data-types'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
-import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],
@@ -25,20 +24,11 @@ type TaxonomyTermChildrenLevel2 = Extract<
 >['children']['nodes'][0]
 
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
-  const { templateContent: description } = unwrapEditorContent(
-    UuidType.TaxonomyTerm,
-    uuid.description ?? ''
-  )
-  const children = uuid.children.nodes.filter(isActive).map((child) => {
-    const { templateContent: childDescription } = unwrapEditorContent(
-      UuidType.TaxonomyTerm,
-      (child as TaxonomyTerm).description ?? ''
-    )
-    return { ...child, description: childDescription }
-  })
+  const children = uuid.children.nodes.filter(isActive)
+
   return {
-    description: description
-      ? (parseDocumentString(description) as EditorRowsDocument)
+    description: uuid.description
+      ? (parseDocumentString(uuid.description) as EditorRowsDocument)
       : undefined,
     title: uuid.name,
     id: uuid.id,
@@ -57,12 +47,10 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   }
 }
 
-function isActive(child: TaxonomyTermChildrenLevel1) {
-  return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
-}
-
-function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
-  return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
+function isActive(
+  child: TaxonomyTermChildrenLevel1 | TaxonomyTermChildrenLevel2
+) {
+  return child.trashed === false
 }
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
@@ -152,7 +140,7 @@ function collectNestedTaxonomyTerms(
       child.__typename === UuidType.TaxonomyTerm &&
       child.type !== TaxonomyTermType.ExerciseFolder
     ) {
-      const subChildren = child.children.nodes.filter(isActive_for_subchildren)
+      const subChildren = child.children.nodes.filter(isActive)
       result.push({
         id: child.id,
         title: child.name,
