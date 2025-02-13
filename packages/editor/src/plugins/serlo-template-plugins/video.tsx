@@ -1,22 +1,20 @@
 import {
   type EditorPlugin,
   type EditorPluginProps,
+  object,
   string,
   upload,
 } from '@editor/plugin'
 import { videoPlugin } from '@editor/plugins/video'
 
-import { editorContent, entityType } from './common/common'
+import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
-export const videoTypeState = entityType(
-  {
-    content: upload(''),
-    title: string(),
-    description: editorContent(),
-  },
-  {}
-)
+export const videoTypeState = object({
+  content: upload(''),
+  title: string(),
+  description: editorContent(),
+})
 
 export type VideoTypePluginState = typeof videoTypeState
 

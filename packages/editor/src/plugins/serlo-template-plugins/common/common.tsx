@@ -1,52 +1,10 @@
 import {
   StateType,
-  StateTypesStaticType,
-  StateTypesValueType,
   StateTypeValueType,
-  StateTypesReturnType,
   StateTypeReturnType,
   child,
-  object,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { mapObjIndexed } from 'ramda'
-
-export function entityType<
-  Ds extends Record<string, StateType>,
-  Childs extends Record<string, StateType>,
->(
-  ownTypes: Ds,
-  children: Childs
-): StateType<
-  StateTypesStaticType<Ds & Childs>,
-  StateTypesValueType<Ds & Childs>,
-  StateTypesReturnType<Ds & Childs> & {
-    replaceOwnState: (newValue: StateTypesStaticType<Ds>) => void
-  }
-> {
-  const objectType = object<Ds & Childs>({ ...ownTypes, ...children })
-  return {
-    ...objectType,
-    init(state, onChange) {
-      const initialisedObject = objectType.init(state, onChange)
-      return {
-        ...initialisedObject,
-        replaceOwnState(newValue) {
-          onChange((previousState, helpers) => {
-            return mapObjIndexed((_value, key) => {
-              if (key in ownTypes) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                return ownTypes[key].toStoreState(newValue[key], helpers)
-              } else {
-                return previousState[key]
-              }
-            }, previousState) as StateTypesValueType<Ds & Childs>
-          })
-        },
-      }
-    },
-  }
-}
 
 export function editorContent(
   plugin: string = EditorPluginType.Rows

@@ -1,19 +1,17 @@
 import {
   type EditorPlugin,
   type EditorPluginProps,
+  object,
   string,
 } from '@editor/plugin'
 
-import { editorContent, entityType } from './common/common'
+import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
-export const eventTypeState = entityType(
-  {
-    title: string(),
-    content: editorContent(),
-  },
-  {}
-)
+export const eventTypeState = object({
+  title: string(),
+  content: editorContent(),
+})
 
 export type EventTypePluginState = typeof eventTypeState
 
