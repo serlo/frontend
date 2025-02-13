@@ -63,6 +63,7 @@ export function SerloEditor({
 }: SerloEditorProps) {
   // No need to rerender on Editor change, therefore `useRef`
   const editorState = useRef(initialState)
+  const prefilledChangesRef = useRef<string | undefined>(undefined)
 
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
@@ -92,12 +93,15 @@ export function SerloEditor({
           const hasPendingChanges = editor.history.pendingChanges !== 0
           return (
             <>
-              <SaveButton
-                onSave={onSave}
-                isChanged={hasPendingChanges}
-                editorState={editorState}
-                isInTestArea={isInTestArea}
-              />
+              {editorState.current.document.state ? (
+                <SaveButton
+                  onSave={onSave}
+                  isChanged={hasPendingChanges}
+                  editorState={editorState}
+                  isInTestArea={isInTestArea}
+                  prefilledChanges={prefilledChangesRef.current}
+                />
+              ) : null}
               {isNewEntity ? (
                 <ExternalRevisionLoader
                   templateType={
@@ -106,6 +110,7 @@ export function SerloEditor({
                   dispatchReplaceRootDocument={
                     editor.dispatchReplaceRootDocument
                   }
+                  prefilledChangesRef={prefilledChangesRef}
                 />
               ) : null}
               {editor.element}

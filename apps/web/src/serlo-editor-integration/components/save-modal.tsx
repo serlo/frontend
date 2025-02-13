@@ -2,6 +2,7 @@ import { type StorageFormat, TemplatePluginType } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { type MutableRefObject, useEffect, useState } from 'react'
 
+import { AbstractSerializedState } from '../convert-editor-response-to-state'
 import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
@@ -11,7 +12,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function SaveModal({
   open,
@@ -19,19 +19,19 @@ export function SaveModal({
   onSave,
   editorState,
   isInTestArea,
+  prefilledChanges,
 }: {
   open: boolean
   setOpen: (arg0: boolean) => void
   onSave: SerloEditorProps['onSave']
   editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
+  prefilledChanges?: string
 }) {
   const editorDocument = editorState.current.document
-  const editorDocumentState =
-    editorDocument?.state as SupportedTypesSerializedState
+  const editorDocumentState = editorDocument?.state as AbstractSerializedState
 
   const licenseId = editorDocumentState.licenseId
-  const changes = editorDocumentState.changes
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
@@ -39,13 +39,13 @@ export function SaveModal({
     onSave
   )
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
-  const [changesText, setChangesText] = useState(changes ?? '')
+  const [changesText, setChangesText] = useState(prefilledChanges ?? '')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses, strings } = useInstanceData()
 
   const licenseAccepted = !licenseId || hasAgreedLicense
-  const changesFilled = !changes || changesText
+  const changesFilled = !prefilledChanges || changesText
   const isNoEntity = editorDocument
     ? [
         TemplatePluginType.User,
@@ -55,7 +55,8 @@ export function SaveModal({
     : false
   const maySave = isNoEntity || (licenseAccepted && changesFilled)
   const needsNoReview = isInTestArea || isNoEntity
-  const isOnlyText = isNoEntity || (needsNoReview && !licenseId && !changes)
+  const isOnlyText =
+    isNoEntity || (needsNoReview && !licenseId && !prefilledChanges)
 
   const showChanges = editorDocument ? !isNoEntity : true
 
@@ -67,7 +68,7 @@ export function SaveModal({
 
   useEffect(() => {
     // make sure generated change text is used
-    if (!changesText) setChangesText(changes ?? '')
+    if (!changesText) setChangesText(prefilledChanges ?? '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 

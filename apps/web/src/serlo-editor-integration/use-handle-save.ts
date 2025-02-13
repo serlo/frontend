@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
+import { type AbstractSerializedState } from './convert-editor-response-to-state'
 import type { SerloEditorProps } from './serlo-editor'
-import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function useHandleSave(
   visible: boolean,
-  editorDocumentState: SupportedTypesSerializedState,
+  editorDocumentState: AbstractSerializedState,
   onSave: SerloEditorProps['onSave']
 ) {
   const [pending, setPending] = useState(false)

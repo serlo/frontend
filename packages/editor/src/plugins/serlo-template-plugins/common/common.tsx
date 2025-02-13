@@ -23,7 +23,6 @@ export const entity = {
   ...uuid,
   revision: number(),
   licenseId: optional(number()),
-  changes: string(),
   meta_title: optional(string()),
   meta_description: optional(string()),
 }
@@ -35,7 +34,6 @@ export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
 export type Uuid = StateTypesStaticType<typeof uuid>
 export type Entity = Uuid & {
   revision: number
-  changes?: string
   licenseId?: number
 }
 

@@ -2,7 +2,7 @@ import { type BaseEditor, TemplatePluginType } from '@editor/package'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
-import { useCallback, useState } from 'react'
+import { type MutableRefObject, useCallback, useState } from 'react'
 
 import { AddButton } from './add-button'
 import { endpoint } from '@/api/endpoint'
@@ -40,9 +40,11 @@ const pluginsWithContentLoaders = Object.keys(templateTypeToUuidType)
 export function ExternalRevisionLoader<T>({
   templateType,
   dispatchReplaceRootDocument,
+  prefilledChangesRef,
 }: {
   templateType: TemplatePluginType
   dispatchReplaceRootDocument: BaseEditor['dispatchReplaceRootDocument']
+  prefilledChangesRef: MutableRefObject<string | undefined>
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 
@@ -141,13 +143,14 @@ export function ExternalRevisionLoader<T>({
               ? uuid.currentRevision.id
               : uuid.id
 
+          prefilledChangesRef.current = `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`
+
           handleReplace({
             ...((converted.document || {}).state as T),
             revision: 0,
             id: 0,
             meta_title: '',
             meta_description: '',
-            changes: `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`,
           } as T)
           setShowRevisions(false)
         }

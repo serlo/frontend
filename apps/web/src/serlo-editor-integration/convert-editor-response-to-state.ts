@@ -62,7 +62,6 @@ export function convertEditorResponseToState(
   const entityFields = {
     ...idAndLicense,
     revision,
-    changes: '',
     title,
     meta_title,
     meta_description,
