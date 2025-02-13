@@ -20,6 +20,7 @@ export function SaveModal({
   editorState,
   isInTestArea,
   prefilledChanges,
+  licenseId,
 }: {
   open: boolean
   setOpen: (arg0: boolean) => void
@@ -27,11 +28,10 @@ export function SaveModal({
   editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
   prefilledChanges?: string
+  licenseId: number
 }) {
   const editorDocument = editorState.current.document
   const editorDocumentState = editorDocument?.state as AbstractSerializedState
-
-  const licenseId = editorDocumentState.licenseId
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
