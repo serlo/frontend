@@ -12,7 +12,6 @@ import {
   entityType,
 } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { MetadataFieldsModal } from './common/metadata-fields-modal'
 
 export const appletTypeState = entityType(
   {
@@ -33,24 +32,11 @@ export const appletTypePlugin: EditorPlugin<AppletTypePluginState> = {
 }
 
 function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
-  const {
-    title,
-    url,
-    content,
-    meta_title: metaTitle,
-    meta_description: metaDescription,
-  } = props.state
+  const { title, url, content } = props.state
 
   return (
     <>
-      <div className="absolute right-0 -mt-10 mr-side flex">
-        <MetadataFieldsModal
-          metaTitle={metaTitle}
-          metaDescription={metaDescription}
-        />
-      </div>
       <EntityTitleInput title={title} />
-
       {url.render()}
       {content.render()}
     </>
