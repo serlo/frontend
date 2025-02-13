@@ -8,7 +8,6 @@ import {
   StateTypeReturnType,
   StateUpdater,
   child,
-  number,
   object,
   string,
   optional,
@@ -17,10 +16,7 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { mapObjIndexed } from 'ramda'
 
-export const uuid = { id: number() }
-
 export const entity = {
-  ...uuid,
   meta_title: optional(string()),
   meta_description: optional(string()),
 }
@@ -28,9 +24,6 @@ export const entity = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const entityTypeHelper = entityType(entity, {})
 export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
-
-export type Uuid = StateTypesStaticType<typeof uuid>
-export type Entity = Uuid
 
 export function entityType<
   Ds extends Record<string, StateType>,

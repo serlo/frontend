@@ -2,8 +2,6 @@ import {
   EditorPluginType,
   TemplatePluginType,
   type AnyEditorDocument,
-  type Entity,
-  type Uuid,
   type StorageFormat,
 } from '@editor/package'
 import { createEmptyDocument } from '@editor/package/storage-format'
@@ -217,7 +215,7 @@ export function convertUserByDescription(description?: string | null) {
   }
 }
 
-export interface AbstractSerializedState extends Entity {
+export interface AbstractSerializedState {
   __typename?: UuidType[number]
   title?: string
   content: SerializedStaticState
@@ -229,7 +227,7 @@ export interface AbstractSerializedState extends Entity {
   cohesive?: string
 }
 
-export interface TaxonomySerializedState extends Uuid {
+export interface TaxonomySerializedState {
   __typename?: UuidType.TaxonomyTerm
   term: {
     name: string
@@ -240,7 +238,7 @@ export interface TaxonomySerializedState extends Uuid {
   position: number
 }
 
-export interface UserSerializedState extends Uuid {
+export interface UserSerializedState {
   __typename?: UuidType.User
   description: SerializedStaticState
 }

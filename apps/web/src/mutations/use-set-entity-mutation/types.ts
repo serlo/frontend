@@ -9,7 +9,7 @@ export type SetEntityMutationData = AbstractSerializedState & {
 
 export type TaxonomyCreateOrUpdateMutationData = Pick<
   TaxonomySerializedState,
-  'id' | 'term' | 'description'
+  'term' | 'description'
 > & {
   __typename?: 'TaxonomyTerm'
   parent?: number

@@ -1,10 +1,9 @@
 import { EditorPlugin, EditorPluginProps, object, string } from '@editor/plugin'
 
-import { editorContent, uuid } from './common/common'
+import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const pageTypeState = object({
-  ...uuid,
   title: string(),
   content: editorContent(),
 })
