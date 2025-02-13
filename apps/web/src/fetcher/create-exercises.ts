@@ -4,9 +4,7 @@ import type {
 } from '@editor/package'
 
 import { MainUuidType } from './query-types'
-import { UuidType } from '@/data-types'
 import { parseDocumentString } from '@/helper/parse-document-string'
-import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' }>,
@@ -18,13 +16,10 @@ export function createExercise(
 ): EditorExerciseDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const { templateContent } = unwrapEditorContent(
-    UuidType.Exercise,
-    uuid.currentRevision.content
-  )
-
   const exercise = {
-    ...(parseDocumentString(templateContent) as EditorExerciseDocument),
+    ...(parseDocumentString(
+      uuid.currentRevision.content
+    ) as EditorExerciseDocument),
     serloContext: {
       uuid: uuid.id,
       revisionId: uuid.currentRevision.id,
@@ -46,13 +41,10 @@ export function createExerciseGroup(
 ): EditorExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const { templateContent } = unwrapEditorContent(
-    UuidType.ExerciseGroup,
-    uuid.currentRevision.content
-  )
-
   return {
-    ...(parseDocumentString(templateContent) as EditorExerciseGroupDocument),
+    ...(parseDocumentString(
+      uuid.currentRevision.content
+    ) as EditorExerciseGroupDocument),
     serloContext: {
       uuid: uuid.id,
       trashed: uuid.trashed,

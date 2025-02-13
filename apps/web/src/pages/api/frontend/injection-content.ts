@@ -6,11 +6,9 @@ import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
-import { UuidType } from '@/data-types'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { parseDocumentString } from '@/helper/parse-document-string'
-import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 /**
  * Allows frontend (and later other) instances to get content of injected entity
@@ -73,12 +71,8 @@ export default async function handler(
         }
 
         if (uuid.__typename === 'ExerciseGroup') {
-          const { templateContent } = unwrapEditorContent(
-            UuidType.ExerciseGroup,
-            uuid.currentRevision.content
-          )
           const content = parseDocumentString(
-            templateContent
+            uuid.currentRevision.content
           ) as EditorExerciseGroupDocument
 
           // use id in hash to load one exercise out of the group

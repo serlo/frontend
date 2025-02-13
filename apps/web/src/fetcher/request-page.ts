@@ -169,14 +169,14 @@ export async function requestPage(
     }
   }
 
-  const { editorMetadata, templateContent } = unwrapEditorContent(
+  const { editorMetadata } = unwrapEditorContent(
     uuid.__typename,
     uuid.currentRevision?.content
   )
 
   const content = (await prettifyLinksInState(
     uuid.currentRevision?.content
-      ? parseDocumentString(templateContent)
+      ? parseDocumentString(uuid.currentRevision?.content)
       : undefined
   )) as EditorRowsDocument | EditorCourseDocument
 
