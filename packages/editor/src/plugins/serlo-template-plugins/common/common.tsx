@@ -21,7 +21,6 @@ export const uuid = { id: number() }
 
 export const entity = {
   ...uuid,
-  revision: number(),
   meta_title: optional(string()),
   meta_description: optional(string()),
 }
@@ -31,7 +30,7 @@ const entityTypeHelper = entityType(entity, {})
 export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
 
 export type Uuid = StateTypesStaticType<typeof uuid>
-export type Entity = Uuid & { revision: number }
+export type Entity = Uuid
 
 export function entityType<
   Ds extends Record<string, StateType>,

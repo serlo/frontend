@@ -147,7 +147,6 @@ export function ExternalRevisionLoader<T>({
 
           handleReplace({
             ...((converted.document || {}).state as T),
-            revision: 0,
             id: 0,
             meta_title: '',
             meta_description: '',
