@@ -9,12 +9,13 @@ import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
+  const { id, licenseId } = props
   return (
     <FrontendClientBase
       noContainers
       noIndex
       loadLoggedInData /* warn: enables preview editor without login */
-      serloEntityData={{ entityId: props.id }}
+      serloEntityData={{ entityId: id, licenseId }}
     >
       <div className="relative">
         <MaxWidthDiv>

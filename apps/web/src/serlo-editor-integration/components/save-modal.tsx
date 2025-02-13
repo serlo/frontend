@@ -7,9 +7,10 @@ import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { getLicense } from '@/data/licenses/licenses-helpers'
+import { getDefaultLicense, getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -20,7 +21,6 @@ export function SaveModal({
   editorState,
   isInTestArea,
   prefilledChanges,
-  licenseId,
 }: {
   open: boolean
   setOpen: (arg0: boolean) => void
@@ -28,7 +28,6 @@ export function SaveModal({
   editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
   prefilledChanges?: string
-  licenseId: number
 }) {
   const editorDocument = editorState.current.document
   const editorDocumentState = editorDocument?.state as AbstractSerializedState
@@ -43,6 +42,9 @@ export function SaveModal({
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses, strings } = useInstanceData()
+
+  const { licenseId } = useEntityMetaData()
+  const licenseIdOrDefaultId = licenseId ?? getDefaultLicense(licenses).id
 
   const licenseAccepted = !licenseId || hasAgreedLicense
   const changesFilled = !prefilledChanges || changesText
@@ -183,10 +185,10 @@ export function SaveModal({
 
   function renderLicense() {
     if (isNoEntity) return null
-    const licenseAgreement = getLicense(licenses, licenseId).agreement.replace(
-      /<a href/g,
-      '<a target="_blank" href'
-    )
+    const licenseAgreement = getLicense(
+      licenses,
+      licenseIdOrDefaultId
+    ).agreement.replace(/<a href/g, '<a target="_blank" href')
 
     if (!licenseAgreement) return null
 

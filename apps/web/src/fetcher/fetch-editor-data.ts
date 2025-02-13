@@ -23,6 +23,7 @@ export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: UuidWithRevType
   id?: number // only for existing
+  licenseId?: number
   taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
@@ -65,6 +66,10 @@ export async function fetchEditorData(
 
   const breadcrumbsData = createBreadcrumbs(data, instance)
 
+  const licenseId = Object.hasOwn(data, 'licenseId')
+    ? data.licenseId
+    : undefined
+
   if (isError(result)) {
     throw new Error(result.error)
   } else {
@@ -74,6 +79,7 @@ export async function fetchEditorData(
       id: repoId,
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,
+      licenseId,
     }
   }
 }

@@ -16,14 +16,12 @@ export function SaveButton({
   editorState,
   isInTestArea,
   prefilledChanges,
-  licenseId,
 }: {
   onSave: SerloEditorProps['onSave']
   isChanged: boolean
   editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
   prefilledChanges?: string
-  licenseId: number
 }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
@@ -52,7 +50,6 @@ export function SaveButton({
         editorState={editorState}
         isInTestArea={isInTestArea}
         prefilledChanges={prefilledChanges}
-        licenseId={licenseId}
       />
     </div>,
     target

@@ -16,7 +16,6 @@ import { extraSerloRenderers } from './extra-serlo-renderers'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { getDefaultLicense } from '@/data/licenses/licenses-helpers'
 import { isProduction } from '@/helper/is-production'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
@@ -69,14 +68,6 @@ export function SerloEditor({
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
 
-  const templatePluginState = initialState.document.state as unknown & {
-    licenseId: number
-  }
-  const licenseId =
-    templatePluginState && Object.hasOwn(templatePluginState, 'licenseId')
-      ? templatePluginState.licenseId
-      : getDefaultLicense(licenses).id
-
   const isRevisionView = useContext(RevisionViewContext)
   const isNewEntity = !(initialState as { state?: { id?: string } }).state?.id
 
@@ -109,7 +100,6 @@ export function SerloEditor({
                   editorState={editorState}
                   isInTestArea={isInTestArea}
                   prefilledChanges={prefilledChangesRef.current}
-                  licenseId={licenseId}
                 />
               ) : null}
               {isNewEntity ? (
