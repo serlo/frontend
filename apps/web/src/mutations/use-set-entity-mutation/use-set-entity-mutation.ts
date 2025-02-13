@@ -6,8 +6,8 @@ import { SetEntityMutationData, SetEntityMutationRunnerData } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { getAliasById, revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetchAuthed } from '../helper/use-mutation-fetch'
+import { EntityMetaContext } from '@/contexts/entity-meta-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidsContext } from '@/contexts/uuids-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import { SetAbstractEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
@@ -17,8 +17,8 @@ export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetchAuthed()
   const router = useRouter()
-  const entityData = useContext(UuidsContext)
-  const entityId = entityData?.entityId
+  const entityMeta = useContext(EntityMetaContext)
+  const entityId = entityMeta?.entityId
 
   if (!loggedInData) return false
   const mutationStrings = loggedInData.strings.mutations

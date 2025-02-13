@@ -7,8 +7,8 @@ import { useSuccessHandler } from './helper/use-success-handler'
 import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { showToastNotice } from '../helper/show-toast-notice'
+import { EntityMetaContext } from '@/contexts/entity-meta-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidsContext } from '@/contexts/uuids-context'
 import { TaxonomyTypeCreateOptions } from '@/fetcher/graphql-types/operations'
 
 const taxonomySetMutation = gql`
@@ -39,8 +39,8 @@ export function useTaxonomyCreateOrUpdateMutation() {
   const successHandler = useSuccessHandler()
   const router = useRouter()
 
-  const entityData = useContext(UuidsContext)
-  const entityId = entityData?.entityId
+  const entityMeta = useContext(EntityMetaContext)
+  const entityId = entityMeta?.entityId
 
   return async (data: TaxonomyCreateOrUpdateMutationData) => {
     if (!loggedInData) {
