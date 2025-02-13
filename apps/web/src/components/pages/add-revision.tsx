@@ -41,14 +41,11 @@ export function AddRevision({
   const setEntityMutation = useSetEntityMutation()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 
-  const [userReady, setUserReady] = useState<boolean | undefined>(
-    isProduction ? undefined : true
-  )
+  const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
   const isPage = type === UuidType.Page
 
   useEffect(() => {
-    if (userReady) return
     async function confirmAuth() {
       await fetchAndPersistAuthSession()
       setUserReady(isProduction ? auth !== null : true)
