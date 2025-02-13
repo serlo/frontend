@@ -5,17 +5,11 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import {
-  entity,
-  editorContent,
-  serializedChild,
-  entityType,
-} from './common/common'
+import { editorContent, serializedChild, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const appletTypeState = entityType(
   {
-    ...entity,
     title: string(),
     content: editorContent(),
     url: serializedChild(EditorPluginType.Geogebra),

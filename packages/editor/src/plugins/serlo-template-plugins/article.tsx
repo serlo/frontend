@@ -5,12 +5,11 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from './common/common'
+import { editorContent, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const articleTypeState = entityType(
   {
-    ...entity,
     title: string(),
     content: editorContent(EditorPluginType.Article),
   },

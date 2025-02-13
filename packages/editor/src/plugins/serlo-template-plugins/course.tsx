@@ -6,12 +6,11 @@ import {
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from './common/common'
+import { editorContent, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const courseTypeState = entityType(
   {
-    ...entity,
     title: string(),
     content: editorContent(EditorPluginType.Course),
   },
@@ -27,7 +26,7 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
-  const { title, content, meta_description: metaDescription } = props.state
+  const { title, content } = props.state
 
   return (
     <>

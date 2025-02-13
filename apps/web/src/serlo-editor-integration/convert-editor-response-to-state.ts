@@ -29,41 +29,17 @@ export function convertEditorResponseToState(
 ): DeserializedStaticResult {
   const stack: { id: number; type: string }[] = []
 
-  const licenseId = Object.hasOwn(uuid, 'licenseId')
-    ? uuid.licenseId
-    : undefined
-
-  const { id, title } = uuid
+  const { title } = uuid
 
   const currentRev =
     'currentRevision' in uuid ? uuid.currentRevision : undefined
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
-  const meta_title =
-    (currentRev && Object.hasOwn(currentRev, 'metaTitle')
-      ? currentRev.metaTitle
-      : '') ?? ''
-  const meta_description =
-    (currentRev && Object.hasOwn(currentRev, 'metaDescription')
-      ? currentRev.metaDescription
-      : '') ?? ''
+
   const url =
     (currentRev && Object.hasOwn(currentRev, 'url') ? currentRev.url : '') ?? ''
-  const revision =
-    currentRev && Object.hasOwn(currentRev, 'id') ? currentRev.id : 0
 
-  const idAndLicense = {
-    id,
-    licenseId,
-  }
-
-  const entityFields = {
-    ...idAndLicense,
-    revision,
-    title,
-    meta_title,
-    meta_description,
-  }
+  const entityFields = { title }
 
   try {
     if (UuidType.TaxonomyTerm === uuid.__typename) {
@@ -221,8 +197,6 @@ export interface AbstractSerializedState {
   content: SerializedStaticState
   reasoning?: SerializedStaticState
   description: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
   url?: string
   cohesive?: string
 }

@@ -27,6 +27,8 @@ export interface EditorPageData {
   taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
+  metaTitle?: string
+  metaDescription?: string
 }
 
 export interface EditorFetchErrorData {
@@ -70,6 +72,14 @@ export async function fetchEditorData(
     ? data.licenseId
     : undefined
 
+  const metaTitle = Object.hasOwn(data, 'currentRevision')
+    ? (data.currentRevision?.metaTitle ?? undefined)
+    : undefined
+
+  const metaDescription = Object.hasOwn(data, 'currentRevision')
+    ? (data.currentRevision?.metaDescription ?? undefined)
+    : undefined
+
   if (isError(result)) {
     throw new Error(result.error)
   } else {
@@ -80,6 +90,8 @@ export async function fetchEditorData(
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,
       licenseId,
+      metaTitle,
+      metaDescription,
     }
   }
 }

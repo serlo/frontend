@@ -9,21 +9,9 @@ import {
   StateUpdater,
   child,
   object,
-  string,
-  optional,
-  EditorPluginProps,
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { mapObjIndexed } from 'ramda'
-
-export const entity = {
-  meta_title: optional(string()),
-  meta_description: optional(string()),
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const entityTypeHelper = entityType(entity, {})
-export type EntityStateProps = EditorPluginProps<typeof entityTypeHelper>
 
 export function entityType<
   Ds extends Record<string, StateType>,

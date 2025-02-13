@@ -4,6 +4,8 @@ export interface EntityMetaContextData {
   entityId?: number
   revisionId?: number
   licenseId?: number
+  metaTitle?: string
+  metaDescription?: string
 }
 
 export const EntityMetaContext = createContext<EntityMetaContextData | null>(

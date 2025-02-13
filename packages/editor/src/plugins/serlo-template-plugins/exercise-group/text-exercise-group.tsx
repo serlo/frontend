@@ -6,13 +6,12 @@ import {
 import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from '../common/common'
+import { editorContent, entityType } from '../common/common'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
 export const textExerciseGroupTypeState = entityType(
   {
-    ...entity,
     content: editorContent(EditorPluginType.ExerciseGroup),
   },
   {}

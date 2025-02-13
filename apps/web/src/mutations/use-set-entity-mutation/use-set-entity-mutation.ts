@@ -17,8 +17,11 @@ export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetchAuthed()
   const router = useRouter()
+
   const entityMeta = useContext(EntityMetaContext)
   const entityId = entityMeta?.entityId
+  const metaTitle = entityMeta?.metaTitle
+  const metaDescription = entityMeta?.metaDescription
 
   if (!loggedInData) return false
   const mutationStrings = loggedInData.strings.mutations
@@ -61,6 +64,8 @@ export function useSetEntityMutation() {
           entityId,
           ...genericInput,
           ...additionalInput,
+          metaTitle,
+          metaDescription,
           parentId: genericInput.entityId ? undefined : taxonomyParentId,
         }
       } catch (error) {
@@ -143,14 +148,7 @@ function getAdditionalInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData
 ) {
-  const {
-    title,
-    url,
-    meta_title: metaTitle,
-    meta_description: metaDescription,
-    content,
-    description,
-  } = data
+  const { title, url, content, description } = data
   switch (data.__typename) {
     case UuidType.Course:
     case UuidType.Article:
@@ -158,8 +156,6 @@ function getAdditionalInputData(
     case UuidType.Page:
       return {
         title: getRequiredString(mutationStrings, 'title', title),
-        metaTitle,
-        metaDescription,
       }
 
     case UuidType.Exercise:
@@ -176,8 +172,6 @@ function getAdditionalInputData(
       return {
         title: getRequiredString(mutationStrings, 'title', title),
         url: getRequiredString(mutationStrings, 'url', url),
-        metaTitle,
-        metaDescription,
       }
   }
   return {}

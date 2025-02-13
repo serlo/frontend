@@ -4,12 +4,11 @@ import {
   string,
 } from '@editor/plugin'
 
-import { editorContent, entity, entityType } from './common/common'
+import { editorContent, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const eventTypeState = entityType(
   {
-    ...entity,
     title: string(),
     content: editorContent(),
   },

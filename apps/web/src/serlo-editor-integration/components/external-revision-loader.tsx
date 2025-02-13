@@ -145,12 +145,7 @@ export function ExternalRevisionLoader<T>({
 
           prefilledChangesRef.current = `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`
 
-          handleReplace({
-            ...((converted.document || {}).state as T),
-            id: 0,
-            meta_title: '',
-            meta_description: '',
-          } as T)
+          handleReplace({ ...((converted.document || {}).state as T) })
           setShowRevisions(false)
         }
       } catch (e) {

@@ -6,11 +6,10 @@ import {
 import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from './common/common'
+import { editorContent, entityType } from './common/common'
 
 export const textExerciseTypeState = entityType(
   {
-    ...entity,
     content: editorContent(EditorPluginType.Exercise),
   },
   {}
