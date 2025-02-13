@@ -1,12 +1,14 @@
 import {
+  child,
   type EditorPlugin,
   type EditorPluginProps,
   object,
 } from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
-
-export const userTypeState = object({ description: editorContent() })
+export const userTypeState = object({
+  description: child({ plugin: EditorPluginType.Rows }),
+})
 
 export type UserTypePluginState = typeof userTypeState
 

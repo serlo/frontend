@@ -4,9 +4,10 @@ import {
   object,
   string,
   number,
+  child,
 } from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const taxonomyTypeState = object({
@@ -15,7 +16,7 @@ export const taxonomyTypeState = object({
   }),
   parent: number(),
   position: number(),
-  description: editorContent(),
+  description: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type TaxonomyTypePluginState = typeof taxonomyTypeState
