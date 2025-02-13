@@ -1,12 +1,10 @@
 import {
   StateType,
   StateTypesStaticType,
-  StateTypeStaticType,
   StateTypesValueType,
   StateTypeValueType,
   StateTypesReturnType,
   StateTypeReturnType,
-  StateUpdater,
   child,
   object,
 } from '@editor/plugin'
@@ -50,22 +48,6 @@ export function entityType<
   }
 }
 
-export function serialized<S extends StateType>(type: S) {
-  return {
-    ...type,
-    serialize(...args: Parameters<typeof type.toStaticState>) {
-      return JSON.stringify(type.toStaticState(...args))
-    },
-    deserialize(
-      serialized: string,
-      helpers: Parameters<typeof type.toStoreState>[1]
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return type.toStoreState(JSON.parse(serialized), helpers)
-    },
-  }
-}
-
 export function editorContent(
   plugin: string = EditorPluginType.Rows
 ): StateType<
@@ -89,7 +71,7 @@ export function editorContent(
   }
 }
 
-/** jup it's basically a string */
+/** jup it's basically a string – and only used by type-applet */
 export function serializedChild(
   plugin: string
 ): StateType<
