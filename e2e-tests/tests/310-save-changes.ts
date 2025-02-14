@@ -86,6 +86,31 @@ Scenario('Save Modal: Page has no extra requirements in modal', ({ I }) => {
   I.waitForText('Für diese Funktion musst du dich einloggen!', 10)
 })
 
+Scenario('Save Modal: No addition requirements in taxonomy', async ({ I }) => {
+  editExistingEntity(I, 1386)
+
+  I.see('Grundrechenarten')
+  I.see('Übungsaufgaben zu den vier Grundrechenarten')
+  I.seeElement(
+    'img[src="https://assets.serlo.org/legacy/56f10ea9514ea_4ba242201476d137c5cc4420c8e5021337eb8620.png"]'
+  )
+
+  I.click('h1')
+  I.type('$')
+
+  I.click('Speichern')
+  I.see('Bereit zum Speichern?')
+  I.dontSee('Beschreibe deine Änderungen am Inhalt')
+  I.dontSee('Mit dem Speichern dieser Seite versicherst')
+
+  //shorter button text for pages
+  I.seeTextEquals('Speichern', '.serlo-button-green.serlo-button-learner')
+  I.click('.serlo-button-green.serlo-button-learner')
+
+  // this tells us we actually tried to save
+  I.waitForText('Für diese Funktion musst du dich einloggen!', 10)
+})
+
 Scenario('Save Modal: New entity', async ({ I }) => {
   createNewEditorEntity(I, 'article')
 
