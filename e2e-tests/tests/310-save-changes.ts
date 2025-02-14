@@ -67,27 +67,24 @@ Scenario('Save Modal: Shows custom license', ({ I }) => {
   )
 })
 
-Scenario.only(
-  'Save Modal: Page has no extra requirements in modal',
-  ({ I }) => {
-    editExistingEntity(I, 21468)
+Scenario('Save Modal: Page has no extra requirements in modal', ({ I }) => {
+  editExistingEntity(I, 21468)
 
-    I.click('h1')
-    I.type('$')
+  I.click('h1')
+  I.type('$')
 
-    I.click('Speichern')
-    I.see('Bereit zum Speichern?')
-    I.dontSee('Beschreibe deine Änderungen am Inhalt')
-    I.dontSee('Mit dem Speichern dieser Seite versicherst')
+  I.click('Speichern')
+  I.see('Bereit zum Speichern?')
+  I.dontSee('Beschreibe deine Änderungen am Inhalt')
+  I.dontSee('Mit dem Speichern dieser Seite versicherst')
 
-    //shorter button text for pages
-    I.seeTextEquals('Speichern', '.serlo-button-green.serlo-button-learner')
-    I.click('.serlo-button-green.serlo-button-learner')
+  //shorter button text for pages
+  I.seeTextEquals('Speichern', '.serlo-button-green.serlo-button-learner')
+  I.click('.serlo-button-green.serlo-button-learner')
 
-    // this tells us we actually tried to save
-    I.waitForText('Für diese Funktion musst du dich einloggen!', 10)
-  }
-)
+  // this tells us we actually tried to save
+  I.waitForText('Für diese Funktion musst du dich einloggen!', 10)
+})
 
 Scenario('Save Modal: New entity', async ({ I }) => {
   createNewEditorEntity(I, 'article')
@@ -151,3 +148,5 @@ Scenario(
     )
   }
 )
+
+// … maybe add more tests for other entities?
