@@ -16,7 +16,7 @@ export function createExercise(
 ): EditorExerciseDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const exercise = {
+  return {
     ...(parseDocumentString(
       uuid.currentRevision.content
     ) as EditorExerciseDocument),
@@ -29,8 +29,6 @@ export function createExercise(
       licenseId: uuid.licenseId,
     },
   }
-
-  return exercise
 }
 
 export function createExerciseGroup(
