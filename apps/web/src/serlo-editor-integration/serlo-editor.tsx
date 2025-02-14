@@ -92,12 +92,14 @@ export function SerloEditor({
           const hasPendingChanges = editor.history.pendingChanges !== 0
           return (
             <>
-              <SaveButton
-                onSave={onSave}
-                isChanged={hasPendingChanges}
-                editorState={editorState}
-                isInTestArea={isInTestArea}
-              />
+              {editorState.current.document.state ? (
+                <SaveButton
+                  onSave={onSave}
+                  isChanged={hasPendingChanges}
+                  editorState={editorState}
+                  isInTestArea={isInTestArea}
+                />
+              ) : null}
               {isNewEntity ? (
                 <ExternalRevisionLoader
                   templateType={
