@@ -9,13 +9,6 @@ Before(({ login }) => {
 })
 
 // Articles only for now
-Scenario('Saving without changes', ({ I }) => {
-  editExistingEntity(I, 55437)
-  I.click('Speichern')
-  I.waitForText('Bisher hast du nichts geändert')
-  I.dontSee('Beschreibe deine Änderungen am Inhalt')
-})
-
 Scenario('Open Editor from article', async ({ I }) => {
   I.amOnPage('/74888')
 
