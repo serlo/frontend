@@ -2,6 +2,7 @@ import { type StorageFormat, TemplatePluginType } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { type MutableRefObject, useEffect, useState } from 'react'
 
+import { convertEditorStateToSetEntityMutationData } from '../convert-editor-state-to-set-entity-mutation-data'
 import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
@@ -27,15 +28,12 @@ export function SaveModal({
   isInTestArea?: boolean
 }) {
   const editorDocument = editorState.current.document
-  const editorDocumentState =
-    editorDocument?.state as SupportedTypesSerializedState
-
-  const licenseId = editorDocumentState.licenseId
-  const changes = editorDocumentState.changes
+  const { licenseId, changes } =
+    editorDocument.state as SupportedTypesSerializedState
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
-    editorDocumentState,
+    convertEditorStateToSetEntityMutationData(editorState.current),
     onSave
   )
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
