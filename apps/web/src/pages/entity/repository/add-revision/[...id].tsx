@@ -40,5 +40,7 @@ export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
 
   if (result.errorType === 'failed-fetch') return { notFound: true }
 
-  return { props: result }
+  return {
+    props: JSON.parse(JSON.stringify(result)) as EditorPageData, // remove undefined values
+  }
 }
