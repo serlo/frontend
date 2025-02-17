@@ -83,7 +83,7 @@ Scenario('Check picture in scmc exercise', ({ I }) => {
   )
 })
 
-Scenario.only('Interact with input exercise', ({ I }) => {
+Scenario('Interact with input exercise', ({ I }) => {
   I.amOnPage('/286551')
   I.see('exact number match')
   I.see('Unit')

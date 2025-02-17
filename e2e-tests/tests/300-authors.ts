@@ -167,6 +167,7 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
 
 Scenario('Add new taxonomy', async ({ I }) => {
   I.amOnPage('/taxonomy/term/create/4/234582')
+  I.waitForElement('[data-document=true]', 10)
 
   I.click('$entity-title-input')
   I.see('Füge ein Element hinzu')
