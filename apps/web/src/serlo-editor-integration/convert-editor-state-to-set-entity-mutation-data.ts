@@ -1,4 +1,4 @@
-import type { StorageFormat } from '@editor/package'
+import { TemplatePluginType, type StorageFormat } from '@editor/package'
 
 import type { AbstractSerializedState } from './convert-editor-response-to-state'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
@@ -9,10 +9,21 @@ export function convertEditorStateToSetEntityMutationData(
   const editorDocumentState = editorState.document
     .state as AbstractSerializedState
 
-  const newContent = JSON.stringify({
-    ...editorState,
-    document: JSON.parse(editorDocumentState.content || '') as unknown,
-  })
+  if (editorState.document.plugin === TemplatePluginType.Taxonomy) {
+    return {
+      ...editorDocumentState,
+      description: JSON.stringify({
+        ...editorState,
+        document: JSON.parse(editorDocumentState.description || '') as unknown,
+      }),
+    }
+  }
 
-  return { ...editorDocumentState, content: newContent }
+  return {
+    ...editorDocumentState,
+    content: JSON.stringify({
+      ...editorState,
+      document: JSON.parse(editorDocumentState.content || '') as unknown,
+    }),
+  }
 }
