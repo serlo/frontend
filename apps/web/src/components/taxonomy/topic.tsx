@@ -58,7 +58,11 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-[50vh]">
         <div className="mt-6 sm:mb-5">
-          <SerloRenderer state={data.description} editorVariant="serlo-org" />
+          <SerloRenderer
+            state={data.description}
+            editorVariant="serlo-org"
+            extraSerloRenderers={extraSerloRenderers}
+          />
         </div>
 
         {renderSubterms()}

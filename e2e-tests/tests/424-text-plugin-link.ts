@@ -85,7 +85,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.seeElement(locate({ css: '.editor-core a' }).withAttr({ href: '/1288' }))
 })
 
-Scenario.only('Remove existing link', async ({ I }) => {
+Scenario('Remove existing link', async ({ I }) => {
   createNewEditorEntity(I, 'article')
 
   addNewTextPlugin(I)

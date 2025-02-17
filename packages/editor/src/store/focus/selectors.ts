@@ -6,8 +6,6 @@ import { State } from '../types'
 
 const selectSelf = (state: State) => state.focus
 
-export const selectFocused = createSelector(selectSelf, (focus) => focus)
-
 export const selectIsFocused = createSelector(
   [selectSelf, (_state, id: string) => id],
   (focus, id: string) => focus === id
@@ -18,7 +16,6 @@ export const selectHasFocusedChild = createSelector(
   (state, id: string) => {
     const tree = selectChildTree(state, id)
     if (!tree || !tree.children) return false
-    const focused = selectFocused(state)
-    return R.any((node) => node.id === focused, tree.children)
+    return R.any((node) => node.id === state.focus, tree.children)
   }
 )

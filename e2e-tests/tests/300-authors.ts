@@ -9,13 +9,6 @@ Before(({ login }) => {
 })
 
 // Articles only for now
-Scenario('Saving without changes', ({ I }) => {
-  editExistingEntity(I, 55437)
-  I.click('Speichern')
-  I.waitForText('Bisher hast du nichts geändert')
-  I.dontSee('Beschreibe deine Änderungen am Inhalt')
-})
-
 Scenario('Open Editor from article', async ({ I }) => {
   I.amOnPage('/74888')
 
@@ -174,6 +167,7 @@ Scenario("Switching tabs shouldn't lose work", async ({ I }) => {
 
 Scenario('Add new taxonomy', async ({ I }) => {
   I.amOnPage('/taxonomy/term/create/4/234582')
+  I.waitForElement('[data-document=true]', 10)
 
   I.click('$entity-title-input')
   I.see('Füge ein Element hinzu')

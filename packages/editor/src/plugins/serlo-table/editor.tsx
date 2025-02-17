@@ -4,10 +4,8 @@ import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
   useStore,
-  selectFocused,
   selectIsDocumentEmpty,
   focus,
-  useAppSelector,
   useAppDispatch,
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
@@ -32,7 +30,6 @@ export function SerloTableEditor(props: SerloTableProps) {
   const [, setUpdateHack] = useState(0)
 
   const dispatch = useAppDispatch()
-  const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   const tableStrings = useEditStrings().plugins.serloTable
@@ -332,7 +329,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
     rows.some((row, rowIndex) =>
       row.columns.some((cell, colIndex) => {
-        if (cell.content.id === focusedElement) {
+        if (cell.content.id === store.getState().focus) {
           focusedRowIndex = rowIndex
           focusedColIndex = colIndex
           return true
