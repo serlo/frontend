@@ -247,11 +247,20 @@ export function handleFlowError<S>(
         setFlow(undefined)
         await router.push(flowPath)
         return
-      case 'browser_location_change_required':
+      case 'browser_location_change_required': {
         // Ory Kratos asked us to point the user to this URL.
 
+        const searchParams = new URLSearchParams(window.location.search)
+        const idpHint = searchParams.get('vidis_idp_hint')
+        if (data.redirect_browser_to.includes('vidis.schule')) {
+          window.location.href =
+            data.redirect_browser_to +
+            (idpHint ? `&vidis_idp_hint=${idpHint}` : '')
+          return
+        }
         window.location.href = data.redirect_browser_to
         return
+      }
     }
 
     switch (error.response?.status) {
