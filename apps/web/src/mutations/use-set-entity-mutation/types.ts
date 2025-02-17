@@ -3,13 +3,13 @@ import type {
   TaxonomySerializedState,
 } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
-export type SupportedTypesSerializedState = AbstractSerializedState
-
-export type SetEntityMutationData = SupportedTypesSerializedState
+export type SetEntityMutationData = AbstractSerializedState & {
+  changes?: string
+}
 
 export type TaxonomyCreateOrUpdateMutationData = Pick<
   TaxonomySerializedState,
-  'id' | 'term' | 'description'
+  'term' | 'description'
 > & {
   __typename?: 'TaxonomyTerm'
   parent?: number

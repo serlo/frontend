@@ -49,18 +49,7 @@ const ContentPage: NextPage = () => {
   function renderLis(lis: typeof entities, editor?: boolean) {
     return lis.map(([name, id]) => (
       <li key={name}>
-        <a
-          href={
-            editor
-              ? getEditUrl(
-                  id as number,
-                  undefined,
-                  (name as string).startsWith('Taxonomy')
-                )
-              : `/${id}`
-          }
-          target="show"
-        >
+        <a href={editor ? getEditUrl(id as number) : `/${id}`} target="show">
           {name}
         </a>
       </li>

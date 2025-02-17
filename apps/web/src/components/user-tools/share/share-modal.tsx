@@ -15,8 +15,8 @@ import { MouseEvent, useState, useEffect } from 'react'
 
 import { FaIcon, FaIconProps } from '../../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEntityData } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 import { colors } from '@/helper/colors'
@@ -46,7 +46,7 @@ export function ShareModal({
   path,
 }: ShareModalProps) {
   const { strings, lang } = useInstanceData()
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
   const pathOrId = path ?? entityId
   const [isClipboardSupported, setIsClipboardSupported] = useState(false)
 

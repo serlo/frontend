@@ -23,9 +23,12 @@ export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: UuidWithRevType
   id?: number // only for existing
+  licenseId?: number
   taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
+  metaTitle?: string
+  metaDescription?: string
 }
 
 export interface EditorFetchErrorData {
@@ -65,6 +68,18 @@ export async function fetchEditorData(
 
   const breadcrumbsData = createBreadcrumbs(data, instance)
 
+  const licenseId = Object.hasOwn(data, 'licenseId')
+    ? data.licenseId
+    : undefined
+
+  const metaTitle = Object.hasOwn(data, 'currentRevision')
+    ? (data.currentRevision?.metaTitle ?? undefined)
+    : undefined
+
+  const metaDescription = Object.hasOwn(data, 'currentRevision')
+    ? (data.currentRevision?.metaDescription ?? undefined)
+    : undefined
+
   if (isError(result)) {
     throw new Error(result.error)
   } else {
@@ -74,6 +89,9 @@ export async function fetchEditorData(
       id: repoId,
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,
+      licenseId,
+      metaTitle,
+      metaDescription,
     }
   }
 }

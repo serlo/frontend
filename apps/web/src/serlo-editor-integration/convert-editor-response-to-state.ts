@@ -2,8 +2,6 @@ import {
   EditorPluginType,
   TemplatePluginType,
   type AnyEditorDocument,
-  type Entity,
-  type Uuid,
   type StorageFormat,
 } from '@editor/package'
 import { createEmptyDocument } from '@editor/package/storage-format'
@@ -31,42 +29,17 @@ export function convertEditorResponseToState(
 ): DeserializedStaticResult {
   const stack: { id: number; type: string }[] = []
 
-  const licenseId = Object.hasOwn(uuid, 'licenseId')
-    ? uuid.licenseId
-    : undefined
-
-  const { id, title } = uuid
+  const { title } = uuid
 
   const currentRev =
     'currentRevision' in uuid ? uuid.currentRevision : undefined
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
-  const meta_title =
-    (currentRev && Object.hasOwn(currentRev, 'metaTitle')
-      ? currentRev.metaTitle
-      : '') ?? ''
-  const meta_description =
-    (currentRev && Object.hasOwn(currentRev, 'metaDescription')
-      ? currentRev.metaDescription
-      : '') ?? ''
+
   const url =
     (currentRev && Object.hasOwn(currentRev, 'url') ? currentRev.url : '') ?? ''
-  const revision =
-    currentRev && Object.hasOwn(currentRev, 'id') ? currentRev.id : 0
 
-  const idAndLicense = {
-    id,
-    licenseId,
-  }
-
-  const entityFields = {
-    ...idAndLicense,
-    revision,
-    changes: '',
-    title,
-    meta_title,
-    meta_description,
-  }
+  const entityFields = { title }
 
   try {
     if (UuidType.TaxonomyTerm === uuid.__typename) {
@@ -232,19 +205,17 @@ export function convertUserByDescription(description?: string | null) {
   }
 }
 
-export interface AbstractSerializedState extends Entity {
+export interface AbstractSerializedState {
   __typename?: UuidType[number]
   title?: string
   content: SerializedStaticState
   reasoning?: SerializedStaticState
   description: SerializedStaticState
-  meta_title?: string
-  meta_description?: string
   url?: string
   cohesive?: string
 }
 
-export interface TaxonomySerializedState extends Uuid {
+export interface TaxonomySerializedState {
   __typename?: UuidType.TaxonomyTerm
   term: {
     name: string
@@ -255,7 +226,7 @@ export interface TaxonomySerializedState extends Uuid {
   position: number
 }
 
-export interface UserSerializedState extends Uuid {
+export interface UserSerializedState {
   __typename?: UuidType.User
   description: SerializedStaticState
 }

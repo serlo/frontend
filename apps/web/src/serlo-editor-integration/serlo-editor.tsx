@@ -63,6 +63,7 @@ export function SerloEditor({
 }: SerloEditorProps) {
   // No need to rerender on Editor change, therefore `useRef`
   const editorState = useRef(initialState)
+  const prefilledChangesRef = useRef<string | undefined>(undefined)
 
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
@@ -98,6 +99,7 @@ export function SerloEditor({
                   isChanged={hasPendingChanges}
                   editorState={editorState}
                   isInTestArea={isInTestArea}
+                  prefilledChanges={prefilledChangesRef.current}
                 />
               ) : null}
               {isNewEntity ? (
@@ -108,6 +110,7 @@ export function SerloEditor({
                   dispatchReplaceRootDocument={
                     editor.dispatchReplaceRootDocument
                   }
+                  prefilledChangesRef={prefilledChangesRef}
                 />
               ) : null}
               {editor.element}

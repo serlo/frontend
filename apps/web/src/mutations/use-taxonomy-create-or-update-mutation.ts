@@ -1,11 +1,13 @@
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
 
 import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
 import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { showToastNotice } from '../helper/show-toast-notice'
+import { EntityMetaContext } from '@/contexts/entity-meta-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { TaxonomyTypeCreateOptions } from '@/fetcher/graphql-types/operations'
 
@@ -37,6 +39,9 @@ export function useTaxonomyCreateOrUpdateMutation() {
   const successHandler = useSuccessHandler()
   const router = useRouter()
 
+  const entityMeta = useContext(EntityMetaContext)
+  const entityId = entityMeta?.entityId
+
   return async (data: TaxonomyCreateOrUpdateMutationData) => {
     if (!loggedInData) {
       showToastNotice('Please make sure you are logged in!', 'warning')
@@ -46,7 +51,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
 
     try {
       const input = {
-        id: data.id,
+        id: entityId,
         name: getRequiredString(mutationStrings, 'name', data.term.name),
         description: getRequiredString(
           mutationStrings,
@@ -60,7 +65,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
       const [, , , , typeNumberString, parentIdString] =
         router.asPath.split('/') // e.g. taxonomy/term/create/4/1390
 
-      const success = data.id
+      const success = entityId
         ? await mutationFetch(taxonomySetMutation, input)
         : await mutationFetch(taxonomyCreateMutation, {
             ...input,
@@ -71,7 +76,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
       return successHandler({
         success,
         toastKey: 'save',
-        redirectUrl: `/${data.id ?? parentIdString}`,
+        redirectUrl: `/${entityId ?? parentIdString}`,
       })
     } catch (e) {
       // eslint-disable-next-line no-console

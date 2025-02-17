@@ -5,18 +5,11 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import {
-  entity,
-  editorContent,
-  serializedChild,
-  entityType,
-} from './common/common'
+import { editorContent, serializedChild, entityType } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
-import { MetadataFieldsModal } from './common/metadata-fields-modal'
 
 export const appletTypeState = entityType(
   {
-    ...entity,
     title: string(),
     content: editorContent(),
     url: serializedChild(EditorPluginType.Geogebra),
@@ -33,24 +26,11 @@ export const appletTypePlugin: EditorPlugin<AppletTypePluginState> = {
 }
 
 function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
-  const {
-    title,
-    url,
-    content,
-    meta_title: metaTitle,
-    meta_description: metaDescription,
-  } = props.state
+  const { title, url, content } = props.state
 
   return (
     <>
-      <div className="absolute right-0 -mt-10 mr-side flex">
-        <MetadataFieldsModal
-          metaTitle={metaTitle}
-          metaDescription={metaDescription}
-        />
-      </div>
       <EntityTitleInput title={title} />
-
       {url.render()}
       {content.render()}
     </>

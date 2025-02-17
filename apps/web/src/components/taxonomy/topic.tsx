@@ -12,9 +12,9 @@ import { InfoPanel } from '../info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { EntityMetaProvider } from '@/contexts/entity-meta-context'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidsProvider } from '@/contexts/uuids-context'
 import { allMathExamTaxIds } from '@/data/de/math-exams-data'
 import {
   BreadcrumbsData,
@@ -142,7 +142,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
 
           return (
             <li key={exerciseOrGroup.id ?? entityId} className="pb-10">
-              <UuidsProvider value={{ entityId }}>
+              <EntityMetaProvider value={{ entityId }}>
                 <ExerciseContext.Provider
                   value={{
                     isEntity:
@@ -157,7 +157,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
                     extraSerloRenderers={extraSerloRenderers}
                   />
                 </ExerciseContext.Provider>
-              </UuidsProvider>
+              </EntityMetaProvider>
             </li>
           )
         })}
