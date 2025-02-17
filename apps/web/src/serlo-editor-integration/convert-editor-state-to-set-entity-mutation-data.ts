@@ -9,21 +9,17 @@ export function convertEditorStateToSetEntityMutationData(
   const editorDocumentState = editorState.document
     .state as AbstractSerializedState
 
-  if (editorState.document.plugin === TemplatePluginType.Taxonomy) {
-    return {
-      ...editorDocumentState,
-      description: JSON.stringify({
-        ...editorState,
-        document: JSON.parse(editorDocumentState.description || '') as unknown,
-      }),
-    }
-  }
+  const editorDocument =
+    editorState.document.plugin === TemplatePluginType.Taxonomy ||
+    editorState.document.plugin === TemplatePluginType.Video
+      ? editorDocumentState.description || ''
+      : editorDocumentState.content || ''
 
   return {
     ...editorDocumentState,
-    content: JSON.stringify({
+    description: JSON.stringify({
       ...editorState,
-      document: JSON.parse(editorDocumentState.content || '') as unknown,
+      document: JSON.parse(editorDocument) as unknown,
     }),
   }
 }
