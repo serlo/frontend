@@ -16,11 +16,6 @@ import { State } from '../types'
 
 const selectSelf = (state: State) => state.documents
 
-export const selectDocuments = createSelector(
-  selectSelf,
-  (documents) => documents
-)
-
 export const selectDocument = createSelector(
   [selectSelf, (_state, id: string | null) => id],
   (documents, id) => {
