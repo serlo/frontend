@@ -140,7 +140,9 @@ export function convertEditorResponseToState(
   ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
-    const { editorMetadata } = unwrapEditorContent(entityType)
+    const { editorMetadata, taxonomyDescription } = unwrapTaxonomyDescription(
+      uuid.description
+    )
 
     return {
       ...editorMetadata,
@@ -153,13 +155,25 @@ export function convertEditorResponseToState(
           term: {
             name: uuid.name,
           },
-          description: serializeStaticDocument(
-            parseStaticString(uuid.description ?? '')
-          ),
+          description: taxonomyDescription,
         },
       },
     }
   }
+}
+
+function unwrapTaxonomyDescription(description: string | null | undefined) {
+  const convertedDescription = parseEditorData(description ?? undefined)
+
+  const editorMetadata = convertedDescription
+    ? R.omit(['document'], convertedDescription)
+    : R.omit(['document'], createEmptyDocument('serlo-org'))
+
+  const taxonomyDescription = serializeStaticDocument(
+    convertedDescription?.document
+  )
+
+  return { editorMetadata, taxonomyDescription }
 }
 
 export function unwrapEditorContent(
