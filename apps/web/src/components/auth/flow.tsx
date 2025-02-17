@@ -248,10 +248,11 @@ export function handleFlowError<S>(
         await router.push(flowPath)
         return
       case 'browser_location_change_required': {
-        // Ory Kratos asked us to point the user to this URL.
+        // Ory Kratos asked us to point the user to another URL.
 
         const searchParams = new URLSearchParams(window.location.search)
         const idpHint = searchParams.get('vidis_idp_hint')
+        // In case of SSO with VIDIS we have to append the query parameter vidis_idp_hint if it is present.
         if (data.redirect_browser_to.includes('vidis.schule')) {
           window.location.href =
             data.redirect_browser_to +
