@@ -173,5 +173,3 @@ Scenario(
     )
   }
 )
-
-// … maybe add more tests for other entities?
