@@ -3,10 +3,10 @@ import {
   EditorPluginType,
   TemplatePluginType,
   SerloOnlyFeaturesContext,
-  type SerloEditorProps as EditorProps,
+  type StorageFormat,
 } from '@editor/package'
 import dynamic from 'next/dynamic'
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ExternalRevisionLoader } from './components/external-revision-loader'
@@ -26,10 +26,34 @@ const Editor = dynamic(
   }
 )
 
+const plugins = [
+  ...defaultPlugins,
+  TemplatePluginType.Applet,
+  TemplatePluginType.Article,
+  TemplatePluginType.Course,
+  TemplatePluginType.Event,
+  TemplatePluginType.Page,
+  TemplatePluginType.Taxonomy,
+  TemplatePluginType.TextExercise,
+  TemplatePluginType.TextExerciseGroup,
+  TemplatePluginType.User,
+  TemplatePluginType.Video,
+  EditorPluginType.Anchor,
+  EditorPluginType.Article,
+  EditorPluginType.ArticleIntroduction,
+  EditorPluginType.Audio,
+  EditorPluginType.Course,
+  EditorPluginType.ExerciseGroup,
+  EditorPluginType.H5p,
+  EditorPluginType.Injection,
+  EditorPluginType.InteractiveVideo,
+  EditorPluginType.PageLayout,
+]
+
 export interface SerloEditorProps {
   isInTestArea?: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
-  initialState: EditorProps['initialState']
+  initialState: StorageFormat
 }
 
 export function SerloEditor({
@@ -37,6 +61,10 @@ export function SerloEditor({
   isInTestArea,
   initialState,
 }: SerloEditorProps) {
+  // No need to rerender on Editor change, therefore `useRef`
+  const editorState = useRef(initialState)
+  const prefilledChangesRef = useRef<string | undefined>(undefined)
+
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
 
@@ -51,53 +79,38 @@ export function SerloEditor({
         language={lang === 'de' ? 'de' : 'en'}
         editorVariant="serlo-org"
         userId={String(auth?.id)}
-        plugins={[
-          ...defaultPlugins,
-          TemplatePluginType.Applet,
-          TemplatePluginType.Article,
-          TemplatePluginType.Course,
-          TemplatePluginType.Event,
-          TemplatePluginType.Page,
-          TemplatePluginType.Taxonomy,
-          TemplatePluginType.TextExercise,
-          TemplatePluginType.TextExerciseGroup,
-          TemplatePluginType.User,
-          TemplatePluginType.Video,
-          EditorPluginType.Article,
-          EditorPluginType.Course,
-          EditorPluginType.PageLayout,
-          EditorPluginType.ArticleIntroduction,
-          EditorPluginType.Injection,
-          EditorPluginType.Anchor,
-          EditorPluginType.ExerciseGroup,
-          EditorPluginType.InteractiveVideo,
-          EditorPluginType.Audio,
-          EditorPluginType.H5p,
-        ]}
+        plugins={plugins}
         isProductionEnvironment={isProduction}
         initialState={initialState}
         styleReset={false}
         extraSerloPlugins={extraSerloPlugins}
         extraSerloRenderers={extraSerloRenderers}
+        onChange={(state) => {
+          editorState.current = state
+        }}
       >
         {(editor) => {
           const hasPendingChanges = editor.history.pendingChanges !== 0
           return (
             <>
-              <SaveButton
-                onSave={onSave}
-                isChanged={hasPendingChanges}
-                selectRootDocument={editor.selectRootDocument}
-                isInTestArea={isInTestArea}
-              />
+              {editorState.current.document.state ? (
+                <SaveButton
+                  onSave={onSave}
+                  isChanged={hasPendingChanges}
+                  editorState={editorState}
+                  isInTestArea={isInTestArea}
+                  prefilledChanges={prefilledChangesRef.current}
+                />
+              ) : null}
               {isNewEntity ? (
                 <ExternalRevisionLoader
                   templateType={
-                    (initialState as { plugin: TemplatePluginType }).plugin
+                    initialState.document.plugin as TemplatePluginType
                   }
                   dispatchReplaceRootDocument={
                     editor.dispatchReplaceRootDocument
                   }
+                  prefilledChangesRef={prefilledChangesRef}
                 />
               ) : null}
               {editor.element}

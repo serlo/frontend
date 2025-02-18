@@ -11,10 +11,10 @@ import type { CommentAreaEntityProps } from '@/components/comments/comment-area-
 import { Lazy } from '@/components/content/lazy'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
-import { useEntityData } from '@/contexts/uuids-context'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
@@ -28,7 +28,7 @@ export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
   const isRevisionView = useContext(RevisionViewContext)
   const currentPath = useRouter().asPath
 
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
   const { isInExerciseGroup, isEntity } = useContext(ExerciseContext)
 
   if (isPrintMode && !printModeSolutionVisible) return null

@@ -25,6 +25,7 @@ type TaxonomyTermChildrenLevel2 = Extract<
 
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
+
   return {
     description: uuid.description
       ? (parseDocumentString(uuid.description) as EditorRowsDocument)
@@ -46,12 +47,10 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   }
 }
 
-function isActive(child: TaxonomyTermChildrenLevel1) {
-  return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
-}
-
-function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
-  return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
+function isActive(
+  child: TaxonomyTermChildrenLevel1 | TaxonomyTermChildrenLevel2
+) {
+  return child.trashed === false
 }
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
@@ -141,7 +140,7 @@ function collectNestedTaxonomyTerms(
       child.__typename === UuidType.TaxonomyTerm &&
       child.type !== TaxonomyTermType.ExerciseFolder
     ) {
-      const subChildren = child.children.nodes.filter(isActive_for_subchildren)
+      const subChildren = child.children.nodes.filter(isActive)
       result.push({
         id: child.id,
         title: child.name,

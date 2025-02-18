@@ -1,7 +1,6 @@
 import { EditorToolbar } from '@editor/editor-ui/editor-toolbar/editor-toolbar'
 import {
   LocalStorageNotice,
-  debouncedStoreToLocalStorage,
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
 import { getEditorVersion } from '@editor/package/editor-version'
@@ -9,7 +8,7 @@ import { cn } from '@editor/utils/cn'
 import { useState, useMemo } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { HotkeysProvider } from 'react-hotkeys-hook'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 
 import { DndWrapper } from './components/dnd-wrapper'
 import { InnerDocument } from './inner-document'
@@ -24,7 +23,7 @@ export function Editor(props: EditorProps) {
   const isSerlo = useIsSerlo()
   const [useStored, setUseStored] = useState(false)
 
-  const storedState = getStateFromLocalStorage()
+  const storedState = getStateFromLocalStorage()?.document
   const initialState =
     useStored && storedState ? storedState : props.initialState
 
@@ -36,7 +35,7 @@ export function Editor(props: EditorProps) {
     window?.location?.href.includes('___editor_preview')
 
   return (
-    <Provider store={store}>
+    <ReduxProvider store={store}>
       <DndWrapper>
         <HotkeysProvider initiallyActiveScopes={['global']}>
           {/* only on serlo for now */}
@@ -64,18 +63,10 @@ export function Editor(props: EditorProps) {
             )}
             data-editor-version={getEditorVersion()}
           >
-            <InnerDocument
-              {...props}
-              initialState={initialState}
-              onChange={({ changed, getDocument }) => {
-                props.onChange?.({ changed, getDocument })
-                if (!changed || !isSerlo) return
-                void debouncedStoreToLocalStorage(getDocument())
-              }}
-            />
+            <InnerDocument {...props} initialState={initialState} />
           </div>
         </HotkeysProvider>
       </DndWrapper>
-    </Provider>
+    </ReduxProvider>
   )
 }

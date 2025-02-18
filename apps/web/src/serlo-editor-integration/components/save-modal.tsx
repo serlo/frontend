@@ -1,63 +1,65 @@
-import { TemplatePluginType, type AnyEditorDocument } from '@editor/package'
+import { type StorageFormat, TemplatePluginType } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { type MutableRefObject, useContext, useEffect, useState } from 'react'
 
+import { convertEditorStateToSetEntityMutationData } from '../convert-editor-state-to-set-entity-mutation-data'
 import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { EntityMetaContext } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { getLicense } from '@/data/licenses/licenses-helpers'
+import { getDefaultLicense, getLicense } from '@/data/licenses/licenses-helpers'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { type SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function SaveModal({
   open,
   setOpen,
   onSave,
-  selectRootDocument,
+  editorState,
   isInTestArea,
+  prefilledChanges,
 }: {
   open: boolean
   setOpen: (arg0: boolean) => void
   onSave: SerloEditorProps['onSave']
-  selectRootDocument: () => AnyEditorDocument
+  editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
+  prefilledChanges?: string
 }) {
-  const serializedRoot = selectRootDocument()
-  const serializedRootState =
-    serializedRoot?.state as SupportedTypesSerializedState
-
-  const licenseId = serializedRootState.licenseId
-  const changes = serializedRootState.changes
+  const editorDocument = editorState.current.document
 
   const { handleSave, pending, hasError } = useHandleSave(
     open,
-    serializedRootState,
+    convertEditorStateToSetEntityMutationData(editorState.current),
     onSave
   )
   const [hasAgreedLicense, setHasAgreedLicense] = useState(false)
-  const [changesText, setChangesText] = useState(changes ?? '')
+  const [changesText, setChangesText] = useState(prefilledChanges ?? '')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses, strings } = useInstanceData()
 
+  const licenseId = useContext(EntityMetaContext)?.licenseId
+  const licenseIdOrDefaultId = licenseId ?? getDefaultLicense(licenses).id
+
   const licenseAccepted = !licenseId || hasAgreedLicense
-  const changesFilled = !changes || changesText
-  const isNoEntity = serializedRoot
+  const changesFilled = !prefilledChanges || changesText
+  const isNoEntity = editorDocument
     ? [
         TemplatePluginType.User,
         TemplatePluginType.Page,
         TemplatePluginType.Taxonomy,
-      ].includes(serializedRoot.plugin as TemplatePluginType)
+      ].includes(editorDocument.plugin as TemplatePluginType)
     : false
   const maySave = isNoEntity || (licenseAccepted && changesFilled)
   const needsNoReview = isInTestArea || isNoEntity
-  const isOnlyText = isNoEntity || (needsNoReview && !licenseId && !changes)
+  const isOnlyText =
+    isNoEntity || (needsNoReview && !licenseId && !prefilledChanges)
 
-  const showChanges = serializedRoot ? !isNoEntity : true
+  const showChanges = editorDocument ? !isNoEntity : true
 
   useEffect(() => {
     if (!fireSave) return
@@ -67,7 +69,7 @@ export function SaveModal({
 
   useEffect(() => {
     // make sure generated change text is used
-    if (!changesText) setChangesText(changes ?? '')
+    if (!changesText) setChangesText(prefilledChanges ?? '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
@@ -182,10 +184,10 @@ export function SaveModal({
 
   function renderLicense() {
     if (isNoEntity) return null
-    const licenseAgreement = getLicense(licenses, licenseId).agreement.replace(
-      /<a href/g,
-      '<a target="_blank" href'
-    )
+    const licenseAgreement = getLicense(
+      licenses,
+      licenseIdOrDefaultId
+    ).agreement.replace(/<a href/g, '<a target="_blank" href')
 
     if (!licenseAgreement) return null
 

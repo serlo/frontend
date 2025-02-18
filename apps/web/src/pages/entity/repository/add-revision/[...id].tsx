@@ -9,12 +9,13 @@ import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
+  const { id, licenseId, metaTitle, metaDescription } = props
   return (
     <FrontendClientBase
       noContainers
       noIndex
       loadLoggedInData /* warn: enables preview editor without login */
-      serloEntityData={{ entityId: props.id }}
+      serloEntityData={{ entityId: id, licenseId, metaTitle, metaDescription }}
     >
       <div className="relative">
         <MaxWidthDiv>
@@ -39,5 +40,7 @@ export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
 
   if (result.errorType === 'failed-fetch') return { notFound: true }
 
-  return { props: result }
+  return {
+    props: JSON.parse(JSON.stringify(result)) as EditorPageData, // remove undefined values
+  }
 }

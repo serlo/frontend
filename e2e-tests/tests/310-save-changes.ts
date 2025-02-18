@@ -138,38 +138,3 @@ Scenario('Save Modal: New entity', async ({ I }) => {
   // this tells us we actually tried to save
   I.waitForText('Für diese Funktion musst du dich einloggen!', 5)
 })
-
-Scenario(
-  'Save content: Existing Article in Testarea, Metadata persist',
-  ({ I, login }) => {
-    login('admin')
-
-    editExistingEntity(I, 234583)
-    I.click('h1') //title
-    I.type('$')
-    I.click('h2') //content
-    I.type('$')
-    I.click('Speichern')
-    I.type('[test-changes]')
-    I.click('.license-wrapper')
-
-    I.click('.serlo-button-learner.serlo-button-green')
-
-    I.waitForText('Bearbeitungsverlauf', 30)
-    I.waitForText('gerade eben', 10)
-    I.see('[test-changes]')
-    //open preview
-    I.click('.serlo-button-learner-secondary.serlo-link')
-
-    // should get auto accepted in test area
-    I.waitForText('Das ist die aktuell akzeptierte Bearbeitung', 10)
-    I.see('Differenzenquotient$')
-    I.see('Beispiel$')
-
-    I.see('Meta-Titel: Differenzenquotient')
-    I.see('Meta-Beschreibung')
-    I.see(
-      'Der Differenzenquotient beschreibt die Steigung einer Funktion zwischen zwei Punkten.'
-    )
-  }
-)

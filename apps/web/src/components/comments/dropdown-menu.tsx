@@ -8,8 +8,8 @@ import { Thread } from '@serlo/authorization'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useEntityData } from '@/contexts/uuids-context'
 import { cn } from '@/helper/cn'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
@@ -57,7 +57,7 @@ export function DropdownMenu({
     ? canDo(Thread.createThread)
     : canDo(Thread.createComment)
 
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
 
   return (
     <div

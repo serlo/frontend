@@ -1,4 +1,4 @@
-import { TemplatePluginType } from '@editor/package'
+import { createEmptyDocument, TemplatePluginType } from '@editor/package'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
@@ -14,7 +14,10 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 export default renderedPageNoHooks(() => {
   const addRevisionProps = {
     initialState: {
-      plugin: TemplatePluginType.Page,
+      ...createEmptyDocument('serlo-org'),
+      document: {
+        plugin: TemplatePluginType.Page,
+      },
     },
     type: UuidType.Page,
     errorType: 'none',

@@ -39,17 +39,25 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         breadcrumbs={pageData.breadcrumbsData}
       />
     )
-  const entityId =
+
+  const serloEntityData =
     pageData.kind === 'single-entity'
-      ? pageData.entityData.id
-      : pageData.taxonomyData.id
+      ? {
+          entityId: pageData.entityData.id,
+          revisionId: pageData.entityData.revisionId,
+          licenseId: pageData.entityData.licenseId,
+        }
+      : {
+          entityId: pageData.taxonomyData.id,
+          revisionId: undefined,
+        }
 
   return (
     <FrontendClientBase
       noContainers
       noHeaderFooter
       noIndex
-      serloEntityData={{ entityId }}
+      serloEntityData={serloEntityData}
       authorization={pageData.authorization}
     >
       <Script
