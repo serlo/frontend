@@ -49,32 +49,28 @@ export async function requestRevision(
     const title = createTitle(uuid, instance)
 
     const thisExercise = isExercise
-      ? [
-          createExercise({
-            ...uuid,
-            licenseId: uuid.repository.licenseId,
-            currentRevision: {
-              title: uuid.title,
-              alias: uuid.alias,
-              content: uuid.content,
-              id: uuid.id,
-              date: uuid.date,
-            },
-            revisions: { totalCount: 0, nodes: [] },
-          }),
-        ]
+      ? createExercise({
+          ...uuid,
+          licenseId: uuid.repository.licenseId,
+          currentRevision: {
+            title: uuid.title,
+            alias: uuid.alias,
+            content: uuid.content,
+            id: uuid.id,
+            date: uuid.date,
+          },
+          revisions: { totalCount: 0, nodes: [] },
+        })
       : undefined
 
     const currentExercise =
       isExercise && uuid.repository.currentRevision
-        ? [
-            createExercise({
-              ...uuid,
-              licenseId: uuid.repository.licenseId,
-              currentRevision: uuid.repository.currentRevision,
-              revisions: { totalCount: 0, nodes: [] },
-            }),
-          ]
+        ? createExercise({
+            ...uuid,
+            licenseId: uuid.repository.licenseId,
+            currentRevision: uuid.repository.currentRevision,
+            revisions: { totalCount: 0, nodes: [] },
+          })
         : null
 
     // likely the previously accepted revision

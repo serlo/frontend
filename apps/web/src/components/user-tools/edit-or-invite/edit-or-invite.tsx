@@ -91,8 +91,8 @@ export function EditOrInvite({
     const coursePageId = getCoursePageIdFromPath(router.asPath)
 
     const url = isCourse
-      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + coursePageId
-      : getEditUrl(id, revisionId, typename.startsWith('Taxonomy'))
+      ? getEditUrl(data.courseId ?? id) + '#' + coursePageId
+      : getEditUrl(id, revisionId)
 
     if (typename === UuidType.Page || typename === UuidRevType.Page) {
       return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined

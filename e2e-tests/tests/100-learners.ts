@@ -283,3 +283,14 @@ Scenario('Comments', ({ I }) => {
   I.scrollTo('#comment-area-begin-scrollpoint')
   I.waitForText('Ich weiß nicht, ob es vom Computer', 10)
 })
+
+Scenario('Injections load', ({ I }) => {
+  I.amOnPage('/277232')
+  I.scrollTo('#b6ab26c0')
+  // text from injected content
+  I.waitForText('im Intervall', 10)
+
+  I.amOnPage('/1555')
+  I.scrollTo(locate('h2').withText('Übungsaufgaben: Zylinder'))
+  I.waitForText('Berechne das Volumen des Glases', 10)
+})

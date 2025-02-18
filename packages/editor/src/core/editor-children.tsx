@@ -14,7 +14,6 @@ import {
   selectPendingChanges,
   selectHasUndoActions,
   selectHasRedoActions,
-  selectDocuments,
   useStore,
 } from '../store'
 import { ROOT } from '../store/root/constants'
@@ -38,7 +37,7 @@ export function EditorChildren({ children }: { children: EditorRenderProps }) {
 
   const pendingChanges = useAppSelector(selectPendingChanges)
   const dispatchPersistHistory = useCallback(() => {
-    const documents = selectDocuments(store.getState())
+    const documents = store.getState().documents
     void dispatch(persistHistory(documents))
   }, [dispatch, store])
 

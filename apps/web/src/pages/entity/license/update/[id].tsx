@@ -47,7 +47,7 @@ function Content({ id }: UpdateLicenseProps) {
   if (!data || !data.uuid) {
     return (
       <>
-        {renderBackbutton()}
+        {renderBackButton()}
         <h3 className="serlo-h3">{strings.errors.defaultMessage}</h3>
       </>
     )
@@ -57,7 +57,7 @@ function Content({ id }: UpdateLicenseProps) {
 
   return (
     <>
-      {renderBackbutton()}
+      {renderBackButton()}
       <PageTitle title={loggendInStrings.authorMenu.changeLicense} headTitle />
 
       <div className="mx-side flex">
@@ -78,7 +78,7 @@ function Content({ id }: UpdateLicenseProps) {
     </>
   )
 
-  function renderBackbutton() {
+  function renderBackButton() {
     return (
       <Breadcrumbs
         data={[{ label: strings.revisions.toContent, url: `/${id}` }]}
