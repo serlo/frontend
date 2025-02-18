@@ -62,9 +62,7 @@ export function convertEditorResponseToState(
       message: `error while converting: ${JSON.stringify(stack)}`,
     })
 
-    return {
-      error: 'failure',
-    }
+    return { error: 'failure' }
   }
 
   function convertAbstractEntity(
