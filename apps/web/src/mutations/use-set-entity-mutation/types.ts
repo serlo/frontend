@@ -13,6 +13,7 @@ export type TaxonomyCreateOrUpdateMutationData = Pick<
 > & {
   __typename?: 'TaxonomyTerm'
   parent?: number
+  content: string
 }
 
 export interface SetEntityMutationRunnerData {
