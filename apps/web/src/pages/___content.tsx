@@ -39,7 +39,13 @@ const ContentPage: NextPage = () => {
         <h2>Review Types</h2>…<h2>Special Cases</h2>
         <ul>{renderLis(specialCases)}</ul>
         <h2>Editor Test</h2>
-        <ul>{renderLis(entities, true)}</ul>
+        <ul>
+          {renderLis(
+            // Editing just one CoursePage is not possible.
+            entities.filter((entity) => entity[0] !== 'CoursePage'),
+            true
+          )}
+        </ul>
       </nav>
       <iframe name="show" />
       <Style />
