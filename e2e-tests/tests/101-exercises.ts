@@ -93,7 +93,7 @@ Scenario('Interact with input exercise', ({ I }) => {
   I.click('$plugin-input-exercise-input')
   I.type('1')
   I.click("Stimmt's")
-  I.see('🎉')
+  I.seeElement('$plugin-exercise-feedback-correct')
   I.see('Superb feedback')
 
   I.click('$plugin-input-exercise-input')

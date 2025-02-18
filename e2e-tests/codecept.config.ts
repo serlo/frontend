@@ -20,6 +20,10 @@ exports.config = {
           }
         : { browser }),
     },
+    REST: {
+      endpoint: 'https://api.serlo-staging.dev/graphql',
+    },
+    JSONResponse: {},
   },
   plugins: {
     // https://codecept.io/locators/#custom-locators

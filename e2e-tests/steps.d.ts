@@ -6,7 +6,7 @@ declare namespace CodeceptJS {
     current: any
     login: any
   }
-  interface Methods extends Playwright {}
+  interface Methods extends Playwright, REST, JSONResponse {}
   interface I extends WithTranslation<Methods> {}
   namespace Translation {
     interface Actions {}

@@ -13,7 +13,6 @@ import {
 } from '../../editor-ui'
 import {
   focus,
-  selectFocused,
   selectStaticDocument,
   useStore,
   useAppDispatch,
@@ -52,7 +51,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   useEffect(() => overwriteFocus, [])
 
   const isAnyAnswerFocused = answers.some(
-    ({ feedback }) => feedback.id === selectFocused(store.getState())
+    ({ feedback }) => feedback.id === store.getState().focus
   )
 
   const showUi = focused || isAnyAnswerFocused
