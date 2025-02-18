@@ -96,8 +96,9 @@ export function convertEditorResponseToState(
   ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
-    const { editorMetadata, entityDescription } = unwrapEntityDescription(
-      uuid.description
+    const { editorMetadata, templateContent } = unwrapEditorContent(
+      UuidType.TaxonomyTerm,
+      uuid.description ?? undefined
     )
 
     return {
@@ -111,7 +112,7 @@ export function convertEditorResponseToState(
           term: {
             name: uuid.name,
           },
-          description: entityDescription ?? { plugin: EditorPluginType.Rows },
+          content: templateContent ?? { plugin: EditorPluginType.Rows },
         },
       },
     }

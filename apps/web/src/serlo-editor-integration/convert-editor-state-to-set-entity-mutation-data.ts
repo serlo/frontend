@@ -3,10 +3,7 @@ import { TemplatePluginType, type StorageFormat } from '@editor/package'
 import type { AbstractSerializedState } from './convert-editor-response-to-state'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
-const typesWithDescription = [
-  TemplatePluginType.Taxonomy,
-  TemplatePluginType.User,
-]
+const typesWithDescription = [TemplatePluginType.User]
 
 export function convertEditorStateToSetEntityMutationData(
   editorState: StorageFormat

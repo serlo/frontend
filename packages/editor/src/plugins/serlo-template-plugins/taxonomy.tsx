@@ -16,7 +16,7 @@ export const taxonomyTypeState = object({
   }),
   parent: number(),
   position: number(),
-  description: child({ plugin: EditorPluginType.Rows }),
+  content: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type TaxonomyTypePluginState = typeof taxonomyTypeState
@@ -28,7 +28,7 @@ export const taxonomyTypePlugin: EditorPlugin<TaxonomyTypePluginState> = {
 }
 
 function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
-  const { term, description } = props.state
+  const { term, content } = props.state
 
   return (
     <>
@@ -36,7 +36,7 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
         <EntityTitleInput title={term.name} />
       </header>
 
-      {description.render()}
+      {content.render()}
     </>
   )
 }
