@@ -1,21 +1,19 @@
 import {
   type EditorPlugin,
   type EditorPluginProps,
+  object,
   string,
 } from '@editor/plugin'
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entityType } from './common/common'
+import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
-export const courseTypeState = entityType(
-  {
-    title: string(),
-    content: editorContent(EditorPluginType.Course),
-  },
-  {}
-)
+export const courseTypeState = object({
+  title: string(),
+  content: editorContent(EditorPluginType.Course),
+})
 
 export type CourseTypePluginState = typeof courseTypeState
 
