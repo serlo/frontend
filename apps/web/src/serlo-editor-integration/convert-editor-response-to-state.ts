@@ -126,7 +126,7 @@ export function convertEditorResponseToState(
           term: {
             name: uuid.name,
           },
-          description: entityDescription,
+          description: entityDescription ?? { plugin: EditorPluginType.Rows },
         },
       },
     }
