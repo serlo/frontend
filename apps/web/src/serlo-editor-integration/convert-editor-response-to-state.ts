@@ -76,20 +76,6 @@ export function convertEditorResponseToState(
       content
     )
 
-    if (uuid.__typename === UuidType.Video) {
-      return {
-        ...editorMetadata,
-        document: {
-          plugin: TemplatePluginType.Video,
-          state: {
-            ...entityFields,
-            description: templateContent,
-            ...(url ? { url } : {}),
-          },
-        },
-      }
-    }
-
     return {
       ...editorMetadata,
       document: {

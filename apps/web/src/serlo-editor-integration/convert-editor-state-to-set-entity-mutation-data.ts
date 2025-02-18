@@ -5,7 +5,6 @@ import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/
 
 const typesWithDescription = [
   TemplatePluginType.Taxonomy,
-  TemplatePluginType.Video,
   TemplatePluginType.User,
 ]
 
