@@ -113,7 +113,7 @@ export function convertEditorResponseToState(
   ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
-    const { editorMetadata, taxonomyDescription } = unwrapTaxonomyDescription(
+    const { editorMetadata, entityDescription } = unwrapEntityDescription(
       uuid.description
     )
 
@@ -128,25 +128,25 @@ export function convertEditorResponseToState(
           term: {
             name: uuid.name,
           },
-          description: taxonomyDescription,
+          description: entityDescription,
         },
       },
     }
   }
 }
 
-function unwrapTaxonomyDescription(description: string | null | undefined) {
+function unwrapEntityDescription(description: string | null | undefined) {
   const convertedDescription = parseEditorData(description ?? undefined)
 
   const editorMetadata = convertedDescription
     ? R.omit(['document'], convertedDescription)
     : R.omit(['document'], createEmptyDocument('serlo-org'))
 
-  const taxonomyDescription = serializeStaticDocument(
+  const entityDescription = serializeStaticDocument(
     convertedDescription?.document
   )
 
-  return { editorMetadata, taxonomyDescription }
+  return { editorMetadata, entityDescription }
 }
 
 export function unwrapEditorContent(
@@ -192,14 +192,15 @@ export function unwrapEditorContent(
 }
 
 export function convertUserByDescription(description?: string | null) {
+  const { editorMetadata, entityDescription } =
+    unwrapEntityDescription(description)
+
   return {
-    ...createEmptyDocument('serlo-org'),
+    ...editorMetadata,
     document: {
       plugin: TemplatePluginType.User,
       state: {
-        description: serializeStaticDocument(
-          parseStaticString(description ?? '')
-        ),
+        description: entityDescription,
       },
     },
   }
@@ -252,18 +253,6 @@ function serializeStaticDocument(content?: AnyEditorDocument): string {
       state: [{ plugin: EditorPluginType.Text, state: undefined }],
     }
   )
-}
-
-function parseStaticString(
-  content: SerializedStaticState
-): AnyEditorDocument | undefined {
-  if (!content) return undefined
-  try {
-    return JSON.parse(content) as AnyEditorDocument
-  } catch {
-    // No valid JSON, so we return nothing
-    return undefined
-  }
 }
 
 function parseEditorData(
