@@ -1,13 +1,13 @@
 import { type StorageFormat, TemplatePluginType } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { type MutableRefObject, useEffect, useState } from 'react'
+import { type MutableRefObject, useContext, useEffect, useState } from 'react'
 
 import { convertEditorStateToSetEntityMutationData } from '../convert-editor-state-to-set-entity-mutation-data'
 import type { SerloEditorProps } from '../serlo-editor'
 import { useHandleSave } from '../use-handle-save'
 import { InfoPanel } from '@/components/info-panel'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useEntityMetaData } from '@/contexts/entity-meta-context'
+import { EntityMetaContext } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getDefaultLicense, getLicense } from '@/data/licenses/licenses-helpers'
@@ -42,7 +42,7 @@ export function SaveModal({
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { licenses, strings } = useInstanceData()
 
-  const { licenseId } = useEntityMetaData()
+  const licenseId = useContext(EntityMetaContext)?.licenseId
   const licenseIdOrDefaultId = licenseId ?? getDefaultLicense(licenses).id
 
   const licenseAccepted = !licenseId || hasAgreedLicense
