@@ -277,7 +277,7 @@ Scenario('Save Entity "Page" and check result', ({ I }) => {
   })
 })
 
-Scenario.only('Save "User" and check result', ({ I }) => {
+Scenario('Save "User" and check result', ({ I }) => {
   const { id, state } = idsAndExpectedResult['User']
   I.amOnPage(`/user/settings`)
   I.waitForElement('[data-document=true]', 10)
