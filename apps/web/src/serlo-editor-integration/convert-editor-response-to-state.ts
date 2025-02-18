@@ -83,7 +83,6 @@ export function convertEditorResponseToState(
           plugin: TemplatePluginType.Video,
           state: {
             ...entityFields,
-            content: url ? url : templateContent,
             description: templateContent,
             ...(url ? { url } : {}),
           },

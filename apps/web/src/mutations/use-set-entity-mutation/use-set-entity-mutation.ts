@@ -59,7 +59,6 @@ export function useSetEntityMutation() {
           return false
         }
         const additionalInput = getAdditionalInputData(mutationStrings, data)
-
         input = {
           entityId,
           ...genericInput,
@@ -148,7 +147,13 @@ function getAdditionalInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData
 ) {
-  const { title, url, content, description } = data
+  if (
+    data.__typename === UuidType.Exercise ||
+    data.__typename === UuidType.ExerciseGroup
+  ) {
+    return {}
+  }
+  const { title, url, content } = data
   switch (data.__typename) {
     case UuidType.Course:
     case UuidType.Article:
@@ -157,16 +162,14 @@ function getAdditionalInputData(
       return {
         title: getRequiredString(mutationStrings, 'title', title),
       }
-
     case UuidType.Exercise:
     case UuidType.ExerciseGroup:
       return {}
     case UuidType.Video:
       return {
         title: getRequiredString(mutationStrings, 'title', title),
-        // url is stored in content for some reason
-        url: getRequiredString(mutationStrings, 'url', content),
-        content: getRequiredString(mutationStrings, 'content', description),
+        url: getRequiredString(mutationStrings, 'url', url),
+        content: getRequiredString(mutationStrings, 'content', content),
       }
     case UuidType.Applet:
       return {
