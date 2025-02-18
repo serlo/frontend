@@ -11,7 +11,8 @@ export function convertEditorStateToSetEntityMutationData(
 
   if (
     editorState.document.plugin === TemplatePluginType.Taxonomy ||
-    editorState.document.plugin === TemplatePluginType.Video
+    editorState.document.plugin === TemplatePluginType.Video ||
+    editorState.document.plugin === TemplatePluginType.User
   ) {
     return {
       ...editorDocumentState,
