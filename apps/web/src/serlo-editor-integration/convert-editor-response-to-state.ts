@@ -142,9 +142,7 @@ function unwrapEntityDescription(description: string | null | undefined) {
     ? R.omit(['document'], convertedDescription)
     : R.omit(['document'], createEmptyDocument('serlo-org'))
 
-  const entityDescription = serializeStaticDocument(
-    convertedDescription?.document
-  )
+  const entityDescription = convertedDescription?.document
 
   return { editorMetadata, entityDescription }
 }
@@ -163,32 +161,26 @@ export function unwrapEditorContent(
     | AnyEditorDocument
     | undefined
 
-  let templateContent
   if (
     entityType !== 'Article' ||
     editorContent?.plugin === EditorPluginType.Article
   ) {
-    templateContent = serializeStaticDocument(editorContent)
-  } else {
-    // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
-    templateContent = serializeStaticDocument({
-      plugin: EditorPluginType.Article,
-      state: {
-        introduction: { plugin: EditorPluginType.ArticleIntroduction },
-        content: editorContent,
-        exercises: [],
-        exerciseFolder: { id: '', title: '' },
-        relatedContent: {
-          articles: [],
-          courses: [],
-          videos: [],
-        },
-        sources: [],
-      },
-    })
+    return { editorMetadata, templateContent: editorContent }
   }
 
-  return { editorMetadata, templateContent }
+  // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
+  const articlePluginDocument = {
+    plugin: EditorPluginType.Article,
+    state: {
+      introduction: { plugin: EditorPluginType.ArticleIntroduction },
+      content: editorContent,
+      exercises: [],
+      exerciseFolder: { id: '', title: '' },
+      relatedContent: { articles: [], courses: [], videos: [] },
+      sources: [],
+    },
+  }
+  return { editorMetadata, templateContent: articlePluginDocument }
 }
 
 export function convertUserByDescription(description?: string | null) {
@@ -199,9 +191,7 @@ export function convertUserByDescription(description?: string | null) {
     ...editorMetadata,
     document: {
       plugin: TemplatePluginType.User,
-      state: {
-        description: entityDescription,
-      },
+      state: { description: entityDescription },
     },
   }
 }
@@ -243,16 +233,6 @@ export function isError(
   result: DeserializedStaticResult
 ): result is ConvertResponseError {
   return !!(result as ConvertResponseError).error
-}
-
-function serializeStaticDocument(content?: AnyEditorDocument): string {
-  if (typeof content === 'string') return content
-  return JSON.stringify(
-    content ?? {
-      plugin: EditorPluginType.Rows,
-      state: [{ plugin: EditorPluginType.Text, state: undefined }],
-    }
-  )
 }
 
 function parseEditorData(
