@@ -18,6 +18,7 @@ export interface EditorProps {
     state?: unknown
   }
   onChange: OnEditorChange
+  showUndoRedoButtons?: boolean
 }
 
 export type EditorRenderProps = ReactNode | ((editor: BaseEditor) => ReactNode)

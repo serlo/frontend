@@ -83,6 +83,7 @@ export function SerloEditor({
         isProductionEnvironment={isProduction}
         initialState={initialState}
         styleReset={false}
+        showUndoRedoButtons
         extraSerloPlugins={extraSerloPlugins}
         extraSerloRenderers={extraSerloRenderers}
         onChange={(state) => {
