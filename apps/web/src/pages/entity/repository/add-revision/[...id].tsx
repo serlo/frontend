@@ -1,17 +1,16 @@
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import * as t from 'io-ts'
-
 import type { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
-import { EditorPageData, fetchEditorData } from '@/fetcher/fetch-editor-data'
+import { UuidType } from '@/data-types'
+import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { loadEditorState } from '@/pages/api/datenraum/node'
-import { UuidType } from '@/data-types'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
 const Plugin = t.type({ plugin: t.string })
 

@@ -5,8 +5,9 @@ import { isArticleDocument } from '@editor/types/plugin-type-guards'
 import { useQuery } from '@tanstack/react-query'
 import { ImportIcon, NewspaperIcon, SquareCheckBigIcon } from 'lucide-react'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
+import { PasswordContext } from './login-form'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -39,11 +40,14 @@ export interface LearningResource {
   type: 'Article' | 'Exercise'
 }
 
-async function fetchContent({ queryKey }: { queryKey: string[] }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_key, id] = queryKey
-
-  const fetchUrl = `/api/datenraum/node?id=${id}`
+async function fetchContent({
+  id,
+  password,
+}: {
+  id: string
+  password: string
+}) {
+  const fetchUrl = `/api/datenraum/node?id=${id}&password=${encodeURIComponent(password)}`
   try {
     const result = await fetch(fetchUrl)
     const stateObject = (await result.json()) as {
@@ -71,6 +75,7 @@ export default function SearchCard({
   entry: LearningResource
   onImport?: (state?: unknown) => void
 }) {
+  const password = useContext(PasswordContext)
   const router = useRouter()
 
   const IconComponent = iconMap[entry.type]
@@ -79,7 +84,7 @@ export default function SearchCard({
 
   const { data } = useQuery({
     queryKey: ['contentState', entry.id],
-    queryFn: fetchContent,
+    queryFn: ({ queryKey }) => fetchContent({ id: queryKey[1], password }),
     enabled,
   })
 

@@ -2,14 +2,16 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { faDove } from '@fortawesome/free-solid-svg-icons'
+import { useRouter } from 'next/router'
+import { useContext } from 'react'
 
 import { AbstractSerializedState } from '../convert-editor-response-to-state'
 import type { SerloEditorProps } from '../serlo-editor'
+import { PasswordContext } from '@/components/datenraum/login-form'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useRouter } from 'next/router'
 
 export function SaveModal({
   open,
@@ -20,6 +22,7 @@ export function SaveModal({
   onSave: SerloEditorProps['onSave']
   isInTestArea?: boolean
 }) {
+  const password = useContext(PasswordContext)
   const router = useRouter()
   const store = useStore()
   // can be empty before first change
@@ -74,21 +77,24 @@ export function SaveModal({
     const randomId = Math.floor(Math.random() * 10000000000) + 10000000000
 
     try {
-      const result = await fetch('/api/datenraum/put', {
-        method: 'POST',
-        headers: {
-          // Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: exampleSourceID,
-          title: title + ' (datenraum-test)',
-          description:
-            'Neuer Inhalt vom Prototypen "Serlo Editor <> Datenraum".',
-          serloId: randomId,
-          editorState: content,
-        }),
-      })
+      const result = await fetch(
+        `/api/datenraum/put?password=${encodeURIComponent(password)}`,
+        {
+          method: 'POST',
+          headers: {
+            // Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: exampleSourceID,
+            title: title + ' (datenraum-test)',
+            description:
+              'Neuer Inhalt vom Prototypen "Serlo Editor <> Datenraum".',
+            serloId: randomId,
+            editorState: content,
+          }),
+        }
+      )
 
       if (!result.ok) throw new Error('Failed to put node')
 

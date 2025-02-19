@@ -28,6 +28,11 @@ export default async function handler(
     return
   }
 
+  if (req.query.password !== process.env.DATENRAUM_DEMO_PASSWORD_FOR_USER) {
+    res.status(401).json({ message: 'wrong password' })
+    return
+  }
+
   const { id } = req.query
 
   if (!id || Array.isArray(id)) {

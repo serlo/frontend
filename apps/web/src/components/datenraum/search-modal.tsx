@@ -3,10 +3,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { DogIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import SearchCard, { LearningResource, typeTitleMap } from './search-card'
 import { FaIcon } from '../fa-icon'
+import { PasswordContext } from './login-form'
 import { Card, CardHeader, CardTitle } from '../ui/card'
 import {
   Select,
@@ -27,6 +28,7 @@ export function SearchModal({
   noNew?: boolean
   onImport?: (state?: unknown) => void
 }) {
+  const password = useContext(PasswordContext)
   const [liveQuery, setLiveQuery] = useState('')
   const query = useDebounce(liveQuery, 500)
 
@@ -156,7 +158,9 @@ export function SearchModal({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_key, query] = queryKey
 
-    const response = await fetch(`/api/datenraum/search?q=${query}`)
+    const response = await fetch(
+      `/api/datenraum/search?q=${query}&password=${encodeURIComponent(password)}`
+    )
 
     if (!response.ok) {
       // eslint-disable-next-line no-console

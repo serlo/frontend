@@ -24,6 +24,11 @@ export default async function handler(
     return
   }
 
+  if (req.query.password !== process.env.DATENRAUM_DEMO_PASSWORD_FOR_USER) {
+    res.status(401).json({ message: 'wrong password' })
+    return
+  }
+
   const username = process.env.DATENRAUM_USERNAME
   const password = process.env.DATENRAUM_PASSWORD
 
@@ -77,7 +82,7 @@ export default async function handler(
     description: description,
     inLanguage: ['de'],
     type: ['LearningResource', 'Article'],
-    content: JSON.parse(editorState),
+    content: JSON.parse(editorState) as unknown,
   }
 
   const putResponse = await fetch(
