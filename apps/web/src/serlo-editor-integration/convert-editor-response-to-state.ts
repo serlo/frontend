@@ -76,20 +76,6 @@ export function convertEditorResponseToState(
       content
     )
 
-    if (uuid.__typename === UuidType.Video) {
-      return {
-        ...editorMetadata,
-        document: {
-          plugin: TemplatePluginType.Video,
-          state: {
-            ...entityFields,
-            description: templateContent,
-            ...(url ? { url } : {}),
-          },
-        },
-      }
-    }
-
     return {
       ...editorMetadata,
       document: {
@@ -110,8 +96,9 @@ export function convertEditorResponseToState(
   ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
-    const { editorMetadata, entityDescription } = unwrapEntityDescription(
-      uuid.description
+    const { editorMetadata, templateContent } = unwrapEditorContent(
+      UuidType.TaxonomyTerm,
+      uuid.description ?? undefined
     )
 
     return {
@@ -125,23 +112,11 @@ export function convertEditorResponseToState(
           term: {
             name: uuid.name,
           },
-          description: entityDescription ?? { plugin: EditorPluginType.Rows },
+          content: templateContent ?? { plugin: EditorPluginType.Rows },
         },
       },
     }
   }
-}
-
-function unwrapEntityDescription(description: string | null | undefined) {
-  const convertedDescription = parseEditorData(description ?? undefined)
-
-  const editorMetadata = convertedDescription
-    ? R.omit(['document'], convertedDescription)
-    : R.omit(['document'], createEmptyDocument('serlo-org'))
-
-  const entityDescription = convertedDescription?.document
-
-  return { editorMetadata, entityDescription }
 }
 
 export function unwrapEditorContent(
@@ -180,43 +155,26 @@ export function unwrapEditorContent(
   return { editorMetadata, templateContent: articlePluginDocument }
 }
 
-export function convertUserByDescription(description?: string | null) {
-  const { editorMetadata, entityDescription } =
-    unwrapEntityDescription(description)
+export function convertUserByDescription(content?: string | null) {
+  const { editorMetadata, templateContent } = unwrapEditorContent(
+    UuidType.User,
+    content ?? undefined
+  )
 
   return {
     ...editorMetadata,
     document: {
       plugin: TemplatePluginType.User,
-      state: { description: entityDescription },
+      state: { content: templateContent },
     },
   }
 }
 
-export interface AbstractSerializedState {
+export interface SerializedAbstractTemplatePluginDocument {
   __typename?: UuidType[number]
-  title?: string
   content: SerializedStaticState
-  reasoning?: SerializedStaticState
-  description: SerializedStaticState
+  title?: string
   url?: string
-  cohesive?: string
-}
-
-export interface TaxonomySerializedState {
-  __typename?: UuidType.TaxonomyTerm
-  term: {
-    name: string
-  }
-  description: SerializedStaticState
-  taxonomy: number
-  parent: number
-  position: number
-}
-
-export interface UserSerializedState {
-  __typename?: UuidType.User
-  description: SerializedStaticState
 }
 
 export type ConvertResponseError =
