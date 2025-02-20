@@ -11,6 +11,7 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { loadEditorState } from '@/pages/api/datenraum/node'
+import LoginForm from '@/components/datenraum/login-form'
 
 const Plugin = t.type({ plugin: t.string })
 
@@ -23,15 +24,17 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
       loadLoggedInData /* warn: enables preview editor without login */
       serloEntityData={{ entityId: id, licenseId, metaTitle, metaDescription }}
     >
-      <div className="relative">
-        <MaxWidthDiv>
-          <main>
-            <Guard needsAuth={isProduction ? true : undefined} data>
-              <AddRevision {...props} />
-            </Guard>
-          </main>
-        </MaxWidthDiv>
-      </div>
+      <LoginForm>
+        <div className="relative">
+          <MaxWidthDiv>
+            <main>
+              <Guard needsAuth={isProduction ? true : undefined} data>
+                <AddRevision {...props} />
+              </Guard>
+            </main>
+          </MaxWidthDiv>
+        </div>
+      </LoginForm>
     </FrontendClientBase>
   )
 })

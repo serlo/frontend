@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import clsx from 'clsx'
-import React, { createContext } from 'react'
+import Cookies from 'js-cookie'
+import React, { createContext, useEffect } from 'react'
 
 export const PasswordContext = createContext<string>('')
 
@@ -11,6 +12,8 @@ interface LoginFormProps {
 export default function LoginForm(props: LoginFormProps) {
   const [password, setPassword] = React.useState('')
   const [isCorrectPassword, setIsCorrectPassword] = React.useState(false)
+
+  const cookieName = 'passwordForPrototype'
 
   const checkPassword = useMutation({
     mutationFn: async () => {
@@ -25,6 +28,26 @@ export default function LoginForm(props: LoginFormProps) {
     },
     onSuccess: () => setIsCorrectPassword(true),
   })
+
+  useEffect(() => {
+    const passwordCookieValue = Cookies.get(cookieName)
+
+    if (passwordCookieValue && !isCorrectPassword) {
+      setPassword(passwordCookieValue)
+      setIsCorrectPassword(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    const passwordCookieValue = Cookies.get(cookieName)
+
+    console.log(passwordCookieValue, password)
+
+    if (isCorrectPassword && passwordCookieValue !== password) {
+      console.log('setting cookie')
+      Cookies.set(cookieName, password, { expires: 30 })
+    }
+  }, [password, isCorrectPassword])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)

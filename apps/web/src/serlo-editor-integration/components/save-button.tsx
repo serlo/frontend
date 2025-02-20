@@ -1,6 +1,6 @@
 import type { StorageFormat } from '@editor/package'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { type MutableRefObject, useState } from 'react'
+import { type MutableRefObject, useContext, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { SaveModal } from './save-modal'
@@ -8,6 +8,7 @@ import type { SerloEditorProps } from '../serlo-editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { PasswordContext } from '@/components/datenraum/login-form'
 
 export function SaveButton({
   onSave,
@@ -22,6 +23,9 @@ export function SaveButton({
   isInTestArea?: boolean
   prefilledChanges?: string
 }) {
+  const password = useContext(PasswordContext)
+
+  console.log('password', password)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   const saveButtonStrings = useInstanceData().strings.saveButton
@@ -41,6 +45,7 @@ export function SaveButton({
         <FaIcon icon={faSave} /> {saveButtonStrings.save}
       </button>
       <SaveModal
+        password={password}
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         onSave={onSave}
