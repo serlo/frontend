@@ -56,6 +56,7 @@ export default function LoginForm(props: LoginFormProps) {
                 type="password"
                 value={password}
                 onChange={handleChange}
+                onKeyDown={(e) => e.key === 'Enter' && checkPassword.mutate()}
               />
             </div>
             <button
