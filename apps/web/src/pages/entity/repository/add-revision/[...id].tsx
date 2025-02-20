@@ -2,6 +2,7 @@ import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import * as t from 'io-ts'
 import type { GetServerSideProps } from 'next'
 
+import LoginForm from '@/components/datenraum/login-form'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -11,7 +12,6 @@ import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { loadEditorState } from '@/pages/api/datenraum/node'
-import LoginForm from '@/components/datenraum/login-form'
 
 const Plugin = t.type({ plugin: t.string })
 

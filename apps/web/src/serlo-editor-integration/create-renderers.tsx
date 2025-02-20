@@ -3,9 +3,9 @@ import {
   LinkRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
-import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
+import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { DatenraumIntegrationStaticRenderer } from '@editor/plugins/datenraum-integration/static'
 import { ImageGalleryStaticRenderer } from '@editor/plugins/image-gallery/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'

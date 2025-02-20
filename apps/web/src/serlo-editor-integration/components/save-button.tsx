@@ -5,10 +5,10 @@ import { createPortal } from 'react-dom'
 
 import { SaveModal } from './save-modal'
 import type { SerloEditorProps } from '../serlo-editor'
+import { PasswordContext } from '@/components/datenraum/login-form'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { PasswordContext } from '@/components/datenraum/login-form'
 
 export function SaveButton({
   onSave,
