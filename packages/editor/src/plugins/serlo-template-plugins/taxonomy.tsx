@@ -6,11 +6,10 @@ import {
   number,
 } from '@editor/plugin'
 
-import { editorContent, uuid } from './common/common'
+import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const taxonomyTypeState = object({
-  ...uuid,
   term: object({
     name: string(),
   }),

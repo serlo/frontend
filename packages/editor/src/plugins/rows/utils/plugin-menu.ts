@@ -79,7 +79,6 @@ export const pluginMenuType = {
 
   InteractiveVideo: EditorPluginType.InteractiveVideo,
   PageLayout: EditorPluginType.PageLayout,
-  PagePartners: EditorPluginType.PagePartners,
 
   SingleChoiceExercise: 'singleChoiceExercise',
   MultipleChoiceExercise: 'multipleChoiceExercise',
@@ -259,7 +258,6 @@ const iconLookup: Record<PluginMenuType, string> = {
   [pluginMenuType.ExerciseGroup]: IconFallback,
   [pluginMenuType.InteractiveVideo]: IconInteractiveVideo,
   [pluginMenuType.PageLayout]: IconFallback,
-  [pluginMenuType.PagePartners]: IconFallback,
   [pluginMenuType.EdusharingAsset]: IconImage,
 }
 
@@ -291,7 +289,6 @@ const iconComponentLookup: Record<PluginMenuType, React.ComponentType> = {
   [pluginMenuType.ExerciseGroup]: FallbackIcon,
   [pluginMenuType.InteractiveVideo]: InteractiveVideoIcon,
   [pluginMenuType.PageLayout]: FallbackIcon,
-  [pluginMenuType.PagePartners]: FallbackIcon,
   [pluginMenuType.EdusharingAsset]: ImageIcon,
   [pluginMenuType.DatenraumIntegration]: DatenraumIcon,
   [pluginMenuType.MeineInhalte]: FallbackIcon,

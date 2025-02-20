@@ -1,15 +1,17 @@
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import type {
-  EditorArticleDocument,
-  EditorExerciseDocument,
-  EditorExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+import {
+  EditorPluginType,
+  type EditorArticleIntroductionDocument,
+  type EditorExerciseDocument,
+  type EditorExerciseGroupDocument,
+  type EditorRowsDocument,
+} from '@editor/package'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
 import { ShareEditorContentQuery } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 /**
  * Allows frontend to copy Serlo content to the clipboard.
@@ -50,11 +52,28 @@ export default async function handler(
         }
 
         if (uuid.__typename === 'Article') {
-          const articleDocument = parseDocumentString(
-            uuid.currentRevision.content
-          ) as EditorArticleDocument
-          const articleContent = articleDocument.state.content
-          respondWithContent(articleContent)
+          const { introduction, content } = (
+            parseDocumentString(uuid.currentRevision.content) as {
+              state: {
+                introduction: EditorArticleIntroductionDocument
+                content: EditorRowsDocument
+              }
+            }
+          ).state
+          const articleIntroductionAsMultimediaPlugin = {
+            plugin: EditorPluginType.Multimedia,
+            state: {
+              ...introduction.state,
+              explanation: {
+                plugin: EditorPluginType.Rows,
+                state: [introduction.state.explanation],
+              },
+            },
+          }
+          respondWithContent({
+            plugin: EditorPluginType.Rows,
+            state: [articleIntroductionAsMultimediaPlugin, ...content.state],
+          })
           return
         }
 

@@ -1,9 +1,11 @@
-import { useEmptyPreview } from '@editor/core/hooks/use-empty-preview'
 import { cn } from '@editor/utils/cn'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useDrag } from 'react-dnd'
+import { getEmptyImage } from 'react-dnd-html5-backend'
 
 import type { DraggableId } from '..'
+import { DraggableAnswerPreview } from './draggable-answer-preview'
+import { draggableAnswerStyle } from './draggable-answer-style'
 
 export const blankDraggableAnswerDragType = 'blank-solution'
 
@@ -18,9 +20,6 @@ export interface BlankAnswerDragItem {
   text: string
 }
 
-export const dragAnswerStyle =
-  'cursor-grab rounded-full border border-brand bg-brand-50 px-2'
-
 export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
   const { draggableId, text, isAnswerCorrect } = props
 
@@ -33,18 +32,24 @@ export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
     type: blankDraggableAnswerDragType,
     item: dragItem,
   })
-  useEmptyPreview(preview)
+
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true })
+  }, [preview])
 
   return (
-    <span
-      className={cn(
-        dragAnswerStyle,
-        isAnswerCorrect && 'border-green-500',
-        isAnswerCorrect === false && 'border-red-500'
-      )}
-      ref={dragRef as unknown as React.LegacyRef<HTMLSpanElement>}
-    >
-      {text}
-    </span>
+    <div className="relative inline-block">
+      <span
+        className={cn(
+          draggableAnswerStyle,
+          isAnswerCorrect && 'border-green-500',
+          isAnswerCorrect === false && 'border-red-500'
+        )}
+        ref={dragRef as unknown as React.LegacyRef<HTMLSpanElement>}
+      >
+        {text}
+      </span>
+      <DraggableAnswerPreview draggableId={draggableId} />
+    </div>
   )
 }

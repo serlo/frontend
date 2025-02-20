@@ -90,7 +90,7 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   function getEditHref(): string | undefined {
     if (!data) return undefined
     const revisionId = data.revisionId
-    const url = getEditUrl(data.id, revisionId, true)
+    const url = getEditUrl(data.id, revisionId)
     return canDo(TaxonomyTerm.set) ? url : undefined
   }
 }

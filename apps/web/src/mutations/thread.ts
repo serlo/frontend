@@ -4,7 +4,7 @@ import { useSWRConfig } from 'swr'
 
 import { useMutationFetchAuthed } from './helper/use-mutation-fetch'
 import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
-import { useEntityData } from '@/contexts/uuids-context'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
@@ -30,7 +30,7 @@ const threadArchiveMutation = gql`
 `
 
 export function useThreadArchivedMutation() {
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
   const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
@@ -61,7 +61,7 @@ const setThreadStateMutation = gql`
 `
 
 export function useSetThreadStateMutation() {
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
   const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
@@ -89,7 +89,7 @@ const setCommentStateMutation = gql`
 `
 
 export function useSetCommentStateMutation() {
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
   const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
@@ -146,7 +146,7 @@ export function useCreateCommentMutation() {
   const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
 
   return async function (input: ThreadCreateCommentInput) {
     if (!entityId) return false
@@ -174,7 +174,7 @@ export function useEditCommentMutation() {
   const mutationFetch = useMutationFetchAuthed()
   const mutateSWRCache = useSWRCacheMutate()
   const { mutate } = useSWRConfig()
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
 
   return async function (input: ThreadEditCommentInput) {
     if (!entityId) return false

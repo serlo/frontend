@@ -1,12 +1,11 @@
-import { storeStateToLocalStorage } from '@editor/editor-ui/save/local-storage-notice'
 import { useEffect, useState } from 'react'
 
+import { type AbstractSerializedState } from './convert-editor-response-to-state'
 import type { SerloEditorProps } from './serlo-editor'
-import type { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function useHandleSave(
   visible: boolean,
-  serializedRootState: SupportedTypesSerializedState,
+  editorDocumentState: AbstractSerializedState,
   onSave: SerloEditorProps['onSave']
 ) {
   const [pending, setPending] = useState(false)
@@ -22,10 +21,9 @@ export function useHandleSave(
   const handleSave = (changes?: string) => {
     setPending(true)
 
-    onSave({ ...serializedRootState, changes })
+    onSave({ ...editorDocumentState, changes })
       .then(() => {
         setTimeout(() => {
-          storeStateToLocalStorage(null)
           setPending(false)
           setHasError(false)
         }, 200)

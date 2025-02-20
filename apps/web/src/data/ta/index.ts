@@ -127,7 +127,8 @@ export const instanceData = {
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: "படம்",
       previewImage: 'Preview Image',
-      task: "பணி"
+      task: "பணி",
+      courseNoPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.'
     },
     consent: {
       title: 'Consent for external Content',
@@ -224,6 +225,12 @@ export const instanceData = {
       importedContentText: 'imported',
       importedContentNote: 'This revision includes imported content',
       importedContentIdentifier: 'Content imported from'
+    },
+    externalRevisions: {
+      importOther: 'Import content from other entity',
+      importOtherExplanation: "Just paste the url or id of another serlo.org entity of the same type here to duplicate it's content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).",
+      importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+      importOtherButton: 'Import content'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -366,7 +373,8 @@ export const instanceData = {
         code4000007: 'An account with the same email or username exists already.',
         code4000008: 'The provided authentication code is invalid, please try again.',
         code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
-        code4000032: "You inserted less than 8 characters.",
+        code4000031: 'This password can not be used because it is too similar to the username.',
+        code4000032: 'You inserted less than 8 characters.',
         code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
         code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
         code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'
@@ -427,6 +435,26 @@ export const instanceData = {
     bin: {
       title: "தலைப்பு",
       trashed: 'Trashed…'
+    },
+    saveButton: {
+      noChangesWarning: 'Nothing changed so there is no need to save yet',
+      save: "சேமி",
+      saveWithReview: 'Save and get review',
+      ready: "சேமிக்கத் தயாரா?",
+      cancel: "ரத்து செய்",
+      saving: 'Saving…',
+      missingChanges: 'You need to fill out the changes you made',
+      missingLicenseTerms: 'You need to accept the license terms',
+      missingChangesAndLicenseTerms: 'You need to fill out the changes you made and accept the license terms',
+      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
+      changes: 'Describe your changes to the content',
+      confirmRouteChange: 'Are you sure you want to leave without saving?'
+    },
+    articleAddModal: {
+      introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+      introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+      buttonAddType: "இணைக்குக %type%",
+      title: 'Add related Content or Exercises'
     }
   }
 };
@@ -624,6 +652,17 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    uuidUrlInput: {
+      invalidInput: 'Invalid id or url',
+      fetchError: 'Something went wrong, please try later',
+      loading: "ஏற்றுகிறது...",
+      notFound: 'Could not find that content',
+      unsupportedType: 'Sorry, type [%type%] is not supported here',
+      unsupportedId: 'Sorry, this ID is not supported here',
+      addFromFolderTitle: 'From the folder',
+      placeholder: 'Paste Serlo ID or URL here',
+      exerciseFolderNote: 'Only one can be selected here'
     },
     roles: {
       addButton: 'Add as %role%'

@@ -3,6 +3,7 @@ import {
   LinkRenderer,
 } from '@editor/plugin/helpers/editor-renderer'
 import { AnchorStaticRenderer } from '@editor/plugins/anchor/static'
+import { CourseStaticRenderer } from '@editor/plugins/course/static/static'
 import { ArticleStaticRenderer } from '@editor/plugins/article/static'
 import { BoxStaticRenderer } from '@editor/plugins/box/static'
 import { DatenraumIntegrationStaticRenderer } from '@editor/plugins/datenraum-integration/static'
@@ -21,7 +22,6 @@ import type {
   EditorInjectionDocument,
   EditorInputExerciseDocument,
   EditorPageLayoutDocument,
-  EditorPagePartnersDocument,
   EditorScMcExerciseDocument,
   EditorSerloTableDocument,
   EditorSolutionDocument,
@@ -36,7 +36,6 @@ import { ComponentProps } from 'react'
 
 import { ExtraInfoIfRevisionView } from './extra-info-if-revision-view'
 import { EditorH5PDocument } from './h5p'
-import { CourseSerloStaticRenderer } from './serlo-plugin-wrappers/course-serlo-static-renderer'
 import { GeogebraSerloStaticRenderer } from './serlo-plugin-wrappers/geogebra-serlo-static-renderer'
 import { ImageSerloStaticRenderer } from './serlo-plugin-wrappers/image-serlo-static-renderer'
 import { VideoSerloStaticRenderer } from './serlo-plugin-wrappers/video-serlo-static-renderer'
@@ -90,11 +89,6 @@ const DropzoneImageStaticRenderer = dynamic<
 const PageLayoutStaticRenderer = dynamic<EditorPageLayoutDocument>(() =>
   import('@editor/plugins/page-layout/static').then(
     (mod) => mod.PageLayoutStaticRenderer
-  )
-)
-const PagePartnersStaticRenderer = dynamic<EditorPagePartnersDocument>(() =>
-  import('@editor/plugins/page-partners/static').then(
-    (mod) => mod.PagePartnersStaticRenderer
   )
 )
 const ScMcSerloStaticRenderer = dynamic<EditorScMcExerciseDocument>(() =>
@@ -166,7 +160,7 @@ export function createRenderers(): InitRenderersArgs {
         renderer: DropzoneImageStaticRenderer,
       },
       { type: EditorPluginType.Box, renderer: BoxStaticRenderer },
-      { type: EditorPluginType.Course, renderer: CourseSerloStaticRenderer },
+      { type: EditorPluginType.Course, renderer: CourseStaticRenderer },
       { type: EditorPluginType.SerloTable, renderer: SerloTableStaticRenderer },
       {
         type: EditorPluginType.Injection,
@@ -209,10 +203,6 @@ export function createRenderers(): InitRenderersArgs {
 
       // only for pages
       { type: EditorPluginType.PageLayout, renderer: PageLayoutStaticRenderer },
-      {
-        type: EditorPluginType.PagePartners,
-        renderer: PagePartnersStaticRenderer,
-      },
 
       // exercises
       {

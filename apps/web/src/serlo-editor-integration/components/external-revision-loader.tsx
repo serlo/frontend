@@ -1,18 +1,15 @@
-import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
-import { runReplaceDocumentSaga, useAppDispatch } from '@editor/store'
-import { ROOT } from '@editor/store/root/constants'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { type BaseEditor, TemplatePluginType } from '@editor/package'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
-import { useCallback, useState } from 'react'
+import { type MutableRefObject, useCallback, useState } from 'react'
 
+import { AddButton } from './add-button'
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { SimpleTooltip } from '@/components/simple-tooltip'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import type {
@@ -42,26 +39,22 @@ const pluginsWithContentLoaders = Object.keys(templateTypeToUuidType)
 
 export function ExternalRevisionLoader<T>({
   templateType,
+  dispatchReplaceRootDocument,
+  prefilledChangesRef,
 }: {
   templateType: TemplatePluginType
+  dispatchReplaceRootDocument: BaseEditor['dispatchReplaceRootDocument']
+  prefilledChangesRef: MutableRefObject<string | undefined>
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 
   const { strings } = useInstanceData()
-  const editorStrings = useEditStrings()
 
-  const dispatch = useAppDispatch()
   const handleReplace = useCallback(
     (newState: unknown) => {
-      dispatch(
-        runReplaceDocumentSaga({
-          id: ROOT,
-          pluginType: templateType,
-          state: newState,
-        })
-      )
+      dispatchReplaceRootDocument(templateType, newState)
     },
-    [dispatch, templateType]
+    [dispatchReplaceRootDocument, templateType]
   )
 
   if (!pluginsWithContentLoaders.includes(templateType)) return null
@@ -79,8 +72,8 @@ export function ExternalRevisionLoader<T>({
     <div className="-mb-8 mr-6 mt-4 flex justify-end">
       <span onClick={() => setShowRevisions(true)}>
         <button className="serlo-button-edit-secondary serlo-tooltip-trigger">
-          <EditorTooltip
-            text={editorStrings.edtrIo.importOther}
+          <SimpleTooltip
+            text={strings.externalRevisions.importOther}
             className="-left-40"
           />
           <FaIcon icon={faFileImport} className="text-md" />
@@ -90,15 +83,15 @@ export function ExternalRevisionLoader<T>({
       <ModalWithCloseButton
         isOpen={showRevisions}
         setIsOpen={setShowRevisions}
-        title={editorStrings.edtrIo.importOther}
+        title={strings.externalRevisions.importOther}
         className="max-h-[80vh] w-[900px] max-w-[90vw] -translate-x-1/2 overflow-y-auto pt-0"
       >
         <>
           <p className="serlo-p">
-            {editorStrings.edtrIo.importOtherExplanation}
+            {strings.externalRevisions.importOtherExplanation}
             <br />
             <br />
-            <b>{editorStrings.edtrIo.importOtherWarning}</b>
+            <b>{strings.externalRevisions.importOtherWarning}</b>
           </p>
           <div className="mx-side">
             <UuidUrlInput
@@ -108,8 +101,8 @@ export function ExternalRevisionLoader<T>({
                 _title: string,
                 _taxType?: unknown
               ) => (
-                <SerloAddButton
-                  text={editorStrings.edtrIo.importOtherButton}
+                <AddButton
+                  text={strings.externalRevisions.importOtherButton}
                   onClick={() => fetchRevisionDataByUuid(id)}
                 />
               )}
@@ -150,14 +143,9 @@ export function ExternalRevisionLoader<T>({
               ? uuid.currentRevision.id
               : uuid.id
 
-          handleReplace({
-            ...(converted.state as T),
-            revision: 0,
-            id: 0,
-            meta_title: '',
-            meta_description: '',
-            changes: `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`,
-          } as T)
+          prefilledChangesRef.current = `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`
+
+          handleReplace({ ...((converted.document || {}).state as T) })
           setShowRevisions(false)
         }
       } catch (e) {

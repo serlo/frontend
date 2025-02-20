@@ -15,12 +15,13 @@ import { loadEditorState } from '@/pages/api/datenraum/node'
 const Plugin = t.type({ plugin: t.string })
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
+  const { id, licenseId, metaTitle, metaDescription } = props
   return (
     <FrontendClientBase
       noContainers
       noIndex
       loadLoggedInData /* warn: enables preview editor without login */
-      serloEntityData={{ entityId: props.id }}
+      serloEntityData={{ entityId: id, licenseId, metaTitle, metaDescription }}
     >
       <div className="relative">
         <MaxWidthDiv>
@@ -67,8 +68,17 @@ export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
   return {
     props: {
       initialState: {
-        plugin: TemplatePluginType[uuidType],
-        state: { content: JSON.stringify(content), title: node.title },
+        id: randomIntId.toString(),
+        type: 'https://serlo.org/editor',
+        variant: 'serlo-org',
+        domainOrigin: 'serlo.org',
+        dateModified: new Date().toISOString(),
+        version: 2,
+        editorVersion: '0.0.1',
+        document: {
+          plugin: TemplatePluginType[uuidType],
+          state: { content: JSON.stringify(content), title: node.title },
+        },
       },
       type: uuidType,
       errorType: 'none',

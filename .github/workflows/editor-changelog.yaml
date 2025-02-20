@@ -126,8 +126,14 @@ jobs:
             fi
 
             MERGED=$(echo "$PR_DATA" | jq -r '.merged')
+            BASE_BRANCH=$(echo "$PR_DATA" | jq -r '.base.ref')
             if [ "$MERGED" != "true" ]; then
               echo "PR #$pr was not merged, skipping"
+              continue
+            fi
+
+            if [ "$BASE_BRANCH" != "staging" ] && [ "$BASE_BRANCH" != "production" ]; then
+              echo "PR #$pr was merged to branch '$BASE_BRANCH', not 'staging' or 'production', skipping"
               continue
             fi
 

@@ -127,7 +127,8 @@ export const instanceData = {
       emptyNotice: "No hay contenido aquí. Por favor, edita o elimina.",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
-      task: "Tarea"
+      task: "Tarea",
+      courseNoPagesWarning: "Lo sentimos, parece que no hay páginas revisadas en este curso todavía."
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -224,6 +225,12 @@ export const instanceData = {
       importedContentText: "importado",
       importedContentNote: "Esta revisión incluye contenido importado",
       importedContentIdentifier: "Contenido importado de"
+    },
+    externalRevisions: {
+      importOther: "Importar contenido de otra entidad",
+      importOtherExplanation: "Simplemente pega la url o id de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
+      importOtherWarning: "Advertencia: ¡Esto sobrescribe todo lo que ya está presente en este editor!",
+      importOtherButton: "Importar contenido"
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -366,6 +373,7 @@ export const instanceData = {
         code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",
         code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
+        code4000031: "Esta contraseña no se puede utilizar porque es demasiado similar al nombre de usuario.",
         code4000032: "Has introducido menos de 8 caracteres.",
         code4060004: "El enlace de recuperación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo",
         code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo.",
@@ -427,6 +435,26 @@ export const instanceData = {
     bin: {
       title: "Título",
       trashed: "Eliminado..."
+    },
+    saveButton: {
+      noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
+      save: "Guardar",
+      saveWithReview: "Guardar y obtener una revisión",
+      ready: "¿Listo para guardar?",
+      cancel: "Cancelar",
+      saving: "Guardando…",
+      missingChanges: "Tienes que indicar los cambios que has hecho",
+      missingLicenseTerms: "Necesitas aceptar los términos de la licencia",
+      missingChangesAndLicenseTerms: "Necesitas indicar los cambios que has realizado y aceptar los términos de la licencia",
+      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
+      changes: "Describe tus cambios en el contenido",
+      confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?"
+    },
+    articleAddModal: {
+      introText: "Después de leer el artículo, ¿qué ayudaría a los alumnos a continuación? %break% Aquí puedes añadir algunos %exercises% o enlazar a una sola %exerciseFolder%. %break% O puedes sugerir %articles%, %courses% o %videos% para que continúen.",
+      introText2: "Puedes pegar un ID de Serlo, una URL o elegir el contenido de la carpeta principal de abajo.",
+      buttonAddType: "Agregar %type%",
+      title: "Añadir contenido o ejercicios relacionados"
     }
   }
 };
@@ -624,6 +652,17 @@ export const loggedInData = {
         title: "Ordenar entidades",
         saveButtonText: "Guardar orden"
       }
+    },
+    uuidUrlInput: {
+      invalidInput: "Id o url inválidos",
+      fetchError: "Se produjo un error. Por favor, inténtalo más tarde.",
+      loading: "Cargando…",
+      notFound: "No se encontró ese contenido",
+      unsupportedType: "Lo sentimos, el tipo [%type%] no se puede usar aquí",
+      unsupportedId: "Disculpa, este ID no se puede usar aquí",
+      addFromFolderTitle: "De la carpeta",
+      placeholder: "Pegar Serlo ID o URL aquí",
+      exerciseFolderNote: "Solo uno puede ser seleccionado aquí"
     },
     roles: {
       addButton: "Añadir como %role%"

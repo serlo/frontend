@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { ReactNode } from 'react'
 
+import { ProxyImage } from '../landing/subjects/proxy-image'
 import { defaultModalOverlayStyles } from '../modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
@@ -20,8 +21,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
       <Dialog.Portal>
         <Dialog.Overlay className={cn(defaultModalOverlayStyles, 'z-[101]')} />
         <Dialog.Content className={cn('serlo-modal', 'pb-7 text-center')}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <ProxyImage
             onClick={onClose}
             src={src}
             alt={alt ?? pictureString}

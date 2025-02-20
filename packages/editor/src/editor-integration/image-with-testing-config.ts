@@ -72,14 +72,15 @@ const validateFile: UploadValidator<FileError[]> = (file) => {
   return { valid: false, errors: handleErrors(uploadErrors) }
 }
 
-export const createTestingImagePlugin = (secret: string) => {
+export const createTestingImagePlugin = (secret: string | null | undefined) => {
   return createImagePlugin({
     upload: createUploadImageHandler(secret),
     validate: validateFile,
+    disableFileUpload: secret ? false : true,
   })
 }
 
-function createUploadImageHandler(secret: string) {
+function createUploadImageHandler(secret?: string | null) {
   const readAndUploadFile = createReadAndUploadFile(secret)
   return async function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)
@@ -118,7 +119,7 @@ interface GraphQlResponse {
   }>
 }
 
-export function createReadAndUploadFile(secret: string) {
+export function createReadAndUploadFile(secret?: string | null) {
   return async function readAndUploadFile(file: File): Promise<LoadedFile> {
     if (!secret) {
       throw new Error(FileErrorCode.SECRET_MISSING.toString())

@@ -1,11 +1,14 @@
-import { EditorPluginType } from '@editor/package'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorExerciseGroupDocument } from '@editor/types/editor-plugins'
+import {
+  EditorPluginType,
+  type StorageFormat,
+  type EditorExerciseGroupDocument,
+} from '@editor/package'
 import { gql } from 'graphql-request'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { endpoint } from '@/api/endpoint'
 import { InjectionOnlyContentQuery } from '@/fetcher/graphql-types/operations'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 /**
  * Allows frontend (and later other) instances to get content of injected entity
@@ -61,7 +64,11 @@ export default async function handler(
             uuid: uuid.id,
           }
           respondWithContent([
-            { ...JSON.parse(uuid.currentRevision.content), serloContext },
+            {
+              ...(JSON.parse(uuid.currentRevision.content) as StorageFormat)
+                .document,
+              serloContext,
+            },
           ])
           return
         }

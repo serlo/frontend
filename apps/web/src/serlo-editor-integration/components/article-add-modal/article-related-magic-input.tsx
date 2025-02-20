@@ -1,10 +1,10 @@
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+import { AddButton } from '../add-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { useEntityData } from '@/contexts/uuids-context'
 import { UuidType, type UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
@@ -17,7 +17,7 @@ export function ArticleRelatedMagicInput({
   addEntry,
   showExerciseFolderPreview: showExerciseFolderPreview,
 }: ArticleRelatedMagicInputProps) {
-  const { entityId } = useEntityData()
+  const { entityId } = useEntityMetaData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
 
@@ -55,7 +55,7 @@ export function ArticleRelatedMagicInput({
             <FaIcon icon={faSearch} />
           </button>
         ) : null}
-        <SerloAddButton text="" onClick={() => addEntry(id, typename, title)} />
+        <AddButton text="" onClick={() => addEntry(id, typename, title)} />
       </>
     )
   }

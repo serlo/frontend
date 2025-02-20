@@ -40,6 +40,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       ? {
           entityId: pageData.entityData.id,
           revisionId: pageData.entityData.revisionId,
+          licenseId: pageData.entityData.licenseId,
         }
       : {
           entityId: pageData.taxonomyData.id,

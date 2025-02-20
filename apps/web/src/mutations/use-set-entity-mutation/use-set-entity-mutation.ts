@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
 
 import { setAbstractEntityMutation } from './set-abstract-entity-mutation'
 import { SetEntityMutationData, SetEntityMutationRunnerData } from './types'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { getAliasById, revalidatePath } from '../helper/revalidate-path'
 import { useMutationFetchAuthed } from '../helper/use-mutation-fetch'
+import { EntityMetaContext } from '@/contexts/entity-meta-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import { SetAbstractEntityInput } from '@/fetcher/graphql-types/operations'
@@ -15,6 +17,11 @@ export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetchAuthed()
   const router = useRouter()
+
+  const entityMeta = useContext(EntityMetaContext)
+  const entityId = entityMeta?.entityId
+  const metaTitle = entityMeta?.metaTitle
+  const metaDescription = entityMeta?.metaDescription
 
   if (!loggedInData) return false
   const mutationStrings = loggedInData.strings.mutations
@@ -34,9 +41,14 @@ export function useSetEntityMutation() {
         console.error('no typename')
         return false
       }
+      if (!entityId) {
+        // eslint-disable-next-line no-console
+        console.error('no entityId')
+        return false
+      }
 
       // persist current alias here since it might change on mutation
-      const oldAlias = await getAliasById(data.id)
+      const oldAlias = await getAliasById(entityId)
 
       let input = {}
       try {
@@ -49,8 +61,11 @@ export function useSetEntityMutation() {
         const additionalInput = getAdditionalInputData(mutationStrings, data)
 
         input = {
+          entityId,
           ...genericInput,
           ...additionalInput,
+          metaTitle,
+          metaDescription,
           parentId: genericInput.entityId ? undefined : taxonomyParentId,
         }
       } catch (error) {
@@ -77,7 +92,7 @@ export function useSetEntityMutation() {
       showToastNotice(mutationStrings.success.saveNeedsReview, 'success', 7000)
 
       const idFallback = savedId === 0 ? undefined : (savedId as number)
-      const id = data.id || idFallback
+      const id = entityId || idFallback
 
       const redirectHref = id
         ? getHistoryUrl(id)
@@ -111,7 +126,7 @@ function getGenericInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData
 ): SetAbstractEntityInput | undefined {
-  const { __typename, changes, content, id } = data
+  const { __typename, changes, content } = data
   if (!__typename) return
 
   const changesOrFallback =
@@ -123,7 +138,6 @@ function getGenericInputData(
     entityType: __typename,
     changes: changesOrFallback,
     content: getRequiredString(mutationStrings, 'content', content),
-    entityId: id ? id : undefined,
     needsReview: true,
     subscribeThis: true,
     subscribeThisByEmail: false,
@@ -134,14 +148,7 @@ function getAdditionalInputData(
   mutationStrings: LoggedInData['strings']['mutations'],
   data: SetEntityMutationData
 ) {
-  const {
-    title,
-    url,
-    meta_title: metaTitle,
-    meta_description: metaDescription,
-    content,
-    description,
-  } = data
+  const { title, url, content, description } = data
   switch (data.__typename) {
     case UuidType.Course:
     case UuidType.Article:
@@ -149,8 +156,6 @@ function getAdditionalInputData(
     case UuidType.Page:
       return {
         title: getRequiredString(mutationStrings, 'title', title),
-        metaTitle,
-        metaDescription,
       }
 
     case UuidType.Exercise:
@@ -167,8 +172,6 @@ function getAdditionalInputData(
       return {
         title: getRequiredString(mutationStrings, 'title', title),
         url: getRequiredString(mutationStrings, 'url', url),
-        metaTitle,
-        metaDescription,
       }
   }
   return {}

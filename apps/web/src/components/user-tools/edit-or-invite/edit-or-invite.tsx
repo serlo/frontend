@@ -1,4 +1,3 @@
-import { getCoursePageIdFromPath } from '@editor/plugins/course/helper/get-course-id-from-path'
 import { faClock, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
@@ -12,6 +11,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidRevType, UuidType } from '@/data-types'
+import { getCoursePageIdFromPath } from '@/helper/get-course-id-from-path'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
@@ -91,8 +91,8 @@ export function EditOrInvite({
     const coursePageId = getCoursePageIdFromPath(router.asPath)
 
     const url = isCourse
-      ? getEditUrl(data.courseId ?? id, undefined, false) + '#' + coursePageId
-      : getEditUrl(id, revisionId, typename.startsWith('Taxonomy'))
+      ? getEditUrl(data.courseId ?? id) + '#' + coursePageId
+      : getEditUrl(id, revisionId)
 
     if (typename === UuidType.Page || typename === UuidRevType.Page) {
       return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined

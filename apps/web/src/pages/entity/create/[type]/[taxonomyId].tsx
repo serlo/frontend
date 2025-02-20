@@ -1,4 +1,4 @@
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
+import { createEmptyDocument, TemplatePluginType } from '@editor/package'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
@@ -45,7 +45,10 @@ function Content({
   props: EntityCreateProps
 }) {
   const initialState = {
-    plugin: AllowedPlugins[entityType],
+    ...createEmptyDocument('serlo-org'),
+    document: {
+      plugin: AllowedPlugins[entityType],
+    },
   }
 
   const { id: taxonomyParentId } = taxonomyTerm

@@ -1,4 +1,5 @@
 import {
+  object,
   type EditorPlugin,
   type EditorPluginProps,
   type PrettyStaticState,
@@ -6,15 +7,11 @@ import {
 import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from './common/common'
+import { editorContent } from './common/common'
 
-export const textExerciseTypeState = entityType(
-  {
-    ...entity,
-    content: editorContent(EditorPluginType.Exercise),
-  },
-  {}
-)
+export const textExerciseTypeState = object({
+  content: editorContent(EditorPluginType.Exercise),
+})
 
 export type TextExerciseTypePluginState = typeof textExerciseTypeState
 

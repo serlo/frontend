@@ -1,3 +1,62 @@
+## Changelog for version 0.22.2
+
+- fix(plugin-edusharing): handle new format of brockhaus embeds. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4468
+- chore(interactive-video): use useAppDispatch instead of useDispatch. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4466
+- chore: simulate cross-origin iframe in editor demo page. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4460
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.1-editor...v0.22.2-editor
+
+## Changelog for version 0.22.1
+
+- fix(plugin-interactive-video): actually use saved learner interactions. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4459
+- fix(exercise-feedback): memoize randomized feedback. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4458
+- fix(plugin-interactive-video): disable autoplay. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4455
+- fix(blanks-exercise): consistent BlankDraggableAnswer preview positioning. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4454
+- fix(plugin-interactive-video): solve 'stuck when playing video' in edu-sharing preview.. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4453
+- fix(editor): restrict @editor/package imports to avoid dep cycle. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4452
+- fix(editor): fixing some minor things. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4449
+- fix(editor): enable interactive video on staging. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4448
+- fix: allow pixabay cdn without image proxy. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4447
+- feat(plugin-video): allow video upload via new infra. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4368
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.0-editor...v0.22.1-editor
+
+## Changelog for version 0.22.0
+
+- refactor: enable Serlo-specific plugins (and renderers) in Editor. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4417
+- feat(editor-package): try loading renderers dynamically. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4416
+- fix(editor-package): add sideEffects:false to allow tree shaking. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4415
+- refactor: Editor package exports for \_\_\_experiments page. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4413
+- refactor: export dispatchReplaceRootDocument from package. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4410
+- chore(editor-upload): use new asset infra in serlo.org production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4442
+- hot-deploy: fix(plugin-image): upload pixabay images to our bucket. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4441
+- fix(plugin-image): upload pixabay images to our bucket. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4440
+- e2e: fixes after editor package in web. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4437
+- feat(exercise): add nicer fallback feedback (random). Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4434
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.3-editor...v0.22.0-editor
+
+## Changelog for version 0.21.3
+
+- fix(editor-help): content fixes, more videos. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4423
+- chore(deps): bump katex from 0.16.11 to 0.16.21. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4421
+- chore(deps-dev): bump vite from 5.4.11 to 5.4.12. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4420
+- feat(interactive-video): add basic privacy wrapper for serlo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4411
+- fix(editor-help): small corrections. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4408
+- fix(interactive-video): another focus approach, remove rewind toggle. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4400
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.2-editor...v0.21.3-editor
+
+## Changelog for version 0.21.2
+
+- fix(editor-package): make testing secret optional & enable image (and related) plugins even if testing secret is missing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4405
+- feat(ai-generation): add extraction of context. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4403
+- fix(plugin-edusharing): make H5P embeds work again. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4401
+- feat(edusharing-asset): embed word as box. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4394
+- feat(editor): add simple plugin help buttons. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4364
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.1-editor...v0.21.2-editor
+
 ## Changelog for version 0.21.1
 
 - fix(moodle): prevent style collision in moodle. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4396

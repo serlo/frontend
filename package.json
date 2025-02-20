@@ -35,7 +35,6 @@
     "editor:build": "yarn workspace @serlo/editor build",
     "editor:publish": "yarn workspace @serlo/editor run publish:package",
     "editor:publish-local": "yarn workspace @serlo/editor yalc:publish",
-    "editor:test": "yarn workspace @serlo/editor test",
     "format": "yarn workspace @serlo/frontend format",
     "format:eslint": "yarn workspace @serlo/frontend format:eslint",
     "format:prettier": "yarn workspaces foreach -Ap run format:prettier",
@@ -44,7 +43,7 @@
     "lint:prettier": "cross-env FORCE_COLOR=true yarn workspaces foreach -Aip run lint:prettier",
     "lint:tsc": "yarn workspace @serlo/frontend lint:tsc",
     "start": "yarn workspace @serlo/frontend start",
-    "test": "yarn workspace @serlo/frontend test"
+    "test": "yarn workspace @serlo/editor test"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",

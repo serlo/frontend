@@ -1,10 +1,10 @@
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import {
+import type {
   EditorExerciseDocument,
   EditorExerciseGroupDocument,
-} from '@editor/types/editor-plugins'
+} from '@editor/package'
 
 import { MainUuidType } from './query-types'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' }>,
@@ -16,7 +16,7 @@ export function createExercise(
 ): EditorExerciseDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  const exercise = {
+  return {
     ...(parseDocumentString(
       uuid.currentRevision.content
     ) as EditorExerciseDocument),
@@ -29,8 +29,6 @@ export function createExercise(
       licenseId: uuid.licenseId,
     },
   }
-
-  return exercise
 }
 
 export function createExerciseGroup(

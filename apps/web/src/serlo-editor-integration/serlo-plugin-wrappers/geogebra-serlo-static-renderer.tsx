@@ -1,6 +1,8 @@
-import { parseId } from '@editor/plugins/geogebra/renderer'
-import { GeogebraStaticRenderer } from '@editor/plugins/geogebra/static'
-import { EditorGeogebraDocument } from '@editor/types/editor-plugins'
+import {
+  type EditorGeogebraDocument,
+  parseId,
+  GeogebraStaticRenderer,
+} from '@editor/package'
 import dynamic from 'next/dynamic'
 
 import { Lazy } from '@/components/content/lazy'

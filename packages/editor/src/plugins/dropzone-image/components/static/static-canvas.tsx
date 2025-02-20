@@ -42,11 +42,10 @@ export function StaticCanvas(props: StaticCanvasProps) {
 
   return (
     <div
-      className={cn(`
-        relative mx-auto box-content max-w-full
-        overflow-hidden rounded-lg border
-        border-brand-500 bg-cover bg-center bg-no-repeat
-      `)}
+      className={cn(
+        'relative mx-auto box-content max-w-full rounded-lg border',
+        'border-brand-500 bg-cover bg-center bg-no-repeat'
+      )}
       style={{
         backgroundImage: `url(${backgroundImageUrlFromPlugin})`,
         width: canvasDimensions.width,

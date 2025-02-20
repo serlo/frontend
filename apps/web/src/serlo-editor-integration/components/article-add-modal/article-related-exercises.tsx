@@ -1,9 +1,7 @@
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { SerloAddButton } from '@editor/plugin/helpers/serlo-editor-button'
-import { InjectionStaticRenderer } from '@editor/plugins/injection/static'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType, SerloRenderer } from '@editor/package'
 import { gql } from 'graphql-request'
 
+import { AddButton } from '../add-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,6 +12,7 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
@@ -32,7 +31,6 @@ export function ArticleRelatedExercises({
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
   const { strings } = useInstanceData()
-  const articleStrings = useEditStrings().templatePlugins.article
 
   const errorReturn = <p>Sorry, something went wrong.</p>
 
@@ -78,12 +76,13 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <InjectionStaticRenderer
-          plugin={EditorPluginType.Injection}
-          state={`/${id}`}
+        <SerloRenderer
+          editorVariant="serlo-org"
+          state={{ plugin: EditorPluginType.Injection, state: `/${id}` }}
+          extraSerloRenderers={extraSerloRenderers}
         />
-        <SerloAddButton
-          text={articleStrings.addModal.buttonAddType.replace(
+        <AddButton
+          text={strings.articleAddModal.buttonAddType.replace(
             '%type%',
             getTranslatedType(strings, __typename)
           )}

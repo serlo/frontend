@@ -68,6 +68,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.click('$plugin-toolbar-button-link')
   I.type('Mathematik Start')
   I.seeElement('$link-suggestion-0')
+  I.seeElement('$link-suggestion-1')
   I.pressKey('Enter')
   I.seeElement(locate({ css: '.editor-core a' }).withAttr({ href: '/19767' }))
 
@@ -79,6 +80,7 @@ Scenario('Edit existing link', async ({ I }) => {
   I.pressKey(['CommandOrControl', 'A'])
   I.type('geometrie')
   I.seeElement('$link-suggestion-0')
+  I.seeElement('$link-suggestion-1')
   I.pressKey('Enter')
   I.seeElement(locate({ css: '.editor-core a' }).withAttr({ href: '/1288' }))
 })
@@ -93,6 +95,8 @@ Scenario('Remove existing link', async ({ I }) => {
   I.pressKey(['CommandOrControl', 'A'])
   I.click('$plugin-toolbar-button-link')
   I.type('Math')
+  I.seeElement('$link-suggestion-0')
+  I.seeElement('$link-suggestion-1')
   I.click('$link-suggestion-0')
   I.seeElement({ css: '.editor-core a' })
 

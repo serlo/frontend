@@ -2,30 +2,35 @@ import {
   EditorMetaContext,
   type EditorMeta,
 } from '@editor/core/contexts/editor-meta-context'
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
+import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { type UploadHandler } from '@editor/plugin'
+import { EditStrings } from '@editor/types/language-data'
 import { useContext } from 'react'
 
 import { handleError, validateFile } from './validate-file'
 
 type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
-export function useUploadFile(oldUploader: UploadHandler<string>) {
+export function useUploadFile(oldUploader?: UploadHandler<string>) {
   const { editorVariant, userId } = useContext(EditorMetaContext)
-
-  const uploader = (file: File) => uploadFile({ file, editorVariant, userId })
-  return shouldUseNewUpload() ? uploader : oldUploader
+  const isSerlo = useIsSerlo()
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
+  const uploader = (file: File) =>
+    uploadFile({ file, editorVariant, userId, isSerlo, uploadStrings })
+  return shouldUseNewUpload(isSerlo) ? uploader : oldUploader!
 }
 
-// while testing
-export function shouldUseNewUpload() {
+function shouldUseNewUpload(isSerlo: boolean) {
+  if (isSerlo) return true
+  // while testing
   if (typeof window === 'undefined') return false
   const host = window.location.hostname
   const isDevOrPreviewOrStaging =
-    (host.startsWith('frontend-git') && host.endsWith('vercel.app')) ||
-    host.endsWith('serlo-staging.dev') ||
     host === 'localhost' ||
     process.env.NODE_ENV === 'development' ||
-    host.endsWith('serlo.dev')
+    host === 'editor.serlo.dev' ||
+    host === 'editor.serlo-staging.dev'
 
   if (isDevOrPreviewOrStaging) {
     // eslint-disable-next-line no-console
@@ -35,16 +40,21 @@ export function shouldUseNewUpload() {
 }
 
 async function uploadFile({
+  isSerlo,
   file,
   editorVariant,
   userId,
+  uploadStrings,
 }: UploadMeta & {
   file: File
+  uploadStrings: EditStrings['edtrIo']['fileUpload']
+  isSerlo: boolean
 }) {
-  const validated = validateFile(file)
+  const validated = validateFile(file, uploadStrings)
   if (!validated) return Promise.reject()
 
   const parentHost = getParentHost()
+  const signedUrlHost = getSignedUrlHost(isSerlo)
 
   // url for signedUrl fetch
   const url = new URL(`https://${signedUrlHost}/media/presigned-url`)
@@ -88,10 +98,11 @@ async function uploadFile({
   return Promise.resolve(fileUrl)
 }
 
-const signedUrlHost =
-  process.env.NODE_ENV === 'development'
-    ? 'editor.serlo.dev'
-    : 'editor.serlo.dev' // TODO: Change to production bucket after testing
+const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
+
+function getSignedUrlHost(isSerlo: boolean) {
+  return isSerlo && isSerloProduction ? 'editor.serlo.org' : 'editor.serlo.dev'
+}
 
 const errorMessage = 'Error while uploading'
 

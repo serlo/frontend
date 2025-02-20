@@ -73,6 +73,9 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
 
   if (!childPluginState || !staticDocument) return null
 
+  const showToolbar =
+    isChildPluginFocused && childPluginState.plugin === EditorPluginType.Text
+
   return (
     <div
       className={cn(
@@ -104,16 +107,15 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
         <BlanksExerciseRenderer
           isEditing
           childPlugin={
-            <>
-              {isChildPluginFocused ? (
+            <div className="[&_.plugin-toolbar]:!-top-12 [&_.plugin-toolbar]:!left-0">
+              {showToolbar ? (
                 <PluginToolbar
                   pluginType={EditorPluginType.Text}
-                  className="!-top-12 !left-0"
                   noWhiteShadow
                 />
               ) : null}
               {childPlugin.render({ config: childPluginConfig })}
-            </>
+            </div>
           }
           childPluginState={childPluginState}
           extraDraggableAnswers={staticDocument.state.extraDraggableAnswers}

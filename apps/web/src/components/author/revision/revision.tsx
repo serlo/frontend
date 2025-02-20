@@ -1,4 +1,3 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { useState, useEffect } from 'react'
 
 import { DisplayModes } from './display-modes'
@@ -12,7 +11,6 @@ import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { type RevisionData } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
 
 export interface RevisionProps {
   data: RevisionData
@@ -26,7 +24,6 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = useState<DisplayModes>(
     DisplayModes.This
   )
-  editorRenderers.init(createRenderers())
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {

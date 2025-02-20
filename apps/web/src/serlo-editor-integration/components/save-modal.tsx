@@ -3,9 +3,11 @@ import { selectStaticDocument, useStore } from '@editor/store'
 import { ROOT } from '@editor/store/root/constants'
 import { faDove } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
 
 import { AbstractSerializedState } from '../convert-editor-response-to-state'
+import { type StorageFormat } from '@editor/package'
+import { type MutableRefObject, useContext } from 'react'
+
 import type { SerloEditorProps } from '../serlo-editor'
 import { PasswordContext } from '@/components/datenraum/login-form'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -20,7 +22,9 @@ export function SaveModal({
   open: boolean
   setOpen: (arg0: boolean) => void
   onSave: SerloEditorProps['onSave']
+  editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
+  prefilledChanges?: string
 }) {
   const password = useContext(PasswordContext)
   const router = useRouter()
