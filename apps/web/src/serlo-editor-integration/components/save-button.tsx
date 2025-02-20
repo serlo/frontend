@@ -45,7 +45,6 @@ export function SaveButton({
         <FaIcon icon={faSave} /> {saveButtonStrings.save}
       </button>
       <SaveModal
-        password={password}
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         onSave={onSave}
