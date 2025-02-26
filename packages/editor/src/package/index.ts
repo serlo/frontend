@@ -29,6 +29,7 @@ export { extractStringFromTextDocument } from '@editor/plugins/text/utils/static
 export type * from '@editor/types/editor-plugins'
 export type * from '@editor/plugin/internal-plugin-state'
 export type * from '@editor/plugin/internal-plugin'
+export type { StorageFormat } from './storage-format'
 
 /**
  * Exported so that integrations can customize available plugins
@@ -101,17 +102,4 @@ export { parseVideoUrl } from '@editor/plugins/video/utils/parse-video-url'
 export { VideoStaticRenderer } from '@editor/plugins/video/static'
 // Exported for image-with-serlo-config plugin wrapper
 export { createImagePlugin } from '@editor/plugins/image'
-// Exported for convertEditorResponseToState utility
-export type { AppletTypePluginState } from '@editor/plugins/serlo-template-plugins/applet'
-export type { ArticleTypePluginState } from '@editor/plugins/serlo-template-plugins/article'
-export type {
-  Entity,
-  Uuid,
-} from '@editor/plugins/serlo-template-plugins/common/common'
-export type { CourseTypePluginState } from '@editor/plugins/serlo-template-plugins/course'
-export type { EventTypePluginState } from '@editor/plugins/serlo-template-plugins/event'
-export type { TextExerciseGroupTypePluginState } from '@editor/plugins/serlo-template-plugins/exercise-group/text-exercise-group'
-export type { PageTypePluginState } from '@editor/plugins/serlo-template-plugins/page'
-export type { TaxonomyTypePluginState } from '@editor/plugins/serlo-template-plugins/taxonomy'
-export type { TextExerciseTypePluginState } from '@editor/plugins/serlo-template-plugins/text-exercise'
-export type { VideoTypePluginState } from '@editor/plugins/serlo-template-plugins/video'
+export { createEmptyDocument } from './storage-format'

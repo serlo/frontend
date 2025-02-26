@@ -1,6 +1,6 @@
-import type { AnyEditorDocument } from '@editor/package'
+import type { StorageFormat } from '@editor/package'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { type MutableRefObject, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { SaveModal } from './save-modal'
@@ -13,13 +13,15 @@ import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 export function SaveButton({
   onSave,
   isChanged,
-  selectRootDocument,
+  editorState,
   isInTestArea,
+  prefilledChanges,
 }: {
   onSave: SerloEditorProps['onSave']
   isChanged: boolean
-  selectRootDocument: () => AnyEditorDocument
+  editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
+  prefilledChanges?: string
 }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
@@ -45,8 +47,9 @@ export function SaveButton({
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         onSave={onSave}
-        selectRootDocument={selectRootDocument}
+        editorState={editorState}
         isInTestArea={isInTestArea}
+        prefilledChanges={prefilledChanges}
       />
     </div>,
     target

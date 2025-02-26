@@ -16,9 +16,12 @@ import { MaxWidthDiv } from '../navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
+import {
+  type EntityMetaContextData,
+  EntityMetaProvider,
+} from '@/contexts/entity-meta-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import { type UuidsContextData, UuidsProvider } from '@/contexts/uuids-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import {
   FixedInstanceData,
@@ -32,7 +35,7 @@ export interface FrontendClientBaseProps {
   noContainers?: boolean
   noIndex?: boolean
   showNav?: boolean
-  serloEntityData?: UuidsContextData
+  serloEntityData?: EntityMetaContextData
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
 }
@@ -122,7 +125,7 @@ export function FrontendClientBase({
       ) : null}
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
-          <UuidsProvider value={serloEntityData ?? null}>
+          <EntityMetaProvider value={serloEntityData ?? null}>
             <Toaster />
             <ConditionalWrap
               condition={!noHeaderFooter}
@@ -142,7 +145,7 @@ export function FrontendClientBase({
               </ConditionalWrap>
               <MaintenanceBanner />
             </ConditionalWrap>
-          </UuidsProvider>
+          </EntityMetaProvider>
         </LoggedInDataProvider>
       </AuthProvider>
     </InstanceDataProvider>

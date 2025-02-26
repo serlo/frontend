@@ -1,5 +1,6 @@
 import {
   EditorPluginType,
+  type StorageFormat,
   type EditorExerciseGroupDocument,
 } from '@editor/package'
 import { gql } from 'graphql-request'
@@ -65,7 +66,11 @@ export default async function handler(
             uuid: uuid.id,
           }
           respondWithContent([
-            { ...JSON.parse(uuid.currentRevision.content), serloContext },
+            {
+              ...(JSON.parse(uuid.currentRevision.content) as StorageFormat)
+                .document,
+              serloContext,
+            },
           ])
           return
         }

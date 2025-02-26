@@ -1,5 +1,5 @@
-import type { EditorProps } from '@editor/core'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
+import type { StorageFormat } from '@editor/package/storage-format'
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
 
@@ -8,7 +8,7 @@ export interface LocalStorageNoticeProps {
   setUseStored: Dispatch<SetStateAction<boolean>>
 }
 
-type StateOrNull = EditorProps['initialState'] | null
+type StateOrNull = StorageFormat | null
 interface Stored {
   [key: string]: StateOrNull
 }

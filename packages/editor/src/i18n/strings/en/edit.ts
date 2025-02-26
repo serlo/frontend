@@ -425,8 +425,6 @@ export const editStrings = {
   templatePlugins: {
     entity: {
       titlePlaceholder: 'Title',
-      seoTitle: 'Title for search engines',
-      seoDesc: 'Description for search engines',
       moveUpLabel: 'Move up',
       moveDownLabel: 'Move down',
     },

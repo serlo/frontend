@@ -31,6 +31,7 @@ import {
   getCoursePageIdFromPath,
 } from '@/helper/get-course-id-from-path'
 import { parseDocumentString } from '@/helper/parse-document-string'
+import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 // ALWAYS start requestPath with slash
 export async function requestPage(
@@ -168,6 +169,11 @@ export async function requestPage(
     }
   }
 
+  const { editorMetadata } = unwrapEditorContent(
+    uuid.__typename,
+    uuid.currentRevision?.content
+  )
+
   const content = (await prettifyLinksInState(
     uuid.currentRevision?.content
       ? parseDocumentString(uuid.currentRevision?.content)
@@ -205,7 +211,10 @@ export async function requestPage(
     trashed: uuid.trashed,
     title: uuid.title,
     licenseId,
-    content,
+    content: {
+      ...editorMetadata,
+      document: content,
+    },
     isUnrevised: !uuid.currentRevision,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
@@ -316,6 +325,7 @@ export async function requestPage(
       newsletterPopup: true,
       entityData: {
         ...sharedEntityData,
+        content,
         typename: UuidType.Page,
       },
       metaData: {

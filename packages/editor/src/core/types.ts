@@ -1,5 +1,4 @@
 import type { DocumentState } from '@editor/store'
-import type { AnyEditorDocument } from '@editor/types/editor-plugins'
 import type { LanguageData } from '@editor/types/language-data'
 import type { ReactNode } from 'react'
 
@@ -18,7 +17,8 @@ export interface EditorProps {
     plugin: string
     state?: unknown
   }
-  onChange?: OnEditorChange
+  onChange: OnEditorChange
+  showUndoRedoButtons?: boolean
 }
 
 export type EditorRenderProps = ReactNode | ((editor: BaseEditor) => ReactNode)
@@ -27,21 +27,16 @@ export interface BaseEditor {
   element: ReactNode
   i18n: LanguageData
   history: HistoryData
-  /**
-   * @deprecated
-   * Used for selecting Editor state from the Redux store
-   * in the current way that entities are saved on serlo.org.
-   * Could be replaced with the `onChange` Editor method.
-   */
-  selectRootDocument: () => AnyEditorDocument
   /** @deprecated Only temporarily provided for serlo.org. */
   dispatchReplaceRootDocument: (pluginType: string, state: unknown) => void
 }
 
 export type GetDocument = () => DocumentState | null
 
-export type OnEditorChange = (payload: {
+export interface OnEditorChangePayload {
   /** False if the user undos all changes and arrives back at the initial state */
   changed: boolean
   getDocument: GetDocument
-}) => void
+}
+
+export type OnEditorChange = (payload: OnEditorChangePayload) => void
