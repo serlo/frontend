@@ -43,6 +43,9 @@ export interface SerloEditorProps {
   isProductionEnvironment?: boolean
   userId?: string
   styleReset?: boolean
+  /** Shows default Undo/Redo UI. Defaults to false for now */
+  showUndoRedoButtons?: boolean
+  /** @deprecated Please do not use for new setups */
   _testingSecret?: string | null
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
@@ -62,6 +65,7 @@ export function SerloEditor(props: SerloEditorProps) {
     isProductionEnvironment,
     userId,
     styleReset,
+    showUndoRedoButtons,
     _testingSecret,
     _ltik,
     extraSerloPlugins,
@@ -107,6 +111,7 @@ export function SerloEditor(props: SerloEditorProps) {
             <Editor
               initialState={migratedState.document}
               onChange={handleDocumentChange}
+              showUndoRedoButtons={showUndoRedoButtons}
             >
               {children}
             </Editor>
