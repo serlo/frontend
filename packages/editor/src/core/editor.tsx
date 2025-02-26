@@ -38,15 +38,13 @@ export function Editor(props: EditorProps) {
     <ReduxProvider store={store}>
       <DndWrapper>
         <HotkeysProvider initiallyActiveScopes={['global']}>
+          {props.showUndoRedoButtons ? <EditorToolbar /> : null}
           {/* only on serlo for now */}
           {isSerlo && !isSerloEditorPreviewPage ? (
-            <>
-              <EditorToolbar />
-              <LocalStorageNotice
-                useStored={useStored}
-                setUseStored={setUseStored}
-              />
-            </>
+            <LocalStorageNotice
+              useStored={useStored}
+              setUseStored={setUseStored}
+            />
           ) : null}
           {/* For non serlo environments, we need to render the toaster
           (already gets rendered in the web project) */}

@@ -122,11 +122,15 @@ See below for the current API specification.
 
 - **`onChange` (optional)**: To receive state changes of the editor and persist the content into your own infrastructure, use the `onChange` callback of the `SerloEditor` component. It's a function with the signature `(state: StorageFormat) => void`.
 
-- **`language` (optional)**: The default language is `de`.
+- **`language` (optional)**: The default language is `de`. Currently the only other option is `en`.
 
 - **`editorVariant`**: The variant (integration) of the Serlo editor. For example `edusharing` or `serlo-org`. The editor adds this information to the `StorageFormat` that will be saved. Might become useful for example if we need to apply a migration only to one variant of the editor.
 
-- **`_testingSecret` (optional)**: A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **To be deprecated once a long term solution is agreed on.**
+- **`isProductionEnvironment`(optional)**: Tell the editor if it runs in an production environment. In all other environments there will be a warning and experimental features might be active.
+
+- **`showUndoRedoButtons`(optional)**: Set to true to show the default undo/redo buttons. (Defaults to false).
+
+- **`_testingSecret` (optional)**: A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **Deprecated**
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
 
