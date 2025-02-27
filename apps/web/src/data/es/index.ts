@@ -89,7 +89,7 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "¡Enlace copiado!",
-      copyFailed: "¡Error al copiar enlace!",
+      copyFailed: "¡Error al copiar el enlace!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -228,7 +228,7 @@ export const instanceData = {
     },
     externalRevisions: {
       importOther: "Importar contenido de otra entidad",
-      importOtherExplanation: "Simplemente pega la url o id de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
+      importOtherExplanation: "Simplemente pega la URL o ID de otra entidad de serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
       importOtherWarning: "Advertencia: ¡Esto sobrescribe todo lo que ya está presente en este editor!",
       importOtherButton: "Importar contenido"
     },
