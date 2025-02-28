@@ -275,7 +275,7 @@ Scenario('Comments', ({ I }) => {
   I.amOnPage('/1537')
   I.scrollTo('#comment-area-begin-scrollpoint')
   I.waitForText('Hast du eine Frage oder Feedback?', 10)
-  I.see('Der Artikel Koordinatesystem ist nicht')
+  I.waitForText('Der Artikel Koordinatesystem ist nicht', 10)
 
   // In exercise
   I.amOnPage('/37296')
