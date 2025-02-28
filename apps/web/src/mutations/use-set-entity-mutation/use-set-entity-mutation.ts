@@ -61,7 +61,7 @@ export function useSetEntityMutation() {
         const additionalInput = getAdditionalInputData(mutationStrings, data)
 
         input = {
-          entityId,
+          entityId: taxonomyParentId ? null : entityId,
           ...genericInput,
           ...additionalInput,
           metaTitle,
@@ -92,7 +92,7 @@ export function useSetEntityMutation() {
       showToastNotice(mutationStrings.success.saveNeedsReview, 'success', 7000)
 
       const idFallback = savedId === 0 ? undefined : (savedId as number)
-      const id = entityId || idFallback
+      const id = taxonomyParentId ? idFallback : entityId || idFallback
 
       const redirectHref = id
         ? getHistoryUrl(id)
@@ -100,9 +100,7 @@ export function useSetEntityMutation() {
 
       if (oldAlias) await revalidatePath(oldAlias)
 
-      setTimeout(() => {
-        void router.push(redirectHref + successHash)
-      }, 200)
+      setTimeout(() => router.push(redirectHref + successHash), 200)
 
       return true
     }
