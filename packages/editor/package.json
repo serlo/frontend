@@ -10,7 +10,7 @@
     "url": "https://github.com/serlo/frontend.git",
     "directory": "packages/editor"
   },
-  "license": "Apache-2.0",
+  "license": "AGPL-3.0-or-later",
   "author": "Serlo Education e.V.",
   "sideEffects": false,
   "type": "module",
