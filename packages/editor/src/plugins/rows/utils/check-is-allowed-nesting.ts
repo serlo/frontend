@@ -39,5 +39,10 @@ export function checkIsAllowedNesting(
     return Boolean(hasValidRoot)
   }
 
+  // Special `PageLayout` plugin only available in Page entities
+  if (pluginType === EditorPluginType.PageLayout) {
+    return typesOfAncestors.includes(TemplatePluginType.Page)
+  }
+
   return true
 }
