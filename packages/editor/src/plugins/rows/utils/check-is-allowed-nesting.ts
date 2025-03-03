@@ -18,7 +18,12 @@ export function checkIsAllowedNesting(
 
   const rootPluginType = typesOfAncestors.at(0)
 
-  if (pluginType === EditorPluginType.Exercise) {
+  if (
+    pluginType === EditorPluginType.Exercise ||
+    // Interactive video is a special interactive plugin,
+    // in that it's not a child of the Exercise plugin
+    pluginType === EditorPluginType.InteractiveVideo
+  ) {
     // Restrict Exercise->Exercise nesting
     if (
       typesOfAncestors.includes(EditorPluginType.Exercise) ||
@@ -37,6 +42,11 @@ export function checkIsAllowedNesting(
       ].includes(rootPluginType as TemplatePluginType)
 
     return Boolean(hasValidRoot)
+  }
+
+  // Special `PageLayout` plugin only available in Page entities
+  if (pluginType === EditorPluginType.PageLayout) {
+    return typesOfAncestors.includes(TemplatePluginType.Page)
   }
 
   return true
