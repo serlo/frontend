@@ -18,7 +18,12 @@ export function checkIsAllowedNesting(
 
   const rootPluginType = typesOfAncestors.at(0)
 
-  if (pluginType === EditorPluginType.Exercise) {
+  if (
+    pluginType === EditorPluginType.Exercise ||
+    // Interactive video is a special interactive plugin,
+    // in that it's not a child of the Exercise plugin
+    pluginType === EditorPluginType.InteractiveVideo
+  ) {
     // Restrict Exercise->Exercise nesting
     if (
       typesOfAncestors.includes(EditorPluginType.Exercise) ||
