@@ -219,7 +219,7 @@ function stringifyAndRemoveDateTime(state: unknown) {
       // remove iso date time
       .replace(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+/g, '')
       // remove editor semver
-      .replace(/([0-9]+)\.([0-9]+)\.([0-9]+)/g, '')
+      .replace(/v?\d+\.\d+\.\d+(?:-[\da-z.-]+)?(?:\+[\da-z.-]+)?/gi, '')
   )
 }
 
