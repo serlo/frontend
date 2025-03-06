@@ -89,7 +89,7 @@ export const instanceData = {
       title: "¡Comparte!",
       copyLink: "Copiar enlace",
       copySuccess: "¡Enlace copiado!",
-      copyFailed: "¡Error al copiar enlace!",
+      copyFailed: "¡Error al copiar el enlace!",
       close: "Cerrar",
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
@@ -228,7 +228,7 @@ export const instanceData = {
     },
     externalRevisions: {
       importOther: "Importar contenido de otra entidad",
-      importOtherExplanation: "Simplemente pega la url o id de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
+      importOtherExplanation: "Simplemente pega la URL o ID de otra entidad de serlo.org del mismo tipo aquí para duplicar su contenido. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
       importOtherWarning: "Advertencia: ¡Esto sobrescribe todo lo que ya está presente en este editor!",
       importOtherButton: "Importar contenido"
     },
@@ -446,7 +446,7 @@ export const instanceData = {
       missingChanges: "Tienes que indicar los cambios que has hecho",
       missingLicenseTerms: "Necesitas aceptar los términos de la licencia",
       missingChangesAndLicenseTerms: "Necesitas indicar los cambios que has realizado y aceptar los términos de la licencia",
-      errorSaving: 'An error occurred during saving, but your changes are stored locally. Please check if you are logged in and again.',
+      errorSaving: "Se ha producido un error al guardar, pero tus cambios se han guardado localmente. Por favor, comprueba si has iniciado sesión e intenta de nuevo.",
       changes: "Describe tus cambios en el contenido",
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?"
     },
@@ -654,14 +654,14 @@ export const loggedInData = {
       }
     },
     uuidUrlInput: {
-      invalidInput: "Id o url inválidos",
+      invalidInput: "ID o URL inválido",
       fetchError: "Se produjo un error. Por favor, inténtalo más tarde.",
       loading: "Cargando…",
       notFound: "No se encontró ese contenido",
       unsupportedType: "Lo sentimos, el tipo [%type%] no se puede usar aquí",
       unsupportedId: "Disculpa, este ID no se puede usar aquí",
       addFromFolderTitle: "De la carpeta",
-      placeholder: "Pegar Serlo ID o URL aquí",
+      placeholder: "Pegar ID de Serlo o URL aquí",
       exerciseFolderNote: "Solo uno puede ser seleccionado aquí"
     },
     roles: {
