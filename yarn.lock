@@ -1785,13 +1785,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cortex-js/compute-engine@npm:0.24.1":
-  version: 0.24.1
-  resolution: "@cortex-js/compute-engine@npm:0.24.1"
+"@cortex-js/compute-engine@npm:0.27.0":
+  version: 0.27.0
+  resolution: "@cortex-js/compute-engine@npm:0.27.0"
   dependencies:
-    complex.js: ^2.1.1
+    complex-esm: ^2.1.1-esm1
     decimal.js: ^10.4.3
-  checksum: 0c6a3d37438f5e38b44caf67d6a8249f74354cfffcf30c47fd8db08db0ceeb3c047742f99565db2bdb569fef75210b07c7d9abd83e16438149d851511a37dbce
+  checksum: e1cd45107d88d193fe0c182c3fa4f5435a1ebbc9fcb973ca517d9a7717d33e333d2a3414451077013ecb7510ef1b8fed5fbfc09f27e78ddc173b4e8b2e645acd
   languageName: node
   linkType: hard
 
@@ -5466,7 +5466,7 @@ __metadata:
     json-diff: ^1.0.6
     katex: ^0.16.21
     mathjs: ^13.2.2
-    mathlive: ^0.101.1
+    mathlive: ^0.104.0
     micromark: ^4.0.1
     next: ^14.2.18
     next-query-params: ^5.0.1
@@ -8040,6 +8040,13 @@ __metadata:
   version: 6.1.1
   resolution: "compare-versions@npm:6.1.1"
   checksum: 73fe6c4f52d22efe28f0a3be10df2afd704e10b3593360cd963e86b33a7a263c263b41a1361b69c30a0fe68bfa70fef90860c1cf2ef41502629d4402890fcd57
+  languageName: node
+  linkType: hard
+
+"complex-esm@npm:^2.1.1-esm1":
+  version: 2.1.1-esm1
+  resolution: "complex-esm@npm:2.1.1-esm1"
+  checksum: 7e22a5e6e74e38af113d2942dee5a7108308de950d20b83b6d669685e449914f055e9f8788e28c5d2793c6b86e026a7852b823400bd61245aa34dd0b439f2d02
   languageName: node
   linkType: hard
 
@@ -12490,12 +12497,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mathlive@npm:^0.101.1":
-  version: 0.101.1
-  resolution: "mathlive@npm:0.101.1"
+"mathlive@npm:^0.104.0":
+  version: 0.104.0
+  resolution: "mathlive@npm:0.104.0"
   dependencies:
-    "@cortex-js/compute-engine": 0.24.1
-  checksum: 7b521acea549c2b587a08665cc7157d0eaafa63fb26bd10c5c3ac4ab643ebd52a0a5029d417a0f2c4d94a8649f855f0fd0cde8d0a5635025cc41cce07bf95ec7
+    "@cortex-js/compute-engine": 0.27.0
+  checksum: 1bb6e83f36c6c3955119ccb70921230db1890b44f91bf23bbb1c396d819db22532b82ebe945c1e3753cf6147b1afa0c9523ea5035b56c5180e52aeaac14e31c7
   languageName: node
   linkType: hard
 
