@@ -4,6 +4,7 @@ import NextAdapterPages from 'next-query-params/pages'
 import { useMemo } from 'react'
 import { debounce } from 'ts-debounce'
 import {
+  BooleanParam,
   QueryParamProvider,
   StringParam,
   useQueryParam,
@@ -13,6 +14,7 @@ import {
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import { cn } from '@/helper/cn'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -61,6 +63,11 @@ function Content() {
     withDefault(StringParam, emptyState)
   )
 
+  const [showPreview, setShowPreview] = useQueryParam(
+    'preview',
+    withDefault(BooleanParam, false)
+  )
+
   const { lang } = useInstanceData()
 
   const isNotEmpty = previewState !== emptyState
@@ -94,7 +101,12 @@ function Content() {
 
   return (
     <main id="content" className="flex">
-      <section className="min-h-screen w-1/2 border-4 border-r-0 border-editor-primary">
+      <section
+        className={cn(
+          'min-h-screen border-4 border-editor-primary',
+          showPreview ? 'w-1/2' : 'w-full'
+        )}
+      >
         <header className="mx-side flex justify-between align-middle font-bold">
           <h2 className="mb-12 text-editor-primary">Edit</h2>
           <div>
@@ -135,17 +147,28 @@ function Content() {
               className="mt-0.5 text-sm"
             >
               reset
+            </button>{' '}
+            |{' '}
+            <button
+              onClick={() => setShowPreview(!showPreview)}
+              className="mt-0.5 text-sm"
+            >
+              {showPreview ? 'hide' : 'show'} preview
             </button>
           </div>
         </header>
         <div className="px-2">{editor}</div>
       </section>
-      <section className="min-h-screen w-1/2 border-4 border-editor-primary">
-        <h2 className="mx-side mb-12 font-bold text-editor-primary">Preview</h2>
-        <div className="mt-[3rem]">
-          <EditorRenderer document={parseDocumentString(previewState)} />
-        </div>
-      </section>
+      {showPreview ? (
+        <section className="min-h-screen w-1/2 border-4 border-l-0 border-editor-primary">
+          <h2 className="mx-side mb-12 font-bold text-editor-primary">
+            Preview
+          </h2>
+          <div className="mt-[3rem]">
+            <EditorRenderer document={parseDocumentString(previewState)} />
+          </div>
+        </section>
+      ) : null}
     </main>
   )
 }
