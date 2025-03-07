@@ -84,6 +84,7 @@ function Content() {
         userId="serlo-preview-user"
         initialState={parseDocumentString(previewState)}
         styleReset={false}
+        showUndoRedoButtons
         onChange={(newState) => {
           const stringifiedNewState = JSON.stringify(newState.document)
           if (stringifiedNewState === previewState) return
