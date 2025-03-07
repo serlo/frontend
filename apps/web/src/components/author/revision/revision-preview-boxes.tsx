@@ -114,12 +114,6 @@ export function RevisionPreviewBoxes({
 
     return (
       <>
-        <style jsx>{`
-          .fixH1 :global(h1) {
-            margin-top: 0;
-            margin-bottom: 0;
-          }
-        `}</style>
         <p className="serlo-p mb-1.5 mt-10 flex justify-between">
           <b title={changes ? strings.revisions.hasChanges : undefined}>
             {title}
@@ -130,7 +124,7 @@ export function RevisionPreviewBoxes({
           className={cn(
             data.typename === UuidRevType.Exercise && '!py-2',
             withPadding && 'p-side',
-            'fixH1 rounded-2xl border border-brand-400 py-7 text-lg'
+            'rounded-2xl border border-brand-400 py-7 text-lg [&_h1]:my-0'
           )}
         >
           {notDiff ? (
