@@ -101,63 +101,50 @@ function Content() {
 
   return (
     <main id="content" className="flex">
+      <nav className="absolute right-3 top-1.5 text-sm font-bold text-gray-500">
+        <input
+          className="w-20 rounded-sm bg-gray-100 text-center text-sm"
+          placeholder="paste json"
+          onPaste={({ clipboardData }) => {
+            const pastedString = clipboardData.getData('text/plain').trim()
+            const cleanJsonString = pastedString
+              .replace(/'/g, '')
+              .replace(/\\"/g, '"')
+
+            try {
+              const jsonObject = JSON.parse(
+                cleanJsonString
+              ) as AnyEditorDocument
+              setPreviewState(JSON.stringify(jsonObject))
+            } catch (error) {
+              // eslint-disable-next-line no-console
+              console.error('Error parsing JSON:', error)
+              showToastNotice('sorry, invalid json', 'warning')
+            }
+          }}
+        />
+        {' | '}
+        <button
+          onClick={() => {
+            void navigator.clipboard.writeText(previewState)
+            showToastNotice('state copied to clipboard', 'success')
+          }}
+        >
+          copy
+        </button>{' '}
+        | <button onClick={() => setPreviewState(emptyState)}>reset</button> |{' '}
+        <button onClick={() => setShowPreview(!showPreview)}>
+          {showPreview ? 'hide' : 'show'} preview
+        </button>
+      </nav>
       <section
         className={cn(
           'min-h-screen border-4 border-editor-primary',
           showPreview ? 'w-1/2' : 'w-full'
         )}
       >
-        <header className="mx-side flex justify-between align-middle font-bold">
-          <h2 className="mb-12 text-editor-primary">Edit</h2>
-          <div>
-            <input
-              onPaste={({ clipboardData }) => {
-                const pastedString = clipboardData.getData('text/plain').trim()
-                const cleanJsonString = pastedString
-                  .replace(/'/g, '')
-                  .replace(/\\"/g, '"')
-
-                try {
-                  const jsonObject = JSON.parse(
-                    cleanJsonString
-                  ) as AnyEditorDocument
-                  setPreviewState(JSON.stringify(jsonObject))
-                } catch (error) {
-                  // eslint-disable-next-line no-console
-                  console.error('Error parsing JSON:', error)
-                  showToastNotice('sorry, invalid json', 'warning')
-                }
-              }}
-              className="mt-0.5 w-20 bg-gray-100 text-sm"
-              placeholder="paste json"
-            />
-            {' | '}
-            <button
-              onClick={() => {
-                void navigator.clipboard.writeText(previewState)
-                showToastNotice('state copied to clipboard', 'success')
-              }}
-              className="mt-0.5 text-sm"
-            >
-              copy
-            </button>{' '}
-            |{' '}
-            <button
-              onClick={() => setPreviewState(emptyState)}
-              className="mt-0.5 text-sm"
-            >
-              reset
-            </button>{' '}
-            |{' '}
-            <button
-              onClick={() => setShowPreview(!showPreview)}
-              className="mt-0.5 text-sm"
-            >
-              {showPreview ? 'hide' : 'show'} preview
-            </button>
-          </div>
-        </header>
-        <div className="px-2">{editor}</div>
+        <h2 className="mx-side mb-12 font-bold text-editor-primary">Edit</h2>
+        <div className="mx-auto max-w-screen-sm px-2">{editor}</div>
       </section>
       {showPreview ? (
         <section className="min-h-screen w-1/2 border-4 border-l-0 border-editor-primary">
