@@ -1,18 +1,6 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { EditStrings } from '@editor/types/language-data'
 
-export enum FileErrorCode {
-  TOO_MANY_FILES,
-  NO_FILE_SELECTED,
-  BAD_EXTENSION,
-  FILE_TOO_BIG,
-  UPLOAD_FAILED,
-}
-
-export interface FileError {
-  errorCode: FileErrorCode
-  message: string
-}
 const maxImageFileSize = 2 * 1024 * 1024
 const maxVideoFileSize = 16 * 1024 * 1024
 const allowedExtensions = [
