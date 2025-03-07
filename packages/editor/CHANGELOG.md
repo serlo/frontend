@@ -1,3 +1,32 @@
+## Changelog for version 0.23.0-beta.0
+
+- fix(editor): plugin menu restrictions. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4516
+- fix(editor): harden unwrap code for unexpected state. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4513
+- Deployment. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4508
+- feat(editor): add optional showUndoRedoButtons prop. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4505
+- Production. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4504
+- hotfix(editor): always enable InteractiveVideo. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4503
+- refactor: remove unnecessary selectors. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4497
+- fix(editor-integration): conditional for serlo exerciseGroup renderer. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4481
+- Deployment. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4480
+- fix: missing plugins and renderers. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4478
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4474
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.2-editor...v0.23.0-beta.0-editor
+
+## Changelog for version 0.23.0
+
+- feat(editor): add optional showUndoRedoButtons prop. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4505
+- Production. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4504
+- hotfix(editor): always enable InteractiveVideo. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4503
+- refactor: remove unnecessary selectors. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4497
+- fix(editor-integration): conditional for serlo exerciseGroup renderer. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4481
+- Deployment. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4480
+- fix: missing plugins and renderers. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4478
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4474
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.2-editor...v0.23.0-editor
+
 ## Changelog for version 0.22.2
 
 - fix(plugin-edusharing): handle new format of brockhaus embeds. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4468

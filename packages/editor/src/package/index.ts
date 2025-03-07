@@ -1,3 +1,8 @@
+/**
+ * @license AGPL-3.0
+ * Copyright (c) 2025-present Serlo Education
+ */
+
 export { SerloEditor, type SerloEditorProps } from './editor'
 export { SerloRenderer, type SerloRendererProps } from './serlo-renderer'
 

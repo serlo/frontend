@@ -12,6 +12,7 @@ import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects
 import { InstanceLandingData } from '@/data-types'
 import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
+import { submitEvent } from '@/helper/submit-event'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface LandingDEProps {
@@ -32,7 +33,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <LandingJsonLd />
       <Header />
       <main id="content" className="text-almost-black">
-        <section className="mx-auto mt-20 max-w-3xl px-2 text-center font-bold md:mt-[11vh]">
+        <section className="mx-auto mt-10 max-w-3xl px-2 text-center font-bold sm:mt-0">
           <p className="serlo-add-eyebrows font-handwritten text-3xl text-brand">
             <WelcomeMessage />
           </p>
@@ -57,6 +58,17 @@ export function LandingDE({ data }: LandingDEProps) {
         </section>
 
         <section className="mt-10">
+          <Link
+            onClick={() => submitEvent('oam-banner-click-landing')}
+            href="/mathe-pruefungen"
+            className="group mb-10 block bg-newgreen bg-opacity-20 p-3 text-lg text-black hover:!no-underline mobile:text-center sm:py-4 md:text-[22px] lg:mb-0"
+          >
+            🎓 Ui, schon Prüfungszeit?{' '}
+            <b className="serlo-link group-hover:underline">
+              Hier geht&apos;s zur Mathe-Prüfungsvorbereitung
+            </b>
+            .
+          </Link>
           <LandingSubjectsNew data={subjectsData} />
         </section>
 
@@ -142,6 +154,9 @@ export function LandingDE({ data }: LandingDEProps) {
       </main>
       <FooterNew />
       <style jsx>{`
+        {/* :global(body) {
+          margin-top: 40px;
+        } */}
         /* special donation button on landing */
         :global(.navtrigger[href='/spenden']) {
           display: none;
