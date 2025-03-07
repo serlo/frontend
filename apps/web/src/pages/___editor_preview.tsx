@@ -11,6 +11,7 @@ import {
 } from 'use-query-params'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
+import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -60,6 +61,8 @@ function Content() {
     withDefault(StringParam, emptyState)
   )
 
+  const { lang } = useInstanceData()
+
   const isNotEmpty = previewState !== emptyState
 
   const debouncedSetState = debounce(
@@ -70,6 +73,7 @@ function Content() {
     () => (
       <Editor
         editorVariant="serlo-org"
+        language={lang === 'de' ? 'de' : 'en'}
         userId="serlo-preview-user"
         initialState={parseDocumentString(previewState)}
         styleReset={false}
