@@ -8,7 +8,8 @@ import { type UploadHandler } from '@editor/plugin'
 import { EditStrings } from '@editor/types/language-data'
 import { useContext } from 'react'
 
-import { handleError, validateFile } from './validate-file'
+import { handleError, handleValidationError } from './handle-errors'
+import { validateFile } from './validate-file'
 
 type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
@@ -50,8 +51,11 @@ async function uploadFile({
   uploadStrings: EditStrings['edtrIo']['fileUpload']
   isSerlo: boolean
 }) {
-  const validated = validateFile(file, uploadStrings)
-  if (!validated) return Promise.reject()
+  const validated = validateFile(file)
+  if (validated !== true) {
+    handleValidationError(validated, uploadStrings)
+    return Promise.reject()
+  }
 
   const parentHost = getParentHost()
   const signedUrlHost = getSignedUrlHost(isSerlo)
