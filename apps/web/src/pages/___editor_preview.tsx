@@ -181,7 +181,7 @@ function Content() {
           <h2 className="mx-side mb-12 font-bold text-editor-primary">
             Preview
           </h2>
-          <div className="mt-[3rem]">
+          <div className="mx-auto mt-[3rem] max-w-screen-sm">
             <EditorRenderer document={parseDocumentString(previewState)} />
           </div>
         </section>
