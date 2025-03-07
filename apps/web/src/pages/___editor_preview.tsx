@@ -4,7 +4,6 @@ import NextAdapterPages from 'next-query-params/pages'
 import { useMemo } from 'react'
 import { debounce } from 'ts-debounce'
 import {
-  BooleanParam,
   QueryParamProvider,
   StringParam,
   useQueryParam,
@@ -63,10 +62,11 @@ function Content() {
     withDefault(StringParam, emptyState)
   )
 
-  const [showPreview, setShowPreview] = useQueryParam(
-    'preview',
-    withDefault(BooleanParam, false)
-  )
+  const [viewMode, setViewMode] = useQueryParam<
+    string | undefined,
+    'both' | 'onlyPreview' | 'onlyEdit'
+    // @ts-expect-error not so important
+  >('mode', withDefault(StringParam, 'both', false))
 
   const { lang } = useInstanceData()
 
@@ -101,7 +101,7 @@ function Content() {
   )
 
   return (
-    <main id="content" className="flex">
+    <>
       <nav className="absolute right-3 top-1.5 text-sm font-bold text-gray-500">
         <input
           className="w-20 rounded-sm bg-gray-100 text-center text-sm"
@@ -134,21 +134,50 @@ function Content() {
           copy
         </button>{' '}
         | <button onClick={() => setPreviewState(emptyState)}>reset</button> |{' '}
-        <button onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? 'hide' : 'show'} preview
+        <button
+          onClick={() => {
+            if (viewMode === 'both') {
+              setViewMode('onlyEdit')
+              return
+            }
+            if (viewMode === 'onlyEdit') {
+              setViewMode('onlyPreview')
+              return
+            }
+            if (viewMode === 'onlyPreview') {
+              setViewMode('both')
+              return
+            }
+          }}
+        >
+          {viewMode === 'both'
+            ? 'only edit'
+            : viewMode === 'onlyEdit'
+              ? 'only preview'
+              : 'show both'}
         </button>
       </nav>
-      <section
-        className={cn(
-          'min-h-screen border-4 border-editor-primary',
-          showPreview ? 'w-1/2' : 'w-full'
-        )}
+      <main
+        id="content"
+        className="flex min-h-screen border-4 border-editor-primary"
       >
-        <h2 className="mx-side mb-12 font-bold text-editor-primary">Edit</h2>
-        <div className="mx-auto max-w-screen-sm px-2">{editor}</div>
-      </section>
-      {showPreview ? (
-        <section className="min-h-screen w-1/2 border-4 border-l-0 border-editor-primary">
+        <section
+          className={cn(
+            viewMode === 'both' ? 'w-1/2' : 'w-full',
+            viewMode === 'onlyPreview' && 'hidden'
+          )}
+        >
+          <h2 className="mx-side mb-12 font-bold text-editor-primary">Edit</h2>
+          <div className="mx-auto max-w-screen-sm px-2">{editor}</div>
+        </section>
+
+        <section
+          className={cn(
+            'border-editor-primary',
+            viewMode === 'both' ? 'w-1/2 border-l-4' : 'w-full',
+            viewMode === 'onlyEdit' && 'hidden'
+          )}
+        >
           <h2 className="mx-side mb-12 font-bold text-editor-primary">
             Preview
           </h2>
@@ -156,7 +185,7 @@ function Content() {
             <EditorRenderer document={parseDocumentString(previewState)} />
           </div>
         </section>
-      ) : null}
-    </main>
+      </main>
+    </>
   )
 }
