@@ -507,6 +507,9 @@ export const editStrings = {
       invalidUrl: 'Error: Invalid or Incomplete URL',
       invalidUrlMessage:
         'The URL you entered is either invalid or incomplete. Please ensure you have copied and pasted the full URL correctly. The URL should start with "http://" or "https://".',
+      errorFetchingSignedUrl:
+        'Sorry the server is not available currently 😕 Please try again later.',
+      errorUploading: 'Sorry the upload failed 😕 Please try again later.',
       noFileSelected: 'Please select a file',
       badExtension:
         'Sorry, %ext% is not an accepted file type. Try one of: %allowed%',
