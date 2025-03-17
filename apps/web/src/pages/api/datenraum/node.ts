@@ -114,6 +114,45 @@ export async function loadEditorState(
     return { success: false, message: 'Failed to get node: ' + id }
   }
 
+  if (
+    !('SerloEditorContent' in node.metadata) ||
+    node.metadata.SerloEditorContent == null
+  ) {
+    const id = Number.parseInt(
+      node.metadata.Amb.id.replace('https://serlo.org/', '')
+    )
+    const graphqlQuery = `
+      query($id: Int!) {
+        uuid(id: $id) {
+          ... on AbstractEntity {
+            currentRevision {
+              content
+            }
+          }
+        }
+      }
+    `
+
+    const graphqlResponse = await fetch('https://api.serlo.org/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: graphqlQuery,
+        variables: { id },
+      }),
+    })
+
+    const data = await graphqlResponse.json()
+
+    const content = data.data?.uuid?.currentRevision?.content
+
+    if (content) {
+      node.metadata.SerloEditorContent = JSON.parse(content)
+    }
+  }
+
   return { success: true, node }
 }
 

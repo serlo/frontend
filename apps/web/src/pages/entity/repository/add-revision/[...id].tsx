@@ -51,7 +51,15 @@ export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
   if (!result.success) return { notFound: true }
 
   const node = result.node
-  const content = node.metadata.SerloEditorContent
+  const contentWithMetadata = node.metadata.SerloEditorContent
+  const content =
+    typeof contentWithMetadata === 'object' &&
+    contentWithMetadata != null &&
+    'document' in contentWithMetadata
+      ? contentWithMetadata.document
+      : contentWithMetadata
+
+  console.log('content', content)
 
   if (!Plugin.is(content)) return { notFound: true }
 
