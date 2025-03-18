@@ -1,83 +1,124 @@
-import { type EditorProps } from '@editor/core'
-import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
-import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
-import { editStrings as editStringsDe } from '@editor/i18n/strings/de/edit'
-import { editStrings as editStringsEn } from '@editor/i18n/strings/en/edit'
-import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
-import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
-import { TemplatePluginType } from '@editor/types/template-plugin-type'
-import { SerloOnlyFeaturesContext } from '@editor/utils/serlo-extra-context'
+import {
+  defaultPlugins,
+  EditorPluginType,
+  TemplatePluginType,
+  SerloOnlyFeaturesContext,
+  type StorageFormat,
+} from '@editor/package'
 import dynamic from 'next/dynamic'
-import { mergeDeepRight } from 'ramda'
-import { type ReactNode } from 'react'
+import { useContext, useRef } from 'react'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ExternalRevisionLoader } from './components/external-revision-loader'
 import { SaveButton } from './components/save-button'
-import { createPlugins } from './create-plugins'
-import { createRenderers } from './create-renderers'
-import { useSerloHandleLearnerEvent } from './use-handle-learner-event'
+import { extraSerloPlugins } from './extra-serlo-plugins'
+import { extraSerloRenderers } from './extra-serlo-renderers'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
+import { RevisionViewContext } from '@/contexts/revision-view-context'
+import { isProduction } from '@/helper/is-production'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
-const Editor = dynamic(() => import('@editor/core').then((mod) => mod.Editor), {
-  ssr: false,
-})
+const Editor = dynamic(
+  () => import('@editor/package').then((mod) => mod.SerloEditor),
+  {
+    ssr: false,
+  }
+)
+
+const plugins = [
+  ...defaultPlugins,
+  TemplatePluginType.Applet,
+  TemplatePluginType.Article,
+  TemplatePluginType.Course,
+  TemplatePluginType.Event,
+  TemplatePluginType.Page,
+  TemplatePluginType.Taxonomy,
+  TemplatePluginType.TextExercise,
+  TemplatePluginType.TextExerciseGroup,
+  TemplatePluginType.User,
+  TemplatePluginType.Video,
+  EditorPluginType.Anchor,
+  EditorPluginType.Article,
+  EditorPluginType.ArticleIntroduction,
+  EditorPluginType.Audio,
+  EditorPluginType.Course,
+  EditorPluginType.ExerciseGroup,
+  EditorPluginType.H5p,
+  EditorPluginType.Injection,
+  EditorPluginType.InteractiveVideo,
+  EditorPluginType.PageLayout,
+]
 
 export interface SerloEditorProps {
-  children?: ReactNode
   isInTestArea?: boolean
   onSave: (data: SetEntityMutationData) => Promise<void | boolean>
-  initialState: EditorProps['initialState']
+  initialState: StorageFormat
 }
 
 export function SerloEditor({
   onSave,
   isInTestArea,
   initialState,
-  children,
 }: SerloEditorProps) {
+  // No need to rerender on Editor change, therefore `useRef`
+  const editorState = useRef(initialState)
+  const prefilledChangesRef = useRef<string | undefined>(undefined)
+
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
 
-  const handleLearnerEvent = useSerloHandleLearnerEvent()
-
-  // simplest way to provide plugins to editor that can also easily be adapted by edusharing
-  editorPlugins.init(createPlugins({ lang }))
-
-  // some plugins rely on static renderes
-  editorRenderers.init(createRenderers())
-
-  editorLearnerEvent.init(handleLearnerEvent)
-
-  const editString =
-    lang === 'de' ? mergeDeepRight(editStringsEn, editStringsDe) : editStringsEn
-
-  const isNewEntity = !(initialState.state as AnyEditorDocument)?.id
+  const isRevisionView = useContext(RevisionViewContext)
+  const isNewEntity = !(initialState as { state?: { id?: string } }).state?.id
 
   return (
-    <EditStringsProvider value={editString}>
-      <EditorMetaContext.Provider
-        value={{ editorVariant: 'serlo-org', userId: String(auth?.id) }}
+    <SerloOnlyFeaturesContext.Provider
+      value={{ isRevisionView, licenses, ArticleAddModal }}
+    >
+      <Editor
+        language={lang === 'de' ? 'de' : 'en'}
+        editorVariant="serlo-org"
+        userId={String(auth?.id)}
+        plugins={plugins}
+        isProductionEnvironment={isProduction}
+        initialState={initialState}
+        styleReset={false}
+        showUndoRedoButtons
+        extraSerloPlugins={extraSerloPlugins}
+        extraSerloRenderers={extraSerloRenderers}
+        onChange={(state) => {
+          editorState.current = state
+        }}
       >
-        <SerloOnlyFeaturesContext.Provider
-          value={{ isSerlo: true, licenses, ArticleAddModal }}
-        >
-          <Editor initialState={initialState}>
-            <SaveButton onSave={onSave} isInTestArea={isInTestArea} />
-            {isNewEntity ? (
-              <ExternalRevisionLoader
-                templateType={initialState.plugin as TemplatePluginType}
-              />
-            ) : null}
-
-            {children}
-          </Editor>
-        </SerloOnlyFeaturesContext.Provider>
-      </EditorMetaContext.Provider>
-    </EditStringsProvider>
+        {(editor) => {
+          const hasPendingChanges = editor.history.pendingChanges !== 0
+          return (
+            <>
+              {editorState.current.document.state ? (
+                <SaveButton
+                  onSave={onSave}
+                  isChanged={hasPendingChanges}
+                  editorState={editorState}
+                  isInTestArea={isInTestArea}
+                  prefilledChanges={prefilledChangesRef.current}
+                />
+              ) : null}
+              {isNewEntity ? (
+                <ExternalRevisionLoader
+                  templateType={
+                    initialState.document.plugin as TemplatePluginType
+                  }
+                  dispatchReplaceRootDocument={
+                    editor.dispatchReplaceRootDocument
+                  }
+                  prefilledChangesRef={prefilledChangesRef}
+                />
+              ) : null}
+              {editor.element}
+            </>
+          )
+        }}
+      </Editor>
+    </SerloOnlyFeaturesContext.Provider>
   )
 }

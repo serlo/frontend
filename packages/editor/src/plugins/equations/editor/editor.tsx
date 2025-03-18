@@ -6,7 +6,6 @@ import {
   focus,
   focusNext,
   focusPrevious,
-  selectFocused,
   selectIsDocumentEmpty,
   useAppSelector,
   useAppDispatch,
@@ -39,7 +38,7 @@ export function EquationsEditor(props: EquationsProps) {
 
   const dispatch = useAppDispatch()
   const store = useStore()
-  const focusedElement = useAppSelector(selectFocused)
+  const focusedElement = store.getState().focus
   const nestedFocus =
     focused ||
     includes(

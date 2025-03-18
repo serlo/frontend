@@ -1,7 +1,6 @@
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
 
-import { type DummyNextRouter } from './static'
 import { CourseNavigationRenderer } from '../renderer/course-navigation'
 
 export function CourseNavigation({
@@ -10,14 +9,12 @@ export function CourseNavigation({
   courseNavOpen,
   setCourseNavOpen,
   pageUrls,
-  router,
 }: {
   pages: EditorCourseDocument['state']['pages']
   activePageId?: string
   courseNavOpen: boolean
   setCourseNavOpen: (open: boolean) => void
   pageUrls?: string[]
-  router: DummyNextRouter
 }) {
   if (!pages) return null
 
@@ -35,7 +32,7 @@ export function CourseNavigation({
         function handleClick(e: React.MouseEvent) {
           e.preventDefault()
           if (!href) return
-          void router.push(href, undefined, { shallow: true })
+          window.location.pathname = href
           setTimeout(() => {
             document.title = title
           }, 100)

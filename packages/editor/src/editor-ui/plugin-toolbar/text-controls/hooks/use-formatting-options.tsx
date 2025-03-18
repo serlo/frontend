@@ -297,7 +297,8 @@ function createToolbarControls(
       group: 'default',
       renderIcon: (editor: SlateEditor) => {
         const colorIndex = getColorIndex(editor)
-        const color = colorIndex ? textColors[colorIndex].value : 'black'
+        const color =
+          colorIndex !== undefined ? textColors[colorIndex].value : 'black'
         return <ColorTextIcon color={color} />
       },
       subMenuButtons: [

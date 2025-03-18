@@ -1,3 +1,122 @@
+## Changelog for version 0.23.0-beta.0
+
+- fix(editor): plugin menu restrictions. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4516
+- fix(editor): harden unwrap code for unexpected state. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4513
+- Deployment. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4508
+- feat(editor): add optional showUndoRedoButtons prop. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4505
+- Production. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4504
+- hotfix(editor): always enable InteractiveVideo. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4503
+- refactor: remove unnecessary selectors. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4497
+- fix(editor-integration): conditional for serlo exerciseGroup renderer. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4481
+- Deployment. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4480
+- fix: missing plugins and renderers. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4478
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4474
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.2-editor...v0.23.0-beta.0-editor
+
+## Changelog for version 0.23.0
+
+- feat(editor): add optional showUndoRedoButtons prop. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4505
+- Production. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4504
+- hotfix(editor): always enable InteractiveVideo. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4503
+- refactor: remove unnecessary selectors. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4497
+- fix(editor-integration): conditional for serlo exerciseGroup renderer. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4481
+- Deployment. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4480
+- fix: missing plugins and renderers. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4478
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4474
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.2-editor...v0.23.0-editor
+
+## Changelog for version 0.22.2
+
+- fix(plugin-edusharing): handle new format of brockhaus embeds. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4468
+- chore(interactive-video): use useAppDispatch instead of useDispatch. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4466
+- chore: simulate cross-origin iframe in editor demo page. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4460
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.1-editor...v0.22.2-editor
+
+## Changelog for version 0.22.1
+
+- fix(plugin-interactive-video): actually use saved learner interactions. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4459
+- fix(exercise-feedback): memoize randomized feedback. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4458
+- fix(plugin-interactive-video): disable autoplay. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4455
+- fix(blanks-exercise): consistent BlankDraggableAnswer preview positioning. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4454
+- fix(plugin-interactive-video): solve 'stuck when playing video' in edu-sharing preview.. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4453
+- fix(editor): restrict @editor/package imports to avoid dep cycle. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4452
+- fix(editor): fixing some minor things. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4449
+- fix(editor): enable interactive video on staging. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4448
+- fix: allow pixabay cdn without image proxy. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4447
+- feat(plugin-video): allow video upload via new infra. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4368
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.22.0-editor...v0.22.1-editor
+
+## Changelog for version 0.22.0
+
+- refactor: enable Serlo-specific plugins (and renderers) in Editor. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4417
+- feat(editor-package): try loading renderers dynamically. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4416
+- fix(editor-package): add sideEffects:false to allow tree shaking. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4415
+- refactor: Editor package exports for \_\_\_experiments page. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4413
+- refactor: export dispatchReplaceRootDocument from package. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4410
+- chore(editor-upload): use new asset infra in serlo.org production. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4442
+- hot-deploy: fix(plugin-image): upload pixabay images to our bucket. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4441
+- fix(plugin-image): upload pixabay images to our bucket. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4440
+- e2e: fixes after editor package in web. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4437
+- feat(exercise): add nicer fallback feedback (random). Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4434
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.3-editor...v0.22.0-editor
+
+## Changelog for version 0.21.3
+
+- fix(editor-help): content fixes, more videos. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4423
+- chore(deps): bump katex from 0.16.11 to 0.16.21. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4421
+- chore(deps-dev): bump vite from 5.4.11 to 5.4.12. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4420
+- feat(interactive-video): add basic privacy wrapper for serlo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4411
+- fix(editor-help): small corrections. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4408
+- fix(interactive-video): another focus approach, remove rewind toggle. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4400
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.2-editor...v0.21.3-editor
+
+## Changelog for version 0.21.2
+
+- fix(editor-package): make testing secret optional & enable image (and related) plugins even if testing secret is missing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4405
+- feat(ai-generation): add extraction of context. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4403
+- fix(plugin-edusharing): make H5P embeds work again. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4401
+- feat(edusharing-asset): embed word as box. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4394
+- feat(editor): add simple plugin help buttons. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4364
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.1-editor...v0.21.2-editor
+
+## Changelog for version 0.21.1
+
+- fix(moodle): prevent style collision in moodle. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4396
+- fix(interactive-video): fix focus bug when creating new exercise. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4395
+- refactor: remove direct Editor imports from Editor presentation. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4393
+- fix(interactive-video): bugfixes/improvements. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4392
+- refactor: remove Next router from Course. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4391
+- fix: update eu logo, add text. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4387
+- refactor: static math in package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4385
+- refactor(web): move strings for uuid-url-input to frontend. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4384
+- Deployment. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4378
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.21.0-editor...v0.21.1-editor
+
+## Changelog for version 0.21.0
+
+- fix(math-renderer): sanitize html from katex. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4379
+- fix(plugin-edusharing): use DomPurify to sanitize embed html from edu-sharing. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4376
+- fix(editor): Modal on serlo.org by applying high z-index only in integrations on content instead of overlay. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4373
+- fix(editor): reset styles for moodle. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4372
+- fix(link-renderer): add guard against injecting javascript in link elements through href. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4371
+- refactor(editor): package plugin icons as react components (to remove `dangerouslySetInnerHtml`). Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4370
+- fix(editor): skip other checks if we found editor state in paste. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4366
+- feat(editor): add email to test environment warning message. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4365
+- fix(plugin-edusharing): sandbox iframes to secure parent. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4361
+- fix(editor): Modal in moodle. Thank you [@CodingDive](https://github.com/CodingDive) in https://github.com/serlo/frontend/pull/4360
+- feat(editor): add iframed demo. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4356
+- feat(bildungsraum-share): copy content to clipboard. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4354
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.20.2-editor...v0.21.0-editor
+
 ## Changelog for version 0.20.2
 
 - feat(editor): add learner event handler to package. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4350

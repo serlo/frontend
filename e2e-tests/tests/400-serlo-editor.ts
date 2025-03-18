@@ -174,6 +174,8 @@ Scenario(
 Scenario(
   'Undo via keyboard in input field of picture plugin',
   async ({ I }) => {
+    createNewEditorEntity(I, 'article')
+
     // make sure autofocus logic after opening is done
     I.wait(0.5)
     // No need to create the image plugin first as the multimedia plugin at the

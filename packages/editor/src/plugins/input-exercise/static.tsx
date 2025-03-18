@@ -13,10 +13,12 @@ export function InputExerciseStaticRenderer({
 }: EditorInputExerciseDocument) {
   const answers = state.answers.map((answer) => {
     const hasFeedback = !isEmptyTextDocument(answer.feedback)
-    const unwrappedFeedback = (answer.feedback.state as Element[])?.[0].children
+    const unwrappedFeedback = hasFeedback
+      ? (answer.feedback.state as Element[])?.[0]?.children
+      : undefined
     return {
       ...answer,
-      feedback: hasFeedback ? (
+      feedback: unwrappedFeedback ? (
         <StaticSlate element={unwrappedFeedback} />
       ) : null,
     }

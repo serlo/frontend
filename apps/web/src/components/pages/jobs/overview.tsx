@@ -260,7 +260,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               digitale Transformation unserer Schulen ein.
             </p>
             <Link
-              className="serlo-new-landing-button serlo-button-with-wings inline"
+              className="serlo-new-landing-button serlo-button-with-wings inline !text-white"
               href="/serlo"
             >
               Mehr über Serlo

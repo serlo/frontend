@@ -22,7 +22,6 @@ export function addOverlayContent(
     startTime,
     autoOpen: true,
     mandatory: false,
-    forceRewatch: false,
   })
   setTimeout(() => setShowOverlayContentIndex(index))
 }

@@ -11,7 +11,9 @@ import {
   selectChildTreeOfParent,
   useStore,
   useAppDispatch,
+  selectParentPluginType,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import isHotkey from 'is-hotkey'
 import { useCallback, useContext } from 'react'
 import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
@@ -19,7 +21,7 @@ import { Editor as SlateEditor, Range, Node, Transforms } from 'slate'
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
 import { emptyDocumentFactory, mergePlugins } from '../utils/document'
-import { insertPlugin } from '../utils/insert-plugin'
+import { insertPlugins } from '../utils/insert-plugins'
 import { instanceStateStore } from '../utils/instance-state-store'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 
@@ -59,9 +61,15 @@ export const useEditableKeydownHandler = (
           const { path } = selection.focus
           const node = Node.get(editor, path)
 
+          const parentType = selectParentPluginType(store.getState(), id)
           const parent = selectChildTreeOfParent(store.getState(), id)
 
-          if (Object.hasOwn(node, 'text') && node.text.length === 0 && parent) {
+          if (
+            parentType === EditorPluginType.Rows &&
+            Object.hasOwn(node, 'text') &&
+            node.text.length === 0 &&
+            parent
+          ) {
             const currentIndex = parent.children?.findIndex(
               (child) => child.id === id
             )
@@ -74,13 +82,14 @@ export const useEditableKeydownHandler = (
               payload: {
                 insertIndex,
                 insertCallback: (plugin) => {
-                  insertPlugin({
-                    pluginType: plugin.plugin,
+                  insertPlugins({
+                    plugins: [
+                      { pluginType: plugin.plugin, state: plugin.state },
+                    ],
                     editor,
                     id,
-                    dispatch,
-                    state: plugin.state,
                     getStoreState: () => store.getState(),
+                    dispatch,
                   })
                 },
               },

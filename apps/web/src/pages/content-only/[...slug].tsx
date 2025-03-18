@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import Script from 'next/script'
 
+import { LazyIframeResizer } from '@/components/content/lazy-iframe-resizer'
 import { Entity } from '@/components/entity/entity'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
@@ -39,23 +39,28 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         breadcrumbs={pageData.breadcrumbsData}
       />
     )
-  const entityId =
+
+  const serloEntityData =
     pageData.kind === 'single-entity'
-      ? pageData.entityData.id
-      : pageData.taxonomyData.id
+      ? {
+          entityId: pageData.entityData.id,
+          revisionId: pageData.entityData.revisionId,
+          licenseId: pageData.entityData.licenseId,
+        }
+      : {
+          entityId: pageData.taxonomyData.id,
+          revisionId: undefined,
+        }
 
   return (
     <FrontendClientBase
       noContainers
       noHeaderFooter
       noIndex
-      serloEntityData={{ entityId }}
+      serloEntityData={serloEntityData}
       authorization={pageData.authorization}
     >
-      <Script
-        src="https://cdn.jsdelivr.net/npm/@open-iframe-resizer/core@1.2.1/dist/index.min.js"
-        strategy="lazyOnload"
-      />
+      <LazyIframeResizer />
       {pageData.metaData ? (
         <HeadTags
           data={pageData.metaData}

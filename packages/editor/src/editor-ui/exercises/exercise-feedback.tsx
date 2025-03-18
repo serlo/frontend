@@ -1,17 +1,35 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { useMemo } from 'react'
 
 export interface SolutionFeedbackProps {
   correct: boolean
-  children?: React.ReactNode
   missedSome?: boolean
+  customFeedback?: React.ReactNode
 }
 
-export function ExerciseFeedback(props: SolutionFeedbackProps) {
-  const { children, correct, missedSome } = props
+const correctEmojis = ['🥳', '🤩', '😎']
+const incorrectEmojis = ['🐸', '🐼', '🐹', '🦊', '🐶']
 
+export function ExerciseFeedback({
+  correct,
+  missedSome,
+  customFeedback,
+}: SolutionFeedbackProps) {
   const exStrings = useStaticStrings().plugins.exercise
-  const fallbackString =
-    exStrings[correct ? 'correct' : missedSome ? 'missedSome' : 'wrong']
+
+  const fallbackString = useMemo(() => {
+    if (correct) return exStrings.feedback.correct
+    if (missedSome) return exStrings.feedback.missedSome
+    const randomIndex = Math.floor(Math.random() * 6)
+    return exStrings.feedback[
+      ('incorrect' + randomIndex) as keyof typeof exStrings.feedback
+    ]
+  }, [correct, exStrings, missedSome])
+  const emoji = useMemo(() => {
+    return correct
+      ? correctEmojis[Math.floor(Math.random() * correctEmojis.length)]
+      : incorrectEmojis[Math.floor(Math.random() * incorrectEmojis.length)]
+  }, [correct])
 
   return (
     <div className="ml-3 mt-1 flex text-lg animate-in fade-in">
@@ -21,12 +39,12 @@ export function ExerciseFeedback(props: SolutionFeedbackProps) {
           correct ? 'correct' : 'incorrect'
         }`}
       >
-        {correct ? '🎉' : '✋'}
+        {emoji}
       </span>{' '}
       <div className="serlo-p mb-0 ml-1">
-        {children ? (
+        {customFeedback ? (
           <>
-            {missedSome && exStrings.missedSome} {children}
+            {missedSome && exStrings.feedback.missedSome} {customFeedback}
           </>
         ) : (
           fallbackString

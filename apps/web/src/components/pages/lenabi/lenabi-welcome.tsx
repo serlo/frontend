@@ -56,7 +56,8 @@ export function LenabiWelcome() {
               'mx-auto mb-6 mt-3 max-w-2xl'
             )}
           >
-            Was möchtest du <span className="underlined pb-2">lernen ?</span>
+            Was möchtest du{' '}
+            <span className="serlo-underlined pb-2">lernen ?</span>
           </h1>
           <p className="text-lg font-normal leading-cozy">
             Mit dir lernen gerade <b className="tracking-tight">1621</b> andere
@@ -123,14 +124,6 @@ export function LenabiWelcome() {
           </div>
         </section>
       </main>
-      <style jsx>{`
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-      `}</style>
     </>
   )
 

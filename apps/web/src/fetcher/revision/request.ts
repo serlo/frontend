@@ -1,5 +1,4 @@
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorExerciseDocument } from '@editor/types/editor-plugins'
+import type { EditorExerciseDocument } from '@editor/package'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -13,6 +12,7 @@ import {
 } from '../graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType } from '@/data-types'
+import { parseDocumentString } from '@/helper/parse-document-string'
 
 export async function requestRevision(
   revisionId: number,
@@ -49,32 +49,28 @@ export async function requestRevision(
     const title = createTitle(uuid, instance)
 
     const thisExercise = isExercise
-      ? [
-          createExercise({
-            ...uuid,
-            licenseId: uuid.repository.licenseId,
-            currentRevision: {
-              title: uuid.title,
-              alias: uuid.alias,
-              content: uuid.content,
-              id: uuid.id,
-              date: uuid.date,
-            },
-            revisions: { totalCount: 0, nodes: [] },
-          }),
-        ]
+      ? createExercise({
+          ...uuid,
+          licenseId: uuid.repository.licenseId,
+          currentRevision: {
+            title: uuid.title,
+            alias: uuid.alias,
+            content: uuid.content,
+            id: uuid.id,
+            date: uuid.date,
+          },
+          revisions: { totalCount: 0, nodes: [] },
+        })
       : undefined
 
     const currentExercise =
       isExercise && uuid.repository.currentRevision
-        ? [
-            createExercise({
-              ...uuid,
-              licenseId: uuid.repository.licenseId,
-              currentRevision: uuid.repository.currentRevision,
-              revisions: { totalCount: 0, nodes: [] },
-            }),
-          ]
+        ? createExercise({
+            ...uuid,
+            licenseId: uuid.repository.licenseId,
+            currentRevision: uuid.repository.currentRevision,
+            revisions: { totalCount: 0, nodes: [] },
+          })
         : null
 
     // likely the previously accepted revision

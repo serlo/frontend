@@ -11,7 +11,7 @@ export function BoxStaticRenderer({ state }: EditorBoxDocument) {
   if (!content || !boxType || isEmptyRowsDocument(content)) return null
 
   // get rid of wrapping p
-  const unwrappedTitle = (title.state as Element[])?.[0].children
+  const unwrappedTitle = (title.state as Element[])?.[0]?.children
 
   const boldTitle = unwrappedTitle ? (
     <b>

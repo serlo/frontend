@@ -1,15 +1,15 @@
-import { getChildrenOfStaticDocument } from '@editor/static-renderer/helper/get-children-of-static-document'
-import { AnyEditorDocument } from '@editor/types/editor-plugins'
 import {
   isImageDocument,
   isSolutionDocument,
   isTextDocument,
-} from '@editor/types/plugin-type-guards'
+  type AnyEditorDocument,
+} from '@editor/package'
 import request from 'graphql-request'
 import type { Descendant } from 'slate'
 
 import { idsQuery } from './ids-query'
 import { endpoint } from '@/api/endpoint'
+import { getChildrenOfStaticDocument } from '@/helper/get-children-of-static-document'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 export interface IdsQueryReturn {

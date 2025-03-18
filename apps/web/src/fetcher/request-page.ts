@@ -1,13 +1,8 @@
 import {
-  buildCoursePageUrl,
-  getCoursePageIdFromPath,
-} from '@editor/plugins/course/helper/get-course-id-from-path'
-import { parseDocumentString } from '@editor/static-renderer/helper/parse-document-string'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import {
-  EditorCourseDocument,
-  EditorRowsDocument,
-} from '@editor/types/editor-plugins'
+  EditorPluginType,
+  type EditorCourseDocument,
+  type EditorRowsDocument,
+} from '@editor/package'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -31,6 +26,12 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import {
+  buildCoursePageUrl,
+  getCoursePageIdFromPath,
+} from '@/helper/get-course-id-from-path'
+import { parseDocumentString } from '@/helper/parse-document-string'
+import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
 // ALWAYS start requestPath with slash
 export async function requestPage(
@@ -168,6 +169,11 @@ export async function requestPage(
     }
   }
 
+  const { editorMetadata } = unwrapEditorContent(
+    uuid.__typename,
+    uuid.currentRevision?.content
+  )
+
   const content = (await prettifyLinksInState(
     uuid.currentRevision?.content
       ? parseDocumentString(uuid.currentRevision?.content)
@@ -205,7 +211,10 @@ export async function requestPage(
     trashed: uuid.trashed,
     title: uuid.title,
     licenseId,
-    content,
+    content: {
+      ...editorMetadata,
+      document: content,
+    },
     isUnrevised: !uuid.currentRevision,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
@@ -316,6 +325,7 @@ export async function requestPage(
       newsletterPopup: true,
       entityData: {
         ...sharedEntityData,
+        content,
         typename: UuidType.Page,
       },
       metaData: {
@@ -336,16 +346,19 @@ export async function requestPage(
       entityData: {
         ...sharedEntityData,
         typename: UuidType.Video,
-        content: [
-          {
-            plugin: EditorPluginType.Video,
-            state: {
-              src: uuid.currentRevision?.url ?? '',
-              alt: uuid.currentRevision?.title ?? '',
+        content: {
+          plugin: EditorPluginType.Rows,
+          state: [
+            {
+              plugin: EditorPluginType.Video,
+              state: {
+                src: uuid.currentRevision?.url ?? '',
+                alt: uuid.currentRevision?.title ?? '',
+              },
             },
-          },
-          ...(content ? [content] : []),
-        ],
+            ...(content ? [content] : []),
+          ],
+        },
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -367,13 +380,16 @@ export async function requestPage(
       entityData: {
         typename: UuidType.Applet,
         ...sharedEntityData,
-        content: [
-          {
-            plugin: EditorPluginType.Geogebra,
-            state: uuid.currentRevision?.url ?? '',
-          },
-          ...(content ? [content] : []),
-        ],
+        content: {
+          plugin: EditorPluginType.Rows,
+          state: [
+            {
+              plugin: EditorPluginType.Geogebra,
+              state: uuid.currentRevision?.url ?? '',
+            },
+            ...(content ? [content] : []),
+          ],
+        },
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },

@@ -275,11 +275,22 @@ Scenario('Comments', ({ I }) => {
   I.amOnPage('/1537')
   I.scrollTo('#comment-area-begin-scrollpoint')
   I.waitForText('Hast du eine Frage oder Feedback?', 10)
-  I.see('Der Artikel Koordinatesystem ist nicht')
+  I.waitForText('Der Artikel Koordinatesystem ist nicht', 10)
 
   // In exercise
   I.amOnPage('/37296')
   I.click('Lösung')
   I.scrollTo('#comment-area-begin-scrollpoint')
   I.waitForText('Ich weiß nicht, ob es vom Computer', 10)
+})
+
+Scenario('Injections load', ({ I }) => {
+  I.amOnPage('/277232')
+  I.scrollTo('#b6ab26c0')
+  // text from injected content
+  I.waitForText('im Intervall', 10)
+
+  I.amOnPage('/1555')
+  I.scrollTo(locate('h2').withText('Übungsaufgaben: Zylinder'))
+  I.waitForText('Berechne das Volumen des Glases', 10)
 })

@@ -1,4 +1,4 @@
-import type { StaticMathProps } from '@editor/plugins/text/static-components/static-math'
+import type { StaticMathProps } from '@editor/package'
 import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
@@ -39,9 +39,7 @@ interface EventProps {
 }
 
 const StaticMath = dynamic<StaticMathProps>(() =>
-  import('@editor/plugins/text/static-components/static-math').then(
-    (mod) => mod.StaticMath
-  )
+  import('@editor/package').then((mod) => mod.StaticMath)
 )
 
 export function Event({
@@ -141,7 +139,7 @@ export function Event({
             ),
             comment: (
               <p className="font-normal">
-                &quot;{event.thread.thread.nodes[0].content}&quot;
+                &bdquo;{event.thread.thread.nodes[0].content}&ldquo;
               </p>
             ),
           })

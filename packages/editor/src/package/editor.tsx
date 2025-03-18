@@ -1,8 +1,15 @@
 import { Editor, type EditorProps } from '@editor/core'
 import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
-import { type GetDocument } from '@editor/core/types'
-import { createBasicPlugins } from '@editor/editor-integration/create-basic-plugins'
-import { createRenderers } from '@editor/editor-integration/create-renderers'
+import type { OnEditorChangePayload } from '@editor/core/types'
+import {
+  createPlugins,
+  type ExtraSerloPlugins,
+} from '@editor/editor-integration/create-plugins'
+import {
+  createRenderers,
+  type ExtraSerloRenderers,
+} from '@editor/editor-integration/create-renderers'
+import { debouncedStoreToLocalStorage } from '@editor/editor-ui/save/local-storage-notice'
 import { EditStringsProvider } from '@editor/i18n/edit-strings-provider'
 import { StaticStringsProvider } from '@editor/i18n/static-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
@@ -11,6 +18,7 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { getCurrentDatetime } from '@editor/utils/get-current-datetime'
+import { useMemo } from 'react'
 
 import { defaultSerloEditorProps } from './config'
 import { editorData } from './editor-data'
@@ -34,8 +42,16 @@ export interface SerloEditorProps {
   editorVariant: EditorVariant
   isProductionEnvironment?: boolean
   userId?: string
+  styleReset?: boolean
+  /** Shows default Undo/Redo UI. Defaults to false for now */
+  showUndoRedoButtons?: boolean
+  /** @deprecated Please do not use for new setups */
   _testingSecret?: string | null
   _ltik?: string
+  /** @deprecated Only temporarily allowed for serlo.org. */
+  extraSerloPlugins?: ExtraSerloPlugins
+  /** @deprecated Only temporarily allowed for serlo.org. */
+  extraSerloRenderers?: ExtraSerloRenderers
 }
 
 /** For exporting the editor */
@@ -48,8 +64,12 @@ export function SerloEditor(props: SerloEditorProps) {
     plugins,
     isProductionEnvironment,
     userId,
+    styleReset,
+    showUndoRedoButtons,
     _testingSecret,
     _ltik,
+    extraSerloPlugins,
+    extraSerloRenderers,
   } = {
     ...defaultSerloEditorProps,
     ...props,
@@ -59,7 +79,9 @@ export function SerloEditor(props: SerloEditorProps) {
     ? createEmptyDocument(editorVariant)
     : props.initialState
 
-  const { migratedState, stateChanged } = migrate(initialState, editorVariant)
+  const { migratedState, stateChanged } = useMemo(() => {
+    return migrate(initialState, editorVariant)
+  }, [editorVariant, initialState])
 
   if (onChange && stateChanged) {
     onChange(migratedState)
@@ -67,10 +89,15 @@ export function SerloEditor(props: SerloEditorProps) {
 
   const { staticStrings, editStrings } = editorData[language]
 
-  const allPlugins = createBasicPlugins(plugins, _testingSecret)
+  const allPlugins = createPlugins(
+    plugins,
+    _testingSecret,
+    language,
+    extraSerloPlugins
+  )
   editorPlugins.init(allPlugins)
 
-  const basicRenderers = createRenderers()
+  const basicRenderers = createRenderers(extraSerloRenderers)
   editorRenderers.init(basicRenderers)
 
   return (
@@ -79,34 +106,45 @@ export function SerloEditor(props: SerloEditorProps) {
         <EditorMetaContext.Provider
           value={{ editorVariant, userId, ltik: _ltik }}
         >
-          {isProductionEnvironment ? null : renderTestEnvironmentWarning()}
-          <Editor
-            initialState={migratedState.document}
-            onChange={handleDocumentChange}
-          >
-            {children}
-          </Editor>
+          {renderTestEnvironmentWarning()}
+          <div className={styleReset ? 'serlo-editor-style-reset' : ''}>
+            <Editor
+              initialState={migratedState.document}
+              onChange={handleDocumentChange}
+              showUndoRedoButtons={showUndoRedoButtons}
+            >
+              {children}
+            </Editor>
+          </div>
         </EditorMetaContext.Provider>
       </EditStringsProvider>
     </StaticStringsProvider>
   )
 
-  // Parameter `changed` is ignored. Even if it is false, we still want to call onChange.
-  function handleDocumentChange({ getDocument }: { getDocument: GetDocument }) {
-    if (!onChange) return
+  function handleDocumentChange({
+    changed,
+    getDocument,
+  }: OnEditorChangePayload) {
     const document = getDocument()
     if (!document) return
-    onChange({
+
+    const stateToSave = {
       ...migratedState,
       dateModified: getCurrentDatetime(),
       editorVersion: getEditorVersion(),
       document,
-    })
+    }
+
+    const isSerlo = editorVariant === 'serlo-org'
+    if (changed && isSerlo) void debouncedStoreToLocalStorage(stateToSave)
+
+    if (onChange) onChange(stateToSave)
   }
 
   function renderTestEnvironmentWarning() {
+    if (isProductionEnvironment) return null
     return (
-      <div className="bg-editor-primary-100 px-1.5 py-0.5 text-sm">
+      <div className="test-environment-warning my-3 bg-editor-primary-100 px-1.5 py-0.5 text-sm">
         {editStrings.savedContentMightDisappearWarning}
       </div>
     )

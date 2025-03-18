@@ -1,4 +1,4 @@
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
+import { EditorPluginType } from '@editor/package'
 import {
   faCubes,
   faExpand,
@@ -32,8 +32,8 @@ import {
   TextExerciseExample,
 } from './education-plugin-examples'
 import { FaIcon } from '@/components/fa-icon'
+import { EntityMetaProvider } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidsProvider } from '@/contexts/uuids-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { cn } from '@/helper/cn'
 import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
@@ -290,7 +290,7 @@ export function EducationPlugins() {
         key={`infoBox-${title}`}
       >
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
-          <UuidsProvider value={{ entityId: 1555 }}>
+          <EntityMetaProvider value={{ entityId: 1555 }}>
             <p className="mb-6 text-xl">{isDe ? descriptionDe : description}</p>
 
             {demoSlug ? (
@@ -336,7 +336,7 @@ export function EducationPlugins() {
                 />
               </>
             ) : null}
-          </UuidsProvider>
+          </EntityMetaProvider>
           <style jsx global>
             {`
               .lazyload-wrapper > .print:hidden,

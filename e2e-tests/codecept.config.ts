@@ -11,9 +11,6 @@ exports.config = {
   helpers: {
     Playwright: {
       url: frontendUrl,
-      restart: 'keep',
-      keepBrowserState: true,
-      keepCookies: true,
       show: !isCI,
       waitForTimeout: 30_000,
       ...(isCI && isChromium
@@ -23,6 +20,10 @@ exports.config = {
           }
         : { browser }),
     },
+    REST: {
+      endpoint: 'https://api.serlo-staging.dev/graphql',
+    },
+    JSONResponse: {},
   },
   plugins: {
     // https://codecept.io/locators/#custom-locators

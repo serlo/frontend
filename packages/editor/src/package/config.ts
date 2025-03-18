@@ -18,6 +18,7 @@ export const defaultPlugins = [
   EditorPluginType.ScMcExercise,
   EditorPluginType.BlanksExercise,
   EditorPluginType.DropzoneImage,
+  EditorPluginType.InteractiveVideo,
   EditorPluginType.Solution,
   EditorPluginType.Rows,
   EditorPluginType.TextAreaExercise,
@@ -31,4 +32,5 @@ export const defaultSerloEditorProps = {
   onChange: undefined,
   language: 'de' as SupportedLanguage,
   isProductionEnvironment: false,
+  styleReset: true,
 }

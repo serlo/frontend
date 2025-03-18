@@ -9,12 +9,7 @@ import {
   InteractiveAnswer,
   PreviewOverlaySimple,
 } from '../../editor-ui'
-import {
-  useStore,
-  selectFocused,
-  selectStaticDocument,
-  useAppSelector,
-} from '../../store'
+import { useStore, selectStaticDocument, useAppSelector } from '../../store'
 import { useIsPreviewActive } from '../exercise/context/preview-context'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
@@ -45,7 +40,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const previewActive = useIsPreviewActive()
 
   const isAnyAnswerFocused = answers.some(({ content, feedback }) => {
-    const focusedId = selectFocused(store.getState())
+    const focusedId = store.getState().focus
     return focusedId === content.id || focusedId === feedback.id
   })
 

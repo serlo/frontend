@@ -1,22 +1,19 @@
 import {
   type EditorPlugin,
   type EditorPluginProps,
+  object,
   PrettyStaticState,
 } from '@editor/plugin'
 import { selectStaticDocument, useStore } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, entity, entityType } from '../common/common'
+import { editorContent } from '../common/common'
 
 // text-exercises also include interactive exercises, we keep the naming to avoid db-migration
 
-export const textExerciseGroupTypeState = entityType(
-  {
-    ...entity,
-    content: editorContent(EditorPluginType.ExerciseGroup),
-  },
-  {}
-)
+export const textExerciseGroupTypeState = object({
+  content: editorContent(EditorPluginType.ExerciseGroup),
+})
 
 export type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
 

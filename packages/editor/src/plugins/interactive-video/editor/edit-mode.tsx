@@ -1,7 +1,6 @@
-import { focus } from '@editor/store'
+import { focus, useAppDispatch } from '@editor/store'
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { type InteractiveVideoProps } from '..'
 import { MarksList } from './marks-list'
@@ -26,7 +25,7 @@ export function EditMode({
   previewActive: boolean
 }) {
   const { marks } = state
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const learnerInteractions = useLearnerInteractions()
   const checkSeekAndPlay = useCheckSeekAndPlay({
@@ -47,9 +46,11 @@ export function EditMode({
   return (
     <>
       <InteractiveVideoRenderer
+        isEditMode
         videoSrc={videoSrc}
         marks={staticMarks}
         learnerInteractions={previewActive ? learnerInteractions : undefined}
+        checkSeekAndPlay={previewActive ? checkSeekAndPlay : undefined}
         tools={
           previewActive ? (
             <MarkOverlay
@@ -68,7 +69,6 @@ export function EditMode({
             />
           )
         }
-        checkSeekAndPlay={checkSeekAndPlay}
       />
       {showOverlayContentIndex === null || previewActive ? null : (
         <OverlayContentModal

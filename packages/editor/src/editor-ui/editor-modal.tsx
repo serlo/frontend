@@ -1,3 +1,4 @@
+import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { cn } from '@editor/utils/cn'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -32,6 +33,7 @@ export function EditorModal({
 }: EditorModalProps) {
   const previouslyFocusedElementRef = useRef<HTMLElement | null>(null)
 
+  const isSerlo = useIsSerlo()
   const onOpenChange = useCallback(
     (open: boolean) => {
       if (open !== false) {
@@ -70,7 +72,12 @@ export function EditorModal({
             className={cn(defaultModalOverlayStyles, extraOverlayClassName)}
           />
           <Dialog.Content
-            className={cn('serlo-modal', className)}
+            className={cn(
+              'serlo-modal',
+              className,
+              // The moodle navigation bar has a z-index of 1030...
+              !isSerlo && 'z-[1040]'
+            )}
             data-modal-state={isOpen ? 'open' : 'closed'}
             aria-describedby={undefined}
             onEscapeKeyDown={onEscapeKeyDown}
@@ -88,9 +95,9 @@ export function EditorModal({
               onClick={() => onOpenChange(false)}
               title={title}
               className={cn(
-                `absolute right-3.5 top-3.5 z-20 inline-flex h-9 w-9 cursor-pointer items-center
-                 justify-center rounded-full border-none leading-tight
-               text-almost-black hover:bg-brand hover:text-white`,
+                `absolute right-3.5 top-3.5 z-20 inline-flex flow-root h-9 w-9 cursor-pointer
+                 items-center justify-center rounded-full border-none
+                 leading-tight text-almost-black hover:bg-brand hover:text-white`,
                 extraCloseButtonClassName
               )}
               data-qa="modal-close-button"

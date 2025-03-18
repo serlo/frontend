@@ -1,6 +1,4 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
-import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { EditorRowsDocument } from '@editor/types/editor-plugins'
+import { EditorPluginType, SerloRenderer } from '@editor/package'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
@@ -14,9 +12,9 @@ import { InfoPanel } from '../info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { EntityMetaProvider } from '@/contexts/entity-meta-context'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidsProvider } from '@/contexts/uuids-context'
 import { allMathExamTaxIds } from '@/data/de/math-exams-data'
 import {
   BreadcrumbsData,
@@ -25,8 +23,7 @@ import {
   UuidType,
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { createRenderers } from '@/serlo-editor-integration/create-renderers'
-import { EditorRenderer } from '@/serlo-editor-integration/editor-renderer'
+import { extraSerloRenderers } from '@/serlo-editor-integration/extra-serlo-renderers'
 
 export interface TopicProps {
   data: TaxonomyData
@@ -54,8 +51,6 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
 
   const hasExercises = data.exercisesContent.length > 0
 
-  editorRenderers.init(createRenderers())
-
   return (
     <>
       {data.trashed && renderTrashedNotice()}
@@ -63,8 +58,10 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-[50vh]">
         <div className="mt-6 sm:mb-5">
-          <EditorRenderer
-            document={data.description as unknown as EditorRowsDocument}
+          <SerloRenderer
+            state={data.description}
+            editorVariant="serlo-org"
+            extraSerloRenderers={extraSerloRenderers}
           />
         </div>
 
@@ -149,7 +146,7 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
 
           return (
             <li key={exerciseOrGroup.id ?? entityId} className="pb-10">
-              <UuidsProvider value={{ entityId }}>
+              <EntityMetaProvider value={{ entityId }}>
                 <ExerciseContext.Provider
                   value={{
                     isEntity:
@@ -158,9 +155,13 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
                   }}
                 >
                   <ExerciseNumbering href={`/${entityId}`} index={i} />
-                  <EditorRenderer document={exerciseOrGroup} />
+                  <SerloRenderer
+                    state={exerciseOrGroup}
+                    editorVariant="serlo-org"
+                    extraSerloRenderers={extraSerloRenderers}
+                  />
                 </ExerciseContext.Provider>
-              </UuidsProvider>
+              </EntityMetaProvider>
             </li>
           )
         })}

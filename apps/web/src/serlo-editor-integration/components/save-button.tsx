@@ -1,31 +1,36 @@
-import { FaIcon } from '@editor/editor-ui/fa-icon'
-import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
-import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { selectHasPendingChanges, useAppSelector } from '@editor/store'
+import type { StorageFormat } from '@editor/package'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { type MutableRefObject, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { SaveModal } from './save-modal'
 import type { SerloEditorProps } from '../serlo-editor'
+import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 export function SaveButton({
   onSave,
+  isChanged,
+  editorState,
   isInTestArea,
+  prefilledChanges,
 }: {
   onSave: SerloEditorProps['onSave']
+  isChanged: boolean
+  editorState: MutableRefObject<StorageFormat>
   isInTestArea?: boolean
+  prefilledChanges?: string
 }) {
-  const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
-  const editStrings = useEditStrings()
+  const saveButtonStrings = useInstanceData().strings.saveButton
 
   const handleClick = () =>
     isChanged
       ? setSaveModalOpen(true)
-      : showToastNotice('👀 ' + editStrings.noChangesWarning)
+      : showToastNotice('👀 ' + saveButtonStrings.noChangesWarning)
 
   useLeaveConfirm(isChanged)
 
@@ -36,13 +41,15 @@ export function SaveButton({
   return createPortal(
     <div className="sticky right-0 top-0">
       <button className="serlo-button-edit-primary" onClick={handleClick}>
-        <FaIcon icon={faSave} /> {editStrings.edtrIo.save}
+        <FaIcon icon={faSave} /> {saveButtonStrings.save}
       </button>
       <SaveModal
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
         onSave={onSave}
+        editorState={editorState}
         isInTestArea={isInTestArea}
+        prefilledChanges={prefilledChanges}
       />
     </div>,
     target

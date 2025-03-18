@@ -17,7 +17,11 @@ import {
 } from '../store'
 import { ROOT } from '../store/root/constants'
 
-export function InnerDocument({ children, onChange, ...props }: EditorProps) {
+export function InnerDocument({
+  children,
+  onChange,
+  initialState,
+}: EditorProps) {
   const [isInitialized, setIsInitialized] = useState(false)
   const store = useStore()
   const dispatch = useAppDispatch()
@@ -41,9 +45,9 @@ export function InnerDocument({ children, onChange, ...props }: EditorProps) {
   }, [onChange, store])
 
   useEffect(() => {
-    dispatch(runInitRootSaga({ initialState: props.initialState }))
+    dispatch(runInitRootSaga({ initialState }))
     setIsInitialized(true)
-  }, [props.initialState, dispatch])
+  }, [initialState, dispatch])
 
   useHotkeys(
     ['ctrl+z, meta+z'],
