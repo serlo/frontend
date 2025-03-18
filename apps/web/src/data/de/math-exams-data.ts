@@ -215,73 +215,88 @@ export const extraMetaTags = {
   297606: {
     title: 'Abiturprüfungen Mathe eA mit Lösungen',
     metaDescription:
-      'Mathe lernen fürs Abitur mit Serlo. Mathe Abi Aufgaben erhöhtes Anforderungsnvieau mit Lösungen. Du schaffst das!',
+      'Mathe lernen fürs Abitur in Niedersachsen mit Serlo. Mathe Abi Aufgaben erhöhtes Anforderungsniveau mit Lösungen ✨ kostenlos und einfach erklärt.',
   },
   300778: {
     title: 'Abiturprüfungen Mathe gA mit Lösungen',
     metaDescription:
-      'Mathe lernen fürs Abitur mit Serlo. Mathe Abi Aufgaben grundlegendes Anforderungsnvieau mit Lösungen. Du schaffst das!',
+      'Mathe lernen fürs Abitur mit Serlo. 💪 Mathe Abi Aufgaben grundlegendes Anforderungsniveau in Niedersachsen mit Lösungen. Du schaffst das!',
   },
   297604: {
     title: 'Mathe Prüfungsaufgaben mit Lösungen | Realschule',
     metaDescription:
-      'Mathe lernen für die Realschul- Abschlussprüfungen mit Original- Aufgaben und Lösungshilfe. Mit Serlo schaffst du das!',
+      'Mathe lernen für die Realschul-Abschlussprüfungen in Niedersachsen mit Original-Aufgaben und Lösungen. 🙌 Mit Serlo schaffst du das!',
   },
   302433: {
     title: 'IGS-Prüfungen Mathe G-Kurs mit Lösungen',
     metaDescription:
-      'Mathe lernen mit originalen Aufgaben und Lösungen für die Abschlussprüfungen an der Gesamtschule. Mit Serlo schaffst du das!',
+      'Bereite dich auf Mathe-Abschlussprüfung an der Gesamtschule vor! 💪 Lerne mit originalen Prüfungsaufgaben mit Lösungen für den G-Kurs!',
+  },
+  302434: {
+    title: 'IGS-Prüfungen Mathe E-Kurs mit Lösungen',
+    metaDescription:
+      'Mathe-Prüfungsaufgaben und Lösungen für den IGS E Abschluss in Niedersachsen 🚀 Mit Serlo gut vorbereitet zur Prüfung!',
   },
   20852: {
     title: 'Mathe Abiturprüfungen mit Lösung',
     metaDescription:
-      'Die beste Vorbereitung fürs Mathe Abi. Mathe-Aufgaben fürs Abitur mit Lösungen und Erklärungen. Mit Serlo schaffst du das!',
+      'Die beste Vorbereitung fürs Mathe Abi. 🚀 Mathe-Aufgaben fürs Abitur in Bayern mit Lösungen und Erklärungen. Mit Serlo schaffst du das!',
   },
   75049: {
     title: 'Mathe Abschlussprüfungen mit Lösung | Mittlere Reife',
     metaDescription:
-      'Deine Vorbereitung für die Mittlere Reife Zweig i: Mathe lernen mit originalen Prüfungsaufgaben. Mit Serlo schaffst du das!',
+      'Lerne für die Abschlussprüfung für die Realschule in Bayern: Mathe lernen mit originalen Prüfungsaufgaben Zweig I und Lösungen. 🙌 Mit Serlo schaffst du das!',
   },
   76750: {
     title: 'Mathe Abschlussprüfungen mit Lösung | Mittlere Reife',
     metaDescription:
-      'Deine Vorbereitung für die Mittlere Reife Zweig ii und iii: Mathe lernen mit originalen Prüfungsaufgaben. Mit Serlo schaffst du das!',
+      'Deine Vorbereitung für die Abschlussprüfung der Realschule in Bayern Zweig II und III 💪 Mathe lernen mit originalen Prüfungen und Lösungen.',
   },
   307335: {
     title: 'GYM Mathe – Zentrale Prüfungen (ZAP) | NRW',
     metaDescription:
-      'Deine Vorbereitung für die zentrale Prüfung (ZAP) am Gymnasium in Nordrhein-Westfalen: Mathe lernen mit originalen Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+      'Deine Vorbereitung für die ZP 10 am Gymnasium in NRW mit Serlo. 🙌 Übe mit den Prüfungen von 2021-2024 mit Lösungen für die gymnasiale Differenzierung.',
   },
   307336: {
     title: 'MSA Mathe – Zentrale Prüfungen (ZAP) | NRW',
     metaDescription:
-      'Deine Vorbereitung für den Mittleren Schulabschluss – Zentrale Prüfungen (ZAP) in Nordrhein-Westfalen: Mathe lernen mit originalen Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+      'Lerne für die ZP 10 Mathe in NRW mit Serlo. 🚀 Mit originalen Mathe-Aufgaben für den MSA der Jahre 2024-2021 mit Lösungen optimal vorbereiten!',
   },
   305819: {
     title: 'Mathe MSA- und eBBR-Prüfungen | Berlin',
     metaDescription:
-      'Mathe lernen für den Mittleren Schulabschluss (MSA) und die erweiterte Berufsbildungsreife (eBBR) mit den originalen Prüfungsaufgaben und Lösungen aus Berlin. Mit Serlo schaffst du das!',
+      'Mathe lernen für den MSA und den eBBR in Berlin! 💪 Originale Prüfungsaufgaben und Lösungen für deinen erfolgreichen Abschluss.',
   },
   305843: {
     title:
       'Mathe Abschlussprüfungen in Brandenburg | Oberschule & Gesamtschule',
     metaDescription:
-      'Kostenlose Prüfungsvorbereitung für A-Kurs/EBR-Klasse und B-Kurs/FOR-Klasse sowie Grund- und Erweiterungskurs der Gesamtschule in Brandenburg. Mit Serlo schaffst du das!',
+      'Mathe lernen für den MSA, FOR und EBR in Berlin! 🚀 Deine Prüfungsvorbereitung mit originalen Aufgaben und Lösungen von Serlo.',
   },
   308610: {
     title: 'Mathe MSA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
     metaDescription:
-      'Mathe lernen für den Mittleren Schulabschluss (MSA) mit den originalen Prüfungsaufgaben und Lösungen aus Schleswig-Holstein. Mit Serlo schaffst du das!',
+      'Optimale Mathe-Prüfungsvorbereitung zum Mittleren Schulabschluss (MSA) in Schleswig-Holstein! 🔥 Originale Aufgaben 2021-2024 mit Lösungen.',
   },
   313804: {
     title: 'Mathe ESA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
     metaDescription:
-      'Mathe lernen für den Ersten allgemeinbildenden Schulabschluss (ESA) mit den originalen Prüfungsaufgaben und Lösungen aus Schleswig-Holstein. Mit Serlo schaffst du das!',
+      'Lerne für den Mathe ESA in Schleswig-Holstein! ✨ Originale Prüfungsaufgaben für den ersten allgemeinbildenden Schulabschluss mit Lösungen.',
   },
   311010: {
     title: 'Mathe EESA – Zentrale Prüfungen (ZAP) | NRW',
     metaDescription:
-      'Deine Vorbereitung für den erweiterten ersten Schulabschluss in der zentralen Prüfung (ZAP) in Nordrhein-Westfalen (vormals HSA10): Mathe lernen mit originalen Prüfungsaufgaben und Lösungen. Mit Serlo schaffst du das!',
+      'EESA ZP in NRW (ehemals HSA10) bestehen! 💪 Lerne mit originalen Mathe-Prüfungen der Jahre 2024–2021 mit Lösungen. Mit Serlo schaffst du das!',
+  },
+  313659: {
+    title: 'Abitur Grund- und Leistungskurs & LK | NRW',
+    metaDescription:
+      'Deine Abi-Vorbereitung mit Lösungen in NRW: Originale Abitur-Aufgaben Mathe 2021-2024 Grundkurs und Leistungskurs. 🔥 Kostenlos vorbereiten mit Serlo!',
+  },
+  75678: {
+    title: 'Quali Abschlussprüfungen mit Lösung für Bayern',
+    metaDescription:
+      'Lerne Mathe für den Quali in Bayern! ✨ Prüfungsaufgaben mit Lösungen von Serlo - verständlich und kostenlos!',
   },
 } as const
 
