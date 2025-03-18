@@ -1,11 +1,11 @@
 import { EditorModal } from '@editor/editor-ui/editor-modal'
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
+// import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useWelcomeModal } from './use-welcome-modal'
-import { WelcomeModalButton } from './welcome-modal-button'
+// import { WelcomeModalButton } from './welcome-modal-button'
 
 export function WelcomeModal() {
   const { isOpen, onClose } = useWelcomeModal()
@@ -51,7 +51,7 @@ export function WelcomeModal() {
             </p>
           </div>
 
-          <div {...slideProps}>
+          {/* <div {...slideProps}>
             <div className="px-4">
               <video controls>
                 <source
@@ -66,12 +66,12 @@ export function WelcomeModal() {
               <FaIcon icon={faCircleQuestion} />
               &#8202;-Symbol klicken.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
       <div className="flex items-center justify-between px-8">
-        <div className="flex items-center gap-1">
+        {/* <div className="flex items-center gap-1">
           {steps.map((step) => (
             <WelcomeModalButton
               key={step}
@@ -79,7 +79,7 @@ export function WelcomeModal() {
               onClick={() => setCurrentStep(step)}
             />
           ))}
-        </div>
+        </div> */}
         <button
           className="serlo-button-learner-primary"
           onClick={handleNextButtonClick}
@@ -92,7 +92,10 @@ export function WelcomeModal() {
   )
 }
 
-const steps = [1, 2]
+const steps = [
+  1,
+  // 2,
+]
 
 const slideWidth = 600
 
@@ -103,5 +106,5 @@ const slideProps = {
 
 const translateXValuesMap: Record<number, string> = {
   1: '0',
-  2: `-${slideWidth}px`,
+  // 2: `-${slideWidth}px`,
 }
