@@ -3,6 +3,7 @@ import {
   LocalStorageNotice,
   getStateFromLocalStorage,
 } from '@editor/editor-ui/save/local-storage-notice'
+import { WelcomeModal } from '@editor/editor-ui/welcome-modal/welcome-modal'
 import { getEditorVersion } from '@editor/package/editor-version'
 import { cn } from '@editor/utils/cn'
 import { useState, useMemo } from 'react'
@@ -49,6 +50,7 @@ export function Editor(props: EditorProps) {
           {/* For non serlo environments, we need to render the toaster
           (already gets rendered in the web project) */}
           {!isSerlo ? <Toaster /> : null}
+          <WelcomeModal />
           <div
             className={cn(
               'editor-core mb-24 text-lg leading-cozy',
