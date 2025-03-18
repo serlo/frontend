@@ -1,4 +1,8 @@
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
+
 Feature('Learners')
+
+Before(setWelcomeModalSeen)
 
 const subjectQuickbarSelector = 'input[placeholder*="heute lerne ich"]'
 
