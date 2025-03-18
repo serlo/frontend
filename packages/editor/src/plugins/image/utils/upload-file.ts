@@ -8,7 +8,8 @@ import { type UploadHandler } from '@editor/plugin'
 import { EditStrings } from '@editor/types/language-data'
 import { useContext } from 'react'
 
-import { handleError, validateFile } from './validate-file'
+import { handleError, handleValidationError } from './handle-errors'
+import { validateFile } from './validate-file'
 
 type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
@@ -50,8 +51,11 @@ async function uploadFile({
   uploadStrings: EditStrings['edtrIo']['fileUpload']
   isSerlo: boolean
 }) {
-  const validated = validateFile(file, uploadStrings)
-  if (!validated) return Promise.reject()
+  const validated = validateFile(file)
+  if (validated !== true) {
+    handleValidationError(validated, uploadStrings)
+    return Promise.reject()
+  }
 
   const parentHost = getParentHost()
   const signedUrlHost = getSignedUrlHost(isSerlo)
@@ -67,11 +71,11 @@ async function uploadFile({
   const result = await fetch(url).catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e)
-    handleError(errorMessage)
+    handleError(uploadStrings.errorFetchingSignedUrl)
   })
 
   if (result && !result.ok) {
-    const error = new Error('Failed to get signed URL')
+    const error = new Error(uploadStrings.errorFetchingSignedUrl)
     handleError(error.message)
     return Promise.reject(error)
   }
@@ -81,7 +85,7 @@ async function uploadFile({
     fileUrl: string
   } | null
   if (!data) {
-    const error = new Error('Failed to get signed URL')
+    const error = new Error(uploadStrings.errorFetchingSignedUrl)
     handleError(error.message)
 
     return Promise.reject(error)
@@ -89,7 +93,7 @@ async function uploadFile({
 
   const { signedUrl, fileUrl } = data
 
-  const success = await uploadToBucket({ file, signedUrl })
+  const success = await uploadToBucket({ file, signedUrl, uploadStrings })
   if (!success) {
     const error = new Error('Failed to upload file')
     handleError(error.message)
@@ -104,14 +108,14 @@ function getSignedUrlHost(isSerlo: boolean) {
   return isSerlo && isSerloProduction ? 'editor.serlo.org' : 'editor.serlo.dev'
 }
 
-const errorMessage = 'Error while uploading'
-
 async function uploadToBucket({
   file,
   signedUrl,
+  uploadStrings,
 }: {
   file: File
   signedUrl: string
+  uploadStrings: EditStrings['edtrIo']['fileUpload']
 }) {
   const response = await fetch(signedUrl, {
     method: 'PUT',
@@ -123,12 +127,12 @@ async function uploadToBucket({
   }).catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e)
-    handleError(errorMessage)
+    handleError(uploadStrings.errorUploading)
     return
   })
 
   if (!response || response.status !== 200) {
-    handleError(errorMessage)
+    handleError(uploadStrings.errorUploading)
     return
   }
   return true

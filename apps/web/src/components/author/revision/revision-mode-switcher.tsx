@@ -23,21 +23,9 @@ export function RevisionModeSwitcher({
   const { strings } = useInstanceData()
 
   return (
-    <>
-      <style jsx>{`
-        .metabar {
-          display: flex;
-          justify-content: center;
-          position: sticky;
-          z-index: 50;
-          padding-top: 25px;
-          padding-bottom: 10px;
-          top: 0;
-          background-color: #fff;
-        }
-      `}</style>
-      <nav className="metabar p-side">{renderButtons()}</nav>
-    </>
+    <nav className="sticky top-0 z-50 flex justify-center bg-white p-side pb-2.5 pt-6">
+      {renderButtons()}
+    </nav>
   )
 
   function renderButtons() {

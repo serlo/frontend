@@ -524,11 +524,15 @@ export const editStrings = {
       invalidUrl: 'Fehler: Ungültige oder unvollständige URL',
       invalidUrlMessage:
         'Die eingegebene URL ist entweder ungültig oder unvollständig. Bitte stelle sicher, dass du die vollständige URL korrekt kopiert und eingefügt hast. Die URL sollte mit "http://" oder "https://" beginnen.',
+      errorFetchingSignedUrl:
+        'Tut uns leid, der Server ist gerade nicht erreichbar 😕 Versuch es später nochmal.',
+      errorUploading:
+        'Tut uns leid, das Hochladen hat leider nicht geklappt 😕 Versuch es später nochmal.',
       noFileSelected: 'Bitte wähle eine Datei aus',
       badExtension:
         "Sorry, %ext% ist leider nicht erlaubt. Versuch's mit diesen Typen: %allowed%",
       fileTooBig:
-        "Sorry, diese Datei ist zu groß. Versuch's weniger als %maxsize% MB",
+        "Sorry, diese Datei ist zu groß. Versuch's mit weniger als %maxsize% MB",
     },
     settings: 'Einstellungen',
     extendedSettings: 'Erweiterte Einstellungen',

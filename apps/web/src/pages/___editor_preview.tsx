@@ -11,7 +11,9 @@ import {
 } from 'use-query-params'
 
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
+import { useInstanceData } from '@/contexts/instance-context'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import { cn } from '@/helper/cn'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -60,6 +62,14 @@ function Content() {
     withDefault(StringParam, emptyState)
   )
 
+  const [viewMode, setViewMode] = useQueryParam<
+    string | undefined,
+    'both' | 'onlyPreview' | 'onlyEdit'
+    // @ts-expect-error not so important
+  >('mode', withDefault(StringParam, 'both', false))
+
+  const { lang } = useInstanceData()
+
   const isNotEmpty = previewState !== emptyState
 
   const debouncedSetState = debounce(
@@ -70,9 +80,11 @@ function Content() {
     () => (
       <Editor
         editorVariant="serlo-org"
+        language={lang === 'de' ? 'de' : 'en'}
         userId="serlo-preview-user"
         initialState={parseDocumentString(previewState)}
         styleReset={false}
+        showUndoRedoButtons
         onChange={(newState) => {
           const stringifiedNewState = JSON.stringify(newState.document)
           if (stringifiedNewState === previewState) return
@@ -89,59 +101,91 @@ function Content() {
   )
 
   return (
-    <main id="content" className="flex">
-      <section className="min-h-screen w-1/2 border-4 border-r-0 border-editor-primary">
-        <header className="mx-side flex justify-between align-middle font-bold">
-          <h2 className="mb-12 text-editor-primary">Edit</h2>
-          <div>
-            <input
-              onPaste={({ clipboardData }) => {
-                const pastedString = clipboardData.getData('text/plain').trim()
-                const cleanJsonString = pastedString
-                  .replace(/'/g, '')
-                  .replace(/\\"/g, '"')
+    <>
+      <nav className="absolute right-3 top-1.5 text-sm font-bold text-gray-500">
+        <input
+          className="w-20 rounded-sm bg-gray-100 text-center text-sm"
+          placeholder="paste json"
+          onPaste={({ clipboardData }) => {
+            const pastedString = clipboardData.getData('text/plain').trim()
+            const cleanJsonString = pastedString
+              .replace(/'/g, '')
+              .replace(/\\"/g, '"')
 
-                try {
-                  const jsonObject = JSON.parse(
-                    cleanJsonString
-                  ) as AnyEditorDocument
-                  setPreviewState(JSON.stringify(jsonObject))
-                } catch (error) {
-                  // eslint-disable-next-line no-console
-                  console.error('Error parsing JSON:', error)
-                  showToastNotice('sorry, invalid json', 'warning')
-                }
-              }}
-              className="mt-0.5 w-20 bg-gray-100 text-sm"
-              placeholder="paste json"
-            />
-            {' | '}
-            <button
-              onClick={() => {
-                void navigator.clipboard.writeText(previewState)
-                showToastNotice('state copied to clipboard', 'success')
-              }}
-              className="mt-0.5 text-sm"
-            >
-              copy
-            </button>{' '}
-            |{' '}
-            <button
-              onClick={() => setPreviewState(emptyState)}
-              className="mt-0.5 text-sm"
-            >
-              reset
-            </button>
+            try {
+              const jsonObject = JSON.parse(
+                cleanJsonString
+              ) as AnyEditorDocument
+              setPreviewState(JSON.stringify(jsonObject))
+            } catch (error) {
+              // eslint-disable-next-line no-console
+              console.error('Error parsing JSON:', error)
+              showToastNotice('sorry, invalid json', 'warning')
+            }
+          }}
+        />
+        {' | '}
+        <button
+          onClick={() => {
+            void navigator.clipboard.writeText(previewState)
+            showToastNotice('state copied to clipboard', 'success')
+          }}
+        >
+          copy
+        </button>{' '}
+        | <button onClick={() => setPreviewState(emptyState)}>reset</button> |{' '}
+        <button
+          onClick={() => {
+            if (viewMode === 'both') {
+              setViewMode('onlyEdit')
+              return
+            }
+            if (viewMode === 'onlyEdit') {
+              setViewMode('onlyPreview')
+              return
+            }
+            if (viewMode === 'onlyPreview') {
+              setViewMode('both')
+              return
+            }
+          }}
+        >
+          {viewMode === 'both'
+            ? 'only edit'
+            : viewMode === 'onlyEdit'
+              ? 'only preview'
+              : 'show both'}
+        </button>
+      </nav>
+      <main
+        id="content"
+        className="flex min-h-screen border-4 border-editor-primary"
+      >
+        <section
+          className={cn(
+            viewMode === 'both' ? 'w-1/2' : 'w-full',
+            viewMode === 'onlyPreview' && 'hidden'
+          )}
+        >
+          <h2 className="mx-side mb-12 font-bold text-editor-primary">Edit</h2>
+          <div className="mx-auto max-w-screen-sm px-2">{editor}</div>
+        </section>
+
+        <section
+          className={cn(
+            'border-editor-primary',
+            viewMode === 'both' ? 'w-1/2 border-l-4' : 'w-full',
+            viewMode === 'onlyEdit' && 'hidden'
+          )}
+        >
+          <h2 className="mx-side mb-12 font-bold text-editor-primary">
+            Preview
+          </h2>
+          <div className="mx-auto mt-[3rem] max-w-screen-sm">
+            <EditorRenderer document={parseDocumentString(previewState)} />
           </div>
-        </header>
-        <div className="px-2">{editor}</div>
-      </section>
-      <section className="min-h-screen w-1/2 border-4 border-editor-primary">
-        <h2 className="mx-side mb-12 font-bold text-editor-primary">Preview</h2>
-        <div className="mt-[3rem]">
-          <EditorRenderer document={parseDocumentString(previewState)} />
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </>
   )
 }
