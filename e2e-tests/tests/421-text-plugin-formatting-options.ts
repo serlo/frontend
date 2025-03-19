@@ -1,10 +1,12 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Text plugin - formatting options')
 
 Before(popupWarningFix)
+Before(setWelcomeModalSeen)
 
 Scenario(
   'Toggle text formatting options using keyboard shortcuts',

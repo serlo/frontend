@@ -2,10 +2,12 @@ import { addNewTextPlugin } from './helpers/add-plugin'
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { editExistingEntity } from './helpers/edit-existing-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - saving changes')
 
 Before(popupWarningFix)
+Before(setWelcomeModalSeen)
 
 Scenario('Save Modal: Blocks saving if requirements are not met', ({ I }) => {
   editExistingEntity(I, 55437)

@@ -1,6 +1,7 @@
 import assert from 'assert'
 import { editExistingEntity } from './helpers/edit-existing-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 // Not strictly e2e test but useful for migrations and refactorings involving saving
 // activate if needed
@@ -10,6 +11,7 @@ Feature('Serlo Editor - save content and check result via API')
 Before(({ I, login }) => {
   popupWarningFix({ I })
   login('admin') // login as admin for now
+  setWelcomeModalSeen({ I })
 })
 
 const abstractEntityQuery = `

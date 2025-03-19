@@ -1,10 +1,12 @@
 import assert from 'assert'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Blank exercise')
 
 Before(popupWarningFix)
+Before(setWelcomeModalSeen)
 
 const BlanksExerciseButton = '$add-exercise-blanksExercise'
 

@@ -1,6 +1,9 @@
 import { adminUser } from '../codecept.config'
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Login')
+
+Before(setWelcomeModalSeen)
 
 Scenario('Login', ({ I }) => {
   I.amOnPage('/')

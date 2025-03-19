@@ -1,9 +1,11 @@
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
+import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Image Gallery plugin')
 
 Before(popupWarningFix)
+Before(setWelcomeModalSeen)
 
 async function addImageGalleryPlugin(I: CodeceptJS.I) {
   I.say('Create image gallery plugin')
