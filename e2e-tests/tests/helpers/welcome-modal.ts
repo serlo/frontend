@@ -1,7 +1,10 @@
-export function setWelcomeModalSeen({ I }) {
-  I.amOnPage('/')
-  I.executeScript(() => {
-    if (localStorage.getItem('serlo-editor::hasUserSeenWelcomeModal')) return
-    localStorage.setItem('serlo-editor::hasUserSeenWelcomeModal', 'true')
+export async function setWelcomeModalSeen({ I }) {
+  I.amOnPage('/entity/create/Article/1377')
+  const hasWelcomeModalButton = await tryTo(() => {
+    I.wait(1)
+    I.seeElement('$welcome-modal-button')
   })
+  if (hasWelcomeModalButton) {
+    I.click('$welcome-modal-button')
+  }
 }
