@@ -6,7 +6,6 @@ export enum ExternalProvider {
   GoogleSearch = 'GoogleSearch',
   H5p = 'H5P',
   Vocaroo = 'Vocaroo',
-  GoogleTagManager = 'GoogleTagManager'
 }
 
 export function useConsent() {
