@@ -19,6 +19,7 @@ export interface EditorProps {
   }
   onChange: OnEditorChange
   showUndoRedoButtons?: boolean
+  isProductionEnvironment?: boolean
 }
 
 export type EditorRenderProps = ReactNode | ((editor: BaseEditor) => ReactNode)

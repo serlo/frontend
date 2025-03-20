@@ -1,8 +1,4 @@
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
-
 Feature('Learners: Exercises')
-
-Before(setWelcomeModalSeen)
 
 Scenario('Exercise folder', ({ I }) => {
   I.amOnPage('/23869')

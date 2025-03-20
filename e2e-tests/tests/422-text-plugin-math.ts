@@ -1,12 +1,10 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Text plugin - math formula')
 
 Before(popupWarningFix)
-Before(setWelcomeModalSeen)
 
 Scenario('Add a math formula', async ({ I }) => {
   createNewEditorEntity(I, 'article')

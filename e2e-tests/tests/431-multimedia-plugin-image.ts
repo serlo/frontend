@@ -1,13 +1,11 @@
 import { addMultimediaPlugin } from './430-multimedia-plugin'
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Multimedia plugin - image multimedia type')
 
 Before(({ login }) => {
   login('admin')
 })
-Before(setWelcomeModalSeen)
 
 const imageSrcPlaceholder = 'https://example.com/image.png'
 // Currently, we're not displaying any messages when users try to upload image

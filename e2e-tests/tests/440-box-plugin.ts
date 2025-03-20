@@ -1,11 +1,9 @@
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Box plugin')
 
 Before(popupWarningFix)
-Before(setWelcomeModalSeen)
 
 async function addBoxPlugin(I: CodeceptJS.I, type: string) {
   I.say('Create box plugin and set type')
