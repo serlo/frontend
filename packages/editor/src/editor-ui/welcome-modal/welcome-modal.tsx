@@ -82,6 +82,7 @@ export function WelcomeModal() {
         </div> */}
         <button
           className="serlo-button-learner-primary"
+          data-qa="welcome-modal-button"
           onClick={handleNextButtonClick}
         >
           {currentStep === steps.length ? "Los geht's!" : 'Weiter'}{' '}

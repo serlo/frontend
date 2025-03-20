@@ -1,10 +1,7 @@
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { editExistingEntity } from './helpers/edit-existing-entity'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - focus behaviour')
-
-Before(setWelcomeModalSeen)
 
 Scenario('Autofocus', async ({ I }) => {
   createNewEditorEntity(I, 'course')

@@ -1,12 +1,10 @@
 import { addNewTextPlugin } from './helpers/add-plugin'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 import { selectors } from './helpers/selectors'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Text plugin basic interactions')
 
 Before(popupWarningFix)
-Before(setWelcomeModalSeen)
 
 // First Text plugin is the multimedia explanation,
 // second is the default empty Text plugin.

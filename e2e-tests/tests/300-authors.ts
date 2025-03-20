@@ -1,5 +1,4 @@
 import { editExistingEntity } from './helpers/edit-existing-entity'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Authors')
 
@@ -8,7 +7,6 @@ Feature('Authors')
 Before(({ login }) => {
   login('admin') // login as admin for now
 })
-Before(setWelcomeModalSeen)
 
 // Articles only for now
 Scenario('Open Editor from article', async ({ I }) => {

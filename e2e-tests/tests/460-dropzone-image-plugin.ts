@@ -1,11 +1,9 @@
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Dropzone Image plugin')
 
 Before(popupWarningFix)
-Before(setWelcomeModalSeen)
 
 Scenario('Create a drag drop exercise with two dropzones', async ({ I }) => {
   createNewEditorEntity(I, 'exercise')

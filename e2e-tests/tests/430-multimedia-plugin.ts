@@ -1,12 +1,10 @@
 import { createNewEditorEntity } from './helpers/create-new-editor-entity'
 import { popupWarningFix } from './helpers/popup-warning-fix'
 import { selectors } from './helpers/selectors'
-import { setWelcomeModalSeen } from './helpers/welcome-modal'
 
 Feature('Serlo Editor - Multimedia plugin')
 
 Before(popupWarningFix)
-Before(setWelcomeModalSeen)
 
 export async function addMultimediaPlugin(I: CodeceptJS.I) {
   // Ensure that only the Multimedia plugin from article introduction is present
