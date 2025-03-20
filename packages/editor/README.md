@@ -1,4 +1,4 @@
-# Serlo Editor [![License: AGPL-v3](https://img.shields.io/badge/license-AGPL--v3-blue.svg)](https://opensource.org/license/agpl-v3) [![npm](https://img.shields.io/npm/v/@serlo/editor.svg)](https://www.npmjs.com/package/@serlo/editor)
+# Serlo Editor [![License](https://img.shields.io/badge/License-Apache_2.0-blue)](https://opensource.org/license/apache-2-0) [![npm](https://img.shields.io/npm/v/@serlo/editor.svg)](https://www.npmjs.com/package/@serlo/editor)
 
 This is an early version of the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on this package and thus there will be breaking changes before v1 is reached. The repository [serlo/serlo-editor-for-edusharing](https://github.com/serlo/serlo-editor-for-edusharing) shows an example of how this package can be used in production.
 
@@ -184,6 +184,6 @@ To remove the local link to Serlo Editor:
 
 ## License
 
-[AGPL-v3](https://opensource.org/license/agpl-v3)
+[Apache License, Version 2.0](https://opensource.org/license/apache-2-0)
 
 Copyright (c) 2025-present, Serlo Education

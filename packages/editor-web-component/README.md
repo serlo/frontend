@@ -1,4 +1,4 @@
-# Serlo Editor as a web component [![License: AGPL-v3](https://img.shields.io/badge/license-AGPL--v3-blue.svg)](https://opensource.org/license/agpl-v3) [![npm](https://img.shields.io/npm/v/@serlo/editor-web-component.svg)](https://www.npmjs.com/package/@serlo/editor-web-component)
+# Serlo Editor as a web component [![License](https://img.shields.io/badge/License-Apache_2.0-blue)](https://opensource.org/license/apache-2-0) [![npm](https://img.shields.io/npm/v/@serlo/editor-web-component.svg)](https://www.npmjs.com/package/@serlo/editor-web-component)
 
 This is an early version of the web component wrapping the [Serlo Editor](https://de.serlo.org/editor). Be aware that we are actively working on both packages and thus there will be breaking changes in minor versions before version 1 is reached. The repositories [serlo/serlo-editor-lit](https://github.com/serlo/serlo-editor-lit) and [serlo/block-serlo-editor-with-vue-js](https://github.com/serlo/block-serlo-editor-with-vue-js) show how this package can be used.
 
@@ -146,6 +146,6 @@ To remove the local link to Serlo Editor:
 
 ## License
 
-[AGPL-v3](https://opensource.org/license/agpl-v3)
+[Apache License, Version 2.0](https://opensource.org/license/apache-2-0)
 
 Copyright (c) 2025-present, Serlo Education
