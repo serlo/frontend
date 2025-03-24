@@ -40,29 +40,33 @@ export function TagConsentPopup() {
         title="Wir sammeln ausnahmsweiße Cookies 🍪"
         isOpen={consented === undefined}
         setIsOpen={handleDenyClick}
+        className="top-8 max-h-[90vh] translate-y-0 overflow-y-auto"
       >
-        <div className="mb-24 max-h-[80vh] overflow-y-auto">
+        <div>
           <p className="serlo-p">
             Serlo.org findet Datenschutz super und wir bemühen uns nur die
             nötigsten Daten für eine gute Benutzung der Seite zu speichern.
             <br />
-            Weil du über einen speziellen Werbelink von YouTube oder Google zu
-            uns kommst würden wir gerne Cookies verwenden um diese Zugriffe zu
-            analysieren.
+            <br />
+            Weil du über einen{' '}
+            <b>speziellen Werbelink von YouTube oder Google</b> zu uns kommst
+            würden wir gerne besser verstehen, was du auf unserer Seite machst,
+            damit wir unsere Service verbessern können.{' '}
+            <b>Dürfen wir dafür Cookies in deinen Browser ablegen?</b>
             <br />
             <br />
-            <a href="/consent" target="_blank" className="serlo-link">
-              Jederzeit widerrufen
-            </a>
-            <br />
+            Deine Zustimmung gilt nur für diesen Besuch. Du kannst deine
+            Zustimmung jede Zeit wiederrufen in dem du die Seite neu lädst. Bei
+            deinem nächsten Besuch ist deine Zustimmung automatisch
+            zurückgezogen. Was mit deinen Daten passiert, steht in unserer{' '}
             <a href="/privacy" target="_blank" className="serlo-link">
               Datenschutzerklärung
             </a>
-            {/* TODO: write text */}
+            .
           </p>
         </div>
 
-        <div className="absolute bottom-12 left-0 right-0 mx-side flex items-center justify-between bg-white">
+        <div className="mx-side mb-2 flex items-center justify-between gap-x-3">
           <button
             className="serlo-button-learner-secondary"
             onClick={handleDenyClick}
