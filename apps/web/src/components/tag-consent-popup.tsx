@@ -56,7 +56,7 @@ export function TagConsentPopup() {
             <br />
             <br />
             Deine Zustimmung gilt nur für diesen Besuch. Du kannst deine
-            Zustimmung jede Zeit wiederrufen in dem du die Seite neu lädst. Bei
+            Zustimmung jeder Zeit wiederrufen in dem du die Seite neu lädst. Bei
             deinem nächsten Besuch ist deine Zustimmung automatisch
             zurückgezogen. Was mit deinen Daten passiert, steht in unserer{' '}
             <a href="/privacy" target="_blank" className="serlo-link">
