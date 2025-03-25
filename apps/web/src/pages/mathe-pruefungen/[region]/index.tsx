@@ -4,6 +4,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base/frontend-client-base'
 import { MathExamsLanding } from '@/components/pages/math-exams-landing'
+import { TagConsentPopup } from '@/components/tag-consent-popup'
 import {
   type SupportedRegion,
   deRegions,
@@ -22,6 +23,7 @@ export default renderedPageNoHooks<ExamsLandingData>(
   ({ region, examsTaxonomyData }) => {
     return (
       <FrontendClientBase noContainers noHeaderFooter>
+        <TagConsentPopup />
         <MathExamsLanding
           region={region}
           examsTaxonomyData={examsTaxonomyData}

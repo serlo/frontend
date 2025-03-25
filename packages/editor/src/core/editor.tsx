@@ -50,7 +50,7 @@ export function Editor(props: EditorProps) {
           {/* For non serlo environments, we need to render the toaster
           (already gets rendered in the web project) */}
           {!isSerlo ? <Toaster /> : null}
-          <WelcomeModal />
+          {props.isProductionEnvironment ? <WelcomeModal /> : null}
           <div
             className={cn(
               'editor-core mb-24 text-lg leading-cozy',

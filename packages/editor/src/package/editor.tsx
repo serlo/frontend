@@ -112,6 +112,7 @@ export function SerloEditor(props: SerloEditorProps) {
               initialState={migratedState.document}
               onChange={handleDocumentChange}
               showUndoRedoButtons={showUndoRedoButtons}
+              isProductionEnvironment={isProductionEnvironment}
             >
               {children}
             </Editor>

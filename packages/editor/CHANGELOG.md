@@ -1,3 +1,9 @@
+## Changelog for version 0.24.0
+
+- Revert contentOnly pages: Use old iframe resizing method using `iframe-resizer` instead of `open-iframe-resizer`. Thank you [@LarsTheGlidingSquirrel](https://github.com/LarsTheGlidingSquirrel) in https://github.com/serlo/frontend/pull/4528
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.23.0-editor...v0.24.0-editor
+
 ## Changelog for version 0.23.0-beta.0
 
 - fix(editor): plugin menu restrictions. Thank you [@hejtful](https://github.com/hejtful) in https://github.com/serlo/frontend/pull/4516
