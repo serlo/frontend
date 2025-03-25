@@ -49,7 +49,13 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'lit', '@serlo/editor-web-component'],
+      external: [
+        'react',
+        'react-dom',
+        'lit',
+        '@serlo/editor-web-component',
+        'isomorphic-dompurify',
+      ],
       output: {
         globals: {
           react: 'React',
