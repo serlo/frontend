@@ -126,6 +126,11 @@ export default class MyDocument extends Document {
               __html: `window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};`,
             }}
           ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `document.cookie = '__gsas=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/mathe-pruefungen;'; document.cookie = '__gsas=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';`,
+            }}
+          />
         </Head>
         <body style={bodyStyles}>
           <Main />
