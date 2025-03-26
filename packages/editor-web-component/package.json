@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor-web-component",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -46,7 +46,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
     "@rollup/plugin-replace": "^6.0.1",
-    "@serlo/editor": "0.21.2",
+    "@serlo/editor": "0.24.0",
     "@serlo/typescript-config": "workspace:*",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.3.1",
