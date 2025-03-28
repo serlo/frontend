@@ -1,10 +1,16 @@
 import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { BlankRendererStatic } from '@editor/plugins/blanks-exercise/blank-renderer-static'
-import { createElement } from 'react'
+import { createElement, lazy, Suspense } from 'react'
 import { Descendant, Element } from 'slate'
 
 import { TextLeafRenderer } from '../components/text-leaf-renderer'
 import { ListElementType } from '../types/text-editor'
+
+const StaticMath = lazy(() =>
+  import('./static-math').then((module) => ({
+    default: module.StaticMath,
+  }))
+)
 
 export function StaticSlate({
   element,
@@ -84,8 +90,11 @@ export function StaticSlate({
       )
     }
     if (element.type === 'math') {
-      const MathRenderer = editorRenderers.getMathRenderer()
-      return <MathRenderer {...element} />
+      return (
+        <Suspense>
+          <StaticMath {...element} />
+        </Suspense>
+      )
     }
     if (element.type === 'textBlank') {
       const isCorrectAnswerEmpty =

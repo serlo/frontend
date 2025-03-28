@@ -1,16 +1,21 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import {
   EquationsRenderer,
   EquationsRendererStep,
 } from '@editor/plugins/equations/renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorEquationsDocument } from '@editor/types/editor-plugins'
+import { lazy, Suspense } from 'react'
 
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
+const StaticMath = lazy(() =>
+  import('../text/static-components/static-math').then((module) => ({
+    default: module.StaticMath,
+  }))
+)
+
 export function EquationsStaticRenderer({ state }: EditorEquationsDocument) {
   const { steps, firstExplanation, transformationTarget } = state
-  const MathRenderer = editorRenderers.getMathRenderer()
 
   return (
     <EquationsRenderer
@@ -42,13 +47,9 @@ export function EquationsStaticRenderer({ state }: EditorEquationsDocument) {
 
   function formulaRenderer(formula: string) {
     return (
-      <MathRenderer
-        src={formula}
-        type="math"
-        inline
-        // eslint-disable-next-line react/no-children-prop
-        children={[{ text: '' }]}
-      />
+      <Suspense>
+        <StaticMath src={formula} type="math" inline />
+      </Suspense>
     )
   }
 }

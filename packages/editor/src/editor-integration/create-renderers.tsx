@@ -11,7 +11,6 @@ import { MultimediaStaticRenderer } from '@editor/plugins/multimedia/static'
 import { RowsStaticRenderer } from '@editor/plugins/rows/static'
 import { GenericContentTypeStaticRenderer } from '@editor/plugins/serlo-template-plugins/generic-content/static'
 import { SpoilerStaticRenderer } from '@editor/plugins/spoiler/static'
-import type { MathElement } from '@editor/plugins/text'
 import { TextStaticRenderer } from '@editor/plugins/text/static'
 import { TextAreaExerciseStaticRenderer } from '@editor/plugins/text-area-exercise/static'
 import { VideoStaticRenderer } from '@editor/plugins/video/static'
@@ -19,14 +18,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { sanitizeHref } from '@editor/utils/sanitize-href'
 import { ComponentProps, lazy } from 'react'
-
-const StaticMath = lazy(() =>
-  import('@editor/plugins/text/static-components/static-math').then(
-    (module) => ({
-      default: module.StaticMath,
-    })
-  )
-)
 
 const HighlightStaticRenderer = lazy(() =>
   import('@editor/plugins/highlight/static').then((module) => ({
@@ -284,7 +275,6 @@ export function createRenderers(
           ]
         : []),
     ],
-    mathRenderer: (element: MathElement) => <StaticMath {...element} />,
     linkRenderer: ({ href, children }: ComponentProps<LinkRenderer>) => {
       return (
         <a
