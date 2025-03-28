@@ -12,30 +12,31 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   if (!src) return null
 
   const cleanedSrc = sanitizeLatex(src)
+  const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
+  const displayMode = /\\displaystyle[^a-z]/.test(cleanedSrc)
 
   if (inline) return renderFormula(cleanedSrc)
-
-  const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
-  const addDisplayStyle = !/\\displaystyle[^a-z]/.test(cleanedSrc)
 
   return (
     <div
       className={cn(
         'serlo-math-wrapper text-center',
-        nowrap && 'whitespace-nowrap',
-        addDisplayStyle && 'text-xl'
+        nowrap && 'whitespace-nowrap'
       )}
     >
-      {renderFormula(cleanedSrc, addDisplayStyle)}
+      {renderFormula(cleanedSrc)}
     </div>
   )
 
-  function renderFormula(formula: string, displayMode?: boolean) {
+  function renderFormula(formula: string) {
     const mathML = temml.renderToString(formula, { displayMode })
 
     return (
       <span
-        className="inline-block py-1 [page-break-inside:avoid]"
+        className={cn(
+          'inline-block pb-1 [page-break-inside:avoid]',
+          inline ? 'text-[1.1rem]' : 'text-[1.33rem]'
+        )}
         dangerouslySetInnerHTML={{ __html: mathML }}
       />
     )
