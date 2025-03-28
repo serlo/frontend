@@ -1,5 +1,5 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
 import { BlankRendererStatic } from '@editor/plugins/blanks-exercise/blank-renderer-static'
+import { LinkRenderer } from '@editor/static-renderer/link-renderer'
 import { createElement, lazy, Suspense } from 'react'
 import { Descendant, Element } from 'slate'
 
@@ -45,7 +45,6 @@ export function StaticSlate({
       )
     }
     if (element.type === 'a') {
-      const LinkRenderer = editorRenderers.getLinkRenderer()
       return (
         <LinkRenderer href={element.href}>
           <StaticSlate element={children} />
