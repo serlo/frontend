@@ -1,12 +1,7 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
 import { cn } from '@editor/utils/cn'
-import DOMPurify from 'isomorphic-dompurify'
-import KaTeX from 'katex'
-// eslint-disable-next-line import/no-unassigned-import
-import 'katex/contrib/mhchem'
+import temml from 'temml'
 
-// eslint-disable-next-line import/no-unassigned-import
-import '@serlo/katex-styles/styles.css'
 import type { MathElement } from '../types/text-editor'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
@@ -27,54 +22,21 @@ export function StaticMath({ src, inline }: StaticMathProps) {
     <div
       className={cn(
         'serlo-math-wrapper text-center',
-        nowrap && 'whitespace-nowrap'
+        nowrap && 'whitespace-nowrap',
+        addDisplayStyle && 'text-xl'
       )}
     >
-      {renderFormula(
-        addDisplayStyle ? '\\displaystyle ' + cleanedSrc : cleanedSrc
-      )}
+      {renderFormula(cleanedSrc, addDisplayStyle)}
     </div>
   )
 
-  function renderFormula(formula: string) {
-    // block formular use displaystyle
-    const html = formula
-      ? KaTeX.renderToString(formula, {
-          displayMode: false,
-          throwOnError: false,
-          strict: false,
-          macros: {
-            '\\Q': '\\mathbb{Q}',
-            '\\C': '\\mathbb{C}',
-            '\\and': '\\wedge',
-            '\\euro': '€',
-            '\\or': '\\vee',
-            '\\arccot': '\\operatorname{arccot}',
-            '\\sgn': '\\operatorname{sgn}',
-            '\\m': '\\text{ m}',
-            '\\cm': '\\text{ cm}',
-            '\\mm': '\\text{ mm}',
-            '\\km': '\\text{ km}',
-            '\\dm': '\\text{ dm}',
-            '\\l': '\\text{ l}',
-            '\\dl': '\\text{ dl}',
-            '\\cl': '\\text{ cl}',
-            '\\ml': '\\text{ ml}',
-            '\\s': '\\text{ s}',
-            '\\h': '\\text{ h}',
-            '\\D': '\\mathbb{D}',
-            '\\W': '\\mathbb{W}',
-            '\\L': '\\mathbb{L}',
-          },
-        })
-      : ''
+  function renderFormula(formula: string, displayMode?: boolean) {
+    const mathML = temml.renderToString(formula, { displayMode })
 
-    // Even though we can trust the html created by Katex we sanitize the html as a second guard against XSS.
-    const sanitizedHtml = DOMPurify.sanitize(html)
     return (
       <span
         className="inline-block py-1 [page-break-inside:avoid]"
-        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+        dangerouslySetInnerHTML={{ __html: mathML }}
       />
     )
   }

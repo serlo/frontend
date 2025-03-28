@@ -401,13 +401,13 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
             <div className="mx-auto max-w-[1024px]">
               <div className="flex justify-center">
                 {renderButton(
-                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                  <span style={{ fontFamily: 'Fira Math' }} className="italic">
                     x
                   </span>,
                   ['insert', 'x']
                 )}
                 {renderButton(
-                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                  <span style={{ fontFamily: 'Fira Math' }} className="italic">
                     y
                   </span>,
                   ['insert', 'y']
@@ -431,13 +431,13 @@ export function EquationTask({ data, onSolve, onBack }: EquationTaskProps) {
               </div>
               <div className="flex justify-center">
                 {renderButton(
-                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                  <span style={{ fontFamily: 'Fira Math' }} className="italic">
                     a
                   </span>,
                   ['insert', 'a']
                 )}
                 {renderButton(
-                  <span style={{ fontFamily: 'KaTeX_Main' }} className="italic">
+                  <span style={{ fontFamily: 'Fira Math' }} className="italic">
                     b
                   </span>,
                   ['insert', 'b']

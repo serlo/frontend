@@ -5548,7 +5548,6 @@ __metadata:
     "@radix-ui/react-select": ^2.1.2
     "@reduxjs/toolkit": ^2.3.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@types/dompurify": ^3.0.5
     "@types/is-hotkey": 0.1.10
@@ -5576,7 +5575,6 @@ __metadata:
     io-ts: ^2.2.21
     is-hotkey: 0.2.0
     isomorphic-dompurify: ^2.22.0
-    katex: ^0.16.21
     lit: ^3.2.1
     mathjs: ^13.2.2
     motion: ^11.11.17
@@ -5608,6 +5606,7 @@ __metadata:
     slate-dom: 0.111.0
     slate-react: 0.111.0
     tailwindcss: ^3.4.17
+    temml: ^0.11.2
     ts-debounce: ^4.0.0
     ts-key-enum: ^2.0.13
     typescript: ^5.6.3
@@ -5664,7 +5663,6 @@ __metadata:
     "@serlo/authorization": ^0.60.0
     "@serlo/editor": "workspace:*"
     "@serlo/eslint-config": "workspace:*"
-    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.15
@@ -5673,7 +5671,6 @@ __metadata:
     "@types/iframe-resizer": ^3.5.13
     "@types/js-cookie": ^3.0.6
     "@types/json-diff": ^1.0.3
-    "@types/katex": ^0.16.7
     "@types/node": ^20.17.6
     "@types/nprogress": ^0.2.3
     "@types/qrcode.react": ^1.0.5
@@ -5708,7 +5705,6 @@ __metadata:
     isomorphic-dompurify: ^2.22.0
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
-    katex: ^0.16.21
     mathjs: ^13.2.2
     mathlive: ^0.104.0
     micromark: ^4.0.1
@@ -5752,12 +5748,6 @@ __metadata:
   checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
   languageName: node
   linkType: hard
-
-"@serlo/katex-styles@workspace:packages/katex-styles":
-  version: 0.0.0-use.local
-  resolution: "@serlo/katex-styles@workspace:packages/katex-styles"
-  languageName: unknown
-  linkType: soft
 
 "@serlo/monorepo@workspace:.":
   version: 0.0.0-use.local
@@ -6257,13 +6247,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
-  languageName: node
-  linkType: hard
-
-"@types/katex@npm:^0.16.7":
-  version: 0.16.7
-  resolution: "@types/katex@npm:0.16.7"
-  checksum: 4fd15d93553be97c02c064e16be18d7ccbabf66ec72a9dc7fd5bfa47f0c7581da2f942f693c7cb59499de4c843c2189796e49c9647d336cbd52b777b6722a95a
   languageName: node
   linkType: hard
 
@@ -8446,13 +8429,6 @@ __metadata:
   version: 7.2.0
   resolution: "commander@npm:7.2.0"
   checksum: 53501cbeee61d5157546c0bef0fedb6cdfc763a882136284bed9a07225f09a14b82d2a84e7637edfd1a679fb35ed9502fd58ef1d091e6287f60d790147f68ddc
-  languageName: node
-  linkType: hard
-
-"commander@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "commander@npm:8.3.0"
-  checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
   languageName: node
   linkType: hard
 
@@ -12803,17 +12779,6 @@ __metadata:
   version: 6.0.2
   resolution: "just-diff@npm:6.0.2"
   checksum: 1a0c7524f640cb88ab013862733e710f840927834208fd3b85cbc5da2ced97acc75e7dcfe493268ac6a6514c51dd8624d2fd9d057050efba3c02b81a6dcb7ff9
-  languageName: node
-  linkType: hard
-
-"katex@npm:^0.16.21":
-  version: 0.16.21
-  resolution: "katex@npm:0.16.21"
-  dependencies:
-    commander: ^8.3.0
-  bin:
-    katex: cli.js
-  checksum: 14180322a4e8fe9e4227a08b7d86fde9ee445859ff534e6a540b85eb5022b39ea2be70082776cce8c59b891c247fce3d1c1a090ea7821e005fd8b7bfee714936
   languageName: node
   linkType: hard
 
@@ -17789,6 +17754,13 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
     mkdirp: ^3.0.1
     yallist: ^5.0.0
   checksum: 8485350c0688331c94493031f417df069b778aadb25598abdad51862e007c39d1dd5310702c7be4a6784731a174799d8885d2fde0484269aea205b724d7b2ffa
+  languageName: node
+  linkType: hard
+
+"temml@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "temml@npm:0.11.2"
+  checksum: 6cd4cfc9e34b97d11cb7479a5a29223ec47acabf82c864e38a73e66672ee699fcb0ae510206b43bfa4435665bde51b2311349f870dd3fc62eebe2a02d583eb91
   languageName: node
   linkType: hard
 
