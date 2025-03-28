@@ -1,5 +1,6 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
 import { cn } from '@editor/utils/cn'
+import { useEffect, useRef } from 'react'
 import temml from 'temml'
 
 import type { MathElement } from '../types/text-editor'
@@ -9,14 +10,23 @@ export type StaticMathProps = Omit<MathElement, 'children'>
 /** 🐘 This component is quite big. 🐘
  *  Load it dynamically if you can. */
 export function StaticMath({ src, inline }: StaticMathProps) {
-  if (!src) return null
+  const spanRef = useRef<HTMLSpanElement | null>(null)
 
   const cleanedSrc = sanitizeLatex(src)
-
-  if (inline) return renderFormula(cleanedSrc)
-
-  const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
   const addDisplayStyle = !/\\displaystyle[^a-z]/.test(cleanedSrc)
+  const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
+
+  useEffect(() => {
+    if (!spanRef.current) return
+
+    temml.render(cleanedSrc, spanRef.current, {
+      displayMode: addDisplayStyle,
+    })
+  })
+
+  if (!src) return null
+
+  if (inline) return renderFormula()
 
   return (
     <div
@@ -26,18 +36,22 @@ export function StaticMath({ src, inline }: StaticMathProps) {
         addDisplayStyle && 'text-xl'
       )}
     >
-      {renderFormula(cleanedSrc, addDisplayStyle)}
+      {renderFormula()}
     </div>
   )
 
-  function renderFormula(formula: string, displayMode?: boolean) {
-    const mathML = temml.renderToString(formula, { displayMode })
-
-    return (
-      <span
-        className="inline-block py-1 [page-break-inside:avoid]"
-        dangerouslySetInnerHTML={{ __html: mathML }}
-      />
-    )
+  function renderFormula() {
+    try {
+      return (
+        <span
+          ref={spanRef}
+          className="inline-block py-1 [page-break-inside:avoid]"
+        />
+      )
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error('formula could not be rendered')
+      return <span></span>
+    }
   }
 }
