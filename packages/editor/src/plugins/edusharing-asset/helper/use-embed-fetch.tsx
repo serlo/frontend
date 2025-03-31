@@ -169,6 +169,7 @@ function getEmbedHtml(
                 src={iconURL}
                 alt="Word-File icon"
                 className="-mt-1 inline-block h-4 w-4 opacity-50"
+                loading="lazy"
               />{' '}
               Word-Datei: {name}
             </>

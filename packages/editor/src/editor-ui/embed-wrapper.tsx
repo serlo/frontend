@@ -70,6 +70,7 @@ export function EmbedWrapper({
             className="w-full object-contain opacity-50"
             src={previewImageUrl}
             alt={`${embedStrings.previewImage}`}
+            loading="lazy"
           />
         </div>
         <div
