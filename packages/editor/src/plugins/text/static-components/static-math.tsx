@@ -15,6 +15,28 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
   const displayMode = /\\displaystyle[^a-z]/.test(cleanedSrc)
 
+  const macros = temml.definePreamble(`
+    \\def\\Q{\\mathbb{Q}}
+    \\def\\C{\\mathbb{C}}
+    \\def\\and{\\wedge}
+    \\def\\or{\\vee}
+    \\def\\arccot{\\operatorname{arccot}}
+    \\def\\m{\\text{ m}}
+    \\def\\cm{\\text{ cm}}
+    \\def\\mm{\\text{ mm}}
+    \\def\\km{\\text{ km}}
+    \\def\\dm{\\text{ dm}}
+    \\def\\l{\\text{ l}}
+    \\def\\dl{\\text{ dl}}
+    \\def\\cl{\\text{ cl}}
+    \\def\\ml{\\text{ ml}}
+    \\def\\s{\\text{ s}}
+    \\def\\h{\\text{ h}}
+    \\def\\D{\\mathbb{D}}
+    \\def\\W{\\mathbb{W}}
+    \\def\\L{\\mathbb{L}}
+    `) as Record<string, string>
+
   if (inline) return renderFormula(cleanedSrc)
 
   return (
@@ -29,7 +51,7 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   )
 
   function renderFormula(formula: string) {
-    const mathML = temml.renderToString(formula, { displayMode })
+    const mathML = temml.renderToString(formula, { displayMode, macros })
 
     return (
       <span
