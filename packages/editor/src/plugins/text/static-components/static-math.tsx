@@ -49,22 +49,30 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   )
 
   function renderFormula(formula: string) {
-    const mathML = temml.renderToString(formula, {
-      displayMode,
-      macros,
-      throwOnError: false,
-      strict: false,
-      trust: false,
-    })
+    if (!formula?.length) return <span></span>
 
-    return (
-      <span
-        className={cn(
-          'inline-block pb-1 [page-break-inside:avoid]',
-          inline ? 'text-[1.1rem]' : 'text-[1.33rem]'
-        )}
-        dangerouslySetInnerHTML={{ __html: mathML }}
-      />
-    )
+    try {
+      const mathML = temml.renderToString(formula, {
+        displayMode,
+        macros,
+        throwOnError: false,
+        strict: false,
+        trust: false,
+      })
+
+      return (
+        <span
+          className={cn(
+            'inline-block pb-1 [page-break-inside:avoid]',
+            inline ? 'text-[1.1rem]' : 'text-[1.33rem]'
+          )}
+          dangerouslySetInnerHTML={{ __html: mathML }}
+        />
+      )
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error('formula could not be rendered')
+      return <span></span>
+    }
   }
 }
