@@ -6,62 +6,32 @@ import {
   faArrowCircleRight,
   faArrowCircleUp,
 } from '@fortawesome/free-solid-svg-icons'
-import { MouseEvent } from 'react'
 
 export function CourseFooter({
-  activePageIndex: index,
+  index,
   pages,
-  onOverviewButtonClick,
-  pageUrls,
 }: {
-  activePageIndex: number
+  index: number
   pages: EditorCourseDocument['state']['pages']
-  onOverviewButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
-  pageUrls?: string[]
 }) {
-  const onOverviewClick = (e: MouseEvent<HTMLButtonElement>) => {
-    location.href = '#course-overview'
-    onOverviewButtonClick(e)
-  }
-  const previousIndex = index - 1
   const nextIndex = index + 1
-  const previousPage = pages[previousIndex]
-  const nextPage = pages[nextIndex]
-  const previousHref = previousPage ? pageUrls?.[previousIndex] : undefined
-  const nextHref = nextPage ? pageUrls?.[nextIndex] : undefined
+  const nextPage = pages.at(nextIndex)
 
   const courseStrings = useStaticStrings().plugins.course
 
-  function navigate(toPath: string, newIndex: number) {
-    window.location.pathname = toPath
-    setTimeout(() => {
-      document.title = pages[newIndex].title
-    }, 100)
-  }
-
   return (
     <>
-      <nav className="mb-8 mt-10 flex justify-between bg-brand-50 py-5 align-top sm:bg-white">
-        {previousHref ? (
+      <nav className="mt-auto flex justify-between bg-brand-50 py-5 pt-12 sm:bg-white">
+        <a
+          className="serlo-button-learner-secondary mx-side h-fit hover:no-underline"
+          href="#__next"
+        >
+          <FaIcon icon={faArrowCircleUp} /> {courseStrings.pages}
+        </a>
+
+        {nextPage ? (
           <a
-            href={previousHref}
-            onClick={(e) => {
-              e.preventDefault()
-              navigate(previousHref, previousIndex)
-            }}
-            className="serlo-button-learner-secondary mx-side h-fit hover:no-underline"
-          >
-            <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
-            {courseStrings.back}
-          </a>
-        ) : null}
-        {nextHref ? (
-          <a
-            href={nextHref}
-            onClick={(e) => {
-              e.preventDefault()
-              navigate(nextHref, nextIndex)
-            }}
+            href={`#${nextPage.id}`}
             className="ml-auto mr-side text-right hover:no-underline"
           >
             <div className="serlo-button-learner-primary mb-2 hover:no-underline">
@@ -79,14 +49,7 @@ export function CourseFooter({
               {nextPage.title}
             </div>
           </a>
-        ) : (
-          <button
-            className="serlo-button-learner-primary mx-side"
-            onClick={onOverviewClick}
-          >
-            <FaIcon icon={faArrowCircleUp} /> {courseStrings.showPages}
-          </button>
-        )}
+        ) : null}
       </nav>
     </>
   )

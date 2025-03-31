@@ -16,14 +16,10 @@ const toolButtonClassnames = cn(
 )
 
 export function CourseNavigation({
-  courseNavOpen,
-  setCourseNavOpen,
   pages,
   activePageIndex,
   setActivePageIndex,
 }: {
-  courseNavOpen: boolean
-  setCourseNavOpen: (open: boolean) => void
   pages: CourseProps['state']['pages']
   activePageIndex: number
   setActivePageIndex: (index: number) => void
@@ -38,8 +34,6 @@ export function CourseNavigation({
 
   return (
     <CourseNavigationRenderer
-      open={courseNavOpen}
-      onOverviewButtonClick={() => setCourseNavOpen(!courseNavOpen)}
       pages={pages.map(({ title, id }, index) => {
         const isActive = activePageIndex === index
 

@@ -15,7 +15,6 @@ export function CourseEditor(props: CourseProps) {
   const editorStrings = useEditStrings()
   const courseStrings = editorStrings.templatePlugins.course
 
-  const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [activePageIndex, setActivePageIndex] = useState(0)
 
   const activePage = pages.at(activePageIndex)
@@ -40,8 +39,6 @@ export function CourseEditor(props: CourseProps) {
   return (
     <>
       <CourseNavigation
-        courseNavOpen={courseNavOpen}
-        setCourseNavOpen={setCourseNavOpen}
         pages={pages}
         activePageIndex={activePageIndex}
         setActivePageIndex={setActivePageIndex}
@@ -57,6 +54,18 @@ export function CourseEditor(props: CourseProps) {
           {activePage.content.render()}
         </div>
       ) : null}
+
+      {pages.map((page) => {
+        return (
+          <div
+            key={page.id.value}
+            className="mt-16 border-t-2 border-editor-primary-200 pt-2"
+          >
+            <EntityTitleInput title={page.title} forceFocus />
+            {page.content.render()}
+          </div>
+        )
+      })}
     </>
   )
 
