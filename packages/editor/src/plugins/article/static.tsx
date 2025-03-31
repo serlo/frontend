@@ -1,4 +1,4 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { LinkRenderer } from '@editor/static-renderer/link-renderer'
 import {
   EditorArticleDocument,
   EditorMultimediaDocument,
@@ -38,8 +38,6 @@ export function ArticleStaticRenderer({
   ) ? null : (
     <StaticRenderer document={{ ...introduction, plugin: 'multimedia' }} />
   )
-
-  const LinkRenderer = editorRenderers.getLinkRenderer()
 
   return (
     <ArticleRenderer

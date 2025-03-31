@@ -9,7 +9,7 @@ import { ImgHTMLAttributes } from 'react'
  */
 export function EditorImage(props: ImgHTMLAttributes<HTMLImageElement>) {
   const isSerlo = useIsSerlo()
-  return <img {...props} src={getSrc(isSerlo, props.src)} />
+  return <img {...props} src={getSrc(isSerlo, props.src)} loading="lazy" />
 }
 
 function getSrc(isSerlo?: boolean, src?: string) {
