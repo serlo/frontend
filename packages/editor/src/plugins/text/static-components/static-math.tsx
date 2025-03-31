@@ -51,7 +51,13 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   )
 
   function renderFormula(formula: string) {
-    const mathML = temml.renderToString(formula, { displayMode, macros })
+    const mathML = temml.renderToString(formula, {
+      displayMode,
+      macros,
+      throwOnError: false,
+      strict: false,
+      trust: false,
+    })
 
     return (
       <span
