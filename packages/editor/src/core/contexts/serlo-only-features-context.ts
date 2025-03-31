@@ -18,7 +18,6 @@ export interface ArticleAddModalProps {
 }
 
 interface SerloOnlyFeaturesData {
-  isRevisionView?: boolean
   licenses?: LicenseData[]
   ArticleAddModal?: (props: ArticleAddModalProps) => JSX.Element
 }

@@ -34,7 +34,6 @@ export const staticStrings = {
     },
     course: {
       title: 'Course',
-      showPages: 'Show course overview',
       pages: 'Course overview',
       next: 'Next',
       back: 'Back',
