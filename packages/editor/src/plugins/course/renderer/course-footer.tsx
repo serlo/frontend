@@ -1,6 +1,5 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
-import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
 import {
   faArrowCircleRight,
@@ -12,7 +11,7 @@ export function CourseFooter({
   pages,
 }: {
   index: number
-  pages: EditorCourseDocument['state']['pages']
+  pages: { id: string; title: string }[]
 }) {
   const nextIndex = index + 1
   const nextPage = pages.at(nextIndex)

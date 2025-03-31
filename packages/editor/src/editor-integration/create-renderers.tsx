@@ -112,7 +112,7 @@ const ImageGalleryStaticRenderer = lazy(() =>
 )
 
 const CourseStaticRenderer = lazy(() =>
-  import('@editor/plugins/course/static/static').then((module) => ({
+  import('@editor/plugins/course/static').then((module) => ({
     default: module.CourseStaticRenderer,
   }))
 )

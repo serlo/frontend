@@ -1,11 +1,9 @@
-import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorCourseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
-import { CourseFooter } from './course-footer'
-import { CourseNavigation } from './course-navigation'
+import { CourseNavigationRenderer } from './renderer/course-navigation-renderer'
+import { CoursePagesRenderer } from './renderer/course-pages-renderer'
 
 export type Page = EditorCourseDocument['state']['pages'][number]
 
@@ -14,21 +12,22 @@ export function CourseStaticRenderer({ state }: EditorCourseDocument) {
   return (
     <>
       <div className="mb-24">
-        <CourseNavigation pages={pages} />
+        {pages ? (
+          <CourseNavigationRenderer
+            pages={pages.map(({ id, title }) => ({ id, title }))}
+          />
+        ) : null}
 
-        {pages.map((page, index) => {
-          return (
-            <div
-              className="mt-24 flex min-h-[95vh] flex-col justify-between border-b-2 border-t-2 border-brand-200 pb-4 pt-10"
-              key={page.id}
-              id={page.id}
-            >
-              {renderCoursePageTitle(page, index)}
-              <StaticRenderer document={page.content} />
-              <CourseFooter index={index} pages={pages} />
-            </div>
-          )
-        })}
+        <CoursePagesRenderer
+          pages={pages.map((page, index) => {
+            return {
+              id: page.id,
+              title: page.title,
+              titleElement: renderCoursePageTitle(page, index),
+              contentElement: <StaticRenderer document={page.content} />,
+            }
+          })}
+        />
       </div>
     </>
   )

@@ -8,60 +8,33 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { type CourseProps } from '..'
-import { CourseNavigationRenderer } from '../renderer/course-navigation'
+import { type CourseProps } from '.'
+import { CourseNavigationRenderer } from './renderer/course-navigation-renderer'
 
 const toolButtonClassnames = cn(
   'serlo-button-edit-secondary serlo-tooltip-trigger mr-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100'
 )
 
-export function CourseNavigation({
+export function EditorCourseNavigation({
   pages,
-  activePageIndex,
-  setActivePageIndex,
 }: {
   pages: CourseProps['state']['pages']
-  activePageIndex: number
-  setActivePageIndex: (index: number) => void
 }) {
   const templateStrings = useEditStrings().templatePlugins
 
-  function onRemove() {
+  function handleRemove(index: number) {
     if (window.confirm(templateStrings.course.confirmDelete)) {
-      pages.remove(activePageIndex)
+      pages.remove(index)
     }
   }
 
-  return (
-    <CourseNavigationRenderer
-      pages={pages.map(({ title, id }, index) => {
-        const isActive = activePageIndex === index
+  const pagesData = pages.map(({ title, id }, index) => ({
+    id: id.value,
+    title: title.value.trim().length ? title.value : '___',
+    afterLink: renderPageTools(index),
+  }))
 
-        return {
-          key: id.value,
-          element: (
-            <div className="group">
-              <button
-                onClick={() => {
-                  if (isActive) return
-                  window.location.hash = `#${pages[index].id.value}`
-                  setActivePageIndex(index)
-                }}
-                className={cn(
-                  'serlo-link text-lg leading-browser',
-                  isActive &&
-                    'font-semibold text-almost-black hover:no-underline'
-                )}
-              >
-                {title.value.trim().length ? title.value : '___'}
-              </button>{' '}
-              {renderPageTools(index)}
-            </div>
-          ),
-        }
-      })}
-    />
-  )
+  return <CourseNavigationRenderer pages={pagesData} />
 
   function renderPageTools(index: number) {
     return (
@@ -91,7 +64,10 @@ export function CourseNavigation({
           </button>
         ) : null}
         {pages.length > 1 ? (
-          <button className={toolButtonClassnames} onClick={onRemove}>
+          <button
+            className={toolButtonClassnames}
+            onClick={() => handleRemove(index)}
+          >
             <EditorTooltip text={templateStrings.course.removeCoursePage} />
             <FaIcon icon={faTrashAlt} />
           </button>
