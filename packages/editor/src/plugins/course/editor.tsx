@@ -2,11 +2,11 @@ import { AddButton } from '@editor/editor-ui'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { EntityTitleInput } from '@editor/plugins/serlo-template-plugins/common/entity-title-input'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import type { CourseProps } from '.'
 import { EditorCourseNavigation } from './editor-course-navigation'
-import type { CourseProps } from './index.jsx'
 import { CoursePagesRenderer } from './renderer/course-pages-renderer'
 
 export function CourseEditor(props: CourseProps) {
@@ -29,6 +29,17 @@ export function CourseEditor(props: CourseProps) {
     setTimeout(() => (window.location.hash = `#${id}`), 30)
   }
 
+  const rendererPages = useMemo(
+    () =>
+      pages.map((page) => ({
+        id: page.id.value,
+        title: page.title.value,
+        titleElement: <EntityTitleInput title={page.title} forceFocus />,
+        contentElement: page.content.render(),
+      })),
+    [pages]
+  )
+
   return (
     <>
       <EditorCourseNavigation pages={pages} />
@@ -37,16 +48,7 @@ export function CourseEditor(props: CourseProps) {
         {courseStrings.addCoursePage}
       </AddButton>
 
-      <CoursePagesRenderer
-        pages={pages.map((page) => {
-          return {
-            id: page.id.value,
-            title: page.title.value,
-            titleElement: <EntityTitleInput title={page.title} forceFocus />,
-            contentElement: page.content.render(),
-          }
-        })}
-      />
+      <CoursePagesRenderer pages={rendererPages} />
     </>
   )
 
