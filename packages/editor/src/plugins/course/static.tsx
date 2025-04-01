@@ -9,27 +9,26 @@ export type Page = EditorCourseDocument['state']['pages'][number]
 
 export function CourseStaticRenderer({ state }: EditorCourseDocument) {
   const { pages } = state
-  return (
-    <>
-      <div className="mb-24">
-        {pages ? (
-          <CourseNavigationRenderer
-            pages={pages.map(({ id, title }) => ({ id, title }))}
-          />
-        ) : null}
 
-        <CoursePagesRenderer
-          pages={pages.map((page, index) => {
-            return {
-              id: page.id,
-              title: page.title,
-              titleElement: renderCoursePageTitle(page, index),
-              contentElement: <StaticRenderer document={page.content} />,
-            }
-          })}
-        />
-      </div>
-    </>
+  if (!pages?.length) return null
+
+  return (
+    <div className="mb-24">
+      <CourseNavigationRenderer
+        pages={pages.map(({ id, title }) => ({ id, title }))}
+      />
+
+      <CoursePagesRenderer
+        pages={pages.map((page, index) => {
+          return {
+            id: page.id,
+            title: page.title,
+            titleElement: renderCoursePageTitle(page, index),
+            contentElement: <StaticRenderer document={page.content} />,
+          }
+        })}
+      />
+    </div>
   )
 
   function renderCoursePageTitle(page: Page, index: number) {
