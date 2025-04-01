@@ -3,6 +3,8 @@ import { cn } from '@editor/utils/cn'
 import temml from 'temml'
 
 import type { MathElement } from '../types/text-editor'
+// eslint-disable-next-line import/no-unassigned-import
+import '@editor/assets/math/temml-fira.css'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
 
