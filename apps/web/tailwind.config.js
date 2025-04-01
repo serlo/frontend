@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import plugin from 'tailwindcss/plugin'
-import sharedTailwindBase from '../../packages/editor/src/tailwind/tailwind-base.js'
+import sharedTailwindBase from '../../packages/editor/src/assets/tailwind/tailwind-base.js'
 
 /** @type {import('tailwindcss').Config} */
 export default {
