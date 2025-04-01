@@ -76,7 +76,11 @@ export function StaticMath({ src, inline }: StaticMathProps) {
     } catch {
       // eslint-disable-next-line no-console
       console.error('formula could not be rendered')
-      return <span />
+      return (
+        <i className="text-orange-500">
+          [Formel konnte nicht gerendert werden 😬]
+        </i>
+      )
     }
   }
 }
