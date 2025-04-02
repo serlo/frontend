@@ -237,10 +237,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
-        content: {
-          ...(content as EditorRowsDocument),
-          serloContext: { articleTitle: uuid.title },
-        } as EditorRowsDocument,
+        content: content as EditorRowsDocument,
         typename: UuidType.Article,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',

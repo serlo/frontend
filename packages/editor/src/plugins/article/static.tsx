@@ -13,10 +13,7 @@ interface ArticleNodeUuidLink {
   title: string
 }
 
-export function ArticleStaticRenderer({
-  state,
-  serloContext,
-}: EditorArticleDocument) {
+export function ArticleStaticRenderer({ state }: EditorArticleDocument) {
   const {
     introduction,
     content,
@@ -25,8 +22,6 @@ export function ArticleStaticRenderer({
     relatedContent,
     sources,
   } = state
-
-  const title = serloContext?.articleTitle
 
   const filteredExercises = exercises?.filter(({ state }) => !!state)
 
@@ -59,7 +54,6 @@ export function ArticleStaticRenderer({
         videos: getRelatedContent('videos'),
       }}
       sources={renderSources()}
-      title={title}
     />
   )
 
