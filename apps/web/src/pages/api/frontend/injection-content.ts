@@ -52,7 +52,10 @@ export default async function handler(
           if (!uuid.alias) {
             return res.status(404).json('something is wrong with the content')
           }
-          respondWithContent([createFallbackBox(uuid.alias, uuid.title)])
+          respondWithContent(
+            [createFallbackBox(uuid.alias, uuid.title)],
+            uuid.alias
+          )
           return
         }
 
@@ -61,10 +64,14 @@ export default async function handler(
         }
 
         if (uuid.__typename === 'Exercise') {
-          respondWithContent([
-            (JSON.parse(uuid.currentRevision.content) as StorageFormat)
-              .document,
-          ])
+          respondWithContent(
+            [
+              (JSON.parse(uuid.currentRevision.content) as StorageFormat)
+                .document,
+            ],
+            uuid.alias,
+            uuid.licenseId
+          )
           return
         }
 
@@ -79,11 +86,11 @@ export default async function handler(
               exercise.id?.startsWith(hash)
             )
             if (exercise) {
-              respondWithContent([exercise])
+              respondWithContent([exercise], uuid.alias, uuid.licenseId)
               return
             }
           }
-          respondWithContent([content])
+          respondWithContent([content], uuid.alias, uuid.licenseId)
           return
         }
 
@@ -95,25 +102,31 @@ export default async function handler(
               alt: uuid.title ?? 'video',
             },
           }
-          respondWithContent([state])
+          respondWithContent([state], uuid.alias, uuid.licenseId)
           return
         }
 
         if (uuid.__typename === 'Applet') {
-          respondWithContent([
-            {
-              plugin: EditorPluginType.Geogebra,
-              state: uuid.currentRevision.url,
-            },
-            parseDocumentString(uuid.currentRevision.content),
-          ])
+          respondWithContent(
+            [
+              {
+                plugin: EditorPluginType.Geogebra,
+                state: uuid.currentRevision.url,
+              },
+              parseDocumentString(uuid.currentRevision.content),
+            ],
+            uuid.alias,
+            uuid.licenseId
+          )
           return
         }
 
         if (uuid.__typename === 'Event') {
-          respondWithContent([
-            parseDocumentString(uuid.currentRevision.content),
-          ])
+          respondWithContent(
+            [parseDocumentString(uuid.currentRevision.content)],
+            uuid.alias,
+            uuid.licenseId
+          )
           return
         }
         return res.status(422).json('unknown entity type')
@@ -125,11 +138,15 @@ export default async function handler(
     return res.status(500).json(`${String(e)} at ${path}`)
   }
 
-  function respondWithContent(content: any) {
+  function respondWithContent(
+    content: unknown,
+    alias: string,
+    licenseId?: number
+  ) {
     const twoDaysInSeconds = 172800
     res.setHeader('Cache-Control', `maxage=${twoDaysInSeconds}`)
     if (!isProduction) res.setHeader('Access-Control-Allow-Origin', '*')
-    res.status(200).json(content)
+    res.status(200).json({ content, alias, licenseId })
   }
 }
 
