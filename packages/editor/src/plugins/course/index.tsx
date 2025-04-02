@@ -8,7 +8,7 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { CourseEditor } from './editor/course'
+import { CourseEditor } from './editor'
 
 const courseState = object({
   content: child({ plugin: EditorPluginType.Rows }),
