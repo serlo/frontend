@@ -66,7 +66,11 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
         revisions: { totalCount: 0, nodes: [] },
       })
       if (exercise)
-        result.push({ entityId: child.id, exerciseOrGroup: exercise })
+        result.push({
+          entityId: child.id,
+          licenseId: child.licenseId,
+          exerciseOrGroup: exercise,
+        })
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
       const group = createExerciseGroup({
@@ -76,7 +80,12 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
           alias: '',
         },
       })
-      if (group) result.push({ entityId: child.id, exerciseOrGroup: group })
+      if (group)
+        result.push({
+          entityId: child.id,
+          licenseId: child.licenseId,
+          exerciseOrGroup: group,
+        })
     }
   })
   return result
