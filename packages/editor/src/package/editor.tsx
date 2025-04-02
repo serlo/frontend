@@ -31,7 +31,7 @@ import {
 } from './storage-format'
 
 // eslint-disable-next-line import/no-unassigned-import
-import '../tailwind/editor.css'
+import '../assets/tailwind/editor.css'
 
 export interface SerloEditorProps {
   children: EditorProps['children']

@@ -3,6 +3,8 @@ import { cn } from '@editor/utils/cn'
 import temml from 'temml'
 
 import type { MathElement } from '../types/text-editor'
+// eslint-disable-next-line import/no-unassigned-import
+import '@editor/assets/math/temml-fira.css'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
 
@@ -49,7 +51,7 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   )
 
   function renderFormula(formula: string) {
-    if (!formula?.length) return <span></span>
+    if (!formula?.length) return <span />
 
     try {
       const mathML = temml.renderToString(formula, {
@@ -72,7 +74,11 @@ export function StaticMath({ src, inline }: StaticMathProps) {
     } catch {
       // eslint-disable-next-line no-console
       console.error('formula could not be rendered')
-      return <span></span>
+      return (
+        <i className="text-orange-500">
+          [Formel konnte nicht gerendert werden 😬]
+        </i>
+      )
     }
   }
 }
