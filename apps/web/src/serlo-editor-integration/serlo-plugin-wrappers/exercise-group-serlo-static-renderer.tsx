@@ -56,6 +56,7 @@ export function ExerciseGroupSerloStaticRenderer(
         value={{
           ...exerciseContext, // Use what was provided already (from topic.tsx)
           isInExerciseGroup: true,
+          isEntity: false,
         }}
       >
         <div className="-mt-block">
