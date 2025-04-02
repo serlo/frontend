@@ -67,9 +67,13 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
       })
       if (exercise)
         result.push({
-          entityId: child.id,
-          licenseId: child.licenseId,
           exerciseOrGroup: exercise,
+          metaData: {
+            entityId: child.id,
+            licenseId: child.licenseId,
+            trashed: child.trashed,
+            unrevisedRevisions: child.revisions?.totalCount,
+          },
         })
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
@@ -82,9 +86,13 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
       })
       if (group)
         result.push({
-          entityId: child.id,
-          licenseId: child.licenseId,
           exerciseOrGroup: group,
+          metaData: {
+            entityId: child.id,
+            licenseId: child.licenseId,
+            trashed: child.trashed,
+            unrevisedRevisions: child.revisions?.totalCount,
+          },
         })
     }
   })

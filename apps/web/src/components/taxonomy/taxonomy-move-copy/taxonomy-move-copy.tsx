@@ -62,10 +62,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.copyMove
 
   const exercisesData = taxonomyData.exercisesContent.map(
-    ({ entityId, exerciseOrGroup }) => ({
-      id: entityId,
+    ({ metaData, exerciseOrGroup }) => ({
+      id: metaData.entityId,
       title: getPreviewStringFromExercise(exerciseOrGroup, strings),
-      url: `/${entityId}`,
+      url: `/${metaData.entityId}`,
     })
   )
 

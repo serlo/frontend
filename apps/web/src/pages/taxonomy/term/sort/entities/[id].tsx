@@ -84,14 +84,14 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     exercisesContent: TaxonomyPage['taxonomyData']['exercisesContent']
   ): TaxonomyLink[] {
     return exercisesContent
-      .map(({ entityId, exerciseOrGroup }, index) => {
+      .map(({ metaData, exerciseOrGroup }, index) => {
         if (isSolutionDocument(exerciseOrGroup)) return null
-        const url = `/${entityId}`
+        const url = `/${metaData.entityId}`
         const title = `(${index + 1}) ${getPreviewStringFromExercise(
           exerciseOrGroup,
           strings
         )}`
-        return { title, url, id: entityId }
+        return { title, url, id: metaData.entityId }
       })
       .filter(Boolean) as TaxonomyLink[]
   }

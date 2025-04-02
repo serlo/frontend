@@ -141,30 +141,28 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
     if (!hasExercises || !data.exercisesContent) return null
     return (
       <ol className="mt-12">
-        {data.exercisesContent.map(
-          ({ entityId, licenseId, exerciseOrGroup }, i) => {
-            return (
-              <li key={exerciseOrGroup.id ?? entityId} className="pb-10">
-                <EntityMetaProvider value={{ entityId, licenseId }}>
-                  <ExerciseContext.Provider
-                    value={{
-                      isEntity:
-                        // Exercises have an entityId, exercises in ExerciseGroups don't have an entityId
-                        exerciseOrGroup.plugin === EditorPluginType.Exercise,
-                    }}
-                  >
-                    <ExerciseNumbering href={`/${entityId}`} index={i} />
-                    <SerloRenderer
-                      state={exerciseOrGroup}
-                      editorVariant="serlo-org"
-                      extraSerloRenderers={extraSerloRenderers}
-                    />
-                  </ExerciseContext.Provider>
-                </EntityMetaProvider>
-              </li>
-            )
-          }
-        )}
+        {data.exercisesContent.map(({ exerciseOrGroup, metaData }, i) => {
+          return (
+            <li key={exerciseOrGroup.id ?? metaData.entityId} className="pb-10">
+              <EntityMetaProvider value={metaData}>
+                <ExerciseContext.Provider
+                  value={{
+                    isEntity:
+                      // Exercises have an entityId, exercises in ExerciseGroups don't have an entityId
+                      exerciseOrGroup.plugin === EditorPluginType.Exercise,
+                  }}
+                >
+                  <ExerciseNumbering href={`/${metaData.entityId}`} index={i} />
+                  <SerloRenderer
+                    state={exerciseOrGroup}
+                    editorVariant="serlo-org"
+                    extraSerloRenderers={extraSerloRenderers}
+                  />
+                </ExerciseContext.Provider>
+              </EntityMetaProvider>
+            </li>
+          )
+        })}
       </ol>
     )
   }

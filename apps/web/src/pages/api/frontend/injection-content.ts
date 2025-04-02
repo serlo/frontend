@@ -61,16 +61,9 @@ export default async function handler(
         }
 
         if (uuid.__typename === 'Exercise') {
-          const serloContext = {
-            licenseId: uuid.licenseId,
-            uuid: uuid.id,
-          }
           respondWithContent([
-            {
-              ...(JSON.parse(uuid.currentRevision.content) as StorageFormat)
-                .document,
-              serloContext,
-            },
+            (JSON.parse(uuid.currentRevision.content) as StorageFormat)
+              .document,
           ])
           return
         }
@@ -90,14 +83,7 @@ export default async function handler(
               return
             }
           }
-          const contentWithLicenseId = {
-            ...content,
-            state: {
-              ...content.state,
-              serloContext: { licenseId: uuid.licenseId },
-            },
-          }
-          respondWithContent([contentWithLicenseId])
+          respondWithContent([content])
           return
         }
 

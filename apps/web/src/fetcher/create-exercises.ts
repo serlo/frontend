@@ -16,18 +16,9 @@ export function createExercise(
 ): EditorExerciseDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  return {
-    ...(parseDocumentString(
-      uuid.currentRevision.content
-    ) as EditorExerciseDocument),
-    serloContext: {
-      uuid: uuid.id,
-      revisionId: uuid.currentRevision.id,
-      trashed: uuid.trashed,
-      unrevisedRevisions: uuid.revisions?.totalCount,
-      licenseId: uuid.licenseId,
-    },
-  }
+  return parseDocumentString(
+    uuid.currentRevision.content
+  ) as EditorExerciseDocument
 }
 
 export function createExerciseGroup(
@@ -38,15 +29,7 @@ export function createExerciseGroup(
 ): EditorExerciseGroupDocument | undefined {
   if (!uuid.currentRevision?.content) return undefined
 
-  return {
-    ...(parseDocumentString(
-      uuid.currentRevision.content
-    ) as EditorExerciseGroupDocument),
-    serloContext: {
-      uuid: uuid.id,
-      trashed: uuid.trashed,
-      unrevisedRevisions: uuid.revisions?.totalCount,
-      licenseId: uuid.licenseId,
-    },
-  }
+  return parseDocumentString(
+    uuid.currentRevision.content
+  ) as EditorExerciseGroupDocument
 }

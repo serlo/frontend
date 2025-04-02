@@ -92,15 +92,6 @@ export interface EditorExerciseDocument {
   plugin: EditorPluginType.Exercise
   state: PrettyStaticState<ExercisePluginState>
   id?: string
-
-  // additional data for serlo, not part of normal state
-  serloContext?: {
-    uuid?: number
-    revisionId?: number
-    trashed?: boolean
-    unrevisedRevisions?: number
-    licenseId?: number
-  }
 }
 export interface EditorGeogebraDocument {
   plugin: EditorPluginType.Geogebra
@@ -176,15 +167,6 @@ export interface EditorSolutionDocument {
   plugin: EditorPluginType.Solution
   state: PrettyStaticState<SolutionPluginState>
   id?: string
-
-  // additional data for serlo, not part of normal state
-  serloContext?: {
-    uuid?: number
-    exerciseId?: number
-    trashed?: boolean
-    unrevisedRevisions?: number
-    licenseId?: number
-  }
 }
 export interface EditorSerloTableDocument {
   plugin: EditorPluginType.SerloTable
@@ -218,15 +200,6 @@ export interface EditorExerciseGroupDocument {
     exercises: EditorExerciseDocument[]
   }
   id?: string
-
-  // additional data for serlo, not part of normal state
-  serloContext?: {
-    uuid?: number
-    revisionId?: number
-    trashed?: boolean
-    unrevisedRevisions?: number
-    licenseId?: number
-  }
 }
 
 export interface EditorSerloInjectionDocument {

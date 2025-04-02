@@ -463,9 +463,13 @@ export interface TaxonomyData extends TaxonomyTermBase {
   taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: {
-    entityId: number
-    licenseId: number
     exerciseOrGroup: EditorExerciseDocument | EditorExerciseGroupDocument
+    metaData: {
+      entityId: number
+      licenseId: number
+      trashed: boolean
+      unrevisedRevisions: number
+    }
   }[]
   licenseData?: LicenseData
 }
