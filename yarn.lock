@@ -5606,7 +5606,7 @@ __metadata:
     slate-dom: 0.111.0
     slate-react: 0.111.0
     tailwindcss: ^3.4.17
-    temml: ^0.11.3
+    temml: ^0.11.4
     ts-debounce: ^4.0.0
     ts-key-enum: ^2.0.13
     typescript: ^5.6.3
@@ -17757,10 +17757,10 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"temml@npm:^0.11.3":
-  version: 0.11.3
-  resolution: "temml@npm:0.11.3"
-  checksum: f26a12e6d83afa80cb4602d261ec08d73e65a762f95a36f7e6adaafdf89fe4c331962192e295e95230c326e484f260c9d633b8d38a3a2bbd354d0f0c358e9f5b
+"temml@npm:^0.11.4":
+  version: 0.11.4
+  resolution: "temml@npm:0.11.4"
+  checksum: 7edab9ecb470b53694e9facc9d90d9989c5808a00dd2c71a06549cd466cfc650bd04bfc939e86ca840afd11c4d8c31475aaf201d7a483117c1ae4116dd442d48
   languageName: node
   linkType: hard
 
