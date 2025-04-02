@@ -65,7 +65,8 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
         },
         revisions: { totalCount: 0, nodes: [] },
       })
-      if (exercise) result.push(exercise)
+      if (exercise)
+        result.push({ entityId: child.id, exerciseOrGroup: exercise })
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
       const group = createExerciseGroup({
@@ -75,7 +76,7 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
           alias: '',
         },
       })
-      if (group) result.push(group)
+      if (group) result.push({ entityId: child.id, exerciseOrGroup: group })
     }
   })
   return result

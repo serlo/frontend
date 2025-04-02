@@ -98,7 +98,6 @@ export interface EditorExerciseDocument {
     uuid?: number
     revisionId?: number
     trashed?: boolean
-    grouped?: boolean
     unrevisedRevisions?: number
     licenseId?: number
   }

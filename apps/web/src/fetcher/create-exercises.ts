@@ -24,7 +24,6 @@ export function createExercise(
       uuid: uuid.id,
       revisionId: uuid.currentRevision.id,
       trashed: uuid.trashed,
-      grouped: false,
       unrevisedRevisions: uuid.revisions?.totalCount,
       licenseId: uuid.licenseId,
     },

@@ -591,7 +591,6 @@ export const loggedInData = {
       log: 'Log',
       settings: 'Settings',
       moveOrCopyItems: 'Move or copy items',
-      addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
       subscribe: 'Subscribe',
       subscribeNotifications: 'Receive notifications',
