@@ -68,12 +68,6 @@ export interface EditorCourseDocument {
   plugin: EditorPluginType.Course
   state: PrettyStaticState<CoursePluginState>
   id?: string
-  // additional data for serlo, not part of normal state
-  serloContext?: {
-    activeCoursePageId?: string
-    courseTitle: string
-    coursePageUrls: string[]
-  }
 }
 export interface EditorUnsupportedDocument {
   plugin: EditorPluginType.Unsupported

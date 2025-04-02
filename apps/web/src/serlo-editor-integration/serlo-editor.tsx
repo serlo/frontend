@@ -6,7 +6,7 @@ import {
   type StorageFormat,
 } from '@editor/package'
 import dynamic from 'next/dynamic'
-import { useContext, useRef } from 'react'
+import { useRef } from 'react'
 
 import { ArticleAddModal } from './components/article-add-modal/article-add-modal'
 import { ExternalRevisionLoader } from './components/external-revision-loader'
@@ -15,7 +15,6 @@ import { extraSerloPlugins } from './extra-serlo-plugins'
 import { extraSerloRenderers } from './extra-serlo-renderers'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { isProduction } from '@/helper/is-production'
 import type { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
@@ -68,13 +67,10 @@ export function SerloEditor({
   const { lang, licenses } = useInstanceData()
   const auth = useAuthentication()
 
-  const isRevisionView = useContext(RevisionViewContext)
   const isNewEntity = !(initialState as { state?: { id?: string } }).state?.id
 
   return (
-    <SerloOnlyFeaturesContext.Provider
-      value={{ isRevisionView, licenses, ArticleAddModal }}
-    >
+    <SerloOnlyFeaturesContext.Provider value={{ licenses, ArticleAddModal }}>
       <Editor
         language={lang === 'de' ? 'de' : 'en'}
         editorVariant="serlo-org"

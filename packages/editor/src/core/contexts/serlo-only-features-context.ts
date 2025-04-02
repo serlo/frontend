@@ -8,7 +8,6 @@ export interface ArticleAddModalProps {
 }
 
 interface SerloOnlyFeaturesData {
-  isRevisionView?: boolean
   licenses?: {
     id: number
     title: string

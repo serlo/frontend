@@ -26,10 +26,6 @@ import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import {
-  buildCoursePageUrl,
-  getCoursePageIdFromPath,
-} from '@/helper/get-course-id-from-path'
 import { parseDocumentString } from '@/helper/parse-document-string'
 import { unwrapEditorContent } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
@@ -55,21 +51,10 @@ export async function requestPage(
   // users are not handled in uuid query any more
   if (uuid.__typename === UuidType.User) return { kind: 'not-found' }
 
-  // temporary redirect course pages to course as a fallback for client side navigation
-  // that does not go through cf-worker
-  if (uuid.__typename === 'CoursePage') {
-    const target = buildCoursePageUrl(
-      uuid.course.alias,
-      String(uuid.id),
-      uuid.title
-    )
-    return { kind: 'redirect', target }
-  }
-
   if (
     uuid.__typename === UuidRevType.Article ||
+    uuid.__typename === UuidRevType.CoursePage ||
     uuid.__typename === UuidRevType.Page ||
-    uuid.__typename === UuidRevType.CoursePage || // TODO: remove at some point
     uuid.__typename === UuidRevType.Video ||
     uuid.__typename === UuidRevType.Event ||
     uuid.__typename === UuidRevType.Applet ||
@@ -259,27 +244,6 @@ export async function requestPage(
   }
 
   if (uuid.__typename === UuidType.Course) {
-    const pageId = getCoursePageIdFromPath(requestPath)
-
-    const pages = (content as unknown as EditorCourseDocument).state.pages
-    if (!pages || !pages.length) return { kind: 'not-found' }
-
-    const coursePageUrls = pages.map((page) =>
-      buildCoursePageUrl(uuid.alias, page.id, page.title)
-    )
-    const pageIndex = Math.max(
-      pages.findIndex(({ id }) => pageId && id.startsWith(pageId)),
-      0
-    )
-    const page = pages.at(pageIndex)
-
-    if (!page) return { kind: 'not-found' }
-
-    const fullTitle = page.title ? `${page.title} – ${uuid.title}` : uuid.title
-    const metaTitle =
-      fullTitle.length < 75 ? fullTitle : (page.title ?? uuid.title)
-
-    const canonicalUrl = pageIndex ? coursePageUrls[pageIndex] : uuid.alias
     const metaDescription = sharedMetadata.metaDescription?.length
       ? sharedMetadata.metaDescription
       : uuid.title
@@ -289,14 +253,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
-        content: {
-          ...(content as EditorCourseDocument),
-          serloContext: {
-            activeCoursePageId: pageId,
-            courseTitle: uuid.title,
-            coursePageUrls,
-          },
-        } as EditorCourseDocument,
+        content: content as EditorCourseDocument,
         typename: UuidType.Course,
         title: uuid.title,
         schemaData: {
@@ -307,9 +264,9 @@ export async function requestPage(
       },
       metaData: {
         ...sharedMetadata,
-        title: metaTitle,
+        title: uuid.title,
         contentType: 'course',
-        canonicalUrl,
+        canonicalUrl: uuid.alias,
         metaDescription,
       },
       horizonData,
