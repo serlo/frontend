@@ -24,12 +24,6 @@ export interface AuthorToolsExercisesProps {
   type: ExerciseInlineType
 }
 
-// typename: ExerciseInlineType.ExerciseGroup,
-//               id: entityId,
-//               trashed: trashed,
-//               unrevisedRevisions: unrevisedRevisions,
-
-// export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
 export function AuthorToolsExercises({ type }: AuthorToolsExercisesProps) {
   const triggerFix = useNavMenuTriggerFix()
 
