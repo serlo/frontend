@@ -1,4 +1,5 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import { useEffect } from 'react'
 
 export interface ArticleRendererProps {
   introduction: JSX.Element | null
@@ -12,7 +13,6 @@ export interface ArticleRendererProps {
   }
   relatedContentExtra?: JSX.Element | null
   sources: JSX.Element | null
-  title?: string
 }
 
 export function ArticleRenderer({
@@ -23,9 +23,16 @@ export function ArticleRenderer({
   relatedContent,
   relatedContentExtra,
   sources,
-  title,
 }: ArticleRendererProps) {
   const articleStrings = useStaticStrings().plugins.article
+
+  useEffect(() => {
+    // small hack for SEO
+    const articleTitle = document.title.split('-').slice(0, -1).join('')
+    const exTitle = document.getElementById('exercises-title')
+    if (exTitle)
+      exTitle.innerText = articleStrings.exercisesTitle + ' ' + articleTitle
+  }, [articleStrings.exercisesTitle])
 
   return (
     <>
@@ -35,9 +42,8 @@ export function ArticleRenderer({
       {content}
       {exercises || exercisesFolder ? (
         <>
-          <h2 className="serlo-h2 mb-16">
+          <h2 id="exercises-title" className="serlo-h2 mb-16">
             {articleStrings.exercisesTitle}
-            {title ? `: ${title}` : null}
           </h2>
 
           {exercises}

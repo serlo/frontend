@@ -73,6 +73,10 @@ export const staticStrings = {
       lightboxSrTitle:
         'Popup mit einem großen Bild und Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren',
     },
+    injection: {
+      injectedContent: 'Quelle',
+      license: 'Lizenzinfo',
+    },
     video: {
       failed: 'Sorry, das Video konnte nicht geladen werden.',
     },

@@ -111,6 +111,7 @@ export async function requestPage(
         trashed: uuid.trashed,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        licenseId: uuid.licenseId,
         isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
@@ -137,6 +138,7 @@ export async function requestPage(
         typename: UuidType.ExerciseGroup,
         content: exerciseGroup,
         unrevisedRevisions: uuid.revisions?.totalCount,
+        licenseId: uuid.licenseId,
         isUnrevised: !uuid.currentRevision,
       },
       newsletterPopup: false,
@@ -220,10 +222,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         ...sharedEntityData,
-        content: {
-          ...(content as EditorRowsDocument),
-          serloContext: { articleTitle: uuid.title },
-        } as EditorRowsDocument,
+        content: content as EditorRowsDocument,
         typename: UuidType.Article,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',

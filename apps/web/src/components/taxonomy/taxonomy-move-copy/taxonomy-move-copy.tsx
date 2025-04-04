@@ -61,11 +61,13 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.copyMove
 
-  const exercisesData = taxonomyData.exercisesContent.map((exercise) => ({
-    id: exercise.serloContext?.uuid ?? 0,
-    title: getPreviewStringFromExercise(exercise, strings),
-    url: `/${exercise.serloContext?.uuid}`,
-  }))
+  const exercisesData = taxonomyData.exercisesContent.map(
+    ({ metaData, exerciseOrGroup }) => ({
+      id: metaData.entityId,
+      title: getPreviewStringFromExercise(exerciseOrGroup, strings),
+      url: `/${metaData.entityId}`,
+    })
+  )
 
   const categories = [
     { links: taxonomyData.articles, type: UuidType.Article },
