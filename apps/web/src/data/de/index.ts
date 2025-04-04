@@ -518,7 +518,6 @@ export const loggedInData = {
       log: "Aktivitätenlog",
       settings: "Einstellungen",
       moveOrCopyItems: "Elemente verschieben oder kopieren",
-      addGroupedTextExercise: "Textaufgabe mit Teilaufgaben hinzufügen",
       changeLicense: "Lizenz auswählen",
       subscribe: "Abonnieren",
       subscribeNotifications: "Benachrichtigungen empfangen",
