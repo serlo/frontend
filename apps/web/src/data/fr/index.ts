@@ -518,7 +518,6 @@ export const loggedInData = {
       log: "Historique",
       settings: "Réglages",
       moveOrCopyItems: 'Move or copy items',
-      addGroupedTextExercise: "Ajouter un exercice de texte groupé",
       changeLicense: "Modifier la licence",
       subscribe: "S'abonner",
       subscribeNotifications: 'Receive notifications',
