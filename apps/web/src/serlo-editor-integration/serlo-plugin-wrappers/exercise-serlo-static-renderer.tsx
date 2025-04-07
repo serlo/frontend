@@ -29,24 +29,15 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
   const isRevisionView = useContext(RevisionViewContext)
   const { isEntity, isInExerciseGroup } = useContext(ExerciseContext)
 
-  const { entityId, licenseId } = useEntityMetaData()
+  const { licenseId } = useEntityMetaData()
 
   const exerciseLicenseId = isInExerciseGroup
     ? props.state.licenseId
     : licenseId
   const solutionLicenseId = (props.state.solution as EditorSolutionDocument)
     ?.state.licenseId
-  const serloEntityId = isEntity ? entityId : undefined
 
   const exerciseContext = useContext(ExerciseContext)
-
-  // when we moved the groupedExercises into the exercises state we used the old entity uuid as editor id
-  // e.g. `3743-exercise-child`. This way we can use the entity ids in injections and for exercise analytics
-  const oldEntityId = serloEntityId ?? Number(props.id?.split('-')[0])
-  const exerciseTrackingId = isNaN(oldEntityId)
-    ? // construct fake but persisting tracking id just for evaluation
-      Number(props.id?.replace(/[^0-9]/g, '').substring(0, 8))
-    : oldEntityId
 
   return (
     <div className="relative">
@@ -67,7 +58,6 @@ export function ExerciseSerloStaticRenderer(props: EditorExerciseDocument) {
       <ExerciseContext.Provider
         value={{
           ...exerciseContext, // Use what was provided already (from topic.tsx or entity.txs)
-          exerciseTrackingId,
         }}
       >
         <div className="-mt-block">
