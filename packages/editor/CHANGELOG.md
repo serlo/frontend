@@ -1,3 +1,13 @@
+## Changelog for version 0.25.1
+
+- refactor: remove `serloContext`. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4550
+- refactor: simplify courses. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4549
+- feat(editor): add `loading=\"lazy\"` to images. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4548
+- refactor(editor): remove unused render helpers. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4547
+- fix(editor): handle undefined hrefs in sanitizeHref. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4545
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.25.0-editor...v0.25.1-editor
+
 ## Changelog for version 0.25.0
 
 - chore(deps-dev): bump vite from 5.4.14 to 5.4.15. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4541
