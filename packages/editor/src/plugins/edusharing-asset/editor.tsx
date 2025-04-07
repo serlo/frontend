@@ -183,7 +183,12 @@ export function EdusharingAssetEditor({
         title="Edusharing-Inhalt auswählen"
         extraTitleClassName="sr-only"
       >
-        <iframe src={url.href} className="h-full w-full" ref={iframeRef} />
+        <iframe
+          src={url.href}
+          className="h-full w-full"
+          ref={iframeRef}
+          data-qa="plugin-edusharing-selection-iframe"
+        />
       </EditorModal>
     )
   }
