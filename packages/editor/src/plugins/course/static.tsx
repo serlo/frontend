@@ -9,33 +9,35 @@ export type Page = EditorCourseDocument['state']['pages'][number]
 
 export function CourseStaticRenderer({ state }: EditorCourseDocument) {
   const { pages } = state
-  return (
-    <>
-      <div className="mb-24">
-        {pages ? (
-          <CourseNavigationRenderer
-            pages={pages.map(({ id, title }) => ({ id, title }))}
-          />
-        ) : null}
 
-        <CoursePagesRenderer
-          pages={pages.map((page, index) => {
-            return {
-              id: page.id,
-              title: page.title,
-              titleElement: renderCoursePageTitle(page, index),
-              contentElement: <StaticRenderer document={page.content} />,
-            }
-          })}
-        />
-      </div>
-    </>
+  if (!pages?.length) return null
+
+  return (
+    <div className="mb-24">
+      <CourseNavigationRenderer
+        pages={pages.map(({ id, title }) => ({ id, title }))}
+      />
+
+      <CoursePagesRenderer
+        pages={pages.map((page, index) => {
+          return {
+            id: page.id,
+            title: page.title,
+            titleElement: renderCoursePageTitle(page, index),
+            contentElement: <StaticRenderer document={page.content} />,
+          }
+        })}
+      />
+    </div>
   )
 
   function renderCoursePageTitle(page: Page, index: number) {
+    //also add shortId as target, to make cloudflare redirects work
+    const shortId = page.id.split('-')[0]
     return (
       <h2 className="serlo-h1" itemProp="name" id={page.id}>
         <span
+          id={shortId}
           className={cn(`
           -mt-1.5 mr-1.5 inline-block h-7 w-7 justify-center rounded-full
           bg-brand-200 text-center align-middle text-xl font-bold text-brand

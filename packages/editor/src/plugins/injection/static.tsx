@@ -1,4 +1,5 @@
 import { LoadingSpinner } from '@editor/editor-ui/loading-spinner'
+import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
@@ -8,11 +9,19 @@ import {
 } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
+interface ResponseData {
+  content: AnyEditorDocument
+  alias: string
+  licenseId?: number
+}
+
 export function InjectionStaticRenderer({
   state: href,
   errorBox,
 }: EditorInjectionDocument & { errorBox?: JSX.Element }) {
-  const [content, setContent] = useState<string | 'loading' | 'error'>(
+  const injectionStrings = useStaticStrings().plugins.injection
+
+  const [data, setData] = useState<ResponseData | 'loading' | 'error'>(
     'loading'
   )
 
@@ -27,14 +36,14 @@ export function InjectionStaticRenderer({
     function handleError(error: unknown) {
       // eslint-disable-next-line no-console
       console.error(error)
-      setContent('error')
+      setData('error')
     }
 
     async function fetchSerloContent() {
       const url = `https://raw.githubusercontent.com/elbotho/serlo-content/refs/heads/main/content/entities/${entityId}.json`
 
       const res = await fetch(url)
-      const data = (await res.json()) as {
+      const responseData = (await res.json()) as {
         contentType: string
         path: string
         title: string
@@ -44,57 +53,71 @@ export function InjectionStaticRenderer({
       }
 
       if (!res.ok) {
-        handleError(data)
+        handleError(responseData)
+        return
+      }
+      if (
+        ['Article', 'Course', 'TaxonomyTerm'].includes(responseData.contentType)
+      ) {
+        setData({
+          content: createFallbackBox(responseData.path, responseData.title),
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
         return
       }
 
-      if (['Article', 'Course', 'TaxonomyTerm'].includes(data.contentType)) {
-        createFallbackBox(data.path, data.title)
+      if (responseData.contentType === 'Exercise') {
+        setData({
+          content:
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            JSON.parse(responseData.content).document as AnyEditorDocument,
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
+        return
       }
 
-      if (data.contentType === 'Exercise') {
-        // TODO: inject context again?
-        // const serloContext = {
-        //   licenseId: data.licenseId,
-        //   uuid: entityId,
-        // }
-      }
-
-      if (data.contentType === 'Video') {
-        setContent(
-          JSON.stringify({
-            document: {
-              plugin: EditorPluginType.Video,
-              state: {
-                src: data.contentUrl,
-                alt: data.title ?? 'video',
-              },
+      if (responseData.contentType === 'Video') {
+        setData({
+          content: {
+            plugin: EditorPluginType.Video,
+            state: {
+              src: responseData.contentUrl,
+              alt: responseData.title ?? 'video',
             },
-          })
-        )
+          },
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
         return
       }
 
-      if (data.contentType === 'Applet') {
-        setContent(
-          JSON.stringify({
-            document: [
+      if (responseData.contentType === 'Applet') {
+        setData({
+          content: {
+            plugin: EditorPluginType.Rows,
+            state: [
               {
                 plugin: EditorPluginType.Geogebra,
-                state: data.contentUrl,
+                state: responseData.contentUrl,
               },
               // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-              JSON.parse(data.content).document,
+              JSON.parse(responseData.content).document,
             ],
-          })
-        )
+          },
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
         return
       }
 
-      if (data.contentType === 'ExerciseGroup') {
-        const content =
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          JSON.parse(data.content).document as EditorExerciseGroupDocument
+      if (responseData.contentType === 'ExerciseGroup') {
+        const content = (
+          JSON.parse(responseData.content) as {
+            document: EditorExerciseGroupDocument
+          }
+        ).document
 
         // use id in hash to load one exercise out of the group
         if (hash) {
@@ -102,24 +125,28 @@ export function InjectionStaticRenderer({
             exercise.id?.startsWith(hash)
           )
           if (exercise) {
-            setContent(JSON.stringify({ document: exercise }))
+            setData({
+              content: exercise,
+              alias: responseData.path,
+              licenseId: responseData.licenseId,
+            })
             return
           }
         }
 
-        // TODO: provide license again somehow
-        // const contentWithLicenseId = {
-        //   ...content,
-        //   state: {
-        //     ...content.state,
-        //     serloContext: { licenseId: uuid.licenseId },
-        //   },
-        // }
-        setContent(JSON.stringify({ document: content }))
+        setData({
+          content: content,
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
         return
       }
 
-      setContent(data.content)
+      setData({
+        content: JSON.parse(responseData.content) as AnyEditorDocument,
+        alias: responseData.path,
+        licenseId: responseData.licenseId,
+      })
     }
 
     try {
@@ -131,50 +158,56 @@ export function InjectionStaticRenderer({
 
   if (!href) return null
 
-  if (content === 'loading') return <LoadingSpinner />
-  if (content === 'error') return errorBox ?? null
+  if (data === 'loading') return <LoadingSpinner />
+  if (data === 'error') return errorBox ?? null
+
   return (
-    <div className="border-b-3 border-brand-200 py-4 text-gray-900">
-      <StaticRenderer
-        document={
-          (JSON.parse(content) as { document: AnyEditorDocument }).document
-        }
-      />
+    <div className="pt-4">
+      <div className="mx-side border-t-3 border-brand-200 pb-4"></div>
+      <StaticRenderer document={data.content} />
+      <div className="mx-side border-t-3 border-brand-200 text-right text-gray-400">
+        {data.licenseId && data.licenseId > 1 ? (
+          <a
+            className="serlo-link"
+            href={`/license/detail/${data.licenseId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {injectionStrings.license}
+          </a>
+        ) : null}{' '}
+        (
+        <a
+          className="serlo-link"
+          target="_blank"
+          rel="noreferrer"
+          href={data.alias}
+        >
+          {injectionStrings.injectedContent}
+        </a>
+        )
+      </div>
     </div>
   )
 }
 
 function createFallbackBox(alias: string, title: string) {
   return {
-    plugin: EditorPluginType.Rows,
+    plugin: EditorPluginType.Text,
     state: [
       {
-        plugin: EditorPluginType.Box,
-        state: {
-          type: 'blank',
-          title: { plugin: EditorPluginType.Text },
-          anchorId: '',
-          content: {
-            plugin: EditorPluginType.Rows,
-            state: [
-              {
-                plugin: EditorPluginType.Text,
-                state: [
-                  {
-                    type: 'p',
-                    children: [
-                      {
-                        type: 'a',
-                        href: alias,
-                        children: [{ text: title, strong: true }],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
+        type: 'p',
+        children: [
+          {
+            type: 'a',
+            href: alias,
+            children: [{ text: title, strong: true }],
           },
-        },
+          {
+            type: 'p',
+            children: [{ text: '' }],
+          },
+        ],
       },
     ],
   }

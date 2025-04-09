@@ -8,33 +8,38 @@ import {
 } from '@radix-ui/react-navigation-menu'
 
 import { AuthorTools, Tool } from './author-tools'
-import type { MoreAuthorToolsProps } from './more-author-tools'
 import { FaIcon } from '@/components/fa-icon'
 import {
   preventHover,
   useNavMenuTriggerFix,
 } from '@/components/navigation/header/menu/use-nav-menu-trigger-fix'
+import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
 import { cn } from '@/helper/cn'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
-export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
+export interface AuthorToolsExercisesProps {
+  type: ExerciseInlineType
+}
+
+export function AuthorToolsExercises({ type }: AuthorToolsExercisesProps) {
   const triggerFix = useNavMenuTriggerFix()
 
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
-  if (!data || !loggedInData) return null
+  const { entityId, unrevisedRevisions, trashed } = useEntityMetaData()
 
-  const hasUnrevised =
-    data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
+  if (!loggedInData || !entityId) return null
 
-  const type = getTranslatedType(
+  const hasUnrevised = Boolean(unrevisedRevisions)
+
+  const typeString = getTranslatedType(
     strings,
-    data.typename === ExerciseInlineType.Exercise
+    type === ExerciseInlineType.Exercise
       ? UuidType.Exercise
-      : data.typename === ExerciseInlineType.ExerciseGroup
+      : type === ExerciseInlineType.ExerciseGroup
         ? UuidType.ExerciseGroup
         : UuidType.Exercise
   )
@@ -56,10 +61,15 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
           <Content onPointerEnter={preventHover}>
             <List className="absolute right-0 top-0 z-30 w-56 pt-2">
               <div className="serlo-sub-list-hover">
-                <li className="ml-2 font-bold">{type}</li>
+                <li className="ml-2 font-bold">{typeString}</li>
                 <AuthorTools
-                  entityId={data.id}
-                  data={data}
+                  entityId={entityId}
+                  data={{
+                    typename: type,
+                    id: entityId,
+                    trashed,
+                    unrevisedRevisions,
+                  }}
                   tools={getToolsArray()}
                 />
               </div>
@@ -71,7 +81,6 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
   )
 
   function getToolsArray() {
-    if (!data) return []
     return [
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),

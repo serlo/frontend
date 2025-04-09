@@ -65,7 +65,16 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
         },
         revisions: { totalCount: 0, nodes: [] },
       })
-      if (exercise) result.push(exercise)
+      if (exercise)
+        result.push({
+          exerciseOrGroup: exercise,
+          metaData: {
+            entityId: child.id,
+            licenseId: child.licenseId,
+            trashed: child.trashed,
+            unrevisedRevisions: child.revisions?.totalCount,
+          },
+        })
     }
     if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
       const group = createExerciseGroup({
@@ -75,7 +84,16 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
           alias: '',
         },
       })
-      if (group) result.push(group)
+      if (group)
+        result.push({
+          exerciseOrGroup: group,
+          metaData: {
+            entityId: child.id,
+            licenseId: child.licenseId,
+            trashed: child.trashed,
+            unrevisedRevisions: child.revisions?.totalCount,
+          },
+        })
     }
   })
   return result

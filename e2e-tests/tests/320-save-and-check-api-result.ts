@@ -287,6 +287,7 @@ Scenario('Save "User" and check result', ({ I }) => {
   I.pressKey('Backspace')
 
   I.click('Speichern')
+  I.waitForElement('button.serlo-button-learner.serlo-button-green', 5)
   I.click('button.serlo-button-learner.serlo-button-green')
 
   I.waitForText('Über mich')

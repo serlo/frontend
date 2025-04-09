@@ -13,7 +13,7 @@ export function CoursePagesRenderer({
   return pages.map(({ id, titleElement, contentElement }, index) => {
     return (
       <section
-        className="mt-24 flex min-h-[95vh] flex-col justify-between border-b-2 border-t-2 border-brand-200 pb-4 pt-10"
+        className="mb-64 mt-20 flex min-h-[95vh] flex-col justify-between border-b-2 border-t-2 border-brand-200 pb-4 pt-10"
         key={id}
         id={id}
       >

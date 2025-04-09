@@ -72,6 +72,10 @@ export const staticStrings = {
       lightboxSrTitle:
         'Modal displaying a single large image, with buttons to navigate to other images in the gallery',
     },
+    injection: {
+      injectedContent: 'Source',
+      license: 'License info',
+    },
     video: {
       failed: "Sorry, the video couldn't be loaded.",
     },

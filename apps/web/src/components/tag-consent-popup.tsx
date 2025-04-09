@@ -1,5 +1,5 @@
-import { GoogleTagManager } from '@next/third-parties/google'
-import { useState } from 'react'
+import { GoogleTagManager, sendGTMEvent } from '@next/third-parties/google'
+import { useEffect, useState } from 'react'
 
 import { ModalWithCloseButton } from './modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -30,6 +30,11 @@ export function TagConsentPopup() {
     removeQueryParams()
     setConsented(false)
   }
+
+  useEffect(() => {
+    if (!consented) return
+    setTimeout(() => sendGTMEvent(['js', new Date()]), 500)
+  }, [consented])
 
   if (!isDe || !hasUtm) return null
 

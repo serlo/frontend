@@ -6,6 +6,8 @@ export interface EntityMetaContextData {
   licenseId?: number
   metaTitle?: string
   metaDescription?: string
+  trashed?: boolean
+  unrevisedRevisions?: number
 }
 
 export const EntityMetaContext = createContext<EntityMetaContextData | null>(

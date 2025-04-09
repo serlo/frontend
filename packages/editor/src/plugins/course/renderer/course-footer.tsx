@@ -20,10 +20,10 @@ export function CourseFooter({
 
   return (
     <>
-      <nav className="mt-auto flex justify-between bg-brand-50 py-5 pt-12 sm:bg-white">
+      <nav className="mt-auto flex justify-between py-5 pt-12 sm:bg-white">
         <a
           className="serlo-button-learner-secondary mx-side h-fit hover:no-underline"
-          href="#__next"
+          href="#course-nav"
         >
           <FaIcon icon={faArrowCircleUp} /> {courseStrings.pages}
         </a>

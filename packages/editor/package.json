@@ -1,6 +1,6 @@
 {
   "name": "@serlo/editor",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "homepage": "https://de.serlo.org/editor",
   "bugs": {
     "url": "https://github.com/serlo/frontend/issues"
@@ -124,7 +124,7 @@
     "ts-key-enum": "^2.0.13",
     "typescript": "^5.6.3",
     "uuid": "^11.0.3",
-    "vite": "^5.4.15",
+    "vite": "^5.4.17",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^2.1.9"
