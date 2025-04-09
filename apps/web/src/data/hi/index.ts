@@ -518,7 +518,6 @@ export const loggedInData = {
       log: "लॉग",
       settings: "सेटिंग्स",
       moveOrCopyItems: 'Move or copy items',
-      addGroupedTextExercise: "समूहीकृत-पाठ-व्यायाम",
       changeLicense: "लायसेंस परिवर्तित करें",
       subscribe: "सदस्य बनें",
       subscribeNotifications: 'Receive notifications',

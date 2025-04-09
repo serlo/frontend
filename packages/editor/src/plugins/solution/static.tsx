@@ -1,5 +1,5 @@
 import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { LinkRenderer } from '@editor/static-renderer/link-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
 
@@ -29,8 +29,6 @@ export function StaticSolutionRenderer({
 
   const hasPrerequisite =
     prerequisite && prerequisite.id && prerequisite.title?.length
-
-  const LinkRenderer = editorRenderers.getLinkRenderer()
 
   const prerequisiteElement = hasPrerequisite ? (
     <LinkRenderer href={prerequisite.alias ?? `/${prerequisite.id}`}>

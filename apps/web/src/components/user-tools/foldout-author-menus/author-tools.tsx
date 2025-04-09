@@ -58,7 +58,6 @@ export interface AuthorToolsData {
   title?: string
   parentId?: number
   courseId?: number
-  grouped?: boolean
   trashed?: boolean
   checkoutRejectButtons?: JSX.Element
   revisionData?: {
@@ -117,7 +116,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
       canDo:
-        !(data.typename === ExerciseInlineType.Exercise && data.grouped) &&
+        !(data.typename === ExerciseInlineType.Exercise) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
         canDo(TaxonomyTerm.change) &&

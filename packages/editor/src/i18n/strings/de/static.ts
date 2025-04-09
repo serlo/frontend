@@ -36,7 +36,6 @@ export const staticStrings = {
     },
     course: {
       title: 'Kurse',
-      showPages: 'Kursübersicht anzeigen',
       pages: 'Kursübersicht',
       next: 'Weiter',
       back: 'Zurück',
@@ -73,6 +72,10 @@ export const staticStrings = {
     imageGallery: {
       lightboxSrTitle:
         'Popup mit einem großen Bild und Schaltflächen, um zu anderen Bildern in der Galerie zu navigieren',
+    },
+    injection: {
+      injectedContent: 'Quelle',
+      license: 'Lizenzinfo',
     },
     video: {
       failed: 'Sorry, das Video konnte nicht geladen werden.',

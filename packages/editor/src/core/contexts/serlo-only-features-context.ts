@@ -1,16 +1,6 @@
 import type { ArticleProps } from '@editor/plugins/article'
 import { createContext } from 'react'
 
-// duplicated
-interface LicenseData {
-  id: number
-  title: string
-  url: string
-  isDefault?: boolean
-  shortTitle?: string
-  agreement: string
-}
-
 export interface ArticleAddModalProps {
   open: boolean
   data: ArticleProps['state']
@@ -18,8 +8,10 @@ export interface ArticleAddModalProps {
 }
 
 interface SerloOnlyFeaturesData {
-  isRevisionView?: boolean
-  licenses?: LicenseData[]
+  licenses?: {
+    id: number
+    title: string
+  }[]
   ArticleAddModal?: (props: ArticleAddModalProps) => JSX.Element
 }
 

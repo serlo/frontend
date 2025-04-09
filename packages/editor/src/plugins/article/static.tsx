@@ -1,4 +1,4 @@
-import { editorRenderers } from '@editor/plugin/helpers/editor-renderer'
+import { LinkRenderer } from '@editor/static-renderer/link-renderer'
 import {
   EditorArticleDocument,
   EditorMultimediaDocument,
@@ -13,10 +13,7 @@ interface ArticleNodeUuidLink {
   title: string
 }
 
-export function ArticleStaticRenderer({
-  state,
-  serloContext,
-}: EditorArticleDocument) {
+export function ArticleStaticRenderer({ state }: EditorArticleDocument) {
   const {
     introduction,
     content,
@@ -25,8 +22,6 @@ export function ArticleStaticRenderer({
     relatedContent,
     sources,
   } = state
-
-  const title = serloContext?.articleTitle
 
   const filteredExercises = exercises?.filter(({ state }) => !!state)
 
@@ -38,8 +33,6 @@ export function ArticleStaticRenderer({
   ) ? null : (
     <StaticRenderer document={{ ...introduction, plugin: 'multimedia' }} />
   )
-
-  const LinkRenderer = editorRenderers.getLinkRenderer()
 
   return (
     <ArticleRenderer
@@ -61,7 +54,6 @@ export function ArticleStaticRenderer({
         videos: getRelatedContent('videos'),
       }}
       sources={renderSources()}
-      title={title}
     />
   )
 

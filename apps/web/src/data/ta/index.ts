@@ -518,7 +518,6 @@ export const loggedInData = {
       log: "பதிவு",
       settings: "அமைப்புகள்",
       moveOrCopyItems: 'Move or copy items',
-      addGroupedTextExercise: 'Add grouped-text-exercise',
       changeLicense: 'Change License',
       subscribe: "சந்தா",
       subscribeNotifications: 'Receive notifications',
