@@ -32,9 +32,12 @@ export function CourseStaticRenderer({ state }: EditorCourseDocument) {
   )
 
   function renderCoursePageTitle(page: Page, index: number) {
+    //also add shortId as target, to make cloudflare redirects work
+    const shortId = page.id.split('-')[0]
     return (
       <h2 className="serlo-h1" itemProp="name" id={page.id}>
         <span
+          id={shortId}
           className={cn(`
           -mt-1.5 mr-1.5 inline-block h-7 w-7 justify-center rounded-full
           bg-brand-200 text-center align-middle text-xl font-bold text-brand
