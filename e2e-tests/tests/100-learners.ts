@@ -258,9 +258,7 @@ Scenario('Course', ({ I }) => {
   I.click('Einführung lineare Funktionen')
   I.waitForText('1', 10, 'span.rounded-full')
   I.see('Kursübersicht', 'h2')
-  I.see('Einführung lineare Funktionen')
-  I.click('Weiter')
-  I.waitForText('2', 1, 'span.rounded-full')
+  I.click('Aufstieg zur Zugspitze')
   I.see('Aufstieg zur Zugspitze', 'h2')
   I.click('Kursübersicht')
   I.waitForText('Zusammenfassung', 1)
@@ -289,6 +287,7 @@ Scenario('Injections load', ({ I }) => {
   I.waitForText('im Intervall', 10)
 
   I.amOnPage('/1555')
+  I.waitForElement(locate('h2').withText('Übungsaufgaben: Zylinder'), 15)
   I.scrollTo(locate('h2').withText('Übungsaufgaben: Zylinder'))
   I.waitForText('Berechne das Volumen des Glases', 10)
 })
