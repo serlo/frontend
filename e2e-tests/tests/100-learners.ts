@@ -258,6 +258,7 @@ Scenario('Course', ({ I }) => {
   I.click('Einführung lineare Funktionen')
   I.waitForText('1', 10, 'span.rounded-full')
   I.see('Kursübersicht', 'h2')
+  I.click('Kursübersicht', 'a')
   I.see('Einführung lineare Funktionen')
   I.click('Weiter')
   I.waitForText('2', 1, 'span.rounded-full')
