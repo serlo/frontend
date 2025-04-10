@@ -19,7 +19,7 @@ export interface BlankAnswerDragItem {
 }
 
 export const dragAnswerStyle =
-  'cursor-grab rounded-full border border-brand bg-brand-50 px-2'
+  'cursor-grab rounded-full border border-brand bg-brand-50 px-2 select-none touch-none'
 
 export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
   const { draggableId, text, isAnswerCorrect } = props
