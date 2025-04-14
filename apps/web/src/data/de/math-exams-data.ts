@@ -32,14 +32,15 @@ export type SupportedRegion = keyof typeof deRegions
 export const regionKeys = Object.keys(deRegions) as SupportedRegion[]
 
 export const schoolTypes = {
-  mittelschule: 'Mittelschule',
-  realschule: 'Realschule',
-  gymnasium: 'Gymnasium',
-  'fos-bos': 'FOS & BOS',
-  gesamtschule: 'Gesamtschule',
-  oberschule: 'Oberschule',
-  'haupt-werkreal': 'Haupt- & Werkrealschule',
   alle: 'Alle Schultypen',
+  hauptschule: 'Hauptschule',
+  gesamtschule: 'Gesamtschule',
+  mittelschule: 'Mittelschule',
+  'haupt-werkreal': 'Haupt- & Werkrealschule',
+  realschule: 'Realschule',
+  'fos-bos': 'FOS & BOS',
+  oberschule: 'Oberschule',
+  gymnasium: 'Gymnasium',
 } as const
 export type SchoolType = keyof typeof schoolTypes
 
@@ -102,7 +103,7 @@ export const examsFoldersBW: ExamsFolders = {
   hauptschule: {
     id: 317526,
     displayTitle: 'Hauptschulabschluss',
-    schoolType: 'haupt-werkreal',
+    schoolType: 'hauptschule',
   },
   werkrealschule: {
     id: 317529,
@@ -119,7 +120,7 @@ export const examsFoldersBW: ExamsFolders = {
 export const examsFoldersNI: ExamsFolders = {
   hs9: {
     displayTitle: 'Hauptschulabschluss 9',
-    schoolType: 'gesamtschule',
+    schoolType: 'hauptschule',
     options: [
       {
         id: 315311,
@@ -133,7 +134,7 @@ export const examsFoldersNI: ExamsFolders = {
   },
   hs10: {
     displayTitle: 'Hauptschulabschluss 10',
-    schoolType: 'gesamtschule',
+    schoolType: 'hauptschule',
     options: [
       {
         id: 315309,
