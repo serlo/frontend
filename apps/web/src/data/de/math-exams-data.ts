@@ -268,13 +268,12 @@ export const extraMetaTags = {
       'Mathe lernen für den MSA und den eBBR in Berlin! 💪 Originale Prüfungsaufgaben und Lösungen für deinen erfolgreichen Abschluss.',
   },
   305843: {
-    title:
-      'Mathe Abschlussprüfungen in Brandenburg | Oberschule & Gesamtschule',
+    title: 'Mathe Abschlussprüfungen in Brandenburg mit Lösungen',
     metaDescription:
-      'Mathe lernen für den MSA, FOR und EBR in Berlin! 🚀 Deine Prüfungsvorbereitung mit originalen Aufgaben und Lösungen von Serlo.',
+      'Mathe lernen für den MSA, FOR und EBR in Brandenburg! 🚀 Deine Prüfungsvorbereitung mit originalen Aufgaben und Lösungen von Serlo.',
   },
   308610: {
-    title: 'Mathe MSA Abschlussprüfungen mit Lösungen | Schleswig-Holstein',
+    title: 'Mathe MSA Prüfungen mit Lösungen | Schleswig-Holstein',
     metaDescription:
       'Optimale Mathe-Prüfungsvorbereitung zum Mittleren Schulabschluss (MSA) in Schleswig-Holstein! 🔥 Originale Aufgaben 2021-2024 mit Lösungen.',
   },
@@ -289,7 +288,7 @@ export const extraMetaTags = {
       'EESA ZP in NRW (ehemals HSA10) bestehen! 💪 Lerne mit originalen Mathe-Prüfungen der Jahre 2024–2021 mit Lösungen. Mit Serlo schaffst du das!',
   },
   313659: {
-    title: 'Abitur Grund- und Leistungskurs & LK | NRW',
+    title: 'Mathe Abitur mit Lösungen | NRW',
     metaDescription:
       'Deine Abi-Vorbereitung mit Lösungen in NRW: Originale Abitur-Aufgaben Mathe 2021-2024 Grundkurs und Leistungskurs. 🔥 Kostenlos vorbereiten mit Serlo!',
   },
@@ -297,6 +296,36 @@ export const extraMetaTags = {
     title: 'Quali Abschlussprüfungen mit Lösung für Bayern',
     metaDescription:
       'Lerne Mathe für den Quali in Bayern! ✨ Prüfungsaufgaben mit Lösungen von Serlo - verständlich und kostenlos!',
+  },
+  247427: {
+    title: 'Mathe MSA an der Mittelschule mit Lösungen | Bayern',
+    metaDescription:
+      'Deine Vorbereitung für den MSA an der Mittelschule Bayern!🔥Mathe lernen mit Prüfungen und Lösungen für den Mittleren Schulabschluss!',
+  },
+  317525: {
+    title: 'Prüfungen Realschule mit Lösungen | Mathematik',
+    metaDescription:
+      'Mathe lernen für den Realschulabschluss in Baden-Württemberg mit originalen Aufgaben und Lösungen! 🚀 Mit Serlo schaffst du das!',
+  },
+  317529: {
+    title: 'Prüfungen Werkrealschule mit Lösungen | Mathematik',
+    metaDescription:
+      'Mathe-Prüfungsvorbereitung für deinen erfolgreichen Abschluss! 🙌 Aufgaben mit Lösungen für die Werkrealschule Baden-Württemberg!',
+  },
+  317526: {
+    title: 'Prüfungen Hauptschule mit Lösungen | Mathematik',
+    metaDescription:
+      'Lerne Mathe für den Hauptschulabschluss Baden-Württemberg! 💪 Mit originalen Prüfungen und Lösungen vorbereiten.',
+  },
+  315307: {
+    title: 'Mathe Prüfungsaufgaben HS 9 mit Lösungen',
+    metaDescription:
+      'Lerne Mathe für den HS 9 Niedersachsen! 🚀 Mit Serlo auf den Hauptschulabschluss vorbereiten. Aufgaben und Lösungen für den G-Kurs und E-Kurs.',
+  },
+  315306: {
+    title: 'Mathe Prüfungsaufgaben HS 10 mit Lösungen',
+    metaDescription:
+      'Mathe-Prüfungsvorbereitung für den HS 10 Niedersachsen mit Serlo! 🔥Aufgaben vom Hauptschulabschluss mit Lösungen für den G-Kurs und E-Kurs!',
   },
 } as const
 
