@@ -144,7 +144,7 @@ export function ExamsFinder({
           if (!id) e.preventDefault()
         }}
       >
-        <h4 className="relative mx-auto mb-1 mt-1 hyphens-auto break-normal text-center text-xl font-bold">
+        <h4 className="relative mx-auto mb-1 mt-1 w-full hyphens-auto break-normal text-center text-xl font-bold">
           {options ? (
             <span
               className={cn(

@@ -127,4 +127,13 @@ export const licenses: LicenseData[] = [
     url: 'https://za.schleswig-holstein.de/',
     agreement: `Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Schleswig Holstein nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die <a href="/terms">Nutzungsbedingungen</a> gehalten hast.`,
   },
+  {
+    id: 31,
+    title:
+      'Dieses Werk wurde vom Land Baden-Württemberg zur Verfügung gestellt.',
+    shortTitle: 'Land Baden-Württemberg',
+    url: '/license/detail/31',
+    agreement:
+      'Mit dem Speichern dieser Seite versicherst du, dass du in deinem Beitrag (damit sind auch Änderungen gemeint) die Aufgabenstellung vom Land Baden-Württemberg nicht inhaltlich verändert hast, keine Rechte Dritter verletzt und dich an die Nutzungsbedingungen <a href="/terms">Nutzungsbedingungen</a> gehalten hast.',
+  },
 ]
