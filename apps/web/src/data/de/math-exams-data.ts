@@ -3,6 +3,10 @@ export const deRegions = {
     title: 'Bayern',
     code: 'BY',
   },
+  'baden-wuerttemberg': {
+    title: 'Baden-Württemberg',
+    code: 'BW',
+  },
   berlin: {
     title: 'Berlin',
     code: 'BE',
@@ -34,6 +38,7 @@ export const schoolTypes = {
   'fos-bos': 'FOS & BOS',
   gesamtschule: 'Gesamtschule',
   oberschule: 'Oberschule',
+  'haupt-werkreal': 'Haupt- & Werkrealschule',
   alle: 'Alle Schultypen',
 } as const
 export type SchoolType = keyof typeof schoolTypes
@@ -93,16 +98,66 @@ export const examsFoldersBY: ExamsFolders = {
   },
 }
 
-export const examsFoldersNI: ExamsFolders = {
-  igsG: {
-    id: 302433,
-    displayTitle: 'IGS G',
-    schoolType: 'gesamtschule',
+export const examsFoldersBW: ExamsFolders = {
+  hauptschule: {
+    id: 317526,
+    displayTitle: 'Hauptschulabschluss',
+    schoolType: 'haupt-werkreal',
   },
-  igsE: {
-    id: 302434,
-    displayTitle: 'IGS E',
+  werkrealschule: {
+    id: 317529,
+    displayTitle: 'Werkrealschulabschluss',
+    schoolType: 'haupt-werkreal',
+  },
+  realschule: {
+    id: 317525,
+    displayTitle: 'Realschulabschluss',
+    schoolType: 'realschule',
+  },
+}
+
+export const examsFoldersNI: ExamsFolders = {
+  hs9: {
+    displayTitle: 'Hauptschulabschluss 9',
     schoolType: 'gesamtschule',
+    options: [
+      {
+        id: 315311,
+        displayTitle: 'HS9 G-Kurs',
+      },
+      {
+        id: 315310,
+        displayTitle: 'HS9 E-Kurs',
+      },
+    ],
+  },
+  hs10: {
+    displayTitle: 'Hauptschulabschluss 10',
+    schoolType: 'gesamtschule',
+    options: [
+      {
+        id: 315309,
+        displayTitle: 'HS10 G-Kurs',
+      },
+      {
+        id: 315308,
+        displayTitle: 'HS10 E-Kurs',
+      },
+    ],
+  },
+  isg: {
+    displayTitle: 'IGS Abschlüsse',
+    schoolType: 'gesamtschule',
+    options: [
+      {
+        id: 302434,
+        displayTitle: 'IGS G-Kurs',
+      },
+      {
+        id: 302433,
+        displayTitle: 'IGS E-Kurs',
+      },
+    ],
   },
   realschule: {
     id: 297604,
@@ -122,20 +177,25 @@ export const examsFoldersNI: ExamsFolders = {
 }
 
 export const examsFoldersNW: ExamsFolders = {
-  gym: {
-    id: 307335,
-    displayTitle: 'GYM | Zentrale Prüfungen (ZAP)',
-    schoolType: 'gymnasium',
+  eesa: {
+    id: 311010,
+    displayTitle: 'EESA | Zentrale Prüfungen (ZAP)',
+    schoolType: 'alle',
   },
   msa: {
     id: 307336,
     displayTitle: 'MSA | Zentrale Prüfungen (ZAP)',
     schoolType: 'alle',
   },
-  eesa: {
-    id: 311010,
-    displayTitle: 'EESA | Zentrale Prüfungen (ZAP)',
-    schoolType: 'alle',
+  gym: {
+    id: 307335,
+    displayTitle: 'GYM | Zentrale Prüfungen (ZAP)',
+    schoolType: 'gymnasium',
+  },
+  abitur: {
+    id: 313659,
+    displayTitle: 'Abitur',
+    schoolType: 'gymnasium',
   },
 }
 
@@ -179,6 +239,7 @@ export const examsFoldersSH: ExamsFolders = {
 
 export const mathExamTaxDataStatic: Record<SupportedRegion, ExamsFolders> = {
   bayern: examsFoldersBY,
+  'baden-wuerttemberg': examsFoldersBW,
   berlin: examsFoldersBE,
   brandenburg: examsFoldersBB,
   niedersachsen: examsFoldersNI,
@@ -195,9 +256,10 @@ function extractIds(folders: ExamsFolders) {
 // "de" folder ids that include final math exams
 export const mathExamsTaxIds: Record<SupportedRegion, number[]> = {
   bayern: extractIds(examsFoldersBY),
+  'baden-wuerttemberg': extractIds(examsFoldersBW),
   berlin: extractIds(examsFoldersBE),
   brandenburg: extractIds(examsFoldersBB),
-  niedersachsen: extractIds(examsFoldersNI),
+  niedersachsen: [...extractIds(examsFoldersNI), 315306, 315307],
   nrw: extractIds(examsFoldersNW),
   'schleswig-holstein': extractIds(examsFoldersSH),
 }
@@ -208,7 +270,7 @@ export const allMathExamTaxIds = Object.values(mathExamsTaxIds).flatMap(
 
 export const schoolTaxonomies = [
   201593, 16259, 16157, 16042, 97943, 97944, 97945, 97946, 97947, 16376, 16033,
-  305760, 307330,
+  305760, 307330, 181782, 317521, 317522,
 ]
 
 export const extraMetaTags = {
@@ -337,6 +399,11 @@ export const landingMetaTags: Record<
     title: 'Mathe Abschlussprüfungen in Bayern',
     metaDescription:
       'Mathe lernen mit Prüfungsaufgaben und Lösungen der vergangenen Jahre. Für deine Abschlussprüfung in Bayern.',
+  },
+  'baden-wuerttemberg': {
+    title: 'Mathe Abschlussprüfungen für Baden-Württemberg',
+    metaDescription:
+      'Mathe lernen mit Prüfungsaufgaben und Lösungen der vergangenen Jahre. Für deine Abschlussprüfung in BaWü.',
   },
   berlin: {
     title: 'Prüfungsaufgaben für Mathe-Prüfungen Berlin',
