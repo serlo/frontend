@@ -16,10 +16,12 @@ import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 
-const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
-  import('@/components/comments/comment-area-entity').then(
-    (mod) => mod.CommentAreaEntity
-  )
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(
+  () =>
+    import('@/components/comments/comment-area-entity').then(
+      (mod) => mod.CommentAreaEntity
+    ),
+  { ssr: false }
 )
 
 // Special version for serlo.org with author tools and comments
