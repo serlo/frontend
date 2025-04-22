@@ -67,7 +67,9 @@ export function PluginMenuItems({
         <li key={type}>
           <button
             data-qa={`plugin-suggestion-${initialState.plugin}`}
-            ref={(el) => (itemRefs.current[currentIndex] = el)}
+            ref={(el) => {
+              if (el) itemRefs.current[currentIndex] = el
+            }}
             onClick={() => onInsertPlugin(pluginMenuItem)}
             onFocus={() => setFocusedItemIndex(currentIndex)}
             onBlur={() => setFocusedItemIndex(null)}

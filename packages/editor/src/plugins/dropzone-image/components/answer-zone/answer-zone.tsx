@@ -1,4 +1,5 @@
 import { cn } from '@editor/utils/cn'
+import { useRef } from 'react'
 import { useDrag } from 'react-dnd'
 import { ResizableBox } from 'react-resizable'
 
@@ -44,7 +45,9 @@ export const AnswerZone = (props: AnswerZoneProps) => {
     canvasSize,
   })
 
-  const [collected, drag, dragPreview] = useDrag({
+  const dragRef = useRef<HTMLDivElement>(null)
+  const dragPreviewRef = useRef<HTMLDivElement>(null)
+  const [collected, dragConnector, dragPreviewConnector] = useDrag({
     type: answerZoneDragType,
     item: answerZone,
     collect: (monitor) => ({
@@ -52,15 +55,17 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       hideSourceOnDrag: true,
     }),
   })
+  dragConnector(dragRef)
+  dragPreviewConnector(dragPreviewRef)
 
   // Hide source element while dragging
   if (collected.isDragging) {
-    return <div ref={dragPreview} />
+    return <div ref={dragPreviewRef} />
   }
 
   return (
     <div
-      ref={dragPreview}
+      ref={dragPreviewRef}
       className="absolute flex cursor-move items-center justify-center rounded bg-transparent"
       style={positionState}
       onClick={onClick}
@@ -69,7 +74,7 @@ export const AnswerZone = (props: AnswerZoneProps) => {
       <div className="relative z-20">
         <ResizableBox {...resizableBoxProps}>
           <div
-            ref={drag}
+            ref={dragRef}
             className={cn(
               `group relative flex h-full w-full flex-wrap items-center
             justify-center gap-1 border-2 border-blue-500 bg-white`,
