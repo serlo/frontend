@@ -70,6 +70,11 @@ export const licensesContent = [
     content:
       '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Diese Aufgabe stammt vom "},{"text":"Ministerium für Allgemeine und Berufliche Bildung, Wissenschaft, Forschung und Kultur des","strong":true}]},{"type":"p","children":[{"text":"Landes Schleswig-Holstein ","strong":true},{"text":"("},{"type":"a","href":"https://za.schleswig-holstein.de/","children":[{"text":"Quelle"}]},{"text":")"},{"strong":true,"text":"."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Sie unterliegt nicht den Standard-Nutzungsbedingungen für Inhalte auf serlo.org."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig:","strong":true}]},{"type":"p","children":[{"text":"Bei den Lösungsvorschlägen zu dieser Aufgabenstellung handelt es sich "},{"text":"nicht","strong":true},{"text":" um Lösungsvorgaben des Landes Schleswig Holstein. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]},{"type":"p","children":[{"text":""}]}],"id":"a07cce41-e631-498b-b890-039d9210c19e"}]}',
   },
+  {
+    id: 31,
+    content:
+      '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{"text":"Diese Aufgabe stammt vom "},{"text":"Land Baden-Württemberg","strong":true},{"text":"."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Sie unterliegt nicht den Standard-Nutzungsbedingungen für Inhalte auf serlo.org."}]},{"type":"p","children":[{"text":""}]},{"type":"p","children":[{"text":"Wichtig:","strong":true}]},{"type":"p","children":[{"text":"Bei den Lösungsvorschlägen zu dieser Aufgabenstellung handelt es sich "},{"text":"nicht","strong":true},{"text":" um Lösungsvorgaben des Landes Baden-Württemberg. Diese sind von Autor*innen auf serlo.org erstellt oder kommen aus anderen Quellen."}]}],"id":"2742b6b9-4267-44e0-a055-0c417c04da5b"}]}',
+  },
   // other instances
   {
     id: 9,
