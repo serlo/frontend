@@ -3,10 +3,11 @@ import {
   StaticSolutionRenderer,
 } from '@editor/package'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
-import { CommentAreaEntity } from '@/components/comments/comment-area-entity'
+import type { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
@@ -14,6 +15,14 @@ import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
+
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(
+  () =>
+    import('@/components/comments/comment-area-entity').then(
+      (mod) => mod.CommentAreaEntity
+    ),
+  { ssr: false }
+)
 
 // Special version for serlo.org with author tools and comments
 export function SolutionSerloStaticRenderer(props: EditorSolutionDocument) {
