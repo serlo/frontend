@@ -12,10 +12,12 @@ import { useEntityMetaData } from '@/contexts/entity-meta-context'
 import { ExerciseContext } from '@/contexts/exercise-context'
 import { ExerciseInlineType } from '@/data-types'
 
-const AuthorToolsExercises = dynamic<AuthorToolsExercisesProps>(() =>
-  import(
-    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
-  ).then((mod) => mod.AuthorToolsExercises)
+const AuthorToolsExercises = dynamic<AuthorToolsExercisesProps>(
+  () =>
+    import(
+      '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+    ).then((mod) => mod.AuthorToolsExercises),
+  { ssr: false }
 )
 
 /**

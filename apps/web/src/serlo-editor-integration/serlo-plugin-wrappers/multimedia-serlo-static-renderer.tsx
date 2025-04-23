@@ -11,8 +11,9 @@ import { useState } from 'react'
 
 import { LightBoxProps } from '@/components/content/light-box'
 
-const LightBox = dynamic<LightBoxProps>(() =>
-  import('@/components/content/light-box').then((mod) => mod.LightBox)
+const LightBox = dynamic<LightBoxProps>(
+  () => import('@/components/content/light-box').then((mod) => mod.LightBox),
+  { ssr: false }
 )
 
 // adds a dynamically loaded lightbox component to multimedia image elements

@@ -34,10 +34,12 @@ const VideoSerloStaticRenderer = dynamic<EditorVideoDocument>(() =>
     '@/serlo-editor-integration/serlo-plugin-wrappers/video-serlo-static-renderer'
   ).then((mod) => mod.VideoSerloStaticRenderer)
 )
-const H5pSerloStaticRenderer = dynamic<EditorH5PDocument>(() =>
-  import('@/serlo-editor-integration/h5p/h5p-serlo-static').then(
-    (mod) => mod.H5pSerloStaticRenderer
-  )
+const H5pSerloStaticRenderer = dynamic<EditorH5PDocument>(
+  () =>
+    import('@/serlo-editor-integration/h5p/h5p-serlo-static').then(
+      (mod) => mod.H5pSerloStaticRenderer
+    ),
+  { ssr: false }
 )
 const AudioSerloStaticRenderer = dynamic<EditorAudioDocument>(() =>
   import(

@@ -19,24 +19,34 @@ interface UserToolsProps {
   aboveContent?: boolean
 }
 
-const RevisionTools = dynamic<MoreAuthorToolsProps>(() =>
-  import('@/components/user-tools/revision/revision-tools').then(
-    (mod) => mod.RevisionTools
-  )
+const RevisionTools = dynamic<MoreAuthorToolsProps>(
+  () =>
+    import('@/components/user-tools/revision/revision-tools').then(
+      (mod) => mod.RevisionTools
+    ),
+  { ssr: false }
 )
 
-const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(() =>
-  import('@/components/user-tools/foldout-author-menus/more-author-tools').then(
-    (mod) => mod.MoreAuthorTools
-  )
+const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(
+  () =>
+    import(
+      '@/components/user-tools/foldout-author-menus/more-author-tools'
+    ).then((mod) => mod.MoreAuthorTools),
+  { ssr: false }
 )
 
-const EditOrInvite = dynamic<EditOrInviteProps>(() =>
-  import('./edit-or-invite/edit-or-invite').then((mod) => mod.EditOrInvite)
+const EditOrInvite = dynamic<EditOrInviteProps>(
+  () =>
+    import('./edit-or-invite/edit-or-invite').then((mod) => mod.EditOrInvite),
+  { ssr: false }
 )
 
-const TaxAddOrInvite = dynamic<TaxAddOrInviteProps>(() =>
-  import('./edit-or-invite/tax-add-or-invite').then((mod) => mod.TaxAddOrInvite)
+const TaxAddOrInvite = dynamic<TaxAddOrInviteProps>(
+  () =>
+    import('./edit-or-invite/tax-add-or-invite').then(
+      (mod) => mod.TaxAddOrInvite
+    ),
+  { ssr: false }
 )
 
 export function UserTools({
