@@ -288,6 +288,6 @@ Scenario('Injections load', ({ I }) => {
 
   I.amOnPage('/1555')
   I.waitForElement(locate('h2').withText('Übungsaufgaben: Zylinder'), 15)
-  I.scrollTo(locate('h2').withText('Übungsaufgaben: Zylinder'))
+  I.scrollTo(locate('h2').withText('Übungsaufgaben Zylinder'))
   I.waitForText('Berechne das Volumen des Glases', 10)
 })
