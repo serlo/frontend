@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment, type ReactNode, type JSX } from 'react';
 
 import { Sign, signStrings } from './sign'
 

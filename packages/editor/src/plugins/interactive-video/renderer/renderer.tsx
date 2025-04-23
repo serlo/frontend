@@ -21,6 +21,8 @@ import { TimeSliderWithDots } from './timeslider-with-dots'
 import { createCues } from '../helpers/create-cues'
 import { type LearnerInteractions } from '../helpers/use-learner-interactions'
 
+import type { JSX } from "react";
+
 export function InteractiveVideoRenderer({
   videoSrc,
   marks,

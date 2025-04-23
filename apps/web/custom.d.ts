@@ -1,4 +1,9 @@
-import { FC, SVGAttributes } from 'react'
+import {
+  type FC,
+  type SVGAttributes,
+  type DetailedHTMLProps,
+  type HTMLAttributes,
+} from 'react'
 
 declare module '*.svg' {
   const content: FC<SVGAttributes<SVGElement>>

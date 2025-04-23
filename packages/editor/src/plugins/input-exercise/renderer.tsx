@@ -1,7 +1,7 @@
 import { ExerciseFeedback } from '@editor/editor-ui/exercises/exercise-feedback'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type JSX } from 'react';
 
 import { getMatchingAnswer } from './helper/get-matching-answer'
 import { InputExerciseType } from './input-exercise-type'

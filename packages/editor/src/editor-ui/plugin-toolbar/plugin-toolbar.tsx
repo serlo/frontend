@@ -11,9 +11,9 @@ import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 interface PluginToolbarProps {
   pluginType: EditorPluginType | string
   interactiveExerciseType?: InteractivePluginType | string
-  contentControls?: ReactElement
-  pluginSettings?: ReactElement
-  pluginControls?: ReactElement
+  contentControls?: ReactElement<any>
+  pluginSettings?: ReactElement<any>
+  pluginControls?: ReactElement<any>
   pluginTitle?: string
   className?: string
   noWhiteShadow?: true

@@ -45,11 +45,11 @@ export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
           isAnswerCorrect && 'border-green-500',
           isAnswerCorrect === false && 'border-red-500'
         )}
-        ref={dragRef as unknown as React.LegacyRef<HTMLSpanElement>}
+        ref={dragRef as unknown as React.Ref<HTMLSpanElement>}
       >
         {text}
       </span>
       <DraggableAnswerPreview draggableId={draggableId} />
     </div>
-  )
+  );
 }

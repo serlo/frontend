@@ -38,7 +38,7 @@ export function EditorRowRenderer({
   rows: StateTypeReturnType<RowsPluginState>
   index: number
   plugins: PluginsWithData
-  dropContainer: React.RefObject<HTMLDivElement>
+  dropContainer: React.RefObject<HTMLDivElement | null>
 }) {
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)

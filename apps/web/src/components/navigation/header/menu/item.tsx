@@ -5,6 +5,7 @@ import {
   Link,
 } from '@radix-ui/react-navigation-menu'
 import { default as NextLink } from 'next/link'
+import type { JSX } from 'react'
 
 import { Icon } from './icon'
 import { SubContent } from './sub-content'

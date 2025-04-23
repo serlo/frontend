@@ -1,6 +1,6 @@
 import { BlankRendererStatic } from '@editor/plugins/blanks-exercise/blank-renderer-static'
 import { LinkRenderer } from '@editor/static-renderer/link-renderer'
-import { createElement, lazy, Suspense } from 'react'
+import { createElement, lazy, Suspense, type JSX } from 'react';
 import { Descendant, Element } from 'slate'
 
 import { TextLeafRenderer } from '../components/text-leaf-renderer'

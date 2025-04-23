@@ -3,6 +3,8 @@ import type { EditorPageLayoutDocument } from '@editor/types/editor-plugins'
 
 import { PageLayoutRenderer } from './renderer'
 
+import type { JSX } from "react";
+
 export interface PageLayoutRendererProps {
   widthPercent: number // for first column
   column1: JSX.Element

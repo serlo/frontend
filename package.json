@@ -45,6 +45,11 @@
     "start": "yarn workspace @serlo/frontend start",
     "test": "yarn workspace @serlo/editor test"
   },
+  "dependencies": {
+    "next": "15.3.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",

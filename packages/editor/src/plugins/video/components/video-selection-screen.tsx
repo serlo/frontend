@@ -2,7 +2,7 @@ import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
-import React, { type RefObject } from 'react'
+import { type LegacyRef } from 'react'
 
 import type { VideoProps } from '..'
 import { UploadButton } from './upload-button'
@@ -10,7 +10,7 @@ import { isValidVideoUrl } from '../utils/is-valid-video-url'
 
 interface VideoSelectionScreenProps {
   state: VideoProps['state']
-  urlInputRef: RefObject<HTMLInputElement>
+  urlInputRef: LegacyRef<HTMLInputElement>
   pluginId: string
 }
 

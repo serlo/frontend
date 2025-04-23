@@ -1,5 +1,5 @@
 import type { AnyEditorDocument } from '@editor/types/editor-plugins'
-import { Fragment, Suspense } from 'react'
+import { Fragment, Suspense, type JSX } from 'react';
 
 import { editorRenderers } from '../plugin/helpers/editor-renderer'
 

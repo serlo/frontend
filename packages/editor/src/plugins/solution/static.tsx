@@ -7,6 +7,8 @@ import { SolutionRenderer } from './renderer'
 import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
 
+import type { JSX } from "react";
+
 export function StaticSolutionRenderer({
   id,
   state,

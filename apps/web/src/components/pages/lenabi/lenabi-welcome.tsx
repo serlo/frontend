@@ -151,7 +151,7 @@ export function LenabiWelcome() {
     link,
   }: {
     title: string
-    content: ReactElement
+    content: ReactElement<any>
     link?: string
   }) {
     return (

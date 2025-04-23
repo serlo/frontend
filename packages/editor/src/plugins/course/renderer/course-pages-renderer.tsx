@@ -1,5 +1,7 @@
 import { CourseFooter } from './course-footer'
 
+import type { JSX } from "react";
+
 export function CoursePagesRenderer({
   pages,
 }: {

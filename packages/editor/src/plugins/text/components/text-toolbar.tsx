@@ -12,7 +12,7 @@ interface TextToolbarProps {
   id: string
   toolbarControls: ControlButton[]
   config: TextEditorConfig
-  containerRef?: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
+  containerRef?: React.RefObject<HTMLDivElement | null> // The rendered toolbar buttons
 }
 
 export function TextToolbar({

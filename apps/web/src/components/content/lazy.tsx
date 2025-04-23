@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import type { JSX } from 'react'
 import LazyLoad from 'react-lazyload'
 
 import { isPrintMode } from '../print-mode'

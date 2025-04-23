@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { Fragment } from 'react'
+import { Fragment, type JSX } from 'react';
 
 export enum TableType {
   OnlyColumnHeader = 'OnlyColumnHeader',

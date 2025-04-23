@@ -3,6 +3,8 @@ import { cn } from '@editor/utils/cn'
 
 import { GridImage } from '../types'
 
+import type { JSX } from "react";
+
 interface ImageGridProps {
   images: GridImage[]
   extraChildren?: JSX.Element[]

@@ -12,7 +12,7 @@ import { ReactElement } from 'react'
 import { preventHover, useNavMenuTriggerFix } from './use-nav-menu-trigger-fix'
 
 interface PluginToolMenuProps {
-  pluginControls: ReactElement
+  pluginControls: ReactElement<any>
 }
 
 export function PluginToolMenu({ pluginControls }: PluginToolMenuProps) {

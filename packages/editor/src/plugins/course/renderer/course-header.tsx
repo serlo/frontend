@@ -2,6 +2,8 @@ import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
+import type { JSX } from "react";
+
 export function CourseHeader({ title }: { title: JSX.Element }) {
   const courseStrings = useStaticStrings().plugins.course
 

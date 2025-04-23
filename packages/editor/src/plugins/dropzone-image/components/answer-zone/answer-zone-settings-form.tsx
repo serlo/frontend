@@ -4,6 +4,8 @@ import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
 
 import type { AnswerZoneState } from '../../types'
 
+import type { JSX } from "react";
+
 interface AnswerZoneSettingsFormProps {
   answerZone: AnswerZoneState
   onDuplicate: () => void

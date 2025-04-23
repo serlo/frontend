@@ -1,4 +1,5 @@
 import { sanitizeHref } from '@editor/utils/sanitize-href'
+import type { JSX } from 'react'
 
 export function LinkRenderer({
   href,

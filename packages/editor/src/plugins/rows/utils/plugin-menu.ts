@@ -54,6 +54,8 @@ import {
   isScMcExerciseDocument,
 } from '@editor/types/plugin-type-guards'
 
+import type { JSX } from "react";
+
 const isSerloProduction = process.env.NEXT_PUBLIC_ENV === 'production'
 
 /*

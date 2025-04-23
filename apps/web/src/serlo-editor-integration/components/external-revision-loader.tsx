@@ -2,7 +2,7 @@ import { type BaseEditor, TemplatePluginType } from '@editor/package'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
-import { type MutableRefObject, useCallback, useState } from 'react'
+import { type RefObject, useCallback, useState } from 'react'
 
 import { AddButton } from './add-button'
 import { endpoint } from '@/api/endpoint'
@@ -44,7 +44,7 @@ export function ExternalRevisionLoader<T>({
 }: {
   templateType: TemplatePluginType
   dispatchReplaceRootDocument: BaseEditor['dispatchReplaceRootDocument']
-  prefilledChangesRef: MutableRefObject<string | undefined>
+  prefilledChangesRef: RefObject<string | undefined>
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 

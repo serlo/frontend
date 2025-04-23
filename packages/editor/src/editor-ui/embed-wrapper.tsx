@@ -3,7 +3,7 @@ import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { serloDomain } from '@editor/utils/serlo-domain'
 import { faCubes, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
-import { useState, KeyboardEvent, useEffect } from 'react'
+import { useState, KeyboardEvent, useEffect, type JSX } from 'react';
 
 import { VideoType } from '../plugins/video/renderer'
 

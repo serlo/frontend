@@ -1,5 +1,5 @@
 import type { ArticleProps } from '@editor/plugins/article'
-import { createContext } from 'react'
+import { createContext, type JSX } from 'react';
 
 export interface ArticleAddModalProps {
   open: boolean

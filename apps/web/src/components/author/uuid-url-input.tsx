@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request'
-import { useState } from 'react'
+import { useState, type JSX } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'

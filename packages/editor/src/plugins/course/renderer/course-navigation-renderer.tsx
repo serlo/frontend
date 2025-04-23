@@ -1,5 +1,7 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 
+import type { JSX } from "react";
+
 export interface CourseNavigationProps {
   pages: { id: string; title: string; afterLink?: JSX.Element }[]
 }

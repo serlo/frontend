@@ -7,6 +7,8 @@ import { formatTime } from '@vidstack/react'
 
 import { type InteractiveVideoProps } from '..'
 
+import type { JSX } from "react";
+
 export function MarksList({
   marks,
   staticMarks,

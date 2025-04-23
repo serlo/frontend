@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 export interface GridImage {
   src: string
   caption: JSX.Element | null

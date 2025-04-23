@@ -13,6 +13,8 @@ import {
   faThumbtack,
 } from '@fortawesome/free-solid-svg-icons'
 
+import type { JSX } from "react";
+
 export const boxTypeIcons = {
   blank: undefined,
   example: faSplotch,
