@@ -56,7 +56,7 @@
     "clsx": "^2.1.1",
     "fast-xml-parser": "^4.5.0",
     "fp-ts": "^2.16.9",
-    "graphiql": "^3.7.2",
+    "graphiql": "^3.8.3",
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.2",
     "iframe-resizer": "^4.4.5",
@@ -89,7 +89,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
-    "@graphiql/toolkit": "^0.11.0",
+    "@graphiql/toolkit": "^0.11.1",
     "@graphql-codegen/add": "^5.0.3",
     "@graphql-codegen/cli": "5.0.3",
     "@graphql-codegen/introspection": "4.0.3",
@@ -148,6 +148,9 @@
     "budgetPercentIncreaseRed": 20,
     "minimumChangeThreshold": 0,
     "showDetails": true
+  },
+  "overrides": {
+    "@headlessui/react": "2.2.0"
   },
   "postcss": {
     "plugins": {
