@@ -51,5 +51,5 @@ export function BlankDraggableAnswer(props: BlankDraggableAnswerProps) {
       </span>
       <DraggableAnswerPreview draggableId={draggableId} />
     </div>
-  );
+  )
 }

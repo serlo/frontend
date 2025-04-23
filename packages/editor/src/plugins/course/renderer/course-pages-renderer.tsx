@@ -1,6 +1,6 @@
-import { CourseFooter } from './course-footer'
+import type { JSX } from 'react'
 
-import type { JSX } from "react";
+import { CourseFooter } from './course-footer'
 
 export function CoursePagesRenderer({
   pages,

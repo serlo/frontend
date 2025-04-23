@@ -4,7 +4,7 @@ import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { cn } from '@editor/utils/cn'
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import { useRef, useState, type JSX } from 'react';
+import { useRef, useState, type JSX } from 'react'
 import { createPortal } from 'react-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'

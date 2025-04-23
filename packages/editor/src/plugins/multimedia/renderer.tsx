@@ -1,6 +1,5 @@
 import { cn } from '@editor/utils/cn'
-
-import type { JSX } from "react";
+import type { JSX } from 'react'
 
 export interface MultimediaRendererProps {
   media: JSX.Element

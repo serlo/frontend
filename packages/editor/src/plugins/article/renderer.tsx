@@ -1,5 +1,5 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
-import { useEffect, type JSX } from 'react';
+import { useEffect, type JSX } from 'react'
 
 export interface ArticleRendererProps {
   introduction: JSX.Element | null

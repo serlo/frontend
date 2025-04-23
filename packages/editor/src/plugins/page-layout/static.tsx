@@ -1,9 +1,8 @@
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorPageLayoutDocument } from '@editor/types/editor-plugins'
+import type { JSX } from 'react'
 
 import { PageLayoutRenderer } from './renderer'
-
-import type { JSX } from "react";
 
 export interface PageLayoutRendererProps {
   widthPercent: number // for first column

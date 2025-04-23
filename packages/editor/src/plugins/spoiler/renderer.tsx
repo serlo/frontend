@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { useState, type JSX } from 'react';
+import { useState, type JSX } from 'react'
 
 export interface SpoilerRendererProps {
   title: JSX.Element

@@ -4,8 +4,7 @@ import {
 } from '@editor/plugins/serlo-table/renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import { EditorSerloTableDocument } from '@editor/types/editor-plugins'
-
-import type { JSX } from "react";
+import type { JSX } from 'react'
 
 /**
  * called SerloTable for historic reasons but used in all integrations

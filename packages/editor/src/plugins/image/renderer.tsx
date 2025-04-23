@@ -1,8 +1,7 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import type { JSX } from 'react'
 
 import { EditorImage } from './components/editor-image'
-
-import type { JSX } from "react";
 
 interface ImageProps {
   image: {

@@ -1,7 +1,6 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
-
-import type { JSX } from "react";
+import type { JSX } from 'react'
 
 interface ShowAudioSettingsButtonProps {
   openSettings: () => void

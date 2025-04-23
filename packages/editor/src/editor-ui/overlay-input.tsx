@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { forwardRef, type JSX } from 'react';
+import { forwardRef, type JSX } from 'react'
 
 export interface OverlayInputProps
   extends React.DetailedHTMLProps<

@@ -4,10 +4,9 @@ import { getInteractiveItemByStaticState } from '@editor/plugins/rows/utils/plug
 import { type EditorInteractiveVideoDocument } from '@editor/types/editor-plugins'
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { formatTime } from '@vidstack/react'
+import type { JSX } from 'react'
 
 import { type InteractiveVideoProps } from '..'
-
-import type { JSX } from "react";
 
 export function MarksList({
   marks,

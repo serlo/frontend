@@ -1,11 +1,11 @@
 import { focus, useAppDispatch } from '@editor/store'
-import { MutableRefObject, useEffect } from 'react'
+import { RefObject, useEffect } from 'react'
 
 /**
  * Hook that handler clicks (mousedown) outside of the editor
  */
 export function useBlurOnOutsideClick(
-  editorWrapperRef: MutableRefObject<HTMLDivElement | null>
+  editorWrapperRef: RefObject<HTMLDivElement | null>
 ) {
   const dispatch = useAppDispatch()
 

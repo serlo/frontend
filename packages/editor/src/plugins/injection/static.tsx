@@ -5,7 +5,7 @@ import {
   EditorInjectionDocument,
   type AnyEditorDocument,
 } from '@editor/types/editor-plugins'
-import { useEffect, useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react'
 
 function getBase(currentHost: string) {
   if (currentHost.endsWith('serlo-staging.dev'))

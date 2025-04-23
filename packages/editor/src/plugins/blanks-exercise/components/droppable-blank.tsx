@@ -67,5 +67,5 @@ export function DroppableBlank(props: DroppableBlankProps) {
         <span className="absolute bottom-0 left-[1px] right-[1px] top-0 block rounded-full bg-slate-400 opacity-80"></span>
       ) : null}
     </span>
-  );
+  )
 }

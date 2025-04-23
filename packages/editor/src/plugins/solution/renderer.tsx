@@ -1,6 +1,6 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { cn } from '@editor/utils/cn'
-import { useState, type JSX } from 'react';
+import { useState, type JSX } from 'react'
 
 interface SolutionRendererProps {
   prerequisite: JSX.Element | null

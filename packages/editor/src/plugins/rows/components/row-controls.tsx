@@ -55,7 +55,7 @@ export function RowControls({ drag, rows, index }: RowDragButtonProps) {
         </div>
       </button>
     </div>
-  );
+  )
 }
 
 const buttonStyles = cn(`

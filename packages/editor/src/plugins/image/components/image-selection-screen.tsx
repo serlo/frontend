@@ -3,7 +3,7 @@ import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
-import { type LegacyRef } from 'react'
+import { type Ref } from 'react'
 
 import type { ImageProps } from '..'
 import { PixabaySearch } from './pixabay-search/pixabay-search'
@@ -14,7 +14,7 @@ import { useUploadFile } from '../utils/upload-file'
 interface ImageSelectionScreenProps {
   config: ImageProps['config']
   state: ImageProps['state']
-  urlInputRef: LegacyRef<HTMLInputElement>
+  urlInputRef: Ref<HTMLInputElement>
   setIsAButtonFocused: (isFocused: boolean) => void
 }
 

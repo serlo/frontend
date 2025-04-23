@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
 import c from 'react-syntax-highlighter/dist/cjs/languages/prism/c'
@@ -9,8 +10,6 @@ import markup from 'react-syntax-highlighter/dist/cjs/languages/prism/markup'
 import python from 'react-syntax-highlighter/dist/cjs/languages/prism/python'
 import sql from 'react-syntax-highlighter/dist/cjs/languages/prism/sql'
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
-
-import type { JSX } from "react";
 
 SyntaxHighlighter.registerLanguage('java', java)
 SyntaxHighlighter.registerLanguage('javascript', javascript)

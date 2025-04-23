@@ -1,7 +1,7 @@
+import type { JSX } from 'react'
+
 import { McRenderer } from './mc-renderer'
 import { ScRenderer } from './sc-renderer'
-
-import type { JSX } from "react";
 
 export interface ScMcExerciseRendererAnswer {
   isCorrect: boolean

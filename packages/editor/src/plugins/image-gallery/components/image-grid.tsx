@@ -1,9 +1,8 @@
 import { EditorImage } from '@editor/plugins/image/components/editor-image'
 import { cn } from '@editor/utils/cn'
+import type { JSX } from 'react'
 
 import { GridImage } from '../types'
-
-import type { JSX } from "react";
 
 interface ImageGridProps {
   images: GridImage[]
