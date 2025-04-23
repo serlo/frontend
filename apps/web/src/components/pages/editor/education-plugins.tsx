@@ -329,8 +329,7 @@ export function EducationPlugins() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   key={image}
-                  className="
-                    rounded-md border-4 border-brand-200"
+                  className="rounded-md border-4 border-brand-200"
                   alt={`Screenshot of ${title}`}
                   src={`/_assets/img/editor/screenshots/${image}`}
                 />
