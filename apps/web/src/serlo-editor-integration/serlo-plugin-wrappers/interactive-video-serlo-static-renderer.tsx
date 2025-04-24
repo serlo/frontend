@@ -27,15 +27,17 @@ export function InteractiveVideoSerloStaticRenderer(
 
   return (
     <Lazy noPrint>
-      <PrivacyWrapper
-        type="video"
-        provider={type as unknown as ExternalProvider}
-        embedUrl={iframeSrc}
-        className="print:hidden"
-      >
-        <InteractiveVideoStaticRenderer {...props} />
-      </PrivacyWrapper>
-      <p className="serlo-p hidden print:block">[{src}]</p>
+      <>
+        <PrivacyWrapper
+          type="video"
+          provider={type as unknown as ExternalProvider}
+          embedUrl={iframeSrc}
+          className="print:hidden"
+        >
+          <InteractiveVideoStaticRenderer {...props} />
+        </PrivacyWrapper>
+        <p className="serlo-p hidden print:block">[{src}]</p>
+      </>
     </Lazy>
   )
 }

@@ -24,23 +24,27 @@ export function VideoSerloStaticRenderer(props: EditorVideoDocument) {
   if (type === VideoType.SerloAsset) {
     return (
       <Lazy noPrint>
-        <VideoStaticRenderer {...props} />
-        <p className="serlo-p hidden print:block">[{src}]</p>
+        <>
+          <VideoStaticRenderer {...props} />
+          <p className="serlo-p hidden print:block">[{src}]</p>
+        </>
       </Lazy>
     )
   }
 
   return (
     <Lazy noPrint>
-      <PrivacyWrapper
-        type="video"
-        provider={type as unknown as ExternalProvider}
-        embedUrl={iframeSrc}
-        className="print:hidden"
-      >
-        <VideoStaticRenderer {...props} />
-      </PrivacyWrapper>
-      <p className="serlo-p hidden print:block">[{src}]</p>
+      <>
+        <PrivacyWrapper
+          type="video"
+          provider={type as unknown as ExternalProvider}
+          embedUrl={iframeSrc}
+          className="print:hidden"
+        >
+          <VideoStaticRenderer {...props} />
+        </PrivacyWrapper>
+        <p className="serlo-p hidden print:block">[{src}]</p>
+      </>
     </Lazy>
   )
 }

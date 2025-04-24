@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useDrag } from 'react-dnd'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 
@@ -37,10 +37,12 @@ export function DraggableAnswer(props: DraggableAnswerProps) {
     [id, imageUrl, originDropzoneId, text]
   )
 
-  const [, dragRef, preview] = useDrag({
+  const dragRef = useRef<HTMLSpanElement>(null)
+  const [, dragConnector, preview] = useDrag({
     type: dragType,
     item: dragItem,
   })
+  dragConnector(dragRef)
 
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true })

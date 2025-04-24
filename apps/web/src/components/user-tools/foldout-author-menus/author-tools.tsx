@@ -6,7 +6,7 @@ import {
   UuidType as AuthUuidType,
 } from '@serlo/authorization'
 import { useRouter } from 'next/router'
-import { Fragment } from 'react'
+import { Fragment, type JSX } from 'react'
 
 import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'

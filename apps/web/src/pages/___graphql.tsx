@@ -1,5 +1,5 @@
 import type { FetcherParams } from '@graphiql/toolkit'
-import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
+import { GraphiQLProps } from 'graphiql'
 import { ExecutionResult } from 'graphql'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'

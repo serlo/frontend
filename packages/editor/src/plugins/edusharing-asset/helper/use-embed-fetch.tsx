@@ -1,7 +1,7 @@
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import * as t from 'io-ts'
 import DOMPurify from 'isomorphic-dompurify'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type JSX } from 'react'
 
 import { BoxRenderer } from '../../box/renderer'
 

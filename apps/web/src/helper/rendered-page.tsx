@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
+import type { JSX } from 'react'
 
 type RenderLayout<T> = (pageProps: T, props: AppProps<T>) => JSX.Element
 

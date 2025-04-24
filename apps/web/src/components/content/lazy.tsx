@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
+import type { JSX } from 'react'
 import LazyLoad from 'react-lazyload'
 
 import { isPrintMode } from '../print-mode'
 import { cn } from '@/helper/cn'
 
 export interface LazyProps {
-  children: ReactNode
+  children: JSX.Element
   slim?: boolean
   noPrint?: boolean
 }

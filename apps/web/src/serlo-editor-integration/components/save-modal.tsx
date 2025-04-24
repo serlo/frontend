@@ -1,6 +1,6 @@
 import { type StorageFormat, TemplatePluginType } from '@editor/package'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { type MutableRefObject, useContext, useEffect, useState } from 'react'
+import { type RefObject, useContext, useEffect, useState } from 'react'
 
 import { convertEditorStateToSetEntityMutationData } from '../convert-editor-state-to-set-entity-mutation-data'
 import type { SerloEditorProps } from '../serlo-editor'
@@ -25,7 +25,7 @@ export function SaveModal({
   open: boolean
   setOpen: (arg0: boolean) => void
   onSave: SerloEditorProps['onSave']
-  editorState: MutableRefObject<StorageFormat>
+  editorState: RefObject<StorageFormat>
   isInTestArea?: boolean
   prefilledChanges?: string
 }) {

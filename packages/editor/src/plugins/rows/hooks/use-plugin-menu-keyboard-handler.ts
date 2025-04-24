@@ -8,7 +8,7 @@ interface usePluginMenuKeyboardHandlerArgs {
   columns: number
   basicItemsLength: number
   intearctiveItemsLength: number
-  searchInputRef: React.RefObject<HTMLInputElement>
+  searchInputRef: React.RefObject<HTMLInputElement | null>
 }
 
 export function usePluginMenuKeyboardHandler({

@@ -1,7 +1,7 @@
 import { selectStaticDocument, useStore } from '@editor/store'
 import type { EditorImageDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
 import { defaultLargeCanvasDimension } from './background-shape-select'
@@ -76,7 +76,9 @@ export function EditorCanvas({
     setDidAdjustCanvasDimensions(false)
   }, [backgroundImageUrl])
 
-  const [, drop] = useDrop(
+  const dropRef = useRef<HTMLDivElement>(null)
+
+  const [, dropConnect] = useDrop(
     () => ({
       accept: answerZoneDragType,
       drop(answerZone: AnswerZoneState, monitor) {
@@ -110,10 +112,11 @@ export function EditorCanvas({
     }),
     [answerZones]
   )
+  dropConnect(dropRef)
 
   return (
     <div
-      ref={drop}
+      ref={dropRef}
       className={cn(
         'relative mx-auto box-content max-w-full overflow-hidden',
         'rounded-lg border border-almost-black bg-cover bg-center bg-no-repeat'

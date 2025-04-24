@@ -9,7 +9,7 @@ import { serloDomain } from '@/helper/urls/serlo-domain'
  */
 export function ProxyImage(props: ImgHTMLAttributes<HTMLImageElement>) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img {...props} src={getSrc(props.src)} />
+  return <img {...props} src={getSrc(props.src as string)} />
 }
 
 function getSrc(src?: string) {

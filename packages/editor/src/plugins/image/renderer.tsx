@@ -1,4 +1,5 @@
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
+import type { JSX } from 'react'
 
 import { EditorImage } from './components/editor-image'
 

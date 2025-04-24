@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { memo } from 'react'
+import { memo, useRef } from 'react'
 import { useDrop } from 'react-dnd'
 
 import {
@@ -43,7 +43,8 @@ export const BlankDropZone = memo(function BlankDropZone(
   const { left, top } = position
   const { height, width } = layout
 
-  const [{ isOver, canDrop }, drop] = useDrop({
+  const dropRef = useRef<HTMLDivElement>(null)
+  const [{ isOver, canDrop }, dropConnector] = useDrop({
     accept: acceptedDragType,
     drop: (answer: DraggableAnswerType) => {
       const hasAnswerAlready = droppedAnswers.find(
@@ -58,13 +59,14 @@ export const BlankDropZone = memo(function BlankDropZone(
       canDrop: monitor.canDrop(),
     }),
   })
+  dropConnector(dropRef)
 
   const hasOnlyOneAnswer = droppedAnswers.length === 1
   const isOnlyAnswerTypeImage = hasOnlyOneAnswer && !!droppedAnswers[0].imageUrl
 
   return (
     <div
-      ref={drop}
+      ref={dropRef}
       className={cn(
         `absolute flex flex-wrap items-center justify-center gap-1 rounded p-0`,
         getBackgroundColor(visibility, isOver, canDrop),

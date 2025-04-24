@@ -1,5 +1,5 @@
 import { cn } from '@editor/utils/cn'
-import { LegacyRef, ReactNode } from 'react'
+import { ReactNode, useRef } from 'react'
 import { useDrop } from 'react-dnd'
 
 interface DraggableAreaProps {
@@ -12,13 +12,15 @@ interface DraggableAreaProps {
 export function DraggableArea(props: DraggableAreaProps) {
   const { children, accept, className, onDrop } = props
 
-  const [{ isOver }, dropRef] = useDrop({
+  const dropRef = useRef<HTMLDivElement>(null)
+  const [{ isOver }, dropConnector] = useDrop({
     accept,
     drop: onDrop,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   })
+  dropConnector(dropRef)
 
   return (
     <div
@@ -28,7 +30,7 @@ export function DraggableArea(props: DraggableAreaProps) {
         className
       )}
       data-qa="blank-solution-area"
-      ref={dropRef as LegacyRef<HTMLDivElement>}
+      ref={dropRef}
     >
       {children}
     </div>

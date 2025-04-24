@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 import { McRenderer } from './mc-renderer'
 import { ScRenderer } from './sc-renderer'
 

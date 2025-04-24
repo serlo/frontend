@@ -1,5 +1,5 @@
 import { default as NextLink } from 'next/link'
-import { Fragment } from 'react'
+import { Fragment, type JSX } from 'react'
 
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'

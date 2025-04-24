@@ -1,6 +1,6 @@
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { focus, useAppDispatch } from '@editor/store'
-import { useEffect } from 'react'
+import { useEffect, type JSX } from 'react'
 
 import type { DropzoneImageProps } from '../..'
 import { AnswerType } from '../../types'

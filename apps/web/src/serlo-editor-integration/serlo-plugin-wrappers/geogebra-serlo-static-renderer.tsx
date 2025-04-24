@@ -20,15 +20,17 @@ export function GeogebraSerloStaticRenderer(props: EditorGeogebraDocument) {
   const { url } = parseId(props.state)
   return (
     <Lazy noPrint>
-      <PrivacyWrapper
-        type="applet"
-        provider={ExternalProvider.GeoGebra}
-        embedUrl={url}
-        className="print:hidden"
-      >
-        <GeogebraStaticRenderer {...props} />
-      </PrivacyWrapper>
-      <p className="serlo-p hidden print:block">[{url}]</p>
+      <>
+        <PrivacyWrapper
+          type="applet"
+          provider={ExternalProvider.GeoGebra}
+          embedUrl={url}
+          className="print:hidden"
+        >
+          <GeogebraStaticRenderer {...props} />
+        </PrivacyWrapper>
+        <p className="serlo-p hidden print:block">[{url}]</p>
+      </>
     </Lazy>
   )
 }

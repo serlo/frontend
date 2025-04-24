@@ -2,6 +2,7 @@ import { editorLearnerEvent } from '@editor/plugin/helpers/editor-learner-event'
 import { LinkRenderer } from '@editor/static-renderer/link-renderer'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
 import type { EditorSolutionDocument } from '@editor/types/editor-plugins'
+import type { JSX } from 'react'
 
 import { SolutionRenderer } from './renderer'
 import { isEmptyRowsDocument } from '../rows/utils/static-is-empty'

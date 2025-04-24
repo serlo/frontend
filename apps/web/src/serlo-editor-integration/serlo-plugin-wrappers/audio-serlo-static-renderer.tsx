@@ -22,15 +22,17 @@ export function AudioSerloStaticRenderer(props: EditorAudioDocument) {
 
   return (
     <Lazy noPrint>
-      <PrivacyWrapper
-        type="audio"
-        provider={ExternalProvider.Vocaroo}
-        embedUrl={vocarooUrl}
-        className="print:hidden"
-      >
-        <AudioRenderer src={src} type={type} />
-      </PrivacyWrapper>
-      <p className="serlo-p hidden print:block">[{vocarooUrl}]</p>
+      <>
+        <PrivacyWrapper
+          type="audio"
+          provider={ExternalProvider.Vocaroo}
+          embedUrl={vocarooUrl}
+          className="print:hidden"
+        >
+          <AudioRenderer src={src} type={type} />
+        </PrivacyWrapper>
+        <p className="serlo-p hidden print:block">[{vocarooUrl}]</p>
+      </>
     </Lazy>
   )
 }

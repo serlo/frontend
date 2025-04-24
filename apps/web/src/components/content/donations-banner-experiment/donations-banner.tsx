@@ -210,91 +210,93 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
 
   return (
     <Lazy slim>
-      <aside
-        ref={bannerRef}
-        className={cn(`
+      <>
+        <aside
+          ref={bannerRef}
+          className={cn(`
             relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
             px-side py-6 text-center
             text-xl sm:-mx-2 sm:flex sm:max-w-[100vw] sm:justify-between
             sm:px-0 sm:text-left lg:my-16 lg:py-10 lg:text-2xl
           `)}
-      >
-        {renderHideButton()}
-        <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={banner.imageSrc}
-            onLoad={() => {
-              const observer = new IntersectionObserver(
-                (entries, _observer) => {
-                  const entry = entries[0]
-                  if (
-                    entry.isIntersecting &&
-                    globalThis.hack__lastId !== globalThis.hack__id
-                  ) {
-                    globalThis.hack__lastId = globalThis.hack__id
-                    submitEvent(`spenden-seen-${banner.id}`)
+        >
+          {renderHideButton()}
+          <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={banner.imageSrc}
+              onLoad={() => {
+                const observer = new IntersectionObserver(
+                  (entries, _observer) => {
+                    const entry = entries[0]
+                    if (
+                      entry.isIntersecting &&
+                      globalThis.hack__lastId !== globalThis.hack__id
+                    ) {
+                      globalThis.hack__lastId = globalThis.hack__id
+                      submitEvent(`spenden-seen-${banner.id}`)
+                    }
                   }
-                }
-              )
-              if (bannerRef.current) observer.observe(bannerRef.current)
-            }}
-            className={cn(
-              'mx-auto mb-3',
-              isTestimonial
-                ? 'max-w-[12rem] rounded-full sm:mt-2 sm:p-3'
-                : 'scale-x-[-1] px-16 sm:px-3'
-            )}
-          />
-          {isTestimonial ? (
-            <>
-              <p className="mt-1 text-base font-bold text-gray-700">
-                @{banner.username}
-              </p>
-              {renderRoles(banner.roles)}
-            </>
-          ) : null}
-        </figure>
-        <div className="mx-auto max-w-2xl px-side sm:ml-0 sm:mt-5">
-          <p className="mx-side my-5 font-handwritten text-[1.32em] text-brand">
-            {banner.call}
-          </p>
-          <div className="text-center sm:text-left">{banner.text}</div>
-
-          <p className="mx-auto mb-6 block sm:mb-10 sm:ml-side lg:mb-24">
-            <button
-              className="serlo-button-green"
-              onClick={() => {
-                submitEvent(`spenden-clicked-${banner.id}`)
-                void router.push('/spenden')
+                )
+                if (bannerRef.current) observer.observe(bannerRef.current)
               }}
-            >
-              {banner.buttonText ? banner.buttonText : 'Jetzt spenden'}{' '}
-            </button>
-          </p>
-        </div>
-      </aside>
-      <style jsx>{`
-        aside {
-          left: calc(-50vw + 50%);
-        }
-        @media (min-width: 800px) {
-          aside {
-            left: -51px;
-          }
-        }
-        @media (min-width: 1024px) {
+              className={cn(
+                'mx-auto mb-3',
+                isTestimonial
+                  ? 'max-w-[12rem] rounded-full sm:mt-2 sm:p-3'
+                  : 'scale-x-[-1] px-16 sm:px-3'
+              )}
+            />
+            {isTestimonial ? (
+              <>
+                <p className="mt-1 text-base font-bold text-gray-700">
+                  @{banner.username}
+                </p>
+                {renderRoles(banner.roles)}
+              </>
+            ) : null}
+          </figure>
+          <div className="mx-auto max-w-2xl px-side sm:ml-0 sm:mt-5">
+            <p className="mx-side my-5 font-handwritten text-[1.32em] text-brand">
+              {banner.call}
+            </p>
+            <div className="text-center sm:text-left">{banner.text}</div>
+
+            <p className="mx-auto mb-6 block sm:mb-10 sm:ml-side lg:mb-24">
+              <button
+                className="serlo-button-green"
+                onClick={() => {
+                  submitEvent(`spenden-clicked-${banner.id}`)
+                  void router.push('/spenden')
+                }}
+              >
+                {banner.buttonText ? banner.buttonText : 'Jetzt spenden'}{' '}
+              </button>
+            </p>
+          </div>
+        </aside>
+        <style jsx>{`
           aside {
             left: calc(-50vw + 50%);
           }
-        }
-        @media (min-width: 1216px) {
-          button {
-            /*zoom: 1.15;*/
-            position: absolute;
+          @media (min-width: 800px) {
+            aside {
+              left: -51px;
+            }
           }
-        }
-      `}</style>
+          @media (min-width: 1024px) {
+            aside {
+              left: calc(-50vw + 50%);
+            }
+          }
+          @media (min-width: 1216px) {
+            button {
+              /*zoom: 1.15;*/
+              position: absolute;
+            }
+          }
+        `}</style>
+      </>
     </Lazy>
   )
 

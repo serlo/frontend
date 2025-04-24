@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 export interface PageLayoutRendererProps {
   widthPercent: number // for first col
   column1: JSX.Element

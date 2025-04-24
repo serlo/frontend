@@ -20,7 +20,12 @@ export interface UseAnswerZoneResizeArgs {
 
 const resizeHandles: ResizableProps['resizeHandles'] = ['ne', 'se', 'sw', 'nw']
 
-export const useAnswerZoneResize = (args: UseAnswerZoneResizeArgs) => {
+export const useAnswerZoneResize = (
+  args: UseAnswerZoneResizeArgs
+): {
+  positionState: PositionState
+  resizableBoxProps: ResizableProps
+} => {
   const { answerZone, canvasSize } = args
   const [canvasWidth, canvasHeight] = canvasSize
   const left = answerZone.position.left.value

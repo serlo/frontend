@@ -1,4 +1,5 @@
 import { cn } from '@editor/utils/cn'
+import type { JSX } from 'react'
 
 export interface ExerciseGroupRendererProps {
   content: JSX.Element

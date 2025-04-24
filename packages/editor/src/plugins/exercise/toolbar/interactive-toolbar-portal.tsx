@@ -4,7 +4,7 @@ export function InteractiveToolbarPortal({
   containerRef,
   children,
 }: {
-  containerRef?: React.RefObject<HTMLDivElement>
+  containerRef?: React.RefObject<HTMLDivElement | null>
   children: React.ReactNode
 }) {
   if (!containerRef || !containerRef.current) return null

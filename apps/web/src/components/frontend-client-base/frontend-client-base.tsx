@@ -2,7 +2,7 @@ import type { AuthorizationPayload } from '@serlo/authorization'
 import Head from 'next/head'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type JSX } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 import { ConditionalWrap } from './conditional-wrap'

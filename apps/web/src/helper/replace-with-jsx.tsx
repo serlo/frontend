@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 export function replaceWithJSX(
   input: (string | JSX.Element)[],
   regex: RegExp,
