@@ -31,7 +31,7 @@ export function RowControls({ drag, rows, index }: RowDragButtonProps) {
 
   return (
     <div
-      ref={drag as unknown as React.LegacyRef<HTMLDivElement>}
+      ref={drag as unknown as React.Ref<HTMLDivElement>}
       className={cn(
         'row-controls',
         'absolute bottom-14 left-2 top-0 z-[22] flex flex-col justify-center gap-4',
@@ -46,7 +46,6 @@ export function RowControls({ drag, rows, index }: RowDragButtonProps) {
           <FaIcon icon={faAngleUp} className="text-xl" />
         </div>
       </button>
-
       <button
         className={cn(buttonStyles, index === rows.length - 1 && 'hidden')}
         onClick={handleDownButtonClick}

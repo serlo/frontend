@@ -68,7 +68,7 @@ export type ChildStateType<K extends string = string, S = unknown> = StateType<
   string,
   {
     id: string
-    render: (props?: PluginProps) => React.ReactElement
+    render: (props?: PluginProps) => React.ReactElement<any>
     replace: (plugin: K, state?: S, id?: string) => void
   }
 >

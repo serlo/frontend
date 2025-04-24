@@ -1,6 +1,6 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
-import { useState, KeyboardEvent, useEffect } from 'react'
+import { useState, KeyboardEvent, useEffect, type JSX } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'

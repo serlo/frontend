@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { ReactNode } from 'react'
+import { ReactNode, type JSX } from 'react'
 
 import { ProxyImage } from '../landing/subjects/proxy-image'
 import { defaultModalOverlayStyles } from '../modal-with-close-button'

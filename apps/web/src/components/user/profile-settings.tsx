@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 import { ProfileDescriptionEditor } from './profile-description-editor'
 import { getAvatarUrl } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 export function useScrollUpTrigger(handleScroll: () => void, active: boolean) {
-  const throttleTimer = useRef<NodeJS.Timeout | false>()
+  const throttleTimer = useRef<NodeJS.Timeout | false>(undefined)
   const oldScrollY = useRef<number>(0)
 
   useEffect(() => {

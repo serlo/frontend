@@ -5,6 +5,7 @@ import {
   faPencil,
 } from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
+import type { JSX } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'

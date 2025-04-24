@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, type JSX } from 'react'
 
 import { cn } from '@/helper/cn'
 

@@ -117,5 +117,5 @@ export interface EditorPluginProps<
   focused: boolean
 
   // Ref for the wrapping SubDocument div
-  containerRef?: React.RefObject<HTMLDivElement>
+  containerRef?: React.RefObject<HTMLDivElement | null>
 }

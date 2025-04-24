@@ -8,6 +8,18 @@ interface MathFieldProps {
   onEnter?: () => void
 }
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      'math-field': React.DetailedHTMLProps<
+        React.HTMLAttributes<MathfieldElement>,
+        MathfieldElement
+      >
+    }
+  }
+}
+
 export function MathField2(props: MathFieldProps) {
   const [value, setValue] = useState(props.value ?? '')
 
@@ -71,8 +83,8 @@ export function MathField2(props: MathFieldProps) {
       id="math-input-field"
       style={{ display: 'block' }}
       ref={mf}
-      onInput={(evt) => {
-        const v = (evt.target as MathfieldElement).value
+      onInput={(e) => {
+        const v = (e.target as MathfieldElement).value
         setValue(v)
         if (props.onChange) {
           props.onChange(v)

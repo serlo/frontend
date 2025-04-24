@@ -16,6 +16,7 @@ import {
   defaultLayoutIcons,
   DefaultVideoLayout,
 } from '@vidstack/react/player/layouts/default'
+import type { JSX } from 'react'
 
 import { TimeSliderWithDots } from './timeslider-with-dots'
 import { createCues } from '../helpers/create-cues'

@@ -11,6 +11,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
+import type { JSX } from 'react'
 
 import { HSpace } from '../content/h-space'
 import { Link } from '../content/link'

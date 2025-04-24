@@ -16,7 +16,7 @@ interface DropzoneImageToolbarProps {
   showSettings: boolean
   showSettingsButton?: boolean
   dropzoneVisibility?: DropzoneImageProps['state']['dropzoneVisibility']
-  containerRef?: React.RefObject<HTMLDivElement>
+  containerRef?: React.RefObject<HTMLDivElement | null>
 }
 
 export function DropzoneImageToolbar({

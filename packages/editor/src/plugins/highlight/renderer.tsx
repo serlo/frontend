@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
 import c from 'react-syntax-highlighter/dist/cjs/languages/prism/c'

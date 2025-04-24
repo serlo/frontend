@@ -1,6 +1,6 @@
 import type { StorageFormat } from '@editor/package'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { type MutableRefObject, useState } from 'react'
+import { type RefObject, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { SaveModal } from './save-modal'
@@ -19,7 +19,7 @@ export function SaveButton({
 }: {
   onSave: SerloEditorProps['onSave']
   isChanged: boolean
-  editorState: MutableRefObject<StorageFormat>
+  editorState: RefObject<StorageFormat>
   isInTestArea?: boolean
   prefilledChanges?: string
 }) {

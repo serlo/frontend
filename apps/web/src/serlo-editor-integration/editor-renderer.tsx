@@ -1,4 +1,5 @@
 import { SerloRenderer } from '@editor/package'
+import type { JSX } from 'react'
 
 import { extraSerloRenderers } from './extra-serlo-renderers'
 import { useSerloHandleLearnerEvent } from './use-handle-learner-event'

@@ -3,6 +3,7 @@ import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
 import dynamic from 'next/dynamic'
+import type { JSX } from 'react'
 
 import { UserLink } from './user-link'
 import { FaIcon } from '../fa-icon'

@@ -7,6 +7,7 @@ import {
   faUserEdit,
   faUserFriends,
 } from '@fortawesome/free-solid-svg-icons'
+import type { JSX } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { cn } from '@/helper/cn'

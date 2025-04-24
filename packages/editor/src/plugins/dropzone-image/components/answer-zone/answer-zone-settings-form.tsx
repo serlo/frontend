@@ -1,6 +1,7 @@
 import { FaIcon } from '@editor/editor-ui/fa-icon'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { faClone, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import type { JSX } from 'react'
 
 import type { AnswerZoneState } from '../../types'
 

@@ -42,6 +42,7 @@ export function RowEditor({
       transition={{ duration: 0.3, type: 'linear' }}
       ref={dropContainer}
       // bigger drop zone with padding hack
+      //@ts-expect-error somehow ts does not expect className
       className="rows-child relative -ml-12 pl-12"
     >
       {isRootRow && index === 0 && (
