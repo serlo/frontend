@@ -63,7 +63,7 @@ export function StaticMath({ src, inline }: StaticMathProps) {
         strict: false,
         trust: false,
       })
-      
+
       return (
         <span
           className={cn(
