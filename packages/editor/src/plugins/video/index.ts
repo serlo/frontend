@@ -10,14 +10,23 @@ import { isValidVideoUrl } from './utils/is-valid-video-url'
 
 const videoState = object({ src: upload(''), alt: string() })
 
-export type VideoProps = EditorPluginProps<VideoPluginState>
+export type VideoProps = EditorPluginProps<VideoPluginState, VideoConfig>
 export type VideoPluginState = typeof videoState
+export type VideoConfig = VideoPluginConfig
 
-export const videoPlugin: EditorPlugin<VideoPluginState> = {
-  Component: VideoEditor,
-  config: {},
-  state: videoState,
-  onText(value) {
-    if (isValidVideoUrl(value)) return { state: { src: value, alt: '' } }
-  },
+export function createVideoPlugin(
+  config: VideoConfig
+): EditorPlugin<VideoPluginState, VideoConfig> {
+  return {
+    Component: VideoEditor,
+    config,
+    state: videoState,
+    onText(value) {
+      if (isValidVideoUrl(value)) return { state: { src: value, alt: '' } }
+    },
+  }
+}
+
+export interface VideoPluginConfig {
+  disableFileUpload?: boolean
 }

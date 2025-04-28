@@ -42,7 +42,7 @@ import { createSpoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
-import { videoPlugin } from '@editor/plugins/video'
+import { createVideoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
@@ -81,7 +81,9 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.Video,
-      plugin: videoPlugin,
+      plugin: createVideoPlugin({
+        disableFileUpload: extraSerloPlugins ? false : true,
+      }),
     },
     {
       type: EditorPluginType.Spoiler,

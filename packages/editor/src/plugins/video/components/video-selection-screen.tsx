@@ -10,12 +10,14 @@ import { isValidVideoUrl } from '../utils/is-valid-video-url'
 
 interface VideoSelectionScreenProps {
   state: VideoProps['state']
+  config: VideoProps['config']
   urlInputRef: RefObject<HTMLInputElement>
   pluginId: string
 }
 
 export function VideoSelectionScreen({
   state,
+  config,
   urlInputRef,
   pluginId,
 }: VideoSelectionScreenProps) {
@@ -48,34 +50,39 @@ export function VideoSelectionScreen({
         >
           {videoStrings.videoUrl}
         </label>
-        <div className="serlo-tooltip-trigger mb-8">
-          <input
-            id={'videoInput' + pluginId}
-            ref={urlInputRef}
-            placeholder={placeholder}
-            value={!isTempFile(src.value) ? src.value : ''}
-            disabled={isTempFile(src.value) && !src.value.failed}
-            onChange={(e) => state.src.set(e.target.value)}
-            className={cn(
-              'w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600',
-              showErrorMessage && 'outline outline-1 outline-red-500'
-            )}
-            data-qa="plugin-video-src"
-          />
-          {showErrorMessage && (
-            <>
-              <span
-                className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500"
-                data-qa="plugin-image-src-error"
-              >
-                {uploadStrings.invalidUrl}
-              </span>
-              <EditorTooltip text={uploadStrings.invalidUrlMessage} />
-            </>
-          )}
-        </div>
 
-        <UploadButton src={src} />
+        {config.disableFileUpload ? null : (
+          <>
+            <div className="serlo-tooltip-trigger mb-8">
+              <input
+                id={'videoInput' + pluginId}
+                ref={urlInputRef}
+                placeholder={placeholder}
+                value={!isTempFile(src.value) ? src.value : ''}
+                disabled={isTempFile(src.value) && !src.value.failed}
+                onChange={(e) => state.src.set(e.target.value)}
+                className={cn(
+                  'w-full rounded-lg border-0 bg-yellow-100 px-4 py-2 text-gray-600',
+                  showErrorMessage && 'outline outline-1 outline-red-500'
+                )}
+                data-qa="plugin-video-src"
+              />
+              {showErrorMessage && (
+                <>
+                  <span
+                    className="mt-1 inline-block pl-1 text-sm font-semibold text-red-500"
+                    data-qa="plugin-image-src-error"
+                  >
+                    {uploadStrings.invalidUrl}
+                  </span>
+                  <EditorTooltip text={uploadStrings.invalidUrlMessage} />
+                </>
+              )}
+            </div>
+
+            <UploadButton src={src} />
+          </>
+        )}
       </div>
     </div>
   )
