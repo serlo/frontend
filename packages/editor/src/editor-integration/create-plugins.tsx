@@ -4,7 +4,7 @@ import { articlePlugin } from '@editor/plugins/article'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { boxPlugin } from '@editor/plugins/box'
 import { coursePlugin } from '@editor/plugins/course'
-import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
+import { dropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
@@ -146,7 +146,7 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.DropzoneImage,
-      plugin: createDropzoneImagePlugin(),
+      plugin: dropzoneImagePlugin,
     },
     {
       type: EditorPluginType.InteractiveVideo,

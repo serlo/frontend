@@ -63,19 +63,10 @@ const dropzoneImageState = object({
   extraDraggableAnswers: list(answerData),
 })
 
-export const defaultConfig: DropzoneImageConfig = {}
-
-export function createDropzoneImagePlugin(): EditorPlugin<DropzoneImagePluginState> {
-  return {
-    Component: DropzoneImageEditor,
-    state: dropzoneImageState,
-  }
-}
-
-export interface DropzoneImageConfig {
-  allowedPlugins?: (EditorPluginType | string)[]
+export const dropzoneImagePlugin: EditorPlugin<DropzoneImagePluginState> = {
+  Component: DropzoneImageEditor,
+  state: dropzoneImageState,
 }
 
 export type DropzoneImagePluginState = typeof dropzoneImageState
-
 export type DropzoneImageProps = EditorPluginProps<DropzoneImagePluginState>
