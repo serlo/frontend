@@ -31,7 +31,6 @@ export type RowsPluginState = typeof rowsState
 
 export interface RowsPluginConfig {
   allowedPlugins?: (EditorPluginType | string)[]
-  parentType: string
   textPluginPlaceholder?: string
 }
 
