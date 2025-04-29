@@ -16,18 +16,12 @@ export const stepProps = object({
   sign: string(Sign.Equals),
   right: string(''),
   transform: string(''),
-  explanation: child({
-    plugin: EditorPluginType.Text,
-    config: { registry: [] },
-  }),
+  explanation: child({ plugin: EditorPluginType.Text }),
 })
 
 const equationsState = object({
   steps: list(stepProps, 2),
-  firstExplanation: child({
-    plugin: EditorPluginType.Text,
-    config: { registry: [] },
-  }),
+  firstExplanation: child({ plugin: EditorPluginType.Text }),
   transformationTarget: string('equation'),
 })
 
