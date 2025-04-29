@@ -38,7 +38,7 @@ import { textExerciseTypePlugin } from '@editor/plugins/serlo-template-plugins/t
 import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@editor/plugins/solution'
-import { createSpoilerPlugin } from '@editor/plugins/spoiler'
+import { spoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
@@ -87,7 +87,7 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.Spoiler,
-      plugin: createSpoilerPlugin(plugins),
+      plugin: spoilerPlugin,
     },
     {
       type: EditorPluginType.Equations,

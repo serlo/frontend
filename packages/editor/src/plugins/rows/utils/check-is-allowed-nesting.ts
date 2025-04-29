@@ -1,4 +1,5 @@
 import { allowedBoxChildren } from '@editor/plugins/box'
+import { allowedSpoilerChildren } from '@editor/plugins/spoiler'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
@@ -20,6 +21,12 @@ export function checkIsAllowedNesting(
   // restrict what children a box plugin can contain
   if (typesOfAncestors.includes(EditorPluginType.Box)) {
     if (!allowedBoxChildren.includes(pluginType as EditorPluginType))
+      return false
+  }
+
+  // restrict what children a spoiler plugin can contain
+  if (typesOfAncestors.includes(EditorPluginType.Spoiler)) {
+    if (!allowedSpoilerChildren.includes(pluginType as EditorPluginType))
       return false
   }
 
