@@ -36,8 +36,6 @@ export class EditorWebComponent extends HTMLElement {
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
 
-  private _testingSecret: string | null = null
-
   private _editorVariant: EditorVariant = 'unknown'
 
   private _plugins = defaultPlugins
@@ -129,14 +127,6 @@ export class EditorWebComponent extends HTMLElement {
     return this._history
   }
 
-  get testingSecret(): string | null {
-    return this._testingSecret
-  }
-
-  set testingSecret(newTestingSecret) {
-    if (newTestingSecret) this.setAttribute('testing-secret', newTestingSecret)
-  }
-
   get editorVariant(): EditorVariant {
     return this._editorVariant
   }
@@ -212,7 +202,6 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
-    const testingSecretAttr = this.getAttribute('testing-secret')
 
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
@@ -237,7 +226,6 @@ export class EditorWebComponent extends HTMLElement {
               <LazySerloEditor
                 editorVariant={this.editorVariant}
                 initialState={this.initialState}
-                _testingSecret={testingSecretAttr}
                 plugins={this.plugins}
                 isProductionEnvironment={this.isProductionEnvironment}
                 onChange={(newState) => {

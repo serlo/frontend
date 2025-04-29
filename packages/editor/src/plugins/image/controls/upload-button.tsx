@@ -29,7 +29,7 @@ export function UploadButton({
   const imageStrings = useEditStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 
-  const upload = useUploadFile(config?.upload)
+  const upload = useUploadFile()
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)
 

@@ -1,31 +1,30 @@
 import type { EditorPlugin, StringStateType } from '@editor/plugin'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
-import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
+import { blanksExercisePlugin } from '@editor/plugins/blanks-exercise'
 import { boxPlugin } from '@editor/plugins/box'
 import { coursePlugin } from '@editor/plugins/course'
 import { dropzoneImagePlugin } from '@editor/plugins/dropzone-image'
-import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
+import { edusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
 import { equationsPlugin } from '@editor/plugins/equations'
 import { exercisePlugin } from '@editor/plugins/exercise'
 import { exerciseGroupPlugin } from '@editor/plugins/exercise-group'
 import { geoGebraPlugin } from '@editor/plugins/geogebra'
-import { createHighlightPlugin } from '@editor/plugins/highlight'
-import type { ImagePluginConfig, ImagePluginState } from '@editor/plugins/image'
-import { createImageGalleryPlugin } from '@editor/plugins/image-gallery'
+import { highlightPlugin } from '@editor/plugins/highlight'
+import { imagePlugin } from '@editor/plugins/image'
+import { imageGalleryPlugin } from '@editor/plugins/image-gallery'
 import { injectionPlugin } from '@editor/plugins/injection'
-import { createInputExercisePlugin } from '@editor/plugins/input-exercise'
+import { inputExercisePlugin } from '@editor/plugins/input-exercise'
 import { interactiveVideoPlugin } from '@editor/plugins/interactive-video'
 import {
-  createArticleIntroduction,
-  createMultimediaPlugin,
+  articleIntroduction,
+  multimediaPlugin,
 } from '@editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
 import { rowsPlugin } from '@editor/plugins/rows'
-import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
-import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
-import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
-import { createSerloTablePlugin } from '@editor/plugins/serlo-table'
+import { scMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
+import { serloInjectionPlugin } from '@editor/plugins/serlo-injection'
+import { tablePlugin } from '@editor/plugins/serlo-table'
 import { appletTypePlugin } from '@editor/plugins/serlo-template-plugins/applet'
 import { articleTypePlugin } from '@editor/plugins/serlo-template-plugins/article'
 import { courseTypePlugin } from '@editor/plugins/serlo-template-plugins/course'
@@ -39,45 +38,37 @@ import { userTypePlugin } from '@editor/plugins/serlo-template-plugins/user'
 import { videoTypePlugin } from '@editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@editor/plugins/solution'
 import { spoilerPlugin } from '@editor/plugins/spoiler'
-import { createTextPlugin } from '@editor/plugins/text'
+import { textPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
 import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
-import type { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
-
-import { createTestingImagePlugin } from './image-with-testing-config'
 
 export interface ExtraSerloPlugins {
   h5p: EditorPlugin<StringStateType>
-  image: EditorPlugin<ImagePluginState, ImagePluginConfig>
 }
 
 export function createPlugins(
   plugins: (EditorPluginType | TemplatePluginType)[],
-  testingSecret?: string | null,
-  language: SupportedLanguage = 'de',
   extraSerloPlugins?: ExtraSerloPlugins
 ) {
   const allPlugins = [
     {
       type: EditorPluginType.Text,
-      plugin: createTextPlugin({}),
+      plugin: textPlugin,
     },
     {
       type: EditorPluginType.Image,
-      plugin: extraSerloPlugins
-        ? extraSerloPlugins.image
-        : createTestingImagePlugin(testingSecret),
+      plugin: imagePlugin,
     },
     {
       type: EditorPluginType.ImageGallery,
-      plugin: createImageGalleryPlugin(),
+      plugin: imageGalleryPlugin,
     },
     {
       type: EditorPluginType.Multimedia,
-      plugin: createMultimediaPlugin(plugins),
+      plugin: multimediaPlugin,
     },
     {
       type: EditorPluginType.Video,
@@ -97,7 +88,7 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.SerloTable,
-      plugin: createSerloTablePlugin(),
+      plugin: tablePlugin,
     },
     {
       type: EditorPluginType.Geogebra,
@@ -105,16 +96,15 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.Highlight,
-      plugin: createHighlightPlugin(),
+      plugin: highlightPlugin,
     },
     {
       type: EditorPluginType.EdusharingAsset,
-      plugin: createEdusharingAssetPlugin(),
+      plugin: edusharingAssetPlugin,
     },
     {
       type: EditorPluginType.SerloInjection,
-      plugin: createSerloInjectionPlugin(),
-      renderer: SerloInjectionStaticRenderer,
+      plugin: serloInjectionPlugin,
     },
     // Exercises etc.
     // ===================================================
@@ -128,15 +118,15 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.InputExercise,
-      plugin: createInputExercisePlugin(),
+      plugin: inputExercisePlugin,
     },
     {
       type: EditorPluginType.ScMcExercise,
-      plugin: createScMcExercisePlugin(),
+      plugin: scMcExercisePlugin,
     },
     {
       type: EditorPluginType.BlanksExercise,
-      plugin: createBlanksExercisePlugin(),
+      plugin: blanksExercisePlugin,
     },
     {
       type: EditorPluginType.TextAreaExercise,
@@ -215,11 +205,7 @@ export function createPlugins(
           },
           {
             type: EditorPluginType.ArticleIntroduction,
-            plugin: createArticleIntroduction(
-              language === 'de'
-                ? 'Fasse das Thema des Artikels kurz zusammen'
-                : 'Write a short introduction'
-            ),
+            plugin: articleIntroduction,
           },
           {
             type: EditorPluginType.ExerciseGroup,

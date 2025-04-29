@@ -9,17 +9,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { BoxEditor } from './editor'
 
-export const allowedBoxChildren: EditorPluginType[] = [
-  EditorPluginType.Text,
-  EditorPluginType.Image,
-  EditorPluginType.Equations,
-  EditorPluginType.Multimedia,
-  EditorPluginType.SerloTable,
-  EditorPluginType.Highlight,
-  EditorPluginType.EdusharingAsset,
-  EditorPluginType.Exercise,
-]
-
 const boxState = object({
   type: string(''),
   title: child({

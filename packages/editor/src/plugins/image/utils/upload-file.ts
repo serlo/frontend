@@ -4,7 +4,6 @@ import {
 } from '@editor/core/contexts/editor-meta-context'
 import { useIsSerlo } from '@editor/core/hooks/use-is-serlo'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
-import { type UploadHandler } from '@editor/plugin'
 import { EditStrings } from '@editor/types/language-data'
 import { useContext } from 'react'
 
@@ -13,31 +12,13 @@ import { validateFile } from './validate-file'
 
 type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
 
-export function useUploadFile(oldUploader?: UploadHandler<string>) {
+export function useUploadFile() {
   const { editorVariant, userId } = useContext(EditorMetaContext)
   const isSerlo = useIsSerlo()
   const uploadStrings = useEditStrings().edtrIo.fileUpload
   const uploader = (file: File) =>
     uploadFile({ file, editorVariant, userId, isSerlo, uploadStrings })
-  return shouldUseNewUpload(isSerlo) ? uploader : oldUploader!
-}
-
-function shouldUseNewUpload(isSerlo: boolean) {
-  if (isSerlo) return true
-  // while testing
-  if (typeof window === 'undefined') return false
-  const host = window.location.hostname
-  const isDevOrPreviewOrStaging =
-    host === 'localhost' ||
-    process.env.NODE_ENV === 'development' ||
-    host === 'editor.serlo.dev' ||
-    host === 'editor.serlo-staging.dev'
-
-  if (isDevOrPreviewOrStaging) {
-    // eslint-disable-next-line no-console
-    console.log('using new upload method and temporary bucket')
-  }
-  return isDevOrPreviewOrStaging
+  return uploader
 }
 
 async function uploadFile({

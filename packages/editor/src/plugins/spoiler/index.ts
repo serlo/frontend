@@ -21,24 +21,6 @@ const spoilerState = object({
   content: child({ plugin: EditorPluginType.Rows }),
 })
 
-export const allowedSpoilerChildren: EditorPluginType[] = [
-  EditorPluginType.Text,
-  EditorPluginType.Image,
-  EditorPluginType.ImageGallery,
-  EditorPluginType.Multimedia,
-  EditorPluginType.Spoiler,
-  EditorPluginType.Box,
-  EditorPluginType.SerloTable,
-  EditorPluginType.Injection,
-  EditorPluginType.Equations,
-  EditorPluginType.Geogebra,
-  EditorPluginType.Highlight,
-  EditorPluginType.Video,
-  EditorPluginType.Audio,
-  EditorPluginType.Exercise,
-  EditorPluginType.EdusharingAsset,
-]
-
 export const spoilerPlugin: EditorPlugin<SpoilerPluginState> = {
   Component: SpoilerEditor,
   state: spoilerState,

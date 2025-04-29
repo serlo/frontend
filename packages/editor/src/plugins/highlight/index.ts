@@ -18,9 +18,7 @@ export type HighlightPluginState = typeof hightlightState
 
 export type HighlightProps = EditorPluginProps<HighlightPluginState>
 
-export function createHighlightPlugin(): EditorPlugin<HighlightPluginState> {
-  return {
-    Component: HighlightEditor,
-    state: hightlightState,
-  }
+export const highlightPlugin: EditorPlugin<HighlightPluginState> = {
+  Component: HighlightEditor,
+  state: hightlightState,
 }

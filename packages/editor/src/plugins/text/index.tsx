@@ -17,11 +17,8 @@ import type {
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
 
-const createTextPlugin = (
-  config: TextEditorConfig
-): EditorPlugin<TextEditorState, TextEditorConfig> => ({
+export const textPlugin: EditorPlugin<TextEditorState, TextEditorConfig> = {
   Component: TextEditor,
-  config,
   state: serializedScalar(emptyDocumentFactory(), {
     toStaticState({ value }) {
       return value //slate
@@ -66,9 +63,7 @@ const createTextPlugin = (
         .join('') === ''
     )
   },
-})
-
-export { createTextPlugin }
+}
 
 export type {
   CustomElement,

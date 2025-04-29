@@ -12,29 +12,22 @@ import {
   string,
 } from '../../plugin'
 
-function createInputExerciseState() {
-  const answerObject = object({
-    value: string(''),
-    isCorrect: boolean(true),
-    feedback: child({ plugin: EditorPluginType.Text }),
-  })
+const answerObject = object({
+  value: string(''),
+  isCorrect: boolean(true),
+  feedback: child({ plugin: EditorPluginType.Text }),
+})
 
-  return object({
-    type: string(InputExerciseType.NumberExact),
-    unit: string(''),
-    answers: list(answerObject, 1),
-  })
-}
+const inputExerciseState = object({
+  type: string(InputExerciseType.NumberExact),
+  unit: string(''),
+  answers: list(answerObject, 1),
+})
 
-export type InputExercisePluginState = ReturnType<
-  typeof createInputExerciseState
->
-
+export type InputExercisePluginState = typeof inputExerciseState
 export type InputExerciseProps = EditorPluginProps<InputExercisePluginState>
 
-export function createInputExercisePlugin(): EditorPlugin<InputExercisePluginState> {
-  return {
-    Component: InputExerciseEditor,
-    state: createInputExerciseState(),
-  }
+export const inputExercisePlugin: EditorPlugin<InputExercisePluginState> = {
+  Component: InputExerciseEditor,
+  state: inputExerciseState,
 }

@@ -14,7 +14,7 @@ import { cn } from '@editor/utils/cn'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { KeyboardEvent, useState } from 'react'
 
-import { SerloTableProps } from '.'
+import type { SerloTableProps } from '.'
 import { CellSwitchButton } from './cell-switch-button'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'

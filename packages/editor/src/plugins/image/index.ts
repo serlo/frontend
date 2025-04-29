@@ -1,5 +1,3 @@
-import type { FileError } from '@editor/editor-integration/image-with-testing-config'
-import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
@@ -8,8 +6,6 @@ import { isImageUrl } from './utils/check-image-url'
 import {
   type EditorPlugin,
   type EditorPluginProps,
-  type UploadHandler,
-  type UploadValidator,
   child,
   isTempFile,
   number,
@@ -18,6 +14,7 @@ import {
   string,
   upload,
 } from '../../plugin'
+import { validateFile } from './utils/validate-file'
 
 const imageState = object({
   src: upload(''),
@@ -34,80 +31,70 @@ const imageState = object({
   ),
 })
 
-export function createImagePlugin(
-  config: ImageConfig
-): EditorPlugin<ImagePluginState, ImageConfig> {
-  return {
-    Component: ImageEditor,
-    config,
-    state: imageState,
-    async onText(value) {
-      // ==================
-      // experimental feature: upload directly when pasting url from mathpix
-      // could maybe be used for all image urls in the future
-      if (value.startsWith('![](https://cdn.mathpix.com')) {
-        const imageUrl = value.substring(4, value.length - 1)
-        const proxyUrl = '/api/frontend/mathpix-image-proxy?imageUrl='
+export const imagePlugin: EditorPlugin<ImagePluginState, ImageConfig> = {
+  Component: ImageEditor,
+  state: imageState,
+  async onText(value) {
+    // ==================
+    // experimental feature: upload directly when pasting url from mathpix
+    // could maybe be used for all image urls in the future
+    if (value.startsWith('![](https://cdn.mathpix.com')) {
+      const imageUrl = value.substring(4, value.length - 1)
+      const proxyUrl = '/api/frontend/mathpix-image-proxy?imageUrl='
 
-        try {
-          const response = await fetch(proxyUrl + encodeURIComponent(imageUrl))
-          const blob = await response.blob()
-          const { type } = blob
-          const imagePlugin = editorPlugins.getByType('image')
-          if (imagePlugin.onFiles) {
-            return imagePlugin.onFiles([
-              new File([blob], `image.${blob.type.split('/')[1]}`, {
-                type,
-              }),
-            ])
-          }
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.error(err)
+      try {
+        const response = await fetch(proxyUrl + encodeURIComponent(imageUrl))
+        const blob = await response.blob()
+        const { type } = blob
+        const imagePlugin = editorPlugins.getByType('image')
+        if (imagePlugin.onFiles) {
+          return imagePlugin.onFiles([
+            new File([blob], `image.${blob.type.split('/')[1]}`, {
+              type,
+            }),
+          ])
         }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err)
       }
-      // ==================
-      if (isImageUrl(value.toLowerCase())) {
-        return {
-          state: {
-            src: value,
-            link: undefined,
-            alt: undefined,
-            maxWidth: undefined,
-            caption: { plugin: EditorPluginType.Text },
-          },
-        }
+    }
+    // ==================
+    if (isImageUrl(value.toLowerCase())) {
+      return {
+        state: {
+          src: value,
+          link: undefined,
+          alt: undefined,
+          maxWidth: undefined,
+          caption: { plugin: EditorPluginType.Text },
+        },
       }
-    },
-    onFiles(files) {
-      if (files.length === 1) {
-        const file = files[0]
-        const validation = config.validate(file)
-        if (validation.valid) {
-          return {
-            state: {
-              src: { pending: files[0] },
-              link: undefined,
-              alt: undefined,
-              licence: undefined,
-              imageSource: undefined,
-              maxWidth: undefined,
-              caption: { plugin: EditorPluginType.Text },
-            },
-          }
-        } else {
-          for (const error of validation.errors) showToastNotice(error.message)
-        }
-      }
-    },
-    isEmpty: (staticState) => {
-      return (
-        (!staticState.src.value || isTempFile(staticState.src.value)) &&
-        (!staticState.link.defined || !staticState.link.href.value) &&
-        (!staticState.alt.defined || !staticState.alt.value)
-      )
-    },
-  }
+    }
+  },
+  onFiles(files) {
+    if (files.length !== 1) return
+    const file = files[0]
+    if (!validateFile(file)) return
+    return {
+      state: {
+        src: { pending: file },
+        link: undefined,
+        alt: undefined,
+        licence: undefined,
+        imageSource: undefined,
+        maxWidth: undefined,
+        caption: { plugin: EditorPluginType.Text },
+      },
+    }
+  },
+  isEmpty: (staticState) => {
+    return (
+      (!staticState.src.value || isTempFile(staticState.src.value)) &&
+      (!staticState.link.defined || !staticState.link.href.value) &&
+      (!staticState.alt.defined || !staticState.alt.value)
+    )
+  },
 }
 
 export type ImageConfig = ImagePluginConfig
@@ -116,6 +103,4 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
   onMultipleUpload?: (files: File[]) => void
-  upload: UploadHandler<string>
-  validate: UploadValidator<FileError[]>
 }

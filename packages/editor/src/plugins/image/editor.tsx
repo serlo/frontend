@@ -25,7 +25,7 @@ const captionFormattingOptions = [
 export function ImageEditor(props: ImageProps) {
   const { id, focused, state, config } = props
   const imageStrings = useEditStrings().plugins.image
-  const upload = useUploadFile(config?.upload)
+  const upload = useUploadFile()
   usePendingFileUploader(state.src, upload)
 
   const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)

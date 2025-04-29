@@ -26,11 +26,9 @@ const tableState = object({
   tableType: string(TableType.OnlyColumnHeader),
 })
 
-export function createSerloTablePlugin(): EditorPlugin<SerloTablePluginState> {
-  return {
-    Component: SerloTableEditor,
-    state: tableState,
-  }
+export const tablePlugin: EditorPlugin<SerloTablePluginState> = {
+  Component: SerloTableEditor,
+  state: tableState,
 }
 
 export type SerloTablePluginState = typeof tableState

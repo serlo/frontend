@@ -25,9 +25,7 @@ const scMcExerciseState = object({
 export type ScMcExerciseProps = EditorPluginProps<ScMcExercisePluginState>
 export type ScMcExercisePluginState = typeof scMcExerciseState
 
-export function createScMcExercisePlugin(): EditorPlugin<ScMcExercisePluginState> {
-  return {
-    Component: ScMcExerciseEditor,
-    state: scMcExerciseState,
-  }
+export const scMcExercisePlugin: EditorPlugin<ScMcExercisePluginState> = {
+  Component: ScMcExerciseEditor,
+  state: scMcExerciseState,
 }

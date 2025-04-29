@@ -46,8 +46,6 @@ export interface SerloEditorProps {
   /** Shows default Undo/Redo UI. Defaults to false for now */
   showUndoRedoButtons?: boolean
   disableMediaUpload?: boolean
-  /** @deprecated Please do not use for new setups */
-  _testingSecret?: string | null
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
   extraSerloPlugins?: ExtraSerloPlugins
@@ -68,7 +66,6 @@ export function SerloEditor(props: SerloEditorProps) {
     styleReset,
     showUndoRedoButtons,
     disableMediaUpload,
-    _testingSecret,
     _ltik,
     extraSerloPlugins,
     extraSerloRenderers,
@@ -91,12 +88,7 @@ export function SerloEditor(props: SerloEditorProps) {
 
   const { staticStrings, editStrings } = editorData[language]
 
-  const allPlugins = createPlugins(
-    plugins,
-    _testingSecret,
-    language,
-    extraSerloPlugins
-  )
+  const allPlugins = createPlugins(plugins, extraSerloPlugins)
   editorPlugins.init(allPlugins)
 
   const basicRenderers = createRenderers(extraSerloRenderers)
@@ -110,11 +102,7 @@ export function SerloEditor(props: SerloEditorProps) {
             editorVariant,
             userId,
             ltik: _ltik,
-            disableMediaUpload: disableMediaUpload
-              ? true
-              : _testingSecret
-                ? false
-                : true,
+            disableMediaUpload,
           }}
         >
           {renderTestEnvironmentWarning()}

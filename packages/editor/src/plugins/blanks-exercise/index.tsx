@@ -38,11 +38,9 @@ const blanksState = object({
   extraDraggableAnswers: optional(list(object({ answer: string() }))),
 })
 
-export function createBlanksExercisePlugin(): EditorPlugin<BlanksExerciseState> {
-  return {
-    Component: BlanksExerciseEditor,
-    state: blanksState,
-  }
+export const blanksExercisePlugin: EditorPlugin<BlanksExerciseState> = {
+  Component: BlanksExerciseEditor,
+  state: blanksState,
 }
 
 export type BlanksExerciseState = typeof blanksState

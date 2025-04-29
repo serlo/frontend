@@ -1,7 +1,34 @@
-import { allowedBoxChildren } from '@editor/plugins/box'
-import { allowedSpoilerChildren } from '@editor/plugins/spoiler'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
+
+const allowedBoxChildren: EditorPluginType[] = [
+  EditorPluginType.Text,
+  EditorPluginType.Image,
+  EditorPluginType.Equations,
+  EditorPluginType.Multimedia,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Highlight,
+  EditorPluginType.EdusharingAsset,
+  EditorPluginType.Exercise,
+]
+
+export const allowedSpoilerChildren: EditorPluginType[] = [
+  EditorPluginType.Text,
+  EditorPluginType.Image,
+  EditorPluginType.ImageGallery,
+  EditorPluginType.Multimedia,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Box,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Injection,
+  EditorPluginType.Equations,
+  EditorPluginType.Geogebra,
+  EditorPluginType.Highlight,
+  EditorPluginType.Video,
+  EditorPluginType.Audio,
+  EditorPluginType.Exercise,
+  EditorPluginType.EdusharingAsset,
+]
 
 export function checkIsAllowedNesting(
   pluginType: string,
