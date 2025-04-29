@@ -7,11 +7,6 @@ import {
 } from '@editor/plugin'
 
 import { HighlightEditor } from './editor'
-import { HighlightRenderer, type HighlightRendererProps } from './renderer'
-
-export interface HighlightConfig {
-  Renderer?: HighlightPluginConfig['Renderer']
-}
 
 const hightlightState = object({
   code: string(''),
@@ -21,23 +16,11 @@ const hightlightState = object({
 
 export type HighlightPluginState = typeof hightlightState
 
-export interface HighlightPluginConfig {
-  Renderer: React.ComponentType<HighlightRendererProps>
-}
+export type HighlightProps = EditorPluginProps<HighlightPluginState>
 
-export type HighlightProps = EditorPluginProps<
-  HighlightPluginState,
-  HighlightPluginConfig
->
-
-export function createHighlightPlugin(
-  config: HighlightConfig = {}
-): EditorPlugin<HighlightPluginState, HighlightPluginConfig> {
-  const { Renderer = HighlightRenderer } = config
-
+export function createHighlightPlugin(): EditorPlugin<HighlightPluginState> {
   return {
     Component: HighlightEditor,
     state: hightlightState,
-    config: { Renderer },
   }
 }
