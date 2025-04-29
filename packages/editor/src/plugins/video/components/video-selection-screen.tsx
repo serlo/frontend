@@ -1,4 +1,5 @@
-import { type RefObject } from 'react'
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
+import { useContext, type RefObject } from 'react'
 
 import type { VideoProps } from '..'
 import { UploadButton } from './upload-button'
@@ -6,17 +7,16 @@ import { VideoUrlInput } from './video-url-input'
 
 interface VideoSelectionScreenProps {
   state: VideoProps['state']
-  config: VideoProps['config']
   urlInputRef: RefObject<HTMLInputElement>
   pluginId: string
 }
 
 export function VideoSelectionScreen({
   state,
-  config,
   urlInputRef,
   pluginId,
 }: VideoSelectionScreenProps) {
+  const disableMediaUpload = useContext(EditorMetaContext).disableMediaUpload
   return (
     <div
       className="mx-auto rounded-md bg-yellow-50 p-8 shadow-md"
@@ -29,7 +29,7 @@ export function VideoSelectionScreen({
           urlInputRef={urlInputRef}
         />
 
-        {config?.disableFileUpload ? null : <UploadButton src={state.src} />}
+        {disableMediaUpload ? null : <UploadButton src={state.src} />}
       </div>
     </div>
   )

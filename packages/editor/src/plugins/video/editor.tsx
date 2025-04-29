@@ -42,7 +42,6 @@ export const VideoEditor = (props: VideoProps) => {
       ) : (
         <VideoSelectionScreen
           pluginId={props.id}
-          config={props.config}
           state={state}
           urlInputRef={urlInputRef}
         />

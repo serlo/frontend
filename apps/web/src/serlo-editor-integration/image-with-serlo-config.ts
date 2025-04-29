@@ -60,7 +60,6 @@ const validateFile: UploadValidator<FileError[]> = (file) => {
 export const imagePlugin = createImagePlugin({
   upload: createUploadImageHandler(),
   validate: validateFile,
-  disableFileUpload: false,
 })
 
 function createUploadImageHandler() {

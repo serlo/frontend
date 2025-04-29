@@ -45,6 +45,7 @@ export interface SerloEditorProps {
   styleReset?: boolean
   /** Shows default Undo/Redo UI. Defaults to false for now */
   showUndoRedoButtons?: boolean
+  disableMediaUpload?: boolean
   /** @deprecated Please do not use for new setups */
   _testingSecret?: string | null
   _ltik?: string
@@ -66,6 +67,7 @@ export function SerloEditor(props: SerloEditorProps) {
     userId,
     styleReset,
     showUndoRedoButtons,
+    disableMediaUpload,
     _testingSecret,
     _ltik,
     extraSerloPlugins,
@@ -104,7 +106,16 @@ export function SerloEditor(props: SerloEditorProps) {
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
         <EditorMetaContext.Provider
-          value={{ editorVariant, userId, ltik: _ltik }}
+          value={{
+            editorVariant,
+            userId,
+            ltik: _ltik,
+            disableMediaUpload: disableMediaUpload
+              ? true
+              : _testingSecret
+                ? false
+                : true,
+          }}
         >
           {renderTestEnvironmentWarning()}
           <div className={styleReset ? 'serlo-editor-style-reset' : ''}>

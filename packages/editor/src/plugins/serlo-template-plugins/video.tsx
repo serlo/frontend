@@ -5,7 +5,7 @@ import {
   string,
   upload,
 } from '@editor/plugin'
-import { createVideoPlugin } from '@editor/plugins/video'
+import { videoPlugin } from '@editor/plugins/video'
 
 import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
@@ -22,8 +22,6 @@ export const videoTypePlugin: EditorPlugin<VideoTypePluginState> = {
   Component: VideoTypeEditor,
   state: videoTypeState,
 }
-
-const videoPlugin = createVideoPlugin({ disableFileUpload: true })
 
 function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
   const { title, content, description } = props.state

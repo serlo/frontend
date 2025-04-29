@@ -76,7 +76,6 @@ export const createTestingImagePlugin = (secret: string | null | undefined) => {
   return createImagePlugin({
     upload: createUploadImageHandler(secret),
     validate: validateFile,
-    disableFileUpload: secret ? false : true,
   })
 }
 

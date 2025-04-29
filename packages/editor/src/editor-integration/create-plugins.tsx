@@ -21,7 +21,7 @@ import {
   createMultimediaPlugin,
 } from '@editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@editor/plugins/page-layout'
-import { createRowsPlugin } from '@editor/plugins/rows'
+import { rowsPlugin } from '@editor/plugins/rows'
 import { createScMcExercisePlugin } from '@editor/plugins/sc-mc-exercise'
 import { createSerloInjectionPlugin } from '@editor/plugins/serlo-injection'
 import { SerloInjectionStaticRenderer } from '@editor/plugins/serlo-injection/static'
@@ -42,7 +42,7 @@ import { spoilerPlugin } from '@editor/plugins/spoiler'
 import { createTextPlugin } from '@editor/plugins/text'
 import { textAreaExercisePlugin } from '@editor/plugins/text-area-exercise'
 import { unsupportedPlugin } from '@editor/plugins/unsupported'
-import { createVideoPlugin } from '@editor/plugins/video'
+import { videoPlugin } from '@editor/plugins/video'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { SupportedLanguage } from '@editor/types/language-data'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
@@ -81,9 +81,7 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.Video,
-      plugin: createVideoPlugin({
-        disableFileUpload: extraSerloPlugins ? false : true,
-      }),
+      plugin: videoPlugin,
     },
     {
       type: EditorPluginType.Spoiler,
@@ -155,7 +153,7 @@ export function createPlugins(
 
     // Special plugins, never visible in suggestions
     // ===================================================
-    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
+    { type: EditorPluginType.Rows, plugin: rowsPlugin },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
     {
       type: TemplatePluginType.GenericContent,
