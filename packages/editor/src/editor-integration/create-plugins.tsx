@@ -2,7 +2,7 @@ import type { EditorPlugin, StringStateType } from '@editor/plugin'
 import { anchorPlugin } from '@editor/plugins/anchor'
 import { articlePlugin } from '@editor/plugins/article'
 import { createBlanksExercisePlugin } from '@editor/plugins/blanks-exercise'
-import { createBoxPlugin } from '@editor/plugins/box'
+import { boxPlugin } from '@editor/plugins/box'
 import { coursePlugin } from '@editor/plugins/course'
 import { createDropzoneImagePlugin } from '@editor/plugins/dropzone-image'
 import { createEdusharingAssetPlugin } from '@editor/plugins/edusharing-asset'
@@ -95,7 +95,7 @@ export function createPlugins(
     },
     {
       type: EditorPluginType.Box,
-      plugin: createBoxPlugin(plugins),
+      plugin: boxPlugin,
     },
     {
       type: EditorPluginType.SerloTable,

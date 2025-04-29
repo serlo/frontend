@@ -1,3 +1,4 @@
+import { allowedBoxChildren } from '@editor/plugins/box'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { TemplatePluginType } from '@editor/types/template-plugin-type'
 
@@ -14,6 +15,12 @@ export function checkIsAllowedNesting(
     ).length > 1
   ) {
     return false
+  }
+
+  // restrict what children a box plugin can contain
+  if (typesOfAncestors.includes(EditorPluginType.Box)) {
+    if (!allowedBoxChildren.includes(pluginType as EditorPluginType))
+      return false
   }
 
   const rootPluginType = typesOfAncestors.at(0)
