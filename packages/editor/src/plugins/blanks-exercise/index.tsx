@@ -29,7 +29,6 @@ const blanksState = object({
         TextEditorFormattingOption.lists,
         TextEditorFormattingOption.richTextBold,
         TextEditorFormattingOption.richTextItalic,
-        TextEditorFormattingOption.textBlank,
         TextEditorFormattingOption.math,
       ],
       isInlineChildEditor: true,

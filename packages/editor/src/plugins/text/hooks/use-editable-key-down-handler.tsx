@@ -40,7 +40,10 @@ export const useEditableKeydownHandler = (
   const store = useStore()
 
   const dispatch = useAppDispatch()
-  const textFormattingOptions = useFormattingOptions(config.formattingOptions)
+  const textFormattingOptions = useFormattingOptions(
+    config.formattingOptions,
+    id
+  )
 
   const { pluginMenuDispatch } = useContext(PluginMenuContext)
 

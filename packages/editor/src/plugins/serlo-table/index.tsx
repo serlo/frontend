@@ -1,4 +1,3 @@
-import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import {
   type EditorPlugin,
   type EditorPluginProps,
@@ -11,22 +10,6 @@ import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
 import { SerloTableEditor } from './editor'
 import { TableType } from './renderer'
-
-const headerTextFormattingOptions = [
-  TextEditorFormattingOption.code,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.math,
-]
-
-const cellTextFormattingOptions = [
-  TextEditorFormattingOption.code,
-  TextEditorFormattingOption.colors,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.lists,
-  TextEditorFormattingOption.math,
-  TextEditorFormattingOption.richTextBold,
-  TextEditorFormattingOption.richTextItalic,
-]
 
 const tableState = object({
   rows: list(
@@ -43,28 +26,12 @@ const tableState = object({
   tableType: string(TableType.OnlyColumnHeader),
 })
 
-const defaultConfig: SerloTableConfig = {
-  headerTextFormattingOptions,
-  cellTextFormattingOptions,
-}
-
-export function createSerloTablePlugin(
-  config = defaultConfig
-): EditorPlugin<SerloTablePluginState, SerloTableConfig> {
+export function createSerloTablePlugin(): EditorPlugin<SerloTablePluginState> {
   return {
     Component: SerloTableEditor,
-    config: config,
     state: tableState,
   }
 }
 
 export type SerloTablePluginState = typeof tableState
-export type SerloTableProps = EditorPluginProps<
-  SerloTablePluginState,
-  SerloTableConfig
->
-
-export interface SerloTableConfig {
-  headerTextFormattingOptions?: TextEditorFormattingOption[]
-  cellTextFormattingOptions?: TextEditorFormattingOption[]
-}
+export type SerloTableProps = EditorPluginProps<SerloTablePluginState>

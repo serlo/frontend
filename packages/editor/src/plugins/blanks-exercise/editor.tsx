@@ -1,5 +1,4 @@
 import { PluginToolbar } from '@editor/editor-ui/plugin-toolbar'
-import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import {
   selectIsFocused,
@@ -9,7 +8,7 @@ import {
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import type { EditorBlanksExerciseDocument } from '@editor/types/editor-plugins'
 import { cn } from '@editor/utils/cn'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import type { BlanksExerciseProps, BlanksExerciseMode } from '.'
 import { ChildPluginSelection } from './components/child-plugin-selection'
@@ -19,24 +18,6 @@ import { BlanksExerciseStaticRenderer } from './static'
 import { BlanksExerciseToolbar } from './toolbar'
 import { useIsPreviewActive } from '../exercise/context/preview-context'
 import { isEmptyTextDocument } from '../text/utils/static-is-empty'
-
-const headerTextFormattingOptions = [
-  TextEditorFormattingOption.code,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.math,
-  TextEditorFormattingOption.textBlank,
-]
-
-const cellTextFormattingOptions = [
-  TextEditorFormattingOption.code,
-  TextEditorFormattingOption.colors,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.lists,
-  TextEditorFormattingOption.math,
-  TextEditorFormattingOption.richTextBold,
-  TextEditorFormattingOption.richTextItalic,
-  TextEditorFormattingOption.textBlank,
-]
 
 export function BlanksExerciseEditor(props: BlanksExerciseProps) {
   const { focused, id, state } = props
@@ -64,12 +45,10 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
     isEmptyTextDocument(staticDocument.state.text)
   )
 
-  const childPluginConfig = useMemo(() => {
-    if (childPluginState.plugin === EditorPluginType.Text)
-      return { placeholder: blanksExerciseStrings.placeholder }
-    if (childPluginState.plugin === EditorPluginType.SerloTable)
-      return { headerTextFormattingOptions, cellTextFormattingOptions }
-  }, [childPluginState.plugin, blanksExerciseStrings.placeholder])
+  const placeholder =
+    childPluginState.plugin === EditorPluginType.Text
+      ? blanksExerciseStrings.placeholder
+      : undefined
 
   if (!childPluginState || !staticDocument) return null
 
@@ -114,7 +93,9 @@ export function BlanksExerciseEditor(props: BlanksExerciseProps) {
                   noWhiteShadow
                 />
               ) : null}
-              {childPlugin.render({ config: childPluginConfig })}
+              {childPlugin.render({
+                config: placeholder ? { placeholder } : undefined,
+              })}
             </div>
           }
           childPluginState={childPluginState}
