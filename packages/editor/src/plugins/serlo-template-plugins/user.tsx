@@ -13,7 +13,6 @@ export type UserTypePluginState = typeof userTypeState
 export const userTypePlugin: EditorPlugin<UserTypePluginState> = {
   Component: UserTypeEditor,
   state: userTypeState,
-  config: {},
 }
 
 function UserTypeEditor({ state }: EditorPluginProps<UserTypePluginState>) {

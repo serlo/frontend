@@ -28,7 +28,6 @@ export type ScMcExercisePluginState = typeof scMcExerciseState
 export function createScMcExercisePlugin(): EditorPlugin<ScMcExercisePluginState> {
   return {
     Component: ScMcExerciseEditor,
-    config: {},
     state: scMcExerciseState,
   }
 }

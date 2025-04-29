@@ -29,9 +29,7 @@ const imageState = object({
   caption: optional(
     child({
       plugin: EditorPluginType.Text,
-      config: {
-        noLinebreaks: true,
-      },
+      config: { noLinebreaks: true },
     })
   ),
 })

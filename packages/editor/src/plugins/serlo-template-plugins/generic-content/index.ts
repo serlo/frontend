@@ -24,5 +24,4 @@ export const genericContentTypePlugin: EditorPlugin<GenericContentTypePluginStat
   {
     Component: GenericContentTypeEditor,
     state: state,
-    config: {},
   }

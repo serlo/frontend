@@ -21,7 +21,6 @@ export function createEdusharingAssetPlugin(): EditorPlugin<EdusharingAssetState
   return {
     Component: EdusharingAssetEditor,
     state,
-    config: {},
   }
 }
 

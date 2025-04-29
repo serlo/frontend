@@ -13,7 +13,6 @@ export type PageTypePluginState = typeof pageTypeState
 export const pageTypePlugin: EditorPlugin<PageTypePluginState> = {
   Component: PageTypeEditor,
   state: pageTypeState,
-  config: {},
 }
 
 function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {

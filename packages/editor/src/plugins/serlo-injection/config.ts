@@ -1,9 +1,9 @@
 import { type SerloInjectionConfig, type SerloInjectionPluginConfig } from '.'
 
 export function useSerloInjectionConfig(
-  config: SerloInjectionConfig
+  config?: SerloInjectionConfig
 ): SerloInjectionPluginConfig {
-  const { i18n = {} } = config
+  const i18n = config?.i18n ?? {}
 
   return {
     i18n: {

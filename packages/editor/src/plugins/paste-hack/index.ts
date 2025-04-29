@@ -17,5 +17,4 @@ export type PasteHackPluginProps = EditorPluginProps<PasteHackPluginState>
 export const pasteHackPlugin: EditorPlugin<PasteHackPluginState> = {
   Component: PasteHackEditor,
   state: pasteHackState,
-  config: {},
 }

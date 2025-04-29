@@ -15,9 +15,7 @@ function createBoxState(allowedPlugins: EditorPluginType[]) {
     type: string(''),
     title: child({
       plugin: EditorPluginType.Text,
-      config: {
-        noLinebreaks: true,
-      },
+      config: { noLinebreaks: true },
     }),
     // we don't generate new id's any more but keep the old ones for now
     anchorId: string(''),
@@ -55,8 +53,6 @@ export function createBoxPlugin(
   return {
     Component: BoxEditor,
     state: createBoxState(allowedPlugins),
-    config: {
-      allowedPlugins,
-    },
+    config: { allowedPlugins },
   }
 }

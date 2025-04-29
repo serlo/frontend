@@ -29,7 +29,7 @@ export function VideoSelectionScreen({
           urlInputRef={urlInputRef}
         />
 
-        {config.disableFileUpload ? null : <UploadButton src={state.src} />}
+        {config?.disableFileUpload ? null : <UploadButton src={state.src} />}
       </div>
     </div>
   )

@@ -69,7 +69,6 @@ export function createDropzoneImagePlugin(): EditorPlugin<DropzoneImagePluginSta
   return {
     Component: DropzoneImageEditor,
     state: dropzoneImageState,
-    config: {},
   }
 }
 

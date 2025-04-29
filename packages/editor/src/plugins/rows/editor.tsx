@@ -7,7 +7,7 @@ export function RowsEditor(props: RowsProps) {
 
   return (
     <PluginMenuProvider
-      allowedChildPlugins={config.allowedPlugins}
+      allowedChildPlugins={config?.allowedPlugins}
       parentPluginId={id}
     >
       <RowsInnerEditor {...props} />

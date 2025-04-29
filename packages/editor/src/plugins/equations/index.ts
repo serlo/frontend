@@ -36,6 +36,5 @@ export type EquationsProps = EditorPluginProps<EquationsPluginState>
 
 export const equationsPlugin: EditorPlugin<EquationsPluginState> = {
   Component: EquationsEditor,
-  config: {},
   state: equationsState,
 }

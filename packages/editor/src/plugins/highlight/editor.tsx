@@ -7,7 +7,7 @@ import { HighlightToolbar } from './toolbar'
 
 export function HighlightEditor(props: HighlightProps) {
   const { config, state, focused } = props
-  const { Renderer } = config
+  const Renderer = config?.Renderer
 
   const [throttledEdit, setEditThrottled] = useState(focused)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
@@ -32,7 +32,7 @@ export function HighlightEditor(props: HighlightProps) {
 
   const numberOflines = state.code.value.split(/\r\n|\r|\n/).length
 
-  if (!throttledEdit && !focused) {
+  if (!throttledEdit && !focused && Renderer) {
     return (
       <div className="px-2 py-4">
         <Renderer

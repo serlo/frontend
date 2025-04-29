@@ -35,7 +35,6 @@ export type InputExerciseProps = EditorPluginProps<InputExercisePluginState>
 export function createInputExercisePlugin(): EditorPlugin<InputExercisePluginState> {
   return {
     Component: InputExerciseEditor,
-    config: {},
     state: createInputExerciseState(),
   }
 }

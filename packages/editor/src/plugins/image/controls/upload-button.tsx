@@ -29,7 +29,7 @@ export function UploadButton({
   const imageStrings = useEditStrings().plugins.image
   const isFailed = isTempFile(src.value) && src.value.failed
 
-  const upload = useUploadFile(config.upload)
+  const upload = useUploadFile(config?.upload)
 
   const [isLabelFocused, setIsLabelFocused] = useState(false)
 
@@ -60,7 +60,7 @@ export function UploadButton({
         </span>
         <input
           type="file"
-          multiple={!!config.onMultipleUpload}
+          multiple={Boolean(config?.onMultipleUpload)}
           accept="image/*,.gif,.jpg,.jpeg,.png,.svg,.webp"
           className="sr-only"
           onChange={({ target }) => {
@@ -72,12 +72,12 @@ export function UploadButton({
 
               // If multiple upload is allowed, call the multiple upload callback
               // with the remaining files
-              config.onMultipleUpload?.(filesArray.slice(1))
+              config?.onMultipleUpload?.(filesArray.slice(1))
             }
           }}
           data-qa="plugin-image-upload"
         />
-        {!config.onMultipleUpload
+        {!config?.onMultipleUpload
           ? imageStrings.upload
           : imageStrings.uploadMultiple}
       </label>

@@ -37,5 +37,4 @@ export const interactiveVideoPlugin: EditorPlugin<InteractiveVideoPluginState> =
   {
     Component: InteractiveVideoEditor,
     state: interactiveVideoState,
-    config: {},
   }

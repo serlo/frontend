@@ -111,8 +111,8 @@ export function SerloTableEditor(props: SerloTableProps) {
                   isInlineChildEditor: true,
                   placeholder: '',
                   formattingOptions: isHead
-                    ? props.config.headerTextFormattingOptions
-                    : props.config.cellTextFormattingOptions,
+                    ? props.config?.headerTextFormattingOptions
+                    : props.config?.cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
               {editorPlugins.isSupported(EditorPluginType.Image) ? (

@@ -22,9 +22,7 @@ const possiblePlugins = [
 
 const explanation = {
   plugin: EditorPluginType.Rows,
-  config: {
-    allowedPlugins: [EditorPluginType.Text],
-  },
+  config: { allowedPlugins: [EditorPluginType.Text] },
 }
 
 function createMultimediaState(allowedPlugins: EditorPluginType[]) {
@@ -45,10 +43,7 @@ export function createMultimediaPlugin(
 
   return {
     Component: MultimediaEditor,
-    config: {
-      allowedPlugins,
-      explanation,
-    },
+    config: { allowedPlugins, explanation },
     state: createMultimediaState(allowedPlugins),
   }
 }

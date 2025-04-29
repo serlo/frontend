@@ -52,10 +52,10 @@ export function MultimediaEditor(props: MultimediaProps) {
     const forbiddenInBox = [EditorPluginType.Video, EditorPluginType.Geogebra]
     const hasBoxAnchestor = typesOfAncestors?.includes(EditorPluginType.Box)
     return hasBoxAnchestor
-      ? config.allowedPlugins.filter(
+      ? config?.allowedPlugins.filter(
           (plugin) => !forbiddenInBox.includes(plugin as EditorPluginType)
         )
-      : config.allowedPlugins
+      : config?.allowedPlugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -74,7 +74,7 @@ export function MultimediaEditor(props: MultimediaProps) {
             state={state.width}
             title={multimediaStrings.chooseSize}
           />
-          {allowedPlugins.length > 1 && (
+          {allowedPlugins && allowedPlugins.length > 1 && (
             <MultimediaTypeSelect
               allowedPlugins={allowedPlugins}
               state={state.multimedia}

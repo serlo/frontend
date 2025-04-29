@@ -29,9 +29,9 @@ export function ImageSelectionScreen({
   const imageStrings = editorStrings.plugins.image
 
   const { src, licence } = state
-  const upload = useUploadFile(config.upload)
+  const upload = useUploadFile(config?.upload)
 
-  const disableFileUpload = config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+  const disableFileUpload = config?.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
 
   const placeholder = !isTempFile(src.value)
     ? imageStrings.placeholderEmpty
@@ -57,7 +57,7 @@ export function ImageSelectionScreen({
             if (!licence.defined) licence.create('Pixabay')
             else licence.set('Pixabay')
 
-            config.onMultipleUpload?.([])
+            config?.onMultipleUpload?.([])
           })
         })
     } catch (error) {
@@ -99,9 +99,9 @@ export function ImageSelectionScreen({
             disabled={isTempFile(src.value) && !src.value.failed}
             onChange={(e) => {
               state.src.set(e.target.value)
-              if (config.onMultipleUpload) {
+              if (config?.onMultipleUpload) {
                 setTimeout(() => {
-                  config.onMultipleUpload?.([])
+                  config?.onMultipleUpload?.([])
                 })
               }
             }}

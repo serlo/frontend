@@ -19,7 +19,6 @@ export type ArticleTypePluginState = typeof articleTypeState
 export const articleTypePlugin: EditorPlugin<ArticleTypePluginState> = {
   Component: ArticleTypeEditor,
   state: articleTypeState,
-  config: {},
 }
 
 function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {

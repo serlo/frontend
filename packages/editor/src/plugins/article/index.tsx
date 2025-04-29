@@ -36,5 +36,4 @@ export type ArticleProps = EditorPluginProps<ArticlePluginState>
 export const articlePlugin: EditorPlugin<ArticlePluginState> = {
   Component: ArticleEditor,
   state: articleState,
-  config: {},
 }

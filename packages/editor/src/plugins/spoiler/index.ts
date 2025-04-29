@@ -22,9 +22,7 @@ function createSpoilerState(allowedPlugins: EditorPluginType[]) {
     ),
     content: child({
       plugin: EditorPluginType.Rows,
-      config: {
-        allowedPlugins,
-      },
+      config: { allowedPlugins },
     }),
   })
 }
@@ -64,9 +62,7 @@ export function createSpoilerPlugin(
   return {
     Component: SpoilerEditor,
     state: createSpoilerState(allowedPlugins),
-    config: {
-      allowedPlugins,
-    },
+    config: { allowedPlugins },
   }
 }
 

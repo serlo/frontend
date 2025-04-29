@@ -25,7 +25,7 @@ const captionFormattingOptions = [
 export function ImageEditor(props: ImageProps) {
   const { id, focused, state, config } = props
   const imageStrings = useEditStrings().plugins.image
-  const upload = useUploadFile(config.upload)
+  const upload = useUploadFile(config?.upload)
   usePendingFileUploader(state.src, upload)
 
   const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)
@@ -36,7 +36,7 @@ export function ImageEditor(props: ImageProps) {
   const hasValidUrl = isImageUrl(src)
 
   const toolbarTitle =
-    config.onMultipleUpload && !hasValidUrl
+    config?.onMultipleUpload && !hasValidUrl
       ? imageStrings.galleryTitle
       : undefined
 
@@ -51,7 +51,7 @@ export function ImageEditor(props: ImageProps) {
     focused ||
     isCaptionFocused ||
     (isAButtonFocused && !hasValidUrl) ||
-    config.onMultipleUpload
+    config?.onMultipleUpload
 
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 

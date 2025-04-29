@@ -9,10 +9,10 @@ import {
 import { cn } from '@editor/utils/cn'
 import { Dispatch, SetStateAction } from 'react'
 
-import type { MultimediaProps } from '..'
+import type { MultimediaConfig, MultimediaProps } from '..'
 
 interface MultimediaTypeSelectProps {
-  allowedPlugins: MultimediaProps['config']['allowedPlugins']
+  allowedPlugins: MultimediaConfig['allowedPlugins']
   state: MultimediaProps['state']['multimedia']
   stateCache: Record<string, unknown>
   setStateCache: Dispatch<SetStateAction<Record<string, unknown>>>

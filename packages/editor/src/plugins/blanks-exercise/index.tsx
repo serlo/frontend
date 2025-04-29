@@ -43,7 +43,6 @@ export function createBlanksExercisePlugin(): EditorPlugin<BlanksExerciseState> 
   return {
     Component: BlanksExerciseEditor,
     state: blanksState,
-    config: {},
   }
 }
 

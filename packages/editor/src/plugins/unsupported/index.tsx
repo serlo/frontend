@@ -16,7 +16,6 @@ const unsupportedState = object({
 export const unsupportedPlugin: EditorPlugin<typeof unsupportedState> = {
   Component: UnsupportedEditor,
   state: unsupportedState,
-  config: {},
 }
 
 export type UnsupportedPluginState = typeof unsupportedState
