@@ -103,6 +103,7 @@ export function SerloEditor(props: SerloEditorProps) {
             userId,
             ltik: _ltik,
             disableMediaUpload,
+            isProductionEnvironment,
           }}
         >
           {renderTestEnvironmentWarning()}
