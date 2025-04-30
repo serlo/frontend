@@ -5,6 +5,8 @@ export interface EditorMeta {
   editorVariant: EditorVariant
   userId?: string
   ltik?: string
+  disableMediaUpload?: boolean
+  isProductionEnvironment?: boolean
 }
 
 export const EditorMetaContext = createContext<EditorMeta>({

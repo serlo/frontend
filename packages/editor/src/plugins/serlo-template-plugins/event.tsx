@@ -18,7 +18,6 @@ export type EventTypePluginState = typeof eventTypeState
 export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
   Component: EventTypeEditor,
   state: eventTypeState,
-  config: {},
 }
 
 function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {

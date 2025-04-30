@@ -41,6 +41,5 @@ export type PageLayoutPluginProps = EditorPluginProps<PageLayoutPluginState>
 
 export const pageLayoutPlugin: EditorPlugin<PageLayoutPluginState> = {
   Component: PageLayoutEditor,
-  config: {},
   state: pageLayoutState,
 }

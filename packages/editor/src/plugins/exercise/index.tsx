@@ -47,5 +47,4 @@ export type ExerciseProps = EditorPluginProps<ExercisePluginState>
 export const exercisePlugin: EditorPlugin<ExercisePluginState> = {
   Component: ExerciseEditor,
   state: exerciseState,
-  config: {},
 }

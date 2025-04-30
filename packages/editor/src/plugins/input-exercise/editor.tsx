@@ -83,9 +83,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                   />
                 }
                 feedback={answer.feedback.render({
-                  config: {
-                    placeholder: inputExStrings.feedbackPlaceholder,
-                  },
+                  config: { placeholder: inputExStrings.feedbackPlaceholder },
                 })}
                 feedbackID={answer.feedback.id}
                 isActive={answer.isCorrect.value}

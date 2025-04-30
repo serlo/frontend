@@ -14,5 +14,4 @@ export type InjectionPluginState = typeof injectionState
 export const injectionPlugin: EditorPlugin<InjectionPluginState> = {
   Component: InjectionEditor,
   state: injectionState,
-  config: {},
 }

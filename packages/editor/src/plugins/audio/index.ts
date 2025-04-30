@@ -13,6 +13,5 @@ export type AudioPluginState = typeof audioState
 
 export const audioPlugin: EditorPlugin<AudioPluginState> = {
   Component: AudioEditor,
-  config: {},
   state: audioState,
 }

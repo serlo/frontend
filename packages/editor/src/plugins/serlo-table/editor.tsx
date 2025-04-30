@@ -1,5 +1,6 @@
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { FaIcon } from '@editor/editor-ui/fa-icon'
+import { TextEditorFormattingOption } from '@editor/editor-ui/plugin-toolbar/text-controls/types'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { editorPlugins } from '@editor/plugin/helpers/editor-plugins'
 import {
@@ -20,6 +21,22 @@ import { SerloTableToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
 import { getTableType } from './utils/get-table-type'
 import { instanceStateStore } from '../text/utils/instance-state-store'
+
+const headerTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.math,
+]
+
+const cellTextFormattingOptions = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.colors,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.lists,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.richTextBold,
+  TextEditorFormattingOption.richTextItalic,
+]
 
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
@@ -111,8 +128,8 @@ export function SerloTableEditor(props: SerloTableProps) {
                   isInlineChildEditor: true,
                   placeholder: '',
                   formattingOptions: isHead
-                    ? props.config.headerTextFormattingOptions
-                    : props.config.cellTextFormattingOptions,
+                    ? headerTextFormattingOptions
+                    : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
               {editorPlugins.isSupported(EditorPluginType.Image) ? (

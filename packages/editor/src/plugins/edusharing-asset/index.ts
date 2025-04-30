@@ -17,12 +17,9 @@ const state = object({
   contentWidth: optional(string()), // Contains values like '40rem'. Possible values ['4rem', '6rem', ...]
 })
 
-export function createEdusharingAssetPlugin(): EditorPlugin<EdusharingAssetState> {
-  return {
-    Component: EdusharingAssetEditor,
-    state,
-    config: {},
-  }
+export const edusharingAssetPlugin: EditorPlugin<EdusharingAssetState> = {
+  Component: EdusharingAssetEditor,
+  state,
 }
 
 export type EdusharingAssetState = typeof state

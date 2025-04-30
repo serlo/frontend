@@ -10,34 +10,19 @@ import {
   number,
 } from '../../plugin'
 
-export const defaultConfig: ImageGalleryConfig = {}
+const imageGalleryState = object({
+  images: list(
+    object({
+      imagePlugin: child({ plugin: EditorPluginType.Image }),
+      dimensions: object({ width: number(0), height: number(0) }),
+    })
+  ),
+})
 
-function createImageGalleryState() {
-  return object({
-    images: list(
-      object({
-        imagePlugin: child({ plugin: EditorPluginType.Image }),
-        dimensions: object({ width: number(0), height: number(0) }),
-      })
-    ),
-  })
+export const imageGalleryPlugin: EditorPlugin<ImageGalleryPluginState> = {
+  Component: ImageGalleryEditor,
+  state: imageGalleryState,
 }
 
-export function createImageGalleryPlugin(
-  config = defaultConfig
-): EditorPlugin<ImageGalleryPluginState, ImageGalleryConfig> {
-  return {
-    Component: ImageGalleryEditor,
-    config,
-    state: createImageGalleryState(),
-  }
-}
-
-export type ImageGalleryPluginState = ReturnType<typeof createImageGalleryState>
-
-export type ImageGalleryConfig = object
-
-export type ImageGalleryProps = EditorPluginProps<
-  ImageGalleryPluginState,
-  ImageGalleryConfig
->
+export type ImageGalleryPluginState = typeof imageGalleryState
+export type ImageGalleryProps = EditorPluginProps<ImageGalleryPluginState>

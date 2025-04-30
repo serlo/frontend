@@ -20,7 +20,6 @@ export type CourseTypePluginState = typeof courseTypeState
 export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
   Component: CourseTypeEditor,
   state: courseTypeState,
-  config: {},
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {

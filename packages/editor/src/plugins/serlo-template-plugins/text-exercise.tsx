@@ -20,7 +20,6 @@ export const textExerciseTypePlugin: EditorPlugin<TextExerciseTypePluginState> =
   {
     Component: TextExerciseTypeEditor,
     state: textExerciseTypeState,
-    config: {},
   }
 
 function TextExerciseTypeEditor({

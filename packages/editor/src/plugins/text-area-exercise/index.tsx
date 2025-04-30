@@ -10,7 +10,6 @@ export const textAreaExercisePlugin: EditorPlugin<TextAreaExercisePluginState> =
   {
     Component: TextAreaExerciseEditor,
     state: createTextAreaExerciseState(),
-    config: {},
   }
 
 export type TextAreaExercisePluginState = ReturnType<

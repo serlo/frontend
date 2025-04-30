@@ -17,7 +17,7 @@ export interface EditorPlugin<
   /**
    * Plugin configuration
    */
-  config: Config | (() => Config)
+  config?: Config | (() => Config)
 
   /**
    * [[StateType]] of the plugin
@@ -99,7 +99,7 @@ export interface EditorPluginProps<
   /**
    * Plugin configuration
    */
-  config: Config
+  config?: Config
 
   /**
    * Current state of the document

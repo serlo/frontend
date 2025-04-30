@@ -23,7 +23,6 @@ export type TaxonomyTypePluginState = typeof taxonomyTypeState
 export const taxonomyTypePlugin: EditorPlugin<TaxonomyTypePluginState> = {
   Component: TaxonomyTypeEditor,
   state: taxonomyTypeState,
-  config: {},
 }
 
 function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {

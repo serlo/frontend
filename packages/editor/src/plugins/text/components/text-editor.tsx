@@ -30,7 +30,10 @@ export function TextEditor(props: TextEditorProps) {
   const textStrings = useEditStrings().plugins.text
   const config = useTextConfig(props.config)
 
-  const textFormattingOptions = useFormattingOptions(config.formattingOptions)
+  const textFormattingOptions = useFormattingOptions(
+    config.formattingOptions,
+    id
+  )
   const { createTextEditor, toolbarControls } = textFormattingOptions
 
   const { editor, editorKey } = useMemo(() => {
