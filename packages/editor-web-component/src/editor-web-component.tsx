@@ -42,6 +42,8 @@ export class EditorWebComponent extends HTMLElement {
 
   private _isProductionEnvironment: boolean = false
 
+  private _disableMediaUpload: boolean | null = null
+
   private _language: SupportedLanguage = 'de' as const
 
   constructor() {
@@ -58,6 +60,7 @@ export class EditorWebComponent extends HTMLElement {
       'editor-variant',
       'plugins',
       'is-production-environment',
+      'disable-media-upload',
       'language',
     ]
   }
@@ -159,6 +162,14 @@ export class EditorWebComponent extends HTMLElement {
     this.mountReactComponent()
   }
 
+  get disableMediaUpload(): boolean | null {
+    return this._disableMediaUpload
+  }
+
+  set disableMediaUpload(value: boolean) {
+    if (value) this.setAttribute('disable-media-upload', String(value))
+  }
+
   get language(): SupportedLanguage {
     return this._language
   }
@@ -202,6 +213,7 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
+    const disableMediaUploadAttr = this.getAttribute('disable-media-upload')
 
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
@@ -228,6 +240,7 @@ export class EditorWebComponent extends HTMLElement {
                 initialState={this.initialState}
                 plugins={this.plugins}
                 isProductionEnvironment={this.isProductionEnvironment}
+                disableMediaUpload={Boolean(disableMediaUploadAttr)}
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)
