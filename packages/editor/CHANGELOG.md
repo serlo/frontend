@@ -1,3 +1,13 @@
+## Changelog for version 0.26.0
+
+- refactor(editor): simplify editor plugin config, remove testingsecret image upload. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4572
+- chore(deps-dev): bump vite from 5.4.17 to 5.4.18. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4567
+- fix(editor): fix hydration and suspense errors. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4564
+- e2e: fix courses tests, increase waits. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4555
+- chore(deps-dev): bump vite from 5.4.15 to 5.4.17. Thank you [@dependabot[bot]](https://github.com/dependabot[bot]) in https://github.com/serlo/frontend/pull/4553
+
+**Full Changelog**: https://github.com/serlo/frontend/compare/v0.25.1-editor...v0.26.0-editor
+
 ## Changelog for version 0.25.1
 
 - refactor: remove `serloContext`. Thank you [@elbotho](https://github.com/elbotho) in https://github.com/serlo/frontend/pull/4550
