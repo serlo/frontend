@@ -32,7 +32,6 @@ export function ImageSelectionScreen({
   const { src, licence } = state
   const upload = useUploadFile()
 
-  // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
   const disableMediaUpload = useContext(EditorMetaContext).disableMediaUpload
 
   const placeholder = !isTempFile(src.value)
