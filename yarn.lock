@@ -5507,7 +5507,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.6.11
     react: ^18.2.0
     react-dom: ^18.3.1
-    vite: ^5.4.18
+    vite: ^5.4.19
     vite-plugin-dts: 4.3.0
   languageName: unknown
   linkType: soft
@@ -5612,7 +5612,7 @@ __metadata:
     ts-key-enum: ^2.0.13
     typescript: ^5.6.3
     uuid: ^11.0.3
-    vite: ^5.4.18
+    vite: ^5.4.19
     vite-plugin-dts: 4.3.0
     vite-plugin-svgr: ^4.3.0
     vitest: ^2.1.9
@@ -18925,9 +18925,9 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.18":
-  version: 5.4.18
-  resolution: "vite@npm:5.4.18"
+"vite@npm:^5.4.19":
+  version: 5.4.19
+  resolution: "vite@npm:5.4.19"
   dependencies:
     esbuild: ^0.21.3
     fsevents: ~2.3.3
@@ -18964,7 +18964,7 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: b61bab8c74b7a1a626e26ae2802734d666818b2a1856217b330ea7522e24a619f3d7f690f0466ea844d96549da44409075289cbc0fa8cb0245d40017c8455f74
+  checksum: c15af65f2370b59e674c5fab22d8e05ec5c7f8f0345ed99ffec155c77feb5636b4e0680dbd096a6f06d7c386b259dc0b9c67c4f1ec08486a2f2a677c9ea6971b
   languageName: node
   linkType: hard
 
