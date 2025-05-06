@@ -45,7 +45,9 @@ export interface SerloEditorProps {
   styleReset?: boolean
   /** Shows default Undo/Redo UI. Defaults to false for now */
   showUndoRedoButtons?: boolean
+  /** Removes upload buttons from all image and video plugins if you opt to not use the serlo.org asset buckets. Plugins can still be used by pasting urls to existing media content. */
   disableMediaUpload?: boolean
+  /** only interally used for `serlo-editor-as-lti-tool` */
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
   extraSerloPlugins?: ExtraSerloPlugins
