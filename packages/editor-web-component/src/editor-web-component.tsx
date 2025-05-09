@@ -65,22 +65,35 @@ export class EditorWebComponent extends HTMLElement {
     ]
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'initial-state' && oldValue !== newValue) {
-      this.initialState = JSON.parse(newValue) as InitialState
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null
+  ) {
+    if (oldValue === newValue) return
+
+    if (name === 'initial-state') {
+      this.initialState =
+        newValue === null ? null : (JSON.parse(newValue) as InitialState)
     } else if (
       name === 'mode' &&
-      oldValue !== newValue &&
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
-    } else if (name === 'editor-variant' && oldValue !== newValue) {
-      this.editorVariant = newValue as EditorVariant
-    } else if (name === 'plugins' && oldValue !== newValue) {
-      this.plugins = JSON.parse(newValue) as EditorPluginType[]
+    } else if (name === 'editor-variant') {
+      this.editorVariant =
+        newValue === null ? 'unknown' : (newValue as EditorVariant)
+    } else if (name === 'plugins') {
+      this.plugins =
+        newValue === null
+          ? defaultPlugins
+          : (JSON.parse(newValue) as EditorPluginType[])
     } else if (name === 'is-production-environment') {
       this.isProductionEnvironment = newValue === 'true'
-    } else if (name === 'language' && oldValue !== newValue) {
+    } else if (name === 'disable-media-upload') {
+      this.disableMediaUpload =
+        newValue === 'true' ? true : newValue === 'false' ? false : null
+    } else if (name === 'language') {
       // Validates the language attribute. Will need to keep this in sync with
       // the SupportedLanguage type, if we add more language support!
       const validatedLanguage = newValue === 'en' ? 'en' : 'de'
@@ -166,8 +179,14 @@ export class EditorWebComponent extends HTMLElement {
     return this._disableMediaUpload
   }
 
-  set disableMediaUpload(value: boolean) {
-    if (value) this.setAttribute('disable-media-upload', String(value))
+  set disableMediaUpload(value: boolean | null) {
+    this._disableMediaUpload = value
+    if (value === null) {
+      this.removeAttribute('disable-media-upload')
+    } else {
+      this.setAttribute('disable-media-upload', String(value))
+    }
+    this.mountReactComponent()
   }
 
   get language(): SupportedLanguage {
@@ -213,7 +232,6 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
-    const disableMediaUploadAttr = this.getAttribute('disable-media-upload')
 
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
@@ -240,7 +258,11 @@ export class EditorWebComponent extends HTMLElement {
                 initialState={this.initialState}
                 plugins={this.plugins}
                 isProductionEnvironment={this.isProductionEnvironment}
-                disableMediaUpload={Boolean(disableMediaUploadAttr)}
+                disableMediaUpload={
+                  this._disableMediaUpload === null
+                    ? undefined
+                    : this._disableMediaUpload
+                }
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)
