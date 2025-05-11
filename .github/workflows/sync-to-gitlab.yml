@@ -1,0 +1,17 @@
+name: Sync to GitLab
+on:
+  push:
+    branches:
+      - staging
+      - production
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to GitLab
+        uses: kulla/sync-to-gitlab@v1
+        with:
+          owner: stephan_kulla
+          repository_name: serlo-frontend
+          token: ${{ secrets.GITLAB_TOKEN }}
