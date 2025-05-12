@@ -36,6 +36,9 @@ export class EditorWebComponent extends HTMLElement {
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
 
+  // Deprecated and ignored
+  private _testingSecret: string | null = null
+
   private _editorVariant: EditorVariant = 'unknown'
 
   private _plugins = defaultPlugins
@@ -93,12 +96,29 @@ export class EditorWebComponent extends HTMLElement {
     } else if (name === 'disable-media-upload') {
       this.disableMediaUpload =
         newValue === 'true' ? true : newValue === 'false' ? false : null
+    } else if (name === 'testing-secret') {
+      this.testingSecret = newValue
     } else if (name === 'language') {
       // Validates the language attribute. Will need to keep this in sync with
       // the SupportedLanguage type, if we add more language support!
       const validatedLanguage = newValue === 'en' ? 'en' : 'de'
       this.language = validatedLanguage
     }
+  }
+
+  get testingSecret(): string | null {
+    return this._testingSecret
+  }
+
+  // Deprecated and ignored
+  set testingSecret(value) {
+    this._testingSecret = value
+    if (value === null) {
+      this.removeAttribute('testing-secret')
+    } else {
+      this.setAttribute('testing-secret', String(value))
+    }
+    this.mountReactComponent()
   }
 
   get initialState() {
