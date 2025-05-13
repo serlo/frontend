@@ -40,7 +40,7 @@ export function InjectionStaticRenderer({
     }
 
     async function fetchSerloContent() {
-      const url = `https://raw.githubusercontent.com/elbotho/serlo-content/refs/heads/main/content/entities/${entityId}.json`
+      const url = `/content/entities/${entityId}.json`
 
       const res = await fetch(url)
       const responseData = (await res.json()) as {
@@ -169,7 +169,7 @@ export function InjectionStaticRenderer({
         {data.licenseId && data.licenseId > 1 ? (
           <a
             className="serlo-link"
-            href={`/license/detail/${data.licenseId}`}
+            href={`/license/${data.licenseId}`}
             target="_blank"
             rel="noreferrer"
           >
