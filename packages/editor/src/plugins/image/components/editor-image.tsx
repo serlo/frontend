@@ -15,14 +15,14 @@ export function EditorImage(props: ImgHTMLAttributes<HTMLImageElement>) {
 function getSrc(isSerlo?: boolean, src?: string) {
   if (!isSerlo || !src) return src
 
-  const isAsset = src.startsWith('https://assets.serlo.org/')
-  if (isAsset) {
-    return src
-      .replace('assets.serlo.org/', 'root.botho.cc/serlo-astro/assets/')
-      .replace('.jpg', '.webp')
-      .replace('.jpeg', '.webp')
-      .replace('.png', '.webp')
-  }
+  // const isAsset = src.startsWith('https://assets.serlo.org/')
+  // if (isAsset) {
+  //   return src
+  //     .replace('assets.serlo.org/', 'root.botho.cc/serlo-astro/assets/')
+  //     .replace('.jpg', '.webp')
+  //     .replace('.jpeg', '.webp')
+  //     .replace('.png', '.webp')
+  // }
 
   const isAllowed =
     src.match(/^https:\/\/[a-z]+.(serlo|serlo-staging).(org|dev)\//) ||
