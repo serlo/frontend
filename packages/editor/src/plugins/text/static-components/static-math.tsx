@@ -1,13 +1,10 @@
 import { sanitizeLatex } from '@editor/plugins/text/utils/sanitize-latex'
 import { cn } from '@editor/utils/cn'
-import DOMPurify from 'isomorphic-dompurify'
-import KaTeX from 'katex'
-// eslint-disable-next-line import/no-unassigned-import
-import 'katex/contrib/mhchem'
+import temml from 'temml'
 
-// eslint-disable-next-line import/no-unassigned-import
-import '@serlo/katex-styles/styles.css'
 import type { MathElement } from '../types/text-editor'
+// eslint-disable-next-line import/no-unassigned-import
+import '@editor/assets/math/temml-fira.css'
 
 export type StaticMathProps = Omit<MathElement, 'children'>
 
@@ -17,11 +14,32 @@ export function StaticMath({ src, inline }: StaticMathProps) {
   if (!src) return null
 
   const cleanedSrc = sanitizeLatex(src)
+  const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
+  const displayMode = /\\displaystyle[^a-z]/.test(cleanedSrc)
+
+  const macros = temml.definePreamble(`
+    \\def\\Q{\\mathbb{Q}}
+    \\def\\C{\\mathbb{C}}
+    \\def\\and{\\wedge}
+    \\def\\or{\\vee}
+    \\def\\arccot{\\operatorname{arccot}}
+    \\def\\m{\\text{ m}}
+    \\def\\cm{\\text{ cm}}
+    \\def\\mm{\\text{ mm}}
+    \\def\\km{\\text{ km}}
+    \\def\\dm{\\text{ dm}}
+    \\def\\l{\\text{ l}}
+    \\def\\dl{\\text{ dl}}
+    \\def\\cl{\\text{ cl}}
+    \\def\\ml{\\text{ ml}}
+    \\def\\s{\\text{ s}}
+    \\def\\h{\\text{ h}}
+    \\def\\D{\\mathbb{D}}
+    \\def\\W{\\mathbb{W}}
+    \\def\\L{\\mathbb{L}}
+    `) as Record<string, string>
 
   if (inline) return renderFormula(cleanedSrc)
-
-  const nowrap = /\\begin *{(array|aligned)}/.test(cleanedSrc)
-  const addDisplayStyle = !/\\displaystyle[^a-z]/.test(cleanedSrc)
 
   return (
     <div
@@ -30,52 +48,39 @@ export function StaticMath({ src, inline }: StaticMathProps) {
         nowrap && 'whitespace-nowrap'
       )}
     >
-      {renderFormula(
-        addDisplayStyle ? '\\displaystyle ' + cleanedSrc : cleanedSrc
-      )}
+      {renderFormula(cleanedSrc)}
     </div>
   )
 
   function renderFormula(formula: string) {
-    // block formular use displaystyle
-    const html = formula
-      ? KaTeX.renderToString(formula, {
-          displayMode: false,
-          throwOnError: false,
-          strict: false,
-          macros: {
-            '\\Q': '\\mathbb{Q}',
-            '\\C': '\\mathbb{C}',
-            '\\and': '\\wedge',
-            '\\euro': '€',
-            '\\or': '\\vee',
-            '\\arccot': '\\operatorname{arccot}',
-            '\\sgn': '\\operatorname{sgn}',
-            '\\m': '\\text{ m}',
-            '\\cm': '\\text{ cm}',
-            '\\mm': '\\text{ mm}',
-            '\\km': '\\text{ km}',
-            '\\dm': '\\text{ dm}',
-            '\\l': '\\text{ l}',
-            '\\dl': '\\text{ dl}',
-            '\\cl': '\\text{ cl}',
-            '\\ml': '\\text{ ml}',
-            '\\s': '\\text{ s}',
-            '\\h': '\\text{ h}',
-            '\\D': '\\mathbb{D}',
-            '\\W': '\\mathbb{W}',
-            '\\L': '\\mathbb{L}',
-          },
-        })
-      : ''
+    if (!formula.length) return <span />
 
-    // Even though we can trust the html created by Katex we sanitize the html as a second guard against XSS.
-    const sanitizedHtml = DOMPurify.sanitize(html)
-    return (
-      <span
-        className="inline-block py-1 [page-break-inside:avoid]"
-        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-      />
-    )
+    try {
+      const mathML = temml.renderToString(formula, {
+        displayMode: displayMode ? true : !inline,
+        macros,
+        throwOnError: false,
+        strict: false,
+        trust: false,
+      })
+
+      return (
+        <span
+          className={cn(
+            'inline-block pb-1 [page-break-inside:avoid]',
+            inline ? 'text-[1.1rem]' : 'text-[1.33rem]'
+          )}
+          dangerouslySetInnerHTML={{ __html: mathML }}
+        />
+      )
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error('formula could not be rendered')
+      return (
+        <i className="text-orange-500">
+          [Formel konnte nicht gerendert werden 😬]
+        </i>
+      )
+    }
   }
 }
