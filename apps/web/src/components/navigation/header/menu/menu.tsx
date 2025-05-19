@@ -8,8 +8,9 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 
-const AuthItems = dynamic(() =>
-  import('./auth-items').then((mod) => mod.AuthItems)
+const AuthItems = dynamic(
+  () => import('./auth-items').then((mod) => mod.AuthItems),
+  { ssr: false }
 )
 
 export function Menu({ isMobile }: { isMobile?: boolean }) {

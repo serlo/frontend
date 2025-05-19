@@ -15,7 +15,6 @@ export type VideoPluginState = typeof videoState
 
 export const videoPlugin: EditorPlugin<VideoPluginState> = {
   Component: VideoEditor,
-  config: {},
   state: videoState,
   onText(value) {
     if (isValidVideoUrl(value)) return { state: { src: value, alt: '' } }

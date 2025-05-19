@@ -3,11 +3,11 @@ import { cn } from '@editor/utils/cn'
 import { useEffect, useRef, useState } from 'react'
 
 import type { HighlightProps } from '.'
+import { HighlightRenderer } from './renderer'
 import { HighlightToolbar } from './toolbar'
 
 export function HighlightEditor(props: HighlightProps) {
-  const { config, state, focused } = props
-  const { Renderer } = config
+  const { state, focused } = props
 
   const [throttledEdit, setEditThrottled] = useState(focused)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
@@ -35,7 +35,7 @@ export function HighlightEditor(props: HighlightProps) {
   if (!throttledEdit && !focused) {
     return (
       <div className="px-2 py-4">
-        <Renderer
+        <HighlightRenderer
           language={state.language.value}
           showLineNumbers={state.showLineNumbers.value}
           code={state.code.value}

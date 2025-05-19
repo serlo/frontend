@@ -43,5 +43,4 @@ export type ExerciseGroupProps = EditorPluginProps<ExerciseGroupPluginState>
 export const exerciseGroupPlugin: EditorPlugin<ExerciseGroupPluginState> = {
   Component: ExeriseGroupEditor,
   state: exerciseGroupState,
-  config: {},
 }

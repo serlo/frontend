@@ -47,8 +47,12 @@ const pages = [
 const imageSrc =
   'https://assets.serlo.org/db99f830-6f49-11ed-b282-836733dd2d87/SerloStandorte.jpg'
 
-const ModalWithCloseButton = dynamic<ModalWithCloseButtonProps>(() =>
-  import('../modal-with-close-button').then((mod) => mod.ModalWithCloseButton)
+const ModalWithCloseButton = dynamic<ModalWithCloseButtonProps>(
+  () =>
+    import('../modal-with-close-button').then(
+      (mod) => mod.ModalWithCloseButton
+    ),
+  { ssr: false }
 )
 
 export function NewsletterPopup() {

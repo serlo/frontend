@@ -5,6 +5,7 @@ export type EditorPlugin<
   S extends StateType = StateType,
   Config extends object = object,
 > = InternalPlugin.EditorPlugin<S, Config>
+
 export type EditorPluginProps<
   S extends StateType = StateType,
   Config extends object = object,

@@ -21,8 +21,6 @@ import { cn } from '@/helper/cn'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 import type { ExamsLandingData } from '@/pages/mathe-pruefungen/[region]'
 
-// TODO: persists school choice in url or sessionstorage
-
 export function MathExamsLanding({
   region: initRegion,
   examsTaxonomyData,
@@ -33,15 +31,17 @@ export function MathExamsLanding({
 
   const regionTitle = region === 'nrw' ? 'NRW' : deRegions[region].title
 
-  const longRegionTitle =
-    region === 'schleswig-holstein' ? (
-      <span>
-        <span className="sm:hidden">Schleswig-</span>
-        <span className="serlo-underlined pb-1 sm:pb-3">
-          <span className="hidden sm:inline">Schleswig-</span>Holstein
-        </span>
+  // for long titles like Schleswig-Holstein
+  const titleParts = regionTitle.split('-')
+  const longRegionTitle = titleParts[1]?.length ? (
+    <span>
+      <span className="sm:hidden">{titleParts[0]}-</span>
+      <span className="serlo-underlined pb-1 sm:pb-3">
+        <span className="hidden sm:inline">{titleParts[0]}-</span>
+        {titleParts[1]}
       </span>
-    ) : null
+    </span>
+  ) : null
 
   return (
     <>

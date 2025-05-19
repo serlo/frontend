@@ -130,7 +130,7 @@ See below for the current API specification.
 
 - **`showUndoRedoButtons`(optional)**: Set to true to show the default undo/redo buttons. (Defaults to false).
 
-- **`_testingSecret` (optional)**: A key used by integrations for uploading files into the serlo-editor-testing bucket, while testing the Editor. **Deprecated**
+- **`disableMediaUpload` (optional)**: Set to true to disable file upload in all image and video plugins. Plugins are still usable by pasting urls of existing media content.
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**
 

@@ -9,7 +9,7 @@ import { AddRowButtonFloating } from './add-row-button-floating'
 import { EditorRowRenderer } from '../editor-row-renderer'
 
 interface RowEditorProps {
-  config: RowsPluginConfig
+  config?: RowsPluginConfig
   index: number
   rows: StateTypeReturnType<RowsPluginState>
   row: StateTypeReturnType<RowsPluginState>[0]

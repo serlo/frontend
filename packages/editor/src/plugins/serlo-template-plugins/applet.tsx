@@ -20,7 +20,6 @@ export type AppletTypePluginState = typeof appletTypeState
 export const appletTypePlugin: EditorPlugin<AppletTypePluginState> = {
   Component: AppletTypeEditor,
   state: appletTypeState,
-  config: {},
 }
 
 function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {

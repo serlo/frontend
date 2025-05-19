@@ -14,16 +14,20 @@ import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
-const InviteModal = dynamic<InviteModalProps>(() =>
-  import('@/components/user-tools/edit-or-invite/invite-modal').then(
-    (mod) => mod.InviteModal
-  )
+const InviteModal = dynamic<InviteModalProps>(
+  () =>
+    import('@/components/user-tools/edit-or-invite/invite-modal').then(
+      (mod) => mod.InviteModal
+    ),
+  { ssr: false }
 )
 
-const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(() =>
-  import('@/components/user-tools/foldout-author-menus/more-author-tools').then(
-    (mod) => mod.MoreAuthorTools
-  )
+const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(
+  () =>
+    import(
+      '@/components/user-tools/foldout-author-menus/more-author-tools'
+    ).then((mod) => mod.MoreAuthorTools),
+  { ssr: false }
 )
 
 export interface TaxAddOrInviteProps {

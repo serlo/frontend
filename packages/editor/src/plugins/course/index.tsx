@@ -28,5 +28,4 @@ export type CourseProps = EditorPluginProps<CoursePluginState>
 export const coursePlugin: EditorPlugin<CoursePluginState> = {
   Component: CourseEditor,
   state: courseState,
-  config: {},
 }

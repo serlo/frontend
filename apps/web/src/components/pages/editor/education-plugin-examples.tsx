@@ -179,9 +179,7 @@ function ExampleWithEditSwitch({
             ]}
             styleReset={false}
             initialState={exampleState}
-            onChange={(state) => {
-              void debouncedSetState(state.document)
-            }}
+            onChange={(state) => debouncedSetState(state.document)}
             extraSerloPlugins={extraSerloPlugins}
             extraSerloRenderers={extraSerloRenderers}
           >

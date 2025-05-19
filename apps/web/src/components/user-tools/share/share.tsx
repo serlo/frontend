@@ -8,10 +8,12 @@ import type { ShareModalProps } from '@/components/user-tools/share/share-modal'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share/share-modal').then(
-    (mod) => mod.ShareModal
-  )
+const ShareModal = dynamic<ShareModalProps>(
+  () =>
+    import('@/components/user-tools/share/share-modal').then(
+      (mod) => mod.ShareModal
+    ),
+  { ssr: false }
 )
 
 export function Share({ data, aboveContent }: MoreAuthorToolsProps) {

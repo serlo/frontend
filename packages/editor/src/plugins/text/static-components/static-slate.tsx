@@ -74,17 +74,22 @@ export function StaticSlate({
     }
     // "list-item-child"
     if (element.type === ListElementType.LIST_ITEM_TEXT) {
-      // compat: unwrap old content where a list item is wrapped inside another p in state
-      const elementChild =
-        children.length === 1 && Object.hasOwn(children[0], 'type')
-          ? (children[0] as unknown as Element)
-          : undefined
-      const unwrapped =
-        elementChild?.type === 'p' ? elementChild.children : children
+      // compat: don't wrap children in a <p> for old content that has <p> children already
+      if (children.length >= 1) {
+        const isAllParagraphs =
+          children.find((child) => {
+            return !(
+              Object.hasOwn(child, 'type') &&
+              (child as unknown as Element).type === 'p'
+            )
+          }) === undefined
+
+        if (isAllParagraphs) return <StaticSlate element={children} />
+      }
 
       return (
         <p className="slate-p serlo-p mb-0 ml-0 min-h-[1.33em]">
-          <StaticSlate element={unwrapped} />
+          <StaticSlate element={children} />
         </p>
       )
     }

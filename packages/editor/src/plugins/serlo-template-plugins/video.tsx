@@ -21,7 +21,6 @@ export type VideoTypePluginState = typeof videoTypeState
 export const videoTypePlugin: EditorPlugin<VideoTypePluginState> = {
   Component: VideoTypeEditor,
   state: videoTypeState,
-  config: {},
 }
 
 function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
