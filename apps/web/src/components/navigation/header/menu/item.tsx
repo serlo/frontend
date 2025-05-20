@@ -12,7 +12,6 @@ import { useNavMenuTriggerFix } from './use-nav-menu-trigger-fix'
 import { FaIcon } from '@/components/fa-icon'
 import type { HeaderLinkData } from '@/data-types'
 import { cn } from '@/helper/cn'
-import { submitEvent } from '@/helper/submit-event'
 
 const styledLinkCls = cn(`
   navtrigger block flex w-full
@@ -60,10 +59,10 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
         <Link
           className={cn('group', styledLinkCls)}
           // temporarily track spenden button use
-          onClick={() => {
-            if (link.url === '/spenden')
-              submitEvent('spenden-header-menu-click')
-          }}
+          // onClick={() => {
+          //   if (link.url === '/spenden')
+          //     submitEvent('spenden-header-menu-click')
+          // }}
         >
           {textAndIcon}
         </Link>

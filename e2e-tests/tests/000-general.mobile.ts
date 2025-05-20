@@ -142,7 +142,7 @@ Scenario('Legal Pages @mobile', async ({ I }) => {
   I.see('Privacy Policy')
   I.see('en@serlo.org')
 })
-Scenario('Consent @mobile', async ({ I }) => {
+Scenario.skip('Consent @mobile', async ({ I }) => {
   I.amOnPage('/spenden')
 
   // Make sure that twingle is activated

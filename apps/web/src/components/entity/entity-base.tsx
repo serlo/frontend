@@ -11,7 +11,6 @@ import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { SecondaryMenu } from '../navigation/secondary-menu'
 import { NewsletterPopup } from '../scripts/newsletter-popup'
-import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import {
   type EntityPageBase,
   type SingleEntityPage,
@@ -29,12 +28,6 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
     (mod) => mod.CommentAreaEntity
   )
-)
-
-const DonationsBanner = dynamic<DonationsBannerProps>(() =>
-  import(
-    '@/components/content/donations-banner-experiment/donations-banner'
-  ).then((mod) => mod.DonationsBanner)
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
@@ -69,11 +62,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
             }
           />
           <main id="content">{children}</main>
-
-          {/* Temporary donations banner trial */}
-          {page.kind === 'single-entity' ? (
-            <DonationsBanner id={entityId} entityData={page.entityData} />
-          ) : null}
 
           <div id="comment-area-begin-scrollpoint" />
           {!noComments && (
