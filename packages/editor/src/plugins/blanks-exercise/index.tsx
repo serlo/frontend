@@ -29,7 +29,6 @@ const blanksState = object({
         TextEditorFormattingOption.lists,
         TextEditorFormattingOption.richTextBold,
         TextEditorFormattingOption.richTextItalic,
-        TextEditorFormattingOption.textBlank,
         TextEditorFormattingOption.math,
       ],
       isInlineChildEditor: true,
@@ -39,12 +38,9 @@ const blanksState = object({
   extraDraggableAnswers: optional(list(object({ answer: string() }))),
 })
 
-export function createBlanksExercisePlugin(): EditorPlugin<BlanksExerciseState> {
-  return {
-    Component: BlanksExerciseEditor,
-    state: blanksState,
-    config: {},
-  }
+export const blanksExercisePlugin: EditorPlugin<BlanksExerciseState> = {
+  Component: BlanksExerciseEditor,
+  state: blanksState,
 }
 
 export type BlanksExerciseState = typeof blanksState

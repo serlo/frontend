@@ -5,14 +5,12 @@ import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
 import { type SerloInjectionProps } from '.'
-import { useSerloInjectionConfig } from './config'
 import { SerloInjectionRenderer } from './renderer'
 import { PluginDefaultTools } from '../../editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { PluginToolbar } from '../../editor-ui/plugin-toolbar/plugin-toolbar'
 
 export const SerloInjectionEditor = (props: SerloInjectionProps) => {
   const { focused, id } = props
-  const config = useSerloInjectionConfig(props.config)
   const injectionStrings = useEditStrings().plugins.injection
   const [cache, setCache] = useState(props.state.value)
   const [preview, setPreview] = useState(false)
@@ -55,8 +53,8 @@ export const SerloInjectionEditor = (props: SerloInjectionProps) => {
       {props.focused && !preview ? (
         <div className="edusharing-mt-4">
           <EditorInput
-            label={config.i18n.label}
-            placeholder={config.i18n.placeholder}
+            label='URL von einem serlo.org Inhalt (z.B. "https://de.serlo.org/mathe/1717/gleichung")'
+            placeholder="https://de.serlo.org/mathe/1717/gleichung"
             value={userInput}
             onChange={(e) => {
               const newUserInput = e.target.value

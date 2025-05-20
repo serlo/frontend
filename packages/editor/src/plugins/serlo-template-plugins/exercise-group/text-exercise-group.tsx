@@ -21,7 +21,6 @@ export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePlug
   {
     Component: TextExerciseGroupTypeEditor,
     state: textExerciseGroupTypeState,
-    config: {},
   }
 
 function TextExerciseGroupTypeEditor(

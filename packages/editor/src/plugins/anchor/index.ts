@@ -15,6 +15,5 @@ export type AnchorProps = EditorPluginProps<AnchorPluginState>
 
 export const anchorPlugin: EditorPlugin<AnchorPluginState> = {
   Component: AnchorEditor,
-  config: {},
   state: string(),
 }

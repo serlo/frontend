@@ -1,6 +1,5 @@
 import { EditorPluginType, SerloRenderer } from '@editor/package'
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
-import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
 
 import { SubTopic } from './sub-topic'
@@ -9,7 +8,6 @@ import { ExerciseNumbering } from '../content/exercises/exercise-numbering'
 import { ExamsInfoBox } from '../exams-info-box'
 import { FaIcon } from '../fa-icon'
 import { InfoPanel } from '../info-panel'
-import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { EntityMetaProvider } from '@/contexts/entity-meta-context'
@@ -29,12 +27,6 @@ export interface TopicProps {
   data: TaxonomyData
   breadcrumbs?: BreadcrumbsData
 }
-
-const DonationsBanner = dynamic<DonationsBannerProps>(() =>
-  import(
-    '@/components/content/donations-banner-experiment/donations-banner'
-  ).then((mod) => mod.DonationsBanner)
-)
 
 export function Topic({ data, breadcrumbs }: TopicProps) {
   const { strings } = useInstanceData()
@@ -81,18 +73,6 @@ export function Topic({ data, breadcrumbs }: TopicProps) {
       </div>
       {/* Default license notice */}
       <LicenseNotice />
-
-      {/* Temporary donations banner trial */}
-      {isExerciseFolder ? (
-        <DonationsBanner
-          id={data.id}
-          entityData={{
-            ...data,
-            typename: UuidType.TaxonomyTerm,
-            isUnrevised: false,
-          }}
-        />
-      ) : null}
 
       {renderUserTools()}
     </>

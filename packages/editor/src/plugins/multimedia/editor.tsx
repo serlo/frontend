@@ -8,6 +8,7 @@ import {
 } from '@editor/store'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { EditorImageDocument } from '@editor/types/editor-plugins'
+import { TemplatePluginType } from '@editor/types/template-plugin-type'
 import { cn } from '@editor/utils/cn'
 import { useMemo, useState } from 'react'
 
@@ -20,11 +21,12 @@ import { MultimediaTypeSelect } from './toolbar/type-select'
 
 export function MultimediaEditor(props: MultimediaProps) {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
-  const { config, state, focused } = props
+  const { state, focused } = props
   const { explanation, multimedia, width } = state
   const store = useStore()
 
-  const multimediaStrings = useEditStrings().plugins.multimedia
+  const { lang, plugins: pluginsStrings } = useEditStrings()
+  const multimediaStrings = pluginsStrings.multimedia
 
   const isMediaChildFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, multimedia.id)
@@ -43,21 +45,31 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   // we memoize this so we don't need to calculate the ancestors on every render
   // the values should only be calculated when we create it or move the plugin (and that also triggers a remount)
-  const allowedPlugins = useMemo(() => {
-    // inside of box plugin don't allow video and geogebra as multimedia children
-    const typesOfAncestors = selectAncestorPluginTypes(
-      store.getState(),
-      props.id
-    )
-    const forbiddenInBox = [EditorPluginType.Video, EditorPluginType.Geogebra]
-    const hasBoxAnchestor = typesOfAncestors?.includes(EditorPluginType.Box)
-    return hasBoxAnchestor
-      ? config.allowedPlugins.filter(
-          (plugin) => !forbiddenInBox.includes(plugin as EditorPluginType)
-        )
-      : config.allowedPlugins
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { hasBoxAncestor, isArticleIntroduction, contentConfig } =
+    useMemo(() => {
+      // inside of box plugin don't allow video and geogebra as multimedia children
+      const typesOfAncestors = selectAncestorPluginTypes(
+        store.getState(),
+        props.id
+      )
+      const hasBoxAncestor = typesOfAncestors?.includes(EditorPluginType.Box)
+
+      const isArticleIntroduction =
+        typesOfAncestors?.length === 2 &&
+        typesOfAncestors[0] === TemplatePluginType.Article &&
+        typesOfAncestors[1] === EditorPluginType.Article
+
+      const contentConfig = isArticleIntroduction
+        ? {
+            placeholder:
+              lang === 'de'
+                ? 'Fasse das Thema des Artikels kurz zusammen'
+                : 'Write a short introduction',
+          }
+        : {}
+      return { hasBoxAncestor, isArticleIntroduction, contentConfig }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
   const pluginToolbarAndStyleHacks = getStyleHacks(
     focused,
@@ -74,9 +86,9 @@ export function MultimediaEditor(props: MultimediaProps) {
             state={state.width}
             title={multimediaStrings.chooseSize}
           />
-          {allowedPlugins.length > 1 && (
+          {isArticleIntroduction ? null : (
             <MultimediaTypeSelect
-              allowedPlugins={allowedPlugins}
+              hasBoxAncestor={hasBoxAncestor}
               state={state.multimedia}
               stateCache={stateCache}
               setStateCache={setStateCache}
@@ -97,8 +109,8 @@ export function MultimediaEditor(props: MultimediaProps) {
       )}
       <div className={pluginToolbarAndStyleHacks}>
         <MultimediaRenderer
-          media={<>{multimedia.render()}</>}
-          explanation={<>{explanation.render()}</>}
+          media={multimedia.render()}
+          explanation={explanation.render({ config: contentConfig })}
           mediaWidth={width.value}
         />
       </div>

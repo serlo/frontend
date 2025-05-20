@@ -14,10 +14,12 @@ import { ExerciseContext } from '@/contexts/exercise-context'
 import { RevisionViewContext } from '@/contexts/revision-view-context'
 import { ExerciseInlineType } from '@/data-types'
 
-const AuthorToolsExercises = dynamic<AuthorToolsExercisesProps>(() =>
-  import(
-    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
-  ).then((mod) => mod.AuthorToolsExercises)
+const AuthorToolsExercises = dynamic<AuthorToolsExercisesProps>(
+  () =>
+    import(
+      '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+    ).then((mod) => mod.AuthorToolsExercises),
+  { ssr: false }
 )
 
 // Special version for serlo.org with author tools and license

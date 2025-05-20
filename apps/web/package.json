@@ -26,9 +26,6 @@
     "show-unused-exports": "ts-unused-exports tsconfig.json --excludePathsFromReport=src/pages/ --excludePathsFromReport=src/fetcher/graphql-types/operations.ts --allowUnusedTypes",
     "start": "next start"
   },
-  "resolutions": {
-    "@serlo/katex-styles": "1.0.1"
-  },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.22.0",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
@@ -45,7 +42,6 @@
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@serlo/authorization": "^0.60.0",
     "@serlo/editor": "workspace:*",
-    "@serlo/katex-styles": "1.0.1",
     "@tippyjs/react": "^4.2.6",
     "@vidstack/react": "next",
     "array-move": "^4.0.0",
@@ -62,7 +58,6 @@
     "isomorphic-dompurify": "^2.22.0",
     "js-cookie": "^3.0.5",
     "json-diff": "^1.0.6",
-    "katex": "^0.16.21",
     "mathjs": "^13.2.2",
     "mathlive": "^0.104.0",
     "next": "^14.2.26",
@@ -102,7 +97,6 @@
     "@types/iframe-resizer": "^3.5.13",
     "@types/js-cookie": "^3.0.6",
     "@types/json-diff": "^1.0.3",
-    "@types/katex": "^0.16.7",
     "@types/node": "^20.17.6",
     "@types/nprogress": "^0.2.3",
     "@types/qrcode.react": "^1.0.5",

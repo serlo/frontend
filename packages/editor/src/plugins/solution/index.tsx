@@ -30,5 +30,4 @@ export type SolutionProps = EditorPluginProps<SolutionPluginState>
 export const solutionPlugin: EditorPlugin<SolutionPluginState> = {
   Component: SolutionEditor,
   state: solutionState,
-  config: {},
 }

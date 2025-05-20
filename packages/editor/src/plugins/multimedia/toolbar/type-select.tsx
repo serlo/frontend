@@ -6,29 +6,48 @@ import {
   useStore,
   useAppSelector,
 } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { cn } from '@editor/utils/cn'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { MultimediaProps } from '..'
 
 interface MultimediaTypeSelectProps {
-  allowedPlugins: MultimediaProps['config']['allowedPlugins']
   state: MultimediaProps['state']['multimedia']
   stateCache: Record<string, unknown>
   setStateCache: Dispatch<SetStateAction<Record<string, unknown>>>
+  hasBoxAncestor?: boolean
 }
 
+export const allowedMediaChildren = [
+  EditorPluginType.Image,
+  EditorPluginType.EdusharingAsset,
+  EditorPluginType.Video,
+  EditorPluginType.Audio,
+  EditorPluginType.Geogebra,
+]
+
+const allowedInsideBox = [
+  EditorPluginType.Image,
+  EditorPluginType.EdusharingAsset,
+  EditorPluginType.Audio,
+]
+
 export const MultimediaTypeSelect = ({
-  allowedPlugins,
   state,
   stateCache,
   setStateCache,
+  hasBoxAncestor,
 }: MultimediaTypeSelectProps) => {
   const store = useStore()
   const pluginStrings = useEditStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
   )?.plugin
+
+  const allowedPlugins = hasBoxAncestor
+    ? allowedInsideBox
+    : allowedMediaChildren
 
   return (
     <div className="mb-8 mt-3">

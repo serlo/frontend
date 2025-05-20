@@ -10,10 +10,12 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
-const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
-  import('@/components/user-tools/revision/checkout-reject-buttons').then(
-    (mod) => mod.CheckoutRejectButtons
-  )
+const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(
+  () =>
+    import('@/components/user-tools/revision/checkout-reject-buttons').then(
+      (mod) => mod.CheckoutRejectButtons
+    ),
+  { ssr: false }
 )
 
 export function RevisionTools({ data, aboveContent }: MoreAuthorToolsProps) {

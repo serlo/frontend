@@ -14,6 +14,8 @@ import {
   withMath,
   withBlanks,
 } from '@editor/plugins/text/plugins'
+import { selectAncestorPluginTypes, useStore } from '@editor/store'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import { isMac } from '@editor/utils/client-detection'
 import {
   faCode,
@@ -128,14 +130,29 @@ const registeredMarkdownShortcuts = [
 ]
 
 export const useFormattingOptions = (
-  formattingOptions: TextEditorFormattingOption[]
+  formattingOptions: TextEditorFormattingOption[],
+  id: string
 ) => {
+  const store = useStore()
+
   const ctrlString = useStaticStrings().misc.ctrl
   const textStrings = useEditStrings().plugins.text
 
+  // add Blank (For Fill in the Blank Exercises)
+  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+  const options = useMemo(() => {
+    const showBlanks = typesOfAncestors?.includes(
+      EditorPluginType.BlanksExercise
+    )
+    return [
+      ...formattingOptions,
+      ...(showBlanks ? [TextEditorFormattingOption.textBlank] : []),
+    ]
+  }, [formattingOptions, typesOfAncestors])
+
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
-      formattingOptions.reduce((currentEditor, currentOption) => {
+      options.reduce((currentEditor, currentOption) => {
         // If there is no initialization function for the current
         // formatting options, return the editor as it was received
         if (!isRegisteredTextPlugin(currentOption)) {
@@ -144,12 +161,12 @@ export const useFormattingOptions = (
         // Otherwise, apply the initialization function to the editor
         return textPluginsMapper[currentOption](currentEditor)
       }, baseEditor),
-    [formattingOptions]
+    [options]
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-    () => createToolbarControls(formattingOptions, textStrings, ctrlString),
-    [formattingOptions, ctrlString, textStrings]
+    () => createToolbarControls(options, textStrings, ctrlString),
+    [options, ctrlString, textStrings]
   )
 
   const handleHotkeys = useCallback(
@@ -158,7 +175,7 @@ export const useFormattingOptions = (
       for (const { hotkey, option, handler } of registeredHotkeys) {
         // Check if their respective formatting option is enabled
         // and if the keyboard event contains the hotkey combination
-        if (formattingOptions.includes(option) && isHotkey(hotkey, event)) {
+        if (options.includes(option) && isHotkey(hotkey, event)) {
           // If so, prevent the default event behavior,
           // handle the hotkey and break out of the loop
           event.preventDefault()
@@ -167,7 +184,7 @@ export const useFormattingOptions = (
         }
       }
     },
-    [formattingOptions]
+    [options]
   )
 
   const handleMarkdownShortcuts = useCallback(
@@ -185,7 +202,7 @@ export const useFormattingOptions = (
       // markdown shortcuts and that formatting option is enabled,
       // handle that markdown shortcut and break out of the loop
       for (const { keys, option, handler } of registeredMarkdownShortcuts) {
-        if (formattingOptions.includes(option) && keys.includes(key)) {
+        if (options.includes(option) && keys.includes(key)) {
           event.preventDefault()
           handler(editor)
           editor.deleteBackward('word')
@@ -193,12 +210,12 @@ export const useFormattingOptions = (
         }
       }
     },
-    [formattingOptions]
+    [options]
   )
 
   const handleListsShortcuts = useCallback(
     (event: React.KeyboardEvent, editor: SlateEditor) => {
-      const isListsOptionEnabled = formattingOptions.includes(
+      const isListsOptionEnabled = options.includes(
         TextEditorFormattingOption.lists
       )
       if (!isListsOptionEnabled) return
@@ -210,7 +227,7 @@ export const useFormattingOptions = (
 
       return slateListsOnKeyDown(editor, event)
     },
-    [formattingOptions]
+    [options]
   )
 
   return {

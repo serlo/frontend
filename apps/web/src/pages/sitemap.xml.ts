@@ -58,7 +58,7 @@ const nextStaticPages: SitemapEntry[] = [
   { url: '/metadata' },
   { url: '/nachhaltigkeit' },
   { url: '/privacy' },
-  { url: '/spenden' },
+  // { url: '/spenden' },
   { url: '/mathe-pruefungen' },
   { url: '/mathe-pruefungen/bayern' },
   { url: '/mathe-pruefungen/berlin' },

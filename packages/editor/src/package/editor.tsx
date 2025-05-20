@@ -31,7 +31,7 @@ import {
 } from './storage-format'
 
 // eslint-disable-next-line import/no-unassigned-import
-import '../tailwind/editor.css'
+import '../assets/tailwind/editor.css'
 
 export interface SerloEditorProps {
   children: EditorProps['children']
@@ -45,8 +45,9 @@ export interface SerloEditorProps {
   styleReset?: boolean
   /** Shows default Undo/Redo UI. Defaults to false for now */
   showUndoRedoButtons?: boolean
-  /** @deprecated Please do not use for new setups */
-  _testingSecret?: string | null
+  /** Removes upload buttons from all image and video plugins if you opt to not use the serlo.org asset buckets. Plugins can still be used by pasting urls to existing media content. */
+  disableMediaUpload?: boolean
+  /** only interally used for `serlo-editor-as-lti-tool` */
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
   extraSerloPlugins?: ExtraSerloPlugins
@@ -66,7 +67,7 @@ export function SerloEditor(props: SerloEditorProps) {
     userId,
     styleReset,
     showUndoRedoButtons,
-    _testingSecret,
+    disableMediaUpload,
     _ltik,
     extraSerloPlugins,
     extraSerloRenderers,
@@ -89,12 +90,7 @@ export function SerloEditor(props: SerloEditorProps) {
 
   const { staticStrings, editStrings } = editorData[language]
 
-  const allPlugins = createPlugins(
-    plugins,
-    _testingSecret,
-    language,
-    extraSerloPlugins
-  )
+  const allPlugins = createPlugins(plugins, extraSerloPlugins)
   editorPlugins.init(allPlugins)
 
   const basicRenderers = createRenderers(extraSerloRenderers)
@@ -104,7 +100,13 @@ export function SerloEditor(props: SerloEditorProps) {
     <StaticStringsProvider value={staticStrings}>
       <EditStringsProvider value={editStrings}>
         <EditorMetaContext.Provider
-          value={{ editorVariant, userId, ltik: _ltik }}
+          value={{
+            editorVariant,
+            userId,
+            ltik: _ltik,
+            disableMediaUpload,
+            isProductionEnvironment,
+          }}
         >
           {renderTestEnvironmentWarning()}
           <div className={styleReset ? 'serlo-editor-style-reset' : ''}>

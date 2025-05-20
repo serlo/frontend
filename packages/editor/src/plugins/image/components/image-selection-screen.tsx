@@ -1,9 +1,10 @@
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import { EditorTooltip } from '@editor/editor-ui/editor-tooltip'
 import { showToastNotice } from '@editor/editor-ui/show-toast-notice'
 import { useEditStrings } from '@editor/i18n/edit-strings-provider'
 import { isTempFile } from '@editor/plugin'
 import { cn } from '@editor/utils/cn'
-import React, { type RefObject } from 'react'
+import React, { useContext, type RefObject } from 'react'
 
 import type { ImageProps } from '..'
 import { PixabaySearch } from './pixabay-search/pixabay-search'
@@ -29,9 +30,9 @@ export function ImageSelectionScreen({
   const imageStrings = editorStrings.plugins.image
 
   const { src, licence } = state
-  const upload = useUploadFile(config.upload)
+  const upload = useUploadFile()
 
-  const disableFileUpload = config.disableFileUpload // HACK: Temporary solution to make image plugin available in Moodle & Chancenwerk integration with file upload disabled.
+  const disableMediaUpload = useContext(EditorMetaContext).disableMediaUpload
 
   const placeholder = !isTempFile(src.value)
     ? imageStrings.placeholderEmpty
@@ -57,7 +58,7 @@ export function ImageSelectionScreen({
             if (!licence.defined) licence.create('Pixabay')
             else licence.set('Pixabay')
 
-            config.onMultipleUpload?.([])
+            config?.onMultipleUpload?.([])
           })
         })
     } catch (error) {
@@ -73,7 +74,7 @@ export function ImageSelectionScreen({
       data-qa="plugin-image-empty-wrapper"
     >
       <div className="mx-auto my-8 w-[60%]">
-        {disableFileUpload ? null : (
+        {disableMediaUpload ? null : (
           <>
             <UploadButton
               config={config}
@@ -99,9 +100,9 @@ export function ImageSelectionScreen({
             disabled={isTempFile(src.value) && !src.value.failed}
             onChange={(e) => {
               state.src.set(e.target.value)
-              if (config.onMultipleUpload) {
+              if (config?.onMultipleUpload) {
                 setTimeout(() => {
-                  config.onMultipleUpload?.([])
+                  config?.onMultipleUpload?.([])
                 })
               }
             }}

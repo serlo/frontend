@@ -61,7 +61,7 @@ export const headerData: InstanceData['headerData'] = [
       { title: 'Kontakt & Standorte', url: '/21657/kontakt-und-standorte' },
     ],
   },
-  { url: '/spenden', title: 'Spenden', icon: 'donate' },
+  // { url: '/spenden', title: 'Spenden', icon: 'donate' },
   {
     url: '',
     title: 'Mitmachen',

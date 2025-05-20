@@ -15,10 +15,12 @@ import { getCoursePageIdFromPath } from '@/helper/get-course-id-from-path'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
-const InviteModal = dynamic<InviteModalProps>(() =>
-  import('@/components/user-tools/edit-or-invite/invite-modal').then(
-    (mod) => mod.InviteModal
-  )
+const InviteModal = dynamic<InviteModalProps>(
+  () =>
+    import('@/components/user-tools/edit-or-invite/invite-modal').then(
+      (mod) => mod.InviteModal
+    ),
+  { ssr: false }
 )
 
 export interface EditOrInviteProps {

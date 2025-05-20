@@ -33,7 +33,7 @@ export function EditorRowRenderer({
   plugins,
   dropContainer,
 }: {
-  config: RowsPluginConfig
+  config?: RowsPluginConfig
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
@@ -46,7 +46,7 @@ export function EditorRowRenderer({
   const store = useStore()
 
   const allowedPlugins = useMemo(() => {
-    return config.allowedPlugins ? config.allowedPlugins : undefined
+    return config?.allowedPlugins ? config.allowedPlugins : undefined
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
@@ -203,9 +203,7 @@ export function EditorRowRenderer({
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >
           {row.render({
-            config: {
-              placeholder: config.textPluginPlaceholder,
-            },
+            config: { placeholder: config?.textPluginPlaceholder },
           })}
         </div>
       </div>

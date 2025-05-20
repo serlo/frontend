@@ -2,8 +2,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
-@import '../../../../../packages/editor/src/tailwind/components.css';
-@import '../../../../../packages/editor/src/tailwind/utilities.css';
+@import '../../../../../packages/editor/src/assets/tailwind/components.css';
+@import '../../../../../packages/editor/src/assets/tailwind/utilities.css';
 @import './components.css';
 
 @import 'tailwindcss/utilities';

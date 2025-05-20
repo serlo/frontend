@@ -5488,7 +5488,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.1
     "@eslint/js": ^9.23.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/editor": 0.24.0
+    "@serlo/editor": 0.26.0
     "@serlo/typescript-config": "workspace:*"
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.3.1
@@ -5507,26 +5507,26 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.6.11
     react: ^18.2.0
     react-dom: ^18.3.1
-    vite: ^5.4.17
+    vite: ^5.4.19
     vite-plugin-dts: 4.3.0
   languageName: unknown
   linkType: soft
 
-"@serlo/editor@npm:0.24.0":
-  version: 0.24.0
-  resolution: "@serlo/editor@npm:0.24.0"
+"@serlo/editor@npm:0.26.0":
+  version: 0.26.0
+  resolution: "@serlo/editor@npm:0.26.0"
   dependencies:
     "@open-iframe-resizer/react": 1.2.1
     "@serlo/katex-styles": 1.0.1
     "@vidstack/react": next
-    isomorphic-dompurify: ^2.19.0
+    isomorphic-dompurify: ^2.22.0
     lit: ^3.2.1
     motion: ^11.11.17
     react: ^18.2.0
     react-dom: ^18.3.1
     react-hot-toast: ^2.4.1
     react-resizable: ^3.0.5
-  checksum: dc071e92e96bc22691a5138eb9e7365a1270bf1c054d668857786f6f9918191cefa181e5141540b2014ca2a982becf1619ee7efbc521520a53f4ea9d6b45cc0f
+  checksum: fc0337e89dd0b447274ce9b0b395516fd77b5a1203820e8ed299eb9e439b881fd428c11ac1a4bcd136245b4204f1dc22c7e81e0a3a47a2e8d9843f2fc1e04a29
   languageName: node
   linkType: hard
 
@@ -5548,7 +5548,6 @@ __metadata:
     "@radix-ui/react-select": ^2.1.2
     "@reduxjs/toolkit": ^2.3.0
     "@rollup/plugin-replace": ^6.0.1
-    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@types/dompurify": ^3.0.5
     "@types/is-hotkey": 0.1.10
@@ -5576,7 +5575,6 @@ __metadata:
     io-ts: ^2.2.21
     is-hotkey: 0.2.0
     isomorphic-dompurify: ^2.22.0
-    katex: ^0.16.21
     lit: ^3.2.1
     mathjs: ^13.2.2
     motion: ^11.11.17
@@ -5608,11 +5606,12 @@ __metadata:
     slate-dom: 0.111.0
     slate-react: 0.111.0
     tailwindcss: ^3.4.17
+    temml: ^0.11.4
     ts-debounce: ^4.0.0
     ts-key-enum: ^2.0.13
     typescript: ^5.6.3
     uuid: ^11.0.3
-    vite: ^5.4.17
+    vite: ^5.4.19
     vite-plugin-dts: 4.3.0
     vite-plugin-svgr: ^4.3.0
     vitest: ^2.1.9
@@ -5664,7 +5663,6 @@ __metadata:
     "@serlo/authorization": ^0.60.0
     "@serlo/editor": "workspace:*"
     "@serlo/eslint-config": "workspace:*"
-    "@serlo/katex-styles": 1.0.1
     "@serlo/typescript-config": "workspace:*"
     "@svgr/webpack": ^8.1.0
     "@tailwindcss/typography": ^0.5.15
@@ -5673,7 +5671,6 @@ __metadata:
     "@types/iframe-resizer": ^3.5.13
     "@types/js-cookie": ^3.0.6
     "@types/json-diff": ^1.0.3
-    "@types/katex": ^0.16.7
     "@types/node": ^20.17.6
     "@types/nprogress": ^0.2.3
     "@types/qrcode.react": ^1.0.5
@@ -5708,7 +5705,6 @@ __metadata:
     isomorphic-dompurify: ^2.22.0
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
-    katex: ^0.16.21
     mathjs: ^13.2.2
     mathlive: ^0.104.0
     micromark: ^4.0.1
@@ -5752,12 +5748,6 @@ __metadata:
   checksum: b8e50847d42669b78a14ee972348457573d806f487b099bf7a552d98cd734abce502be029b2125df0d20dcffc9f51ab1c365965f2c23eafec9aaeddfbc7859d1
   languageName: node
   linkType: hard
-
-"@serlo/katex-styles@workspace:packages/katex-styles":
-  version: 0.0.0-use.local
-  resolution: "@serlo/katex-styles@workspace:packages/katex-styles"
-  languageName: unknown
-  linkType: soft
 
 "@serlo/monorepo@workspace:.":
   version: 0.0.0-use.local
@@ -6257,13 +6247,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
-  languageName: node
-  linkType: hard
-
-"@types/katex@npm:^0.16.7":
-  version: 0.16.7
-  resolution: "@types/katex@npm:0.16.7"
-  checksum: 4fd15d93553be97c02c064e16be18d7ccbabf66ec72a9dc7fd5bfa47f0c7581da2f942f693c7cb59499de4c843c2189796e49c9647d336cbd52b777b6722a95a
   languageName: node
   linkType: hard
 
@@ -8022,17 +8005,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001565, caniuse-lite@npm:^1.0.30001579, caniuse-lite@npm:^1.0.30001646":
-  version: 1.0.30001669
-  resolution: "caniuse-lite@npm:1.0.30001669"
-  checksum: 8ed0c69d0c6aa3b1cbc5ba4e5f5330943e7b7165e257f6955b8b73f043d07ad922265261f2b54d9bbaf02886bbdba5e6f5b16662310a13f91f17035af3212de1
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001669":
-  version: 1.0.30001680
-  resolution: "caniuse-lite@npm:1.0.30001680"
-  checksum: 2641d2b18c5ab0a6663cb350c5adc81e5ede1a7677d1c7518a8053ada87bf6f206419e1820a2608f76fa5e4f7bea327cbe47df423783e571569a88c0ea645270
+"caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001565, caniuse-lite@npm:^1.0.30001579, caniuse-lite@npm:^1.0.30001646, caniuse-lite@npm:^1.0.30001669":
+  version: 1.0.30001715
+  resolution: "caniuse-lite@npm:1.0.30001715"
+  checksum: c8371dceca0177518e43de537c74a01e64428ea65250d597c13472cf8277ffbc800c9a729ff0e7d271c8445ae90976ba64a170232b4498aee9552d993287a4c4
   languageName: node
   linkType: hard
 
@@ -8449,13 +8425,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "commander@npm:8.3.0"
-  checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
-  languageName: node
-  linkType: hard
-
 "common-ancestor-path@npm:^1.0.1":
   version: 1.0.1
   resolution: "common-ancestor-path@npm:1.0.1"
@@ -8754,15 +8723,6 @@ __metadata:
   dependencies:
     css-tree: ~2.2.0
   checksum: 0ad858d36bf5012ed243e9ec69962a867509061986d2ee07cc040a4b26e4d062c00d4c07e5ba8d430706ceb02dd87edd30a52b5937fd45b1b6f2119c4993d59a
-  languageName: node
-  linkType: hard
-
-"cssstyle@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "cssstyle@npm:4.1.0"
-  dependencies:
-    rrweb-cssom: ^0.7.1
-  checksum: a8f5746430c42347e76dc830548f3a296882e42a90af188ae44e4c1a4131aec246b0b6c8562e3e6e4fa0ff14aeee5cd14a0e2fe5a7105dcf39f98eb70d16b634
   languageName: node
   linkType: hard
 
@@ -9212,7 +9172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.2.3, dompurify@npm:^3.2.4":
+"dompurify@npm:^3.2.4":
   version: 3.2.4
   resolution: "dompurify@npm:3.2.4"
   dependencies:
@@ -11474,7 +11434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"https-proxy-agent@npm:^7.0.5, https-proxy-agent@npm:^7.0.6":
+"https-proxy-agent@npm:^7.0.6":
   version: 7.0.6
   resolution: "https-proxy-agent@npm:7.0.6"
   dependencies:
@@ -12349,16 +12309,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isomorphic-dompurify@npm:^2.19.0":
-  version: 2.19.0
-  resolution: "isomorphic-dompurify@npm:2.19.0"
-  dependencies:
-    dompurify: ^3.2.3
-    jsdom: ^25.0.1
-  checksum: 42fb8a4d5e88b51f0081993733d2babb9bf8793ef7ec0b1baf387fbaeab58f3b3f749d084222f13ed72018d6dbf4ffacc2e8335e63aaa204a01d4dd02ef59222
-  languageName: node
-  linkType: hard
-
 "isomorphic-dompurify@npm:^2.22.0":
   version: 2.22.0
   resolution: "isomorphic-dompurify@npm:2.22.0"
@@ -12519,40 +12469,6 @@ __metadata:
   version: 0.1.1
   resolution: "jsbn@npm:0.1.1"
   checksum: e5ff29c1b8d965017ef3f9c219dacd6e40ad355c664e277d31246c90545a02e6047018c16c60a00f36d561b3647215c41894f5d869ada6908a2e0ce4200c88f2
-  languageName: node
-  linkType: hard
-
-"jsdom@npm:^25.0.1":
-  version: 25.0.1
-  resolution: "jsdom@npm:25.0.1"
-  dependencies:
-    cssstyle: ^4.1.0
-    data-urls: ^5.0.0
-    decimal.js: ^10.4.3
-    form-data: ^4.0.0
-    html-encoding-sniffer: ^4.0.0
-    http-proxy-agent: ^7.0.2
-    https-proxy-agent: ^7.0.5
-    is-potential-custom-element-name: ^1.0.1
-    nwsapi: ^2.2.12
-    parse5: ^7.1.2
-    rrweb-cssom: ^0.7.1
-    saxes: ^6.0.0
-    symbol-tree: ^3.2.4
-    tough-cookie: ^5.0.0
-    w3c-xmlserializer: ^5.0.0
-    webidl-conversions: ^7.0.0
-    whatwg-encoding: ^3.1.1
-    whatwg-mimetype: ^4.0.0
-    whatwg-url: ^14.0.0
-    ws: ^8.18.0
-    xml-name-validator: ^5.0.0
-  peerDependencies:
-    canvas: ^2.11.2
-  peerDependenciesMeta:
-    canvas:
-      optional: true
-  checksum: b637d28445d570014195b3c77d06e54ef69d1f807eaf61388cb470e4d9227244e7fe2e0c32b6df03ac4fe35f746d7c721672d9136ecebb49d2e61a04ab9628e0
   languageName: node
   linkType: hard
 
@@ -12803,17 +12719,6 @@ __metadata:
   version: 6.0.2
   resolution: "just-diff@npm:6.0.2"
   checksum: 1a0c7524f640cb88ab013862733e710f840927834208fd3b85cbc5da2ced97acc75e7dcfe493268ac6a6514c51dd8624d2fd9d057050efba3c02b81a6dcb7ff9
-  languageName: node
-  linkType: hard
-
-"katex@npm:^0.16.21":
-  version: 0.16.21
-  resolution: "katex@npm:0.16.21"
-  dependencies:
-    commander: ^8.3.0
-  bin:
-    katex: cli.js
-  checksum: 14180322a4e8fe9e4227a08b7d86fde9ee445859ff534e6a540b85eb5022b39ea2be70082776cce8c59b891c247fce3d1c1a090ea7821e005fd8b7bfee714936
   languageName: node
   linkType: hard
 
@@ -14529,13 +14434,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nwsapi@npm:^2.2.12":
-  version: 2.2.16
-  resolution: "nwsapi@npm:2.2.16"
-  checksum: 467b36a74b7b8647d53fd61d05ca7d6c73a4a5d1b94ea84f770c03150b00ef46d38076cf8e708936246ae450c42a1f21e28e153023719784dc4d1a19b1737d47
-  languageName: node
-  linkType: hard
-
 "nwsapi@npm:^2.2.16":
   version: 2.2.19
   resolution: "nwsapi@npm:2.2.19"
@@ -14959,7 +14857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse5@npm:^7.1.2, parse5@npm:^7.2.1":
+"parse5@npm:^7.2.1":
   version: 7.2.1
   resolution: "parse5@npm:7.2.1"
   dependencies:
@@ -16482,13 +16380,6 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"rrweb-cssom@npm:^0.7.1":
-  version: 0.7.1
-  resolution: "rrweb-cssom@npm:0.7.1"
-  checksum: 62e410ddbaaba6abc196c3bbfa8de4952e0a134d9f2b454ee293039bf9931322d806e14d52ed122a5c2bd332a868b9da2e99358fb6232c33758b5ede86d992c8
-  languageName: node
-  linkType: hard
-
 "rrweb-cssom@npm:^0.8.0":
   version: 0.8.0
   resolution: "rrweb-cssom@npm:0.8.0"
@@ -17792,6 +17683,13 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
+"temml@npm:^0.11.4":
+  version: 0.11.4
+  resolution: "temml@npm:0.11.4"
+  checksum: 7edab9ecb470b53694e9facc9d90d9989c5808a00dd2c71a06549cd466cfc650bd04bfc939e86ca840afd11c4d8c31475aaf201d7a483117c1ae4116dd442d48
+  languageName: node
+  linkType: hard
+
 "text-table@npm:~0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -18932,9 +18830,9 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.17":
-  version: 5.4.17
-  resolution: "vite@npm:5.4.17"
+"vite@npm:^5.4.19":
+  version: 5.4.19
+  resolution: "vite@npm:5.4.19"
   dependencies:
     esbuild: ^0.21.3
     fsevents: ~2.3.3
@@ -18971,7 +18869,7 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: c3921629c49fc58a87678620f5537d88a002abb874254a1d8f9952808bb64669c353a2fe2723262f3af865f42042bc5e0e9ee4740190ad97263681f2c052c922
+  checksum: c15af65f2370b59e674c5fab22d8e05ec5c7f8f0345ed99ffec155c77feb5636b4e0680dbd096a6f06d7c386b259dc0b9c67c4f1ec08486a2f2a677c9ea6971b
   languageName: node
   linkType: hard
 

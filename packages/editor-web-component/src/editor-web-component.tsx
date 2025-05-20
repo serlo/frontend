@@ -36,6 +36,7 @@ export class EditorWebComponent extends HTMLElement {
   private _initialState: InitialState = exampleInitialState
   private _currentState: unknown
 
+  // Deprecated and ignored
   private _testingSecret: string | null = null
 
   private _editorVariant: EditorVariant = 'unknown'
@@ -43,6 +44,8 @@ export class EditorWebComponent extends HTMLElement {
   private _plugins = defaultPlugins
 
   private _isProductionEnvironment: boolean = false
+
+  private _disableMediaUpload: boolean | null = null
 
   private _language: SupportedLanguage = 'de' as const
 
@@ -60,31 +63,62 @@ export class EditorWebComponent extends HTMLElement {
       'editor-variant',
       'plugins',
       'is-production-environment',
+      'disable-media-upload',
       'language',
     ]
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'initial-state' && oldValue !== newValue) {
-      this.initialState = JSON.parse(newValue) as InitialState
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null
+  ) {
+    if (oldValue === newValue) return
+
+    if (name === 'initial-state') {
+      this.initialState =
+        newValue === null ? null : (JSON.parse(newValue) as InitialState)
     } else if (
       name === 'mode' &&
-      oldValue !== newValue &&
       (newValue === 'read' || newValue === 'write')
     ) {
       this.mode = newValue
-    } else if (name === 'editor-variant' && oldValue !== newValue) {
-      this.editorVariant = newValue as EditorVariant
-    } else if (name === 'plugins' && oldValue !== newValue) {
-      this.plugins = JSON.parse(newValue) as EditorPluginType[]
+    } else if (name === 'editor-variant') {
+      this.editorVariant =
+        newValue === null ? 'unknown' : (newValue as EditorVariant)
+    } else if (name === 'plugins') {
+      this.plugins =
+        newValue === null
+          ? defaultPlugins
+          : (JSON.parse(newValue) as EditorPluginType[])
     } else if (name === 'is-production-environment') {
       this.isProductionEnvironment = newValue === 'true'
-    } else if (name === 'language' && oldValue !== newValue) {
+    } else if (name === 'disable-media-upload') {
+      this.disableMediaUpload =
+        newValue === 'true' ? true : newValue === 'false' ? false : null
+    } else if (name === 'testing-secret') {
+      this.testingSecret = newValue
+    } else if (name === 'language') {
       // Validates the language attribute. Will need to keep this in sync with
       // the SupportedLanguage type, if we add more language support!
       const validatedLanguage = newValue === 'en' ? 'en' : 'de'
       this.language = validatedLanguage
     }
+  }
+
+  get testingSecret(): string | null {
+    return this._testingSecret
+  }
+
+  // Deprecated and ignored
+  set testingSecret(value) {
+    this._testingSecret = value
+    if (value === null) {
+      this.removeAttribute('testing-secret')
+    } else {
+      this.setAttribute('testing-secret', String(value))
+    }
+    this.mountReactComponent()
   }
 
   get initialState() {
@@ -129,14 +163,6 @@ export class EditorWebComponent extends HTMLElement {
     return this._history
   }
 
-  get testingSecret(): string | null {
-    return this._testingSecret
-  }
-
-  set testingSecret(newTestingSecret) {
-    if (newTestingSecret) this.setAttribute('testing-secret', newTestingSecret)
-  }
-
   get editorVariant(): EditorVariant {
     return this._editorVariant
   }
@@ -166,6 +192,20 @@ export class EditorWebComponent extends HTMLElement {
   set isProductionEnvironment(value: boolean) {
     this._isProductionEnvironment = value
     this.setAttribute('is-production-environment', String(value))
+    this.mountReactComponent()
+  }
+
+  get disableMediaUpload(): boolean | null {
+    return this._disableMediaUpload
+  }
+
+  set disableMediaUpload(value: boolean | null) {
+    this._disableMediaUpload = value
+    if (value === null) {
+      this.removeAttribute('disable-media-upload')
+    } else {
+      this.setAttribute('disable-media-upload', String(value))
+    }
     this.mountReactComponent()
   }
 
@@ -212,7 +252,6 @@ export class EditorWebComponent extends HTMLElement {
 
   mountReactComponent() {
     const initialStateAttr = this.getAttribute('initial-state')
-    const testingSecretAttr = this.getAttribute('testing-secret')
 
     const initialState: InitialState = initialStateAttr
       ? (JSON.parse(initialStateAttr) as unknown as any)
@@ -237,9 +276,13 @@ export class EditorWebComponent extends HTMLElement {
               <LazySerloEditor
                 editorVariant={this.editorVariant}
                 initialState={this.initialState}
-                _testingSecret={testingSecretAttr}
                 plugins={this.plugins}
                 isProductionEnvironment={this.isProductionEnvironment}
+                disableMediaUpload={
+                  this._disableMediaUpload === null
+                    ? undefined
+                    : this._disableMediaUpload
+                }
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)
