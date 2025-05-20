@@ -4,7 +4,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
-import DonateIcon from '@/assets-webkit/img/footer-donate.svg'
 import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
@@ -64,7 +63,7 @@ function About() {
               {strings.footer.participate}
             </div>
           </Link>
-          <Link
+          {/* <Link
             href={footerData.donationHref}
             className="group flex flex-col items-center hover:no-underline"
           >
@@ -72,7 +71,7 @@ function About() {
             <div className="serlo-button-learner mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.donate}
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

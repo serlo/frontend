@@ -1,7 +1,6 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import Image from 'next/image'
 
-import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'
 import { FaIcon } from '../fa-icon'
 import { HeadTags } from '../head-tags'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
@@ -172,7 +171,6 @@ export function Donations() {
             </p>
           </section>
         </div>
-        <TestimonialDonationsPage />
       </div>
 
       <footer>

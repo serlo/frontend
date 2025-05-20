@@ -26,12 +26,12 @@ export function FooterNavNew() {
           >
             Mitmachen
           </Link>
-          <Link
+          {/* <Link
             className="serlo-new-landing-button !text-white md:mx-0"
             href="/spenden"
           >
             Spenden
-          </Link>
+          </Link> */}
         </div>
       </div>
       <Separator className="md:hidden" />

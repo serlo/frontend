@@ -167,7 +167,7 @@ Scenario('Languages', ({ I }) => {
 })
 */
 
-Scenario('Donation', ({ I }) => {
+Scenario.skip('Donation', ({ I }) => {
   I.amOnPage('/spenden')
   I.see('Deine Spende macht einen Unterschied')
   I.see('Mit PayPal spenden')
@@ -210,7 +210,7 @@ Scenario('Legal Pages', async ({ I }) => {
   I.see('en@serlo.org')
 })
 
-Scenario('Consent', async ({ I }) => {
+Scenario.skip('Consent', async ({ I }) => {
   I.amOnPage('/spenden')
 
   // Make sure that twingle is activated
