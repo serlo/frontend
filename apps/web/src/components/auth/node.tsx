@@ -12,7 +12,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { cn } from '@/helper/cn'
 import { isProduction } from '@/helper/is-production'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { isVidisActive } from '@/pages/auth/___activate_vidis'
 
 export interface NodeProps {
   node: UiNode
@@ -108,11 +107,7 @@ export function Node({
             />
           )
         }
-        if (
-          (!isProduction || isVidisActive()) &&
-          attributes.name === 'provider' &&
-          attributes.value === 'vidis'
-        ) {
+        if (attributes.name === 'provider' && attributes.value === 'vidis') {
           return (
             <LoginButtonVidis
               attributes={attributes}
