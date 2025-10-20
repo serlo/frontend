@@ -128,8 +128,8 @@ export function MathExamsLanding({
             <p className="mx-side max-w-xl text-xl leading-cozy text-almost-black sm:mx-auto">
               Wenn Aufgaben zu Deinem Bundesland oder Deiner Schulform fehlen,
               sag uns gern kurz über{' '}
-              <a className="serlo-link" href="mailto:de@serlo.org">
-                de@serlo.org <FaIcon icon={faEnvelope} />
+              <a className="serlo-link" href="mailto:serlo@chancenwerk.org">
+                serlo@chancenwerk.org <FaIcon icon={faEnvelope} />
               </a>{' '}
               bescheid oder hilf unserer{' '}
               <Link href="/community">Autor*innencommunity</Link> die Aufgaben

@@ -42,7 +42,7 @@ export function LandingJsonLd() {
         addressRegion: 'Bayern',
         addressCountry: 'Germany',
       },
-      email: 'de@serlo.org',
+      email: 'serlo@chancenwerk.org',
     }
   }
 }

@@ -144,10 +144,10 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
         {replacePlaceholders(loggedInStrings.delete.text, {
           mailLink: (
             <a
-              href={`mailto:de@serlo.org?subject=${encodedSubjectLine}`}
+              href={`mailto:serlo@chancenwerk.org?subject=${encodedSubjectLine}`}
               className="serlo-link"
             >
-              de@serlo.org
+              serlo@chancenwerk.org
             </a>
           ),
           subjectLine: <b>{`"${subjectLine}"`}</b>,
