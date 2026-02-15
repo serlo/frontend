@@ -42,22 +42,15 @@ async function uploadFile({
 
   const parentHost = getParentHost()
 
-  // Use custom presigned URL endpoint if provided, otherwise use default
-  let signedUrlHost: string
-  try {
-    signedUrlHost = presignedUrlEndpoint
-      ? new URL(presignedUrlEndpoint).host
-      : isProductionEnvironment
-        ? 'editor.serlo.org'
-        : 'editor.serlo.dev'
-  } catch {
-    const errorMsg = `Invalid presigned URL endpoint: ${presignedUrlEndpoint}`
-    handleError(errorMsg)
-    return Promise.reject(new Error(errorMsg))
-  }
+  const signedUrlHost = isProductionEnvironment
+    ? 'editor.serlo.org'
+    : 'editor.serlo.dev'
 
   // url for signedUrl fetch
-  const url = new URL(`https://${signedUrlHost}/media/presigned-url`)
+  const url = presignedUrlEndpoint
+    ? new URL(presignedUrlEndpoint)
+    : new URL(`https://${signedUrlHost}/media/presigned-url`)
+
   url.searchParams.append('mimeType', file.type)
   url.searchParams.append('editorVariant', editorVariant)
   url.searchParams.append('parentHost', parentHost)
