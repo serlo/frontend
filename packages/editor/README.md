@@ -132,45 +132,22 @@ See below for the current API specification.
 
 - **`disableMediaUpload` (optional)**: Set to true to disable file upload in all image and video plugins. Plugins are still usable by pasting urls of existing media content.
 
-- **`fileUploadConfig` (optional)**: Configuration object for customizing file upload behavior. This allows you to integrate with custom storage backends (like Gitea) instead of the default S3-based presigned URL workflow. The object supports the following properties:
+- **`fileUploadConfig` (optional)**: Configuration for customizing file upload behavior:
 
-  - `uploadHandler` (optional): A custom function `(file: File) => Promise<string>` that handles the file upload. If provided, this will completely replace the default presigned URL workflow. The function should upload the file to your storage backend and return the final URL where the file can be accessed.
+  - `presignedUrlEndpoint` (optional): Custom base URL for the presigned URL endpoint. Defaults to `https://editor.serlo.org` (production) or `https://editor.serlo.dev` (development).
 
-  - `presignedUrlEndpoint` (optional): A custom base URL for the presigned URL endpoint. If not provided, defaults to `https://editor.serlo.org` (production) or `https://editor.serlo.dev` (development). Only used when `uploadHandler` is not provided.
+  - `allowedImageDomains` (optional): Array of additional domain names to whitelist for images. Supports wildcards like `*.example.com`.
 
-  - `allowedImageDomains` (optional): An array of additional domain names to whitelist for images. Images from these domains won't be proxied through the asset-proxy. Supports wildcards like `*.example.com`.
-
-  **Example with custom upload handler (Gitea):**
+  **Example:**
 
   ```tsx
-  const fileUploadConfig = {
-    uploadHandler: async (file: File) => {
-      // Custom upload logic for Gitea
-      const formData = new FormData()
-      formData.append('file', file)
-      const response = await fetch('https://gitea.example.com/api/v1/repos/owner/repo/contents/uploads', {
-        method: 'POST',
-        body: formData,
-        headers: { Authorization: 'token YOUR_TOKEN' }
-      })
-      const data = await response.json()
-      return data.download_url // Return the final URL
-    },
-    allowedImageDomains: ['*.gitea.example.com']
-  }
-
-  <SerloEditor fileUploadConfig={fileUploadConfig} ... />
-  ```
-
-  **Example with custom presigned URL endpoint:**
-
-  ```tsx
-  const fileUploadConfig = {
-    presignedUrlEndpoint: 'https://custom-api.example.com/presigned-url',
-    allowedImageDomains: ['cdn.example.com']
-  }
-
-  <SerloEditor fileUploadConfig={fileUploadConfig} ... />
+  <SerloEditor
+    fileUploadConfig={{
+      presignedUrlEndpoint: 'https://custom-api.example.com/presigned-url',
+      allowedImageDomains: ['*.gitea.example.com', 'cdn.example.com']
+    }}
+    ...
+  />
   ```
 
 - **`_ltik` (optional)**: Required by the custom plugin `edusharingAsset` only used in `serlo-editor-for-edusharing`. **To be removed once a better solution is found or the plugin is removed.**

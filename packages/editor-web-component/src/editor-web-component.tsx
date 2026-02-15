@@ -49,7 +49,6 @@ export class EditorWebComponent extends HTMLElement {
 
   private _language: SupportedLanguage = 'de' as const
 
-  private _fileUploadHandler: ((file: File) => Promise<string>) | null = null
   private _presignedUrlEndpoint: string | null = null
   private _allowedImageDomains: string[] = []
 
@@ -249,16 +248,6 @@ export class EditorWebComponent extends HTMLElement {
     this.mountReactComponent()
   }
 
-  /**
-   * Sets a custom upload handler function. This function will be called when
-   * a file needs to be uploaded. It should return a Promise that resolves to
-   * the URL of the uploaded file.
-   */
-  setFileUploadHandler(handler: (file: File) => Promise<string>) {
-    this._fileUploadHandler = handler
-    this.mountReactComponent()
-  }
-
   get presignedUrlEndpoint(): string | null {
     return this._presignedUrlEndpoint
   }
@@ -331,11 +320,8 @@ export class EditorWebComponent extends HTMLElement {
 
     // Build fileUploadConfig from the component properties
     const fileUploadConfig =
-      this._fileUploadHandler ||
-      this._presignedUrlEndpoint ||
-      this._allowedImageDomains.length > 0
+      this._presignedUrlEndpoint || this._allowedImageDomains.length > 0
         ? {
-            uploadHandler: this._fileUploadHandler ?? undefined,
             presignedUrlEndpoint: this._presignedUrlEndpoint ?? undefined,
             allowedImageDomains:
               this._allowedImageDomains.length > 0

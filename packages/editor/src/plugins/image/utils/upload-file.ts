@@ -48,22 +48,6 @@ async function uploadFile({
     return Promise.reject()
   }
 
-  // If a custom upload handler is provided, use it
-  if (fileUploadConfig?.uploadHandler) {
-    try {
-      const fileUrl = await fileUploadConfig.uploadHandler(file)
-      return Promise.resolve(fileUrl)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-      handleError(uploadStrings.errorUploading)
-      const errorObj =
-        error instanceof Error ? error : new Error(uploadStrings.errorUploading)
-      return Promise.reject(errorObj)
-    }
-  }
-
-  // Otherwise, use the default presigned URL workflow
   const parentHost = getParentHost()
 
   // Use custom presigned URL endpoint if provided, otherwise use default
