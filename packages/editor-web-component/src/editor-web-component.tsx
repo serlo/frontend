@@ -50,7 +50,6 @@ export class EditorWebComponent extends HTMLElement {
   private _language: SupportedLanguage = 'de' as const
 
   private _presignedUrlEndpoint: string | null = null
-  private _allowedImageDomains: string[] = []
 
   constructor() {
     super()
@@ -69,7 +68,6 @@ export class EditorWebComponent extends HTMLElement {
       'disable-media-upload',
       'language',
       'presigned-url-endpoint',
-      'allowed-image-domains',
     ]
   }
 
@@ -110,27 +108,6 @@ export class EditorWebComponent extends HTMLElement {
       this.language = validatedLanguage
     } else if (name === 'presigned-url-endpoint') {
       this.presignedUrlEndpoint = newValue
-    } else if (name === 'allowed-image-domains') {
-      if (newValue === null) {
-        this.allowedImageDomains = []
-      } else {
-        try {
-          const parsedValue = JSON.parse(newValue) as unknown
-
-          if (!isStringArray(parsedValue)) {
-            throw new Error('Parsed value is not an array of strings')
-          }
-
-          this.allowedImageDomains = parsedValue
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(
-            `Invalid JSON for allowed-image-domains attribute: ${newValue}`,
-            error
-          )
-          this.allowedImageDomains = []
-        }
-      }
     }
   }
 
@@ -268,20 +245,6 @@ export class EditorWebComponent extends HTMLElement {
     this.mountReactComponent()
   }
 
-  get allowedImageDomains(): string[] {
-    return this._allowedImageDomains
-  }
-
-  set allowedImageDomains(value: string[]) {
-    this._allowedImageDomains = value
-    if (value.length === 0) {
-      this.removeAttribute('allowed-image-domains')
-    } else {
-      this.setAttribute('allowed-image-domains', JSON.stringify(value))
-    }
-    this.mountReactComponent()
-  }
-
   connectedCallback() {
     this.appendChild(this.container)
     this.loadAndApplyStyles()
@@ -342,11 +305,6 @@ export class EditorWebComponent extends HTMLElement {
                 presignedUrlEndpoint={
                   this._presignedUrlEndpoint ?? undefined
                 }
-                allowedImageDomains={
-                  this._allowedImageDomains.length > 0
-                    ? this._allowedImageDomains
-                    : undefined
-                }
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)
@@ -377,8 +335,4 @@ export class EditorWebComponent extends HTMLElement {
       this.reactRoot = null
     }
   }
-}
-
-function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every((item) => typeof item === 'string')
 }

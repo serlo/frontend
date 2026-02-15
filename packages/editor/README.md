@@ -134,14 +134,11 @@ See below for the current API specification.
 
 - **`presignedUrlEndpoint` (optional)**: Custom base URL for the presigned URL endpoint. Defaults to `https://editor.serlo.org` (production) or `https://editor.serlo.dev` (development).
 
-- **`allowedImageDomains` (optional)**: Array of additional domain names to whitelist for images. Supports wildcards like `*.example.com`.
-
   **Example:**
 
   ```tsx
   <SerloEditor
     presignedUrlEndpoint="https://custom-api.example.com/presigned-url"
-    allowedImageDomains={['*.gitea.example.com', 'cdn.example.com']}
     ...
   />
   ```

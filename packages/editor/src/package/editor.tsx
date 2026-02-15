@@ -52,11 +52,6 @@ export interface SerloEditorProps {
    * depending on isProductionEnvironment.
    */
   presignedUrlEndpoint?: string
-  /**
-   * Additional allowed domains for images. These domains will be whitelisted and images from them
-   * won't be proxied through the asset-proxy. Supports wildcards like '*.example.com'.
-   */
-  allowedImageDomains?: string[]
   /** only interally used for `serlo-editor-as-lti-tool` */
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
@@ -79,7 +74,6 @@ export function SerloEditor(props: SerloEditorProps) {
     showUndoRedoButtons,
     disableMediaUpload,
     presignedUrlEndpoint,
-    allowedImageDomains,
     _ltik,
     extraSerloPlugins,
     extraSerloRenderers,
@@ -119,7 +113,6 @@ export function SerloEditor(props: SerloEditorProps) {
             disableMediaUpload,
             isProductionEnvironment,
             presignedUrlEndpoint,
-            allowedImageDomains,
           }}
         >
           {renderTestEnvironmentWarning()}

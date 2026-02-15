@@ -103,12 +103,11 @@ The plugins attribute/property accepts an array of plugin types. You can referen
 
 ## Configuring file uploads
 
-Configure custom presigned URL endpoint and allowed image domains using HTML attributes:
+Configure custom presigned URL endpoint using HTML attribute:
 
 ```html
 <serlo-editor
   presigned-url-endpoint="https://custom-api.example.com/presigned-url"
-  allowed-image-domains='["*.gitea.example.com", "cdn.example.com"]'
 >
 </serlo-editor>
 ```
