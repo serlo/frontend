@@ -115,7 +115,13 @@ export class EditorWebComponent extends HTMLElement {
         this.allowedImageDomains = []
       } else {
         try {
-          this.allowedImageDomains = JSON.parse(newValue) as string[]
+          const parsedValue = JSON.parse(newValue) as unknown
+
+          if (!isStringArray(parsedValue)) {
+            throw new Error('Parsed value is not an array of strings')
+          }
+
+          this.allowedImageDomains = parsedValue
         } catch (error) {
           // eslint-disable-next-line no-console
           console.error(
@@ -376,4 +382,8 @@ export class EditorWebComponent extends HTMLElement {
       this.reactRoot = null
     }
   }
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === 'string')
 }
