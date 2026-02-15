@@ -113,14 +113,6 @@ Configure custom presigned URL endpoint and allowed image domains using HTML att
 </serlo-editor>
 ```
 
-Or set properties programmatically:
-
-```javascript
-const editor = document.querySelector('serlo-editor')
-editor.presignedUrlEndpoint = 'https://custom-api.example.com/presigned-url'
-editor.allowedImageDomains = ['*.gitea.example.com', 'cdn.example.com']
-```
-
 ## Shadow DOM vs. normal DOM
 
 Version 0.10.3 was the last stable version where you can render the Serlo Editor within the Shadow DOM. All future versions will only work in the regular DOM and the editor expects window/document objects to be available! If you are already rendering your whole app within a Shadow Root, you could consider wrapping the Serlo Editor in an iFrame which should allow you to keep having a Shadow Root, while making the global window/document objects available and isolating the Serlo Editor styles from your existing styles completely.
