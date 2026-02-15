@@ -57,13 +57,15 @@ async function uploadFile({
       // eslint-disable-next-line no-console
       console.error(error)
       handleError(uploadStrings.errorUploading)
-      return Promise.reject(error)
+      const errorObj =
+        error instanceof Error ? error : new Error(uploadStrings.errorUploading)
+      return Promise.reject(errorObj)
     }
   }
 
   // Otherwise, use the default presigned URL workflow
   const parentHost = getParentHost()
-  
+
   // Use custom presigned URL endpoint if provided, otherwise use default
   const signedUrlHost = fileUploadConfig?.presignedUrlEndpoint
     ? new URL(fileUploadConfig.presignedUrlEndpoint).host
