@@ -101,6 +101,56 @@ Then you can pass the filteredPlugins to the plugins array of the editor-web-com
 
 The plugins attribute/property accepts an array of plugin types. You can reference EditorPluginType for all available plugin options. Note that upon first render, the object will be frozen. You can't change the available plugins dynamically, so make sure to filter out the plugins you don't want before the first render!
 
+## Configuring file uploads
+
+The Serlo Editor Web Component supports custom file upload configurations for integrating with various storage backends. This is useful when you want to use a custom storage solution (like Gitea) instead of the default S3-based workflow.
+
+### Using HTML attributes
+
+You can configure the presigned URL endpoint and allowed image domains using HTML attributes:
+
+```html
+<serlo-editor
+  presigned-url-endpoint="https://custom-api.example.com/presigned-url"
+  allowed-image-domains='["cdn.example.com", "*.gitea.example.com"]'
+>
+</serlo-editor>
+```
+
+### Using JavaScript properties
+
+For more advanced use cases, you can set a custom upload handler programmatically:
+
+```javascript
+const editor = document.querySelector('serlo-editor')
+
+// Set custom upload handler for Gitea or other backends
+editor.setFileUploadHandler(async (file) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  
+  const response = await fetch('https://gitea.example.com/api/v1/repos/owner/repo/contents/uploads', {
+    method: 'POST',
+    body: formData,
+    headers: { Authorization: 'token YOUR_TOKEN' }
+  })
+  
+  const data = await response.json()
+  return data.download_url // Return the final URL where the file is accessible
+})
+
+// Set allowed image domains
+editor.allowedImageDomains = ['*.gitea.example.com', 'cdn.example.com']
+```
+
+### Available configuration options
+
+- **`presigned-url-endpoint`** (HTML attribute): Custom base URL for the presigned URL endpoint. Only used when no custom upload handler is set.
+
+- **`allowed-image-domains`** (HTML attribute/property): JSON array of additional domain names to whitelist for images. Supports wildcards like `*.example.com`.
+
+- **`setFileUploadHandler(handler)`** (JavaScript method): Sets a custom upload handler function that receives a `File` object and returns a `Promise<string>` with the final URL. This completely replaces the default upload workflow.
+
 ## Shadow DOM vs. normal DOM
 
 Version 0.10.3 was the last stable version where you can render the Serlo Editor within the Shadow DOM. All future versions will only work in the regular DOM and the editor expects window/document objects to be available! If you are already rendering your whole app within a Shadow Root, you could consider wrapping the Serlo Editor in an iFrame which should allow you to keep having a Shadow Root, while making the global window/document objects available and isolating the Serlo Editor styles from your existing styles completely.
