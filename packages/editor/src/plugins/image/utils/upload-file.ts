@@ -9,10 +9,13 @@ import { useContext } from 'react'
 import { handleError, handleValidationError } from './handle-errors'
 import { validateFile } from './validate-file'
 
-type UploadMeta = Pick<EditorMeta, 'editorVariant' | 'userId'>
+type UploadMeta = Pick<
+  EditorMeta,
+  'editorVariant' | 'userId' | 'fileUploadConfig'
+>
 
 export function useUploadFile() {
-  const { editorVariant, userId, isProductionEnvironment } =
+  const { editorVariant, userId, isProductionEnvironment, fileUploadConfig } =
     useContext(EditorMetaContext)
   const uploadStrings = useEditStrings().edtrIo.fileUpload
   const uploader = (file: File) =>
@@ -22,6 +25,7 @@ export function useUploadFile() {
       userId,
       isProductionEnvironment,
       uploadStrings,
+      fileUploadConfig,
     })
   return uploader
 }
@@ -32,6 +36,7 @@ async function uploadFile({
   editorVariant,
   userId,
   uploadStrings,
+  fileUploadConfig,
 }: UploadMeta & {
   file: File
   uploadStrings: EditStrings['edtrIo']['fileUpload']
@@ -43,10 +48,28 @@ async function uploadFile({
     return Promise.reject()
   }
 
+  // If a custom upload handler is provided, use it
+  if (fileUploadConfig?.uploadHandler) {
+    try {
+      const fileUrl = await fileUploadConfig.uploadHandler(file)
+      return Promise.resolve(fileUrl)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+      handleError(uploadStrings.errorUploading)
+      return Promise.reject(error)
+    }
+  }
+
+  // Otherwise, use the default presigned URL workflow
   const parentHost = getParentHost()
-  const signedUrlHost = isProductionEnvironment
-    ? 'editor.serlo.org'
-    : 'editor.serlo.dev'
+  
+  // Use custom presigned URL endpoint if provided, otherwise use default
+  const signedUrlHost = fileUploadConfig?.presignedUrlEndpoint
+    ? new URL(fileUploadConfig.presignedUrlEndpoint).host
+    : isProductionEnvironment
+      ? 'editor.serlo.org'
+      : 'editor.serlo.dev'
 
   // url for signedUrl fetch
   const url = new URL(`https://${signedUrlHost}/media/presigned-url`)

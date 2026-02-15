@@ -11,6 +11,12 @@ export type { SupportedLanguage } from '@editor/types/language-data'
 export type { LearnerEventData } from '@editor/plugin/helpers/editor-learner-event'
 export { EditorPluginType } from '@editor/types/editor-plugin-type'
 
+// File upload configuration types
+export type {
+  FileUploadConfig,
+  UploadHandler,
+} from '@editor/core/contexts/editor-meta-context'
+
 /**
  * We need to make a distinction between entries in our menu and
  * technical plugin types. For example, internally we have a

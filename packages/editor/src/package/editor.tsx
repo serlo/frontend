@@ -1,5 +1,8 @@
 import { Editor, type EditorProps } from '@editor/core'
-import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
+import {
+  EditorMetaContext,
+  type FileUploadConfig,
+} from '@editor/core/contexts/editor-meta-context'
 import type { OnEditorChangePayload } from '@editor/core/types'
 import {
   createPlugins,
@@ -47,6 +50,8 @@ export interface SerloEditorProps {
   showUndoRedoButtons?: boolean
   /** Removes upload buttons from all image and video plugins if you opt to not use the serlo.org asset buckets. Plugins can still be used by pasting urls to existing media content. */
   disableMediaUpload?: boolean
+  /** Configuration for file upload behavior */
+  fileUploadConfig?: FileUploadConfig
   /** only interally used for `serlo-editor-as-lti-tool` */
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
@@ -68,6 +73,7 @@ export function SerloEditor(props: SerloEditorProps) {
     styleReset,
     showUndoRedoButtons,
     disableMediaUpload,
+    fileUploadConfig,
     _ltik,
     extraSerloPlugins,
     extraSerloRenderers,
@@ -106,6 +112,7 @@ export function SerloEditor(props: SerloEditorProps) {
             ltik: _ltik,
             disableMediaUpload,
             isProductionEnvironment,
+            fileUploadConfig,
           }}
         >
           {renderTestEnvironmentWarning()}

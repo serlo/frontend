@@ -49,6 +49,10 @@ export class EditorWebComponent extends HTMLElement {
 
   private _language: SupportedLanguage = 'de' as const
 
+  private _fileUploadHandler: ((file: File) => Promise<string>) | null = null
+  private _presignedUrlEndpoint: string | null = null
+  private _allowedImageDomains: string[] = []
+
   constructor() {
     super()
 
@@ -65,6 +69,8 @@ export class EditorWebComponent extends HTMLElement {
       'is-production-environment',
       'disable-media-upload',
       'language',
+      'presigned-url-endpoint',
+      'allowed-image-domains',
     ]
   }
 
@@ -103,6 +109,11 @@ export class EditorWebComponent extends HTMLElement {
       // the SupportedLanguage type, if we add more language support!
       const validatedLanguage = newValue === 'en' ? 'en' : 'de'
       this.language = validatedLanguage
+    } else if (name === 'presigned-url-endpoint') {
+      this.presignedUrlEndpoint = newValue
+    } else if (name === 'allowed-image-domains') {
+      this.allowedImageDomains =
+        newValue === null ? [] : (JSON.parse(newValue) as string[])
     }
   }
 
@@ -226,6 +237,44 @@ export class EditorWebComponent extends HTMLElement {
     this.mountReactComponent()
   }
 
+  /**
+   * Sets a custom upload handler function. This function will be called when
+   * a file needs to be uploaded. It should return a Promise that resolves to
+   * the URL of the uploaded file.
+   */
+  setFileUploadHandler(handler: (file: File) => Promise<string>) {
+    this._fileUploadHandler = handler
+    this.mountReactComponent()
+  }
+
+  get presignedUrlEndpoint(): string | null {
+    return this._presignedUrlEndpoint
+  }
+
+  set presignedUrlEndpoint(value: string | null) {
+    this._presignedUrlEndpoint = value
+    if (value === null) {
+      this.removeAttribute('presigned-url-endpoint')
+    } else {
+      this.setAttribute('presigned-url-endpoint', value)
+    }
+    this.mountReactComponent()
+  }
+
+  get allowedImageDomains(): string[] {
+    return this._allowedImageDomains
+  }
+
+  set allowedImageDomains(value: string[]) {
+    this._allowedImageDomains = value
+    if (value.length === 0) {
+      this.removeAttribute('allowed-image-domains')
+    } else {
+      this.setAttribute('allowed-image-domains', JSON.stringify(value))
+    }
+    this.mountReactComponent()
+  }
+
   connectedCallback() {
     this.appendChild(this.container)
     this.loadAndApplyStyles()
@@ -268,6 +317,21 @@ export class EditorWebComponent extends HTMLElement {
       return null
     }
 
+    // Build fileUploadConfig from the component properties
+    const fileUploadConfig =
+      this._fileUploadHandler ||
+      this._presignedUrlEndpoint ||
+      this._allowedImageDomains.length > 0
+        ? {
+            uploadHandler: this._fileUploadHandler ?? undefined,
+            presignedUrlEndpoint: this._presignedUrlEndpoint ?? undefined,
+            allowedImageDomains:
+              this._allowedImageDomains.length > 0
+                ? this._allowedImageDomains
+                : undefined,
+          }
+        : undefined
+
     this.reactRoot.render(
       <React.StrictMode>
         <div id="serlo-root" className="relative">
@@ -283,6 +347,7 @@ export class EditorWebComponent extends HTMLElement {
                     ? undefined
                     : this._disableMediaUpload
                 }
+                fileUploadConfig={fileUploadConfig}
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)

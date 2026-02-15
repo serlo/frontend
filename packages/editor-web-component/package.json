@@ -40,13 +40,13 @@
     "yalc:publish": "yarn build && yalc publish --push --sig"
   },
   "resolutions": {
-    "@serlo/editor": "0.26.0"
+    "@serlo/editor": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
     "@rollup/plugin-replace": "^6.0.1",
-    "@serlo/editor": "0.26.0",
+    "@serlo/editor": "workspace:*",
     "@serlo/typescript-config": "workspace:*",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.3.1",
