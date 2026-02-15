@@ -7,10 +7,6 @@ export interface EditorMeta {
   ltik?: string
   disableMediaUpload?: boolean
   isProductionEnvironment?: boolean
-  /**
-   * Base URL for the presigned URL endpoint. Defaults to 'https://editor.serlo.org' or 'https://editor.serlo.dev'
-   * depending on isProductionEnvironment.
-   */
   presignedUrlEndpoint?: string
 }
 
