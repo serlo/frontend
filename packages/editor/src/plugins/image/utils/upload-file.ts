@@ -9,43 +9,31 @@ import { useContext } from 'react'
 import { handleError, handleValidationError } from './handle-errors'
 import { validateFile } from './validate-file'
 
-type UploadMeta = Pick<
-  EditorMeta,
-  'editorVariant' | 'userId' | 'presignedUrlEndpoint'
->
-
 export function useUploadFile() {
+  const editorMeta = useContext(EditorMetaContext)
+  const uploadStrings = useEditStrings().edtrIo.fileUpload
+  const uploader = (file: File) =>
+    uploadFile({ file, editorMeta, uploadStrings })
+  return uploader
+}
+
+async function uploadFile({
+  editorMeta,
+  file,
+  uploadStrings,
+}: {
+  editorMeta: EditorMeta
+  file: File
+  uploadStrings: EditStrings['edtrIo']['fileUpload']
+  isProductionEnvironment?: boolean
+}) {
   const {
     editorVariant,
     userId,
     isProductionEnvironment,
     presignedUrlEndpoint,
-  } = useContext(EditorMetaContext)
-  const uploadStrings = useEditStrings().edtrIo.fileUpload
-  const uploader = (file: File) =>
-    uploadFile({
-      file,
-      editorVariant,
-      userId,
-      isProductionEnvironment,
-      uploadStrings,
-      presignedUrlEndpoint,
-    })
-  return uploader
-}
+  } = editorMeta
 
-async function uploadFile({
-  isProductionEnvironment,
-  file,
-  editorVariant,
-  userId,
-  uploadStrings,
-  presignedUrlEndpoint,
-}: UploadMeta & {
-  file: File
-  uploadStrings: EditStrings['edtrIo']['fileUpload']
-  isProductionEnvironment?: boolean
-}) {
   const validated = validateFile(file)
   if (validated !== true) {
     handleValidationError(validated, uploadStrings)
