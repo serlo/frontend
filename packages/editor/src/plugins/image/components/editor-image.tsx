@@ -52,7 +52,11 @@ function isAdditionalDomainAllowed(
       // Support wildcards like *.example.com
       if (domain.startsWith('*.')) {
         const baseDomain = domain.slice(2)
-        return url.hostname.endsWith(baseDomain)
+        // Ensure the match occurs at a subdomain boundary
+        // e.g., *.example.com matches sub.example.com but not evilexample.com
+        return (
+          url.hostname.endsWith('.' + baseDomain) || url.hostname === baseDomain
+        )
       }
       return url.hostname === domain
     })

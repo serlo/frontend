@@ -112,8 +112,20 @@ export class EditorWebComponent extends HTMLElement {
     } else if (name === 'presigned-url-endpoint') {
       this.presignedUrlEndpoint = newValue
     } else if (name === 'allowed-image-domains') {
-      this.allowedImageDomains =
-        newValue === null ? [] : (JSON.parse(newValue) as string[])
+      if (newValue === null) {
+        this.allowedImageDomains = []
+      } else {
+        try {
+          this.allowedImageDomains = JSON.parse(newValue) as string[]
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(
+            `Invalid JSON for allowed-image-domains attribute: ${newValue}`,
+            error
+          )
+          this.allowedImageDomains = []
+        }
+      }
     }
   }
 

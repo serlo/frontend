@@ -25,6 +25,31 @@ describe('File Upload Configuration', () => {
     expect(mockUploadHandler).toHaveBeenCalledWith(testFile)
   })
 
+  test('Custom upload handler error is caught and wrapped', async () => {
+    const mockUploadHandler: UploadHandler = vi.fn(async () => {
+      throw new Error('Upload failed')
+    })
+
+    const testFile = new File(['test content'], 'test.jpg', {
+      type: 'image/jpeg',
+    })
+
+    await expect(mockUploadHandler(testFile)).rejects.toThrow('Upload failed')
+  })
+
+  test('Custom upload handler with non-Error rejection', async () => {
+    const mockUploadHandler: UploadHandler = vi.fn(async () => {
+      // eslint-disable-next-line prefer-promise-reject-errors
+      throw 'String error'
+    })
+
+    const testFile = new File(['test content'], 'test.jpg', {
+      type: 'image/jpeg',
+    })
+
+    await expect(mockUploadHandler(testFile)).rejects.toBe('String error')
+  })
+
   test('FileUploadConfig with custom upload handler', () => {
     const uploadHandler: UploadHandler = async (file: File) => {
       return `https://custom.com/${file.name}`

@@ -158,7 +158,7 @@ See below for the current API specification.
     },
     allowedImageDomains: ['*.gitea.example.com']
   }
-  
+
   <SerloEditor fileUploadConfig={fileUploadConfig} ... />
   ```
 
@@ -169,7 +169,7 @@ See below for the current API specification.
     presignedUrlEndpoint: 'https://custom-api.example.com/presigned-url',
     allowedImageDomains: ['cdn.example.com']
   }
-  
+
   <SerloEditor fileUploadConfig={fileUploadConfig} ... />
   ```
 
