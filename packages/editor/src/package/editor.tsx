@@ -1,8 +1,5 @@
 import { Editor, type EditorProps } from '@editor/core'
-import {
-  EditorMetaContext,
-  type FileUploadConfig,
-} from '@editor/core/contexts/editor-meta-context'
+import { EditorMetaContext } from '@editor/core/contexts/editor-meta-context'
 import type { OnEditorChangePayload } from '@editor/core/types'
 import {
   createPlugins,
@@ -50,8 +47,16 @@ export interface SerloEditorProps {
   showUndoRedoButtons?: boolean
   /** Removes upload buttons from all image and video plugins if you opt to not use the serlo.org asset buckets. Plugins can still be used by pasting urls to existing media content. */
   disableMediaUpload?: boolean
-  /** Configuration for file upload behavior */
-  fileUploadConfig?: FileUploadConfig
+  /**
+   * Base URL for the presigned URL endpoint. Defaults to 'https://editor.serlo.org' or 'https://editor.serlo.dev'
+   * depending on isProductionEnvironment.
+   */
+  presignedUrlEndpoint?: string
+  /**
+   * Additional allowed domains for images. These domains will be whitelisted and images from them
+   * won't be proxied through the asset-proxy. Supports wildcards like '*.example.com'.
+   */
+  allowedImageDomains?: string[]
   /** only interally used for `serlo-editor-as-lti-tool` */
   _ltik?: string
   /** @deprecated Only temporarily allowed for serlo.org. */
@@ -73,7 +78,8 @@ export function SerloEditor(props: SerloEditorProps) {
     styleReset,
     showUndoRedoButtons,
     disableMediaUpload,
-    fileUploadConfig,
+    presignedUrlEndpoint,
+    allowedImageDomains,
     _ltik,
     extraSerloPlugins,
     extraSerloRenderers,
@@ -112,7 +118,8 @@ export function SerloEditor(props: SerloEditorProps) {
             ltik: _ltik,
             disableMediaUpload,
             isProductionEnvironment,
-            fileUploadConfig,
+            presignedUrlEndpoint,
+            allowedImageDomains,
           }}
         >
           {renderTestEnvironmentWarning()}

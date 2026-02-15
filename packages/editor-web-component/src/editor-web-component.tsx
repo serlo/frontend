@@ -324,18 +324,6 @@ export class EditorWebComponent extends HTMLElement {
       return null
     }
 
-    // Build fileUploadConfig from the component properties
-    const fileUploadConfig =
-      this._presignedUrlEndpoint || this._allowedImageDomains.length > 0
-        ? {
-            presignedUrlEndpoint: this._presignedUrlEndpoint ?? undefined,
-            allowedImageDomains:
-              this._allowedImageDomains.length > 0
-                ? this._allowedImageDomains
-                : undefined,
-          }
-        : undefined
-
     this.reactRoot.render(
       <React.StrictMode>
         <div id="serlo-root" className="relative">
@@ -351,7 +339,14 @@ export class EditorWebComponent extends HTMLElement {
                     ? undefined
                     : this._disableMediaUpload
                 }
-                fileUploadConfig={fileUploadConfig}
+                presignedUrlEndpoint={
+                  this._presignedUrlEndpoint ?? undefined
+                }
+                allowedImageDomains={
+                  this._allowedImageDomains.length > 0
+                    ? this._allowedImageDomains
+                    : undefined
+                }
                 onChange={(newState) => {
                   this._currentState = newState
                   this.broadcastNewState(newState)

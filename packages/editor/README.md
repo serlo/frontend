@@ -132,20 +132,16 @@ See below for the current API specification.
 
 - **`disableMediaUpload` (optional)**: Set to true to disable file upload in all image and video plugins. Plugins are still usable by pasting urls of existing media content.
 
-- **`fileUploadConfig` (optional)**: Configuration for customizing file upload behavior:
+- **`presignedUrlEndpoint` (optional)**: Custom base URL for the presigned URL endpoint. Defaults to `https://editor.serlo.org` (production) or `https://editor.serlo.dev` (development).
 
-  - `presignedUrlEndpoint` (optional): Custom base URL for the presigned URL endpoint. Defaults to `https://editor.serlo.org` (production) or `https://editor.serlo.dev` (development).
-
-  - `allowedImageDomains` (optional): Array of additional domain names to whitelist for images. Supports wildcards like `*.example.com`.
+- **`allowedImageDomains` (optional)**: Array of additional domain names to whitelist for images. Supports wildcards like `*.example.com`.
 
   **Example:**
 
   ```tsx
   <SerloEditor
-    fileUploadConfig={{
-      presignedUrlEndpoint: 'https://custom-api.example.com/presigned-url',
-      allowedImageDomains: ['*.gitea.example.com', 'cdn.example.com']
-    }}
+    presignedUrlEndpoint="https://custom-api.example.com/presigned-url"
+    allowedImageDomains={['*.gitea.example.com', 'cdn.example.com']}
     ...
   />
   ```

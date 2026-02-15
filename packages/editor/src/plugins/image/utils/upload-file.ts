@@ -11,12 +11,16 @@ import { validateFile } from './validate-file'
 
 type UploadMeta = Pick<
   EditorMeta,
-  'editorVariant' | 'userId' | 'fileUploadConfig'
+  'editorVariant' | 'userId' | 'presignedUrlEndpoint'
 >
 
 export function useUploadFile() {
-  const { editorVariant, userId, isProductionEnvironment, fileUploadConfig } =
-    useContext(EditorMetaContext)
+  const {
+    editorVariant,
+    userId,
+    isProductionEnvironment,
+    presignedUrlEndpoint,
+  } = useContext(EditorMetaContext)
   const uploadStrings = useEditStrings().edtrIo.fileUpload
   const uploader = (file: File) =>
     uploadFile({
@@ -25,7 +29,7 @@ export function useUploadFile() {
       userId,
       isProductionEnvironment,
       uploadStrings,
-      fileUploadConfig,
+      presignedUrlEndpoint,
     })
   return uploader
 }
@@ -36,7 +40,7 @@ async function uploadFile({
   editorVariant,
   userId,
   uploadStrings,
-  fileUploadConfig,
+  presignedUrlEndpoint,
 }: UploadMeta & {
   file: File
   uploadStrings: EditStrings['edtrIo']['fileUpload']
@@ -53,13 +57,13 @@ async function uploadFile({
   // Use custom presigned URL endpoint if provided, otherwise use default
   let signedUrlHost: string
   try {
-    signedUrlHost = fileUploadConfig?.presignedUrlEndpoint
-      ? new URL(fileUploadConfig.presignedUrlEndpoint).host
+    signedUrlHost = presignedUrlEndpoint
+      ? new URL(presignedUrlEndpoint).host
       : isProductionEnvironment
         ? 'editor.serlo.org'
         : 'editor.serlo.dev'
   } catch {
-    const errorMsg = `Invalid presigned URL endpoint: ${fileUploadConfig?.presignedUrlEndpoint}`
+    const errorMsg = `Invalid presigned URL endpoint: ${presignedUrlEndpoint}`
     handleError(errorMsg)
     return Promise.reject(new Error(errorMsg))
   }

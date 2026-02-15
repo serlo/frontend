@@ -10,11 +10,11 @@ import { ImgHTMLAttributes, useContext } from 'react'
  */
 export function EditorImage(props: ImgHTMLAttributes<HTMLImageElement>) {
   const isSerlo = useIsSerlo()
-  const { fileUploadConfig } = useContext(EditorMetaContext)
+  const { allowedImageDomains } = useContext(EditorMetaContext)
   return (
     <img
       {...props}
-      src={getSrc(isSerlo, props.src, fileUploadConfig?.allowedImageDomains)}
+      src={getSrc(isSerlo, props.src, allowedImageDomains)}
       loading="lazy"
     />
   )
