@@ -5136,7 +5136,7 @@ __metadata:
     eslint-plugin-import: ^2.31.0
     eslint-plugin-react: ^7.37.4
     eslint-plugin-react-hooks: ^5.2.0
-    fast-xml-parser: ^5.3.4
+    fast-xml-parser: ^5.3.6
     fp-ts: ^2.16.9
     graphiql: ^3.7.2
     graphql: ^16.9.0
@@ -9066,14 +9066,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^5.3.4":
-  version: 5.3.4
-  resolution: "fast-xml-parser@npm:5.3.4"
+"fast-xml-parser@npm:^5.3.6":
+  version: 5.3.6
+  resolution: "fast-xml-parser@npm:5.3.6"
   dependencies:
-    strnum: ^2.1.0
+    strnum: ^2.1.2
   bin:
     fxparser: src/cli/cli.js
-  checksum: c4ec187c7ce4897d0baa69294ffec2b8628567bab913801a18ac8e42f8f97b6cd84f6d32844e0db9bedc952b09444e97b221a0929f0494a1eb7cbece0150033c
+  checksum: 62363dfe997f14debf5ebac22df8f3930f6a6fdc249ff2cda81aa442dafa52e7997cf62854f8d6e29d239f6b342feb448ec41d382d879d968fa4f59c144b522a
   languageName: node
   linkType: hard
 
@@ -15345,7 +15345,7 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"strnum@npm:^2.1.0":
+"strnum@npm:^2.1.2":
   version: 2.1.2
   resolution: "strnum@npm:2.1.2"
   checksum: 755e8327ee68201d700169ceee097ea52da7b675f4521442a8dbd1517021f89a91399213c446d1bf3d1123ca1896a76f0ff076d04c88ffe6056e78828ce6f60a
