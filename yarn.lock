@@ -8259,14 +8259,14 @@ __metadata:
   linkType: hard
 
 "dompurify@npm:^3.2.4":
-  version: 3.2.4
-  resolution: "dompurify@npm:3.2.4"
+  version: 3.3.3
+  resolution: "dompurify@npm:3.3.3"
   dependencies:
     "@types/trusted-types": ^2.0.7
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 7a299cbbfe3b3d189e5fc77ab94ad312807e37fda1e24a927548b76a58a9c98137e612ce8d94a2f6cd3d3db59844f14fca477676b5eae6103568a82142771df6
+  checksum: 2ba5b40129259836f1e6c98e99d16608d34c7f4ad6ba457ac8c932f0e2c8e0e7c27561d25fcabf97e695eec57fd5eef1c065b324a542e5125631d4f768af2736
   languageName: node
   linkType: hard
 
