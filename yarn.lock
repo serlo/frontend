@@ -1539,12 +1539,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.25.6, @babel/runtime@npm:^7.25.7, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.25.6, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.26.10
   resolution: "@babel/runtime@npm:7.26.10"
   dependencies:
     regenerator-runtime: ^0.14.0
   checksum: 22d2e0abb86e90de489ab16bb578db6fe2b63a88696db431198b24963749820c723f1982298cdbbea187f7b2b80fb4d98a514faf114ddb2fdc14a4b96277b955
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.26.10":
+  version: 7.29.2
+  resolution: "@babel/runtime@npm:7.29.2"
+  checksum: d5548d1165de8995f8afc93a5694b8625409be16cd1f2250ac13e331335858ddac3cb9fd278e6c43956a130101a2203f09417938a1a96f9fb70f02b4b4172e1d
   languageName: node
   linkType: hard
 
@@ -5081,7 +5088,7 @@ __metadata:
     is-hotkey: 0.2.0
     isomorphic-dompurify: ^2.22.0
     lit: ^3.2.1
-    mathjs: ^13.2.2
+    mathjs: ^15.2.0
     motion: ^11.11.17
     npm-run-all: ^4.1.5
     postcss: ^8.4.49
@@ -5210,7 +5217,7 @@ __metadata:
     isomorphic-dompurify: ^2.22.0
     js-cookie: ^3.0.5
     json-diff: ^1.0.6
-    mathjs: ^13.2.2
+    mathjs: ^15.2.0
     mathlive: ^0.104.0
     micromark: ^4.0.1
     next: ^14.2.26
@@ -9377,6 +9384,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fraction.js@npm:^5.2.1":
+  version: 5.3.4
+  resolution: "fraction.js@npm:5.3.4"
+  checksum: 6ac88ecfdb5fabe3566ae30f79828d448288efbb852cd43ad83afc961fb6923e1d77bc65fbcba8ccda10894114edd419581a050c73d61e368fdd4c3ff416a65a
+  languageName: node
+  linkType: hard
+
 "framer-motion@npm:^11.11.17":
   version: 11.11.17
   resolution: "framer-motion@npm:11.11.17"
@@ -11616,22 +11630,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mathjs@npm:^13.2.2":
-  version: 13.2.2
-  resolution: "mathjs@npm:13.2.2"
+"mathjs@npm:^15.2.0":
+  version: 15.2.0
+  resolution: "mathjs@npm:15.2.0"
   dependencies:
-    "@babel/runtime": ^7.25.7
+    "@babel/runtime": ^7.26.10
     complex.js: ^2.2.5
     decimal.js: ^10.4.3
     escape-latex: ^1.2.0
-    fraction.js: ^4.3.7
+    fraction.js: ^5.2.1
     javascript-natural-sort: ^0.7.1
     seedrandom: ^3.0.5
     tiny-emitter: ^2.1.0
     typed-function: ^4.2.1
   bin:
     mathjs: bin/cli.js
-  checksum: b93e54fa6ad5bbdaf6db51c504c62dcc2cdeecd3d938a9ec34d1f55b831cfa2254850a500d2785e873cf22ee4524b10558014cbce76b60ea0f26a33c0c6a2ff1
+  checksum: 0cdb352b21a7ecdbd474e2175d19a2ffa241d5bdbcefd08dde22d435b1825dc81381d5482e3a9e7d271148060c5c6b5410b0b5124469cb5bfc4c74778182d8cc
   languageName: node
   linkType: hard
 
