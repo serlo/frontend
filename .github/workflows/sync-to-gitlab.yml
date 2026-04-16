@@ -12,6 +12,6 @@ jobs:
       - name: Sync to GitLab
         uses: kulla/sync-to-gitlab@v1
         with:
-          owner: stephan_kulla
-          repository_name: serlo-frontend
+          owner: serlo
+          repository_name: frontend
           token: ${{ secrets.GITLAB_TOKEN }}
