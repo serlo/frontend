@@ -127,7 +127,7 @@
     "vite": "^6.4.3",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^2.1.9"
+    "vitest": "^3.2.6"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
