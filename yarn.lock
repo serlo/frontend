@@ -5758,7 +5758,7 @@ __metadata:
     mathjs: ^15.2.0
     motion: ^11.11.17
     npm-run-all: ^4.1.5
-    postcss: ^8.5.10
+    postcss: ^8.5.18
     postcss-flexbugs-fixes: ^5.0.2
     postcss-import: ^16.1.0
     prettier: ^3.5.3
@@ -5891,7 +5891,7 @@ __metadata:
     next-query-params: ^5.0.1
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
-    postcss: ^8.5.10
+    postcss: ^8.5.18
     postcss-flexbugs-fixes: ^5.0.2
     postcss-import: ^16.1.0
     postcss-nested: ^7.0.2
@@ -14319,14 +14319,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.10":
-  version: 8.5.10
-  resolution: "postcss@npm:8.5.10"
+"postcss@npm:^8.5.18":
+  version: 8.5.18
+  resolution: "postcss@npm:8.5.18"
   dependencies:
-    nanoid: ^3.3.11
+    nanoid: ^3.3.12
     picocolors: ^1.1.1
     source-map-js: ^1.2.1
-  checksum: 9af9cd7f2f0d4b8456f6710e48d586328433509b695911fda942c24ac4db4e62c6fed8c6c6d8c8258326285f669494c2c36a4ff84aa160f0586eb545e5258bf5
+  checksum: 924b71b066ada1909b741970b53529b95a6589106302a154cd14b2fae0c8186144be2bb1e0c45e0f3e530474cf92afa01d790afa8b71dcd60c98ca8ee42f66c1
   languageName: node
   linkType: hard
 
