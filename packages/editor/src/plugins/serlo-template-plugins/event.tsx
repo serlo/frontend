@@ -1,16 +1,17 @@
 import {
+  child,
   type EditorPlugin,
   type EditorPluginProps,
   object,
   string,
 } from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const eventTypeState = object({
   title: string(),
-  content: editorContent(),
+  content: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type EventTypePluginState = typeof eventTypeState

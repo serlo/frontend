@@ -1,18 +1,17 @@
-import type {
-  AbstractSerializedState,
-  TaxonomySerializedState,
-} from '@/serlo-editor-integration/convert-editor-response-to-state'
+import type { SerializedAbstractTemplatePluginDocument } from '@/serlo-editor-integration/convert-editor-response-to-state'
 
-export type SetEntityMutationData = AbstractSerializedState & {
+export type SetEntityMutationData = SerializedAbstractTemplatePluginDocument & {
   changes?: string
 }
 
-export type TaxonomyCreateOrUpdateMutationData = Pick<
-  TaxonomySerializedState,
-  'term' | 'description'
-> & {
+export interface TaxonomyCreateOrUpdateMutationData {
   __typename?: 'TaxonomyTerm'
+  term: {
+    name: string
+  }
+  description: string
   parent?: number
+  content: string
 }
 
 export interface SetEntityMutationRunnerData {

@@ -4,9 +4,10 @@ import {
   object,
   string,
   number,
+  child,
 } from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const taxonomyTypeState = object({
@@ -15,7 +16,7 @@ export const taxonomyTypeState = object({
   }),
   parent: number(),
   position: number(),
-  description: editorContent(),
+  content: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type TaxonomyTypePluginState = typeof taxonomyTypeState
@@ -26,7 +27,7 @@ export const taxonomyTypePlugin: EditorPlugin<TaxonomyTypePluginState> = {
 }
 
 function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
-  const { term, description } = props.state
+  const { term, content } = props.state
 
   return (
     <>
@@ -34,7 +35,7 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
         <EntityTitleInput title={term.name} />
       </header>
 
-      {description.render()}
+      {content.render()}
     </>
   )
 }

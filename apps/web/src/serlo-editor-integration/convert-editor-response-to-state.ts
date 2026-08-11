@@ -62,9 +62,7 @@ export function convertEditorResponseToState(
       message: `error while converting: ${JSON.stringify(stack)}`,
     })
 
-    return {
-      error: 'failure',
-    }
+    return { error: 'failure' }
   }
 
   function convertAbstractEntity(
@@ -77,21 +75,6 @@ export function convertEditorResponseToState(
       entityType,
       content
     )
-
-    if (uuid.__typename === UuidType.Video) {
-      return {
-        ...editorMetadata,
-        document: {
-          plugin: TemplatePluginType.Video,
-          state: {
-            ...entityFields,
-            content: url ? url : templateContent,
-            description: templateContent,
-            ...(url ? { url } : {}),
-          },
-        },
-      }
-    }
 
     return {
       ...editorMetadata,
@@ -113,8 +96,9 @@ export function convertEditorResponseToState(
   ): StorageFormat {
     stack.push({ id: uuid.id, type: entityType })
 
-    const { editorMetadata, entityDescription } = unwrapEntityDescription(
-      uuid.description
+    const { editorMetadata, templateContent } = unwrapEditorContent(
+      UuidType.TaxonomyTerm,
+      uuid.description ?? undefined
     )
 
     return {
@@ -128,25 +112,11 @@ export function convertEditorResponseToState(
           term: {
             name: uuid.name,
           },
-          description: entityDescription,
+          content: templateContent ?? { plugin: EditorPluginType.Rows },
         },
       },
     }
   }
-}
-
-function unwrapEntityDescription(description: string | null | undefined) {
-  const convertedDescription = parseEditorData(description ?? undefined)
-
-  const editorMetadata = convertedDescription
-    ? R.omit(['document'], convertedDescription)
-    : R.omit(['document'], createEmptyDocument('serlo-org'))
-
-  const entityDescription = serializeStaticDocument(
-    convertedDescription?.document
-  )
-
-  return { editorMetadata, entityDescription }
 }
 
 export function unwrapEditorContent(
@@ -163,73 +133,48 @@ export function unwrapEditorContent(
     | AnyEditorDocument
     | undefined
 
-  let templateContent
   if (
     entityType !== 'Article' ||
     editorContent?.plugin === EditorPluginType.Article
   ) {
-    templateContent = serializeStaticDocument(editorContent)
-  } else {
-    // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
-    templateContent = serializeStaticDocument({
-      plugin: EditorPluginType.Article,
-      state: {
-        introduction: { plugin: EditorPluginType.ArticleIntroduction },
-        content: editorContent,
-        exercises: [],
-        exerciseFolder: { id: '', title: '' },
-        relatedContent: {
-          articles: [],
-          courses: [],
-          videos: [],
-        },
-        sources: [],
-      },
-    })
+    return { editorMetadata, templateContent: editorContent }
   }
 
-  return { editorMetadata, templateContent }
+  // currently still needed. See https://serlo.slack.com/archives/CEB781NCU/p1695977868948869
+  const articlePluginDocument = {
+    plugin: EditorPluginType.Article,
+    state: {
+      introduction: { plugin: EditorPluginType.ArticleIntroduction },
+      content: editorContent,
+      exercises: [],
+      exerciseFolder: { id: '', title: '' },
+      relatedContent: { articles: [], courses: [], videos: [] },
+      sources: [],
+    },
+  }
+  return { editorMetadata, templateContent: articlePluginDocument }
 }
 
-export function convertUserByDescription(description?: string | null) {
-  const { editorMetadata, entityDescription } =
-    unwrapEntityDescription(description)
+export function convertUserByDescription(content?: string | null) {
+  const { editorMetadata, templateContent } = unwrapEditorContent(
+    UuidType.User,
+    content ?? undefined
+  )
 
   return {
     ...editorMetadata,
     document: {
       plugin: TemplatePluginType.User,
-      state: {
-        description: entityDescription,
-      },
+      state: { content: templateContent },
     },
   }
 }
 
-export interface AbstractSerializedState {
+export interface SerializedAbstractTemplatePluginDocument {
   __typename?: UuidType[number]
-  title?: string
   content: SerializedStaticState
-  reasoning?: SerializedStaticState
-  description: SerializedStaticState
+  title?: string
   url?: string
-  cohesive?: string
-}
-
-export interface TaxonomySerializedState {
-  __typename?: UuidType.TaxonomyTerm
-  term: {
-    name: string
-  }
-  description: SerializedStaticState
-  taxonomy: number
-  parent: number
-  position: number
-}
-
-export interface UserSerializedState {
-  __typename?: UuidType.User
-  description: SerializedStaticState
 }
 
 export type ConvertResponseError =
@@ -243,16 +188,6 @@ export function isError(
   result: DeserializedStaticResult
 ): result is ConvertResponseError {
   return !!(result as ConvertResponseError).error
-}
-
-function serializeStaticDocument(content?: AnyEditorDocument): string {
-  if (typeof content === 'string') return content
-  return JSON.stringify(
-    content ?? {
-      plugin: EditorPluginType.Rows,
-      state: [{ plugin: EditorPluginType.Text, state: undefined }],
-    }
-  )
 }
 
 function parseEditorData(
