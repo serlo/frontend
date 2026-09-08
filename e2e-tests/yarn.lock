@@ -4940,14 +4940,14 @@ __metadata:
   linkType: hard
 
 "multer@npm:^2.0.2":
-  version: 2.2.0
-  resolution: "multer@npm:2.2.0"
+  version: 2.3.0
+  resolution: "multer@npm:2.3.0"
   dependencies:
     append-field: ^1.0.0
     busboy: ^1.6.0
     concat-stream: ^2.0.0
     type-is: ^1.6.18
-  checksum: ed283b3d7ef2a0d1b1d7d6b1688116ca370ba4cfdb0d3f7bb29bd0fdac42199bff87f580b109c559838e38f5af698f77fcf86550ec9240d330405c87912f75c4
+  checksum: 67f62308c80b987254cc71037e71d17af2117bb420bd230ee199a29e80fe922eec8fded4c75bf1cd23ee676389eb67cf652676b121fd0c52385cdb90881020f4
   languageName: node
   linkType: hard
 
