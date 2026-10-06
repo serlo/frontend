@@ -133,7 +133,7 @@
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
-    "node": "^20.0.0"
+    "node": "24.x"
   },
   "nextBundleAnalysis": {
     "budget": null,
