@@ -33,8 +33,8 @@ export default {
       },
       maxWidth: { xs: '300px' },
       fontFamily: {
-        serlo: 'Karla, sans-serif',
-        handwritten: 'Caveat, sans-serif',
+        serlo: 'Montserrat, sans-serif',
+        handwritten: '"Caveat Brush", sans-serif',
       },
     },
   },
