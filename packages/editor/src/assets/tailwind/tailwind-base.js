@@ -7,7 +7,7 @@ import tailwindAnimate from 'tailwindcss-animate'
 import { serloEditorPlugin } from './serlo-editor-plugin'
 
 // base colors
-const brand = '#007ec1'
+const brand = '#006359' // Chancenwerk Petrol
 const brandGreen = '#95bc1a'
 const sunflower = '#ffbe5e'
 const sunflowerColors = {
@@ -24,15 +24,15 @@ export default {
       colors: {
         brand: {
           DEFAULT: brand,
-          50: '#f4f9fc',
-          100: '#eff7fb',
-          150: '#e6f2f9',
-          200: '#d9ebf5',
-          300: '#bbdced',
-          400: '#8ec5e2',
-          500: '#51a5d1',
+          50: '#f4f8f8',
+          100: '#eff5f5',
+          150: '#e6f0ef',
+          200: '#d9e8e6',
+          300: '#bbd5d3',
+          400: '#8ebab5',
+          500: '#51958e',
           600: brand,
-          700: '#0076b9', // slighly darker brand blue for better color contrast with white (for smaller text) and light blue.
+          700: '#005d53', // slightly darker petrol for small text
         },
         brandgreen: {
           DEFAULT: brandGreen,
@@ -50,6 +50,7 @@ export default {
         },
         gray: colors.neutral,
         berry: '#857189',
+        'cw-green': '#dfea9e', // Chancenwerk Unterfarbe für Grafiken und Kacheln
         newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
         'almost-black': '#404040',

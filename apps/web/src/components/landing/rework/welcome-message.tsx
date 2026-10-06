@@ -5,11 +5,11 @@ export function WelcomeMessage() {
       ? { message: 'Yeah, Schule geht los', icon: '' }
       : hours > 22 || hours < 4
         ? { message: 'Oha! Um diese Zeit noch fleißig?', icon: '🦉' }
-        : { message: 'Schön, dass Du da bist', icon: '' }
+        : { message: 'Schön, dass du da bist!', icon: '' }
 
   return (
     <>
-      <span className="italic">{message}</span> {icon}
+      <span>{message}</span> {icon}
     </>
   )
 }

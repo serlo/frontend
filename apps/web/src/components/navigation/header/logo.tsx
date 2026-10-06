@@ -1,34 +1,21 @@
 import { Link } from '@/components/content/link'
-import { useInstanceData } from '@/contexts/instance-context'
-import { cn } from '@/helper/cn'
 
 export interface LogoProps {
   foldOnMobile?: boolean
 }
 
-export function Logo({ foldOnMobile }: LogoProps) {
-  const { strings } = useInstanceData()
-
+// Chancenwerk-Branding: neues Logo, Slogan "Die freie Lernplattform" entfällt
+export function Logo(_props: LogoProps) {
   return (
-    <Link href="/" className="w-min sm:w-auto">
+    <Link href="/" className="inline-block">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className="inline"
-        alt="Serlo"
-        src="/_assets/img/serlo-logo.svg"
-        width="120"
-        height="80"
+        className="inline h-auto w-[180px] mobileExt:w-[226px] md:w-[280px]"
+        alt="Serlo – operated by Chancenwerk"
+        src="/_assets/img/serlo-chancenwerk-logo.png"
+        width="226"
+        height="50"
       />
-      <span
-        className={cn(
-          'align-text-top font-handwritten text-xl text-almost-black',
-          foldOnMobile
-            ? 'ml-9 mt-2 block mobileExt:ml-9 mobileExt:inline-block mobileExt:whitespace-nowrap sm:ml-2 sm:mt-4'
-            : 'absolute ml-2 mt-8 inline-block'
-        )}
-      >
-        {strings.header.slogan}
-      </span>
     </Link>
   )
 }

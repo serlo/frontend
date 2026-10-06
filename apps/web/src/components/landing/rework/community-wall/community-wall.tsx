@@ -33,44 +33,39 @@ export function CommunityWall() {
 
   return (
     <section className="overflow-hidden">
-      <h3
-        className={cn(`
-            relative z-10 mx-auto mt-32 max-w-2xl px-2
-            text-center text-4xl font-bold leading-cozy tracking-tight text-almost-black
-          `)}
-      >
-        Wir sind eine große, ehrenamtliche Community und gestalten Serlo
-        <p className="font-handwritten text-5xl italic text-brand">
-          gemeinsam.
-        </p>
-      </h3>
-      <div className="relative z-0 mt-1 h-0 w-full">
-        <div
+      <div className="mt-20 bg-cw-green px-side py-16">
+        <h3
           className={cn(`
-              absolute inset-0 -mt-14 ml-5 h-32
-              bg-circled-and-arrow bg-contain bg-top bg-no-repeat
-           `)}
-        ></div>
-      </div>
+            relative z-10 mx-auto max-w-2xl
+            text-center text-2xl font-normal leading-snug text-black sm:text-3xl
+          `)}
+        >
+          <span className="serlo-underlined pb-1 font-handwritten text-5xl text-brand">
+            Gemeinsam
+          </span>{' '}
+          mit der Redaktion von Chancenwerk baut unsere große ehrenamtliche
+          Community an Serlo.
+        </h3>
 
-      <div className="relative z-10 mt-16 flex justify-center">
-        <div className="group text-center">
-          <Link
-            className="serlo-new-landing-button inline-block !text-white hover:no-underline group-hover:bg-brand-500"
-            href="/mitmachen"
-          >
-            Magst du mitmachen?
-          </Link>
-          <div className="relative">
-            <div className="absolute inset-0 flex justify-center">
-              <div
-                className={cn(`
+        <div className="relative z-10 mt-10 flex justify-center">
+          <div className="group text-center">
+            <Link
+              className="serlo-new-landing-button inline-block !font-normal !text-white hover:no-underline group-hover:bg-brand-500"
+              href="/mitmachen"
+            >
+              Willst du mitmachen?
+            </Link>
+            <div className="relative">
+              <div className="absolute inset-0 flex justify-center">
+                <div
+                  className={cn(`
                   pointer-events-none h-5 w-72 select-none
                   bg-underlined bg-contain bg-top
                   bg-no-repeat opacity-0 transition-all
                   duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
                 `)}
-              />
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -78,7 +73,7 @@ export function CommunityWall() {
 
       <div
         className={cn(`
-          flex flex-wrap justify-evenly
+          mt-16 flex flex-wrap justify-evenly
           md:relative md:mb-72 md:block md:h-[630px]
         `)}
       >
