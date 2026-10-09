@@ -28,7 +28,7 @@ export function ArticleRenderer({
 
   useEffect(() => {
     // small hack for SEO
-    const articleTitle = document.title.split('-').slice(0, -1).join('')
+    const articleTitle = document.title.split('-')[0].trim()
     const exTitle = document.getElementById('exercises-title')
     if (exTitle)
       exTitle.innerText = articleStrings.exercisesTitle + ' ' + articleTitle

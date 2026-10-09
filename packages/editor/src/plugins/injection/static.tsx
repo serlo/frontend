@@ -1,24 +1,16 @@
 import { LoadingSpinner } from '@editor/editor-ui/loading-spinner'
 import { useStaticStrings } from '@editor/i18n/static-strings-provider'
 import { StaticRenderer } from '@editor/static-renderer/static-renderer'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 import {
+  EditorExerciseGroupDocument,
   EditorInjectionDocument,
   type AnyEditorDocument,
 } from '@editor/types/editor-plugins'
 import { useEffect, useState } from 'react'
 
-function getBase(currentHost: string) {
-  if (currentHost.endsWith('serlo-staging.dev'))
-    return 'https://de.serlo-staging.dev'
-  if (currentHost.endsWith('serlo.org')) return 'https://' + currentHost
-
-  return process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'https://de.serlo.org'
-}
-
 interface ResponseData {
-  content: AnyEditorDocument[]
+  content: AnyEditorDocument
   alias: string
   licenseId?: number
 }
@@ -36,6 +28,11 @@ export function InjectionStaticRenderer({
   useEffect(() => {
     if (!href) return
 
+    const [base, hash] = href.split('#')
+    const entityId = parseInt(base.match(/\/(\d+)/)?.[1] ?? '0')
+
+    if (!entityId) return
+
     function handleError(error: unknown) {
       // eslint-disable-next-line no-console
       console.error(error)
@@ -43,18 +40,113 @@ export function InjectionStaticRenderer({
     }
 
     async function fetchSerloContent() {
-      const base = getBase(window.location.host)
-      const url = `${base}/api/frontend/injection-content?href=${encodeURIComponent(href)}`
+      const url = `/content/entities/${entityId}.json`
+
       const res = await fetch(url)
-      const data = (await res.json()) as
-        | string
-        | { content: AnyEditorDocument[]; alias: string; licenseId?: number }
+      const responseData = (await res.json()) as {
+        contentType: string
+        path: string
+        title: string
+        content: string
+        contentUrl: string
+        licenseId: number
+      }
 
       if (!res.ok) {
-        handleError(data)
+        handleError(responseData)
         return
       }
-      setData(data as ResponseData)
+      if (
+        ['Article', 'Course', 'TaxonomyTerm'].includes(responseData.contentType)
+      ) {
+        setData({
+          content: createFallbackBox(responseData.path, responseData.title),
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
+        return
+      }
+
+      if (responseData.contentType === 'Exercise') {
+        setData({
+          content:
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            JSON.parse(responseData.content).document as AnyEditorDocument,
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
+        return
+      }
+
+      if (responseData.contentType === 'Video') {
+        setData({
+          content: {
+            plugin: EditorPluginType.Video,
+            state: {
+              src: responseData.contentUrl,
+              alt: responseData.title ?? 'video',
+            },
+          },
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
+        return
+      }
+
+      if (responseData.contentType === 'Applet') {
+        setData({
+          content: {
+            plugin: EditorPluginType.Rows,
+            state: [
+              {
+                plugin: EditorPluginType.Geogebra,
+                state: responseData.contentUrl,
+              },
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              JSON.parse(responseData.content).document,
+            ],
+          },
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
+        return
+      }
+
+      if (responseData.contentType === 'ExerciseGroup') {
+        const content = (
+          JSON.parse(responseData.content) as {
+            document: EditorExerciseGroupDocument
+          }
+        ).document
+
+        // use id in hash to load one exercise out of the group
+        if (hash) {
+          const exercise = content.state.exercises.find((exercise) =>
+            exercise.id?.startsWith(hash)
+          )
+          if (exercise) {
+            setData({
+              content: exercise,
+              alias: responseData.path,
+              licenseId: responseData.licenseId,
+            })
+            return
+          }
+        }
+
+        setData({
+          content: content,
+          alias: responseData.path,
+          licenseId: responseData.licenseId,
+        })
+        return
+      }
+
+      setData({
+        content: JSON.parse(responseData.content) as AnyEditorDocument,
+        alias: responseData.path,
+        licenseId: responseData.licenseId,
+      })
     }
 
     try {
@@ -69,8 +161,6 @@ export function InjectionStaticRenderer({
   if (data === 'loading') return <LoadingSpinner />
   if (data === 'error') return errorBox ?? null
 
-  // injection content does not show license notice right now
-
   return (
     <div className="pt-4">
       <div className="mx-side border-t-3 border-brand-200 pb-4"></div>
@@ -79,7 +169,7 @@ export function InjectionStaticRenderer({
         {data.licenseId && data.licenseId > 1 ? (
           <a
             className="serlo-link"
-            href={`/license/detail/${data.licenseId}`}
+            href={`/license/${data.licenseId}`}
             target="_blank"
             rel="noreferrer"
           >
@@ -99,4 +189,26 @@ export function InjectionStaticRenderer({
       </div>
     </div>
   )
+}
+
+function createFallbackBox(alias: string, title: string) {
+  return {
+    plugin: EditorPluginType.Text,
+    state: [
+      {
+        type: 'p',
+        children: [
+          {
+            type: 'a',
+            href: alias,
+            children: [{ text: title, strong: true }],
+          },
+          {
+            type: 'p',
+            children: [{ text: '' }],
+          },
+        ],
+      },
+    ],
+  }
 }
