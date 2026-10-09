@@ -16,7 +16,7 @@ export function ProfileDescriptionEditor({
 
   const handleSave = async (data: unknown) => {
     const success = await setDescription({
-      description: (data as { description: string }).description,
+      description: (data as { content: string }).content,
     })
     if (!success) {
       // eslint-disable-next-line no-console
@@ -25,14 +25,11 @@ export function ProfileDescriptionEditor({
     }
     return revalidatePath(`/user/profile/${username}`)
   }
-
   const initialState = convertUserByDescription(rawDescription)
 
   return (
-    <>
-      <div className="[&>div.relative]:mt-12">
-        <SerloEditor onSave={handleSave} initialState={initialState} />
-      </div>
-    </>
+    <div className="[&>div.relative]:mt-12">
+      <SerloEditor onSave={handleSave} initialState={initialState} />
+    </div>
   )
 }

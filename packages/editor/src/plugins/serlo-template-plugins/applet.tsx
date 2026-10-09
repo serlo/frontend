@@ -1,4 +1,5 @@
 import {
+  child,
   type EditorPlugin,
   type EditorPluginProps,
   object,
@@ -6,12 +7,12 @@ import {
 } from '@editor/plugin'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent, serializedChild } from './common/common'
+import { serializedChild } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const appletTypeState = object({
   title: string(),
-  content: editorContent(),
+  content: child({ plugin: EditorPluginType.Rows }),
   url: serializedChild(EditorPluginType.Geogebra),
 })
 
