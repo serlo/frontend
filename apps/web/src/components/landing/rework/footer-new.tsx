@@ -10,7 +10,7 @@ export function FooterNew() {
   return (
     <footer
       id="footer"
-      className="bg-brand-100 px-side pb-10 font-bold text-almost-black lg:px-36"
+      className="bg-cw-green px-side pb-10 font-bold text-black md:rounded-tr-[5rem] lg:px-36"
     >
       <Separator />
       <FooterNavNew />

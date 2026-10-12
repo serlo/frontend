@@ -6,7 +6,7 @@ import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
-  fontFamily: 'Karla, sans-serif',
+  fontFamily: 'Montserrat, sans-serif',
   backgroundColor: '#fff',
 }
 
@@ -91,14 +91,14 @@ export default class MyDocument extends Document {
           />
           <link
             rel="preload"
-            href="/_assets/fonts/karla/karla-variable.woff2"
+            href="/_assets/fonts/montserrat/montserrat-variable.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""
           />
           <link
             rel="preload"
-            href="/_assets/fonts/caveat/caveat-700.woff2"
+            href="/_assets/fonts/caveat-brush/caveat-brush-400.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""

@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -10,7 +8,6 @@ import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
-import { breakpoints } from '@/helper/breakpoints'
 import { cn } from '@/helper/cn'
 import { submitEvent } from '@/helper/submit-event'
 import { serloDomain } from '@/helper/urls/serlo-domain'
@@ -33,28 +30,43 @@ export function LandingDE({ data }: LandingDEProps) {
       <LandingJsonLd />
       <Header />
       <main id="content" className="text-almost-black">
-        <section className="mx-auto mt-10 max-w-3xl px-2 text-center font-bold sm:mt-0">
-          <p className="serlo-add-eyebrows font-handwritten text-3xl text-brand">
+        <section className="mx-auto mt-10 max-w-3xl px-side sm:mt-0">
+          <p className="font-handwritten text-5xl leading-tight text-brand sm:text-7xl">
             <WelcomeMessage />
           </p>
-          <h1
-            className={cn(`
-              mx-auto mb-6 mt-3 max-w-2xl
-              text-center text-5xl font-extrabold tracking-tight
-            `)}
-          >
-            Was möchtest du{' '}
-            <span className="serlo-underlined pb-2">lernen ?</span>
+          <h1 className="mb-6 mt-3 text-3xl font-normal sm:text-4xl">
+            Was möchtest du lernen?
           </h1>
-          <div className="mx-auto mb-8 mt-10 max-w-2xl text-left font-normal">
-            <Quickbar />
+          <div className="mb-8 max-w-md [&_input]:border-black">
+            <Quickbar placeholder="Mathe, Englisch, Deutsch" />
           </div>
+        </section>
+
+        <section className="mx-auto mb-10 max-w-3xl px-2 text-center font-bold">
           <p className="text-3xl leading-cozy">
             Hier auf Serlo findest du{' '}
             <b className="tracking-tight">einfache Erklärungen,</b> ausgewählte{' '}
             <b className="tracking-tight">Lernvideos</b> und interaktive{' '}
             <b className="tracking-tight">Übungsaufgaben</b> mit Musterlösungen.
           </p>
+        </section>
+
+        <section className="bg-cw-green px-side py-8 text-lg leading-relaxed text-black">
+          <div className="mx-auto max-w-3xl">
+            <p className="mb-6">
+              Huch, hier sieht es anders aus?! Das liegt daran, dass Chancenwerk
+              und Serlo nun eins sind. Chancenwerk e.V. führt die Plattform
+              Serlo weiter, damit gute Bildung auch in Zukunft für alle frei
+              zugänglich bleibt! 🥳
+            </p>
+            <p>
+              Für dich ändert sich nichts: Alle gewohnten Lernmaterialien und
+              Erklärungen bleiben weiterhin kostenlos verfügbar. Zudem binden
+              wir Schritt für Schritt auch die Lerninhalte von Chancenwerk ein.
+              Das Einzige, was sich sonst anpasst, ist der Look: In den nächsten
+              Wochen bekommt die Seite nach und nach ein neues Design.
+            </p>
+          </div>
         </section>
 
         <section className="mt-10">
@@ -72,32 +84,21 @@ export function LandingDE({ data }: LandingDEProps) {
           <LandingSubjectsNew data={subjectsData} />
         </section>
 
-        <section
-          className={cn(`
-            about mt-7
-            text-center text-4xl font-bold
-            tracking-tight
-          `)}
-        >
-          <p className="mx-auto mb-8 max-w-2xl px-2">
-            Unsere Lernplattform wird von einem gemeinnützigen Verein
-            entwickelt. Sie ist komplett{' '}
-            <b className="font-extrabold">
-              kostenlos, werbefrei und{' '}
-              <span className="whitespace-nowrap">frei lizenziert</span>
-            </b>
-            .{' '}
-            <span className="serlo-underlined font-handwritten text-[1.2em] text-brand">
+        <section className="mt-20 bg-cw-green px-side py-16 text-center text-black">
+          <p className="mx-auto mb-8 max-w-2xl text-2xl leading-snug sm:text-3xl">
+            Unsere Lernplattform wird von dem gemeinnützigen Verein Chancenwerk
+            e.V. weiterentwickelt. Sie ist komplett kostenlos, werbefrei und
+            frei lizenziert.
+          </p>
+          <p className="mb-10">
+            <span className="serlo-underlined pb-2 font-handwritten text-5xl text-brand">
               Für immer!
             </span>
           </p>
-          <p className="mx-auto mb-8 max-w-2xl px-2">
-            Monatlich nutzen rund eine Million Schüler*innen und Lehrkräfte
-            Serlo.
-          </p>
           <Link
-            className="serlo-new-landing-button serlo-button-with-wings inline !text-white"
-            href="/serlo"
+            className="serlo-new-landing-button inline !font-normal !text-white"
+            href="https://www.chancenwerk.de"
+            noExternalIcon
           >
             Mehr über uns
           </Link>
@@ -120,36 +121,18 @@ export function LandingDE({ data }: LandingDEProps) {
           </h3>
         </section>
 
-        <section className="bg-blueWave bg-100% pt-4 text-center">
-          <h3
-            className={cn(`
-              relative z-10 mx-auto
-              mb-16 mt-32
-              max-w-2xl text-center text-4xl font-bold leading-cozy tracking-tight
-            `)}
-          >
-            Partner und Förderer
-          </h3>
-          <div className="mx-side mt-auto flex max-w-5xl justify-center pb-20 sm:mx-auto">
-            <Image
-              src="/_assets/img/donations/partners.png"
-              alt="Partner und Förderer Logos"
-              width="840"
-              height="260"
+        <section className="mb-20 mt-20 bg-cw-green px-side py-16 text-center text-black">
+          <h3 className="mb-10 text-3xl font-normal">Förderpartner:innen</h3>
+          <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-x-16 gap-y-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/_assets/img/landing/partner-deloitte.png"
+              alt="Deloitte"
+              className="h-auto w-64"
             />
+            {/* Platzhalter, bis das Fidelity-Logo geklärt ist (PDF S. 10) */}
+            <span className="text-5xl">Fidelity</span>
           </div>
-          <Link
-            className={cn(`
-              serlo-button-with-eyebrows mx-auto mt-12 hidden
-              rounded-lg border-2 border-solid border-almost-black
-              px-8 py-4 text-xl font-bold tracking-tight text-almost-black
-              hover:border-brand-500 hover:text-brand-500 hover:no-underline
-              md:inline-block
-            `)}
-            href="/partner"
-          >
-            Alle Partner ansehen
-          </Link>
         </section>
       </main>
       <FooterNew />
@@ -160,29 +143,6 @@ export function LandingDE({ data }: LandingDEProps) {
         /* special donation button on landing */
         :global(.navtrigger[href='/spenden']) {
           display: none;
-        }
-        .about {
-          padding-top: 7rem;
-          padding-bottom: 5rem;
-          margin: 6rem 0 0 0;
-          background-image: url('/_assets/img/landing/about-big-arrow.svg'),
-            url('/_assets/img/landing/about-container.svg');
-          background-repeat: no-repeat, no-repeat;
-          background-position: 77% 12%;
-          background-size:
-            200%,
-            100vw 100%;
-        }
-
-        @media (min-width: ${breakpoints.sm}) {
-          .about {
-            padding-top: 11rem;
-            padding-bottom: 9rem;
-            background-position: 20% 19%;
-            background-size:
-              82%,
-              100vw 100%;
-          }
         }
       `}</style>
     </>

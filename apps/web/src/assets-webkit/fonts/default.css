@@ -52,3 +52,32 @@
   font-weight: 700;
   src: url('/_assets/fonts/caveat/caveat-700.woff2') format('woff2');
 }
+
+/* Chancenwerk-Branding: Montserrat (Überschriften, Fließtext) und Caveat Brush (Schmuckschrift) */
+/* Quelle: Google Fonts, Lizenz SIL Open Font License, Subset "latin", Lizenztexte in ./LICENSES */
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 300 800;
+  src: url('/_assets/fonts/montserrat/montserrat-variable.woff2')
+    format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-display: swap;
+  font-style: italic;
+  font-weight: 300 800;
+  src: url('/_assets/fonts/montserrat/montserrat-italic-variable.woff2')
+    format('woff2');
+}
+
+/* nur ein Schnitt vorhanden, für 400–700 nutzen, damit der Browser nicht künstlich fett rechnet */
+@font-face {
+  font-family: 'Caveat Brush';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400 700;
+  src: url('/_assets/fonts/caveat-brush/caveat-brush-400.woff2') format('woff2');
+}

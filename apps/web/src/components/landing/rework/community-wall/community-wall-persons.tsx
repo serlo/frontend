@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { zip } from 'ramda'
 import { Fragment } from 'react'
 
-import { Link } from '@/components/content/link'
 import { CommunityWallPerson } from '@/data/de/community-people'
 import { cn } from '@/helper/cn'
 
@@ -46,37 +45,28 @@ export function CommunityWallPersons({
                 `)}
               ></div>
             </div>
-            <Link
-              className="relative z-10 whitespace-nowrap hover:no-underline"
-              href={`/user/profile/${name}`}
-            >
+            {/* Profile entfallen vorerst: Fotos sind nicht klickbar */}
+            <div className="relative z-10">
               <div className="relative block aspect-square w-full">
                 <Image
                   src={imgSrc}
-                  alt={`Avatar von ${name}`}
+                  alt={`Foto von ${name}, Chancenwerk-Team`}
                   fill
                   sizes="(max-width: 799px) 33vw, (max-width: 1023px) 25vw, 12.5vw"
                   className="rounded-full object-cover"
                 />
               </div>
               <p className="mb-2 mt-2 text-base font-bold text-gray-700">
-                @{name}
+                {name}
               </p>
               <span
                 className={cn(
-                  'rounded-2xl px-2 py-1 text-base font-bold text-white',
-                  role.includes('Autor')
-                    ? 'bg-yellow'
-                    : role.includes('Team')
-                      ? 'bg-brand-500'
-                      : role.includes('Lehrer')
-                        ? 'bg-newgreen'
-                        : 'bg-berry'
+                  'inline-block rounded-2xl bg-brand px-2 py-1 text-sm font-bold text-white'
                 )}
               >
                 {role}
               </span>
-            </Link>
+            </div>
           </figure>
           {lineBreak && <div className="h-0 w-full md:hidden"></div>}
         </Fragment>
