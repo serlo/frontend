@@ -55,8 +55,8 @@ export function useTaxonomyCreateOrUpdateMutation() {
         name: getRequiredString(mutationStrings, 'name', data.term.name),
         description: getRequiredString(
           mutationStrings,
-          'description',
-          data.description
+          'content',
+          data.content
         ),
       }
 

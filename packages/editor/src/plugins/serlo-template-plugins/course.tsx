@@ -1,4 +1,5 @@
 import {
+  child,
   type EditorPlugin,
   type EditorPluginProps,
   object,
@@ -7,12 +8,11 @@ import {
 import { CourseHeader } from '@editor/plugins/course/renderer/course-header'
 import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const courseTypeState = object({
   title: string(),
-  content: editorContent(EditorPluginType.Course),
+  content: child({ plugin: EditorPluginType.Course }),
 })
 
 export type CourseTypePluginState = typeof courseTypeState

@@ -1,4 +1,5 @@
 import {
+  child,
   type EditorPlugin,
   type EditorPluginProps,
   object,
@@ -6,14 +7,14 @@ import {
   upload,
 } from '@editor/plugin'
 import { videoPlugin } from '@editor/plugins/video'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const videoTypeState = object({
-  content: upload(''),
+  url: upload(''),
   title: string(),
-  description: editorContent(),
+  content: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type VideoTypePluginState = typeof videoTypeState
@@ -24,18 +25,15 @@ export const videoTypePlugin: EditorPlugin<VideoTypePluginState> = {
 }
 
 function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
-  const { title, content, description } = props.state
+  const { title, url, content } = props.state
 
   return (
     <>
       <EntityTitleInput title={title} />
 
       <article>
-        <videoPlugin.Component
-          {...props}
-          state={{ src: content, alt: title }}
-        />
-        {description.render()}
+        <videoPlugin.Component {...props} state={{ src: url, alt: title }} />
+        {content.render()}
       </article>
     </>
   )

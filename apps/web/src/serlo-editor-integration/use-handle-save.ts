@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import { type AbstractSerializedState } from './convert-editor-response-to-state'
+import { type SerializedAbstractTemplatePluginDocument } from './convert-editor-response-to-state'
 import type { SerloEditorProps } from './serlo-editor'
 
 export function useHandleSave(
   visible: boolean,
-  editorDocumentState: AbstractSerializedState,
+  editorDocumentState: SerializedAbstractTemplatePluginDocument,
   onSave: SerloEditorProps['onSave']
 ) {
   const [pending, setPending] = useState(false)

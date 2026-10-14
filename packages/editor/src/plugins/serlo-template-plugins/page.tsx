@@ -1,11 +1,17 @@
-import { EditorPlugin, EditorPluginProps, object, string } from '@editor/plugin'
+import {
+  child,
+  EditorPlugin,
+  EditorPluginProps,
+  object,
+  string,
+} from '@editor/plugin'
+import { EditorPluginType } from '@editor/types/editor-plugin-type'
 
-import { editorContent } from './common/common'
 import { EntityTitleInput } from './common/entity-title-input'
 
 export const pageTypeState = object({
   title: string(),
-  content: editorContent(),
+  content: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type PageTypePluginState = typeof pageTypeState
